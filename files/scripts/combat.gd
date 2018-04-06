@@ -663,15 +663,15 @@ func actionexecute(actor, target, skill):
 				var protection = float(float(100-target.protection)/100)
 				var armor = target.armor
 				if skill.attributes.has('physpen'):
-					protection = 0
+					protection = 1
 					armor = 0
 				for i in actor.geareffects:
 					if i.type == 'incombatphyattack':
 						if i.effect == 'protpenetration':
-							protection = 0
+							protection = 1
 						if i.effect == 'fullpenetration':
 							armor = 0
-							protection = 0
+							protection = 1
 				damage = power * protection - armor
 				if target.action.code == 'protect':
 					if target.person.spec == 'bodyguard':

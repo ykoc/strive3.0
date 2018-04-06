@@ -216,7 +216,7 @@ func _on_new_slave_button_pressed():
 		i.unlocked = true
 		if !i.type in ['gear','dummy']:
 			i.amount += 10
-	for i in ['armorchain','weaponclaymore','clothpet','clothkimono','underwearlacy','armortentacle','weaponhammer','armorrogue']:
+	for i in ['armorchain','weaponclaymore','clothpet','clothkimono','underwearlacy','armortentacle','accamuletemerald','accamuletemerald','accamuletemerald']:
 		var tmpitem = globals.items.createunstackable(i)
 		globals.state.unstackables[str(tmpitem.id)] = tmpitem
 		globals.items.enchantrand(tmpitem)
@@ -227,6 +227,7 @@ func _on_new_slave_button_pressed():
 	globals.player.ability.append("mindread")
 	globals.player.abilityactive.append("mindread")
 	globals.player.abilityactive.append("sedation")
+	globals.player.abilityactive += ["aimedstrike"]
 	globals.player.ability.append('heal')
 	#globals.player.stats.maf_cur = 3
 	globals.state.branding = 2
@@ -710,7 +711,7 @@ func _on_end_pressed():
 				person.obed += rand_range(8,15)
 			if person.rules.nudity == true:
 				person.lust += rand_range(5,10)
-				if person.lewd < 40 && !person.traits.has("Pervert") && !person.traits.has("Sex-crazed"):
+				if person.lewdness < 40 && !person.traits.has("Pervert") && !person.traits.has("Sex-crazed"):
 					person.stress += rand_range(5,10)
 			if person.punish.expect == true:
 				person.punish.strength = -1
@@ -1402,13 +1403,10 @@ func _on_SavePanel_visibility_changed():
 		if globals.savelist.has(i):
 			node.get_node("date").set_text(globals.savelist[i].date)
 			node.get_node("name").set_text(i.replacen("user://saves/",''))
-			node.get_node("info").set_text(globals.savelist[i].name)
-#-----------------------------------------------------------------------------------------
-			moddedtext = globals.savelist[i].name.replacen(",","\n")
-#-----------------------------------------------------------------------------------------
+			moddedtext = globals.savelist[i].name
 		else:
 			node.get_node("name").set_text(i.replacen("user://saves/",''))
-			node.get_node("info").set_text("This save has no info about it.")
+			moddedtext = "This save has no info stored."
 		get_node("menucontrol/menupanel/SavePanel/ScrollContainer/savelist").add_child(node)
 		#node.set_text(i.replacen("user://saves/",''))
 		node.set_meta("name", i)
@@ -1417,8 +1415,7 @@ func _on_SavePanel_visibility_changed():
 		if pressedsave == node.get_node("name").text:
 			node.pressed = true
 #			get_node("TextureFrame/SavePanel/saveline").editable = false
-			if globals.savelist.has(i):
-			 get_node("menucontrol/menupanel/SavePanel//RichTextLabel").set_text(moddedtext)
+			get_node("menucontrol/menupanel/SavePanel/RichTextLabel").set_bbcode(moddedtext)
 #-----------------------------------------------------------------------------------------
 		node.connect('pressed', self, 'loadchosen', [node])
 
@@ -1545,7 +1542,7 @@ func music_set(text):
 	musicraising = true
 	music.set_autoplay(true)
 	if text == 'combat':
-		array = ['combat1']
+		array = ['combat1', 'combat3']
 		path = musicdict[array[rand_range(0,array.size())]]
 	elif text == 'mansion':
 		music.set_autoplay(false)

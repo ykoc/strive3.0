@@ -60,6 +60,7 @@ var spritedict = gallery.sprites
 var musicdict = {
 combat1 = load("res://files/music/battle1.ogg"),
 combat2 = load("res://files/music/battle2.ogg"),
+combat3 = load("res://files/music/battle3.ogg"),
 mansion1 = load("res://files/music/mansion1.ogg"),
 mansion2 = load("res://files/music/mansion2.ogg"),
 mansion3 = load("res://files/music/mansion3.ogg"),
@@ -1563,7 +1564,7 @@ func save_game(var savename):
 			date[i] = '0' + str(date[i])
 		else:
 			date[i] = str(date[i])
-	var entry = {name = "Master " + player.name + ", Day " + str(resources.day) + ', Gold ' + str(resources.gold) + ', Slaves: ' + str(slavecount()), path = savename, date = date.hour + ":" + date.minute + " " + date.day + '.' + date.month + '.' + date.year}
+	var entry = {name = "Master " + player.name + "\nDay: " + str(resources.day) + '\nGold: [color=yellow] ' + str(resources.gold) + '[/color]\nSlaves: ' + str(slavecount()), path = savename, date = date.hour + ":" + date.minute + " " + date.day + '.' + date.month + '.' + date.year}
 	savelist[savename] = entry
 	overwritesettings()
 	savegame.store_line(to_json(nodedata))

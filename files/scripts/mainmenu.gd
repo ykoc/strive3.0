@@ -95,13 +95,10 @@ func _on_SavePanel_visibility_changed():
 		if globals.savelist.has(i):
 			node.get_node("date").set_text(globals.savelist[i].date)
 			node.get_node("name").set_text(i.replacen("user://saves/",''))
-			node.get_node("info").set_text(globals.savelist[i].name)
-#-----------------------------------------------------------------------------------------
-			moddedtext = globals.savelist[i].name.replacen(",","\n")
-#-----------------------------------------------------------------------------------------
+			moddedtext = globals.savelist[i].name
 		else:
+			moddedtext = "This save has no info stored."
 			node.get_node("name").set_text(i.replacen("user://saves/",''))
-			node.get_node("info").set_text("This save has no info about it.")
 		get_node("TextureFrame/SavePanel/ScrollContainer/savelist").add_child(node)
 		#node.set_text(i.replacen("user://saves/",''))
 		node.set_meta('text', i)
@@ -110,8 +107,7 @@ func _on_SavePanel_visibility_changed():
 		if pressedsave == node.get_node("name").text:
 			node.pressed = true
 			get_node("TextureFrame/SavePanel/saveline").editable = false
-			if globals.savelist.has(i):
-			 get_node("TextureFrame/SavePanel/RichTextLabel").set_text(moddedtext)
+			get_node("TextureFrame/SavePanel/RichTextLabel").set_bbcode(moddedtext)
 #-----------------------------------------------------------------------------------------
 		node.connect('pressed', self, 'loadchosen', [node])
 
