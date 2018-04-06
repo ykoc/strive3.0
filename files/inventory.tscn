@@ -1,0 +1,1940 @@
+[gd_scene load_steps=59 format=2]
+
+[ext_resource path="res://files/theme.tres" type="Theme" id=1]
+[ext_resource path="res://files/buttons/inventory/11-litter.png" type="Texture" id=2]
+[ext_resource path="res://files/inventory.gd" type="Script" id=3]
+[ext_resource path="res://files/buttons/inventory/1.png" type="Texture" id=4]
+[ext_resource path="res://files/buttons/inventory/12_chest.png" type="Texture" id=5]
+[ext_resource path="res://files/theme slavetab.tres" type="Theme" id=6]
+[ext_resource path="res://files/buttons/inventory/14(1).png" type="Texture" id=7]
+[ext_resource path="res://files/buttons/inventory/14(2).png" type="Texture" id=8]
+[ext_resource path="res://files/buttons/inventory/15(1).png" type="Texture" id=9]
+[ext_resource path="res://files/buttons/inventory/15(2).png" type="Texture" id=10]
+[ext_resource path="res://files/buttons/inventory/31.png" type="Texture" id=11]
+[ext_resource path="res://files/buttons/inventory/32.png" type="Texture" id=12]
+[ext_resource path="res://files/buttons/inventory/16(1).png" type="Texture" id=13]
+[ext_resource path="res://files/buttons/inventory/16(2).png" type="Texture" id=14]
+[ext_resource path="res://files/buttons/inventory/17(1).png" type="Texture" id=15]
+[ext_resource path="res://files/buttons/inventory/17(2).png" type="Texture" id=16]
+[ext_resource path="res://files/buttons/inventory/6-(item).png" type="Texture" id=17]
+[ext_resource path="res://files/images/items/armorleather.png" type="Texture" id=18]
+[ext_resource path="res://files/buttons/inventory/20(1).png" type="Texture" id=19]
+[ext_resource path="res://files/buttons/inventory/19(1).png" type="Texture" id=20]
+[ext_resource path="res://files/buttons/inventory/19(2).png" type="Texture" id=21]
+[ext_resource path="res://files/buttons/inventory/21(1).png" type="Texture" id=22]
+[ext_resource path="res://files/buttons/inventory/21(2).png" type="Texture" id=23]
+[ext_resource path="res://files/buttons/inventory/18(1).png" type="Texture" id=24]
+[ext_resource path="res://files/buttons/inventory/18(2).png" type="Texture" id=25]
+[ext_resource path="res://files/buttons/inventorypanel.png" type="Texture" id=26]
+[ext_resource path="res://files/buttons/inventory/7-(slave).png" type="Texture" id=27]
+[ext_resource path="res://files/buttons/inventory/37.png" type="Texture" id=28]
+[ext_resource path="res://files/buttons/inventory/36.png" type="Texture" id=29]
+[ext_resource path="res://files/buttons/inventory/35.png" type="Texture" id=30]
+[ext_resource path="res://files/buttons/inventory/34.png" type="Texture" id=31]
+[ext_resource path="res://files/buttons/icons/strength.png" type="Texture" id=32]
+[ext_resource path="res://files/buttons/icons/agility.png" type="Texture" id=33]
+[ext_resource path="res://files/buttons/icons/magic.png" type="Texture" id=34]
+[ext_resource path="res://files/buttons/icons/endurance.png" type="Texture" id=35]
+[ext_resource path="res://files/buttons/explorebar2.png" type="Texture" id=36]
+[ext_resource path="res://files/buttons/explorebar.png" type="Texture" id=37]
+[ext_resource path="res://files/buttons/inventory/1 (2).png" type="Texture" id=38]
+[ext_resource path="res://files/buttons/inventory/2 (1).png" type="Texture" id=39]
+[ext_resource path="res://files/buttons/inventory/3.png" type="Texture" id=40]
+[ext_resource path="res://files/buttons/inventory/25.png" type="Texture" id=41]
+[ext_resource path="res://files/buttons/inventory/8-(equipped_item).png" type="Texture" id=42]
+[ext_resource path="res://files/buttons/inventory/enchant.png" type="Texture" id=43]
+[ext_resource path="res://files/buttons/inventory/30.png" type="Texture" id=44]
+[ext_resource path="res://files/buttons/inventory/26.png" type="Texture" id=45]
+[ext_resource path="res://files/buttons/inventory/29.png" type="Texture" id=46]
+[ext_resource path="res://files/buttons/inventory/28.png" type="Texture" id=47]
+[ext_resource path="res://files/buttons/inventory/27.png" type="Texture" id=48]
+[ext_resource path="res://files/buttons/inventory/9.png" type="Texture" id=49]
+[ext_resource path="res://files/buttons/inventory/4.png" type="Texture" id=50]
+[ext_resource path="res://files/buttons/inventory/5.png" type="Texture" id=51]
+[ext_resource path="res://files/buttons/inventory/33.png" type="Texture" id=52]
+[ext_resource path="res://files/buttons/menupanel.png" type="Texture" id=53]
+
+[sub_resource type="StyleBoxTexture" id=1]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 26 )
+region_rect = Rect2( 0, 0, 613, 833 )
+margin_left = 0.0
+margin_right = 0.0
+margin_top = 0.0
+margin_bottom = 0.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=2]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 36 )
+region_rect = Rect2( 0, 0, 150, 18 )
+margin_left = 5.0
+margin_right = 5.0
+margin_top = 5.0
+margin_bottom = 5.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=3]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 37 )
+region_rect = Rect2( 0, 0, 150, 18 )
+margin_left = 5.0
+margin_right = 5.0
+margin_top = 5.0
+margin_bottom = 5.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=4]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 52 )
+region_rect = Rect2( 0, 0, 1318, 493 )
+margin_left = 0.0
+margin_right = 0.0
+margin_top = 0.0
+margin_bottom = 0.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=5]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 53 )
+region_rect = Rect2( 0, 0, 500, 500 )
+margin_left = 10.0
+margin_right = 10.0
+margin_top = 10.0
+margin_bottom = 10.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[node name="inventory" type="TextureRect"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = ExtResource( 1 )
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 0
+script = ExtResource( 3 )
+_sections_unfolded = [ "Mouse" ]
+
+[node name="TextureFrame 2" type="TextureRect" parent="." index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 0
+_sections_unfolded = [ "Mouse" ]
+
+[node name="mode" type="TextureButton" parent="." index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 16.0
+margin_top = 29.0
+margin_right = 112.0
+margin_bottom = 78.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 5 )
+expand = true
+_sections_unfolded = [ "Rect" ]
+
+[node name="everything" type="TextureButton" parent="." index="2" groups=[
+"invcategory",
+]]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 154.0
+margin_top = 30.0
+margin_right = 211.0
+margin_bottom = 78.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = ExtResource( 6 )
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 7 )
+texture_pressed = ExtResource( 8 )
+expand = true
+_sections_unfolded = [ "Rect" ]
+
+[node name="potion" type="TextureButton" parent="." index="3" groups=[
+"invcategory",
+]]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 274.0
+margin_top = 30.0
+margin_right = 331.0
+margin_bottom = 78.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = ExtResource( 6 )
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 9 )
+texture_pressed = ExtResource( 10 )
+expand = true
+_sections_unfolded = [ "Rect" ]
+
+[node name="supply" type="TextureButton" parent="." index="4" groups=[
+"invcategory",
+]]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 214.0
+margin_top = 30.0
+margin_right = 271.0
+margin_bottom = 78.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = ExtResource( 6 )
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 11 )
+texture_pressed = ExtResource( 12 )
+expand = true
+_sections_unfolded = [ "Rect" ]
+
+[node name="ingredient" type="TextureButton" parent="." index="5" groups=[
+"invcategory",
+]]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 334.0
+margin_top = 30.0
+margin_right = 391.0
+margin_bottom = 78.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = ExtResource( 6 )
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 13 )
+texture_pressed = ExtResource( 14 )
+expand = true
+_sections_unfolded = [ "Rect" ]
+
+[node name="gear" type="TextureButton" parent="." index="6" groups=[
+"invcategory",
+]]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 394.0
+margin_top = 30.0
+margin_right = 451.0
+margin_bottom = 78.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = ExtResource( 6 )
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 15 )
+texture_pressed = ExtResource( 16 )
+expand = true
+_sections_unfolded = [ "Rect" ]
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." index="7"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+margin_left = 13.0
+margin_top = 96.0
+margin_right = 477.0
+margin_bottom = -62.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+scroll_horizontal_enabled = false
+scroll_horizontal = 0
+scroll_vertical_enabled = true
+scroll_vertical = 0
+_sections_unfolded = [ "Mouse", "Scroll" ]
+
+[node name="GridContainer" type="VBoxContainer" parent="ScrollContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 400.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_min_size = Vector2( 400, 0 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_constants/separation = -2
+alignment = 0
+_sections_unfolded = [ "Grow Direction", "Mouse" ]
+
+[node name="Button" type="TextureRect" parent="ScrollContainer/GridContainer" index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 430.0
+margin_bottom = 85.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_min_size = Vector2( 430, 85 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 0
+texture = ExtResource( 17 )
+expand = true
+stretch_mode = 0
+_sections_unfolded = [ "Mouse", "Size Flags" ]
+
+[node name="icon" type="TextureRect" parent="ScrollContainer/GridContainer/Button" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 6.0
+margin_top = 7.0
+margin_right = 80.0
+margin_bottom = 79.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 18 )
+expand = true
+stretch_mode = 6
+_sections_unfolded = [ "Mouse" ]
+
+[node name="number" type="Label" parent="ScrollContainer/GridContainer/Button" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 55.0
+margin_top = 59.0
+margin_right = 78.0
+margin_bottom = 79.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "20"
+align = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Button" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 85.0
+margin_top = 3.0
+margin_right = -23.0
+margin_bottom = -48.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "Itemname"
+valign = 1
+autowrap = true
+clip_text = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="discard" type="TextureButton" parent="ScrollContainer/GridContainer/Button" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 384.0
+margin_top = 40.0
+margin_right = 420.0
+margin_bottom = 76.0
+rect_min_size = Vector2( 36, 36 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Discard"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 19 )
+expand = true
+_sections_unfolded = [ "Hint" ]
+
+[node name="use" type="TextureButton" parent="ScrollContainer/GridContainer/Button" index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 162.0
+margin_top = 43.0
+margin_right = 198.0
+margin_bottom = 79.0
+rect_min_size = Vector2( 36, 36 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Use"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 20 )
+texture_pressed = ExtResource( 21 )
+expand = true
+_sections_unfolded = [ "Hint" ]
+
+[node name="move" type="TextureButton" parent="ScrollContainer/GridContainer/Button" index="5"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 123.0
+margin_top = 43.0
+margin_right = 159.0
+margin_bottom = 79.0
+rect_min_size = Vector2( 36, 36 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Move"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 22 )
+texture_pressed = ExtResource( 23 )
+expand = true
+_sections_unfolded = [ "Focus", "Hint" ]
+
+[node name="info" type="TextureButton" parent="ScrollContainer/GridContainer/Button" index="6"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 83.0
+margin_top = 43.0
+margin_right = 119.0
+margin_bottom = 79.0
+rect_min_size = Vector2( 36, 36 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Inspect"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 24 )
+texture_pressed = ExtResource( 25 )
+expand = true
+_sections_unfolded = [ "Hint", "Mouse" ]
+
+[node name="Panel" type="Panel" parent="." index="8"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 6.0
+margin_top = 89.0
+margin_right = 452.0
+margin_bottom = 717.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_styles/panel = SubResource( 1 )
+_sections_unfolded = [ "Mouse" ]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="slavelist" type="ScrollContainer" parent="." index="9"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+margin_left = 900.0
+margin_top = 33.0
+margin_right = 1349.0
+margin_bottom = -78.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+scroll_horizontal_enabled = false
+scroll_horizontal = 0
+scroll_vertical_enabled = true
+scroll_vertical = 0
+_sections_unfolded = [ "Rect", "Scroll" ]
+
+[node name="GridContainer" type="VBoxContainer" parent="slavelist" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 350.0
+rect_min_size = Vector2( 350, 0 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_constants/separation = -2
+alignment = 0
+_sections_unfolded = [ "Focus", "custom_constants" ]
+
+[node name="Button" type="TextureButton" parent="slavelist/GridContainer" index="0" groups=[
+"inventoryslaves",
+]]
+
+editor/display_folded = true
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 408.0
+margin_bottom = 85.0
+rect_min_size = Vector2( 408, 85 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 27 )
+texture_pressed = ExtResource( 28 )
+expand = true
+_sections_unfolded = [ "Size Flags" ]
+
+[node name="name" type="RichTextLabel" parent="slavelist/GridContainer/Button" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 123.0
+margin_top = 5.0
+margin_right = -14.0
+margin_bottom = -36.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+bbcode_enabled = true
+bbcode_text = ""
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = ""
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+
+[node name="portrait" type="TextureRect" parent="slavelist/GridContainer/Button" index="1"]
+
+show_behind_parent = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 3.0
+margin_right = 88.0
+margin_bottom = 85.0
+rect_min_size = Vector2( 80, 80 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+expand = true
+stretch_mode = 6
+_sections_unfolded = [ "Mouse" ]
+
+[node name="hpbar" type="TextureProgress" parent="slavelist/GridContainer/Button" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 89.0
+margin_top = 1.0
+margin_right = 105.0
+margin_bottom = 82.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+min_value = 0.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 95.0
+exp_edit = false
+rounded = false
+texture_under = null
+texture_over = ExtResource( 29 )
+texture_progress = ExtResource( 30 )
+fill_mode = 3
+radial_fill_degrees = 360.0
+radial_center_offset = Vector2( 0, 0 )
+nine_patch_stretch = false
+
+[node name="enbar" type="TextureProgress" parent="slavelist/GridContainer/Button" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 103.0
+margin_top = 1.0
+margin_right = 119.0
+margin_bottom = 82.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+min_value = 0.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 95.0
+exp_edit = false
+rounded = false
+texture_under = null
+texture_over = ExtResource( 29 )
+texture_progress = ExtResource( 31 )
+fill_mode = 3
+radial_fill_degrees = 360.0
+radial_center_offset = Vector2( 0, 0 )
+nine_patch_stretch = false
+
+[node name="TextureFrame" type="TextureRect" parent="slavelist/GridContainer/Button" index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 125.0
+margin_top = 56.0
+margin_right = 150.0
+margin_bottom = 81.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 32 )
+stretch_mode = 0
+_sections_unfolded = [ "Mouse", "Size Flags" ]
+
+[node name="TextureFrame1" type="TextureRect" parent="slavelist/GridContainer/Button" index="5"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 188.0
+margin_top = 56.0
+margin_right = 213.0
+margin_bottom = 81.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 33 )
+stretch_mode = 0
+_sections_unfolded = [ "Mouse" ]
+
+[node name="TextureFrame2" type="TextureRect" parent="slavelist/GridContainer/Button" index="6"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 254.0
+margin_top = 56.0
+margin_right = 279.0
+margin_bottom = 81.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 34 )
+stretch_mode = 0
+_sections_unfolded = [ "Mouse" ]
+
+[node name="TextureFrame3" type="TextureRect" parent="slavelist/GridContainer/Button" index="7"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 322.0
+margin_top = 56.0
+margin_right = 347.0
+margin_bottom = 81.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 35 )
+stretch_mode = 0
+_sections_unfolded = [ "Mouse" ]
+
+[node name="sstr" type="Label" parent="slavelist/GridContainer/Button" index="8"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 152.0
+margin_top = 60.0
+margin_right = 189.0
+margin_bottom = 80.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "1/5"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="send" type="Label" parent="slavelist/GridContainer/Button" index="9"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 348.0
+margin_top = 60.0
+margin_right = 385.0
+margin_bottom = 80.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "1/5"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="smaf" type="Label" parent="slavelist/GridContainer/Button" index="10"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 280.0
+margin_top = 60.0
+margin_right = 317.0
+margin_bottom = 80.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "1/5"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="sagi" type="Label" parent="slavelist/GridContainer/Button" index="11"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 215.0
+margin_top = 60.0
+margin_right = 252.0
+margin_bottom = 80.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "1/5"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="noitems" type="Label" parent="." index="10"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 48.0
+margin_top = 104.0
+margin_right = 312.0
+margin_bottom = 147.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "Currently you have no suitable 
+items in possession "
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="weightmeter" type="ProgressBar" parent="." index="11"]
+
+editor/display_folded = true
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -1192.0
+margin_top = -44.0
+margin_right = -925.0
+margin_bottom = -19.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_styles/fg = SubResource( 2 )
+custom_styles/bg = SubResource( 3 )
+min_value = 0.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 10.0
+exp_edit = false
+rounded = false
+percent_visible = false
+_sections_unfolded = [ "Rect" ]
+
+[node name="Label" type="Label" parent="weightmeter" index="0"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -431.0
+margin_top = -21.0
+margin_right = -273.0
+margin_bottom = -1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "Carry Weight:"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Rect" ]
+
+[node name="inventoryclose" type="Button" parent="." index="12"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -779.0
+margin_top = -58.0
+margin_right = -566.0
+margin_bottom = -19.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Close"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="gearpanel" type="TextureRect" parent="." index="13"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 501.0
+margin_top = 30.0
+margin_right = 877.0
+margin_bottom = 460.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 38 )
+expand = true
+stretch_mode = 5
+
+[node name="charframe" type="TextureRect" parent="gearpanel" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 39 )
+stretch_mode = 0
+
+[node name="TextureFrame" type="TextureRect" parent="gearpanel" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -5.0
+margin_top = -5.0
+margin_right = 382.0
+margin_bottom = 432.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 40 )
+expand = true
+stretch_mode = 6
+
+[node name="costume" type="TextureButton" parent="gearpanel" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 30.0
+margin_top = 192.0
+margin_right = 95.0
+margin_bottom = 252.0
+rect_min_size = Vector2( 0, 60 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 41 )
+expand = true
+
+[node name="TextureFrame 2" type="TextureRect" parent="gearpanel/costume" index="0"]
+
+self_modulate = Color( 0.957031, 0.957031, 0.957031, 1 )
+show_behind_parent = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -2.0
+margin_top = -2.0
+margin_right = -2.0
+margin_bottom = -2.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 0
+
+[node name="TextureFrame" type="TextureRect" parent="gearpanel/costume" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -2.0
+margin_top = -1.0
+margin_right = 3.0
+margin_bottom = 4.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 42 )
+expand = true
+stretch_mode = 0
+
+[node name="enchant" type="TextureRect" parent="gearpanel/costume" index="2"]
+
+visible = false
+show_behind_parent = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 43 )
+expand = true
+stretch_mode = 0
+_sections_unfolded = [ "Visibility" ]
+
+[node name="unequip" type="TextureButton" parent="gearpanel/costume" index="3"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 45.0
+margin_top = 46.0
+margin_right = 68.0
+margin_bottom = 65.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 44 )
+expand = true
+
+[node name="underwear" type="TextureButton" parent="gearpanel" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 30.0
+margin_top = 293.0
+margin_right = 95.0
+margin_bottom = 353.0
+rect_min_size = Vector2( 0, 60 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 45 )
+expand = true
+
+[node name="TextureFrame3" type="TextureRect" parent="gearpanel/underwear" index="0"]
+
+self_modulate = Color( 0.957031, 0.957031, 0.957031, 1 )
+show_behind_parent = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 1.0
+margin_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 0
+
+[node name="TextureFrame" type="TextureRect" parent="gearpanel/underwear" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -2.0
+margin_top = -1.0
+margin_right = 3.0
+margin_bottom = 4.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 42 )
+expand = true
+stretch_mode = 0
+_sections_unfolded = [ "Rect" ]
+
+[node name="enchant" type="TextureRect" parent="gearpanel/underwear" index="2"]
+
+visible = false
+show_behind_parent = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 43 )
+expand = true
+stretch_mode = 0
+
+[node name="unequip" type="TextureButton" parent="gearpanel/underwear" index="3"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 45.0
+margin_top = 46.0
+margin_right = 68.0
+margin_bottom = 65.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 44 )
+expand = true
+
+[node name="weapon" type="TextureButton" parent="gearpanel" index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 278.0
+margin_top = 42.0
+margin_right = 343.0
+margin_bottom = 102.0
+rect_min_size = Vector2( 0, 60 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 46 )
+expand = true
+
+[node name="TextureFrame4" type="TextureRect" parent="gearpanel/weapon" index="0"]
+
+self_modulate = Color( 0.957031, 0.957031, 0.957031, 1 )
+show_behind_parent = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 1.0
+margin_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 0
+
+[node name="TextureFrame" type="TextureRect" parent="gearpanel/weapon" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -2.0
+margin_top = -1.0
+margin_right = 3.0
+margin_bottom = 4.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 42 )
+expand = true
+stretch_mode = 0
+
+[node name="enchant" type="TextureRect" parent="gearpanel/weapon" index="2"]
+
+visible = false
+show_behind_parent = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 43 )
+expand = true
+stretch_mode = 0
+_sections_unfolded = [ "Visibility" ]
+
+[node name="unequip" type="TextureButton" parent="gearpanel/weapon" index="3"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 45.0
+margin_top = 46.0
+margin_right = 68.0
+margin_bottom = 65.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 44 )
+expand = true
+
+[node name="armor" type="TextureButton" parent="gearpanel" index="5"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 278.0
+margin_top = 131.0
+margin_right = 343.0
+margin_bottom = 191.0
+rect_min_size = Vector2( 0, 60 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 47 )
+expand = true
+
+[node name="TextureFrame5" type="TextureRect" parent="gearpanel/armor" index="0"]
+
+self_modulate = Color( 0.957031, 0.957031, 0.957031, 1 )
+show_behind_parent = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 1.0
+margin_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 0
+
+[node name="TextureFrame" type="TextureRect" parent="gearpanel/armor" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -2.0
+margin_top = -1.0
+margin_right = 3.0
+margin_bottom = 4.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 42 )
+expand = true
+stretch_mode = 0
+
+[node name="enchant" type="TextureRect" parent="gearpanel/armor" index="2"]
+
+visible = false
+show_behind_parent = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 43 )
+expand = true
+stretch_mode = 0
+
+[node name="unequip" type="TextureButton" parent="gearpanel/armor" index="3"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 45.0
+margin_top = 46.0
+margin_right = 68.0
+margin_bottom = 65.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 44 )
+expand = true
+
+[node name="accessory" type="TextureButton" parent="gearpanel" index="6"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 278.0
+margin_top = 337.0
+margin_right = 343.0
+margin_bottom = 397.0
+rect_min_size = Vector2( 0, 60 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 48 )
+expand = true
+
+[node name="TextureFrame6" type="TextureRect" parent="gearpanel/accessory" index="0"]
+
+self_modulate = Color( 0.957031, 0.957031, 0.957031, 1 )
+show_behind_parent = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 1.0
+margin_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 0
+
+[node name="TextureFrame" type="TextureRect" parent="gearpanel/accessory" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -2.0
+margin_top = -1.0
+margin_right = 3.0
+margin_bottom = 4.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 42 )
+expand = true
+stretch_mode = 0
+
+[node name="enchant" type="TextureRect" parent="gearpanel/accessory" index="2"]
+
+visible = false
+show_behind_parent = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 43 )
+expand = true
+stretch_mode = 0
+
+[node name="unequip" type="TextureButton" parent="gearpanel/accessory" index="3"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 45.0
+margin_top = 46.0
+margin_right = 68.0
+margin_bottom = 65.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 44 )
+expand = true
+
+[node name="Panel" type="TextureRect" parent="gearpanel" index="7"]
+
+show_behind_parent = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -3.0
+margin_top = 445.0
+margin_right = -6.0
+margin_bottom = -238.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 49 )
+expand = true
+stretch_mode = 0
+
+[node name="TextureFrame" type="TextureRect" parent="gearpanel/Panel" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -2.0
+margin_right = 9.0
+margin_bottom = 228.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 50 )
+expand = true
+stretch_mode = 0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="gearpanel" index="8"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 13.0
+margin_top = 462.0
+margin_right = 359.0
+margin_bottom = 653.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+bbcode_enabled = true
+bbcode_text = "Slave
+Info
+And
+Stats"
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = "Slave
+Info
+And
+Stats"
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+
+[node name="TextureFrame 3" type="TextureRect" parent="." index="14"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 893.0
+margin_top = 25.0
+margin_right = 1316.0
+margin_bottom = 702.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 51 )
+expand = true
+stretch_mode = 5
+_sections_unfolded = [ "Mouse" ]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="iteminfo" type="PopupPanel" parent="." index="15"]
+
+editor/display_folded = true
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 187.0
+margin_top = 78.0
+margin_right = 1121.0
+margin_bottom = 424.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_styles/panel = SubResource( 4 )
+popup_exclusive = false
+
+[node name="RichTextLabel" type="RichTextLabel" parent="iteminfo" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 364.0
+margin_top = 24.0
+margin_right = 911.0
+margin_bottom = 324.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+bbcode_enabled = true
+bbcode_text = ""
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = ""
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+
+[node name="TextureFrame" type="TextureRect" parent="iteminfo" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 35.0
+margin_top = 23.0
+margin_right = 335.0
+margin_bottom = 323.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+expand = true
+stretch_mode = 6
+
+[node name="hairchange" type="PopupPanel" parent="." index="16"]
+
+editor/display_folded = true
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 462.0
+margin_top = 175.0
+margin_right = 908.0
+margin_bottom = 398.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_styles/panel = SubResource( 5 )
+popup_exclusive = false
+
+[node name="TextEdit" type="LineEdit" parent="hairchange" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 52.0
+margin_top = 37.0
+margin_right = 391.0
+margin_bottom = 71.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 1
+size_flags_horizontal = 2
+size_flags_vertical = 2
+focus_mode = 2
+context_menu_enabled = true
+placeholder_text = "Input desired hair color"
+placeholder_alpha = 0.6
+caret_blink = false
+caret_blink_speed = 0.65
+caret_position = 0
+
+[node name="hairconfirm" type="Button" parent="hairchange" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 45.0
+margin_top = 167.0
+margin_right = 181.0
+margin_bottom = 206.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Confirm"
+flat = false
+align = 1
+
+[node name="haircancel" type="Button" parent="hairchange" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 255.0
+margin_top = 167.0
+margin_right = 391.0
+margin_bottom = 206.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Cancel"
+flat = false
+align = 1
+
+[connection signal="pressed" from="mode" to="." method="_on_mode_pressed"]
+
+[connection signal="pressed" from="inventoryclose" to="." method="_on_inventoryclose_pressed"]
+
+[connection signal="gui_input" from="iteminfo" to="." method="_on_iteminfo_input_event"]
+
+[connection signal="pressed" from="hairchange/hairconfirm" to="." method="_on_hairconfirm_pressed"]
+
+[connection signal="pressed" from="hairchange/haircancel" to="." method="_on_haircancel_pressed"]
+
+

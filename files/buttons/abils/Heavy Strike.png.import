@@ -1,0 +1,32 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/Heavy Strike.png-3103ddd279335442e8dbecab2467a670.stex"
+
+[deps]
+
+source_file="res://files/buttons/abils/Heavy Strike.png"
+source_md5="c30f1628e82aa83d0ad897b57628634f"
+
+dest_files=[ "res://.import/Heavy Strike.png-3103ddd279335442e8dbecab2467a670.stex" ]
+dest_md5="dfd4809e172329e20e44d7445e0634cf"
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=true
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+stream=false
+size_limit=0
+detect_3d=true
+svg/scale=1.0

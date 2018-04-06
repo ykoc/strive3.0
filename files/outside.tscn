@@ -1,0 +1,5691 @@
+[gd_scene load_steps=84 format=2]
+
+[ext_resource path="res://files/theme.tres" type="Theme" id=1]
+[ext_resource path="res://files/scripts/outside.gd" type="Script" id=2]
+[ext_resource path="res://files/buttons/explorebar2.png" type="Texture" id=3]
+[ext_resource path="res://files/buttons/explorebar.png" type="Texture" id=4]
+[ext_resource path="res://files/buttons/img-pl-vkladki.png" type="Texture" id=5]
+[ext_resource path="res://mainfont.tres" type="DynamicFont" id=6]
+[ext_resource path="res://files/buttons/btn-noact-oran.png" type="Texture" id=7]
+[ext_resource path="res://files/buttons/btn-hover-oran.png" type="Texture" id=8]
+[ext_resource path="res://files/buttons/btn-norm-oran.png" type="Texture" id=9]
+[ext_resource path="res://files/buttons/btn-act-oran.png" type="Texture" id=10]
+[ext_resource path="res://files/buttons/scenes/5.png" type="Texture" id=11]
+[ext_resource path="res://files/buttons/scenes/6.png" type="Texture" id=12]
+[ext_resource path="res://files/buttons/scenes/7.png" type="Texture" id=13]
+[ext_resource path="res://files/buttons/scenes/4.png" type="Texture" id=14]
+[ext_resource path="res://files/buttons/img-text-in.png" type="Texture" id=15]
+[ext_resource path="res://files/buttons/menupanel.png" type="Texture" id=16]
+[ext_resource path="res://files/buttons/paneltransperent.png" type="Texture" id=17]
+[ext_resource path="res://files/buttons/itemactive.png" type="Texture" id=18]
+[ext_resource path="res://files/buttons/itemnormal.png" type="Texture" id=19]
+[ext_resource path="res://files/bigpanel.tres" type="StyleBox" id=20]
+[ext_resource path="res://files/buttons/noimage.png" type="Texture" id=21]
+[ext_resource path="res://files/buttons/inspect.png" type="Texture" id=22]
+[ext_resource path="res://files/buttongrouptheme.tres" type="Theme" id=23]
+[ext_resource path="res://statspanel.tscn" type="PackedScene" id=24]
+[ext_resource path="res://Roundo-Medium.otf" type="DynamicFontData" id=25]
+[ext_resource path="res://files/theme slavetab.tres" type="Theme" id=26]
+[ext_resource path="res://files/buttons/inventory/11-litter.png" type="Texture" id=27]
+[ext_resource path="res://files/buttons/inventory/12_chest.png" type="Texture" id=28]
+[ext_resource path="res://files/buttons/inventory/14(1).png" type="Texture" id=29]
+[ext_resource path="res://files/buttons/inventory/14(2).png" type="Texture" id=30]
+[ext_resource path="res://files/buttons/inventory/15(1).png" type="Texture" id=31]
+[ext_resource path="res://files/buttons/inventory/15(2).png" type="Texture" id=32]
+[ext_resource path="res://files/buttons/inventory/31.png" type="Texture" id=33]
+[ext_resource path="res://files/buttons/inventory/32.png" type="Texture" id=34]
+[ext_resource path="res://files/buttons/inventory/16(1).png" type="Texture" id=35]
+[ext_resource path="res://files/buttons/inventory/16(2).png" type="Texture" id=36]
+[ext_resource path="res://files/buttons/inventory/17(1).png" type="Texture" id=37]
+[ext_resource path="res://files/buttons/inventory/17(2).png" type="Texture" id=38]
+[ext_resource path="res://files/buttons/inventory/6-(item).png" type="Texture" id=39]
+[ext_resource path="res://files/images/items/armorleather.png" type="Texture" id=40]
+[ext_resource path="res://files/buttons/inventory/18(1).png" type="Texture" id=41]
+[ext_resource path="res://files/buttons/inventory/18(2).png" type="Texture" id=42]
+[ext_resource path="res://files/buttons/inventory/21(1).png" type="Texture" id=43]
+[ext_resource path="res://files/buttons/inventory/21(2).png" type="Texture" id=44]
+[ext_resource path="res://files/buttons/mainscreen/gold.png" type="Texture" id=45]
+[ext_resource path="res://files/buttons/inventory/5.png" type="Texture" id=46]
+[ext_resource path="res://files/buttons/inventorypanel.png" type="Texture" id=47]
+[ext_resource path="res://files/buttons/inventory/33.png" type="Texture" id=48]
+[ext_resource path="res://files/buttons/bigpanel.png" type="Texture" id=49]
+[ext_resource path="res://files/buttons/inventory/1.png" type="Texture" id=50]
+
+[sub_resource type="StyleBoxTexture" id=1]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 150, 18 )
+margin_left = 5.0
+margin_right = 5.0
+margin_top = 5.0
+margin_bottom = 5.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=2]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 150, 18 )
+margin_left = 5.0
+margin_right = 5.0
+margin_top = 5.0
+margin_bottom = 5.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=3]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 5 )
+region_rect = Rect2( 0, 0, 54, 54 )
+margin_left = 10.0
+margin_right = 10.0
+margin_top = 10.0
+margin_bottom = 10.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=4]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 219, 50 )
+margin_left = 8.0
+margin_right = 8.0
+margin_top = 8.0
+margin_bottom = 8.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=5]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 8 )
+region_rect = Rect2( 0, 0, 219, 50 )
+margin_left = 8.0
+margin_right = 8.0
+margin_top = 8.0
+margin_bottom = 8.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=6]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 9 )
+region_rect = Rect2( 0, 0, 219, 50 )
+margin_left = 8.0
+margin_right = 8.0
+margin_top = 8.0
+margin_bottom = 8.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=7]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 10 )
+region_rect = Rect2( 0, 0, 219, 50 )
+margin_left = 8.0
+margin_right = 8.0
+margin_top = 8.0
+margin_bottom = 8.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="Theme" id=8]
+
+Button/colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+Button/colors/font_color_disabled = Color( 0.226563, 0.226563, 0.226563, 1 )
+Button/colors/font_color_hover = Color( 1, 1, 1, 1 )
+Button/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+Button/constants/hseparation = 2
+Button/fonts/font = null
+Button/styles/disabled = SubResource( 4 )
+Button/styles/focus = null
+Button/styles/hover = SubResource( 5 )
+Button/styles/normal = SubResource( 6 )
+Button/styles/pressed = SubResource( 7 )
+
+[sub_resource type="StyleBoxTexture" id=9]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 11 )
+region_rect = Rect2( 0, 0, 604, 60 )
+margin_left = 0.0
+margin_right = 0.0
+margin_top = 0.0
+margin_bottom = 0.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=10]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 12 )
+region_rect = Rect2( 0, 0, 604, 60 )
+margin_left = 0.0
+margin_right = 0.0
+margin_top = 0.0
+margin_bottom = 0.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=11]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 13 )
+region_rect = Rect2( 0, 0, 604, 60 )
+margin_left = 0.0
+margin_right = 0.0
+margin_top = 0.0
+margin_bottom = 0.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=12]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 14 )
+region_rect = Rect2( 0, 0, 610, 64 )
+margin_left = 0.0
+margin_right = 0.0
+margin_top = 0.0
+margin_bottom = 0.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=13]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 15 )
+region_rect = Rect2( 0, 0, 54, 54 )
+margin_left = 10.0
+margin_right = 10.0
+margin_top = 10.0
+margin_bottom = 10.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=14]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 16 )
+region_rect = Rect2( 0, 0, 500, 500 )
+margin_left = 10.0
+margin_right = 10.0
+margin_top = 10.0
+margin_bottom = 10.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=15]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 17 )
+region_rect = Rect2( 0, 0, 500, 500 )
+margin_left = 8.0
+margin_right = 8.0
+margin_top = 8.0
+margin_bottom = 8.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=16]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 16 )
+region_rect = Rect2( 0, 0, 500, 500 )
+margin_left = 0.0
+margin_right = 0.0
+margin_top = 0.0
+margin_bottom = 0.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=17]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 18 )
+region_rect = Rect2( 0, 0, 50, 50 )
+margin_left = 10.0
+margin_right = 10.0
+margin_top = 10.0
+margin_bottom = 10.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=18]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 18 )
+region_rect = Rect2( 0, 0, 50, 50 )
+margin_left = 10.0
+margin_right = 10.0
+margin_top = 10.0
+margin_bottom = 10.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=19]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+margin_left = 0.0
+margin_right = 0.0
+margin_top = 0.0
+margin_bottom = 0.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=20]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+margin_left = 0.0
+margin_right = 0.0
+margin_top = 0.0
+margin_bottom = 0.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=21]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 19 )
+region_rect = Rect2( 0, 0, 50, 50 )
+margin_left = 10.0
+margin_right = 10.0
+margin_top = 10.0
+margin_bottom = 10.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=22]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 150, 18 )
+margin_left = 5.0
+margin_right = 5.0
+margin_top = 5.0
+margin_bottom = 5.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=23]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 150, 18 )
+margin_left = 3.0
+margin_right = 3.0
+margin_top = 3.0
+margin_bottom = 3.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="DynamicFont" id=24]
+
+size = 20
+use_mipmaps = false
+use_filter = true
+extra_spacing_top = 3
+font_data = ExtResource( 25 )
+
+[sub_resource type="GDScript" id=27]
+
+script/source = "extends Node
+
+var state
+var location = 'mansion'
+
+var categories = {everything = true, potion = false, ingredient = false, gear = false, supply = false}
+onready var itemgrid = get_node(\"ScrollContainer/GridContainer\")
+
+var merchantitems = []
+
+func _ready():
+	
+	
+	for i in get_tree().get_nodes_in_group(\"invcategory\"):
+		i.connect(\"pressed\",self,'selectcategory',[i])
+	
+#	open()
+
+
+
+func selectcategory(button):
+	if button.get_name() == 'everything':
+		for i in get_tree().get_nodes_in_group('invcategory'):
+			i.set_pressed(i == button)
+	else:
+		categories.everything = false
+		get_node(\"everything\").set_pressed(false)
+	for i in categories:
+		categories[i] = get_node(i).is_pressed()
+	categoryitems()
+
+func categoryitems():
+	for i in get_node(\"ScrollContainer/GridContainer/\").get_children() + $ScrollContainer2/GridContainer.get_children():
+		if (categories.everything == true && i.get_name() != 'Button' ) || (i.has_meta('category') && i.get_meta(\"category\") != 'dummy' && categories[i.get_meta('category')] == true):
+			i.visible = true
+		else:
+			i.visible = false
+
+
+func open(place = 'mansion', part = 'inventory', keepslave = false):
+	
+	location = place
+	state = part
+	updateitems()
+	calculateweight()
+	
+	self.visible = true
+
+func updateitems():
+	clearitems()
+	if state == 'inventory':
+		itemsinventory()
+	elif state == 'backpack':
+		itemsbackpack()
+	itemsshop()
+	$gold.text = str(globals.resources.gold)
+	categoryitems()
+
+var modetextures = {inventory = load(\"res://files/buttons/inventory/12_chest.png\"), backpack = load(\"res://files/buttons/inventory/13_bag.png\")}
+
+func _on_mode_pressed():
+	if state == 'inventory':
+		open('mansion','backpack',true)
+	else:
+		open('mansion','inventory',true)
+	get_node(\"mode\").set_normal_texture(modetextures[state])
+
+func clearitems():
+	for i in itemgrid.get_children():
+		if i.get_name() != \"Button\":
+			i.visible = false
+			i.queue_free()
+	itemgrid.rect_size = itemgrid.rect_min_size
+
+
+func itemsinventory():
+	
+	var button
+	var array = []
+	var tempitem
+	
+	for i in globals.itemdict.values():
+		if i.amount < 1 || i.type in ['gear','dummy']:
+			continue
+		array.append(i)
+	array.sort_custom(globals.items,'sortitems')
+	
+	for i in array:
+		button = get_node(\"ScrollContainer/GridContainer/Button\").duplicate()
+		button.visible = true
+		var price = getcost(i, 'sell')
+		button.get_node('number').set_text(str(i.amount))
+		button.get_node(\"price\").text = str(price)
+		button.get_node(\"Label\").set_text(i.name)
+		button.get_node(\"info\").connect(\"pressed\",self,'info',[button])
+		button.get_node(\"sell\").connect(\"pressed\",self,'sellitem',[button])
+		button.set_meta('item', i)
+		button.set_meta(\"price\",price)
+		button.set_meta(\"number\", i.amount)
+		button.set_meta(\"category\", i.type)
+		if i.icon != null:
+			button.get_node(\"icon\").set_texture(i.icon)
+		itemgrid.add_child(button)
+	array.clear()
+		
+	for i in globals.state.unstackables.values():
+		if (i.owner != null && str(i.owner) != 'backpack') && globals.state.findslave(i.owner) == null && i.owner != globals.player.id:
+			i.owner = null
+		if i.owner != null:
+			continue
+		var entryexists = false
+		for k in array:
+			if k.size() > 0 && k[0].code == i.code && str(k[0].effects) == str(i.effects) :
+				k.append(i)
+				entryexists = true
+				break
+		if entryexists == false:
+			array.append([])
+			array[array.size()-1].append(i)
+		
+	for i in array:
+		button = get_node(\"ScrollContainer/GridContainer/Button\").duplicate()
+		button.visible = true
+		var price = getcost(i[0], 'sell')
+		button.get_node('number').set_text(str(i.size()))
+		button.get_node(\"Label\").set_text(i[0].name)
+		button.get_node(\"info\").connect(\"pressed\",self,'info',[button])
+		button.get_node(\"price\").text = str(price)
+		button.get_node(\"sell\").connect(\"pressed\",self,'sellitem',[button])
+		button.set_meta('item', i[0])
+		button.set_meta(\"itemarray\", i)
+		button.set_meta(\"number\", i.size())
+		button.set_meta(\"category\", 'gear')
+		button.set_meta(\"price\", price)
+		if i[0].enchant != '':
+			button.get_node(\"Label\").set('custom_colors/font_color', Color(0,0.5,0))
+		if i[0].icon != null:
+			button.get_node(\"icon\").set_texture(load(i[0].icon))
+		itemgrid.add_child(button)
+
+func itemsbackpack():
+	var itemgrid = get_node(\"ScrollContainer/GridContainer\")
+	var button
+	var array = []
+	var items = false
+	var tempitem
+	for i in globals.state.backpack.stackables:
+		tempitem = globals.itemdict[i]
+		var price = getcost(i, 'sell')
+		button = get_node(\"ScrollContainer/GridContainer/Button\").duplicate()
+		get_node(\"ScrollContainer/GridContainer\").add_child(button)
+		button.visible = true
+		button.get_node(\"Label\").set_text(tempitem.name)
+		button.get_node(\"info\").connect(\"pressed\",self,'info',[button])
+		button.get_node(\"number\").set_text(str(globals.state.backpack.stackables[i]))
+		button.get_node(\"price\").text = str(price)
+		button.get_node(\"sell\").connect(\"pressed\",self,'sellitem',[button])
+		button.set_meta(\"price\", price)
+		if tempitem.icon != null:
+			button.get_node(\"icon\").set_texture(tempitem.icon)
+		button.set_meta(\"item\", tempitem)
+		button.set_meta(\"category\", tempitem.type)
+	array.clear()
+	for i in globals.state.unstackables.values():
+		if (i.owner != null && str(i.owner) != 'backpack') && globals.state.findslave(i.owner) == null && i.owner != globals.player.id:
+			i.owner = null
+		if str(i.owner) != 'backpack':
+			continue
+		var entryexists = false
+		for k in array:
+			if k.size() > 0 && k[0].code == i.code && str(k[0].effects) == str(i.effects) :
+				k.append(i)
+				entryexists = true
+				break
+		if entryexists == false:
+			array.append([])
+			array[array.size()-1].append(i)
+	
+	for i in array:
+		var price = getcost(i[0], 'sell')
+		button = get_node(\"ScrollContainer/GridContainer/Button\").duplicate()
+		button.visible = true
+		button.get_node('number').set_text(str(i.size()))
+		button.get_node(\"Label\").set_text(i[0].name)
+		button.get_node(\"info\").connect(\"pressed\",self,'info',[button])
+		button.get_node(\"price\").text = str(price)
+		button.set_meta(\"price\", price)
+		button.get_node(\"sell\").connect(\"pressed\",self,'sellitem',[button])
+		button.set_meta('item', i[0])
+		button.set_meta(\"itemarray\", i)
+		button.set_meta(\"number\", i.size())
+		button.set_meta(\"category\", 'gear')
+		if i[0].enchant != '':
+			button.get_node(\"Label\").set('custom_colors/font_color', Color(0,0.5,0))
+		if i[0].icon != null:
+			button.get_node(\"icon\").set_texture(load(i[0].icon))
+		get_node(\"ScrollContainer/GridContainer\").add_child(button)
+
+func itemsshop():
+	var shop = merchantitems
+	for i in $ScrollContainer2/GridContainer.get_children():
+		if i.get_name() != \"Button\":
+			i.visible = false
+			i.queue_free()
+	
+	for i in shop:
+		var item = globals.itemdict[i]
+		item = globals.itemdict[i]
+		if item.code.find('teleport') >= 0 && item.code != 'teleportseal':
+			var temp = item.code.replace('teleport', '')
+			if temp == globals.state.location || globals.state.portals[temp].enabled == true:
+				continue
+		var newbutton = $ScrollContainer2/GridContainer/Button.duplicate()
+		var price = getcost(item, 'buy')
+		$ScrollContainer2/GridContainer.add_child(newbutton)
+		newbutton.visible = true
+		newbutton.get_node(\"price\").set_text(str(price))
+		newbutton.get_node('Label').set_text(item.name)
+		newbutton.get_node(\"buy\").connect(\"pressed\",self,'buyitem',[newbutton])
+		newbutton.set_meta(\"price\", price)
+		newbutton.set_meta(\"category\", item.type)
+		if typeof(item.icon) == TYPE_STRING:
+			newbutton.get_node(\"icon\").set_texture(load(item.icon))
+		else:
+			newbutton.get_node(\"icon\").set_texture(item.icon)
+		newbutton.set_meta('item', item)
+		newbutton.get_node(\"info\").connect(\"pressed\",self,'info',[newbutton])
+		#newbutton.connect('pressed',self,'selectshopitem', [newbutton])
+
+
+func getcost(item, mode):
+	var cost = 0
+	if mode == 'buy':
+		cost = item.cost
+	else:
+		if typeof(item) == TYPE_STRING:
+			item = globals.itemdict[item]
+		if globals.itemdict[item.code].type != 'gear':
+			cost = item.cost*variables.sellingitempricemod
+		else:
+			var itemtype = globals.itemdict[item.code]
+			cost = itemtype.cost*variables.sellingitempricemod
+			if item.has('enchant') && item.enchant != '':
+				cost = cost*variables.enchantitemprice
+	return round(cost)
+
+
+func info(button):
+	get_node(\"iteminfo/RichTextLabel\").set_bbcode(globals.itemdescription(button.get_meta('item')))
+	get_node(\"iteminfo/TextureFrame\").set_texture(button.get_node('icon').get_texture())
+	get_node(\"iteminfo\").popup()
+
+
+func calculateweight():
+	var weight = globals.state.calculateweight()
+	get_node(\"weightmeter/Label\").set_text(\"Weight: \" + str(weight.currentweight) + '/' + str(weight.maxweight))
+	get_node(\"weightmeter\").set_value((weight.currentweight*10/max(weight.maxweight,1)*10))
+
+
+func _on_iteminfo_input_event( ev ):
+	if ev.is_action(\"LMB\") && ev.is_pressed():
+		get_node(\"iteminfo\").visible = false
+
+func _on_inventoryclose_pressed():
+	self.visible = false
+
+
+
+func sellitem(button):
+	var item = button.get_meta('item')
+	var gold = button.get_meta('price')
+	globals.resources.gold += gold
+	if state == 'inventory' or (item.has('owner') && item.owner != null):
+		if item.has('id'):
+			var itemarray = button.get_meta('itemarray')
+			var tempitem = itemarray[itemarray.size()-1]
+			globals.state.unstackables.erase(tempitem.id)
+			itemarray.erase(tempitem)
+			button.get_node('number').set_text(str(itemarray.size()))
+			if itemarray.size() <= 0:
+				button.visible = false
+				button.queue_free()
+			calculateweight()
+		else:
+			item.amount -= 1
+			button.get_node('number').set_text(str(item.amount))
+			if item.amount <= 0:
+				button.visible = false
+				button.queue_free()
+	elif state == 'backpack':
+		globals.state.backpack.stackables[item.code] -= 1
+		button.get_node('number').set_text(str(globals.state.backpack.stackables[item.code]))
+		if globals.state.backpack.stackables[item.code] <= 0:
+			globals.state.backpack.stackables.erase(item.code)
+			button.visible = false
+		calculateweight()
+	$gold.text = str(globals.resources.gold)
+
+func buyitem(button):
+	var text = ''
+	var item = button.get_meta('item')
+	text += \"You will purchase [color=green]\" + item.name + \"[/color] for \" + str(getcost(item, 'buy')) + \" gold per piece. \"
+	selecteditem = button
+	$amountselect.popup()
+	$amountselect/RichTextLabel.bbcode_text = text
+
+var selecteditem
+
+func _on_confirm_pressed():
+	var amount = $amountselect/SpinBox.value
+	var price = selecteditem.get_meta('price')
+	var item = selecteditem.get_meta('item')
+	if amount*price > globals.resources.gold:
+		globals.main.infotext(\"Not enough gold\",'red')
+		return
+	if state == 'backpack' && item.has('weight') && globals.state.calculateweight().currentweight + amount*item.weight > globals.state.calculateweight().maxweight:
+		globals.main.infotext(\"Not enough carry capacity\",'red')
+		return
+	if item.type != 'gear':
+		if state != 'backpack':
+			item.amount += amount
+		else:
+			if globals.state.backpack.stackables.has(item.code):
+				globals.state.backpack.stackables[item.code] += amount
+			else:
+				globals.state.backpack.stackables[item.code] = amount
+	else:
+		var counter = amount
+		while counter >= 1:
+			var tmpitem = globals.items.createunstackable(item.code)
+			if state != 'backpack':
+				globals.state.unstackables[str(tmpitem.id)] = tmpitem
+			else:
+				globals.state.unstackables[str(tmpitem.id)] = tmpitem
+				tmpitem.owner = 'backpack'
+			counter -= 1
+			globals.main.infotext(\"Obtained: \" + item.name, 'green')
+	if item.code in ['food']:
+		globals.items.call(item.effect)
+	elif item.code.find('teleport') >= 0 && item.code != 'teleportseal':
+		globals.items.call(item.effect, item)
+		selecteditem = null
+		return
+	else:
+		globals.resources.gold -= price*amount
+	clearitems()
+	if state == 'inventory':
+		itemsinventory()
+	elif state == 'backpack':
+		itemsbackpack()
+	categoryitems()
+	$gold.text = str(globals.resources.gold)
+	$amountselect.visible = false
+
+func _on_cancel_pressed():
+	$amountselect.visible = false
+
+
+"
+
+[sub_resource type="DynamicFont" id=33]
+
+size = 24
+use_mipmaps = false
+use_filter = true
+extra_spacing_top = 1
+font_data = ExtResource( 25 )
+_sections_unfolded = [ "Settings" ]
+
+[sub_resource type="StyleBoxTexture" id=28]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 47 )
+region_rect = Rect2( 0, 0, 613, 833 )
+margin_left = 0.0
+margin_right = 0.0
+margin_top = 0.0
+margin_bottom = 0.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=29]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 150, 18 )
+margin_left = 5.0
+margin_right = 5.0
+margin_top = 5.0
+margin_bottom = 5.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=30]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 150, 18 )
+margin_left = 5.0
+margin_right = 5.0
+margin_top = 5.0
+margin_bottom = 5.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=31]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 48 )
+region_rect = Rect2( 0, 0, 1318, 493 )
+margin_left = 0.0
+margin_right = 0.0
+margin_top = 0.0
+margin_bottom = 0.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=32]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 49 )
+region_rect = Rect2( 0, 0, 500, 460 )
+margin_left = 0.0
+margin_right = 0.0
+margin_top = 0.0
+margin_bottom = 0.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="Animation" id=25]
+
+length = 0.3
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("charactersprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("charactersprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=26]
+
+length = 0.3
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("charactersprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("charactersprite:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1316, 150 ), Vector2( 758, 19 ) ]
+}
+
+[node name="outside" type="Control"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 2.0
+margin_bottom = 2.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="questlog" type="Button" parent="." index="0"]
+
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+margin_left = -223.0
+margin_top = 1.0
+margin_right = -112.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Quest Log"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="exploreprogress" type="ProgressBar" parent="." index="1"]
+
+editor/display_folded = true
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+margin_left = -391.0
+margin_top = 35.0
+margin_right = -10.0
+margin_bottom = 53.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_styles/fg = SubResource( 1 )
+custom_styles/bg = SubResource( 2 )
+min_value = 0.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 1.0
+exp_edit = false
+rounded = false
+percent_visible = false
+_sections_unfolded = [ "Rect" ]
+
+[node name="locationname" type="Label" parent="exploreprogress" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 3.0
+margin_right = 380.0
+margin_bottom = 18.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="charactersprite" type="TextureRect" parent="." index="2"]
+
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -604.0
+margin_top = 19.0
+margin_right = 137.0
+margin_bottom = -10.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+expand = true
+stretch_mode = 6
+_sections_unfolded = [ "Anchor", "Rect", "Visibility" ]
+
+[node name="textpanel" type="Panel" parent="." index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 300.0
+margin_top = 52.0
+margin_right = -474.0
+margin_bottom = -89.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+_sections_unfolded = [ "Rect" ]
+
+[node name="buttonpanel" type="Panel" parent="." index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = 53.0
+margin_right = 305.0
+margin_bottom = -95.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_styles/panel = SubResource( 3 )
+_sections_unfolded = [ "Rect" ]
+
+[node name="outsidetextbox" type="RichTextLabel" parent="." index="5"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+margin_left = 318.0
+margin_top = 65.0
+margin_right = 871.0
+margin_bottom = -100.0
+rect_min_size = Vector2( 300, 300 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_fonts/normal_font = ExtResource( 6 )
+bbcode_enabled = true
+bbcode_text = ""
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = ""
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+_sections_unfolded = [ "Rect" ]
+
+[node name="outsidebuttoncontainer" type="VBoxContainer" parent="." index="6"]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 23.0
+margin_top = 70.0
+margin_right = 295.0
+margin_bottom = 644.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = SubResource( 8 )
+alignment = 0
+
+[node name="buttontemplate" type="Button" parent="outsidebuttoncontainer" index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 270.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 270, 40 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_styles/hover = SubResource( 9 )
+custom_styles/pressed = SubResource( 10 )
+custom_styles/disabled = SubResource( 11 )
+custom_styles/normal = SubResource( 12 )
+custom_fonts/font = ExtResource( 6 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+custom_constants/hseparation = 0
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Button 1"
+flat = false
+align = 1
+_sections_unfolded = [ "Size Flags", "custom_constants" ]
+
+[node name="Label" type="Label" parent="outsidebuttoncontainer/buttontemplate" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -11.0
+margin_top = 9.0
+margin_right = 33.0
+margin_bottom = 32.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "1"
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_colors" ]
+
+[node name="playergrouppanel" type="Panel" parent="." index="7"]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -84.0
+margin_right = -4.0
+margin_bottom = -2.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+_sections_unfolded = [ "Rect" ]
+
+[node name="VBoxContainer" type="HBoxContainer" parent="playergrouppanel" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 982.0
+margin_bottom = 71.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+alignment = 0
+
+[node name="Panel" type="Panel" parent="playergrouppanel/VBoxContainer" index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 280.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 280, 60 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_styles/panel = SubResource( 13 )
+_sections_unfolded = [ "Rect", "Size Flags" ]
+
+[node name="name" type="Label" parent="playergrouppanel/VBoxContainer/Panel" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 58.0
+margin_top = 8.0
+margin_right = 103.0
+margin_bottom = 27.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 6 )
+text = "Name"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="health" type="Label" parent="playergrouppanel/VBoxContainer/Panel" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 137.0
+margin_top = 8.0
+margin_right = 191.0
+margin_bottom = 27.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 6 )
+text = "Health:"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="energy" type="Label" parent="playergrouppanel/VBoxContainer/Panel" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 137.0
+margin_top = 22.0
+margin_right = 195.0
+margin_bottom = 41.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 6 )
+text = "Energy:"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="stress" type="Label" parent="playergrouppanel/VBoxContainer/Panel" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 137.0
+margin_top = 37.0
+margin_right = 195.0
+margin_bottom = 56.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 6 )
+text = "Stress:"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="portait" type="TextureRect" parent="playergrouppanel/VBoxContainer/Panel" index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 8.0
+margin_top = 7.0
+margin_right = 53.0
+margin_bottom = 52.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+expand = true
+stretch_mode = 6
+
+[node name="utilitypanel" type="PopupPanel" parent="playergrouppanel/VBoxContainer/Panel" index="5"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = -65.0
+margin_right = 238.0
+margin_bottom = 3.0
+rect_min_size = Vector2( 230, 68 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_styles/panel = SubResource( 14 )
+popup_exclusive = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="playergrouppanel/VBoxContainer/Panel/utilitypanel" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 11.0
+margin_top = 9.0
+margin_right = 281.0
+margin_bottom = 59.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+alignment = 0
+
+[node name="Button" type="TextureButton" parent="playergrouppanel/VBoxContainer/Panel/utilitypanel/HBoxContainer" index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 50.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+expand = true
+
+[node name="icon" type="TextureRect" parent="playergrouppanel/VBoxContainer/Panel/utilitypanel/HBoxContainer/Button" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 9.0
+margin_bottom = 12.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+expand = true
+stretch_mode = 0
+
+[node name="amount" type="Label" parent="playergrouppanel/VBoxContainer/Panel/utilitypanel/HBoxContainer/Button" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 23.0
+margin_top = 29.0
+margin_right = 46.0
+margin_bottom = 45.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+align = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="button" type="TextureButton" parent="playergrouppanel/VBoxContainer/Panel" index="6"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 6.0
+margin_top = 5.0
+margin_right = 6.0
+margin_bottom = 4.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+
+[node name="details" type="Button" parent="playergrouppanel" index="1"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -90.0
+margin_top = -68.0
+margin_right = -11.0
+margin_bottom = -13.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Control"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="Label" type="Label" parent="playergrouppanel/details" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 58.0
+margin_top = 33.0
+margin_right = 78.0
+margin_bottom = 49.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_colors/font_color = Color( 0.761719, 0.660181, 0.261841, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "B"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="playergroupdetails" type="Panel" parent="." index="8"]
+
+editor/display_folded = true
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 24.0
+margin_top = 14.0
+margin_right = -31.0
+margin_bottom = -41.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_styles/panel = SubResource( 15 )
+_sections_unfolded = [ "Hint", "Rect" ]
+
+[node name="Control" type="Control" parent="playergroupdetails" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -40.0
+margin_top = -27.0
+margin_right = 55.0
+margin_bottom = 64.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+
+[node name="Panel" type="Panel" parent="playergroupdetails" index="1"]
+
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -518.0
+margin_top = 31.0
+margin_right = -17.0
+margin_bottom = -69.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_styles/panel = SubResource( 16 )
+_sections_unfolded = [ "Rect" ]
+
+[node name="itemdescript" type="RichTextLabel" parent="playergroupdetails/Panel" index="0"]
+
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -232.0
+margin_top = 26.0
+margin_right = -25.0
+margin_bottom = -160.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+bbcode_enabled = true
+bbcode_text = ""
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = ""
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+_sections_unfolded = [ "Rect" ]
+
+[node name="usebutton" type="Button" parent="playergroupdetails/Panel" index="1"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -227.0
+margin_top = -120.0
+margin_right = -49.0
+margin_bottom = -81.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Use"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="discardbutton" type="Button" parent="playergroupdetails/Panel" index="2"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -227.0
+margin_top = -70.0
+margin_right = -49.0
+margin_bottom = -31.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Discard"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="TabContainer" type="TabContainer" parent="playergroupdetails/Panel" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = -19.0
+margin_right = 251.0
+margin_bottom = 4.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+tab_align = 1
+tabs_visible = true
+
+[node name="Items" type="ScrollContainer" parent="playergroupdetails/Panel/TabContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 37.0
+margin_right = -10.0
+margin_bottom = -10.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+scroll_horizontal_enabled = false
+scroll_horizontal = 0
+scroll_vertical_enabled = true
+scroll_vertical = 0
+_sections_unfolded = [ "Scroll" ]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="playergroupdetails/Panel/TabContainer/Items" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_constants/separation = 0
+alignment = 0
+
+[node name="Button" type="Button" parent="playergroupdetails/Panel/TabContainer/Items/VBoxContainer" index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 200.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 200, 40 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_styles/hover = SubResource( 17 )
+custom_styles/pressed = SubResource( 18 )
+custom_styles/focus = SubResource( 19 )
+custom_styles/disabled = SubResource( 20 )
+custom_styles/normal = SubResource( 21 )
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+flat = false
+align = 1
+
+[node name="icon" type="TextureRect" parent="playergroupdetails/Panel/TabContainer/Items/VBoxContainer/Button" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -160.0
+rect_min_size = Vector2( 40, 40 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+expand = true
+stretch_mode = 0
+_sections_unfolded = [ "Rect" ]
+
+[node name="amount" type="Label" parent="playergroupdetails/Panel/TabContainer/Items/VBoxContainer/Button" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 25.0
+margin_top = 26.0
+margin_right = 40.0
+margin_bottom = 46.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="name" type="Label" parent="playergroupdetails/Panel/TabContainer/Items/VBoxContainer/Button" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 55.0
+margin_top = 11.0
+margin_right = 189.0
+margin_bottom = 27.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+clip_text = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Spells" type="ScrollContainer" parent="playergroupdetails/Panel/TabContainer" index="1"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 37.0
+margin_right = -10.0
+margin_bottom = -10.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+scroll_horizontal_enabled = false
+scroll_horizontal = 0
+scroll_vertical_enabled = true
+scroll_vertical = 1
+_sections_unfolded = [ "Scroll" ]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="playergroupdetails/Panel/TabContainer/Spells" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_constants/separation = 0
+alignment = 0
+
+[node name="Button" type="Button" parent="playergroupdetails/Panel/TabContainer/Spells/VBoxContainer" index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 200.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 200, 40 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_styles/hover = SubResource( 17 )
+custom_styles/pressed = SubResource( 18 )
+custom_styles/focus = SubResource( 19 )
+custom_styles/disabled = SubResource( 20 )
+custom_styles/normal = SubResource( 21 )
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+flat = false
+align = 1
+
+[node name="name" type="Label" parent="playergroupdetails/Panel/TabContainer/Spells/VBoxContainer/Button" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 11.0
+margin_top = 10.0
+margin_right = 130.0
+margin_bottom = 26.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "SpellName"
+clip_text = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="cost" type="Label" parent="playergroupdetails/Panel/TabContainer/Spells/VBoxContainer/Button" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 154.0
+margin_top = 11.0
+margin_right = 194.0
+margin_bottom = 27.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "1"
+align = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="closegroup" type="Button" parent="playergroupdetails" index="2"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -750.0
+margin_top = -58.0
+margin_right = -575.0
+margin_bottom = -16.0
+rect_min_size = Vector2( 70, 30 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Close"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="capturedslave" type="PopupPanel" parent="playergroupdetails" index="3"]
+
+editor/display_folded = true
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 225.0
+margin_top = 7.0
+margin_right = 734.0
+margin_bottom = 490.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_styles/panel = ExtResource( 20 )
+popup_exclusive = false
+
+[node name="RichTextLabel" type="RichTextLabel" parent="playergroupdetails/capturedslave" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 19.0
+margin_top = 30.0
+margin_right = 489.0
+margin_bottom = 378.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+bbcode_enabled = true
+bbcode_text = ""
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = ""
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+
+[node name="capturedclose" type="Button" parent="playergroupdetails/capturedslave" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 168.0
+margin_top = 428.0
+margin_right = 345.0
+margin_bottom = 467.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Close"
+flat = false
+align = 1
+
+[node name="capturedfree" type="Button" parent="playergroupdetails/capturedslave" index="2"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 191.0
+margin_top = 388.0
+margin_right = 326.0
+margin_bottom = 427.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Set Free"
+flat = false
+align = 1
+
+[node name="capturedmindread" type="Button" parent="playergroupdetails/capturedslave" index="3"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 351.0
+margin_top = 388.0
+margin_right = 486.0
+margin_bottom = 427.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Cast Mindread"
+flat = false
+align = 1
+
+[node name="capturedteleport" type="Button" parent="playergroupdetails/capturedslave" index="4"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 24.0
+margin_top = 388.0
+margin_right = 159.0
+margin_bottom = 427.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Teleport"
+flat = false
+align = 1
+
+[node name="TextureProgress" type="ProgressBar" parent="playergroupdetails" index="4"]
+
+editor/display_folded = true
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -530.0
+margin_top = -58.0
+margin_right = -26.0
+margin_bottom = -30.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_styles/fg = SubResource( 22 )
+custom_styles/bg = SubResource( 23 )
+min_value = 0.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 40.0
+exp_edit = false
+rounded = false
+percent_visible = false
+_sections_unfolded = [ "Rect" ]
+
+[node name="Label" type="Label" parent="playergroupdetails/TextureProgress" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 86.0
+margin_top = 29.0
+margin_right = 243.0
+margin_bottom = 45.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="return" type="Button" parent="playergroupdetails" index="5"]
+
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+margin_left = 25.0
+margin_top = -58.0
+margin_right = 188.0
+margin_bottom = -16.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Return to Mansion"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="quicksell" type="Button" parent="playergroupdetails" index="6"]
+
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+margin_left = 193.0
+margin_top = -58.0
+margin_right = 352.0
+margin_bottom = -15.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Quicksell Captives"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="TabContainer" type="TabContainer" parent="playergroupdetails" index="7"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 23.0
+margin_top = 17.0
+margin_right = 496.0
+margin_bottom = 315.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+tab_align = 1
+tabs_visible = true
+
+[node name="Party" type="ScrollContainer" parent="playergroupdetails/TabContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 37.0
+margin_right = -10.0
+margin_bottom = -10.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+scroll_horizontal_enabled = true
+scroll_horizontal = 0
+scroll_vertical_enabled = true
+scroll_vertical = 0
+
+[node name="HBoxContainer" type="VBoxContainer" parent="playergroupdetails/TabContainer/Party" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+alignment = 0
+
+[node name="Button" type="Button" parent="playergroupdetails/TabContainer/Party/HBoxContainer" index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 350.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 350, 50 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+flat = false
+clip_text = true
+align = 1
+
+[node name="Captured Slaves" type="ScrollContainer" parent="playergroupdetails/TabContainer" index="1"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 37.0
+margin_right = -10.0
+margin_bottom = -10.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+scroll_horizontal_enabled = true
+scroll_horizontal = 0
+scroll_vertical_enabled = true
+scroll_vertical = 1
+
+[node name="HBoxContainer" type="VBoxContainer" parent="playergroupdetails/TabContainer/Captured Slaves" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+alignment = 0
+
+[node name="Button" type="Button" parent="playergroupdetails/TabContainer/Captured Slaves/HBoxContainer" index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 350.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 350, 50 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+flat = false
+clip_text = true
+align = 1
+
+[node name="setfree" type="TextureButton" parent="playergroupdetails/TabContainer/Captured Slaves/HBoxContainer/Button" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 410.0
+margin_top = 3.0
+margin_right = 455.0
+margin_bottom = 48.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 21 )
+expand = true
+
+[node name="inspect" type="TextureButton" parent="playergroupdetails/TabContainer/Captured Slaves/HBoxContainer/Button" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 360.0
+margin_top = 3.0
+margin_right = 405.0
+margin_bottom = 48.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 22 )
+expand = true
+
+[node name="slavebuypanel" type="Control" parent="." index="9"]
+
+editor/display_folded = true
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -79.0
+margin_top = -3.0
+margin_right = -1089.0
+margin_bottom = -536.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+_sections_unfolded = [ "Rect" ]
+
+[node name="slavebuypanel" type="Panel" parent="slavebuypanel" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+margin_left = 81.0
+margin_top = 89.0
+margin_right = 372.0
+margin_bottom = 443.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+_sections_unfolded = [ "Hint", "Rect" ]
+
+[node name="ScrollContainer" type="ScrollContainer" parent="slavebuypanel/slavebuypanel" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 11.0
+margin_right = 286.0
+margin_bottom = 10.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+scroll_horizontal_enabled = false
+scroll_horizontal = 0
+scroll_vertical_enabled = true
+scroll_vertical = 0
+_sections_unfolded = [ "Scroll" ]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="slavebuypanel/slavebuypanel/ScrollContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+alignment = 0
+
+[node name="slavebutton" type="Button" parent="slavebuypanel/slavebuypanel/ScrollContainer/VBoxContainer" index="0"]
+
+editor/display_folded = true
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 265.0
+margin_bottom = 75.0
+rect_min_size = Vector2( 265, 75 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource( 23 )
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+flat = false
+align = 1
+_sections_unfolded = [ "Size Flags" ]
+
+[node name="name" type="Label" parent="slavebuypanel/slavebuypanel/ScrollContainer/VBoxContainer/slavebutton" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 14.0
+margin_top = 6.0
+margin_right = 119.0
+margin_bottom = 28.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 6 )
+text = "Maria Human"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Mouse" ]
+
+[node name="age" type="Label" parent="slavebuypanel/slavebuypanel/ScrollContainer/VBoxContainer/slavebutton" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 15.0
+margin_top = 24.0
+margin_right = 52.0
+margin_bottom = 46.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 6 )
+text = "Teen"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="origins" type="Label" parent="slavebuypanel/slavebuypanel/ScrollContainer/VBoxContainer/slavebutton" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 15.0
+margin_top = 46.0
+margin_right = 139.0
+margin_bottom = 68.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 6 )
+text = "From rich family"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Mouse" ]
+
+[node name="price" type="Label" parent="slavebuypanel/slavebuypanel/ScrollContainer/VBoxContainer/slavebutton" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 199.0
+margin_top = 27.0
+margin_right = 262.0
+margin_bottom = 47.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 6 )
+text = "150 gold"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="purchasebutton" type="Button" parent="slavebuypanel" index="1"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 119.0
+margin_top = 470.0
+margin_right = 275.0
+margin_bottom = 512.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_fonts/font = ExtResource( 6 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Purchase"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="mindreadbutton" type="Button" parent="slavebuypanel" index="2"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 319.0
+margin_top = 469.0
+margin_right = 490.0
+margin_bottom = 511.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Allows to see more information about the slaves. 
+Costs 5 mana"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_fonts/font = ExtResource( 6 )
+disabled = true
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Use Mind Read (5)"
+flat = false
+align = 1
+_sections_unfolded = [ "Hint", "Rect" ]
+
+[node name="slavelistcancel" type="Button" parent="slavebuypanel" index="3"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 518.0
+margin_top = 470.0
+margin_right = 674.0
+margin_bottom = 512.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_fonts/font = ExtResource( 6 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Cancel"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="Label" type="Label" parent="slavebuypanel" index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 96.0
+margin_top = 70.0
+margin_right = 216.0
+margin_bottom = 95.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 6 )
+text = "Available slaves"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="statspanel" parent="slavebuypanel" index="5" instance=ExtResource( 24 )]
+
+margin_left = 623.0
+margin_top = 60.0
+margin_right = 1071.0
+margin_bottom = 440.0
+
+[node name="Label" parent="slavebuypanel/statspanel" index="0"]
+
+margin_left = -427.0
+margin_right = -307.0
+margin_bottom = 47.0
+
+[node name="sstr" parent="slavebuypanel/statspanel" index="1"]
+
+margin_left = -413.0
+margin_right = -388.0
+
+[node name="Label" parent="slavebuypanel/statspanel/sstr" index="0"]
+
+margin_right = 140.0
+margin_bottom = 24.0
+
+[node name="Control" parent="slavebuypanel/statspanel/sstr" index="1"]
+
+margin_right = 105.0
+
+[node name="Button" parent="slavebuypanel/statspanel/sstr" index="2"]
+
+visible = false
+
+[node name="sagi" parent="slavebuypanel/statspanel" index="2"]
+
+margin_left = -413.0
+margin_right = -388.0
+
+[node name="Label" parent="slavebuypanel/statspanel/sagi" index="0"]
+
+margin_right = 138.0
+margin_bottom = 24.0
+
+[node name="Control" parent="slavebuypanel/statspanel/sagi" index="1"]
+
+margin_right = 111.0
+
+[node name="Button" parent="slavebuypanel/statspanel/sagi" index="2"]
+
+visible = false
+
+[node name="smaf" parent="slavebuypanel/statspanel" index="3"]
+
+editor/display_folded = false
+margin_left = -413.0
+margin_right = -388.0
+
+[node name="Label" parent="slavebuypanel/statspanel/smaf" index="0"]
+
+margin_right = 139.0
+margin_bottom = 24.0
+
+[node name="Control" parent="slavebuypanel/statspanel/smaf" index="1"]
+
+margin_right = 106.0
+
+[node name="Button" parent="slavebuypanel/statspanel/smaf" index="2"]
+
+visible = false
+
+[node name="send" parent="slavebuypanel/statspanel" index="4"]
+
+margin_left = -413.0
+margin_right = -388.0
+
+[node name="Label" parent="slavebuypanel/statspanel/send" index="0"]
+
+margin_right = 140.0
+margin_bottom = 24.0
+
+[node name="Control" parent="slavebuypanel/statspanel/send" index="1"]
+
+margin_right = 109.0
+
+[node name="Button" parent="slavebuypanel/statspanel/send" index="2"]
+
+visible = false
+
+[node name="Label1" parent="slavebuypanel/statspanel" index="5"]
+
+margin_left = -220.0
+margin_right = -110.0
+margin_bottom = 47.0
+
+[node name="cour" parent="slavebuypanel/statspanel" index="6"]
+
+editor/display_folded = false
+margin_left = -213.0
+margin_right = -188.0
+
+[node name="Label" parent="slavebuypanel/statspanel/cour" index="0"]
+
+margin_right = 134.0
+margin_bottom = 27.0
+
+[node name="Control" parent="slavebuypanel/statspanel/cour" index="1"]
+
+margin_right = 106.0
+
+[node name="conf" parent="slavebuypanel/statspanel" index="7"]
+
+margin_left = -213.0
+margin_right = -188.0
+
+[node name="Label" parent="slavebuypanel/statspanel/conf" index="0"]
+
+margin_right = 138.0
+margin_bottom = 28.0
+
+[node name="Control" parent="slavebuypanel/statspanel/conf" index="1"]
+
+margin_right = 101.0
+
+[node name="wit" parent="slavebuypanel/statspanel" index="8"]
+
+editor/display_folded = false
+margin_left = -213.0
+margin_right = -188.0
+
+[node name="Label" parent="slavebuypanel/statspanel/wit" index="0"]
+
+margin_right = 117.0
+margin_bottom = 24.0
+
+[node name="Control" parent="slavebuypanel/statspanel/wit" index="1"]
+
+margin_right = 104.0
+
+[node name="charm" parent="slavebuypanel/statspanel" index="9"]
+
+editor/display_folded = false
+margin_left = -213.0
+margin_right = -188.0
+
+[node name="Label" parent="slavebuypanel/statspanel/charm" index="0"]
+
+margin_right = 117.0
+margin_bottom = 27.0
+
+[node name="Control" parent="slavebuypanel/statspanel/charm" index="1"]
+
+margin_right = 102.0
+
+[node name="leveltext" parent="slavebuypanel/statspanel" index="10"]
+
+margin_top = 177.0
+margin_bottom = 284.0
+mouse_filter = 2
+_sections_unfolded = [ "Mouse" ]
+
+[node name="levelreqs" parent="slavebuypanel/statspanel" index="11"]
+
+visible = false
+
+[node name="traittext" parent="slavebuypanel/statspanel" index="12"]
+
+margin_left = 19.0
+margin_top = 223.0
+margin_right = -22.0
+margin_bottom = 330.0
+_sections_unfolded = [ "Mouse" ]
+
+[node name="levelprogress" parent="slavebuypanel/statspanel" index="13"]
+
+visible = false
+
+[node name="slavesellpanel" type="Control" parent="." index="10"]
+
+editor/display_folded = true
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 92.0
+margin_right = -782.0
+margin_bottom = -105.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+_sections_unfolded = [ "Rect" ]
+
+[node name="ScrollContainer" type="ScrollContainer" parent="slavesellpanel" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+margin_left = 3.0
+margin_top = 2.0
+margin_right = 283.0
+margin_bottom = 4.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+scroll_horizontal_enabled = false
+scroll_horizontal = 0
+scroll_vertical_enabled = true
+scroll_vertical = 0
+_sections_unfolded = [ "Scroll" ]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="slavesellpanel/ScrollContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+alignment = 0
+
+[node name="slavebutton" type="Button" parent="slavesellpanel/ScrollContainer/VBoxContainer" index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 280.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 280, 50 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource( 23 )
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+flat = false
+align = 1
+_sections_unfolded = [ "Size Flags" ]
+
+[node name="name" type="Label" parent="slavesellpanel/ScrollContainer/VBoxContainer/slavebutton" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 14.0
+margin_top = 6.0
+margin_right = 119.0
+margin_bottom = 28.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 6 )
+text = "Maria Human"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="price" type="Label" parent="slavesellpanel/ScrollContainer/VBoxContainer/slavebutton" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 206.0
+margin_top = 25.0
+margin_right = 269.0
+margin_bottom = 45.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 6 )
+text = "150 gold"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="slavesellbutton" type="Button" parent="slavesellpanel" index="1"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -125.0
+margin_top = 34.0
+margin_right = 29.0
+margin_bottom = 88.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_fonts/font = ExtResource( 6 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Sell slave"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="slavesellcancel" type="Button" parent="slavesellpanel" index="2"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 138.0
+margin_top = 34.0
+margin_right = 292.0
+margin_bottom = 88.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_fonts/font = ExtResource( 6 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Cancel"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="Label" type="Label" parent="slavesellpanel" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 17.0
+margin_top = -31.0
+margin_right = 137.0
+margin_bottom = -6.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 6 )
+text = "Available slaves"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="slaveguildquestpanel" type="Control" parent="." index="11"]
+
+editor/display_folded = true
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 9.0
+margin_top = 98.0
+margin_right = -781.0
+margin_bottom = -106.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+_sections_unfolded = [ "Rect" ]
+
+[node name="ScrollContainer" type="ScrollContainer" parent="slaveguildquestpanel" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+margin_left = 6.0
+margin_top = 2.0
+margin_right = 291.0
+margin_bottom = 4.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+scroll_horizontal_enabled = false
+scroll_horizontal = 0
+scroll_vertical_enabled = true
+scroll_vertical = 0
+_sections_unfolded = [ "Scroll" ]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="slaveguildquestpanel/ScrollContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+alignment = 0
+_sections_unfolded = [ "Size Flags" ]
+
+[node name="questbutton" type="Button" parent="slaveguildquestpanel/ScrollContainer/VBoxContainer" index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 275.0
+margin_bottom = 75.0
+rect_min_size = Vector2( 275, 75 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = ExtResource( 23 )
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+flat = false
+align = 1
+
+[node name="name" type="RichTextLabel" parent="slaveguildquestpanel/ScrollContainer/VBoxContainer/questbutton" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 16.0
+margin_top = 10.0
+margin_right = 263.0
+margin_bottom = 64.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_fonts/normal_font = ExtResource( 6 )
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+bbcode_enabled = true
+bbcode_text = "Local aristocrat wants an obedient servant for his house."
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = "Local aristocrat wants an obedient servant for his house."
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+_sections_unfolded = [ "Mouse" ]
+
+[node name="reward" type="Label" parent="slaveguildquestpanel/ScrollContainer/VBoxContainer/questbutton" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 178.0
+margin_top = 54.0
+margin_right = 260.0
+margin_bottom = 74.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 6 )
+text = "150 gold"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="difficulty" type="Label" parent="slaveguildquestpanel/ScrollContainer/VBoxContainer/questbutton" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 10.0
+margin_top = 55.0
+margin_right = 92.0
+margin_bottom = 75.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 6 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "1"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="questaccept" type="Button" parent="slaveguildquestpanel" index="1"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 232.0
+margin_top = 37.0
+margin_right = 385.0
+margin_bottom = 91.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_fonts/font = ExtResource( 6 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Accept"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="questcancel" type="Button" parent="slaveguildquestpanel" index="2"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 40.0
+margin_top = 37.0
+margin_right = 193.0
+margin_bottom = 91.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_fonts/font = ExtResource( 6 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Forfeit"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="questhide" type="Button" parent="slaveguildquestpanel" index="3"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -148.0
+margin_top = 37.0
+margin_right = 5.0
+margin_bottom = 91.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_fonts/font = ExtResource( 6 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Leave"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="Label" type="Label" parent="slaveguildquestpanel" index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 17.0
+margin_top = -31.0
+margin_right = 141.0
+margin_bottom = 10.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 6 )
+text = "Available quests"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="slaveservicepanel" type="Control" parent="." index="12"]
+
+editor/display_folded = true
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 9.0
+margin_top = 96.0
+margin_right = -784.0
+margin_bottom = -100.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+_sections_unfolded = [ "Rect" ]
+
+[node name="Control" type="Control" parent="slaveservicepanel" index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -27.0
+margin_top = -113.0
+margin_right = 1394.0
+margin_bottom = 690.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="slaveservicepanel" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 2.0
+margin_right = 284.0
+margin_bottom = 12.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+scroll_horizontal_enabled = false
+scroll_horizontal = 0
+scroll_vertical_enabled = true
+scroll_vertical = 0
+_sections_unfolded = [ "Scroll" ]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="slaveservicepanel/ScrollContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+alignment = 0
+
+[node name="Button" type="Button" parent="slaveservicepanel/ScrollContainer/VBoxContainer" index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 280.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 280, 30 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource( 23 )
+custom_fonts/font = ExtResource( 6 )
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Hair Cut"
+flat = false
+align = 0
+_sections_unfolded = [ "Size Flags" ]
+
+[node name="price" type="Label" parent="slaveservicepanel/ScrollContainer/VBoxContainer/Button" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 217.0
+margin_top = 6.0
+margin_right = 265.0
+margin_bottom = 24.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "100"
+align = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="speccontainer" type="ScrollContainer" parent="slaveservicepanel" index="2"]
+
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+margin_left = 312.0
+margin_top = -32.0
+margin_right = 654.0
+margin_bottom = 280.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+scroll_horizontal_enabled = false
+scroll_horizontal = 0
+scroll_vertical_enabled = true
+scroll_vertical = 0
+_sections_unfolded = [ "Rect", "Scroll" ]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="slaveservicepanel/speccontainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_constants/separation = -2
+alignment = 0
+_sections_unfolded = [ "Size Flags", "Theme" ]
+
+[node name="Button" type="Button" parent="slaveservicepanel/speccontainer/VBoxContainer" index="0" groups=[
+"specsbutton",
+]]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 200.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 200, 30 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = ExtResource( 23 )
+custom_fonts/font = ExtResource( 6 )
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Hair Cut"
+flat = false
+align = 0
+
+[node name="price" type="Label" parent="slaveservicepanel/speccontainer/VBoxContainer/Button" index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 217.0
+margin_top = 6.0
+margin_right = 265.0
+margin_bottom = 24.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "100"
+align = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="serviceconfirm" type="Button" parent="slaveservicepanel" index="3"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 37.0
+margin_top = 30.0
+margin_right = 191.0
+margin_bottom = 84.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_fonts/font = ExtResource( 6 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Confirm"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="selectslavebutton" type="Button" parent="slaveservicepanel" index="4"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -185.0
+margin_top = 30.0
+margin_right = -31.0
+margin_bottom = 84.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_fonts/font = ExtResource( 6 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Select Slave"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="slaveservicecancel" type="Button" parent="slaveservicepanel" index="5"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 263.0
+margin_top = 30.0
+margin_right = 417.0
+margin_bottom = 84.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_fonts/font = ExtResource( 6 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Cancel"
+flat = false
+align = 1
+_sections_unfolded = [ "Hint", "Rect" ]
+
+[node name="Label" type="Label" parent="slaveservicepanel" index="6"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 38.0
+margin_top = -30.0
+margin_right = 166.0
+margin_bottom = -5.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 6 )
+text = "Available actions"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="hairlengthbutton" type="OptionButton" parent="slaveservicepanel" index="7"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 29.0
+margin_top = -38.0
+margin_right = 158.0
+margin_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+action_mode = 0
+enabled_focus_mode = 2
+shortcut = null
+group = null
+flat = false
+align = 0
+items = [  ]
+selected = -1
+_sections_unfolded = [ "Rect" ]
+
+[node name="mageorderservices" type="Panel" parent="." index="13"]
+
+editor/display_folded = true
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -976.0
+margin_top = -627.0
+margin_right = -388.0
+margin_bottom = -176.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+_sections_unfolded = [ "Rect" ]
+
+[node name="Control" type="Control" parent="mageorderservices" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -394.0
+margin_top = -151.0
+margin_right = 436.0
+margin_bottom = 168.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+
+[node name="Label" type="Label" parent="mageorderservices" index="1"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -388.0
+margin_top = -443.0
+margin_right = -246.0
+margin_bottom = -420.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_fonts/font = SubResource( 24 )
+text = "Available spells"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Rect" ]
+
+[node name="ScrollContainer" type="ScrollContainer" parent="mageorderservices" index="2"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -563.0
+margin_top = -410.0
+margin_right = -360.0
+margin_bottom = -82.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+scroll_horizontal_enabled = false
+scroll_horizontal = 0
+scroll_vertical_enabled = true
+scroll_vertical = 0
+_sections_unfolded = [ "Rect", "Scroll" ]
+
+[node name="spelllist" type="VBoxContainer" parent="mageorderservices/ScrollContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_constants/separation = 15
+alignment = 0
+_sections_unfolded = [ "Rect" ]
+
+[node name="spellbutton" type="Button" parent="mageorderservices/ScrollContainer/spelllist" index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 200.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 200, 40 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource( 23 )
+custom_fonts/font = ExtResource( 6 )
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Mind Read- learned"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect", "Size Flags" ]
+
+[node name="learnspellbutton" type="Button" parent="mageorderservices" index="3"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -439.0
+margin_top = -76.0
+margin_right = -297.0
+margin_bottom = -14.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_fonts/font = ExtResource( 6 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Purchase spell"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="spelldescription" type="RichTextLabel" parent="mageorderservices" index="4"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -308.0
+margin_top = -399.0
+margin_right = -32.0
+margin_bottom = -110.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_fonts/normal_font = ExtResource( 6 )
+bbcode_enabled = true
+bbcode_text = ""
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = ""
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+_sections_unfolded = [ "Rect" ]
+
+[node name="close" type="Button" parent="mageorderservices" index="5"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -276.0
+margin_top = -76.0
+margin_right = -134.0
+margin_bottom = -14.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_fonts/font = ExtResource( 6 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Close"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="shoppanel" type="Control" parent="." index="14" groups=[
+"blockoutsideinput",
+]]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_right = -2.0
+margin_bottom = -2.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+_sections_unfolded = [ "Rect" ]
+
+[node name="Panel" type="Panel" parent="shoppanel" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 17.0
+margin_top = 63.0
+margin_right = 240.0
+margin_bottom = 346.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = ExtResource( 26 )
+
+[node name="buybutton" type="Button" parent="shoppanel/Panel" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 22.0
+margin_top = 41.0
+margin_right = 205.0
+margin_bottom = 81.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Trade"
+flat = false
+align = 1
+
+[node name="sellbutton" type="Button" parent="shoppanel/Panel" index="1"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 22.0
+margin_top = 81.0
+margin_right = 205.0
+margin_bottom = 121.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Sell from Storage"
+flat = false
+align = 1
+
+[node name="sellbuttonbp" type="Button" parent="shoppanel/Panel" index="2"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 22.0
+margin_top = 121.0
+margin_right = 205.0
+margin_bottom = 161.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Sell from Backpack"
+flat = false
+align = 1
+
+[node name="closebutton" type="Button" parent="shoppanel/Panel" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 37.0
+margin_top = 201.0
+margin_right = 194.0
+margin_bottom = 236.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Close"
+flat = false
+align = 1
+
+[node name="title" type="Label" parent="shoppanel/Panel" index="4"]
+
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+margin_left = -191.0
+margin_top = 5.0
+margin_right = -31.0
+margin_bottom = 48.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "Shopname"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="itempanel" type="Panel" parent="shoppanel" index="1"]
+
+editor/display_folded = true
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 244.0
+margin_top = 64.0
+margin_right = -436.0
+margin_bottom = -46.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+_sections_unfolded = [ "Rect" ]
+
+[node name="iconbig" type="TextureRect" parent="shoppanel/itempanel" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 301.0
+margin_top = 26.0
+margin_right = -66.0
+margin_bottom = -351.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+expand = true
+stretch_mode = 5
+_sections_unfolded = [ "Rect" ]
+
+[node name="ScrollContainer" type="ScrollContainer" parent="shoppanel/itempanel" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+margin_left = 22.0
+margin_top = 17.0
+margin_right = 240.0
+margin_bottom = -64.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+scroll_horizontal_enabled = false
+scroll_horizontal = 0
+scroll_vertical_enabled = true
+scroll_vertical = 0
+_sections_unfolded = [ "Rect", "Scroll" ]
+
+[node name="GridContainer" type="GridContainer" parent="shoppanel/itempanel/ScrollContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+columns = 4
+_sections_unfolded = [ "Anchor" ]
+
+[node name="Button" type="TextureButton" parent="shoppanel/itempanel/ScrollContainer/GridContainer" index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 50.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_pressed = ExtResource( 18 )
+texture_hover = ExtResource( 19 )
+expand = true
+_sections_unfolded = [ "Size Flags", "Theme" ]
+
+[node name="icon" type="TextureRect" parent="shoppanel/itempanel/ScrollContainer/GridContainer/Button" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 42.0
+margin_bottom = 42.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+expand = true
+stretch_mode = 7
+_sections_unfolded = [ "Mouse" ]
+
+[node name="price" type="Label" parent="shoppanel/itempanel/ScrollContainer/GridContainer/Button" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 17.0
+margin_top = 33.0
+margin_right = 47.0
+margin_bottom = 51.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "1234"
+align = 2
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="amount" type="Label" parent="shoppanel/itempanel/ScrollContainer/GridContainer/Button" index="2"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 17.0
+margin_top = -1.0
+margin_right = 47.0
+margin_bottom = 17.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "15"
+align = 2
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="name" type="Label" parent="shoppanel/itempanel/ScrollContainer/GridContainer/Button" index="3"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+align = 1
+valign = 1
+autowrap = true
+clip_text = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="itemdescript" type="RichTextLabel" parent="shoppanel/itempanel" index="2"]
+
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 275.0
+margin_top = -321.0
+margin_right = -34.0
+margin_bottom = -82.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+bbcode_enabled = true
+bbcode_text = ""
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = ""
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+_sections_unfolded = [ "Rect" ]
+
+[node name="buysellbutton" type="Button" parent="shoppanel/itempanel" index="3"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -537.0
+margin_top = -54.0
+margin_right = -380.0
+margin_bottom = -15.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Buy"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="SpinBox" type="SpinBox" parent="shoppanel/itempanel/buysellbutton" index="0" groups=[
+"blockoutsideinput",
+]]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 346.0
+margin_top = 2.0
+margin_right = 424.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+min_value = 0.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 1.0
+exp_edit = false
+rounded = false
+editable = true
+prefix = ""
+suffix = ""
+
+[node name="buysellbackpack" type="Button" parent="shoppanel/itempanel" index="4"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -373.0
+margin_top = -54.0
+margin_right = -216.0
+margin_bottom = -15.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Buy to backpack"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="inventory" type="TextureRect" parent="shoppanel" index="2"]
+
+editor/display_folded = true
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = ExtResource( 1 )
+texture = ExtResource( 27 )
+expand = true
+stretch_mode = 0
+script = SubResource( 27 )
+_sections_unfolded = [ "Mouse", "Visibility" ]
+
+[node name="mode" type="TextureButton" parent="shoppanel/inventory" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 16.0
+margin_top = 29.0
+margin_right = 112.0
+margin_bottom = 78.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 28 )
+expand = true
+_sections_unfolded = [ "Rect" ]
+
+[node name="everything" type="TextureButton" parent="shoppanel/inventory" index="1" groups=[
+"invcategory",
+]]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 154.0
+margin_top = 30.0
+margin_right = 211.0
+margin_bottom = 78.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = ExtResource( 26 )
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 29 )
+texture_pressed = ExtResource( 30 )
+expand = true
+_sections_unfolded = [ "Rect" ]
+
+[node name="potion" type="TextureButton" parent="shoppanel/inventory" index="2" groups=[
+"invcategory",
+]]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 274.0
+margin_top = 30.0
+margin_right = 331.0
+margin_bottom = 78.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = ExtResource( 26 )
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 31 )
+texture_pressed = ExtResource( 32 )
+expand = true
+_sections_unfolded = [ "Rect" ]
+
+[node name="supply" type="TextureButton" parent="shoppanel/inventory" index="3" groups=[
+"invcategory",
+]]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 214.0
+margin_top = 30.0
+margin_right = 271.0
+margin_bottom = 78.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = ExtResource( 26 )
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 33 )
+texture_pressed = ExtResource( 34 )
+expand = true
+_sections_unfolded = [ "Rect" ]
+
+[node name="ingredient" type="TextureButton" parent="shoppanel/inventory" index="4" groups=[
+"invcategory",
+]]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 334.0
+margin_top = 30.0
+margin_right = 391.0
+margin_bottom = 78.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = ExtResource( 26 )
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 35 )
+texture_pressed = ExtResource( 36 )
+expand = true
+_sections_unfolded = [ "Rect" ]
+
+[node name="gear" type="TextureButton" parent="shoppanel/inventory" index="5" groups=[
+"invcategory",
+]]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 394.0
+margin_top = 30.0
+margin_right = 451.0
+margin_bottom = 78.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = ExtResource( 26 )
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 37 )
+texture_pressed = ExtResource( 38 )
+expand = true
+_sections_unfolded = [ "Rect" ]
+
+[node name="merchant" type="TextureRect" parent="shoppanel/inventory" index="6"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 748.0
+margin_top = 35.0
+margin_right = 1551.0
+margin_bottom = 765.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="shoppanel/inventory" index="7"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+margin_left = 13.0
+margin_top = 96.0
+margin_right = 481.0
+margin_bottom = -55.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+scroll_horizontal_enabled = false
+scroll_horizontal = 0
+scroll_vertical_enabled = true
+scroll_vertical = 0
+_sections_unfolded = [ "Mouse", "Scroll" ]
+
+[node name="GridContainer" type="VBoxContainer" parent="shoppanel/inventory/ScrollContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 400.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_min_size = Vector2( 400, 0 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_constants/separation = -2
+alignment = 0
+_sections_unfolded = [ "Grow Direction", "Mouse" ]
+
+[node name="Button" type="TextureRect" parent="shoppanel/inventory/ScrollContainer/GridContainer" index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 430.0
+margin_bottom = 85.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_min_size = Vector2( 430, 85 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 0
+texture = ExtResource( 39 )
+expand = true
+stretch_mode = 0
+_sections_unfolded = [ "Mouse", "Size Flags" ]
+
+[node name="icon" type="TextureRect" parent="shoppanel/inventory/ScrollContainer/GridContainer/Button" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 6.0
+margin_top = 7.0
+margin_right = 80.0
+margin_bottom = 79.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 40 )
+expand = true
+stretch_mode = 6
+_sections_unfolded = [ "Mouse" ]
+
+[node name="number" type="Label" parent="shoppanel/inventory/ScrollContainer/GridContainer/Button" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 55.0
+margin_top = 59.0
+margin_right = 78.0
+margin_bottom = 79.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "20"
+align = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Label" type="Label" parent="shoppanel/inventory/ScrollContainer/GridContainer/Button" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 79.0
+margin_top = 3.0
+margin_right = -12.0
+margin_bottom = -48.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "Itemname"
+valign = 1
+autowrap = true
+clip_text = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="info" type="TextureButton" parent="shoppanel/inventory/ScrollContainer/GridContainer/Button" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 83.0
+margin_top = 43.0
+margin_right = 119.0
+margin_bottom = 79.0
+rect_min_size = Vector2( 36, 36 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Inspect"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 41 )
+texture_pressed = ExtResource( 42 )
+expand = true
+_sections_unfolded = [ "Hint", "Mouse", "Rect" ]
+
+[node name="sell" type="TextureButton" parent="shoppanel/inventory/ScrollContainer/GridContainer/Button" index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 122.0
+margin_top = 43.0
+margin_right = 158.0
+margin_bottom = 79.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Sell"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 43 )
+texture_pressed = ExtResource( 44 )
+texture_hover = ExtResource( 44 )
+expand = true
+_sections_unfolded = [ "Hint", "Rect", "Textures" ]
+
+[node name="price" type="Label" parent="shoppanel/inventory/ScrollContainer/GridContainer/Button" index="5"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 375.0
+margin_top = 29.0
+margin_right = 424.0
+margin_bottom = 58.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 33 )
+text = "100"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts", "custom_styles" ]
+
+[node name="TextureRect2" type="TextureRect" parent="shoppanel/inventory/ScrollContainer/GridContainer/Button" index="6"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 322.0
+margin_top = 21.0
+margin_right = 367.0
+margin_bottom = 66.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Selling Price"
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 45 )
+expand = true
+stretch_mode = 0
+_sections_unfolded = [ "Hint", "Rect" ]
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="shoppanel/inventory" index="8"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+margin_left = 485.0
+margin_top = 26.0
+margin_right = 955.0
+margin_bottom = -59.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+scroll_horizontal_enabled = false
+scroll_horizontal = 0
+scroll_vertical_enabled = true
+scroll_vertical = 0
+_sections_unfolded = [ "Mouse", "Scroll" ]
+
+[node name="GridContainer" type="VBoxContainer" parent="shoppanel/inventory/ScrollContainer2" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 400.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_min_size = Vector2( 400, 0 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_constants/separation = -2
+alignment = 0
+_sections_unfolded = [ "Grow Direction", "Mouse" ]
+
+[node name="Button" type="TextureRect" parent="shoppanel/inventory/ScrollContainer2/GridContainer" index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 430.0
+margin_bottom = 85.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_min_size = Vector2( 430, 85 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 0
+texture = ExtResource( 39 )
+expand = true
+stretch_mode = 0
+_sections_unfolded = [ "Mouse", "Size Flags" ]
+
+[node name="icon" type="TextureRect" parent="shoppanel/inventory/ScrollContainer2/GridContainer/Button" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 6.0
+margin_top = 7.0
+margin_right = 80.0
+margin_bottom = 79.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 40 )
+expand = true
+stretch_mode = 6
+_sections_unfolded = [ "Mouse" ]
+
+[node name="number" type="Label" parent="shoppanel/inventory/ScrollContainer2/GridContainer/Button" index="1"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 55.0
+margin_top = 59.0
+margin_right = 78.0
+margin_bottom = 79.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "20"
+align = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Label" type="Label" parent="shoppanel/inventory/ScrollContainer2/GridContainer/Button" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 79.0
+margin_top = 3.0
+margin_right = -12.0
+margin_bottom = -48.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "Itemname"
+valign = 1
+autowrap = true
+clip_text = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="info" type="TextureButton" parent="shoppanel/inventory/ScrollContainer2/GridContainer/Button" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 83.0
+margin_top = 43.0
+margin_right = 119.0
+margin_bottom = 79.0
+rect_min_size = Vector2( 36, 36 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Inspect"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 41 )
+texture_pressed = ExtResource( 42 )
+expand = true
+_sections_unfolded = [ "Hint", "Mouse" ]
+
+[node name="price" type="Label" parent="shoppanel/inventory/ScrollContainer2/GridContainer/Button" index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 363.0
+margin_top = 29.0
+margin_right = 412.0
+margin_bottom = 58.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 33 )
+text = "100"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts", "custom_styles" ]
+
+[node name="TextureRect" type="TextureRect" parent="shoppanel/inventory/ScrollContainer2/GridContainer/Button" index="5"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 310.0
+margin_top = 21.0
+margin_right = 355.0
+margin_bottom = 66.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Price"
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 45 )
+expand = true
+stretch_mode = 0
+_sections_unfolded = [ "Hint", "Rect" ]
+
+[node name="buy" type="TextureButton" parent="shoppanel/inventory/ScrollContainer2/GridContainer/Button" index="6"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 122.0
+margin_top = 43.0
+margin_right = 158.0
+margin_bottom = 79.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Buy"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 43 )
+texture_pressed = ExtResource( 44 )
+texture_hover = ExtResource( 44 )
+expand = true
+_sections_unfolded = [ "Hint", "Rect", "Textures" ]
+
+[node name="TextureFrame 3" type="TextureRect" parent="shoppanel/inventory" index="9"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 476.0
+margin_top = 19.0
+margin_right = 925.0
+margin_bottom = 707.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 46 )
+expand = true
+_sections_unfolded = [ "Mouse" ]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Panel" type="Panel" parent="shoppanel/inventory" index="10"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 6.0
+margin_top = 89.0
+margin_right = 452.0
+margin_bottom = 717.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_styles/panel = SubResource( 28 )
+_sections_unfolded = [ "Mouse" ]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="noitems" type="Label" parent="shoppanel/inventory" index="11"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 48.0
+margin_top = 104.0
+margin_right = 312.0
+margin_bottom = 147.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "Currently you have no suitable 
+items in possession "
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="weightmeter" type="ProgressBar" parent="shoppanel/inventory" index="12"]
+
+editor/display_folded = true
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -1192.0
+margin_top = -44.0
+margin_right = -925.0
+margin_bottom = -19.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_styles/fg = SubResource( 29 )
+custom_styles/bg = SubResource( 30 )
+min_value = 0.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 10.0
+exp_edit = false
+rounded = false
+percent_visible = false
+_sections_unfolded = [ "Rect" ]
+
+[node name="Label" type="Label" parent="shoppanel/inventory/weightmeter" index="0"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -431.0
+margin_top = -21.0
+margin_right = -273.0
+margin_bottom = -1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "Carry Weight:"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Rect" ]
+
+[node name="inventoryclose" type="Button" parent="shoppanel/inventory" index="13"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -670.0
+margin_top = -52.0
+margin_right = -438.0
+margin_bottom = -13.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Close"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="iteminfo" type="PopupPanel" parent="shoppanel/inventory" index="14"]
+
+editor/display_folded = true
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 187.0
+margin_top = 78.0
+margin_right = 1121.0
+margin_bottom = 424.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_styles/panel = SubResource( 31 )
+popup_exclusive = false
+
+[node name="RichTextLabel" type="RichTextLabel" parent="shoppanel/inventory/iteminfo" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 364.0
+margin_top = 24.0
+margin_right = 911.0
+margin_bottom = 324.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+bbcode_enabled = true
+bbcode_text = ""
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = ""
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+
+[node name="TextureFrame" type="TextureRect" parent="shoppanel/inventory/iteminfo" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 35.0
+margin_top = 23.0
+margin_right = 335.0
+margin_bottom = 323.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+expand = true
+stretch_mode = 6
+
+[node name="gold" type="Label" parent="shoppanel/inventory" index="15"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 521.0
+margin_top = 726.0
+margin_right = 615.0
+margin_bottom = 746.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "Gold"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="amountselect" type="PopupPanel" parent="shoppanel/inventory" index="16"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 518.0
+margin_top = 285.0
+margin_right = 939.0
+margin_bottom = 536.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_styles/panel = SubResource( 32 )
+popup_exclusive = false
+_sections_unfolded = [ "custom_styles" ]
+
+[node name="confirm" type="Button" parent="shoppanel/inventory/amountselect" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 29.0
+margin_top = 190.0
+margin_right = 148.0
+margin_bottom = 229.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Confirm"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="cancel" type="Button" parent="shoppanel/inventory/amountselect" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 260.0
+margin_top = 190.0
+margin_right = 379.0
+margin_bottom = 229.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Cancel"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="shoppanel/inventory/amountselect" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 30.0
+margin_top = 14.0
+margin_right = 394.0
+margin_bottom = 121.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+bbcode_enabled = true
+bbcode_text = "Select amount"
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = "Select amount"
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+_sections_unfolded = [ "BBCode", "Theme" ]
+
+[node name="SpinBox" type="SpinBox" parent="shoppanel/inventory/amountselect" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 164.0
+margin_top = 138.0
+margin_right = 242.0
+margin_bottom = 172.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+min_value = 1.0
+max_value = 500.0
+step = 1.0
+page = 0.0
+value = 1.0
+exp_edit = false
+rounded = false
+editable = true
+prefix = ""
+suffix = ""
+
+[node name="TextureRect" type="TextureRect" parent="shoppanel/inventory" index="17"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 476.0
+margin_top = 716.0
+margin_right = 516.0
+margin_bottom = 756.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 45 )
+expand = true
+stretch_mode = 0
+
+[node name="TextureFrame 2" type="TextureRect" parent="shoppanel/inventory" index="18"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 50 )
+expand = true
+stretch_mode = 0
+_sections_unfolded = [ "Mouse" ]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="sebastiannode" type="Control" parent="." index="15"]
+
+editor/display_folded = true
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -2.0
+margin_top = 5.0
+margin_right = -4.0
+margin_bottom = 14.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+
+[node name="sebastionorder" type="OptionButton" parent="sebastiannode" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 44.0
+margin_top = 213.0
+margin_right = 227.0
+margin_bottom = 257.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_fonts/font = ExtResource( 6 )
+toggle_mode = false
+action_mode = 0
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Elf"
+flat = false
+align = 0
+items = [ "Elf", null, false, 0, null, "Dark Elf", null, false, 1, null, "Drow", null, false, 2, null, "Orc", null, false, 3, null, "Beastkin Cat", null, false, 4, null, "Beastkin Wolf", null, false, 5, null, "Beastkin Fox", null, false, 6, null, "Beastkin Bunny", null, false, 7, null, "Beastkin Tanuki", null, false, 8, null, "Halfkin Cat", null, false, 9, null, "Halfkin Wolf", null, false, 10, null, "Halfkin Fox", null, false, 11, null, "Halfkin Tanuki", null, false, 12, null, "Halfkin Bunny", null, false, 13, null, "Fairy", null, false, 14, null, "Dryad", null, false, 15, null, "Demon", null, false, 16, null, "Seraph", null, false, 17, null, "Taurus", null, false, 18, null, "Dragonkin", null, false, 19, null, "Gnome", null, false, 20, null, "Goblin", null, false, 21, null, "Centaur", null, false, 22, null ]
+selected = 0
+
+[node name="sebastianconfirm" type="Button" parent="sebastiannode" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 44.0
+margin_top = 302.0
+margin_right = 173.0
+margin_bottom = 337.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_fonts/font = ExtResource( 6 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Confirm"
+flat = false
+align = 1
+
+[node name="sebastiancancel" type="Button" parent="sebastiannode" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 44.0
+margin_top = 358.0
+margin_right = 173.0
+margin_bottom = 393.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_fonts/font = ExtResource( 6 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Cancel"
+flat = false
+align = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="16"]
+
+root_node = NodePath("..")
+autoplay = "spritemovefairy"
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.0
+anims/show = SubResource( 25 )
+anims/spritemovefairy = SubResource( 26 )
+blend_times = [  ]
+
+[connection signal="pressed" from="questlog" to="." method="_on_questlog_pressed"]
+
+[connection signal="meta_clicked" from="outsidetextbox" to="." method="_on_outsidetextbox_meta_clicked"]
+
+[connection signal="pressed" from="playergrouppanel/details" to="." method="_on_details_pressed"]
+
+[connection signal="pressed" from="playergroupdetails/Panel/usebutton" to="." method="_on_usebutton_pressed"]
+
+[connection signal="pressed" from="playergroupdetails/Panel/discardbutton" to="." method="_on_discardbutton_pressed"]
+
+[connection signal="pressed" from="playergroupdetails/closegroup" to="." method="_on_closegroup_pressed"]
+
+[connection signal="pressed" from="playergroupdetails/return" to="." method="_on_return_pressed"]
+
+[connection signal="pressed" from="playergroupdetails/quicksell" to="." method="_on_quicksell_pressed"]
+
+[connection signal="pressed" from="slavebuypanel/purchasebutton" to="." method="_on_purchasebutton_pressed"]
+
+[connection signal="pressed" from="slavebuypanel/mindreadbutton" to="." method="_on_mindreadbutton_pressed"]
+
+[connection signal="pressed" from="slavebuypanel/slavelistcancel" to="." method="_on_slavelistcancel_pressed"]
+
+[connection signal="pressed" from="slavesellpanel/slavesellbutton" to="." method="_on_slavesellbutton_pressed"]
+
+[connection signal="pressed" from="slavesellpanel/slavesellcancel" to="." method="_on_slavesellcancel_pressed"]
+
+[connection signal="pressed" from="slaveguildquestpanel/questaccept" to="." method="_on_questaccept_pressed"]
+
+[connection signal="pressed" from="slaveguildquestpanel/questcancel" to="." method="_on_questcancel_pressed"]
+
+[connection signal="pressed" from="slaveguildquestpanel/questhide" to="." method="_on_questhide_pressed"]
+
+[connection signal="pressed" from="slaveservicepanel/serviceconfirm" to="." method="_on_serviceconfirm_pressed"]
+
+[connection signal="pressed" from="slaveservicepanel/selectslavebutton" to="." method="_on_selectslavebutton_pressed"]
+
+[connection signal="pressed" from="slaveservicepanel/slaveservicecancel" to="." method="_on_slaveservicecancel_pressed"]
+
+[connection signal="pressed" from="mageorderservices/learnspellbutton" to="." method="_on_learnspellbutton_pressed"]
+
+[connection signal="pressed" from="mageorderservices/close" to="." method="_on_close_pressed"]
+
+[connection signal="pressed" from="shoppanel/Panel/buybutton" to="." method="shopbuy"]
+
+[connection signal="pressed" from="shoppanel/Panel/sellbutton" to="." method="shopsell"]
+
+[connection signal="pressed" from="shoppanel/Panel/sellbuttonbp" to="." method="_on_sellbuttonbp_pressed"]
+
+[connection signal="pressed" from="shoppanel/Panel/closebutton" to="." method="shopclose"]
+
+[connection signal="pressed" from="shoppanel/itempanel/buysellbutton" to="." method="_on_buysellbutton_pressed"]
+
+[connection signal="pressed" from="shoppanel/itempanel/buysellbackpack" to="." method="_on_buysellbackpack_pressed"]
+
+[connection signal="pressed" from="shoppanel/inventory/mode" to="shoppanel/inventory" method="_on_mode_pressed"]
+
+[connection signal="pressed" from="shoppanel/inventory/inventoryclose" to="shoppanel/inventory" method="_on_inventoryclose_pressed"]
+
+[connection signal="gui_input" from="shoppanel/inventory/iteminfo" to="shoppanel/inventory" method="_on_iteminfo_input_event"]
+
+[connection signal="pressed" from="shoppanel/inventory/amountselect/confirm" to="shoppanel/inventory" method="_on_confirm_pressed"]
+
+[connection signal="pressed" from="shoppanel/inventory/amountselect/cancel" to="shoppanel/inventory" method="_on_cancel_pressed"]
+
+[connection signal="pressed" from="sebastiannode/sebastianconfirm" to="." method="_on_sebastianconfirm_pressed"]
+
+[connection signal="pressed" from="sebastiannode/sebastiancancel" to="." method="_on_sebastiancancel_pressed"]
+
+
+[editable path="slavebuypanel/statspanel"]

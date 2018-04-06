@@ -1,0 +1,19 @@
+[gd_scene load_steps=1 format=2]
+
+
+[node name="TextEdit" type="TextEdit"]
+
+focus_ignore_mouse = false
+focus_stop_mouse = true
+size_flags_horizontal = 2
+size_flags_vertical = 2
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 6.0
+margin_bottom = 6.0
+syntax_highlighting = false
+show_line_numbers = false
+highlight_all_occurrences = false
+caret_block_mode = false
+caret_blink = false
+caret_blink_speed = 0.65

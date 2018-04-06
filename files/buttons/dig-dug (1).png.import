@@ -1,0 +1,32 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/dig-dug (1).png-707ff58a252583bb40a52243e4d2afc3.stex"
+
+[deps]
+
+source_file="res://files/buttons/dig-dug (1).png"
+source_md5="e104fefaf5e61c10357886e0b61ed71a"
+
+dest_files=[ "res://.import/dig-dug (1).png-707ff58a252583bb40a52243e4d2afc3.stex" ]
+dest_md5="dba175ed8548b2e0eff113f27e90a8ae"
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=true
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+stream=false
+size_limit=0
+detect_3d=true
+svg/scale=1.0

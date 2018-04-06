@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/stab.wav-b5db86c4c5ec84e5a24f2418693e38e8.sample"
+
+[deps]
+
+source_file="res://files/sounds/stab.wav"
+source_md5="2481efc107e261d9b46dc7e3a3184fb0"
+
+dest_files=[ "res://.import/stab.wav-b5db86c4c5ec84e5a24f2418693e38e8.sample" ]
+dest_md5="335d5fd8ea71f3ef99e293fde22f11b9"
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

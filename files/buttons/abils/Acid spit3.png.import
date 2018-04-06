@@ -1,0 +1,32 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/Acid spit3.png-a0ce3ccce6e0ed320f0458b01e5e73a4.stex"
+
+[deps]
+
+source_file="res://files/buttons/abils/Acid spit3.png"
+source_md5="2f770ba6ad6ca3e5f385220f22ab591c"
+
+dest_files=[ "res://.import/Acid spit3.png-a0ce3ccce6e0ed320f0458b01e5e73a4.stex" ]
+dest_md5="cb554d8125de8071287308ea06b9561c"
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=true
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+stream=false
+size_limit=0
+detect_3d=true
+svg/scale=1.0

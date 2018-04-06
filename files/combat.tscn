@@ -1,0 +1,1535 @@
+[gd_scene load_steps=28 format=2]
+
+[ext_resource path="res://mainfont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://files/buttons/chek-Active.png" type="Texture" id=2]
+[ext_resource path="res://files/buttons/chek-noactive.png" type="Texture" id=3]
+[ext_resource path="res://files/buttons/tex-wind.png" type="Texture" id=4]
+[ext_resource path="res://files/buttons/img-kurs.png" type="Texture" id=5]
+[ext_resource path="res://files/buttons/img-kurs-act.png" type="Texture" id=6]
+[ext_resource path="res://files/buttons/img-scr.png" type="Texture" id=7]
+[ext_resource path="res://files/scripts/combat.gd" type="Script" id=8]
+[ext_resource path="res://files/buttons/img-text-in-act.png" type="Texture" id=9]
+[ext_resource path="res://files/buttons/img-text-in.png" type="Texture" id=10]
+[ext_resource path="res://files/buttons/hpbar.png" type="Texture" id=11]
+[ext_resource path="res://files/buttons/hpbarbot.png" type="Texture" id=12]
+[ext_resource path="res://Roundo-Medium.otf" type="DynamicFontData" id=13]
+[ext_resource path="res://files/theme.tres" type="Theme" id=14]
+[ext_resource path="res://files/paneltexturebland.tres" type="StyleBox" id=15]
+
+[sub_resource type="StyleBoxTexture" id=1]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 50, 50 )
+margin_left = 10.0
+margin_right = 10.0
+margin_top = 10.0
+margin_bottom = 10.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=2]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 5 )
+region_rect = Rect2( 0, 0, 34, 26 )
+margin_left = 21.0
+margin_right = 21.0
+margin_top = 21.0
+margin_bottom = 21.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=3]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 34, 26 )
+margin_left = 21.0
+margin_right = 21.0
+margin_top = 21.0
+margin_bottom = 21.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=4]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 34, 58 )
+margin_left = 9.0
+margin_right = 9.0
+margin_top = 20.0
+margin_bottom = 20.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="Theme" id=5]
+
+default_font = ExtResource( 1 )
+CheckBox/colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+CheckBox/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
+CheckBox/colors/font_color_hover = Color( 0.941176, 0.941176, 0.941176, 1 )
+CheckBox/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+CheckBox/constants/check_vadjust = 0
+CheckBox/constants/hseparation = 4
+CheckBox/fonts/font = ExtResource( 1 )
+CheckBox/icons/checked = ExtResource( 2 )
+CheckBox/icons/radio_checked = null
+CheckBox/icons/radio_unchecked = null
+CheckBox/icons/unchecked = ExtResource( 3 )
+CheckBox/styles/disabled = null
+CheckBox/styles/focus = null
+CheckBox/styles/hover = null
+CheckBox/styles/normal = null
+CheckBox/styles/pressed = null
+Panel/styles/panel = SubResource( 1 )
+Panel/styles/panelf = null
+Panel/styles/panelnc = null
+ProgressBar/colors/font_color = Color( 0.941176, 0.941176, 0.941176, 1 )
+ProgressBar/colors/font_color_shadow = Color( 0, 0, 0, 1 )
+ProgressBar/fonts/font = null
+ProgressBar/styles/bg = null
+ProgressBar/styles/fg = null
+VScrollBar/icons/decrement = null
+VScrollBar/icons/decrement_hilite = null
+VScrollBar/icons/increment = null
+VScrollBar/icons/increment_hilite = null
+VScrollBar/styles/grabber = SubResource( 2 )
+VScrollBar/styles/grabber_hilite = SubResource( 3 )
+VScrollBar/styles/scroll = SubResource( 4 )
+VScrollBar/styles/scroll_focus = null
+
+[sub_resource type="StyleBoxTexture" id=6]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 9 )
+region_rect = Rect2( 0, 0, 54, 54 )
+margin_left = 10.0
+margin_right = 10.0
+margin_top = 10.0
+margin_bottom = 10.0
+expand_margin_left = 5.0
+expand_margin_right = 5.0
+expand_margin_top = 5.0
+expand_margin_bottom = 5.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=7]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+margin_left = 0.0
+margin_right = 0.0
+margin_top = 0.0
+margin_bottom = 0.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=8]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 10 )
+region_rect = Rect2( 0, 0, 54, 54 )
+margin_left = 10.0
+margin_right = 10.0
+margin_top = 10.0
+margin_bottom = 10.0
+expand_margin_left = 5.0
+expand_margin_right = 5.0
+expand_margin_top = 5.0
+expand_margin_bottom = 5.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=9]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 11 )
+region_rect = Rect2( 0, 0, 50, 14 )
+margin_left = 0.0
+margin_right = 0.0
+margin_top = 0.0
+margin_bottom = 0.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=10]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 12 )
+region_rect = Rect2( 0, 0, 50, 14 )
+margin_left = 3.0
+margin_right = 3.0
+margin_top = 5.0
+margin_bottom = 5.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="DynamicFont" id=11]
+
+size = 30
+use_mipmaps = false
+use_filter = true
+extra_spacing_top = 3
+font_data = ExtResource( 13 )
+
+[sub_resource type="DynamicFont" id=12]
+
+size = 30
+use_mipmaps = false
+use_filter = true
+extra_spacing_top = 3
+font_data = ExtResource( 13 )
+
+[node name="combat" type="Control"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 20.0
+margin_right = -3.0
+margin_bottom = -30.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = SubResource( 5 )
+script = ExtResource( 8 )
+_sections_unfolded = [ "Mouse", "Rect" ]
+
+[node name="Panel" type="Panel" parent="." index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_right = 3.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="grouppanel" type="Panel" parent="." index="1"]
+
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 6.0
+margin_top = -162.0
+margin_right = 4.0
+margin_bottom = -1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+_sections_unfolded = [ "Rect" ]
+
+[node name="skilline" type="HBoxContainer" parent="grouppanel" index="0"]
+
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+margin_left = 11.0
+margin_top = -54.0
+margin_right = 927.0
+margin_bottom = -9.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_constants/separation = 8
+alignment = 0
+_sections_unfolded = [ "Rect" ]
+
+[node name="skill" type="TextureButton" parent="grouppanel/skilline" index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 45.0
+margin_bottom = 45.0
+rect_min_size = Vector2( 45, 45 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 4 )
+expand = true
+
+[node name="Label" type="Label" parent="grouppanel/skilline/skill" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 3.0
+margin_top = 31.0
+margin_right = 43.0
+margin_bottom = 47.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_colors/font_color = Color( 1, 0.960938, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "Cost"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="number" type="Label" parent="grouppanel/skilline/skill" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 4.0
+margin_top = 3.0
+margin_right = 14.0
+margin_bottom = 19.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_colors/font_color = Color( 0.945313, 1, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "0"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Panel" type="Panel" parent="grouppanel/skilline/skill" index="2"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 45.0
+margin_bottom = 44.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+
+[node name="groupline" type="HBoxContainer" parent="grouppanel" index="1"]
+
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 12.0
+margin_top = -154.0
+margin_right = -154.0
+margin_bottom = -70.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_constants/separation = 21
+alignment = 0
+_sections_unfolded = [ "Mouse", "Rect" ]
+
+[node name="character" type="Button" parent="grouppanel/groupline" index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 200.0
+margin_bottom = 84.0
+rect_min_size = Vector2( 200, 84 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_styles/hover = SubResource( 6 )
+custom_styles/pressed = SubResource( 6 )
+custom_styles/focus = SubResource( 7 )
+custom_styles/normal = SubResource( 8 )
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="portait" type="TextureRect" parent="grouppanel/groupline/character" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 6.0
+margin_top = 4.0
+margin_right = 56.0
+margin_bottom = 54.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+expand = true
+stretch_mode = 6
+_sections_unfolded = [ "Mouse" ]
+
+[node name="hp" type="Label" parent="grouppanel/groupline/character" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 102.0
+margin_top = 9.0
+margin_right = 192.0
+margin_bottom = 28.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "0"
+align = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="energy" type="Label" parent="grouppanel/groupline/character" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 100.0
+margin_top = 33.0
+margin_right = 192.0
+margin_bottom = 52.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "0"
+align = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="speed" type="Label" parent="grouppanel/groupline/character" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 134.0
+margin_top = 58.0
+margin_right = 191.0
+margin_bottom = 77.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "110"
+align = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="power" type="Label" parent="grouppanel/groupline/character" index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 99.0
+margin_top = 58.0
+margin_right = 153.0
+margin_bottom = 77.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "75"
+align = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="name" type="Label" parent="grouppanel/groupline/character" index="5"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 5.0
+margin_top = 3.0
+margin_right = 50.0
+margin_bottom = 22.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "Name"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="target" type="Label" parent="grouppanel/groupline/character" index="6"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 9.0
+margin_top = 59.0
+margin_right = 54.0
+margin_bottom = 73.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "Target"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Panel" type="Panel" parent="grouppanel/groupline/character" index="7"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 201.0
+margin_bottom = 85.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+_sections_unfolded = [ "Mouse" ]
+
+[node name="enemypanel" type="Panel" parent="." index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+margin_left = 5.0
+margin_top = 2.0
+margin_right = 1.0
+margin_bottom = 129.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+_sections_unfolded = [ "Rect" ]
+
+[node name="enemyline" type="GridContainer" parent="enemypanel" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 1071.0
+margin_bottom = 123.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+columns = 5
+
+[node name="character" type="Button" parent="enemypanel/enemyline" index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 200.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 200, 50 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_styles/hover = SubResource( 6 )
+custom_styles/pressed = SubResource( 6 )
+custom_styles/focus = SubResource( 7 )
+custom_styles/normal = SubResource( 8 )
+toggle_mode = false
+enabled_focus_mode = 0
+shortcut = null
+group = null
+flat = false
+align = 1
+_sections_unfolded = [ "Size Flags" ]
+
+[node name="hpbar" type="ProgressBar" parent="enemypanel/enemyline/character" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 69.0
+margin_top = 32.0
+margin_right = 188.0
+margin_bottom = 48.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_styles/fg = SubResource( 9 )
+custom_styles/bg = SubResource( 10 )
+min_value = 0.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 50.0
+exp_edit = false
+rounded = false
+percent_visible = false
+_sections_unfolded = [ "Mouse" ]
+
+[node name="hp" type="Label" parent="enemypanel/enemyline/character/hpbar" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 118.0
+margin_bottom = 16.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "100/100"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="name" type="Label" parent="enemypanel/enemyline/character" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 69.0
+margin_top = 7.0
+margin_right = 111.0
+margin_bottom = 23.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "Name"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Panel" type="Panel" parent="enemypanel/enemyline/character" index="2"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 200.0
+margin_bottom = 50.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+
+[node name="icon" type="TextureRect" parent="enemypanel/enemyline/character" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 1.0
+margin_right = 51.0
+margin_bottom = 50.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+expand = true
+stretch_mode = 0
+_sections_unfolded = [ "Mouse" ]
+
+[node name="combatlog" type="RichTextLabel" parent="." index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 16.0
+margin_top = 134.0
+margin_right = -12.0
+margin_bottom = -178.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = ""
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = ""
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+_sections_unfolded = [ "Rect" ]
+
+[node name="tooltippanel" type="Panel" parent="." index="4"]
+
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -817.0
+margin_top = -501.0
+margin_right = -556.0
+margin_bottom = -266.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+_sections_unfolded = [ "Mouse", "Rect" ]
+
+[node name="tooltiptext" type="RichTextLabel" parent="tooltippanel" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 14.0
+margin_top = 19.0
+margin_right = 248.0
+margin_bottom = 223.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+bbcode_enabled = true
+bbcode_text = ""
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = ""
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+_sections_unfolded = [ "Mouse" ]
+
+[node name="warning" type="Label" parent="." index="5"]
+
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -1001.0
+margin_top = -460.0
+margin_right = -392.0
+margin_bottom = -369.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_fonts/font = SubResource( 11 )
+text = "Cant"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Hint", "Rect" ]
+
+[node name="confirm" type="Button" parent="." index="6"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -132.0
+margin_top = -56.0
+margin_right = -3.0
+margin_bottom = -15.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = ExtResource( 14 )
+custom_fonts/font = ExtResource( 1 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Confirm (F)"
+flat = false
+align = 1
+_sections_unfolded = [ "Hint", "Rect" ]
+
+[node name="autowin" type="Button" parent="." index="7"]
+
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -274.0
+margin_top = -147.0
+margin_right = -167.0
+margin_bottom = -112.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_fonts/font = ExtResource( 1 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "autowin"
+flat = false
+align = 1
+
+[node name="abilitites" type="Button" parent="." index="8"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -132.0
+margin_top = -155.0
+margin_right = -3.0
+margin_bottom = -114.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = ExtResource( 14 )
+custom_fonts/font = ExtResource( 1 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Abilities"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="Panel" type="Panel" parent="abilitites" index="0"]
+
+editor/display_folded = true
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -1038.0
+margin_top = -488.0
+margin_right = -442.0
+margin_bottom = -23.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_styles/panel = ExtResource( 15 )
+_sections_unfolded = [ "Rect" ]
+
+[node name="inactivecontainer" type="ScrollContainer" parent="abilitites/Panel" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 40.0
+margin_top = 54.0
+margin_right = 257.0
+margin_bottom = 366.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+scroll_horizontal_enabled = false
+scroll_horizontal = 0
+scroll_vertical_enabled = true
+scroll_vertical = 0
+_sections_unfolded = [ "Scroll" ]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="abilitites/Panel/inactivecontainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+alignment = 0
+
+[node name="Button" type="Button" parent="abilitites/Panel/inactivecontainer/VBoxContainer" index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 150.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 150, 30 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_fonts/font = ExtResource( 1 )
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+flat = false
+align = 1
+
+[node name="CheckBox" type="CheckBox" parent="abilitites/Panel/inactivecontainer/VBoxContainer/Button" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 156.0
+margin_top = 5.0
+margin_right = 182.0
+margin_bottom = 28.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+flat = false
+align = 0
+
+[node name="label" type="Label" parent="abilitites/Panel" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 46.0
+margin_top = 25.0
+margin_right = 182.0
+margin_bottom = 44.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 1 )
+text = "Ability List"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="abilitydescript" type="RichTextLabel" parent="abilitites/Panel" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 293.0
+margin_top = 60.0
+margin_right = 559.0
+margin_bottom = 371.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = ""
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = ""
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+
+[node name="use" type="Button" parent="abilitites/Panel" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 134.0
+margin_top = 400.0
+margin_right = 244.0
+margin_bottom = 434.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_fonts/font = ExtResource( 1 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Use"
+flat = false
+align = 1
+
+[node name="close" type="Button" parent="abilitites/Panel" index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 362.0
+margin_top = 400.0
+margin_right = 472.0
+margin_bottom = 434.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_fonts/font = ExtResource( 1 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Close"
+flat = false
+align = 1
+
+[node name="escapewarn" type="Panel" parent="." index="9"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 361.0
+margin_top = 99.0
+margin_right = -301.0
+margin_bottom = -129.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+_sections_unfolded = [ "Rect" ]
+
+[node name="Control" type="Control" parent="escapewarn" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -365.0
+margin_top = -156.0
+margin_right = 320.0
+margin_bottom = 136.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+
+[node name="escapedescript" type="RichTextLabel" parent="escapewarn" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 28.0
+margin_top = 24.0
+margin_right = -28.0
+margin_bottom = -142.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "$Name tries to escape. Send someone to stop them? (cost 40 energy and will be unable to attack for 1 turn)"
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = "$Name tries to escape. Send someone to stop them? (cost 40 energy and will be unable to attack for 1 turn)"
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+_sections_unfolded = [ "Rect" ]
+
+[node name="escapeoption" type="OptionButton" parent="escapewarn" index="2"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -441.0
+margin_top = -139.0
+margin_right = -244.0
+margin_bottom = -98.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_fonts/font = ExtResource( 1 )
+toggle_mode = false
+action_mode = 0
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Let them escape"
+flat = false
+align = 0
+items = [ "Let them escape", null, false, -1, null ]
+selected = 0
+_sections_unfolded = [ "Hint", "Rect" ]
+
+[node name="escapeconfirm" type="Button" parent="escapewarn" index="3"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -411.0
+margin_top = -66.0
+margin_right = -278.0
+margin_bottom = -26.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Confirm"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="win" type="Panel" parent="." index="10"]
+
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -863.0
+margin_top = -475.0
+margin_right = -448.0
+margin_bottom = -278.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+_sections_unfolded = [ "Rect" ]
+
+[node name="Control" type="Control" parent="win" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -500.0
+margin_top = -302.0
+margin_right = 459.0
+margin_bottom = 275.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+
+[node name="windescript" type="RichTextLabel" parent="win" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 28.0
+margin_top = 24.0
+margin_right = 387.0
+margin_bottom = 83.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[center]You have defeated all opponents.[/center]"
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = "You have defeated all opponents."
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+
+[node name="winconfirm" type="Button" parent="win" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 144.0
+margin_top = 136.0
+margin_right = 277.0
+margin_bottom = 176.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Confirm"
+flat = false
+align = 1
+
+[node name="selectedskill" type="RichTextLabel" parent="." index="11"]
+
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -897.0
+margin_top = -480.0
+margin_right = -412.0
+margin_bottom = -301.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_fonts/normal_font = SubResource( 12 )
+bbcode_enabled = true
+bbcode_text = "[center]Choose target: [/center]
+[center][color=yellow]Ability: [/color][/center]"
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = "Choose target: 
+Ability: "
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+_sections_unfolded = [ "Rect" ]
+
+[node name="bufftooltip" type="Panel" parent="." index="12"]
+
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -1211.0
+margin_top = -405.0
+margin_right = -969.0
+margin_bottom = -279.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+_sections_unfolded = [ "Rect" ]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="bufftooltip" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 240.0
+margin_bottom = 71.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 0
+
+[node name="tooltipbase" type="RichTextLabel" parent="bufftooltip/VBoxContainer" index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 240.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 240, 24 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+bbcode_enabled = true
+bbcode_text = "l;ulalulfujaljlfdj"
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = "l;ulalulfujaljlfdj"
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+_sections_unfolded = [ "Rect", "Size Flags" ]
+
+[node name="autoattack" type="CheckBox" parent="." index="13"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -132.0
+margin_top = -101.0
+margin_right = -1.0
+margin_bottom = -73.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "When toggled, will make characters with no actions selected to attack last enemy.  "
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Autoattack"
+flat = false
+align = 0
+_sections_unfolded = [ "Hint", "Rect" ]
+
+[connection signal="pressed" from="confirm" to="." method="_on_confirm_pressed"]
+
+[connection signal="pressed" from="autowin" to="." method="_on_autowin_pressed"]
+
+[connection signal="pressed" from="abilitites" to="." method="_on_abilitites_pressed"]
+
+[connection signal="pressed" from="abilitites/Panel/use" to="." method="_on_use_pressed"]
+
+[connection signal="pressed" from="abilitites/Panel/close" to="." method="_on_close_pressed"]
+
+[connection signal="pressed" from="escapewarn/escapeconfirm" to="." method="_on_escapeconfirm_pressed"]
+
+[connection signal="pressed" from="win/winconfirm" to="." method="_on_winconfirm_pressed"]
+
+[connection signal="pressed" from="autoattack" to="." method="_on_autoattack_pressed"]
+
+

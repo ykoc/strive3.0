@@ -1,0 +1,1685 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://files/theme.tres" type="Theme" id=1]
+[ext_resource path="res://files/scripts/options.tres.gd" type="Script" id=2]
+[ext_resource path="res://files/theme slavetab.tres" type="Theme" id=3]
+
+[sub_resource type="StreamTexture" id=1]
+
+flags = 4
+load_path = "res://.import/2.png-4cf966d13a2c7ebfca9f08501bafd5bd.stex"
+
+[node name="options" type="WindowDialog" index="0"]
+
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -377.0
+margin_top = -258.0
+margin_right = 463.0
+margin_bottom = 297.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = ExtResource( 1 )
+popup_exclusive = false
+window_title = "Options"
+resizable = false
+script = ExtResource( 2 )
+_sections_unfolded = [ "Theme", "custom_styles" ]
+
+[node name="TabContainer" type="TabContainer" parent="." index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 7.0
+margin_top = 12.0
+margin_right = 834.0
+margin_bottom = 567.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+tab_align = 0
+tabs_visible = true
+
+[node name="Settings" type="Tabs" parent="TabContainer" index="0"]
+
+editor/display_folded = true
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 37.0
+margin_right = -10.0
+margin_bottom = -10.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+tab_align = 1
+scrolling_enabled = true
+
+[node name="TextureRect" type="TextureRect" parent="TabContainer/Settings" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 820.0
+margin_top = -13.0
+margin_right = 548.0
+margin_bottom = 312.0
+rect_rotation = 89.9789
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = SubResource( 1 )
+expand = true
+stretch_mode = 0
+_sections_unfolded = [ "Rect" ]
+
+[node name="fading" type="CheckBox" parent="TabContainer/Settings" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 17.0
+margin_top = 67.0
+margin_right = 319.0
+margin_bottom = 94.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Fade to black on window transition"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Use animation on screen change"
+flat = false
+align = 0
+_sections_unfolded = [ "Hint" ]
+
+[node name="spritesindialogues" type="CheckBox" parent="TabContainer/Settings" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 17.0
+margin_top = 93.0
+margin_right = 261.0
+margin_bottom = 120.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Show custom character sprites during dialogues?"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Show Sprites in Dialogues"
+flat = false
+align = 0
+_sections_unfolded = [ "Hint" ]
+
+[node name="Label2" type="Label" parent="TabContainer/Settings" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 482.0
+margin_top = 23.0
+margin_right = 609.0
+margin_bottom = 43.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "Main Font Size"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="fullscreen" type="CheckBox" parent="TabContainer/Settings" index="4"]
+
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+margin_left = 17.0
+margin_top = -474.0
+margin_right = 202.0
+margin_bottom = -434.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Switch to full screen mode"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Fullscreen Mode"
+flat = false
+align = 0
+_sections_unfolded = [ "Hint" ]
+
+[node name="custommouse" type="CheckBox" parent="TabContainer/Settings" index="5"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 17.0
+margin_top = 15.0
+margin_right = 204.0
+margin_bottom = 42.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Disable/enable hardware mouse cursor"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Use custom cursor"
+flat = false
+align = 0
+_sections_unfolded = [ "Hint" ]
+
+[node name="fontsize" type="SpinBox" parent="TabContainer/Settings" index="6"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 403.0
+margin_top = 13.0
+margin_right = 481.0
+margin_bottom = 51.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+min_value = 10.0
+max_value = 24.0
+step = 1.0
+page = 0.0
+value = 10.0
+exp_edit = false
+rounded = false
+editable = true
+prefix = ""
+suffix = ""
+
+[node name="soundslider" type="HSlider" parent="TabContainer/Settings" index="7"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 424.0
+margin_top = 87.0
+margin_right = 581.0
+margin_bottom = 104.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+min_value = 0.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 1.0
+exp_edit = false
+rounded = false
+editable = true
+tick_count = 0
+ticks_on_borders = false
+focus_mode = 2
+
+[node name="Label3" type="Label" parent="TabContainer/Settings/soundslider" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 21.0
+margin_top = -25.0
+margin_right = 121.0
+margin_bottom = -7.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "Music volume"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Game" type="Tabs" parent="TabContainer" index="1"]
+
+editor/display_folded = true
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 37.0
+margin_right = -10.0
+margin_bottom = -10.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+tab_align = 1
+scrolling_enabled = true
+
+[node name="TextureRect" type="TextureRect" parent="TabContainer/Game" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 820.0
+margin_top = -13.0
+margin_right = 548.0
+margin_bottom = 312.0
+rect_rotation = 89.9789
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = SubResource( 1 )
+expand = true
+stretch_mode = 0
+
+[node name="futa" type="CheckBox" parent="TabContainer/Game" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 20.0
+margin_top = 39.0
+margin_right = 84.0
+margin_bottom = 66.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Allow random generation of futanari characters"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Futa"
+flat = false
+align = 0
+_sections_unfolded = [ "Hint" ]
+
+[node name="futaballs" type="CheckBox" parent="TabContainer/Game" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 135.0
+margin_top = 39.0
+margin_right = 317.0
+margin_bottom = 66.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Random futanari characters will be generated with testicles"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Futa with testicles"
+flat = false
+align = 0
+_sections_unfolded = [ "Focus", "Hint" ]
+
+[node name="furry" type="CheckBox" parent="TabContainer/Game" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 20.0
+margin_top = 63.0
+margin_right = 90.0
+margin_bottom = 90.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Allow random generation of furry characters"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Furry"
+flat = false
+align = 0
+_sections_unfolded = [ "Hint" ]
+
+[node name="furrynipples" type="CheckBox" parent="TabContainer/Game" index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 135.0
+margin_top = 62.0
+margin_right = 480.0
+margin_bottom = 89.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Furry characters will posses more nipples"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Additional nipples on furry characters"
+flat = false
+align = 0
+_sections_unfolded = [ "Hint" ]
+
+[node name="slaverguildraces" type="CheckBox" parent="TabContainer/Game" index="5"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 20.0
+margin_top = 85.0
+margin_right = 365.0
+margin_bottom = 112.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "This option will allow starting town's slavers' guild to offer slaves of any possible race. 
+Turning this off will only make it offer local races."
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Allow all possible races in slavers guild"
+flat = false
+align = 0
+_sections_unfolded = [ "Hint" ]
+
+[node name="receive" type="CheckBox" parent="TabContainer/Game" index="6"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 20.0
+margin_top = 107.0
+margin_right = 295.0
+margin_bottom = 134.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "This option will enable unlock of sex options
+which put you on receiving side i.e. be fucked in the ass"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Enable Receiving Sex Options"
+flat = false
+align = 0
+_sections_unfolded = [ "Hint" ]
+
+[node name="childlike" type="CheckBox" parent="TabContainer/Game" index="7"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 20.0
+margin_top = 151.0
+margin_right = 210.0
+margin_bottom = 178.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Turn on 'childlike' age for characters."
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Childlike characters"
+flat = false
+align = 0
+_sections_unfolded = [ "Hint" ]
+
+[node name="permadeath" type="CheckBox" parent="TabContainer/Game" index="8"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 20.0
+margin_top = 129.0
+margin_right = 175.0
+margin_bottom = 156.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Members of your party reaching 0 hp in combat will die 
+instead of going on the rest"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Permadeath"
+flat = false
+align = 0
+_sections_unfolded = [ "Hint" ]
+
+[node name="noadults" type="CheckBox" parent="TabContainer/Game" index="9"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 223.0
+margin_top = 151.0
+margin_right = 452.0
+margin_bottom = 178.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Turn off 'adult' characters generation."
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Disable adult characters"
+flat = false
+align = 0
+_sections_unfolded = [ "Hint" ]
+
+[node name="malesslider" type="HSlider" parent="TabContainer/Game" index="10"]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 18.0
+margin_top = 238.0
+margin_right = 253.0
+margin_bottom = 254.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+min_value = 0.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 1.0
+exp_edit = false
+rounded = true
+editable = true
+tick_count = 10
+ticks_on_borders = true
+focus_mode = 2
+
+[node name="malesliderlabel" type="Label" parent="TabContainer/Game" index="11"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 18.0
+margin_top = 215.0
+margin_right = 259.0
+margin_bottom = 235.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "Gender occurrence balance: "
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="futaslider" type="HSlider" parent="TabContainer/Game" index="12"]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 18.0
+margin_top = 284.0
+margin_right = 253.0
+margin_bottom = 300.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Futas occur only among females"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+min_value = 0.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 1.0
+exp_edit = false
+rounded = true
+editable = true
+tick_count = 10
+ticks_on_borders = true
+focus_mode = 2
+_sections_unfolded = [ "Hint" ]
+
+[node name="futasliderlabel" type="Label" parent="TabContainer/Game" index="13"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 18.0
+margin_top = 260.0
+margin_right = 240.0
+margin_bottom = 280.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "Random futa occurrence: "
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Label 3" type="Label" parent="TabContainer/Game" index="14"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -3.0
+margin_top = 12.0
+margin_right = 827.0
+margin_bottom = 32.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "Random Slave Generation Settings"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Label4" type="Label" parent="TabContainer/Game" index="15"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 29.0
+margin_top = 372.0
+margin_right = 187.0
+margin_bottom = 392.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "Alise on Day End"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="aliseoption" type="OptionButton" parent="TabContainer/Game" index="16"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 19.0
+margin_top = 391.0
+margin_right = 198.0
+margin_bottom = 430.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "When to show Alise on Day End Popup"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+action_mode = 0
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Always"
+flat = false
+align = 0
+items = [ "Always", null, false, -1, null, "After Daily Event", null, false, -1, null, "Never", null, false, -1, null ]
+selected = 0
+_sections_unfolded = [ "Hint" ]
+
+[node name="Supporter section" type="Tabs" parent="TabContainer" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 37.0
+margin_right = -10.0
+margin_bottom = -10.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+tab_align = 1
+scrolling_enabled = true
+
+[node name="TextureRect" type="TextureRect" parent="TabContainer/Supporter section" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 820.0
+margin_top = -13.0
+margin_right = 548.0
+margin_bottom = 312.0
+rect_rotation = 89.9789
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = SubResource( 1 )
+expand = true
+stretch_mode = 0
+
+[node name="Label1" type="Label" parent="TabContainer/Supporter section" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -3.0
+margin_top = 187.0
+margin_right = 827.0
+margin_bottom = 207.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "Supporter password"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TabContainer/Supporter section" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 61.0
+margin_top = 11.0
+margin_right = 762.0
+margin_bottom = 75.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+bbcode_enabled = true
+bbcode_text = "To unlock more options, become a suporter on [color=yellow][url=patreon]Patreon[/url][/color]. For more information please refer to the Patreon page. "
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = "To unlock more options, become a suporter on Patreon. For more information please refer to the Patreon page. "
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+
+[node name="cheats" type="Button" parent="TabContainer/Supporter section" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 308.0
+margin_top = 256.0
+margin_right = 521.0
+margin_bottom = 295.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Password is available for patrons."
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+disabled = true
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Access supporter panel"
+flat = false
+align = 1
+_sections_unfolded = [ "Hint" ]
+
+[node name="cheatpassword" type="LineEdit" parent="TabContainer/Supporter section" index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 350.0
+margin_top = 211.0
+margin_right = 474.0
+margin_bottom = 249.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 1
+size_flags_horizontal = 2
+size_flags_vertical = 2
+focus_mode = 2
+context_menu_enabled = true
+placeholder_text = "Enter password"
+placeholder_alpha = 0.6
+caret_blink = false
+caret_blink_speed = 0.65
+caret_position = 0
+
+[node name="cheatpasswordenter" type="Button" parent="TabContainer/Supporter section" index="5"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 487.0
+margin_top = 212.0
+margin_right = 580.0
+margin_bottom = 251.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Confirm"
+flat = false
+align = 1
+
+[node name="cheatpanel" type="PopupPanel" parent="TabContainer/Supporter section" index="6"]
+
+editor/display_folded = true
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -977.0
+margin_top = -650.0
+margin_right = -289.0
+margin_bottom = -202.0
+rect_min_size = Vector2( 688, 448 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = ExtResource( 3 )
+popup_exclusive = false
+_sections_unfolded = [ "Hint", "Rect" ]
+
+[node name="close" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 300.0
+margin_top = 404.0
+margin_right = 410.0
+margin_bottom = 441.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Close"
+flat = false
+align = 1
+
+[node name="cheatgold" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 16.0
+margin_top = 50.0
+margin_right = 166.0
+margin_bottom = 90.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Set Gold"
+flat = false
+align = 1
+
+[node name="cheatfood" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 16.0
+margin_top = 93.0
+margin_right = 166.0
+margin_bottom = 133.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Set Food"
+flat = false
+align = 1
+
+[node name="cheatmana" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 16.0
+margin_top = 137.0
+margin_right = 166.0
+margin_bottom = 177.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Set Mana"
+flat = false
+align = 1
+
+[node name="removepopcap" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 16.0
+margin_top = 185.0
+margin_right = 266.0
+margin_bottom = 225.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Huge population may impact performance greatly"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Remove population limits"
+flat = false
+align = 1
+_sections_unfolded = [ "Hint" ]
+
+[node name="addupgradepoint" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="5"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 16.0
+margin_top = 227.0
+margin_right = 266.0
+margin_bottom = 267.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Add 5 Upgrade Points"
+flat = false
+align = 1
+_sections_unfolded = [ "Hint" ]
+
+[node name="unlockspells" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="6"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 139.0
+margin_top = 11.0
+margin_right = 256.0
+margin_bottom = 43.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Unlock all spells"
+flat = false
+align = 1
+
+[node name="selectslave" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="7"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 504.0
+margin_top = 30.0
+margin_right = 621.0
+margin_bottom = 62.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Select Slave"
+flat = false
+align = 1
+
+[node name="maxloyalty" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="8"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 346.0
+margin_top = 64.0
+margin_right = 496.0
+margin_bottom = 104.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Max Loyalty"
+flat = false
+align = 1
+
+[node name="maxobed" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="9"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 347.0
+margin_top = 109.0
+margin_right = 499.0
+margin_bottom = 149.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Max Obedience"
+flat = false
+align = 1
+
+[node name="maxlewd" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="10"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 348.0
+margin_top = 155.0
+margin_right = 498.0
+margin_bottom = 195.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Max Affection"
+flat = false
+align = 1
+
+[node name="maxlust" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="11"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 348.0
+margin_top = 200.0
+margin_right = 498.0
+margin_bottom = 240.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Max Lust"
+flat = false
+align = 1
+
+[node name="nostress" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="12"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 348.0
+margin_top = 249.0
+margin_right = 498.0
+margin_bottom = 289.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Remove Stress"
+flat = false
+align = 1
+
+[node name="addskillpoints" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="13"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 348.0
+margin_top = 299.0
+margin_right = 498.0
+margin_bottom = 339.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Add Skillpoint"
+flat = false
+align = 1
+
+[node name="addlevel" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="14"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 348.0
+margin_top = 349.0
+margin_right = 498.0
+margin_bottom = 389.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Add Level"
+flat = false
+align = 1
+
+[node name="levelup" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="15"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 17.0
+margin_top = 269.0
+margin_right = 267.0
+margin_bottom = 309.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Add Skillpoint"
+flat = false
+align = 1
+
+[node name="unlockgallery" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="16"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 17.0
+margin_top = 314.0
+margin_right = 267.0
+margin_bottom = 354.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Fully Unlock Gallery"
+flat = false
+align = 1
+
+[node name="selectedslavelabel" type="Label" parent="TabContainer/Supporter section/cheatpanel" index="17"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 518.0
+margin_top = 93.0
+margin_right = 623.0
+margin_bottom = 107.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "Selected slave - "
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="SpinBox" type="SpinBox" parent="TabContainer/Supporter section/cheatpanel" index="18"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 14.0
+margin_top = 13.0
+margin_right = 125.0
+margin_bottom = 37.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+min_value = 0.0
+max_value = 500000.0
+step = 100.0
+page = 0.0
+value = 100.0
+exp_edit = false
+rounded = true
+editable = true
+prefix = ""
+suffix = ""
+
+[node name="supporterpanel" type="AcceptDialog" parent="TabContainer/Supporter section" index="7"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 327.0
+margin_top = 312.0
+margin_right = 1100.0
+margin_bottom = 565.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+popup_exclusive = false
+window_title = "Thank you!"
+resizable = false
+dialog_text = "You are now registered as a supporter! Thank you for helping to make this game greater!"
+dialog_hide_on_ok = true
+
+[node name="Done" type="Button" parent="." index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 367.0
+margin_top = 516.0
+margin_right = 477.0
+margin_bottom = 555.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Confirm"
+flat = false
+align = 1
+
+[node name="screenpopup" type="Popup" parent="." index="3"]
+
+editor/display_folded = true
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -614.0
+margin_top = -369.0
+margin_right = -228.0
+margin_bottom = -171.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+popup_exclusive = false
+_sections_unfolded = [ "Rect" ]
+
+[node name="Panel" type="Panel" parent="screenpopup" index="0"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -386.0
+margin_top = -198.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+_sections_unfolded = [ "Rect" ]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="screenpopup/Panel" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 27.0
+margin_top = 24.0
+margin_right = 358.0
+margin_bottom = 124.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+bbcode_enabled = true
+bbcode_text = "[center]Screen changed. Save new mode?[/center]"
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = "Screen changed. Save new mode?"
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+
+[node name="confirm" type="Button" parent="screenpopup/Panel" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 42.0
+margin_top = 136.0
+margin_right = 154.0
+margin_bottom = 175.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Confirm"
+flat = false
+align = 1
+
+[node name="cancel" type="Button" parent="screenpopup/Panel" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 227.0
+margin_top = 136.0
+margin_right = 339.0
+margin_bottom = 175.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Cancel"
+flat = false
+align = 1
+
+[connection signal="visibility_changed" from="." to="." method="_on_options_visibility_changed"]
+
+[connection signal="pressed" from="TabContainer/Settings/fading" to="." method="_on_fading_pressed"]
+
+[connection signal="pressed" from="TabContainer/Settings/spritesindialogues" to="." method="_on_spritesindialogues_pressed"]
+
+[connection signal="pressed" from="TabContainer/Settings/fullscreen" to="." method="_on_fullscreen_pressed"]
+
+[connection signal="pressed" from="TabContainer/Settings/custommouse" to="." method="_on_custommouse_pressed"]
+
+[connection signal="value_changed" from="TabContainer/Settings/fontsize" to="." method="_on_fontsize_value_changed"]
+
+[connection signal="value_changed" from="TabContainer/Settings/soundslider" to="." method="_on_soundslider_value_changed"]
+
+[connection signal="pressed" from="TabContainer/Game/futa" to="." method="_on_futa_pressed"]
+
+[connection signal="pressed" from="TabContainer/Game/futaballs" to="." method="_on_futaballs_pressed"]
+
+[connection signal="pressed" from="TabContainer/Game/furry" to="." method="_on_furry_pressed"]
+
+[connection signal="pressed" from="TabContainer/Game/furrynipples" to="." method="_on_furrynipples_pressed"]
+
+[connection signal="pressed" from="TabContainer/Game/slaverguildraces" to="." method="_on_slaverguildraces_pressed"]
+
+[connection signal="pressed" from="TabContainer/Game/receive" to="." method="_on_receive_pressed"]
+
+[connection signal="pressed" from="TabContainer/Game/childlike" to="." method="_on_childlike_pressed"]
+
+[connection signal="pressed" from="TabContainer/Game/permadeath" to="." method="_on_permadeath_pressed"]
+
+[connection signal="pressed" from="TabContainer/Game/noadults" to="." method="_on_noadults_pressed"]
+
+[connection signal="value_changed" from="TabContainer/Game/malesslider" to="." method="_on_malesslider_value_changed"]
+
+[connection signal="value_changed" from="TabContainer/Game/futaslider" to="." method="_on_futaslider_value_changed"]
+
+[connection signal="item_selected" from="TabContainer/Game/aliseoption" to="." method="_on_aliseoption_item_selected"]
+
+[connection signal="meta_clicked" from="TabContainer/Supporter section/RichTextLabel" to="." method="_on_RichTextLabel_meta_clicked"]
+
+[connection signal="pressed" from="TabContainer/Supporter section/cheats" to="." method="_on_cheats_pressed"]
+
+[connection signal="pressed" from="TabContainer/Supporter section/cheatpasswordenter" to="." method="_on_cheatpasswordenter_pressed"]
+
+[connection signal="visibility_changed" from="TabContainer/Supporter section/cheatpanel" to="." method="_on_cheatpanel_visibility_changed"]
+
+[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/close" to="." method="_on_close_pressed"]
+
+[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/cheatgold" to="." method="_on_gold_pressed"]
+
+[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/cheatfood" to="." method="_on_food_pressed"]
+
+[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/cheatmana" to="." method="_on_mana_pressed"]
+
+[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/removepopcap" to="." method="_on_removepopcap_pressed"]
+
+[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/addupgradepoint" to="." method="_on_addupgradepoint_pressed"]
+
+[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/unlockspells" to="." method="_on_unlockspells_pressed"]
+
+[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/selectslave" to="." method="_on_selectslave_pressed"]
+
+[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/maxloyalty" to="." method="_on_maxloyalty_pressed"]
+
+[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/maxobed" to="." method="_on_maxobed_pressed"]
+
+[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/maxlewd" to="." method="_on_maxlewd_pressed"]
+
+[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/maxlust" to="." method="_on_maxlust_pressed"]
+
+[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/nostress" to="." method="_on_nostress_pressed"]
+
+[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/addskillpoints" to="." method="_on_addskillpoints_pressed"]
+
+[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/addlevel" to="." method="_on_addlevel_pressed"]
+
+[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/levelup" to="." method="_on_levelup_pressed"]
+
+[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/unlockgallery" to="." method="_on_unlockgallery_pressed"]
+
+[connection signal="pressed" from="Done" to="." method="_on_Done_pressed"]
+
+[connection signal="pressed" from="screenpopup/Panel/confirm" to="." method="_on_confirm_pressed"]
+
+[connection signal="pressed" from="screenpopup/Panel/cancel" to="." method="_on_cancel_pressed"]
+
+
