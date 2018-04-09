@@ -660,11 +660,11 @@ func _on_end_pressed():
 				person.loyal -= rand_range(1,5)
 				text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=yellow]$name is annoyed by you paying no attention to $him. [/color]\n"))
 			if person.traits.find('Pliable') >= 0:
-				if person.sexuals.affection >= 90:
+				if person.loyal >= 60:
 					person.trait_remove('Pliable')
 					person.add_trait('Devoted')
 					text0.set_bbcode(text0.get_bbcode() + person.dictionary('[color=green]$name has become Devoted. $His willpower strengthened.[/color]\n'))
-				elif person.sexuals.actions.size() >= 12:
+				elif person.lewdness >= 60:
 					person.trait_remove('Pliable')
 					person.add_trait('Slutty')
 					text0.set_bbcode(text0.get_bbcode() + person.dictionary('[color=green]$name has become Slutty. $His willpower strengthened.[/color]\n'))

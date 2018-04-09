@@ -96,6 +96,7 @@ func gearinfo(gear):
 func unequip(gear):
 	var item = globals.state.unstackables[selectedslave.gear[gear]]
 	if selectedslave != null && selectedslave.gear[gear] != null:
+		globals.items.person = selectedslave
 		if location == 'mansion':
 			item.owner = null
 		else:

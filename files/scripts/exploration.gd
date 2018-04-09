@@ -737,10 +737,10 @@ func enemylevelup(person, levelarray):
 	var statdict = ['sstr','sagi','smaf','send']
 	person.skillpoints = 0
 	person.level = 1
-	var skillpoints = 2+(level-1)*3
+	var skillpoints = 2+(level-1)*variables.skillpointsperlevel
 	while person.level < level:
 		person.level += 1
-		var points = 3
+		var points = variables.skillpointsperlevel
 		while points > 0 && statdict.size() > 0:
 			var tempstat = statdict[randi()%statdict.size()]
 			if person[tempstat] >= person.stats[globals.maxstatdict[tempstat]]:

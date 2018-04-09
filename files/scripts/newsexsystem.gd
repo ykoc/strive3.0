@@ -163,6 +163,8 @@ func _ready():
 	for i in get_node("Panel/HBoxContainer").get_children():
 		i.connect("pressed",self,'changecategory',[i.get_name()])
 	
+	filter = globals.state.actionblacklist
+	
 	var i = 5
 	if globals.player.name == '':
 		globals.itemdict.supply.amount = 10
@@ -182,7 +184,7 @@ func _ready():
 			newmember.sanus = person.sensanal
 			newmember.lewd = person.lewdness
 			participants.append(newmember)
-		turns = 20
+		turns = variables.timeforinteraction
 		changecategory('caress')
 		clearstate()
 		rebuildparticipantslist()
@@ -228,7 +230,7 @@ func startsequence(actors, mode = null, secondactors = []):
 			participants.append(newmember)
 	
 	get_node("Panel/sceneeffects").set_bbcode("You bring selected participants into your bedroom. ")
-	turns = 20
+	turns = variables.timeforinteraction
 	changecategory('caress')
 	clearstate()
 	rebuildparticipantslist()
@@ -359,6 +361,8 @@ func rebuildparticipantslist():
 	get_node("TextureFrame/Label").set_text(str(turns))
 	
 	get_node("Panel/sceneeffects1").set_bbcode(text)
+	
+	globals.state.actionblacklist = filter
 	
 	if turns == 0:
 		endencounter()
@@ -919,3 +923,37 @@ func mformula(gain, mana):
 func _on_finishbutton_pressed():
 	hide()
 	get_parent()._on_mansion_pressed()
+
+
+func _on_blacklist_pressed():
+	$blacklist.visible = true
+	for i in $blacklist/ScrollContainer/VBoxContainer.get_children():
+		if i.get_name() != 'CheckBox':
+			i.visible = false
+			i.queue_free()
+	for i in categories.values():
+		for j in i:
+			if j.code == 'wait':
+				continue
+			var node = $blacklist/ScrollContainer/VBoxContainer/CheckBox.duplicate()
+			j.givers = [participants[0]]
+			$blacklist/ScrollContainer/VBoxContainer.add_child(node)
+			node.visible = true
+			node.text = j.getname(1)
+			node.set_pressed(!filter.has(j.code))
+			node.set_meta("action", j)
+			node.connect("toggled", self, 'toggleaction', [node])
+
+func toggleaction(button, node):
+	var action = node.get_meta('action')
+	if filter.has(action.code):
+		filter.erase(action.code)
+	else:
+		filter.append(action.code)
+	node.set_pressed(!filter.has(action.code))
+
+func _on_closeblacklist_pressed():
+	$blacklist.visible = false
+	rebuildparticipantslist()
+
+

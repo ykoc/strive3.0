@@ -30,7 +30,7 @@ func requirements():
 	elif givers.size() > 2:
 		valid = false
 	for i in takers:
-		if i.person.pussy == 'none':
+		if i.person.vagina == 'none':
 			valid = false
 	return valid
 

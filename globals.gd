@@ -385,16 +385,17 @@ class resource:
 	
 	func upgradepoints_set(value):
 		var difference = upgradepoints - value
+		var bonus = 0
 		if difference < 0:
 			for i in globals.slaves:
 				if i.traits.has("Gifted"):
-					value *= 1.2
+					bonus = ceil(abs(difference) * 0.2)
 		var text = ""
-		upgradepoints = value
+		upgradepoints = value + bonus
 		
 		
 		if difference < 0:
-			text = "Obtained " + str(abs(difference)) +  " Mansion Upgrade Points"
+			text = "Obtained " + str(abs(difference)+bonus) +  " Mansion Upgrade Points"
 		
 		
 		if globals.get_tree().get_current_scene().has_node("infotext"):
@@ -477,6 +478,7 @@ class progress:
 	var restday = 0
 	var defaultmasternoun = "Master"
 	var sexactions = 1
+	var actionblacklist = []
 	
 	func calculateweight():
 		var slave
@@ -761,9 +763,9 @@ class person:
 	func levelup():
 		levelupreqs.clear()
 		level += 1
-		skillpoints += 3
+		skillpoints += variables.skillpointsperlevel
 		realxp = 0
-		sexuals.affection += round(rand_range(5,10))
+		self.loyal += rand_range(5,10)
 		if self != globals.player:
 			globals.get_tree().get_current_scene().infotext(dictionary("$name has advanced to Level " + str(level)),'green')
 		else:
@@ -1582,6 +1584,8 @@ func load_game(text):
 	currentline = parse_json(savegame.get_as_text())
 	get_tree().change_scene("res://files/Mansion.scn")
 	for i in currentline.values():
+		if i.has("@path") && i['@path'] in ["res://globals.gdc",'res://globals.gdc']:
+			i['@path'] = "res://files/globals.gd"
 		if i.has("@path"):
 			i['@path'] = i['@path'].replace('.gdc','.gd')
 	if currentline.resources['@subpath'] == '':

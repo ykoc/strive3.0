@@ -111,7 +111,7 @@ func showevent():
 		button.set_text(person.dictionary(i[0]))
 		button.connect("pressed", self, currentevent, [i[1]])
 	if person.imageportait != null:
-			if File.new().file_exists(person.imageportait) == true:
+			if globals.loadimage(person.imageportait):
 				get_node("textpanel/Panel").visible = true
 				get_node("textpanel/portrait").set_texture(load(person.imageportait))
 			else:
