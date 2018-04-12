@@ -753,6 +753,7 @@ func _on_iteminfo_input_event( ev ):
 		get_node(\"iteminfo\").visible = false
 
 func _on_inventoryclose_pressed():
+	globals.main.get_node("outside").shoppanelclosecheck()
 	self.visible = false
 
 
