@@ -304,6 +304,7 @@ func slavelist():
 		for k in ['sstr','sagi','smaf','send']:
 			button.get_node(k).set_text(str(i[k])+ "/" +str(min(i.stats[globals.maxstatdict[k]], i.originvalue[i.origins])))
 		button.connect("pressed",self,'selectslave',[button])
+		button.pressed = i==selectedslave
 		button.set_meta('person', i)
 
 func selectbuttonslave(person):
@@ -367,7 +368,7 @@ func use(button):
 		return
 	if item.type == 'potion':
 		person.metrics.item += 1
-		if item.code != 'minoruspot' && item.code != 'majoruspot' && item.code != 'hairdye':
+		if !item.code in ['minoruspot', 'majoruspot', 'hairdye', 'amnesiapot']:
 			get_tree().get_current_scene().popup(person.dictionary(globals.items.call(item.effect)))
 			person.toxicity += item.toxicity
 			if state == 'backpack':
@@ -702,3 +703,32 @@ func applytestic():
 #	color=data
 
 
+func amnesiapoteffect():
+	var text = 'After chugging down the Amnesia Potion, $name looks lightheaded and confused. "W-what was that? I feel like I have forgotten something..." $He is lost, unable to recall the memories of the time before $his confinement as your servant. '
+	if selectedslave.effects.has('captured'):
+		selectedslave.add_effect(globals.effectdict.captured, true)
+		text = text + 'Memories from before $his confinement no longer influence $him to resist you. '
+	if selectedslave.loyal < 50 && selectedslave.memory != 'clear':
+		text = text + "$He grows closer to you, having no one else $he can rely on. "
+		selectedslave.loyal += rand_range(15,25) - selectedslave.conf/10
+	text += "\n\nYou can choose new name for $name."
+	currentpotion = 'amnesiapot'
+	selectedslave.memory = 'clear'
+	selectedslave.toxicity += 25
+	if state == 'inventory':
+		globals.itemdict[currentpotion].amount -= 1
+	elif state == 'backpack':
+		globals.state.backpack[currentpotion] -= 1
+		if globals.state.backpack[currentpotion] <= 1:
+			globals.state.backpack.erase(currentpotion)
+	updateitems()
+	$amnesia.visible = true
+	$amnesia/name.text = selectedslave.name
+	$amnesia/surname.text = selectedslave.surname
+	$amnesia/RichTextLabel.bbcode_text = selectedslave.dictionary(text)
+
+func _on_amnesiaconf_pressed():
+	$amnesia.visible = false
+	selectedslave.name = $amnesia/name.text
+	selectedslave.surname = $amnesia/surname.text
+	slavelist()

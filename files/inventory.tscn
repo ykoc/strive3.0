@@ -357,6 +357,7 @@ _sections_unfolded = [ "Rect" ]
 
 [node name="ScrollContainer" type="ScrollContainer" parent="." index="7"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -664,7 +665,6 @@ _sections_unfolded = [ "Focus", "custom_constants" ]
 "inventoryslaves",
 ]]
 
-editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -687,7 +687,7 @@ group = null
 texture_normal = ExtResource( 27 )
 texture_pressed = ExtResource( 28 )
 expand = true
-_sections_unfolded = [ "Size Flags" ]
+_sections_unfolded = [ "Size Flags", "Textures" ]
 
 [node name="name" type="RichTextLabel" parent="slavelist/GridContainer/Button" index="0"]
 
@@ -1067,6 +1067,8 @@ _sections_unfolded = [ "Rect" ]
 
 [node name="gearpanel" type="TextureRect" parent="." index="13"]
 
+editor/display_folded = true
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -1927,6 +1929,132 @@ text = "Cancel"
 flat = false
 align = 1
 
+[node name="amnesia" type="PopupPanel" parent="." index="17"]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 447.0
+margin_top = 232.0
+margin_right = 893.0
+margin_bottom = 588.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_styles/panel = SubResource( 5 )
+popup_exclusive = false
+
+[node name="name" type="LineEdit" parent="amnesia" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 53.0
+margin_top = 188.0
+margin_right = 392.0
+margin_bottom = 222.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 1
+size_flags_horizontal = 2
+size_flags_vertical = 2
+focus_mode = 2
+context_menu_enabled = true
+placeholder_text = "Name"
+placeholder_alpha = 0.6
+caret_blink = false
+caret_blink_speed = 0.65
+caret_position = 0
+_sections_unfolded = [ "Caret" ]
+
+[node name="surname" type="LineEdit" parent="amnesia" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 53.0
+margin_top = 229.0
+margin_right = 392.0
+margin_bottom = 263.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 1
+size_flags_horizontal = 2
+size_flags_vertical = 2
+focus_mode = 2
+context_menu_enabled = true
+placeholder_text = "Surname"
+placeholder_alpha = 0.6
+caret_blink = false
+caret_blink_speed = 0.65
+caret_position = 0
+_sections_unfolded = [ "Caret", "Placeholder" ]
+
+[node name="amnesiaconf" type="Button" parent="amnesia" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 146.0
+margin_top = 293.0
+margin_right = 282.0
+margin_bottom = 332.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Confirm"
+flat = false
+align = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="amnesia" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 21.0
+margin_top = 18.0
+margin_right = 425.0
+margin_bottom = 162.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+bbcode_enabled = true
+bbcode_text = ""
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = ""
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+_sections_unfolded = [ "BBCode" ]
+
 [connection signal="pressed" from="mode" to="." method="_on_mode_pressed"]
 
 [connection signal="pressed" from="inventoryclose" to="." method="_on_inventoryclose_pressed"]
@@ -1936,5 +2064,7 @@ align = 1
 [connection signal="pressed" from="hairchange/hairconfirm" to="." method="_on_hairconfirm_pressed"]
 
 [connection signal="pressed" from="hairchange/haircancel" to="." method="_on_haircancel_pressed"]
+
+[connection signal="pressed" from="amnesia/amnesiaconf" to="." method="_on_amnesiaconf_pressed"]
 
 

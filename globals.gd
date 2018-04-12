@@ -1566,7 +1566,7 @@ func save_game(var savename):
 			date[i] = '0' + str(date[i])
 		else:
 			date[i] = str(date[i])
-	var entry = {name = "Master " + player.name + "\nDay: " + str(resources.day) + '\nGold: [color=yellow] ' + str(resources.gold) + '[/color]\nSlaves: ' + str(slavecount()), path = savename, date = date.hour + ":" + date.minute + " " + date.day + '.' + date.month + '.' + date.year}
+	var entry = {name = "Master " + player.name + "\nDay: " + str(resources.day) + '\nGold: [color=yellow] ' + str(resources.gold) + '[/color]\nSlaves: ' + str(slavecount()), path = savename, date = date.hour + ":" + date.minute + " " + date.day + '.' + date.month + '.' + date.year, portrait = player.imageportait}
 	savelist[savename] = entry
 	overwritesettings()
 	savegame.store_line(to_json(nodedata))
@@ -1585,7 +1585,7 @@ func load_game(text):
 	get_tree().change_scene("res://files/Mansion.scn")
 	for i in currentline.values():
 		if i.has("@path") && i['@path'] in ["res://globals.gdc",'res://globals.gdc']:
-			i['@path'] = "res://files/globals.gd"
+			i['@path'] = "res://globals.gd"
 		if i.has("@path"):
 			i['@path'] = i['@path'].replace('.gdc','.gd')
 	if currentline.resources['@subpath'] == '':

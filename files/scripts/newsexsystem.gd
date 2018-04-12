@@ -735,7 +735,7 @@ func orgasm(member):
 			if scene.scene.takerpart == 'penis':
 				anustext += " [anus1] {^squeezes:writhes around:clamps down on} [names2] [penis2] as [he1] reach[es/1] {^climax:orgasm}."
 			else:
-				anustext += " [anus1] {^convulses:twitches:quivers} {^in euphoria:in exstacy:with pleasure} as [he1] reach[es/1] {^climax:orgasm}."
+				anustext += " [anus1] {^convulses:twitches:quivers} {^in euphoria:in ecstasy:with pleasure} as [he1] reach[es/1] {^climax:orgasm}."
 			anustext = decoder(anustext, [member], scene.takers)
 		#anus is in taker slot
 		elif scene.takers.find(member) >= 0:
@@ -746,7 +746,7 @@ func orgasm(member):
 			if scene.scene.giverpart == 'penis':
 				anustext += " [anus2] {^squeezes:writhes around:clamps down on} [names1] [penis1] as [he2] reach[es/2] {^climax:orgasm}."
 			else:
-				anustext += " [anus2] {^convulses:twitches:quivers} {^in euphoria:in exstacy:with pleasure} as [he2] reach[es/2] {^climax:orgasm}."
+				anustext += " [anus2] {^convulses:twitches:quivers} {^in euphoria:in ecstasy:with pleasure} as [he2] reach[es/2] {^climax:orgasm}."
 			anustext = decoder(anustext, scene.givers, [member])
 		#no default conditon
 	#vagina present
@@ -764,7 +764,7 @@ func orgasm(member):
 				if scene.scene.takerpart == 'penis':
 					vaginatext += " [pussy1] {^squeezes:writhes around:clamps down on} [names2] [penis2] as [he1] reach[es/1] {^climax:orgasm}."
 				else:
-					vaginatext += " [pussy1] {^convulses:twitches:quivers} {^in euphoria:in exstacy:with pleasure} as [he1] reach[es/1] {^climax:orgasm}."
+					vaginatext += " [pussy1] {^convulses:twitches:quivers} {^in euphoria:in ecstasy:with pleasure} as [he1] reach[es/1] {^climax:orgasm}."
 				vaginatext = decoder(vaginatext, [member], scene.takers)
 			#vagina is in taker slot
 			elif scene.takers.find(member) >= 0:
@@ -775,7 +775,7 @@ func orgasm(member):
 				if scene.scene.giverpart == 'penis':
 					vaginatext += " [pussy2] {^squeezes:writhes around:clamps down on} [names1] [penis1] as [he2] reach[es/2] {^climax:orgasm}."
 				else:
-					vaginatext += " [pussy2] {^convulses:twitches:quivers} {^in euphoria:in exstacy:with pleasure} as [he2] reach[es/2] {^climax:orgasm}."
+					vaginatext += " [pussy2] {^convulses:twitches:quivers} {^in euphoria:in ecstasy:with pleasure} as [he2] reach[es/2] {^climax:orgasm}."
 				vaginatext = decoder(vaginatext, scene.givers, [member])
 			#no default conditon
 	#penis present

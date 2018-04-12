@@ -1381,15 +1381,12 @@ func _on_SavePanel_visibility_changed():
 	if get_node("menucontrol/menupanel/SavePanel").visible == false:
 		return
 	var node
-#-----------------------------------------------------------------------------------------
 	var pressedsave
 	var moddedtext
-#-----------------------------------------------------------------------------------------
 	for i in get_node("menucontrol/menupanel/SavePanel/ScrollContainer/savelist").get_children():
 		if i != get_node("menucontrol/menupanel/SavePanel/ScrollContainer/savelist/Button"):
 			i.hide()
 			i.queue_free()
-	get_node("menucontrol/menupanel/SavePanel/saveline").set_text(savefilename.replacen("user://saves/",''))
 	var dir = Directory.new()
 	if dir.dir_exists("user://saves") == false:
 		dir.make_dir("user://saves")
@@ -1397,33 +1394,39 @@ func _on_SavePanel_visibility_changed():
 	for i in globals.savelist:
 		if savefiles.find(i) < 0:
 			globals.savelist.erase(i)
+	pressedsave = get_node("menucontrol/menupanel/SavePanel//saveline").text
 	for i in savefiles:
 		node = get_node("menucontrol/menupanel/SavePanel/ScrollContainer/savelist/Button").duplicate()
 		node.show()
 		if globals.savelist.has(i):
 			node.get_node("date").set_text(globals.savelist[i].date)
 			node.get_node("name").set_text(i.replacen("user://saves/",''))
-			moddedtext = globals.savelist[i].name
 		else:
 			node.get_node("name").set_text(i.replacen("user://saves/",''))
-			moddedtext = "This save has no info stored."
 		get_node("menucontrol/menupanel/SavePanel/ScrollContainer/savelist").add_child(node)
-		#node.set_text(i.replacen("user://saves/",''))
 		node.set_meta("name", i)
-#-----------------------------------------------------------------------------------------
-		pressedsave = get_node("menucontrol/menupanel/SavePanel//saveline").text
-		if pressedsave == node.get_node("name").text:
-			node.pressed = true
-#			get_node("TextureFrame/SavePanel/saveline").editable = false
-			get_node("menucontrol/menupanel/SavePanel/RichTextLabel").set_bbcode(moddedtext)
-#-----------------------------------------------------------------------------------------
 		node.connect('pressed', self, 'loadchosen', [node])
 
 
 
 func loadchosen(node):
-	savefilename = node.get_meta('name')
-	_on_SavePanel_visibility_changed()
+	var savename = node.get_meta('name')
+	var text
+	savefilename = savename
+	for i in $menucontrol/menupanel/SavePanel/ScrollContainer/savelist.get_children():
+		i.pressed = (i== node)
+	get_node("menucontrol/menupanel/SavePanel/saveline").set_text(savefilename.replacen("user://saves/",''))
+	if globals.savelist.has(savename):
+		if globals.savelist[savename].has('portrait') && globals.loadimage(globals.savelist[savename].portrait):
+			$menucontrol/menupanel/SavePanel/saveimage.set_texture(globals.loadimage(globals.savelist[savename].portrait))
+		else:
+			$menucontrol/menupanel/SavePanel/saveimage.set_texture(null)
+		text = globals.savelist[savename].name
+	else:
+		text = "This save has no info stored."
+		$menucontrol/menupanel/SavePanel/saveimage.set_texture(null)
+	$menucontrol/menupanel/SavePanel/RichTextLabel.bbcode_text = text
+	#_on_SavePanel_visibility_changed()
 
 func _on_deletebutton_pressed():
 	var dir = Directory.new()

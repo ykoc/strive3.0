@@ -219,6 +219,18 @@ func questarray():
 	location = ['any'],
 	difficulty = 'medium'
 	},
+	quest017 = {
+	code = '017',
+	questreq = globals.rules.male_chance >= 10,
+	shortdescription = "Noble seeks young squire.",
+	description = "An elegant note describes the search for a young male to act as squire for a newly knighted lord.\nMust be well behaved and physically able. ",
+	reqs = [['obed','gte', 90],['sex', 'eq', 'male'], ['sstr', 'gte', 2], ['age','neq','adult']],
+	reqstemp = [],
+	time = round(rand_range(7,12)),
+	reward = round(rand_range(30,50))*10,
+	location = ['any'],
+	difficulty = 'easy'
+	},
 	}
 	return questsarray
 

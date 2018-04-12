@@ -76,17 +76,15 @@ var filesname = 'user://saves/autosave'
 func _on_SavePanel_visibility_changed():
 	$TextureFrame/SavePanel.visible = true
 	var node
-#-----------------------------------------------------------------------------------------
 	var pressedsave
 	var moddedtext
-#-----------------------------------------------------------------------------------------
 	for i in get_node("TextureFrame/SavePanel/ScrollContainer/savelist").get_children():
 		if i != get_node("TextureFrame/SavePanel/ScrollContainer/savelist/Button"):
 			i.queue_free()
 			i.visible = false
 	get_node("TextureFrame/SavePanel/saveline").set_text(filesname.replacen("user://saves/",''))
+	pressedsave = get_node("TextureFrame/SavePanel/saveline").text
 	var dir = Directory.new()
-	#OS.shell_open(ProjectSettings.globalize_path(OS.get_user_data_dir()))
 	if dir.dir_exists("user://saves") == false:
 		dir.make_dir("user://saves")
 	for i in globals.dir_contents():
@@ -100,22 +98,28 @@ func _on_SavePanel_visibility_changed():
 			moddedtext = "This save has no info stored."
 			node.get_node("name").set_text(i.replacen("user://saves/",''))
 		get_node("TextureFrame/SavePanel/ScrollContainer/savelist").add_child(node)
-		#node.set_text(i.replacen("user://saves/",''))
 		node.set_meta('text', i)
-#-----------------------------------------------------------------------------------------
-		pressedsave = get_node("TextureFrame/SavePanel/saveline").text
-		if pressedsave == node.get_node("name").text:
-			node.pressed = true
-			get_node("TextureFrame/SavePanel/saveline").editable = false
-			get_node("TextureFrame/SavePanel/RichTextLabel").set_bbcode(moddedtext)
-#-----------------------------------------------------------------------------------------
 		node.connect('pressed', self, 'loadchosen', [node])
 
 
 
 func loadchosen(node):
 	filesname = node.get_meta('text')
-	_on_SavePanel_visibility_changed()
+	var text
+	for i in $TextureFrame/SavePanel/ScrollContainer/savelist.get_children():
+		i.pressed = (i== node)
+	get_node("TextureFrame/SavePanel/ScrollContainer/savelist/Button/name").set_text(filesname.replacen("user://saves/",''))
+	if globals.savelist.has(filesname):
+		if globals.savelist[filesname].has('portrait') && globals.loadimage(globals.savelist[filesname].portrait):
+			$TextureFrame/SavePanel/loadimage.set_texture(globals.loadimage(globals.savelist[filesname].portrait))
+		else:
+			$TextureFrame/SavePanel/loadimage.set_texture(null)
+		text = globals.savelist[filesname].name
+	else:
+		text = "This save has no info stored."
+		$TextureFrame/SavePanel/loadimage.set_texture(null)
+	$TextureFrame/SavePanel/RichTextLabel.bbcode_text = text
+	#_on_SavePanel_visibility_changed()
 
 func _on_deletebuttonssave_pressed():
 	var dir = Directory.new()

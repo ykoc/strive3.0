@@ -7,6 +7,8 @@ func getslavedescription(tempperson, mode = 'default'):
 	showmode = mode
 	person = tempperson
 	var text = basics() + features() + genitals() + mods() + tattoo() + piercing()
+	if person.customdesc != '':
+		text += '\n\n' + person.customdesc
 	text = person.dictionary(text)
 	if text.find('[furcolor]'):
 		text = text.replace('[furcolor]', getdescription('furcolor'))
