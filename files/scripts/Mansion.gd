@@ -2867,6 +2867,7 @@ func _on_cleanbutton_pressed():
 	globals.state.condition = 100
 	globals.resources.gold -= min(ceil(globals.resources.day/7.0)*10,100)
 	_on_mansionsettings_pressed()
+	_on_mansion_pressed()
 
 
 

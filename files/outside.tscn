@@ -487,7 +487,7 @@ use_filter = true
 extra_spacing_top = 3
 font_data = ExtResource( 25 )
 
-[sub_resource type="GDScript" id=27]
+[sub_resource type="GDScript" id=25]
 
 script/source = "extends Node
 
@@ -753,7 +753,6 @@ func _on_iteminfo_input_event( ev ):
 		get_node(\"iteminfo\").visible = false
 
 func _on_inventoryclose_pressed():
-	globals.main.get_node("outside").shoppanelclosecheck()
 	self.visible = false
 
 
@@ -850,7 +849,7 @@ func _on_cancel_pressed():
 
 "
 
-[sub_resource type="DynamicFont" id=33]
+[sub_resource type="DynamicFont" id=26]
 
 size = 24
 use_mipmaps = false
@@ -859,7 +858,7 @@ extra_spacing_top = 1
 font_data = ExtResource( 25 )
 _sections_unfolded = [ "Settings" ]
 
-[sub_resource type="StyleBoxTexture" id=28]
+[sub_resource type="StyleBoxTexture" id=27]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -878,7 +877,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=29]
+[sub_resource type="StyleBoxTexture" id=28]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -897,7 +896,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=30]
+[sub_resource type="StyleBoxTexture" id=29]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -916,7 +915,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=31]
+[sub_resource type="StyleBoxTexture" id=30]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -935,7 +934,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=32]
+[sub_resource type="StyleBoxTexture" id=31]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -954,7 +953,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="Animation" id=25]
+[sub_resource type="Animation" id=32]
 
 length = 0.3
 loop = false
@@ -984,7 +983,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=26]
+[sub_resource type="Animation" id=33]
 
 length = 0.3
 loop = false
@@ -4443,7 +4442,7 @@ theme = ExtResource( 1 )
 texture = ExtResource( 27 )
 expand = true
 stretch_mode = 0
-script = SubResource( 27 )
+script = SubResource( 25 )
 _sections_unfolded = [ "Mouse", "Visibility" ]
 
 [node name="mode" type="TextureButton" parent="shoppanel/inventory" index="0"]
@@ -4842,7 +4841,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 33 )
+custom_fonts/font = SubResource( 26 )
 text = "100"
 percent_visible = 1.0
 lines_skipped = 0
@@ -5048,7 +5047,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 33 )
+custom_fonts/font = SubResource( 26 )
 text = "100"
 percent_visible = 1.0
 lines_skipped = 0
@@ -5123,6 +5122,7 @@ size_flags_horizontal = 2
 size_flags_vertical = 2
 texture = ExtResource( 46 )
 expand = true
+stretch_mode = 0
 _sections_unfolded = [ "Mouse" ]
 __meta__ = {
 "_edit_lock_": true
@@ -5144,7 +5144,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 28 )
+custom_styles/panel = SubResource( 27 )
 _sections_unfolded = [ "Mouse" ]
 __meta__ = {
 "_edit_lock_": true
@@ -5190,8 +5190,8 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_styles/fg = SubResource( 29 )
-custom_styles/bg = SubResource( 30 )
+custom_styles/fg = SubResource( 28 )
+custom_styles/bg = SubResource( 29 )
 min_value = 0.0
 max_value = 100.0
 step = 1.0
@@ -5269,7 +5269,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 31 )
+custom_styles/panel = SubResource( 30 )
 popup_exclusive = false
 
 [node name="RichTextLabel" type="RichTextLabel" parent="shoppanel/inventory/iteminfo" index="0"]
@@ -5343,6 +5343,7 @@ _sections_unfolded = [ "custom_fonts" ]
 
 [node name="amountselect" type="PopupPanel" parent="shoppanel/inventory" index="16"]
 
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -5357,7 +5358,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_styles/panel = SubResource( 32 )
+custom_styles/panel = SubResource( 31 )
 popup_exclusive = false
 _sections_unfolded = [ "custom_styles" ]
 
@@ -5616,8 +5617,8 @@ autoplay = "spritemovefairy"
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
-anims/show = SubResource( 25 )
-anims/spritemovefairy = SubResource( 26 )
+anims/show = SubResource( 32 )
+anims/spritemovefairy = SubResource( 33 )
 blend_times = [  ]
 
 [connection signal="pressed" from="questlog" to="." method="_on_questlog_pressed"]

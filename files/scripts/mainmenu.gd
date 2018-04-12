@@ -105,6 +105,7 @@ func _on_SavePanel_visibility_changed():
 
 func loadchosen(node):
 	filesname = node.get_meta('text')
+	get_node("TextureFrame/SavePanel/saveline").set_text(filesname.replacen("user://saves/",''))
 	var text
 	for i in $TextureFrame/SavePanel/ScrollContainer/savelist.get_children():
 		i.pressed = (i== node)
@@ -119,6 +120,7 @@ func loadchosen(node):
 		text = "This save has no info stored."
 		$TextureFrame/SavePanel/loadimage.set_texture(null)
 	$TextureFrame/SavePanel/RichTextLabel.bbcode_text = text
+	
 	#_on_SavePanel_visibility_changed()
 
 func _on_deletebuttonssave_pressed():
@@ -144,9 +146,6 @@ func _on_loadbutton_pressed():
 func loadfile():
 	globals.load_game(filesname)
 	_on_SavePanel_visibility_changed()
-
-func _on_saveline_text_changed( text ):
-	filesname = text
 
 func _on_load_pressed():
 	_on_SavePanel_visibility_changed()
