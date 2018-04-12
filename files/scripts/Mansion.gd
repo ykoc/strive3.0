@@ -10,6 +10,7 @@ var currentslave = 0 setget currentslave_set
 var selectedslave = -1
 var texture = null
 var startcombatzone = "amberguardforest"
+var nameportallocation
 onready var maintext = '' setget maintext_set, maintext_get
 onready var exploration = get_node("explorationnode")
 onready var slavepanel = get_node("MainScreen/slave_tab")
@@ -1602,11 +1603,11 @@ func _on_mansion_pressed():
 	else:
 		$Navigation/personal/TextureRect.texture = selftexture
 	$ResourcePanel/clean.set_text(str(round(globals.state.condition)) + '%')
-	var portals = false
-	for i in globals.state.portals.values():
-		if i.enabled == true:
-			portals = true
-	$MainScreen/mansion/portals.set_disabled(!portals)
+	var portals = true
+	#for i in globals.state.portals.values():
+	#	if i.enabled == true:
+	#		portals = true
+	#$MainScreen/mansion/portals.set_disabled(!portals)
 	textnode.show()
 	var sleepers = globals.count_sleepers()
 	text = 'You are at your mansion, which is located near [color=aqua]'+ globals.state.location.capitalize()+'[/color].\n\n'
@@ -2621,18 +2622,39 @@ func _on_portals_pressed():
 			i.hide()
 			i.queue_free()
 	for i in globals.state.portals.values():
-		if i.enabled == true:
-			var newbutton = button.duplicate()
-			list.add_child(newbutton)
-			newbutton.set_text(i.code.capitalize())
+		var newbutton = button.duplicate()
+		list.add_child(newbutton)
+		if i.code !='wimborn':
 			newbutton.show()
-			newbutton.connect("pressed",self,'portalbutton', [i])
+		if i.enabled == true:
+			newbutton.disabled = false
+			newbutton.set_text(i.code.capitalize())
+			newbutton.connect('pressed', self, 'portalbuttonpressed', [newbutton, i])
+		else:
+			newbutton.set_text('???')
+			newbutton.disabled = true
 
 
-func portalbutton(i):
+func portalbuttonpressed(newbutton, i):
+	var text
+	nameportallocation = i.code
+	for i in $MainScreen/mansion/portalspanel/ScrollContainer/VBoxContainer.get_children():
+		i.pressed = (i== newbutton)
+		if i.pressed == true:
+			get_node("MainScreen/mansion/portalspanel/imagelocation").set_texture(globals.backgrounds[nameportallocation])
+			get_node("MainScreen/mansion/portalspanel/imagelocation/namelocation").text = newbutton.text+" Portal"
+			if newbutton.text == 'Umbra':
+				get_node("MainScreen/mansion/portalspanel/imagelocation/RichTextLabel").text = "Portal leads to the "+newbutton.text+" Undergrounds"
+			else:
+				get_node("MainScreen/mansion/portalspanel/imagelocation/RichTextLabel").text = "Portal leads to the city of "+newbutton.text
+
+func _on_traveltoportal_pressed():
+	portalbutton()
+	
+func portalbutton():
 	get_node("MainScreen/mansion/portalspanel").hide()
 	get_node("outside").gooutside()
-	get_node("explorationnode").call('zoneenter', i.code)
+	get_node("explorationnode").call('zoneenter', nameportallocation)
 
 func _on_portalsclose_pressed():
 	get_node("MainScreen/mansion/portalspanel").hide()
@@ -3328,3 +3350,6 @@ func _on_close_pressed():
 func _on_hideui_pressed():
 	$outside.visible = !$outside.visible
 	$ResourcePanel.visible = !$ResourcePanel.visible
+
+
+
