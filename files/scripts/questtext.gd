@@ -255,6 +255,19 @@ var AynerisMeet3 = "After entering the local store, you spot a familiar figure, 
 var AynerisOfferJoin = "You figure out, that not letting Ayneris to join you is really not an option at this point, and cautiously invite her. \n\n[color=yellow]— Great! I'll be looking forward to my personal room![/color]\n\nWith slightly mischievous smile, Ayneris disappears through the portal. "
 var AynerisIgnore = "With a cheap distracting trick you quickly retreat. Thankfully, you've managed to get lost in the crowd, before Ayneris could bring to much attention to you, but your reputation around Amberguard will surely suffer. "
 
+#---------------------------
+###Slaver Merchant
+
+var SlaverMeet1 = "blabla"
+var SlaverWin1 = "blabla"
+var SlaverBuy = "blabla"
+var SlaverLeave = "blabla"
+
+###Outdoor Merchant
+
+var MerchantMeet1 = "blabla"
+
+#---------------------------
 
 #Sebastian
 

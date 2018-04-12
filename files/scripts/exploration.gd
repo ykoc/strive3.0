@@ -1924,6 +1924,31 @@ func chloeforest():
 func aynerisencounter():
 	globals.events.aynerisforest()
 
+#------------------------------------------
+func slaverrandomencounter():
+	var race = ''
+	var origins = ''
+	var rand = 0
+	var newslaverslave = []
+	race = globals.weightedrandom(currentzone.races)
+	var sex = 'random'
+	var originspool = [{value = 'rich', weight = 2},{value = 'commoner', weight = 5},{value = 'poor', weight = 5},{value = 'slave', weight = 12}]
+	var agepool = [['child',20],['teen',60], ['adult', 100]]
+	rand = rand_range(0,100)
+	race = globals.checkfurryrace(race)
+	var age = globals.weightedrandom(agepool)
+	origins = globals.weightedrandom(originspool)
+	if deeperregion == true && globals.originsarray.find(origins) < 4 && rand_range(0,1) > 0.3:
+		origins = globals.originsarray[globals.originsarray.find(origins)+1]
+	var newslave = globals.newslave(race, age, sex, origins)
+	newslaverslave.append(newslave)
+	globals.main.get_node("outside").slavermerchantaddslave(newslaverslave)
+	globals.events.slaverencounter()
+	
+func merchantrandomencounter():
+	globals.events.merchantencounter()
+	
+#------------------------------------------
 
 func chloehouse():
 	if globals.state.sidequests.chloe in [2,3]:

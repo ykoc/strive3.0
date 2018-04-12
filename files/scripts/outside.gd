@@ -7,6 +7,9 @@ onready var button = get_node("outsidebuttoncontainer/buttontemplate")
 onready var questtext = globals.questtext
 onready var mansion = get_parent()
 var location = ''
+#--------------------------------------------------------
+var guildloc 
+#--------------------------------------------------------
 var questgiveawayslave
 
 func _ready():
@@ -318,6 +321,15 @@ func slaveguild(guild = 'wimborn'):
 		mansion.maintext = globals.player.dictionaryplayer(text)
 		var array = [{name = 'See slaves for sale',function = 'slaveguildslaves'},{name = 'Offer your servants',function = 'slaveguildsells'}, {name = 'See custom requests', function = 'slaveguildquests'}, {name = 'Services for Slaves',function = 'slaveservice'}, {name = 'Leave', function = 'tofrostford'}]
 		buildbuttons(array)
+#--------------------------------------------------------
+	elif guild == 'outdoor':
+		guildloc = 'outdoor'
+		clearselection()
+		
+		#slavearray = globals.guildslaves.frostford
+		text = "blabla"
+		mansion.maintext = globals.player.dictionaryplayer(text)
+#--------------------------------------------------------
 	get_node("playergrouppanel/VBoxContainer").visible = false
 	if globals.spelldict.mindread.learned == false:
 		get_node("slavebuypanel/mindreadbutton").visible = false
@@ -419,7 +431,12 @@ func slaveguildslaves():
 		newbutton.connect('pressed',self,'selectslavebuy',[person])
 	mansion.maintext = 'You get a simple catalogue with currently present slaves available for purchase.'
 	$slavebuypanel/statspanel.visible = false
-	clearbuttons()
+#--------------------------------------------------------
+	if guildloc == 'outdoor':
+		buttoncontainer.visible = false
+	else:
+#--------------------------------------------------------
+		clearbuttons()
 
 func selectslavebuy(person):
 	var price = 0
@@ -496,7 +513,12 @@ func _on_slavelistcancel_pressed():
 	get_node("slavebuypanel").visible = false
 	clearselection()
 	if location != 'umbra':
-		slaveguild(location)
+#----------------------------------------------------------
+		if guildloc == 'outdoor':
+			buttoncontainer.visible = true
+		else:
+#----------------------------------------------------------
+			slaveguild(location)
 	else:
 		get_parent().get_node("explorationnode").zoneenter('umbra')
 
@@ -1405,6 +1427,10 @@ frostfordmarket = {code = 'frostfordmarket', name = "Frostford's Market", items 
 aydashop = {code = 'aydashop', sprite = 'aydanormal', name = "Ayda's Assortments", items = ['regressionpot', 'beautypot', 'hairdye', 'basicsolutioning','bestialessenceing','taintedessenceing','fluidsubstanceing'], selling = false},
 amberguardmarket = {code = 'amberguardmarket', name = "Amberguard's Market", items = ['teleportamberguard','beautypot','bestialessenceing','magicessenceing','fluidsubstanceing','armorelvenchain','armorrobe'], selling = true},
 sebastian = {code = 'sebastian', name = "Sebastian", items = ['teleportumbra'], selling = false},
+#----------------------------------------------------------------------------------------------------------
+outdoor = {code = 'outdoor', name = "Outdoor", items = [], selling = false},
+#----------------------------------------------------------------------------------------------------------
+
 blackmarket = {code = 'blackmarket', name = 'Black Market', items = ['lockpick','accslavecollar','acchandcuffs','armorleather','armorchain','weaponsword','weaponhammer','armortentacle'], selling = true}
 }
 
@@ -1436,12 +1462,29 @@ var currentshop
 var selecteditem
 var mode
 
+#-----------------------------------------------------------------------
+func shoppanelclosecheck():
+	print("panel close check")
+	if get_node("shoppanel/Panel").visible == false:
+		get_node("shoppanel").visible = false
+		get_node("shoppanel/Panel").visible = true
+#-----------------------------------------------------------------------
+
 func shopinitiate(shopname):
 	currentshop = shops[shopname]
 	selecteditem = null
-	get_node("shoppanel/Panel/title").set_text(currentshop.name)
-	get_node("shoppanel").visible = true
-	get_node("shoppanel/itempanel").visible = false
+#-----------------------------------------------------------------------
+	if shopname == "outdoor":
+		currentshop.items.append('food')
+		get_node("shoppanel").visible = true
+		get_node("shoppanel/Panel").visible = false
+		get_node("shoppanel/itempanel").visible = false
+		get_node("shoppanel/inventory/ScrollContainer/GridContainer/Button/sell").visible = false
+	else:
+#-----------------------------------------------------------------------
+		get_node("shoppanel/Panel/title").set_text(currentshop.name)
+		get_node("shoppanel").visible = true
+		get_node("shoppanel/itempanel").visible = false
 	if currentshop.has('sprite'):
 		setcharacter(currentshop.sprite)
 		get_node("AnimationPlayer").play("show")
