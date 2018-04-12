@@ -2313,6 +2313,63 @@ func chloealchemy(stage = 0):
 		globals.state.sidequests.chloe = 9
 	globals.main.dialogue(true, self, text, buttons)
 
+#-----------------------------------------------------------------------
+func slaverencounter(stage = 0):
+	var state = false
+	var text = ''
+	var buttons = []
+	var image
+	var sprites = []
+	if stage == 0:
+		text = textnode.SlaverMeet1
+		buttons.append({text = 'Fight Slaver', function = 'slaverencounter', args = 1})
+		buttons.append({text = 'Buy Slave',function = 'slaverencounter',args = 2})
+		buttons.append({text = 'Ignore',function = 'slaverencounter',args = 3})
+	elif stage == 1:
+		globals.main.get_node("explorationnode").buildenemies("slaver1")
+		globals.main.close_dialogue()
+		#globals.main.get_node("explorationnode").launchonwin = 'slaverwin'
+		globals.main.get_node("combat").nocaptures = true
+		globals.main.get_node("explorationnode").enemyfight()
+		return
+	elif stage == 2:
+		globals.main.get_node("outside").slaveguild("outdoor")
+		globals.main.get_node("outside").slaveguildslaves()
+		globals.main.close_dialogue()
+		return
+	elif stage == 3:
+		globals.main.close_dialogue()
+		return
+	globals.main.dialogue(state, self, text, buttons, sprites)
+	
+#func slaverwin():
+#	var state = false
+#	var text = ''
+#	var buttons = []
+#	var sprites = []
+#	text = textnode.SlaverWin1
+#	globals.main.dialogue(state, self, text, buttons, sprites)
+	
+func merchantencounter(stage = 0):
+	var state = false
+	var text = ''
+	var buttons = []
+	var image
+	var sprites = []
+	if stage == 0:
+		text = textnode.MerchantMeet1
+		buttons.append({text = 'Trade',function = 'merchantencounter',args = 1})
+		buttons.append({text = 'Ignore',function = 'merchantencounter',args = 2})
+	elif stage == 1:
+		globals.main.get_node("outside").shopinitiate('outdoor')
+		globals.main.get_node("outside").shopbuy()
+		globals.main.close_dialogue()
+		return
+	elif stage == 2:
+		globals.main.close_dialogue()
+		return
+	globals.main.dialogue(state, self, text, buttons, sprites)
+#-----------------------------------------------------------------------
 
 func aynerisforest(stage = 0):
 	var state = false
