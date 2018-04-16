@@ -1008,6 +1008,7 @@ func resolution(text = ''):
 	if counter >= enemygroup.size():
 		get_node("win").show()
 		globals.main.music_set('stop')
+		globals.main.sound('win')
 	elif playergroup[0].state == 'stopfight':
 		clearpanels()
 		hide()

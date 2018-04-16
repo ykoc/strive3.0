@@ -75,7 +75,9 @@ dungeon = load("res://files/music/dungeon.ogg"),
 intimate = load("res://files/music/intimate.ogg"),
 }
 var sounddict = {
-stab = load("res://files/sounds/stab.wav")}
+stab = load("res://files/sounds/stab.wav"),
+win = load("res://files/sounds/win.wav"),
+}
 var backgrounds = {
 mansion = load("res://files/backgrounds/mansion.png"),
 jail = load("res://files/backgrounds/jail.png"),
@@ -107,6 +109,7 @@ undercity = load("res://files/backgrounds/undercity.png"),
 tunnels = load("res://files/backgrounds/tunnels.png"),
 mainorder = load("res://files/backgrounds/mainorder.png"),
 mainorderfinale = load("res://files/backgrounds/mainorderfinale.png"),
+umbra = load("res://files/backgrounds/umbra.png"),
 }
 var scenes = {
 finale = load("res://files/images/scene/finale.png"),
@@ -835,7 +838,7 @@ class person:
 	
 	func health_set(value):
 		stats.health_max = ((variables.basehealth + stats.end_cur*variables.healthperend) + floor(level/2)*5 )*stats.health_bonus
-		stats.health_cur = min(value, stats.health_max) 
+		stats.health_cur = min(floor(value), stats.health_max) 
 	
 	func obed_set(value):
 		var difference = stats.obed_cur - value

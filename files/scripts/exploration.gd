@@ -309,7 +309,7 @@ tags = [],
 },
 
 umbra = {
-background = 'undercity',
+background = 'umbra',
 reqs = "true",
 combat = false,
 code = 'umbra',
@@ -448,11 +448,11 @@ func zoneenter(zone):
 	if deeperregion:
 		text += ' [Deep Area]'
 	outside.get_node('exploreprogress/locationname').set_text(text)
+	text = ''
 	globals.get_tree().get_current_scene().get_node("outside/exploreprogress").set_value((progress/max(zone.length,1))*100)
 	currentzone = zone
 	outside.clearbuttons()
-	text = '[center]'+ zone.name + '[/center]' + globals.fastif(deeperregion == true, ' [color=yellow][Deep Area][/color]', '')
-	text += '\n\n'+ zone.description
+	text += zone.description
 	if zone.code in ['wimborn','gorn','amberguard','frostford']:
 		text += "\n\n[color=yellow]You can use public teleport to return to mansion from this location.[/color]"
 	mansion.maintext = text
@@ -905,24 +905,6 @@ func generaterandomloot(gear = {number = 0, enchantchance = 0}, misc = 0, miscnu
 	winpanel.get_node("wintext").set_bbcode(text)
 	builditemlists()
 
-func slavers():
-	globals.get_tree().get_current_scene().get_node('outside').clearbuttons()
-	newbutton = button.duplicate()
-	mansion.maintext = encounterdictionary(enemygroup.description)
-	buttoncontainer.add_child(newbutton)
-	newbutton.set_text('Greet them')
-	newbutton.visible = true
-	newbutton.connect("pressed",self,'slaversgreet')
-	newbutton = button.duplicate()
-	buttoncontainer.add_child(newbutton)
-	newbutton.set_text('Attack them')
-	newbutton.visible = true
-	newbutton.connect("pressed",self,'enemyfight')
-	newbutton = button.duplicate()
-	buttoncontainer.add_child(newbutton)
-	newbutton.set_text('Ignore them')
-	newbutton.visible = true
-	newbutton.connect("pressed",self,'enemyleave')
 
 func banditcamp():
 	globals.get_tree().get_current_scene().get_node('outside').clearbuttons()
@@ -936,6 +918,68 @@ func banditcamp():
 	newbutton.set_text('Ignore them')
 	newbutton.visible = true
 	newbutton.connect("pressed",self,'enemyleave')
+
+func slaversenc(stage = 0):
+	var state = false
+	var buttons = []
+	var image
+	var sprites = []
+	if stage == 0:
+		if enemygroup.units.size() < 4:
+			mansion.maintext = "You spot a small group of slavers escorting a captured person. "
+		else:
+			mansion.maintext = "You come across a considerable group of slavers escorting a few capturees. "
+		buttons.append({name = 'Attack Slavers', function = 'slaversenc', args = 1})
+		buttons.append({name = 'Greet Slavers',function = 'slaversenc',args = 2})
+		buttons.append({name = 'Leave',function = 'slaversenc',args = 3})
+	elif stage == 1:
+		enemyfight()
+		return
+	elif stage == 2:
+		mansion.maintext = "You greet the group of slavers and they offer you to check their freshly acquired merchandise. "
+		buttons.append({name = 'Fight Slavers', function = 'slaversenc', args = 1})
+		buttons.append({name = 'Check Victims',function = 'slaversenc',args = 4})
+		buttons.append({name = 'Leave',function = 'slaversenc',args = 3})
+	elif stage == 3:
+		progress += 1
+		zoneenter(currentzone.code)
+	elif stage == 4:
+		globals.main.get_node("outside").closefunction = ['slaversenc',2]
+		globals.main.get_node("outside").slavearray = enemygroup.captured
+		globals.main.get_node("outside").guildlocation = 'outside'
+		globals.main.get_node("outside").slaveguildslaves()
+	outside.buildbuttons(buttons,self)
+	#globals.main.dialogue(state, self, text, buttons, sprites)
+	
+#func slaverwin():
+#	var state = false
+#	var text = ''
+#	var buttons = []
+#	var sprites = []
+#	text = textnode.SlaverWin1
+#	globals.main.dialogue(state, self, text, buttons, sprites)
+	
+func merchantencounter(stage = 0):
+	var state = false
+	var text = ''
+	var buttons = []
+	var image
+	var sprites = []
+	if stage == 0:
+		text = ""
+		buttons.append({text = 'Trade',function = 'merchantencounter',args = 1})
+		buttons.append({text = 'Ignore',function = 'merchantencounter',args = 2})
+	elif stage == 1:
+		globals.main.get_node("outside").shopinitiate('outdoor')
+		globals.main.get_node("outside").shopbuy()
+		globals.main.close_dialogue()
+		return
+	elif stage == 2:
+		globals.main.close_dialogue()
+		return
+	globals.main.dialogue(state, self, text, buttons, sprites)
+#-----------------------------------------------------------------------
+
 
 func slaversgreet():
 	globals.get_tree().get_current_scene().get_node('outside').clearbuttons()
@@ -1442,7 +1486,7 @@ func capturedecide(stage): #1 - no reward, 2 - material, 3 - sex, 4 - join
 		location = 'gorn'
 	
 	if stage == 1:
-		text = "$race $child is surprised by your generosity, and after thanking you again, leaves. "
+		text = rewardslave.dictionary("$race ").capitalize() + "$child is surprised by your generosity, and after thanking you again, leaves. "
 		globals.state.reputation[location] += 1
 	elif stage == 2:
 		if randf() >= 0.25:
@@ -1924,31 +1968,9 @@ func chloeforest():
 func aynerisencounter():
 	globals.events.aynerisforest()
 
-#------------------------------------------
-func slaverrandomencounter():
-	var race = ''
-	var origins = ''
-	var rand = 0
-	var newslaverslave = []
-	race = globals.weightedrandom(currentzone.races)
-	var sex = 'random'
-	var originspool = [{value = 'rich', weight = 2},{value = 'commoner', weight = 5},{value = 'poor', weight = 5},{value = 'slave', weight = 12}]
-	var agepool = [['child',20],['teen',60], ['adult', 100]]
-	rand = rand_range(0,100)
-	race = globals.checkfurryrace(race)
-	var age = globals.weightedrandom(agepool)
-	origins = globals.weightedrandom(originspool)
-	if deeperregion == true && globals.originsarray.find(origins) < 4 && rand_range(0,1) > 0.3:
-		origins = globals.originsarray[globals.originsarray.find(origins)+1]
-	var newslave = globals.newslave(race, age, sex, origins)
-	newslaverslave.append(newslave)
-	globals.main.get_node("outside").slavermerchantaddslave(newslaverslave)
-	globals.events.slaverencounter()
-	
 func merchantrandomencounter():
 	globals.events.merchantencounter()
-	
-#------------------------------------------
+
 
 func chloehouse():
 	if globals.state.sidequests.chloe in [2,3]:

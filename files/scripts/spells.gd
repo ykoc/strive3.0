@@ -407,6 +407,9 @@ func mutate(power=2, silent = false):
 			text += "$name's butt size has changed. "
 			person.ass = globals.sizearray[rand_range(0,globals.sizearray.size())]
 		elif line == 'penis':
+			if (globals.rules.futa == false && person.sex != 'male'):
+				power += 1
+				continue
 			if person.penis == 'none':
 				person.penis = 'small'
 				text += "$name has grown a dick. "
@@ -420,6 +423,9 @@ func mutate(power=2, silent = false):
 				text += "$name's dick shape has changed. "
 				person.penistype = globals.penistypearray[rand_range(0,globals.penistypearray.size())]
 		elif line == "balls":
+			if (globals.rules.futaballs == false && person.sex != 'male'):
+				power += 1
+				continue
 			if person.balls == 'none':
 				person.balls = 'small'
 				text += "$name has grown a scrotum. "
@@ -430,6 +436,9 @@ func mutate(power=2, silent = false):
 			text += "$name's skin color has changed. "
 			person.skin = globals.assets.getrandomskincolor()
 		elif line == 'skincov':
+#			if globals.rules.furry == false:
+#				power += 1
+#				continue
 			text += "$name's skin coverage has changed. "
 			person.skincov = globals.skincovarray[rand_range(0,globals.skincovarray.size())]
 			person.furcolor = globals.assets.getrandomfurcolor()

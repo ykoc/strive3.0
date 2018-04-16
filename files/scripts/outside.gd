@@ -7,9 +7,6 @@ onready var button = get_node("outsidebuttoncontainer/buttontemplate")
 onready var questtext = globals.questtext
 onready var mansion = get_parent()
 var location = ''
-#--------------------------------------------------------
-var guildloc 
-#--------------------------------------------------------
 var questgiveawayslave
 
 func _ready():
@@ -25,6 +22,12 @@ func _ready():
 	if globals.guildslaves.umbra.size() < 4:
 		var rand = round(rand_range(4,6))
 		newslaveinguild(rand, 'umbra')
+	for i in ['armor','weapon','costume','accessory','underwear']:
+		$playergrouppanel/characterinfo.get_node(i).connect('mouse_entered',self,'iteminfo',[i])
+		$playergrouppanel/characterinfo.get_node(i).connect('mouse_exited',self,'iteminfoclose')
+	for i in ['sstr','sagi','smaf','send']:
+		$playergrouppanel/characterinfo/stats.get_node(i).connect("mouse_entered",self,'statinfo',[i])
+		$playergrouppanel/characterinfo/stats.get_node(i).connect("mouse_exited",self,'iteminfoclose')
 	#get_node("playergroupdetails/TabContainer").connect("visibility_changed", self, "_on_TabContainer_tab_changed")
 
 
@@ -121,24 +124,99 @@ func playergrouppanel():
 		if i != get_node("playergrouppanel/VBoxContainer/Panel"):
 			i.visible = false
 			i.queue_free()
+	for i in $itemmenu/ScrollContainer/VBoxContainer.get_children():
+		if i.get_name() != 'TextureButton':
+			i.visible = false
+			i.queue_free()
 	$playergrouppanel/VBoxContainer.rect_size = $playergrouppanel/VBoxContainer.rect_min_size
 	array.append(globals.player)
 	for i in globals.state.playergroup:
 		array.append(globals.state.findslave(i))
 	for person in array:
 		charpanel = get_node("playergrouppanel/VBoxContainer/Panel").duplicate()
-		if person.imageportait != null:
-			charpanel.get_node("portait").set_texture(globals.loadimage(person.imageportait))
 		get_node("playergrouppanel/VBoxContainer").add_child(charpanel)
 		charpanel.visible = true
+		charpanel.get_node("button").connect("pressed",self,'opencharacter', [person])
 		charpanel.set_meta("person", person)
-		charpanel.get_node("name").set_text(person.name_short())
-		charpanel.get_node("stress").visible = true
-		#charpanel.get_node("button").connect("pressed",self,'utilitypanel',[charpanel])
-		charpanel.get_node("stress").set_text("SR:" + str(round(person.stress)))
-		charpanel.get_node("health").set_text('HP:' +str(round(person.health)) + '/' + str(person.stats.health_max))
-		charpanel.get_node("energy").set_text('EN:'+str(round(person.energy)) + '/' + str(person.stats.energy_max))
-		#charpanel.get_node("utilitypanel").connect("popup_hide", globals, 'hidetooltip')
+		buildbars(charpanel, person)
+	for i in ['supply','rope','bandage','lockpick','torch']:
+		if globals.state.backpack.stackables.has(i):
+			charpanel = $itemmenu/ScrollContainer/VBoxContainer/TextureButton.duplicate()
+			$itemmenu/ScrollContainer/VBoxContainer.add_child(charpanel)
+			charpanel.visible = true
+			charpanel.get_node("icon").set_texture(globals.itemdict[i].icon)
+			charpanel.hint_tooltip = globals.itemdict[i].name
+			charpanel.get_node("Label").text = str(globals.state.backpack.stackables[i])
+
+var geardefaulticon = {
+	armor = load("res://files/buttons/inventory/28.png"),
+	weapon = load("res://files/buttons/inventory/29.png"),
+	accessory = load("res://files/buttons/inventory/27.png"),
+	costume = load("res://files/buttons/inventory/25.png"),
+	underwear = load("res://files/buttons/inventory/26.png"),
+}
+
+func iteminfo(gear):
+	var item
+	var text = ''
+	if partyselectedchar.gear[gear] != null:
+		item = globals.state.unstackables[partyselectedchar.gear[gear]]
+		globals.showtooltip(globals.itemdescription(item))
+
+func iteminfoclose():
+	globals.hidetooltip()
+
+func abilitytooltip(ability):
+	var text = ''
+	globals.showtooltip('[center]' + ability.name + '[/center]\n\n' + ability.description)
+
+func statinfo(stat):
+	globals.showtooltip(globals.statsdescript[stat])
+
+var partyselectedchar = null
+
+func opencharacter(person):
+	partyselectedchar = person
+	$playergrouppanel/characterinfo.popup()
+	buildbars($playergrouppanel/characterinfo, person)
+	for i in person.gear:
+		$playergrouppanel/characterinfo.get_node(i).texture_normal = geardefaulticon[i]
+		if person.gear[i] != null:
+			var item = globals.state.unstackables[person.gear[i]]
+			$playergrouppanel/characterinfo.get_node(i).texture_normal = load(item.icon)
+	for i in $playergrouppanel/characterinfo/Container/GridContainer.get_children():
+		if i.get_name() != 'Button':
+			i.visible = false
+			i.queue_free()
+	for i in person.ability:
+		var ability = globals.abilities.abilitydict[i]
+		var newnode = $playergrouppanel/characterinfo/Container/GridContainer/Button.duplicate()
+		$playergrouppanel/characterinfo/Container/GridContainer.add_child(newnode)
+		newnode.visible = true
+		newnode.texture = ability.iconnorm
+		newnode.connect("mouse_entered",self,'abilitytooltip',[ability])
+		newnode.connect("mouse_exited",self,'iteminfoclose')
+	for i in ['sstr','sagi','smaf','send']:
+		$playergrouppanel/characterinfo/stats.get_node(i+'/Label').text = str(person[i]) + "/" +str(min(person.stats[globals.maxstatdict[i]], person.originvalue[person.origins]))
+
+func _on_closechar_pressed():
+	$playergrouppanel/characterinfo.visible = false
+
+func buildbars(parentnode, person):
+	parentnode.get_node("name").text = person.name_short()
+	parentnode.get_node("hp").value = (person.health/person.stats.health_max)*100
+	parentnode.get_node("hp").hint_tooltip = "Health: " + str(person.health) + "/" + str(person.stats.health_max)
+	parentnode.get_node("en").value = (float(person.energy)/person.stats.energy_max)*100
+	parentnode.get_node("en").hint_tooltip = "Energy: " + str(person.energy) + "/" + str(person.stats.energy_max)
+	parentnode.get_node("portait").set_texture(globals.loadimage(person.imageportait))
+	if person != globals.player:
+		parentnode.get_node("stress").visible = true
+		parentnode.get_node("lust").visible = true
+		parentnode.get_node("stress").value = (float(person.stress)/person.stats.stress_max)*100
+		parentnode.get_node("lust").value = (float(person.lust)/person.stats.lust_max)*100
+	else:
+		parentnode.get_node("stress").visible = false
+		parentnode.get_node("lust").visible = false
 
 
 func utilitypanel(panel):
@@ -272,6 +350,7 @@ func slaveguild(guild = 'wimborn'):
 	mindread = false
 	var text = ''
 	sellslavelocation = guild
+	guildlocation = guild
 	if guild == 'wimborn':
 		slavearray = globals.guildslaves.wimborn
 		if get_node("charactersprite").is_visible() == false || get_node("charactersprite").get_texture() != globals.spritedict.fairy:
@@ -321,15 +400,6 @@ func slaveguild(guild = 'wimborn'):
 		mansion.maintext = globals.player.dictionaryplayer(text)
 		var array = [{name = 'See slaves for sale',function = 'slaveguildslaves'},{name = 'Offer your servants',function = 'slaveguildsells'}, {name = 'See custom requests', function = 'slaveguildquests'}, {name = 'Services for Slaves',function = 'slaveservice'}, {name = 'Leave', function = 'tofrostford'}]
 		buildbuttons(array)
-#--------------------------------------------------------
-	elif guild == 'outdoor':
-		guildloc = 'outdoor'
-		clearselection()
-		
-		#slavearray = globals.guildslaves.frostford
-		text = "blabla"
-		mansion.maintext = globals.player.dictionaryplayer(text)
-#--------------------------------------------------------
 	get_node("playergrouppanel/VBoxContainer").visible = false
 	if globals.spelldict.mindread.learned == false:
 		get_node("slavebuypanel/mindreadbutton").visible = false
@@ -405,6 +475,7 @@ var selectedslaveprice
 var slavearray
 var mindread = false
 var sellslavelocation
+var guildlocation
 
 func slaveguildslaves():
 	get_node("slavebuypanel").visible = true
@@ -424,19 +495,17 @@ func slaveguildslaves():
 		var price = max(person.buyprice()*0.8,50)
 		if globals.state.reputation.has(location) && globals.state.reputation[location] <= -10 && location != 'umbra':
 			price *= (abs(globals.state.reputation[location])/20.0)
+		if guildlocation == 'outside':
+			price *= 0.5
 		price = round(price)
 		newbutton.set_meta('person', person)
 		newbutton.get_node('price').set_text(str(price)+ ' gold')
 		newbutton.set_meta('price', price)
 		newbutton.connect('pressed',self,'selectslavebuy',[person])
-	mansion.maintext = 'You get a simple catalogue with currently present slaves available for purchase.'
+	if guildlocation != 'outside':
+		mansion.maintext = 'You get a simple catalogue with currently present slaves available for purchase.'
 	$slavebuypanel/statspanel.visible = false
-#--------------------------------------------------------
-	if guildloc == 'outdoor':
-		buttoncontainer.visible = false
-	else:
-#--------------------------------------------------------
-		clearbuttons()
+	clearbuttons()
 
 func selectslavebuy(person):
 	var price = 0
@@ -453,7 +522,10 @@ func selectslavebuy(person):
 	elif person.obed < 40:
 		text += "$name reacts to commands [color=#ff4949]poorly[/color] and does not seem to hold any enthusiasm about $his position. Perhaps $he will need an additional training...\n\n"
 	if person.vagvirgin == true && person.vagina != 'none':
-		text += "After a gesture, $name reveals to you $his [color=aqua]virgin[/color] pussy. \n\n"
+		if person.obed >= 40:
+			text += "After a gesture, $name reveals to you $his [color=aqua]virgin[/color] pussy. \n\n"
+		else:
+			text += "With some assistance, $name is forced to demonstrate you $his [color=aqua]virgin[/color] pussy. \n\n"
 	text += "As you finish inspection, you are being reminded, that you can purchase $him for mere [color=yellow]"+str(price)+ " gold[/color].[/color] "
 	mansion.maintext = person.descriptionsmall() + '\n\n[color=#ff5df8]'+ person.dictionary(text)
 	if globals.resources.gold < price:
@@ -507,29 +579,30 @@ func selectslavesell(person = null, type = 'guild'):
 		else:
 			i.set_pressed(false)
 
-
+var closefunction
 
 func _on_slavelistcancel_pressed():
 	get_node("slavebuypanel").visible = false
 	clearselection()
-	if location != 'umbra':
-#----------------------------------------------------------
-		if guildloc == 'outdoor':
-			buttoncontainer.visible = true
-		else:
-#----------------------------------------------------------
-			slaveguild(location)
+	if guildlocation == 'outside':
+		get_parent().get_node("explorationnode").call(closefunction[0], closefunction[1])
+	elif location != 'umbra':
+		slaveguild(location)
 	else:
 		get_parent().get_node("explorationnode").zoneenter('umbra')
 
 func _on_purchasebutton_pressed():
 	globals.resources.gold -= selectedslaveprice
-	globals.slaves = selectedslave
+	
+	if guildlocation == 'outside':
+		get_parent().get_node("explorationnode").captureeffect(selectedslave)
+	else:
+		globals.slaves = selectedslave
+		main.popup('You pay ' + str(selectedslaveprice) + selectedslave.dictionary(" gold for $name. With that, guild's helper brands $him for you and $he's sent to your mansion. "))
+		mansion.maintext = globals.player.dictionary("A finest choice, $sir. Anyone else caught your attention?")
+		selectedslave.brand = 'basic'
 	slavearray.remove(slavearray.find(selectedslave))
-	main.popup('You pay ' + str(selectedslaveprice) + selectedslave.dictionary(" gold for $name. With that, guild's helper brands $him for you and $he's sent to your mansion. "))
-	selectedslave.brand = 'basic'
 	slaveguildslaves()
-	mansion.maintext = globals.player.dictionary("A finest choice, $sir. Anyone else caught your attention?")
 	clearselection('buy')
 
 
@@ -615,8 +688,10 @@ func clearselection(temp = ''):
 	selectedslave = ''
 	selectedslaveprice = 0
 	mansion.maintext = ''
-	if temp == 'buy':
-		mansion.maintext = '[color=yellow]Your newly purchased person has been sent to your mansion. [/color]'
+	if temp == 'buy' && guildlocation != 'outside':
+		mansion.maintext = '[color=yellow]Your newly purchased slave has been sent to your mansion. [/color]'
+	elif temp == 'buy' && guildlocation == 'outside':
+		mansion.maintext = '[color=yellow]Purchased slave is added to your group. [/color]'
 	elif temp == 'sell':
 		mansion.maintext = "[color=yellow]You receive a nice purse of gold for your freshly selled servant. [/color]"
 	get_node("slavebuypanel/purchasebutton").set_disabled(true)
@@ -2367,3 +2442,5 @@ func _on_return_pressed():
 func _on_outsidetextbox_meta_clicked(meta):
 	if meta == 'race':
 		get_tree().get_current_scene().showracedescript(selectedslave)
+
+

@@ -255,20 +255,6 @@ var AynerisMeet3 = "After entering the local store, you spot a familiar figure, 
 var AynerisOfferJoin = "You figure out, that not letting Ayneris to join you is really not an option at this point, and cautiously invite her. \n\n[color=yellow]— Great! I'll be looking forward to my personal room![/color]\n\nWith slightly mischievous smile, Ayneris disappears through the portal. "
 var AynerisIgnore = "With a cheap distracting trick you quickly retreat. Thankfully, you've managed to get lost in the crowd, before Ayneris could bring to much attention to you, but your reputation around Amberguard will surely suffer. "
 
-#---------------------------
-###Slaver Merchant
-
-var SlaverMeet1 = "blabla"
-var SlaverWin1 = "blabla"
-var SlaverBuy = "blabla"
-var SlaverLeave = "blabla"
-
-###Outdoor Merchant
-
-var MerchantMeet1 = "blabla"
-
-#---------------------------
-
 #Sebastian
 
 var sebastianumbra = "You explain to Sebastian, that you are looking for alternative options for selling slaves and wondering if he can help you make a few new connections.\n\n[color=yellow]— Looking for new options, pal? I suppose, I could take some troublesome slaves from you, but I will be straight up with you: I won't pay you much, also word about it will quickly spread and people won't be pleased. You don't care about your reputation? I might have another option for you, it will be difficult to arrange... Fine, I'll pass you an exclusive ticket. Just come see me once you have enough money.[/color]\n\n[color=aqua]You can sell slaves to Sebastian now. Slaves sold this way will grant upgrade points even if they are not tamed properly, but this will lower your reputation. [/color]"

@@ -99,10 +99,10 @@ descriptionescape = "A group of [color=aqua]wild $race[/color] escapes from you 
 harpy = {units = [['harpy',1,1]], awareness = 0, captured = null, special = null,
 description =  "You come across a [color=aqua]$race monster $child[/color]. $He hasn't spotted you yet. ",
 },
-slaverseasy = {units = [['slaver',2,3]], awareness = 0, captured = ['slavervictim'], special = null,
+slaverseasy = {units = [['slaver',2,3]], awareness = 0, captured = ['slavervictim'], special = 'slaversenc',
 description = "You spot a group of [color=aqua]$unitnumber slavers[/color] leading a [color=yellow]sole victim[/color]. You can't make out any more details without getting closer.",
 },
-slaversmedium = {units = [['slaver',3,5]], awareness = 0, captured = ['slavervictim', 'slavervictim'], special = null,
+slaversmedium = {units = [['slaver',3,5]], awareness = 0, captured = ['slavervictim', 'slavervictim'], special = 'slaversenc',
 description = "You spot a group of [color=aqua]$unitnumber slavers[/color] leading few recently [color=yellow]captured victims[/color]. You can't say much about them without getting closer.",
 },
 peasant = {units = [['peasant',1,1]], awareness = 0, captured = null, special = null,
@@ -199,11 +199,6 @@ description = "You have been spotted by [color=aqua]patrolling militia[/color] g
 amberguardguardsmany = {units = [['amberguardpatrol',7,10]], awareness = 0, captured = null, special = null,
 description = "You have been spotted by [color=aqua]large patrolling militia[/color] group from Amberguard. ",
 },
-#----------------------------------------------------------
-slaver1 = {units = [['slavermerchant',1,1],['slaverguard',2,3]], awareness = 0, captured = ['slavervictim'], special = null,
-description = "",
-},
-#----------------------------------------------------------
 }
 
 var capturespool = {
@@ -905,46 +900,7 @@ rewardexp = 10,
 stats = {health = 450, power = 24, speed = 30, energy = 50, armor = 15, magic = 2, abilities = ['attack','aoeattack']},
 skills = [],
 },
-#----------------------------------------------------------
-slavermerchant = {
-name = 'Slaver Merchant',
-code = 'slavermerchant',
-faction = 'stranger',
-icon = load("res://files/images/enemies/slaverm.png"),
-iconalt = load("res://files/images/enemies/slaverf.png"),
-special = null,
-capture = true,
-capturerace = ['bandits'],
-captureoriginspool = [{value = 'slave', weight = 1},{value = 'commoner', weight = 3},{value = 'poor', weight = 4}],
-captureagepool = [{value = 'teen', weight = 1}, {value = 'adult', weight = 4}],
-capturesex = ['any'],
-rewardpool = {gold = 35, supply = 35},
-rewardgold = [5,15],
-rewardexp = 25,
-stats = {health = 70, power = 7, speed = 18, armor = 4, energy = 50, magic = 0, abilities = ['attack']},
-gear = 'medbandits',
-skills = [],
-},
-slaverguard = {
-name = 'Slaver Guard',
-code = 'slaverguard',
-faction = 'stranger',
-icon = load("res://files/images/enemies/slaverm.png"),
-iconalt = load("res://files/images/enemies/slaverf.png"),
-special = null,
-capture = true,
-capturerace = ['bandits'],
-captureoriginspool = [{value = 'slave', weight = 1},{value = 'commoner', weight = 3},{value = 'poor', weight = 4}],
-captureagepool = [{value = 'teen', weight = 1}, {value = 'adult', weight = 4}],
-capturesex = ['any'],
-rewardpool = {gold = 35, supply = 35},
-rewardgold = [5,15],
-rewardexp = 25,
-stats = {health = 70, power = 7, speed = 18, armor = 4, energy = 50, magic = 0, abilities = ['attack']},
-gear = 'medbandits',
-skills = [],
-},
-#----------------------------------------------------------
+
 }
 
 var enemyequips = {

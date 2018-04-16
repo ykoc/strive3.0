@@ -1309,7 +1309,6 @@ margin_right = 345.0
 margin_bottom = 54.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
-hint_tooltip = "Grade"
 mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -1330,7 +1329,6 @@ margin_right = 345.0
 margin_bottom = 104.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
-hint_tooltip = "Specialization"
 mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -1356,7 +1354,7 @@ size_flags_vertical = 1
 texture = ExtResource( 12 )
 expand = true
 stretch_mode = 0
-_sections_unfolded = [ "Mouse" ]
+_sections_unfolded = [ "Hint", "Mouse" ]
 
 [node name="attribute" type="Label" parent="stats/statspanel" index="16"]
 
