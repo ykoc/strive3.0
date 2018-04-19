@@ -832,7 +832,7 @@ accgoldring = {
 },
 accslavecollar = {
 	code = 'accslavecollar',
-	name = 'A Leather person Collar',
+	name = 'A Leather Slave Collar',
 	icon = "res://files/images/items/collar.png",
 	description = "This leather collar is designed to fit tightly around the neck. It has rings to which bindings can be attached.\n",
 	effect = [{type = 'onendday', effect = 'slavecollareffect', descript = "Increases Obedience by the end of a day. "}],

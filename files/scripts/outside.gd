@@ -2,8 +2,8 @@
 extends Node
 
 onready var main = get_tree().get_current_scene()
-onready var buttoncontainer = get_node("outsidebuttoncontainer")
-onready var button = get_node("outsidebuttoncontainer/buttontemplate")
+onready var buttoncontainer = $buttonpanel/outsidebuttoncontainer
+onready var button = $buttonpanel/outsidebuttoncontainer/buttontemplate
 onready var questtext = globals.questtext
 onready var mansion = get_parent()
 var location = ''
@@ -44,9 +44,9 @@ func _input(event):
 	var dict = {49 : 1, 50 : 2, 51 : 3, 52 : 4,53 : 5,54 : 6,55 : 7,56 : 8, 16777351 :1, 16777352 : 2, 16777353 : 3, 16777354 : 4, 16777355 : 5, 16777356: 6, 16777357: 7, 16777358: 8}
 	if event.scancode in dict:
 		var key = dict[event.scancode]
-		if event.is_action_pressed(str(key)) == true && get_node("outsidebuttoncontainer").get_children().size() >= key+1 && self.is_visible() == true && get_parent().get_node("dialogue").visible == false && get_node("outsidebuttoncontainer").get_child(key).disabled == false:
+		if event.is_action_pressed(str(key)) == true && buttoncontainer.get_children().size() >= key+1 && self.is_visible() == true && get_parent().get_node("dialogue").visible == false && buttoncontainer.get_child(key).disabled == false:
 			get_parent().get_node("chooseslavepopup").visible = false
-			get_node("outsidebuttoncontainer").get_child(key).emit_signal("pressed")
+			buttoncontainer.get_child(key).emit_signal("pressed")
 		elif event.is_action_pressed(str(key)) == true && get_parent().get_node("dialogue").visible == true && get_parent().get_node("dialogue/popupbuttoncenter/popupbuttons").get_children().size() >= key+1:
 			if get_parent().get_node("dialogue/popupbuttoncenter/popupbuttons").get_child(key).is_disabled() == false:
 				get_parent().get_node("dialogue/popupbuttoncenter/popupbuttons").get_child(key).emit_signal("pressed")
@@ -68,7 +68,7 @@ func clearbuttons():
 		if i != button:
 			i.visible = false
 			i.queue_free()
-	#$outsidebuttoncontainer.rect_size = $outsidebuttoncontainer.rect_min_size
+
 
 func buildbuttons(array, target = self):
 	clearbuttons()
@@ -198,6 +198,38 @@ func opencharacter(person):
 		newnode.connect("mouse_exited",self,'iteminfoclose')
 	for i in ['sstr','sagi','smaf','send']:
 		$playergrouppanel/characterinfo/stats.get_node(i+'/Label').text = str(person[i]) + "/" +str(min(person.stats[globals.maxstatdict[i]], person.originvalue[person.origins]))
+	$playergrouppanel/characterinfo/grade.texture = globals.gradeimages[person.origins]
+	if person.spec != null:
+		$playergrouppanel/characterinfo/spec.texture = globals.specimages[person.spec]
+	$playergrouppanel/characterinfo/grade.visible = person != globals.player
+	$playergrouppanel/characterinfo/spec.visible = person != globals.player
+
+func _on_grade_mouse_entered():
+	var text = ''
+	for i in globals.originsarray:
+		if i == partyselectedchar.origins:
+			text += '[color=green] ' + i.capitalize() + '[/color]'
+		else:
+			text += i.capitalize()
+		if i != 'noble':
+			text += ' - '
+	text += '\n\n' + globals.dictionary.getOriginDescription(partyselectedchar)
+	globals.showtooltip(text)
+
+func _on_spec_mouse_entered():
+	var text 
+	if partyselectedchar.spec == null:
+		text = "Specialization can provide special abilities and effects and can be trained at Slavers' Guild. "
+	else:
+		var spec = globals.jobs.specs[partyselectedchar.spec]
+		text = "[center]" + spec.name + '[/center]\n'+ spec.descript + "\n[color=aqua]" +  spec.descriptbonus + '[/color]'
+	globals.showtooltip(text)
+
+func _on_grade_mouse_exited():
+	globals.hidetooltip()
+
+func _on_spec_mouse_exited():
+	globals.hidetooltip()
 
 func _on_closechar_pressed():
 	$playergrouppanel/characterinfo.visible = false
@@ -290,6 +322,7 @@ func gooutside():
 	main.get_node("Navigation").visible = false
 	main.get_node('MainScreen').visible = false
 	main.get_node("charlistcontrol").visible = false
+	#main.get_node("ResourcePanel").visible = false
 	self.visible = true
 	$shoppanel.visible = false
 	$shoppanel/inventory.visible = false
@@ -1922,7 +1955,7 @@ func caliqueststart(value = ''):
 	elif globals.state.sidequests.cali >= 10:
 		market()
 		cali = null
-		main.get_node('dialogue').visible = false
+		main.close_dialogue()
 		return
 	if globals.state.sidequests.cali == 0:
 		sprites = [['caliangry', 'pos1','opac']]
@@ -2198,7 +2231,7 @@ func _on_details_pressed(empty = null):
 		get_node("playergroupdetails/TabContainer").connect("tab_changed",self,"_on_details_pressed")
 	if get_node("playergroupdetails/Panel/TabContainer").is_connected('tab_changed',self,'_on_details_pressed') == false:
 		get_node("playergroupdetails/Panel/TabContainer").connect("tab_changed",self,"_on_details_pressed")
-	get_node("playergroupdetails").visible = true
+	get_node("playergroupdetails").popup()
 	get_node("playergroupdetails/Panel/itemdescript").set_bbcode("")
 	get_node("playergroupdetails/Panel/discardbutton").set_disabled(true)
 	get_node("playergroupdetails/Panel/usebutton").set_disabled(true)

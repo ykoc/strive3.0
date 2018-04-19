@@ -112,6 +112,8 @@ class fighter:
 
 
 func start_battle(nosound = false):
+	get_parent().animationfade(0.4)
+	yield(get_parent(),'animfinished')
 	get_node("autowin").visible = get_parent().get_node("new slave button").visible
 	var slave
 	var combatant
@@ -263,7 +265,6 @@ func start_battle(nosound = false):
 			if slave.spec == 'trapper':
 				trapper = true
 				trappername = slave.name_short()
-			combatant = fighter.new()
 			combatant.person = slave
 			combatant.name = i.name
 			combatant.health = slave.health
@@ -1048,6 +1049,9 @@ func capturesequence(enemy):
 
 func victory():
 	var deads = []
+	
+	get_parent().animationfade(0.4)
+	yield(get_parent(),'animfinished')
 	get_node("win").hide()
 	for i in range(0, enemygroup.size()):
 		if enemygroup[i].state == 'escaped':

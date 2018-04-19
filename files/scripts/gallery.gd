@@ -254,7 +254,7 @@ sagi = 2,
 sstr = 1,
 skillpoints = 2,
 obed = 90,
-traits = ['Grateful', 'Nimble']
+traits = ['Nimble']
 },
 Yris = {
 basics = ['Beastkin Cat', 'adult', 'female', 'commoner'],
@@ -390,6 +390,7 @@ aynerispissed = load("res://files/images/ayneris/aynerispissed.png"),
 aynerisneutralnaked = load("res://files/images/ayneris/aynerisneutralnaked.png"),
 aynerisangrynaked = load("res://files/images/ayneris/aynerisangrynaked.png"),
 aynerispissednaked = load("res://files/images/ayneris/aynerispissednaked.png"),
+ayneristopless = load("res://files/images/ayneris/ayneristopless.png"),
 zoeneutral = load("res://files/images/zoe/zoeneutral.png"),
 zoeneutralnaked = load("res://files/images/zoe/zoeneutralnaked.png"),
 zoehappy = load("res://files/images/zoe/zoehappy.png"),

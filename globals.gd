@@ -91,7 +91,7 @@ market = load("res://files/backgrounds/market.jpg"),
 library1 = load("res://files/backgrounds/library1.png"),
 library2 = load("res://files/backgrounds/library2.png"),
 forest = load("res://files/backgrounds/forest.jpg"),
-shaliq = load("res://files/backgrounds/shaliq.jpg"),
+shaliq = load("res://files/backgrounds/shaliq.png"),
 crossroads = load("res://files/backgrounds/crossroads.png"),
 grove = load("res://files/backgrounds/grove.jpg"),
 highlands = load("res://files/backgrounds/highlands.jpg"),
@@ -125,7 +125,26 @@ aynerispunish = load("res://files/images/sexscenes/aynerispunish.png"),
 aynerissex = load("res://files/images/sexscenes/aynerissex.png"),
 }
 var mansionupgradesdict = mansionupgrades.dict
-
+var gradeimages = {
+slave = load("res://files/buttons/mainscreen/40.png"),
+poor = load("res://files/buttons/mainscreen/41.png"),
+commoner = load("res://files/buttons/mainscreen/42.png"),
+rich = load("res://files/buttons/mainscreen/43.png"),
+noble = load("res://files/buttons/mainscreen/44.png"),
+}
+var specimages = {
+null = null,
+geisha = load("res://files/buttons/mainscreen/33.png"),
+ranger = load("res://files/buttons/mainscreen/37.png"),
+executor = load("res://files/buttons/mainscreen/39.png"),
+bodyguard = load("res://files/buttons/mainscreen/31.png"),
+assassin = load("res://files/buttons/mainscreen/30.png"),
+housekeeper = load("res://files/buttons/mainscreen/34.png"),
+trapper = load("res://files/buttons/mainscreen/38.png"),
+nympho = load("res://files/buttons/mainscreen/36.png"),
+merchant = load("res://files/buttons/mainscreen/35.png"),
+tamer = load("res://files/buttons/mainscreen/32.png"),
+}
 
 var noimage = load("res://files/buttons/noimagesmall.png")
 
@@ -237,7 +256,7 @@ func slaves_set(person):
 	if get_tree().get_current_scene().find_node('ResourcePanel'):
 		get_tree().get_current_scene().find_node('population').set_text(str(slavecount())) 
 	if globals.get_tree().get_current_scene().has_node("infotext"):
-		globals.get_tree().get_current_scene().infotext("New person acquired: " + person.name_long(),'green')
+		globals.get_tree().get_current_scene().infotext("New Character acquired: " + person.name_long(),'green')
 
 func loadimage(path):
 	var file = File.new()

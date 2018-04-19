@@ -55,7 +55,7 @@ func _input(event):
 	if event.is_pressed() && event.is_action("escape") && stage in ['credits','patrons']:
 		stage = 'alise'
 		advance()
-	if event.is_pressed() && (event.is_action("LMB") || event.type == 1):#event.is_action("LMB") &&
+	if event.is_pressed() && (event.is_action("LMB")):#event.is_action("LMB") &&
 		advance()
 
 func launch():
@@ -112,18 +112,16 @@ func advance():
 	if stage == 'epilogue':
 		if scenearray.find(currentscene)+1 >= scenearray.size():
 			stage = 'credits'
-			player.play("blackout")
+			get_parent().animationfade(2)
 			yield(player, 'animation_finished')
-			player.play_backwards("blackout")
 			advance()
 			return
 		currentscene = scenearray[scenearray.find(currentscene)+1]
-		player.play("blackout")
+		get_parent().animationfade(2)
 		yield(player, 'animation_finished')
 		show(call(currentscene))
 		timer.set_wait_time(15)
 		timer.start()
-		player.play_backwards("blackout")
 	elif stage == 'credits':
 		get_node("TextureFrame").visible = true
 		get_node("TextureFrame/RichTextLabel").visible = true
@@ -143,10 +141,9 @@ func advance():
 		get_node("TextureFrame/RichTextLabel").visible = false
 		get_node("TextureFrame/RichTextLabel1").visible = false
 		get_node("TextureFrame/VBoxContainer").visible = false
-		player.play("blackout")
+		get_parent().animationfade(2)
 		yield(player,'animation_finished')
 		get_node("TextureFrame/alise").visible = true
-		player.play_backwards("blackout")
 
 
 

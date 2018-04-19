@@ -446,8 +446,8 @@ func zoneenter(zone):
 	outside.playergrouppanel()
 	text = zone.name
 	if deeperregion:
-		text += ' [Deep Area]'
-	outside.get_node('exploreprogress/locationname').set_text(text)
+		text = "+" + text + "+"
+	outside.get_node('locationname').set_text(text)
 	text = ''
 	globals.get_tree().get_current_scene().get_node("outside/exploreprogress").set_value((progress/max(zone.length,1))*100)
 	currentzone = zone
@@ -731,6 +731,20 @@ func enemyencounter():
 			call(enemygroup.special)
 			return
 	mansion.maintext = text
+	enemyinfo()
+
+func enemyinfo():
+	var text = ''
+	if enemygroup.units.size() <= 3:
+		text = "Number: " + str(enemygroup.size())
+	else:
+		text += "Estimate number: " + str(max(round(enemygroup.units.size() + rand_range(-2,2)),1))
+	
+	text += '\nGroup: ' + enemygroup.units[0].faction
+	if enemygroup.captured.size() >= 1:
+		text += "\n\nHave other persons involved. "
+	outside.get_node("textpanelexplore/enemyportrait").set_texture(enemygroup.units[0].icon)
+	outside.get_node("textpanelexplore/enemyinfo").set_bbcode(text)
 
 func enemylevelup(person, levelarray):
 	var level = levelarray[randi()%levelarray.size()]
@@ -1702,6 +1716,10 @@ func amberguard():
 	array.append({name = "Local Market (shop)", function = 'amberguardmarket'})
 	array.append({name = "Return to Elven Grove", function = 'zoneenter', args = 'elvenforest'})
 	array.append({name = "Move to the Amber Road", function = 'zoneenter', args = 'amberguardforest'})
+	if globals.state.sidequests.ayneris == 6:
+		for i in globals.state.playergroup:
+			if globals.state.findslave(i).unique == 'Ayneris':
+				event("aynerisrapieramberguard")
 	outside.buildbuttons(array,self)
 	if globals.state.location != 'amberguard':
 		if globals.resources.gold >= 25 :

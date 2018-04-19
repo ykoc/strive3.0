@@ -24,7 +24,17 @@ func _process(delta):
 	for i in get_tree().get_nodes_in_group("messages"):
 		if i.modulate.a > 0:
 			i.modulate.a = (i.modulate.a - delta)
-	$screenchange.visible = (float($screenchange.modulate.a) > 0.1)
+	
+	if shaking == true && _timer >= 0:
+		var shake_amount = 10
+		$Camera2D.set_offset(Vector2(rand_range(-1.0, 1.0) * shake_amount, rand_range(-1.0, 1.0) * shake_amount))
+		_timer -= delta
+	elif shaking == true && _timer < 0:
+		$Camera2D.set_offset(Vector2(0,0))
+		shaking = false
+		_timer = 0.0
+	
+	$screenchange.visible = (float($screenchange.modulate.a) > 0)
 	if musicfading == true && get_node("music").get_volume_db() != 0 && get_node("music").playing:
 		get_node("music").set_volume_db(get_node('music').get_volume_db() - delta*20)
 		if get_node("music").get_volume_db() <= 0:
@@ -37,6 +47,13 @@ func _process(delta):
 		if get_node("music").get_volume_db() >= globals.rules.musicvol:
 			musicraising = false
 			get_node("music").set_volume_db(globals.rules.musicvol)
+
+var shaking = false
+var _timer = 0.0
+
+func shake(duration):
+	shaking = true
+	_timer = duration
 
 var musicfading = false
 var musicraising = false
@@ -144,8 +161,8 @@ func _ready():
 	get_node("birthpanel/raise/childpanel/teen").connect('pressed', self, 'babyage', ['teen'])
 	get_node("birthpanel/raise/childpanel/adult").connect('pressed', self, 'babyage', ['adult'])
 	#exploration
-	get_node("explorationnode").buttoncontainer = get_node("outside/outsidebuttoncontainer")
-	get_node("explorationnode").button = get_node("outside/outsidebuttoncontainer/buttontemplate")
+	get_node("explorationnode").buttoncontainer = get_node("outside/buttonpanel/outsidebuttoncontainer")
+	get_node("explorationnode").button = get_node("outside/buttonpanel/outsidebuttoncontainer/buttontemplate")
 	get_node("explorationnode").main = self
 	get_node("explorationnode").outside = get_node('outside')
 	globals.events.outside = get_node("outside")
@@ -182,7 +199,7 @@ func sound(value):
 func startending():
 	var name = globals.player.name + " - Main Quest Completed"
 	var scene = load("res://files/ending.tscn").instance()
-	get_node("screenchange/AnimationPlayer").play("slowfade")
+	animationfade(3)
 	yield(get_node("screenchange/AnimationPlayer"), 'animation_finished')
 	scene.add_to_group('blockmaininput')
 	add_child(scene)
@@ -190,7 +207,6 @@ func startending():
 	scene.launch()
 	music_set('ending')
 	#scene.advance()
-	get_node("screenchange/AnimationPlayer").play_backwards("slowfade")
 	if globals.developmode == false:
 		globals.save_game('user://saves/'+name)
 	if globals.state.decisions.has('hadekeep'):
@@ -252,10 +268,10 @@ func _on_new_slave_button_pressed():
 	globals.resources.upgradepoints += 100
 	
 	globals.state.sidequests.brothel = 1
-	globals.state.sidequests.emily = 0
+	globals.state.sidequests.ayneris = 6
 	#globals.state.decisions.append('')
 	globals.state.rank = 3
-	globals.state.mainquest = 1
+	globals.state.mainquest = 5
 	globals.resources.mana = 200
 	globals.state.farm = 3
 	globals.state.mansionupgrades.mansionlab = 1
@@ -270,7 +286,7 @@ func _on_new_slave_button_pressed():
 	globals.state.condition -= 100
 	globals.state.decisions = ['tishaemilytricked','chloebrothel','ivrantaken','goodroute']
 	#lobals.state.upcomingevents.append({code = 'tishaappearance',duration =1})
-	globals.state.upcomingevents.append({code = 'caliproposal', duration = 1})
+	globals.state.upcomingevents.append({code = 'aynerisrapierstart', duration = 1})
 	for i in globals.characters.characters:
 		person = globals.characters.create(i)
 		person.loyal = 100
@@ -1523,14 +1539,32 @@ func background_set(text):
 			yield(get_tree(), 'idle_frame')
 			emit_signal('animfinished')
 			return
-		player.play("fadetoblack")
+		animationfade()
 		yield(player, "animation_finished")
-		emit_signal('animfinished')
 	texture = globals.backgrounds[text]
 	get_node("TextureFrame").set_texture(texture)
-	if OS.get_name() != "HTML5" && globals.rules.fadinganimation == true:
+
+
+func animationfade(value = 0.4, duration = 0.05):
+	var player = $screenchange/AnimationPlayer
+	player.get_animation("fadetoblack").length = value + duration
+	#print(var2str(player.get_animation("fadetoblack").track_get_key_value(0,0)))
+	player.get_animation("fadetoblack").track_remove_key(0, 1)
+	player.get_animation("fadetoblack").track_insert_key(0, value, Color(1,1,1,1)) 
+	#print(player.get_animation('fadetoblack').track_set_key_value(0,1))
+	if OS.get_name() != 'HTML5' && globals.rules.fadinganimation == true:
+		player.play('fadetoblack')
+		yield(player, "animation_finished")
+		emit_signal("animfinished")
 		player.play_backwards("fadetoblack")
-		#get_node("screenchange").hide()
+
+func screenanimation(text):
+	var player = get_node("screenchange/AnimationPlayer")
+	if OS.get_name() != 'HTML5' && globals.rules.fadinganimation == true:
+		player.play(text)
+		yield(player, "animation_finished")
+		emit_signal("animfinished")
+	
 
 var musicdict = globals.musicdict
 var musicvolume = 0
@@ -2628,7 +2662,7 @@ func _on_portals_pressed():
 		yield(self, 'animfinished')
 	var list = get_node("MainScreen/mansion/portalspanel/ScrollContainer/VBoxContainer")
 	var button = get_node("MainScreen/mansion/portalspanel/ScrollContainer/VBoxContainer/portalbutton")
-	get_node("MainScreen/mansion/portalspanel").show()
+	get_node("MainScreen/mansion/portalspanel").popup()
 	nameportallocation = null
 	$MainScreen/mansion/portalspanel/imagelocation.texture = null
 	$MainScreen/mansion/portalspanel/imagelocation/RichTextLabel.bbcode_text = 'Select a desired location to travel'
@@ -2902,6 +2936,8 @@ func checkplayergroup():
 
 
 func _on_cleanbutton_pressed():
+	animationfade()
+	yield(self, 'animfinished')
 	globals.state.condition = 100
 	globals.resources.gold -= min(ceil(globals.resources.day/7.0)*10,100)
 	_on_mansionsettings_pressed()
@@ -3282,6 +3318,10 @@ func _on_startbutton_pressed():
 			globals.events.emilytishasex()
 			return
 	var mode = 'normal'
+	if sexslaves.size() >= 4 && sexmode == 'sex':
+		globals.itemdict.aphroditebrew.amount -= 1
+	animationfade()
+	yield(self, 'animfinished')
 	if sexmode == 'abuse':
 		mode = 'abuse'
 		get_node("interactions").startsequence([globals.player] + sexassist, mode, sexslaves)

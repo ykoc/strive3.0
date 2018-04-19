@@ -863,26 +863,9 @@ func updatestats():
 	else:
 		$stats/basics/levelupreqs.set_bbcode('')
 
-var gradeimages = {
-slave = load("res://files/buttons/mainscreen/40.png"),
-poor = load("res://files/buttons/mainscreen/41.png"),
-commoner = load("res://files/buttons/mainscreen/42.png"),
-rich = load("res://files/buttons/mainscreen/43.png"),
-noble = load("res://files/buttons/mainscreen/44.png"),
-}
+var gradeimages = globals.gradeimages
 
-var specimages = {
-geisha = load("res://files/buttons/mainscreen/33.png"),
-ranger = load("res://files/buttons/mainscreen/37.png"),
-executor = load("res://files/buttons/mainscreen/39.png"),
-bodyguard = load("res://files/buttons/mainscreen/31.png"),
-assassin = load("res://files/buttons/mainscreen/30.png"),
-housekeeper = load("res://files/buttons/mainscreen/34.png"),
-trapper = load("res://files/buttons/mainscreen/38.png"),
-nympho = load("res://files/buttons/mainscreen/36.png"),
-merchant = load("res://files/buttons/mainscreen/35.png"),
-tamer = load("res://files/buttons/mainscreen/32.png"),
-}
+var specimages = globals.specimages
 
 
 func _on_traittext_meta_clicked( meta ):
@@ -900,7 +883,7 @@ func _on_info_meta_clicked( meta ):
 func _on_spec_mouse_entered():
 	var text 
 	if person.spec == null:
-		text = "Specialization can provide special abilities and effects and can be trained at person's Guild. "
+		text = "Specialization can provide special abilities and effects and can be trained at Slavers' Guild. "
 	else:
 		var spec = globals.jobs.specs[person.spec]
 		text = "[center]" + spec.name + '[/center]\n'+ spec.descript + "\n[color=aqua]" +  spec.descriptbonus + '[/color]'

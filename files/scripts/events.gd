@@ -129,7 +129,7 @@ func gornivranwin():
 	var buttons = []
 	text = textnode.MainQuestGornIvranWin
 	globals.state.sidequests.ivran = ''
-	globals.state.upcomingevents.append(({code = 'gornwaitday', duration = 1}))
+	globals.state.upcomingevents.append({code = 'gornwaitday', duration = 1})
 	globals.state.mainquest = 14
 	globals.main.get_node("explorationnode").zoneenter('gorn')
 	globals.main.dialogue(true, self, text, buttons, sprite)
@@ -2409,12 +2409,126 @@ func aynerismarket(stage = 0):
 		globals.state.unstackables[str(tmpitem.id)] = tmpitem
 		globals.slaves = person
 		globals.state.sidequests.ayneris = 5
+		globals.state.upcomingevents.append({code = "aynerisrapierstart", duration = 10})
 	elif stage == 2:
 		sprites = [['aynerisangry','pos1']]
 		text = textnode.AynerisIgnore
-		globals.state.sidequests.ayneris = 6
+		globals.state.sidequests.ayneris = 100
 		
 	globals.main.dialogue(state, self, text, buttons, sprites)
 
 func aynerisnextstage():
 	globals.state.sidequests.ayneris += 1
+
+func aynerisrapierstart(stage = 0):
+	var state = false
+	var text = ''
+	var ayneris
+	var buttons = []
+	var sprites = []
+	for i in globals.slaves:
+		if i.unique == 'Ayneris':
+			ayneris = i
+	if ayneris == null:
+		globals.state.sidequests.ayneris = 100
+		return
+	
+	
+	if stage == 0:
+		sprites = [['aynerispissed','pos1']]
+		text = textnode.AynerisContinue
+		buttons.append(['Agree','aynerisrapierstart',1])
+		buttons.append(['Refuse','aynerisrapierstart',2])
+	elif stage == 1:
+		sprites = [['aynerisneutral','pos1']]
+		text = textnode.AynerisRapierAgree
+		state = true
+		globals.state.sidequests.ayneris = 6
+	elif stage == 2:
+		sprites = [['aynerisangry', 'pos1']]
+		ayneris.obed -= 50
+		ayneris.loyal -= 20
+		state = true
+		globals.state.sidequests.ayneris = 100
+		text = textnode.AynerisRapierRefuse
+	
+	globals.main.dialogue(state, self, text, buttons, sprites)
+
+func aynerisrapieramberguard(stage = 0):
+	var state = false
+	var text = ''
+	var ayneris
+	var buttons = []
+	var sprites = []
+	for i in globals.slaves:
+		if i.unique == 'Ayneris':
+			ayneris = i
+	if stage == 0:
+		globals.state.sidequests.ayneris = 7
+		sprites = [['aynerisneutral','pos1']]
+		text = textnode.AynerisRapierAmberguard
+		buttons.append(['Continue', 'aynerisrapieramberguard', 1])
+	elif stage == 1:
+		globals.main.animationfade()
+		yield(globals.main, 'animfinished')
+		sprites = [['aynerispissed','pos1']]
+		text = textnode.AynerisRapierAmberguardCleaner
+		buttons.append(['Make Ayneris expose herself','aynerisrapieramberguard',2])
+		buttons.append({text = 'Give 200 gold', function = 'aynerisrapieramberguard', args = 3, disabled = globals.resources.gold < 200})
+	elif stage == 2:
+		sprites = [['aynerisangry','pos1']]
+		text = textnode.AynerisRapierShow
+		ayneris.lewdness += 10
+		ayneris.lust += 20
+		ayneris.obed -= 35
+		buttons.append(['Continue', 'aynerisrapieramberguard', 4])
+	elif stage == 3:
+		sprites = [['aynerisneutral','pos1']]
+		globals.resources.gold -= 200
+		ayneris.obed += 25
+		ayneris.loyal += 15
+		text = textnode.AynerisRapierPay
+		buttons.append(['Continue', 'aynerisrapieramberguard', 5])
+	elif stage == 4:
+		sprites = [['ayneristopless','pos1']]
+		text = textnode.AynerisRapierShow2
+		buttons.append(['Continue', 'aynerisrapieramberguard', 5])
+	elif stage == 5:
+		globals.main.animationfade()
+		yield(globals.main, 'animfinished')
+		sprites = [['aynerispissed','pos1']]
+		text = textnode.AynerisRapierFall
+		buttons.append(['Try catch her', 'aynerisrapieramberguard', 6])
+		buttons.append(['Let her fall', 'aynerisrapieramberguard', 7])
+	elif stage == 6:
+		sprites = [['aynerispissed','pos1']]
+		buttons.append(['Continue', 'aynerisrapieramberguard', 8])
+		text = textnode.AynerisRapierCatch
+		globals.main.shake(0.5)
+	elif stage == 7:
+		sprites = [['aynerisangry','pos1']]
+		buttons.append(['Continue', 'aynerisrapieramberguard', 9])
+		text = textnode.AynerisRapierIgnore
+		globals.main.shake(0.5)
+	elif stage == 8:
+		ayneris.away.duration = 1
+		globals.main._on_mansion_pressed()
+		ayneris.stress += 25
+		yield(globals.main, 'animfinished')
+		state = true
+		text = textnode.AynerisRapierCatchContinue
+		ayneris.add_trait('Grateful')
+		var item = globals.items.createunstackable('weaponaynerisrapier')
+		globals.state.unstackables[str(item.id)] = item
+	elif stage == 9:
+		ayneris.away.duration = 1
+		ayneris.stress += 40
+		globals.main._on_mansion_pressed()
+		yield(globals.main, 'animfinished')
+		state = true
+		var item = globals.items.createunstackable('weaponaynerisrapier')
+		globals.state.unstackables[str(item.id)] = item
+		text = textnode.AynerisRapierIgnoreContinue
+	
+	globals.main.dialogue(state, self, text, buttons, sprites)
+
