@@ -39,7 +39,7 @@ onready var nakedspritesdict = {
 	Melissa = {cons = "melissanakedfriendly", rape = 'melissanakedneutral', clothcons = 'melissafriendly', clothrape = 'melissaneutral'},
 	}
 
-func slavetabopen():
+func slavetabopen(): 
 	var label
 	var text = ""
 	get_parent().get_node("mansion/mansioninfo").set_bbcode('')
@@ -97,10 +97,35 @@ func slavetabopen():
 				i.visible = true
 			else:
 				i.visible = false
+#--------------------------------------------------------------------------------
+		if i.is_in_group('extrarules'):
+			if person.brand == 'advanced':
+				i.visible = true
+			else:
+				i.visible = false
+#--------------------------------------------------------------------------------
 	#regulationdescription()
 	for i in get_tree().get_nodes_in_group("slaverules"):
 		if person.rules.has(i.get_name()):
 			i.set_pressed(person.rules[i.get_name()])
+#--------------------------------------------------------------------------------
+	if get_node("stats/customization/rules/morningblowjob").pressed == true:
+		if person.sleep == 'jail':
+			get_node("stats/customization/rules/morningblowjob").pressed = false
+		else:
+			get_node("stats/customization/rules/morningblowjob").pressed = true
+	if person.sleep == 'jail':
+		get_node("stats/customization/rules/morningblowjob").visible = false
+	else:
+		if person.brand == 'advanced':
+			get_node("stats/customization/rules/morningblowjob").visible = true
+		else:
+			get_node("stats/customization/rules/morningblowjob").visible = false
+	if globals.itemdict.semen.amount < 10:
+		get_node("stats/customization/rules/cuminfood").disabled = true
+	else:
+		get_node("stats/customization/rules/cuminfood").disabled = false
+#--------------------------------------------------------------------------------
 	get_node("stats/workbutton").set_text(jobdict[person.work].name)
 	$stats/customization/brandbutton.set_text(person.brand.capitalize())
 	if globals.state.branding == 0:

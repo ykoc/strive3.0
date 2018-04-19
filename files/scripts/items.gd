@@ -806,7 +806,6 @@ weaponaynerisrapier = {
 	description = "\n[color=yellow]Requirements: 4 Agility[/color] ",
 	effect = [{type = 'incombat', effect = 'damage', effectvalue = 8, descript = "+8 Damage"}, {type = 'incombat', effect = 'passive', effectvalue = 'doubleattack', descript = '50% chance to attack twice'}],
 	recipe = '',
-	enchant = 'unique',
 	reqs = [{reqstat = 'sagi', oper = 'gte', reqvalue = 4}],
 	cost = 500,
 	type = 'gear',
@@ -872,6 +871,18 @@ acctravelbag = {
 	type = 'gear',
 	subtype = 'accessory',
 	weight = 5,
+	amount = 0,
+	unlocked = true,
+},
+semen = {
+	code = 'semen',
+	name = 'Master Cum',
+	icon = load("res://files/images/items/semen.png"),
+	description = "Extracted using Self masturbation(extraction) or when a slave on morning blowjob rule does not swallow the load. \nIs used to mix cum in your slave food",
+	effect = [],
+	recipe = '',
+	cost = 10,
+	type = 'ingredient',
 	amount = 0,
 	unlocked = true,
 },
@@ -957,7 +968,7 @@ clothtentacle = {
 	name = 'Living Suit',
 	icon = "res://files/images/items/clothtentacle.png",
 	description = "Parasitic suit which feeds on bodily fluids and stimulates person's privates. ",
-	effect = [{type = 'onendday', effect = 'livingsuiteffect', descript = "lust grows at the end of the day"}],
+	effect = [{type = 'onendday', effect = 'lust', effectvalue = 4, descript = "lust grows at the end of the day"}],
 	recipe = '',
 	reqs = null,
 	cost = 200,
@@ -1066,10 +1077,6 @@ func maiduniformeffect(person):
 
 func kimonoeffect(person):
 	pass
-
-func livingsuiteffect(person):
-	person.lust += 4
-	return "$name is being stimulated by wearing [color=yellow]Living suit[/color] and $his lust grows.\n\n"
 
 func peteffect(person):
 	var text = person.dictionary("$name wears pet suit ")

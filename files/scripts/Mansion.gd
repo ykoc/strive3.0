@@ -10,7 +10,6 @@ var currentslave = 0 setget currentslave_set
 var selectedslave = -1
 var texture = null
 var startcombatzone = "amberguardforest"
-var nameportallocation
 onready var maintext = '' setget maintext_set, maintext_get
 onready var exploration = get_node("explorationnode")
 onready var slavepanel = get_node("MainScreen/slave_tab")
@@ -43,21 +42,10 @@ var musicraising = false
 var musicvalue = 0
 
 func maintext_set(value):
-	var wild = $explorationnode.zones[$explorationnode.currentzone.code].combat == true
-	$outside/textpanel.visible = !wild
-	$outside/textpanelexplore.visible = wild
-	$outside/textpanel/outsidetextbox.bbcode_text = value
-	$outside/textpanelexplore/outsidetextbox2.bbcode_text = value
-
+	get_node("outside/outsidetextbox").set_bbcode(value)
 
 func maintext_get():
-	var wild = $explorationnode.zones[$explorationnode.currentzone.code].combat == true
-	var text = ''
-	if wild == false:
-		text = $outside/textpanel/outsidetextbox.bbcode_text
-	else:
-		text = $outside/textpanelexplore/outsidetextbox2.bbcode_text
-	return text
+	return get_node("outside/outsidetextbox").get_bbcode()
 
 func currentslave_set(value):
 	currentslave = value
@@ -177,7 +165,6 @@ func _ready():
 func sound(value):
 	$soundeffect.stream = globals.sounddict[value]
 	$soundeffect.playing = true
-	$soundeffect.autoplay = false
 
 func startending():
 	var name = globals.player.name + " - Main Quest Completed"
@@ -229,7 +216,7 @@ func _on_new_slave_button_pressed():
 		i.unlocked = true
 		if !i.type in ['gear','dummy']:
 			i.amount += 10
-	for i in ['armorchain','weaponclaymore','clothpet','clothkimono','underwearlacy','armortentacle','accamuletemerald','accamuletemerald','clothtentacle']:
+	for i in ['armorchain','weaponclaymore','clothpet','clothkimono','underwearlacy','armortentacle','accamuletemerald','accamuletemerald','accamuletemerald']:
 		var tmpitem = globals.items.createunstackable(i)
 		globals.state.unstackables[str(tmpitem.id)] = tmpitem
 		globals.items.enchantrand(tmpitem)
@@ -428,6 +415,7 @@ func rebuild_slave_list():
 func openslavetab(person):
 	currentslave = globals.slaves.find(person)
 	get_tree().get_current_scene().hide_everything()
+	globals.state.descriptsettings.general = true
 	$MainScreen/slave_tab.slavetabopen()
 
 func _on_prisonbutton_pressed():
@@ -482,7 +470,9 @@ func _on_end_pressed():
 	text1.set_bbcode('')
 	text2.set_bbcode('')
 	count = 0
-	
+#----------------------------------------------------------------
+	var nextmorningenergydrain = 100
+#----------------------------------------------------------------	
 	if globals.player.preg.duration >= 1:
 		globals.player.preg.duration += 1
 		if globals.player.preg.duration == 5:
@@ -500,6 +490,15 @@ func _on_end_pressed():
 				globals.state.condition = -1.0
 	
 	for person in globals.slaves:
+#--------------------------------------------------------------------------------------
+		if globals.resources.day == person.sexexp.cycleday+15:
+			person.sexexp.cycleday +=30
+		if globals.resources.day == person.sexexp.cycleday:
+			person.sexexp.impregnationday = 1
+		else:
+			person.sexexp.impregnationday = 0
+
+#--------------------------------------------------------------------------------------
 		person.metrics.ownership += 1
 		var handcuffs = false
 		for i in person.gear.values():
@@ -548,6 +547,18 @@ func _on_end_pressed():
 							globals.resources.food += workdict.food
 							person.metrics.foodearn += workdict.food
 			text1.set_bbcode(text1.get_bbcode()+person.dictionary(text))
+#-----------------------------------------------------------------
+			person.sexexp.cuminfooddetect = 1
+			person.sexexp.morningblowswallow = 0
+			if rand_range(0,2) > 1:
+				person.sexexp.cuminfooddetect = 0
+			if rand_range(0,2) > 1:
+				person.sexexp.morningblowswallow = 1
+			if globals.player.rules.repeatdaily == true:
+				if globals.itemdict.semen.amount < 10:
+					person.rules.cuminfood = false
+					text0.set_bbcode(text0.get_bbcode()+person.dictionary('[color=yellow]you do not have enough stored semen to mix in with $name food.[/color]\n'))
+#-----------------------------------------------------------------
 			######## Counting food
 			if globals.resources.food >= 5:
 				person.loyal += rand_range(0,1)
@@ -637,6 +648,9 @@ func _on_end_pressed():
 				else:
 					text2.set_bbcode(text2.get_bbcode() + person.dictionary('$name keeps you company at night and you grew closer.\n'))
 			elif person.sleep == 'jail':
+#-------------------------------------------------------------------------
+				person.rules.morningblowjob = false
+#-------------------------------------------------------------------------
 				person.metrics.jail += 1
 				person.obed += 25 - person.conf/6
 				person.energy += rand_range(20,30) + person.stats.end_cur*6
@@ -652,6 +666,67 @@ func _on_end_pressed():
 				person.stress += rand_range(10,15)
 				person.obed -= rand_range(10,20)
 				text0.bbcode_text += person.dictionary("[color=red]$name is suffering from unquenched lust.[/color]\n")
+#-------------------------------------------------------------------------
+			if person.rules.morningblowjob == true:
+				person.rules.morningblowjob = true
+			else:
+				person.rules.morningblowjob = false
+			if person.rules.cuminfood == true:
+				if person.sexexp.swallowlove >= 1 || person.sexexp.cuminfooddetect == 0:
+					person.sexexp.cuminfood += 1
+					globals.itemdict.semen.amount -= 10
+					if person.sexexp.cuminfood > 10 && randf() <= 0.1:
+						person.sexexp.swallowlove += 1
+						text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=yellow]$name addiction to cum swallowing increased without $him knowledge.[/color]\n"))
+					else:
+						if person.sexexp.swallowlove >= 2:
+							text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=yellow]$name likes having cum in $him food.[/color]\n"))
+						elif person.sexexp.swallowlove >= 1:
+							text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=yellow]$name starts to like having cum in $him food.[/color]\n"))
+						else:
+							text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=yellow]$name ate $him food not knowing cum was mixed in it.[/color]\n"))
+				else:
+					text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=yellow]$name detected something strange in $him food and decided to not eat what you gave $him, but instead stole some food to eat.[/color]\n"))
+					globals.resources.food -= 10
+			if person.rules.morningblowjob == true:
+				if nextmorningenergydrain >= 10:
+					nextmorningenergydrain -= 10
+					var semenamount
+					var semenamount1
+					if globals.player.balls == 'none':
+						semenamount = 0
+						semenamount1 = 0
+					elif globals.player.balls == 'small':
+						semenamount = 2
+						semenamount1 = 10
+					elif globals.player.balls == 'average':
+						semenamount = 4
+						semenamount1 = 20
+					elif globals.player.balls == 'big':
+						semenamount = 6
+						semenamount1 = 30
+					if person.obed >= 80 || person.sexexp.swallowlove >= 1:
+						person.sexexp.morningblowjob += 1
+						if person.sexexp.morningblowswallow == 1 && person.sexexp.morningblowjob > 10:
+							person.obed += 5
+							if randf() <= 0.1:
+								person.sexexp.swallowlove += 1
+								text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=yellow]$name finished you off swallowing all your seed and got more accustomed to swallowing cum.[/color]\n"))
+								globals.resources.food += semenamount
+							else:
+								text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=yellow]$name finished you off swallowing all your seed, reducing $him food usage by "+str(semenamount)+"[/color]\n"))
+								globals.resources.food += semenamount
+						else:# not in the mood to swallow
+							text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=yellow]$name finished you off but wasnt in the mood to swallow the load, but instead filled a vial with it that you put into storage for "+str(semenamount1)+" ml of semen[/color]\n"))
+							globals.itemdict.semen.amount += semenamount1
+							person.obed += 5
+					else:# refuse
+						text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=yellow]$name refused to give you a morning blowjob, and you lost some energy trying to enforce the rule.[/color]\n"))
+						person.obed -= 5
+				else:
+					person.rules.morningblowjob = false
+					text0.set_bbcode(text0.get_bbcode()+person.dictionary("[color=yellow]not enough remaining energy to get blown next morning by $name.[/color]\n"))
+#-------------------------------------------------------------------------
 			#Races
 			if person.race == 'Elf':
 				person.asser = person.conf
@@ -673,11 +748,11 @@ func _on_end_pressed():
 				person.loyal -= rand_range(1,5)
 				text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=yellow]$name is annoyed by you paying no attention to $him. [/color]\n"))
 			if person.traits.find('Pliable') >= 0:
-				if person.loyal >= 60:
+				if person.sexuals.affection >= 90:
 					person.trait_remove('Pliable')
 					person.add_trait('Devoted')
 					text0.set_bbcode(text0.get_bbcode() + person.dictionary('[color=green]$name has become Devoted. $His willpower strengthened.[/color]\n'))
-				elif person.lewdness >= 60:
+				elif person.sexuals.actions.size() >= 12:
 					person.trait_remove('Pliable')
 					person.add_trait('Slutty')
 					text0.set_bbcode(text0.get_bbcode() + person.dictionary('[color=green]$name has become Slutty. $His willpower strengthened.[/color]\n'))
@@ -940,7 +1015,26 @@ func _on_end_pressed():
 	if globals.state.mansionupgrades.foodpreservation == 0 && globals.resources.food >= globals.resources.foodcaparray[globals.state.mansionupgrades.foodcapacity]*0.80:
 		globals.resources.food -= globals.resources.food*0.03
 		text0.set_bbcode(text0.get_bbcode() + '[color=yellow]Some of your food reserves have spoiled.[/color]\n')
-	
+#---------------------------------------------------------------------------
+	if globals.player.rules.repeatdaily == true:
+		if nextmorningenergydrain >= 20:
+			nextmorningenergydrain -= 20
+			var semenamount
+			if globals.player.balls == 'none':
+				semenamount = 0
+			elif globals.player.balls == 'small':
+				semenamount = 10
+			elif globals.player.balls == 'average':
+				semenamount = 20
+			elif globals.player.balls == 'big':
+				semenamount = 30
+		#	if globals.itemdict.semen.amount > 0:	
+			globals.itemdict.semen.amount += semenamount
+			text0.set_bbcode(text0.get_bbcode()+"[color=yellow]you where able to store "+ str(semenamount)+" ml of cum after your morning masturbation session, but at the cost of some energy.[/color]\n")
+		else:
+			globals.player.rules.repeatdaily = false
+			text0.set_bbcode(text0.get_bbcode()+"[color=yellow]not enough remaining energy to masturbate yoursel.[/color]\n")
+#---------------------------------------------------------------------------	
 	if globals.resources.food >= 5:
 		if chef != null:
 			globals.resources.food -= max(3, variables.basefoodconsumption - (chef.sagi + (chef.wit/20))/2)
@@ -1128,6 +1222,14 @@ func startnewday():
 	else:
 		alisehide()
 	_on_mansion_pressed()
+#--------------------------------------------------------------------
+	if globals.player.rules.repeatdaily == true:
+		globals.player.energy -= 20
+	for person in globals.slaves:
+		if person.away.duration == 0:
+			if person.rules.morningblowjob == true:
+				globals.player.energy -= 10
+#--------------------------------------------------------------------
 #	if globals.state.supporter == false && int(globals.resources.day)%100 == 0:
 #		get_node("sellout").show()
 
@@ -1394,12 +1496,15 @@ func _on_SavePanel_visibility_changed():
 	if get_node("menucontrol/menupanel/SavePanel").visible == false:
 		return
 	var node
+#-----------------------------------------------------------------------------------------
 	var pressedsave
 	var moddedtext
+#-----------------------------------------------------------------------------------------
 	for i in get_node("menucontrol/menupanel/SavePanel/ScrollContainer/savelist").get_children():
 		if i != get_node("menucontrol/menupanel/SavePanel/ScrollContainer/savelist/Button"):
 			i.hide()
 			i.queue_free()
+	get_node("menucontrol/menupanel/SavePanel/saveline").set_text(savefilename.replacen("user://saves/",''))
 	var dir = Directory.new()
 	if dir.dir_exists("user://saves") == false:
 		dir.make_dir("user://saves")
@@ -1407,39 +1512,33 @@ func _on_SavePanel_visibility_changed():
 	for i in globals.savelist:
 		if savefiles.find(i) < 0:
 			globals.savelist.erase(i)
-	pressedsave = get_node("menucontrol/menupanel/SavePanel//saveline").text
 	for i in savefiles:
 		node = get_node("menucontrol/menupanel/SavePanel/ScrollContainer/savelist/Button").duplicate()
 		node.show()
 		if globals.savelist.has(i):
 			node.get_node("date").set_text(globals.savelist[i].date)
 			node.get_node("name").set_text(i.replacen("user://saves/",''))
+			moddedtext = globals.savelist[i].name
 		else:
 			node.get_node("name").set_text(i.replacen("user://saves/",''))
+			moddedtext = "This save has no info stored."
 		get_node("menucontrol/menupanel/SavePanel/ScrollContainer/savelist").add_child(node)
+		#node.set_text(i.replacen("user://saves/",''))
 		node.set_meta("name", i)
+#-----------------------------------------------------------------------------------------
+		pressedsave = get_node("menucontrol/menupanel/SavePanel//saveline").text
+		if pressedsave == node.get_node("name").text:
+			node.pressed = true
+#			get_node("TextureFrame/SavePanel/saveline").editable = false
+			get_node("menucontrol/menupanel/SavePanel/RichTextLabel").set_bbcode(moddedtext)
+#-----------------------------------------------------------------------------------------
 		node.connect('pressed', self, 'loadchosen', [node])
 
 
 
 func loadchosen(node):
-	var savename = node.get_meta('name')
-	var text
-	savefilename = savename
-	for i in $menucontrol/menupanel/SavePanel/ScrollContainer/savelist.get_children():
-		i.pressed = (i== node)
-	get_node("menucontrol/menupanel/SavePanel/saveline").set_text(savefilename.replacen("user://saves/",''))
-	if globals.savelist.has(savename):
-		if globals.savelist[savename].has('portrait') && globals.loadimage(globals.savelist[savename].portrait):
-			$menucontrol/menupanel/SavePanel/saveimage.set_texture(globals.loadimage(globals.savelist[savename].portrait))
-		else:
-			$menucontrol/menupanel/SavePanel/saveimage.set_texture(null)
-		text = globals.savelist[savename].name
-	else:
-		text = "This save has no info stored."
-		$menucontrol/menupanel/SavePanel/saveimage.set_texture(null)
-	$menucontrol/menupanel/SavePanel/RichTextLabel.bbcode_text = text
-	#_on_SavePanel_visibility_changed()
+	savefilename = node.get_meta('name')
+	_on_SavePanel_visibility_changed()
 
 func _on_deletebutton_pressed():
 	var dir = Directory.new()
@@ -1541,7 +1640,7 @@ func music_set(text):
 	if music.is_playing() == false && globals.rules.musicvol > 0:
 		music.playing = true
 	if text == 'stop':
-		musicfading = true
+		#musicfading = true
 		music.stop()
 		return
 	elif text == 'pause':
@@ -1615,11 +1714,11 @@ func _on_mansion_pressed():
 	else:
 		$Navigation/personal/TextureRect.texture = selftexture
 	$ResourcePanel/clean.set_text(str(round(globals.state.condition)) + '%')
-	#var portals = false
-	#for i in globals.state.portals.values():
-	#	if i.enabled == true:
-	#		portals = true
-	#$MainScreen/mansion/portals.set_disabled(!portals)
+	var portals = false
+	for i in globals.state.portals.values():
+		if i.enabled == true:
+			portals = true
+	$MainScreen/mansion/portals.set_disabled(!portals)
 	textnode.show()
 	var sleepers = globals.count_sleepers()
 	text = 'You are at your mansion, which is located near [color=aqua]'+ globals.state.location.capitalize()+'[/color].\n\n'
@@ -1766,6 +1865,7 @@ func _on_jailsettingspanel_visibility_changed(inputslave = null):
 func prisonertab(number):
 	self.currentslave = number
 	get_node("MainScreen/slave_tab").tab = 'prison'
+	globals.state.descriptsettings.general = true
 	get_node("MainScreen/slave_tab").slavetabopen()
 
 func _on_jailerchange_pressed():
@@ -2310,7 +2410,32 @@ func _on_selfbutton_pressed():
 	get_node("MainScreen/mansion/selfinspect/mainstatlabel").set_bbcode(text)
 	updatestats(person)
 
+#---------------------------------------------------------
+func _on_selfextraction_pressed():
+	var semenamount
+	if globals.player.balls == 'none':
+		semenamount = 0
+	elif globals.player.balls == 'small':
+		semenamount = 10
+	elif globals.player.balls == 'average':
+		semenamount = 20
+	elif globals.player.balls == 'big':
+		semenamount = 30
+#	if globals.itemdict.semen.amount > 0:	
+	globals.itemdict.semen.amount += semenamount
+	if globals.player.energy >= 20:
+		globals.player.energy -= 20
+	#else:
 
+func _on_repeatdaily_pressed():
+	if globals.player.rules.repeatdaily == false:
+		globals.player.rules.repeatdaily = true
+		get_node("MainScreen/mansion/selfinspect/selfextraction").disabled = true
+	else:
+		globals.player.rules.repeatdaily = false
+		get_node("MainScreen/mansion/selfinspect/selfextraction").disabled = false
+	_on_selfbutton_pressed()
+#---------------------------------------------------------
 
 
 func stattooltip(value):
@@ -2629,48 +2754,23 @@ func _on_portals_pressed():
 	var list = get_node("MainScreen/mansion/portalspanel/ScrollContainer/VBoxContainer")
 	var button = get_node("MainScreen/mansion/portalspanel/ScrollContainer/VBoxContainer/portalbutton")
 	get_node("MainScreen/mansion/portalspanel").show()
-	nameportallocation = null
-	$MainScreen/mansion/portalspanel/imagelocation.texture = null
-	$MainScreen/mansion/portalspanel/imagelocation/RichTextLabel.bbcode_text = 'Select a desired location to travel'
-	$MainScreen/mansion/portalspanel/imagelocation/namelocation.text = ''
-	$MainScreen/mansion/portalspanel/traveltoportal.disabled = true
 	for i in list.get_children():
 		if i != button:
 			i.hide()
 			i.queue_free()
 	for i in globals.state.portals.values():
-		var newbutton = button.duplicate()
-		list.add_child(newbutton)
-		if i.code !='wimborn':
-			newbutton.show()
 		if i.enabled == true:
-			newbutton.disabled = false
+			var newbutton = button.duplicate()
+			list.add_child(newbutton)
 			newbutton.set_text(i.code.capitalize())
-			newbutton.connect('pressed', self, 'portalbuttonpressed', [newbutton, i])
-		else:
-			newbutton.set_text('???')
-			newbutton.disabled = true
+			newbutton.show()
+			newbutton.connect("pressed",self,'portalbutton', [i])
 
 
-func portalbuttonpressed(newbutton, portal):
-	var text
-	nameportallocation = portal.code
-	$MainScreen/mansion/portalspanel/traveltoportal.disabled = false
-	for i in $MainScreen/mansion/portalspanel/ScrollContainer/VBoxContainer.get_children():
-		i.pressed = (i== newbutton)
-		if i.pressed == true:
-			get_node("MainScreen/mansion/portalspanel/imagelocation").set_texture(globals.backgrounds[nameportallocation])
-			get_node("MainScreen/mansion/portalspanel/imagelocation/namelocation").text = newbutton.text+" Portal"
-			if newbutton.text == 'Umbra':
-				get_node("MainScreen/mansion/portalspanel/imagelocation/RichTextLabel").text = "Portal leads to the "+newbutton.text+" Undergrounds"
-			else:
-				get_node("MainScreen/mansion/portalspanel/imagelocation/RichTextLabel").text = "Portal leads to the city of "+newbutton.text
-
-func _on_traveltoportal_pressed():
-	if nameportallocation != null:
-		get_node("MainScreen/mansion/portalspanel").hide()
-		get_node("outside").gooutside()
-		get_node("explorationnode").call('zoneenter', nameportallocation)
+func portalbutton(i):
+	get_node("MainScreen/mansion/portalspanel").hide()
+	get_node("outside").gooutside()
+	get_node("explorationnode").call('zoneenter', i.code)
 
 func _on_portalsclose_pressed():
 	get_node("MainScreen/mansion/portalspanel").hide()
@@ -2905,7 +3005,6 @@ func _on_cleanbutton_pressed():
 	globals.state.condition = 100
 	globals.resources.gold -= min(ceil(globals.resources.day/7.0)*10,100)
 	_on_mansionsettings_pressed()
-	_on_mansion_pressed()
 
 
 
@@ -3362,10 +3461,6 @@ func _on_close_pressed():
 
 
 
-
 func _on_hideui_pressed():
 	$outside.visible = !$outside.visible
 	$ResourcePanel.visible = !$ResourcePanel.visible
-
-
-
