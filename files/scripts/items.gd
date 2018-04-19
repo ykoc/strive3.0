@@ -806,6 +806,7 @@ weaponaynerisrapier = {
 	description = "\n[color=yellow]Requirements: 4 Agility[/color] ",
 	effect = [{type = 'incombat', effect = 'damage', effectvalue = 8, descript = "+8 Damage"}, {type = 'incombat', effect = 'passive', effectvalue = 'doubleattack', descript = '50% chance to attack twice'}],
 	recipe = '',
+	enchant = 'unique',
 	reqs = [{reqstat = 'sagi', oper = 'gte', reqvalue = 4}],
 	cost = 500,
 	type = 'gear',
@@ -956,7 +957,7 @@ clothtentacle = {
 	name = 'Living Suit',
 	icon = "res://files/images/items/clothtentacle.png",
 	description = "Parasitic suit which feeds on bodily fluids and stimulates person's privates. ",
-	effect = [{type = 'onendday', effect = 'lust', effectvalue = 4, descript = "lust grows at the end of the day"}],
+	effect = [{type = 'onendday', effect = 'livingsuiteffect', descript = "lust grows at the end of the day"}],
 	recipe = '',
 	reqs = null,
 	cost = 200,
@@ -1065,6 +1066,10 @@ func maiduniformeffect(person):
 
 func kimonoeffect(person):
 	pass
+
+func livingsuiteffect(person):
+	person.lust += 4
+	return "$name is being stimulated by wearing [color=yellow]Living suit[/color] and $his lust grows.\n\n"
 
 func peteffect(person):
 	var text = person.dictionary("$name wears pet suit ")

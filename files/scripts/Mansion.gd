@@ -43,10 +43,21 @@ var musicraising = false
 var musicvalue = 0
 
 func maintext_set(value):
-	get_node("outside/outsidetextbox").set_bbcode(value)
+	var wild = $explorationnode.zones[$explorationnode.currentzone.code].combat == true
+	$outside/textpanel.visible = !wild
+	$outside/textpanelexplore.visible = wild
+	$outside/textpanel/outsidetextbox.bbcode_text = value
+	$outside/textpanelexplore/outsidetextbox2.bbcode_text = value
+
 
 func maintext_get():
-	return get_node("outside/outsidetextbox").get_bbcode()
+	var wild = $explorationnode.zones[$explorationnode.currentzone.code].combat == true
+	var text = ''
+	if wild == false:
+		text = $outside/textpanel/outsidetextbox.bbcode_text
+	else:
+		text = $outside/textpanelexplore/outsidetextbox2.bbcode_text
+	return text
 
 func currentslave_set(value):
 	currentslave = value
@@ -166,6 +177,7 @@ func _ready():
 func sound(value):
 	$soundeffect.stream = globals.sounddict[value]
 	$soundeffect.playing = true
+	$soundeffect.autoplay = false
 
 func startending():
 	var name = globals.player.name + " - Main Quest Completed"
@@ -217,7 +229,7 @@ func _on_new_slave_button_pressed():
 		i.unlocked = true
 		if !i.type in ['gear','dummy']:
 			i.amount += 10
-	for i in ['armorchain','weaponclaymore','clothpet','clothkimono','underwearlacy','armortentacle','accamuletemerald','accamuletemerald','accamuletemerald']:
+	for i in ['armorchain','weaponclaymore','clothpet','clothkimono','underwearlacy','armortentacle','accamuletemerald','accamuletemerald','clothtentacle']:
 		var tmpitem = globals.items.createunstackable(i)
 		globals.state.unstackables[str(tmpitem.id)] = tmpitem
 		globals.items.enchantrand(tmpitem)
@@ -1529,7 +1541,7 @@ func music_set(text):
 	if music.is_playing() == false && globals.rules.musicvol > 0:
 		music.playing = true
 	if text == 'stop':
-		#musicfading = true
+		musicfading = true
 		music.stop()
 		return
 	elif text == 'pause':
@@ -1603,7 +1615,7 @@ func _on_mansion_pressed():
 	else:
 		$Navigation/personal/TextureRect.texture = selftexture
 	$ResourcePanel/clean.set_text(str(round(globals.state.condition)) + '%')
-	var portals = true
+	#var portals = false
 	#for i in globals.state.portals.values():
 	#	if i.enabled == true:
 	#		portals = true
@@ -2617,6 +2629,11 @@ func _on_portals_pressed():
 	var list = get_node("MainScreen/mansion/portalspanel/ScrollContainer/VBoxContainer")
 	var button = get_node("MainScreen/mansion/portalspanel/ScrollContainer/VBoxContainer/portalbutton")
 	get_node("MainScreen/mansion/portalspanel").show()
+	nameportallocation = null
+	$MainScreen/mansion/portalspanel/imagelocation.texture = null
+	$MainScreen/mansion/portalspanel/imagelocation/RichTextLabel.bbcode_text = 'Select a desired location to travel'
+	$MainScreen/mansion/portalspanel/imagelocation/namelocation.text = ''
+	$MainScreen/mansion/portalspanel/traveltoportal.disabled = true
 	for i in list.get_children():
 		if i != button:
 			i.hide()
@@ -2635,9 +2652,10 @@ func _on_portals_pressed():
 			newbutton.disabled = true
 
 
-func portalbuttonpressed(newbutton, i):
+func portalbuttonpressed(newbutton, portal):
 	var text
-	nameportallocation = i.code
+	nameportallocation = portal.code
+	$MainScreen/mansion/portalspanel/traveltoportal.disabled = false
 	for i in $MainScreen/mansion/portalspanel/ScrollContainer/VBoxContainer.get_children():
 		i.pressed = (i== newbutton)
 		if i.pressed == true:
@@ -2649,12 +2667,10 @@ func portalbuttonpressed(newbutton, i):
 				get_node("MainScreen/mansion/portalspanel/imagelocation/RichTextLabel").text = "Portal leads to the city of "+newbutton.text
 
 func _on_traveltoportal_pressed():
-	portalbutton()
-	
-func portalbutton():
-	get_node("MainScreen/mansion/portalspanel").hide()
-	get_node("outside").gooutside()
-	get_node("explorationnode").call('zoneenter', nameportallocation)
+	if nameportallocation != null:
+		get_node("MainScreen/mansion/portalspanel").hide()
+		get_node("outside").gooutside()
+		get_node("explorationnode").call('zoneenter', nameportallocation)
 
 func _on_portalsclose_pressed():
 	get_node("MainScreen/mansion/portalspanel").hide()
