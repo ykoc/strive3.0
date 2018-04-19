@@ -10,10 +10,8 @@ var actions = []
 var ongoingactions = []
 var location
 
-#var filter = ['nosehook','relaxinginsense','facesit','afacesit','grovel','enemaplug']
-#-------------------------------------------------------------------
-var filter = ['nosehook','facesit','afacesit','grovel','enemaplug']
-#-------------------------------------------------------------------
+var filter = ['nosehook','relaxinginsense','facesit','afacesit','grovel','enemaplug']
+
 var sexicons = {
 female = load("res://files/buttons/sexicons/female.png"),
 male = load("res://files/buttons/sexicons/male.png"),
@@ -66,11 +64,6 @@ class member:
 	var sbreast = 0
 	var spenis = 0
 	var sanus = 0
-#---------------------
-	var stail = 0
-	var screvix = 0
-	var aphrodisiac = 0
-#---------------------
 	var lewd
 	
 	var energy = 100
@@ -81,75 +74,6 @@ class member:
 	var taking = []
 	
 	var vagina
-#--------------------
-	var crevix
-	var oraltec = 0
-	var fingerstec = 0
-	var vaginatec = 0
-	var crevixtec = 0
-	var penistec = 0
-	var analtec = 0
-	var tailtec = 0
-	var feetstec = 0
-	var tempsexexp = {
-		oral = 0,
-		oralsex = 0,
-		oraltech = 0,
-		throat = 0,
-		swallow = 0,
-		swallowamount = 0,
-		swallowlove = 0,
-		breast = 0,
-		breastamount = 0,
-		milked = 0,
-		milkedamount = 0,
-		milkedlove = 0,
-		fingers = 0,
-		fingerstech = 0,
-		fingersamount = 0,
-		vagina = 0,
-		vaginasex = 0,
-		vaginatech = 0,
-		creampie = 0,
-		creampieamount = 0,
-		creampielove = 0,
-		crevix = 0,
-		crevixtech = 0,
-		crevixpie = 0,
-		crevixamount = 0,
-		crevixpielove = 0,
-		penis = 0,
-		penissex = 0,
-		penistech = 0,
-		penisamount = 0,
-		anal = 0,
-		analsex = 0,
-		analtech = 0,
-		analcreampie = 0,
-		analcreampieamount = 0,
-		analcreampielove = 0,
-		clit = 0,
-		clitamount = 0,
-		tail = 0,
-		tailtech = 0,
-		tailamount = 0,
-		feets = 0,
-		feetstech = 0,
-		feetsamount = 0,
-		orgasms = 0,
-		kiss = 0,
-		masturbation = 0,
-		cumbath = 0,
-		cumbathamount = 0,
-		submission = 0,
-		dominance = 0,
-		showingdescription = 0,
-		impregnationrisk = 0,
-		impregnationday = 0,
-		cycleday = 0
-		}#simple values.. neex to add parts lvl and parts experience / virginity taken / last person used parts
-#	
-#--------------------
 	var penis
 	var clit
 	var breast
@@ -193,34 +117,7 @@ class member:
 		if values.has('pain'):
 			paininput = values.pain
 		
-#-------------------------------------------------------------------------------------------------------------------------					
-			
-		#Oraltech
-		if person.traits.find("Skilled tongue") >= 0:
-			person.sexexp.oraltech = 2
-		#Fingerstech
-		if person.traits.find("Gold fingers") >= 0:
-			person.sexexp.fingerstech = 2
-		#Penistech
-		if person.traits.find("Majestic pole") >= 0:
-			person.sexexp.penistech = 2
-		#Vaginatech
-		if person.traits.find("Wild vagina") >= 0:
-			person.sexexp.vaginatech = 2
-		#crevixtech
-		if person.traits.find("Lewd crevix") >= 0:
-			person.sexexp.crevixtech = 2
-		#Anustech
-		if person.traits.find("Anal Maniac") >= 0:
-			person.sexexp.analtech = 2
-		#Tailtech
-		if person.traits.find("Tailminator") >= 0:
-			person.sexexp.tailtech = 2
-		#Feetstech
-		if person.traits.find("Little devil") >= 0:
-			person.sexexp.feetstech = 2
-			
-#-------------------------------------------------------------------------------------------------------------------------			
+		
 		if acceptance == 'good':
 			sensinput *= rand_range(1.1,1.4)
 			lustinput *= 2
@@ -266,6 +163,8 @@ func _ready():
 	for i in get_node("Panel/HBoxContainer").get_children():
 		i.connect("pressed",self,'changecategory',[i.get_name()])
 	
+	filter = globals.state.actionblacklist
+	
 	var i = 5
 	if globals.player.name == '':
 		globals.itemdict.supply.amount = 10
@@ -285,7 +184,7 @@ func _ready():
 			newmember.sanus = person.sensanal
 			newmember.lewd = person.lewdness
 			participants.append(newmember)
-		turns = 20
+		turns = variables.timeforinteraction
 		changecategory('caress')
 		clearstate()
 		rebuildparticipantslist()
@@ -331,7 +230,7 @@ func startsequence(actors, mode = null, secondactors = []):
 			participants.append(newmember)
 	
 	get_node("Panel/sceneeffects").set_bbcode("You bring selected participants into your bedroom. ")
-	turns = 20
+	turns = variables.timeforinteraction
 	changecategory('caress')
 	clearstate()
 	rebuildparticipantslist()
@@ -371,17 +270,8 @@ func rebuildparticipantslist():
 		newnode.get_node("sex").set_texture(sexicons[i.person.sex])
 		newnode.get_node("sex").set_tooltip(i.person.sex)
 		newnode.get_node("lust").set_texture(statsicons['lust' + str(max(1,ceil(i.lust/200)))])
-#-----------------------------------------------------------------------------------------------------------
-		newnode.get_node("lust").set_tooltip("lust: " + str(floor(i.lust))+"%")
-#-----------------------------------------------------------------------------------------------------------
 		newnode.get_node("sens").set_texture(statsicons['sens' + str(max(1,ceil(i.sens/200)))])
-#-----------------------------------------------------------------------------------------------------------
-		newnode.get_node("sens").set_tooltip("sens: " + str(floor(i.sens))+"%")
-#-----------------------------------------------------------------------------------------------------------
 		newnode.get_node("lube").set_texture(statsicons['lub' + str(clamp(ceil(i.lube/2), 1, 5))])
-#-----------------------------------------------------------------------------------------------------------
-		newnode.get_node("lube").set_tooltip("lube: " + str(floor(i.lube))+"%")
-#-----------------------------------------------------------------------------------------------------------
 		newnode.get_node("stress").set_texture(statsicons['stress'+str(clamp(round(i.person.stress/33)+1,1,3))])
 		newnode.get_node("stress").set_tooltip("Stress: " + str(floor(i.person.stress))+"%")
 		newnode.get_node("give").connect("pressed",self,'switchsides',[newnode, 'give'])
@@ -472,26 +362,14 @@ func rebuildparticipantslist():
 	
 	get_node("Panel/sceneeffects1").set_bbcode(text)
 	
+	globals.state.actionblacklist = filter
+	
 	if turns == 0:
 		endencounter()
 
-#-------------------------------------------------------------------
 func slavedescription(member):
-	#get_parent().popup(member.person.descriptionsmall())
-	#get_parent().get_node("MainScreen/slave_tab")._on_slavedescript_meta_clicked( meta )
+	get_parent().popup(member.person.descriptionsmall())
 
-#	var text = ""
-#	var text1 = ""
-#	text = member.person.description()
-#	text1 = thissession(member)
-#	member.person.sexexp.showingdescription = 1
-#	get_node("Control2").show()
-#	get_node("Control2/Panel/TabContainer/General Report").set_bbcode(text)
-#	get_node("Control2/Panel/TabContainer/This session Report").set_bbcode(text1)
-
-	get_node("bodyinfo").open("sexinteraction")
-	get_node("bodyinfo").slavebodyinfo(member)
-#-------------------------------------------------------------------
 var nakedspritesdict = {
 	Cali = {cons = 'calinakedhappy', rape = 'calinakedsad', clothcons = 'calineutral', clothrape = 'calisad'},
 	Tisha = {cons = 'tishanakedhappy', rape = 'tishanakedneutral', clothcons = 'tishahappy', clothrape = 'tishaneutral'},
@@ -565,10 +443,8 @@ func startscene(scenescript, cont = false):
 			if i.scene.category == 'fucking' && (i.givers.has(givers[0]) || i.takers.has(givers[0]) || i.givers.has(takers[0]) || i.takers.has(takers[0])):
 				if i.givers == givers && i.takers == takers:
 					stopongoingaction(i)
-#-------------------------------------------------------------------
-	if scenescript.code in ['strapon', 'rope', 'relaxinginsense']:
+	if scenescript.code in ['strapon', 'rope']:
 		cont = true
-#-------------------------------------------------------------------
 	#to make action switch on that hole even if they comes from another body part
 	if scenescript.code in ['cunnilingus','rimjob','facesit','afacesit','massagefoot','lickfeet']:
 		for i in ongoingactions:
@@ -842,30 +718,6 @@ func orgasm(member):
 	var penistext
 	var vaginatext
 	var anustext
-#--------------------------------------------------------------------------------------	
-	var semenamount
-	var nectaramount
-	
-	if member.person.balls == 'none':
-		semenamount = 0
-	elif member.person.balls == 'small':
-		semenamount = 10
-	elif member.person.balls == 'average':
-		semenamount = 20
-	elif member.person.balls == 'big':
-		semenamount = 30
-	
-	#if member.person.sex != 'male':
-	if member.person.sexexp.clitamount == 0:
-		nectaramount = 10
-	elif member.person.sexexp.clitamount == 250:
-		nectaramount = 20
-	elif member.person.sexexp.clitamount == 500:
-		nectaramount = 30
-	
-	member.person.sexexp.orgasms += 1
-	member.person.sexexp.impregnationrisk = 0
-#--------------------------------------------------------------------------------------
 	member.orgasms += 1
 	if participants.size() == 2 && member.person != globals.player:
 		member.person.loyal += rand_range(1,4)
@@ -883,7 +735,7 @@ func orgasm(member):
 			if scene.scene.takerpart == 'penis':
 				anustext += " [anus1] {^squeezes:writhes around:clamps down on} [names2] [penis2] as [he1] reach[es/1] {^climax:orgasm}."
 			else:
-				anustext += " [anus1] {^convulses:twitches:quivers} {^in euphoria:in exstacy:with pleasure} as [he1] reach[es/1] {^climax:orgasm}."
+				anustext += " [anus1] {^convulses:twitches:quivers} {^in euphoria:in ecstasy:with pleasure} as [he1] reach[es/1] {^climax:orgasm}."
 			anustext = decoder(anustext, [member], scene.takers)
 		#anus is in taker slot
 		elif scene.takers.find(member) >= 0:
@@ -894,7 +746,7 @@ func orgasm(member):
 			if scene.scene.giverpart == 'penis':
 				anustext += " [anus2] {^squeezes:writhes around:clamps down on} [names1] [penis1] as [he2] reach[es/2] {^climax:orgasm}."
 			else:
-				anustext += " [anus2] {^convulses:twitches:quivers} {^in euphoria:in exstacy:with pleasure} as [he2] reach[es/2] {^climax:orgasm}."
+				anustext += " [anus2] {^convulses:twitches:quivers} {^in euphoria:in ecstasy:with pleasure} as [he2] reach[es/2] {^climax:orgasm}."
 			anustext = decoder(anustext, scene.givers, [member])
 		#no default conditon
 	#vagina present
@@ -912,7 +764,7 @@ func orgasm(member):
 				if scene.scene.takerpart == 'penis':
 					vaginatext += " [pussy1] {^squeezes:writhes around:clamps down on} [names2] [penis2] as [he1] reach[es/1] {^climax:orgasm}."
 				else:
-					vaginatext += " [pussy1] {^convulses:twitches:quivers} {^in euphoria:in exstacy:with pleasure} as [he1] reach[es/1] {^climax:orgasm}."
+					vaginatext += " [pussy1] {^convulses:twitches:quivers} {^in euphoria:in ecstasy:with pleasure} as [he1] reach[es/1] {^climax:orgasm}."
 				vaginatext = decoder(vaginatext, [member], scene.takers)
 			#vagina is in taker slot
 			elif scene.takers.find(member) >= 0:
@@ -923,7 +775,7 @@ func orgasm(member):
 				if scene.scene.giverpart == 'penis':
 					vaginatext += " [pussy2] {^squeezes:writhes around:clamps down on} [names1] [penis1] as [he2] reach[es/2] {^climax:orgasm}."
 				else:
-					vaginatext += " [pussy2] {^convulses:twitches:quivers} {^in euphoria:in exstacy:with pleasure} as [he2] reach[es/2] {^climax:orgasm}."
+					vaginatext += " [pussy2] {^convulses:twitches:quivers} {^in euphoria:in ecstasy:with pleasure} as [he2] reach[es/2] {^climax:orgasm}."
 				vaginatext = decoder(vaginatext, scene.givers, [member])
 			#no default conditon
 	#penis present
@@ -933,214 +785,37 @@ func orgasm(member):
 			scene = member.penis
 			#penis in giver slot
 			if scene.givers.find(member) >= 0:
-#-------------------------------------------------------------------------------------
-				member.tempsexexp.penisamount += 1*semenamount
-#-------------------------------------------------------------------------------------
 				if randf() < 0.4:
 					penistext = "[name1] feel[s/1] {^a wave of:an intense} {^pleasure:euphoria} {^run through:course through:building in} [his1] [penis1] and [his1]"
 				else:
 					penistext = "[name1] {^thrust:jerk}[s/1] [his1] hips forward and a {^thick :hot :}{^jet:load:batch} of"
 				if scene.scene.takerpart == '':
 					penistext += " {^semen:seed:cum} {^pours onto:shoots onto:falls to} the {^ground:floor} as [he1] ejaculate[s/1]."
-#-------------------------------------------------------------------------------------
-				elif ['crevix'].has(scene.scene.takerpart):
-					penistext += " {^semen:seed:cum} {^pours:shoots:pumps:sprays} directly into [names2] {^womb:uterus:crevix} as [he1] ejaculate[s/1]."
-					for i in scene.takers:
-						i.person.sexexp.crevixpie += 1
-						i.person.sexexp.crevixamount += 1*semenamount
-						#if i.tempsexexp.creampieamount >= 80 && randf() < 0.2 && i.person.sexexp.impregnationday == 1:
-						#if i.tempsexexp.creampieamount >= 80 && i.person.sexexp.impregnationday == 1:.
-						if i.person.sexexp.impregnationday == 1:
-							var chance = i.tempsexexp.crevixamount
-							if chance > 100:
-								chance = 100
-							if randi()%80 <= chance:
-								i.tempsexexp.impregnationrisk = 1
-								i.person.sexexp.impregnationrisk = 1
-								globals.impregnation(i.person, member.person)
-						if i.tempsexexp.crevixamount >= 100 && i.person.sexexp.crevixpie > 50 && randf() < 0.2 && i.tempsexexp.crevixpielove != 1:
-							i.tempsexexp.crevixpielove = 1
-							i.person.sexexp.crevixpielove += 1
-#--------------------------------------------------------------------------------------
 				elif ['anus','vagina','mouth'].has(scene.scene.takerpart):
-#--------------------------------------------------------------------------------------
-					if scene.scene.code == 'deepthroat':
-						penistext += " {^semen:seed:cum} {^pours:shoots:pumps:sprays} deep into [names2] throat as [he1] ejaculate[s/1]."
-					else:
-#--------------------------------------------------------------------------------------
-						temptext = scene.scene.takerpart.replace('anus', '[anus2]').replace('vagina','[pussy2]')
-						penistext += " {^semen:seed:cum} {^pours:shoots:pumps:sprays} into [names2] " + temptext + " as [he1] ejaculate[s/1]."
+					temptext = scene.scene.takerpart.replace('anus', '[anus2]').replace('vagina','[pussy2]')
+					penistext += " {^semen:seed:cum} {^pours:shoots:pumps:sprays} into [names2] " + temptext + " as [he1] ejaculate[s/1]."
 					if scene.scene.takerpart == 'vagina':
 						for i in scene.takers:
-#							globals.impregnation(i.person, member.person)
-#--------------------------------------------------------------------------------------
-							i.person.sexexp.creampie += 1
-							i.tempsexexp.creampie += 1
-							i.person.sexexp.creampieamount += 1*semenamount
-							i.tempsexexp.creampieamount += 1*semenamount
-							#if i.tempsexexp.creampieamount >= 100 && randf() < 0.2 && i.person.sexexp.impregnationday == 1:
-							#if i.tempsexexp.creampieamount >= 100 && i.person.sexexp.impregnationday == 1:
-							if i.person.sexexp.impregnationday == 1:
-								var chance = i.tempsexexp.creampieamount
-								if chance > 100:
-									chance = 100
-								if randi()%100 <= chance:
-									i.tempsexexp.impregnationrisk = 1
-									i.person.sexexp.impregnationrisk = 1
-									globals.impregnation(i.person, member.person)
-							if i.tempsexexp.creampieamount >= 100 && i.person.sexexp.creampie > 50 && randf() < 0.2 && i.tempsexexp.creampielove != 1:
-								i.tempsexexp.creampielove = 1
-								i.person.sexexp.creampielove += 1
-					if scene.scene.takerpart == 'anus':
-						for i in scene.takers:
-							i.person.sexexp.analcreampie += 1
-							i.person.sexexp.analcreampieamount += 1*semenamount
-							if i.tempsexexp.analcreampieamount >= 100 && i.person.sexexp.analcreampie > 50 && randf() < 0.2 && i.tempsexexp.analcreampielove != 1:
-								i.tempsexexp.analcreampielove = 1
-								i.person.sexexp.analcreampielove += 1
-					if scene.scene.takerpart == 'mouth':
-						for i in scene.takers:
-					# atm its only the deepthroat part thats needed here.. but ill keep the cum in mouth swallow in case i add the option to finih in mouth
-							#if i.person.sexexp.swallowlove > 2 || scene.scene.code == 'deepthroat' || i.person.obed > 80:
-							if scene.scene.code == 'deepthroat':
-								if scene.scene.code == 'deepthroat':
-									penistext += "\n"+"\n"+"Forcing [names2] to swallow every drop of [their] {^semen:seed:cum}."
-							#	else:
-							#		penistext += "\n"+"\n"+"[names2] loves [name1] or [his1] {^semen:seed:cum} enough to swallow every drop of it."
-								i.person.sexexp.swallow += 1
-								i.tempsexexp.swallow += 1
-								i.person.sexexp.swallowamount += 1*semenamount
-								i.tempsexexp.swallowamount += 1*semenamount
-								if i.tempsexexp.swallowamount >= 100 && i.person.sexexp.swallow > 50 && randf() < 0.2 && i.tempsexexp.swallowlove != 1:
-									i.tempsexexp.swallowlove = 1
-									i.person.sexexp.swallowlove += 1
-							#else:
-							#	penistext += "\n"+"\n"+"Not liking to swallow or no obedient enough [names2] spits the {^semen:seed:cum} that was in [his2] mouth."
-							#	if randf() < 0.2:
-							#		penistext += "\n"+"But some leftovers [he2] wasnt able to spit where swallowed by mistake."
-							#		i.person.sexexp.swallow += 1
-							#		i.tempsexexp.swallow += 1
-							#		i.person.sexexp.swallowamount += 1*(semenamount*0.2)
-							#		i.tempsexexp.swallowamount += 1*(semenamount*0.2)
-							#		if i.tempsexexp.swallowamount >= 100 && randf() < 0.2 && i.tempsexexp.swallowlove != 1:
-							#			i.tempsexexp.swallowlove = 1
-							#			i.person.sexexp.swallowlove += 1
-#--------------------------------------------------------------------------------------
+							globals.impregnation(i.person, member.person)
 				penistext = decoder(penistext, [member], scene.takers)
 			#penis in taker slot
 			elif scene.takers.find(member) >= 0:
-#--------------------------------------------------------------------------------------
-				member.tempsexexp.penisamount += 1*semenamount
-#--------------------------------------------------------------------------------------
 				if randf() < 0.4:
 					penistext = "[name2] feel[s/2] {^a wave of:an intense} {^pleasure:euphoria} {^run through:course through:building in} [his2] [penis2] and [his2]"
 				else:
 					penistext = "[name2] {^thrust:jerk}[s/2] [his2] hips forward and a {^thick :hot :}{^jet:load:batch} of"
 				if scene.scene.code in ['handjob','titjob']:
-#--------------------------------------------------------------------------------------
-					if scene.scene.code == 'handjob':
-						for i in scene.givers:
-							i.person.sexexp.fingersamount += 1*semenamount
-							i.tempsexexp.fingersamount += 1*semenamount
-							penistext += " {^sticky:white:hot} {^semen:seed:cum} {^sprays onto:shoots all over:covers} [names1] hands[/s1] as [he2] ejaculate[s/2]."
-					if scene.scene.code == 'titjob':
-						for i in scene.givers:
-							i.person.sexexp.breastamount += 1*semenamount
-							i.tempsexexp.breastamount += 1*semenamount
-							penistext += " {^sticky:white:hot} {^semen:seed:cum} {^sprays onto:shoots all over:covers} [names1] tits[/s1] as [he2] ejaculate[s/2]."
-					if scene.scene.code == 'footjob':
-						for i in scene.givers:
-							i.person.sexexp.feetsamount += 1*semenamount
-							i.tempsexexp.feetsamount += 1*semenamount
-							penistext += " {^sticky:white:hot} {^semen:seed:cum} {^sprays onto:shoots all over:covers} [names1] feets[/s1] as [he2] ejaculate[s/2]."				
-				# might add target location later but atm bodypart used is location
-				#	penistext += " {^sticky:white:hot} {^semen:seed:cum} {^sprays onto:shoots all over:covers} [names1] face[/s1] as [he2] ejaculate[s/2]."
-#--------------------------------------------------------------------------------------
+					penistext += " {^sticky:white:hot} {^semen:seed:cum} {^sprays onto:shoots all over:covers} [names1] face[/s1] as [he2] ejaculate[s/2]."
 				elif scene.scene.code == 'tailjob':
-#--------------------------------------------------------------------------------------
-					for i in scene.givers:
-						i.person.sexexp.tailamount += 1*semenamount
-						i.tempsexexp.tailamount += 1*semenamount
-#--------------------------------------------------------------------------------------
 					penistext += " {^sticky:white:hot} {^semen:seed:cum} {^sprays onto:shoots all over:covers} [names1] tail[/s1] as [he2] ejaculate[s/2]."
 				elif scene.scene.giverpart == '':
 					penistext += " {^semen:seed:cum} {^pours onto:shoots onto:falls to} the {^ground:floor} as [he2] ejaculate[s/2]."
-#-------------------------------------------------------------------------------------
-				elif ['crevix'].has(scene.scene.giverpart):
-					penistext += " {^semen:seed:cum} {^pours:shoots:pumps:sprays} directly into [names2] {^womb:uterus:crevix} as [he1] ejaculate[s/1]."
-					for i in scene.givers:
-						i.person.sexexp.crevixpie += 1
-						i.person.sexexp.crevixamount += 1*semenamount
-						#if i.tempsexexp.creampieamount >= 80 && randf() < 0.2 && i.person.sexexp.impregnationday == 1:
-						#if i.tempsexexp.creampieamount >= 80 && i.person.sexexp.impregnationday == 1:
-						if i.person.sexexp.impregnationday == 1:
-							var chance = i.tempsexexp.crevixamount
-							if chance > 100:
-								chance = 100
-							if randi()%80 <= chance:
-								i.tempsexexp.impregnationrisk = 1
-								i.person.sexexp.impregnationrisk = 1
-								globals.impregnation(i.person, member.person)
-						if i.tempsexexp.crevixamount >= 100 && i.person.sexexp.crevixpie > 50 && randf() < 0.2 && i.tempsexexp.crevixpielove != 1:
-							i.tempsexexp.crevixpielove = 1
-							i.person.sexexp.crevixpielove += 1
-#--------------------------------------------------------------------------------------
 				elif ['anus','vagina','mouth'].has(scene.scene.giverpart):
 					temptext = scene.scene.giverpart.replace('anus', '[anus1]').replace('vagina','[pussy1]')
 					penistext += " {^semen:seed:cum} {^pours:shoots:pumps:sprays} into [names1] " + temptext + " as [he2] ejaculate[s/2]."
 					if scene.scene.giverpart == 'vagina':
 						for i in scene.givers:
-#							globals.impregnation(i.person, member.person)
-#--------------------------------------------------------------------------------------
-							i.person.sexexp.creampie += 1
-							i.person.sexexp.creampieamount += 1*semenamount
-							#if i.tempsexexp.creampieamount >= 100 && randf() < 0.2 && i.person.sexexp.impregnationday == 1:
-							#if i.tempsexexp.creampieamount >= 100 && i.person.sexexp.impregnationday == 1:
-							if i.person.sexexp.impregnationday == 1:
-								var chance = i.tempsexexp.creampieamount
-								if chance > 100:
-									chance = 100
-								if randi()%100 <= chance:
-									i.tempsexexp.impregnationrisk = 1
-									i.person.sexexp.impregnationrisk = 1
-									globals.impregnation(i.person, member.person)
-							if i.tempsexexp.creampieamount >= 100 && i.person.sexexp.creampie > 50 && randf() < 0.2 && i.tempsexexp.creampielove != 1:
-								i.tempsexexp.creampielove = 1
-								i.person.sexexp.creampielove += 1
-					if scene.scene.giverpart == 'anus':
-						for i in scene.givers:
-							i.person.sexexp.analcreampie += 1
-							i.person.sexexp.analcreampieamount += 1*semenamount
-							if i.tempsexexp.analcreampieamount >= 100 && i.person.sexexp.analcreampie > 50 && randf() < 0.2 && i.tempsexexp.analcreampielove != 1:
-								i.tempsexexp.analcreampielove = 1
-								i.person.sexexp.analcreampielove += 1
-					if scene.scene.giverpart == 'mouth':
-						for i in scene.givers:
-					# atm deepthroat here is leftover code from base but could have sense if (s)he could deepthroat you willingly as in (s)he gives a deepthroat
-							if i.person.sexexp.swallowlove > 2 || scene.scene.code == 'deepthroat' || i.person.obed > 80:
-								if scene.scene.code == 'deepthroat':
-									penistext += "\n"+"\n"+"Forcing [names2] to swallow every drop of [their] {^semen:seed:cum}."
-								else:
-									penistext += "\n"+"\n"+"[name1] loves [name2] or [his2] {^semen:seed:cum} enough to swallow every drop of it."
-								i.person.sexexp.swallow += 1
-								i.tempsexexp.swallow += 1
-								i.person.sexexp.swallowamount += 1*semenamount
-								i.tempsexexp.swallowamount += 1*semenamount
-								if i.tempsexexp.swallowamount >= 100 && i.person.sexexp.swallow > 50 && randf() < 0.2 && i.tempsexexp.swallowlove != 1:
-									i.tempsexexp.swallowlove = 1
-									i.person.sexexp.swallowlove += 1
-							else:
-								penistext += "\n"+"\n"+"Not liking to swallow or not obedient enough [name1] spits the {^semen:seed:cum} that was in [his1] mouth."
-								if randf() < 0.2:
-									penistext += "\n"+"But some leftovers [he1] wasnt able to spit where swallowed by mistake."
-									i.person.sexexp.swallow += 1
-									i.tempsexexp.swallow += 1
-									i.person.sexexp.swallowamount += 1*(semenamount*0.2)
-									i.tempsexexp.swallowamount += 1*(semenamount*0.2)
-									if i.tempsexexp.swallowamount >= 100 && i.person.sexexp.swallow > 50 && randf() < 0.2 && i.tempsexexp.swallowlove != 1:
-										i.tempsexexp.swallowlove = 1
-										i.person.sexexp.swallowlove += 1
-#--------------------------------------------------------------------------------------
+							globals.impregnation(i.person, member.person)
 				penistext = decoder(penistext, scene.givers, [member])
 		#orgasm without penis, secondary ejaculation
 		else:
@@ -1249,255 +924,36 @@ func _on_finishbutton_pressed():
 	hide()
 	get_parent()._on_mansion_pressed()
 
-#----------------------------------------------------------------------------------------------
-func splitrand(text):
-	while text.find("{^") >= 0:
-		var temptext = text.substr(text.find("{^"), text.find("}")+1 - text.find("{^"))
-		text = text.replace(temptext, temptext.split(":")[randi()%temptext.split(":").size()].replace("{^", "").replace("}",""))
-	return text
-	
-func thissession(member):
-	var text = '\n'
-	var sexmember
-	var sexmember1
-	if member.sex == 'male':
-		sexmember = "he"
-		sexmember1 = "his"
-	else:
-		sexmember = "she"
-		sexmember1 = "her"
-	text += '[url=mouth][color=#d1b970][Mouth][/color][/url] '
-	if globals.state.descriptsettings.mouth == true:
-		if member.tempsexexp.oral > 0:
-			text += "\n"+"was [color=yellow]used[/color] "+str(floor(member.tempsexexp.oral))+" times"
-#			linetechoraltemp = 'and '
-			if member.tempsexexp.swallow > 0:# should spit if not enough experience but should swallow 1/4 of total original ammount
-				text += " and [color=yellow]swallowed[/color] "+str(floor(member.tempsexexp.swallowamount))+" ml of {^cum:semen:seed}"
-				if member.tempsexexp.swallowamount > 100:
-					text += "\n"+"got filled with so much of [their] cum "+sexmember+" looks pregnant"
-				elif member.tempsexexp.swallowamount > 70:
-					text += "\n"+"is filled with [their] cum"
-				elif member.tempsexexp.swallowamount > 30:
-					text += "\n"+"contains some of [their] cum"
-			if member.tempsexexp.swallowlove == 1:
-				text += "\n"+"has just developed a new liking for the taste of cum"
-		else:
-			text += "\n"+"hasnt been used for anything sexual this session"
-	else:
-		text += "Omitted. "
-	text += "\n"
-	text += "\n"
-	text += '[url=breasts][color=#d1b970][Breasts][/color][/url] '
-	if globals.state.descriptsettings.breasts == true:
-		if member.tempsexexp.breast > 0:
-			text += "\n"+"where [color=yellow]used[/color] "+str(floor(member.tempsexexp.breast))+" times"
-#			linetechoraltemp = 'and '
-			if member.tempsexexp.breastamount > 0:
-				text += " and are [color=yellow]covered[/color] with "+str(floor(member.tempsexexp.breastamount))+" ml of cum"
-#				if member.tempsexexp.breastamount > 100:
-#					text += "\n"+sexmember1+" tits got covered with [their] cum"
-#				elif member.tempsexexp.breastamount > 70:
-#					text += "\n"+sexmember1+" tits got covered with [their] cum"
-				if member.tempsexexp.breastamount > 30:
-					text += "\n"+"got covered with [their] cum"
-#			if member.tempsexexp.cumbathamount == 1:#temp for future stats
-#				text += "\n"+"has just developed a new liking of been covered with cum"
-		else:
-			text += "\n"+"wherent used for anything sexual this session"
-	else:
-		text += "Omitted. "
-	text += "\n"
-	text += "\n"
-	text += '[url=fingers][color=#d1b970][Fingers][/color][/url] '
-	if globals.state.descriptsettings.fingers == true:
-		if member.tempsexexp.fingers > 0:
-			text += "\n"+"where [color=yellow]used[/color] "+str(floor(member.tempsexexp.fingers))+" times"
-#			linetechoraltemp = 'and '
-			if member.tempsexexp.fingersamount > 0:# should spit if not enough experience but should swallow 1/4 of total original ammount
-				text += " and are [color=yellow]covered[/color] with "+str(floor(member.tempsexexp.fingersamount))+" ml of cum"
-#				if member.tempsexexp.fingersamount > 100:
-#					text += "\n"+sexmember1+" hands are covered with [their] cum"
-#				elif member.tempsexexp.fingersamount > 70:
-#					text += "\n"+sexmember1+" hands are covered with [their] cum"
-				if member.tempsexexp.fingersamount > 30:
-					text += "\n"+"are covered with [their] cum"
-#			if member.tempsexexp.cumbathamount == 1:#temp for future stats
-#				text += "\n"+"has just developed a new liking of been covered with cum""
-		else:
-			text += "\n"+"wherent been used for anything sexual this session"
-	else:
-		text += "Omitted. "
-	if member.sex != 'male':
-		text += "\n"
-		text += "\n"
-		text += '[url=vagina][color=#d1b970][Vagina][/color][/url] '
-		if globals.state.descriptsettings.vagina == true:
-			if member.tempsexexp.vagina > 0:
-				text += "\n"+"was [color=yellow]used[/color] "+str(floor(member.tempsexexp.vagina))+" times"
-				if member.tempsexexp.creampie > 0:
-					text += " and [color=yellow]creampied[/color] with "+str(floor(member.tempsexexp.creampieamount))+" ml of cum"
-					if member.tempsexexp.creampieamount > 100:
-						text += "\n"+"got filled with so much of [their] cum "+sexmember+" looks pregnant"
-					elif member.tempsexexp.creampieamount > 70:
-						text += "\n"+"is filled with [their] cum"
-					elif member.tempsexexp.creampieamount > 30:
-						text += "\n"+"contains some of [their] cum"
-				if member.tempsexexp.creampielove == 1:
-					text += "\n"+"has just developed a new liking for the taste of cum"
-			else:
-				text += "\n"+"hasnt been used for anything sexual this session"
-		else:
-			text += "Omitted. "
-		if member.tempsexexp.crevix > 0:
-			text += "\n"
-			text += "\n"
-			text += '[url=crevix][color=#d1b970][Crevix][/color][/url] '
-			if globals.state.descriptsettings.crevix == true:
-				text += "\n"+"was [color=yellow]inserted[/color] "+str(floor(member.tempsexexp.crevix))+" times"
-				if member.tempsexexp.crevixpie > 0:
-					text += " and [color=yellow]stuffed[/color] with "+str(floor(member.tempsexexp.crevixamount))+" ml of cum"
-					if member.tempsexexp.crevixamount > 100:
-						text += "\n"+"got filled with so much of [their] cum "+sexmember+" looks pregnant"
-					elif member.tempsexexp.crevixamount > 70:
-						text += "\n"+"is filled with [their] cum"
-					elif member.tempsexexp.crevixamount > 30:
-						text += "\n"+"contains some of [their] cum"
-				if member.tempsexexp.crevixpielove == 1:
-					text += "\n"+"has just developed a new liking for the taste of cum"
-			else:
-				text += "Omitted. "
-		text += "\n"
-		text += "\n"
-		text += '[url=clitoris][color=#d1b970][Clitoris][/color][/url] '
-		if globals.state.descriptsettings.clitoris == true:
-			if member.tempsexexp.clit > 0:
-				text += "\n"+"was [color=yellow]used[/color] "+str(floor(member.tempsexexp.clit))+" times"
-				if member.tempsexexp.clitamount > 0:
-					text += " and [color=yellow]relased[/color] "+str(floor(member.tempsexexp.clitamount))+" ml of nectar"
-#				if member.tempsexexp.fingersamount > 100:
-#					text += "\n"+sexmember1+" clitoris relased so much squirt it cant sotp pulsing wanting to release even more"
-#				elif member.tempsexexp.fingersamount > 70:
-#					text += "\n"+sexmember1+" clitoris drips with squirt"
-				if member.tempsexexp.clitamount > 30:
-					text += "\n"+"just came recently"
-#			if member.tempsexexp.forgasmaddict == 1:#temp for future stats
-#				text += "\n"+"has just developed a new liking from cumming"
-			else:
-				text += "\n"+"hasnt been used for anything sexual this session"
-		else:
-			text += "Omitted. "
-	if member.sex != 'female':
-		text += "\n"
-		text += "\n"
-		text += '[url=penis][color=#d1b970][Penis][/color][/url] '
-		if globals.state.descriptsettings.penis == true:
-			if member.tempsexexp.penis > 0:
-				text += "\n"+"was [color=yellow]used[/color] "+str(floor(member.tempsexexp.penis))+" times"
-				if member.tempsexexp.penisamount > 0:
-					text += " and [color=yellow]relased[/color] "+str(floor(member.tempsexexp.penisamount))+" ml of cum"
-#				if member.tempsexexp.fingersamount > 100:
-#					text += "\n"+sexmember1+" clitoris relased so much squirt it cant sotp pulsing wanting to release even more"
-#				elif member.tempsexexp.fingersamount > 70:
-#					text += "\n"+sexmember1+" clitoris drips with squirt"
-				if member.tempsexexp.penisamount > 30:
-					text += "\n"+"just came recently"
-#			if member.tempsexexp.morgasmaddict == 1:#temp for future stats
-#				text += "\n"+"has just developed a new liking from cumming"	
-			else:
-				text += "\n"+"hasnt been used for anything sexual this session"
-		else:
-			text += "Omitted. "
-	if member.tail != 'none':
-		text += "\n"
-		text += "\n"
-		text += '[url=tail][color=#d1b970][Tail][/color][/url] '
-		if globals.state.descriptsettings.tail == true:
-			if member.tempsexexp.tail > 0:
-				text += "\n"+"was [color=yellow]used[/color] "+str(floor(member.tempsexexp.tail))+" times"
-				if member.tempsexexp.tailamount > 0:
-					text += " and was [color=yellow]covered[/color] with "+str(floor(member.tempsexexp.tailamount))+" ml of cum"
-	#				if member.tempsexexp.fingersamount > 100:
-	#					text += "\n"+sexmember1+" hands are covered with [their] cum"
-	#				elif member.tempsexexp.fingersamount > 70:
-	#					text += "\n"+sexmember1+" hands are covered with [their] cum"
-					if member.tempsexexp.tailamount > 30:
-						text += "\n"+"is covered with [their] cum"
-	#			if member.tempsexexp.cumbathamount == 1:#temp for future stats
-	#				text += "\n"+"has just developed a new liking of been covered with cum""
-			else:
-				text += "\n"+"hasnt been used for anything sexual this session"
-		else:
-			text += "Omitted. "
-	text += "\n"
-	text += "\n"
-	text += '[url=anus][color=#d1b970][Anus][/color][/url] '
-	if globals.state.descriptsettings.anus == true:
-		if member.tempsexexp.anal > 0:
-			text += "\n"+"was [color=yellow]used[/color] "+str(floor(member.tempsexexp.anal))+" times"
-			if member.tempsexexp.analcreampie > 0:
-				text += " and [color=yellow]creampied[/color] with "+str(floor(member.tempsexexp.analcreampieamount))+" ml of cum"
-				if member.tempsexexp.analcreampieamount > 100:
-					text += "\n"+"got filled with so much of [their] cum "+sexmember+" looks pregnant"
-				elif member.tempsexexp.analcreampieamount > 70:
-					text += "\n"+"is filled with [their] cum"
-				elif member.tempsexexp.analcreampieamount > 30:
-					text += "\n"+"contains some of [their] cum"
-			if member.tempsexexp.analcreampielove == 1:
-				text += "\n"+"has just developed a new liking for the taste of cum"
-		else:
-			text += "\n"+"hasnt been used for anything sexual this session"
-	else:
-		text += "Omitted. "
-	text += "\n"
-	text += "\n"
-	text += '[url=feets][color=#d1b970][Feets][/color][/url] '
-	if globals.state.descriptsettings.feets == true:
-		if member.tempsexexp.tail > 0:
-			text += "\n"+"where [color=yellow]used[/color] "+str(floor(member.tempsexexp.tail))+" times"
-			if member.tempsexexp.feetsamount > 0:
-				text += " and where [color=yellow]covered[/color] with "+str(floor(member.tempsexexp.feetsamount))+" ml of cum"
-#				if member.tempsexexp.fingersamount > 100:
-#					text += "\n"+sexmember1+" hands are covered with [their] cum"
-#				elif member.tempsexexp.fingersamount > 70:
-#					text += "\n"+sexmember1+" hands are covered with [their] cum"
-				if member.tempsexexp.feetsamount > 30:
-					text += "\n"+"is covered with [their] cum"
-#			if member.tempsexexp.cumbathamount == 1:#temp for future stats
-#				text += "\n"+"has just developed a new liking of been covered with cum""
-		else:
-			text += "\n"+"hasnt been used for anything sexual this session"
-	else:
-		text += "Omitted. "
-	text += "\n"
-	text += "\n"
-	text += "orgasmed "+str(floor(member.tempsexexp.orgasms))+" times"
-	if get_node("Panel/sceneeffects").text != 'You bring selected participants into your bedroom. ':
-		text = decoder(text, null, [member])
-		text = splitrand(text)
-	return text
-	
 
-func _on_closebutton_pressed():
-	get_node("Control2").hide()
-	for i in participants:
-		if i.person.sexexp.showingdescription == 1:
-			i.person.sexexp.showingdescription = 0
+func _on_blacklist_pressed():
+	$blacklist.visible = true
+	for i in $blacklist/ScrollContainer/VBoxContainer.get_children():
+		if i.get_name() != 'CheckBox':
+			i.visible = false
+			i.queue_free()
+	for i in categories.values():
+		for j in i:
+			if j.code == 'wait':
+				continue
+			var node = $blacklist/ScrollContainer/VBoxContainer/CheckBox.duplicate()
+			j.givers = [participants[0]]
+			$blacklist/ScrollContainer/VBoxContainer.add_child(node)
+			node.visible = true
+			node.text = j.getname(1)
+			node.set_pressed(!filter.has(j.code))
+			node.set_meta("action", j)
+			node.connect("toggled", self, 'toggleaction', [node])
+
+func toggleaction(button, node):
+	var action = node.get_meta('action')
+	if filter.has(action.code):
+		filter.erase(action.code)
+	else:
+		filter.append(action.code)
+	node.set_pressed(!filter.has(action.code))
+
+func _on_closeblacklist_pressed():
+	$blacklist.visible = false
+	rebuildparticipantslist()
 
 
-func _on_General_Report_meta_clicked(meta):
-	#if meta == 'race':
-	#	get_tree().get_current_scene().showracedescript(person)
-	if globals.state.descriptsettings.has(meta):
-		globals.state.descriptsettings[meta] = !globals.state.descriptsettings[meta]
-	for i in participants:
-		if i.person.sexexp.showingdescription == 1:
-			slavedescription(i)
-
-
-func _on_This_session_Report_meta_clicked(meta):
-	if globals.state.descriptsettings.has(meta):
-		globals.state.descriptsettings[meta] = !globals.state.descriptsettings[meta]
-	for i in participants:
-		if i.person.sexexp.showingdescription == 1:
-			slavedescription(i)
-#----------------------------------------------------------------------------------------------
