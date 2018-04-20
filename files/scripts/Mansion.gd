@@ -9,7 +9,7 @@ var testslaveorigin = ['slave','poor','commoner','rich','noble']
 var currentslave = 0 setget currentslave_set
 var selectedslave = -1
 var texture = null
-var startcombatzone = "amberguardforest"
+var startcombatzone = "grove"
 var nameportallocation
 onready var maintext = '' setget maintext_set, maintext_get
 onready var exploration = get_node("explorationnode")
@@ -62,6 +62,7 @@ var musicvalue = 0
 func maintext_set(value):
 	var wild = $explorationnode.zones[$explorationnode.currentzone.code].combat == true
 	$outside/textpanel.visible = !wild
+	$outside/exploreprogress.visible = wild
 	$outside/textpanelexplore.visible = wild
 	$outside/textpanel/outsidetextbox.bbcode_text = value
 	$outside/textpanelexplore/outsidetextbox2.bbcode_text = value

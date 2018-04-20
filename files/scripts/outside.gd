@@ -167,8 +167,12 @@ func iteminfoclose():
 	globals.hidetooltip()
 
 func abilitytooltip(ability):
-	var text = ''
-	globals.showtooltip('[center]' + ability.name + '[/center]\n\n' + ability.description)
+	var text = '[center]' + ability.name + '[/center]\n\n' + ability.description
+	if partyselectedchar.abilityactive.has(ability.code):
+		text += "\n\n[color=green]Ability active[/color]"
+	else:
+		text += "\n\nAbility inactive"
+	globals.showtooltip(text)
 
 func statinfo(stat):
 	globals.showtooltip(globals.statsdescript[stat])
@@ -193,9 +197,13 @@ func opencharacter(person):
 		var newnode = $playergrouppanel/characterinfo/Container/GridContainer/Button.duplicate()
 		$playergrouppanel/characterinfo/Container/GridContainer.add_child(newnode)
 		newnode.visible = true
-		newnode.texture = ability.iconnorm
+		newnode.texture_normal = ability.iconnorm
+		newnode.texture_pressed = ability.icondisabled
+		if !person.abilityactive.has(i):
+			newnode.pressed = true
 		newnode.connect("mouse_entered",self,'abilitytooltip',[ability])
 		newnode.connect("mouse_exited",self,'iteminfoclose')
+		newnode.connect("pressed", self, 'abilitytoggle', [i])
 	for i in ['sstr','sagi','smaf','send']:
 		$playergrouppanel/characterinfo/stats.get_node(i+'/Label').text = str(person[i]) + "/" +str(min(person.stats[globals.maxstatdict[i]], person.originvalue[person.origins]))
 	$playergrouppanel/characterinfo/grade.texture = globals.gradeimages[person.origins]
@@ -203,6 +211,13 @@ func opencharacter(person):
 		$playergrouppanel/characterinfo/spec.texture = globals.specimages[person.spec]
 	$playergrouppanel/characterinfo/grade.visible = person != globals.player
 	$playergrouppanel/characterinfo/spec.visible = person != globals.player
+
+func abilitytoggle(ability):
+	if !partyselectedchar.abilityactive.has(ability):
+		partyselectedchar.abilityactive.append(ability)
+	else:
+		partyselectedchar.abilityactive.erase(ability)
+	iteminfoclose()
 
 func _on_grade_mouse_entered():
 	var text = ''

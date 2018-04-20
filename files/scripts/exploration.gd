@@ -64,7 +64,7 @@ combat = true,
 code = 'forest',
 name = 'Ancient Forest',
 description = "You stand deep within this ancient forest. Giant trees tower above you, reaching into the skies and casting deep shadows on the ground below. As the wind whispers past, you can hear the movement of small creature in the undergrowth and birds singing from their perches above.",
-enemies = [{value = 'thugseasy', weight = 3},{value = 'banditseasy', weight = 3}, {value = 'peasant', weight = 6}, {value ='solobear', weight = 4}, {value = 'wolveseasy', weight = 9},{value = 'treasurechest', weight = 1}],
+enemies = [{value = 'wolveswithperson', weight = 0.4},{value = 'banditseasy', weight = 3}, {value = 'peasant', weight = 3}, {value ='solobear', weight = 4}, {value = 'wolveseasy', weight = 9},{value = 'treasurechest', weight = 1}],
 encounters = [['chloeforest','globals.state.sidequests.chloe in [0,1]',10]],
 length = 5,
 exits = ['shaliq', 'wimbornoutskirts', 'elvenforest'],
@@ -80,7 +80,7 @@ combat = true,
 code = 'elvenforest',
 name = 'Elven Grove',
 description = "This portion of the forest is located dangerously close to eleven lands. They take poorly to intruders in their part of the woods so you should remain on your guard.",
-enemies = [{value = 'fairy', weight = 2},{value = 'solobear', weight = 6},{value = 'elfguards',weight = 6},{value = 'plantseasy', weight = 6},{value = 'wolveseasy', weight = 8},{value = 'blockedsection', weight = 0.5}],
+enemies = [{value = 'wolveswithperson', weight = 0.4},{value = 'fairy', weight = 2},{value = 'solobear', weight = 6},{value = 'elfguards',weight = 6},{value = 'plantseasy', weight = 6},{value = 'wolveseasy', weight = 8},{value = 'blockedsection', weight = 0.5}],
 encounters = [],
 length = 5,
 exits = ['amberguard','forest'],
@@ -113,7 +113,7 @@ combat = true,
 code = 'grove',
 name = 'Far Eerie Woods',
 description = "This portion of the forest is deeply shadowed, and strange sounds drift in and out of hearing. Something about the atmosphere keeps the normal forest creatures silent, lending an eerie, mystic feeling to the grove you stand within.",
-enemies = [{value = 'dryad',weight = 2},  {value = 'fairy', weight = 2},{value = 'wolveshard', weight = 4},{value = 'plantseasy',weight = 5}],
+enemies = [{value = 'plantswithperson',weight = 1},{value = 'dryad',weight = 2},  {value = 'fairy', weight = 2},{value = 'wolveshard', weight = 4},{value = 'plantseasy',weight = 5}],
 encounters = [['chloegrove','globals.state.sidequests.chloe == 6',25],['snailevent','globals.state.mansionupgrades.farmhatchery >= 1 && globals.state.snails < 10',10]],
 length = 7,
 exits = ['shaliq','marsh'],
@@ -427,6 +427,7 @@ func zoneenter(zone):
 		lastzone = currentzone.code
 	zone = self.zones[zone]
 	outside.location = zone.code
+	enemyinfoclear()
 	main.background_set(zone.background)
 	if OS.get_name() != "HTML5" && globals.rules.fadinganimation == true:
 		yield(main, "animfinished")
@@ -736,15 +737,22 @@ func enemyencounter():
 func enemyinfo():
 	var text = ''
 	if enemygroup.units.size() <= 3:
-		text = "Number: " + str(enemygroup.size())
+		text = "Number: " + str(enemygroup.units.size())
 	else:
 		text += "Estimate number: " + str(max(round(enemygroup.units.size() + rand_range(-2,2)),1))
-	
+	if enemygroup.units[0].capture != null:
+		text += "\nEstimated level: " + str(enemygroup.units[0].capture.level)
+	else:
+		text += "\nEstimated level: " + str(max(1,enemygroup.units[0].level + round(rand_range(-1,1))))
 	text += '\nGroup: ' + enemygroup.units[0].faction
-	if enemygroup.captured.size() >= 1:
+	if enemygroup.captured != null && enemygroup.captured.size() >= 1:
 		text += "\n\nHave other persons involved. "
 	outside.get_node("textpanelexplore/enemyportrait").set_texture(enemygroup.units[0].icon)
 	outside.get_node("textpanelexplore/enemyinfo").set_bbcode(text)
+
+func enemyinfoclear():
+	outside.get_node("textpanelexplore/enemyportrait").set_texture(null)
+	outside.get_node("textpanelexplore/enemyinfo").set_bbcode('')
 
 func enemylevelup(person, levelarray):
 	var level = levelarray[randi()%levelarray.size()]
@@ -1115,6 +1123,7 @@ func enemydefeated():
 		if globals.state.findslave(i).spec == 'ranger':
 			ranger = true
 	winscreenclear()
+	enemyinfoclear()
 	capturedtojail = 0
 	#Fight rewards
 	var winpanel = get_node("winningpanel")
@@ -1217,7 +1226,7 @@ func buildcapturelist():
 		newbutton.get_node("capture").connect("pressed",self,'captureslave', [defeated.units[i]])
 		if !globals.state.backpack.stackables.has('rope') || globals.state.backpack.stackables.rope < 1:
 			newbutton.get_node('capture').set_disabled(true)
-		newbutton.get_node("Label").set_text(defeated.names[i] + ' ' + defeated.units[i].sex+ ' ' + defeated.units[i].age + ' ' + defeated.units[i].race)
+		newbutton.get_node("Label").set_text(defeated.names[i] + ' ' + defeated.units[i].sex+ ' ' + defeated.units[i].race)
 		newbutton.connect("pressed", self, 'defeatedselected', [defeated.units[i]])
 		newbutton.get_node("choice").set_meta('person', defeated.units[i])
 		newbutton.get_node("mindread").connect("pressed",self,'mindreadslave', [defeated.units[i]])
@@ -2015,6 +2024,13 @@ func encounterdictionary(text):
 		if temp == '1':
 			temp = 'sole'
 		string = string.replace('$capturednumber', temp)
+		string = string.replace('$capturedrace', enemygroup.captured[0].race)
+		if enemygroup.captured[0].sex == 'male':
+			temp = 'guy'
+		else:
+			temp = 'girl'
+		string = string.replace('$capturedsex', temp)
+		string = string.replace('$capturedchild', enemygroup.captured[0].dictionary('$child'))
 	if enemygroup.units[0].capture != null:
 		string = enemygroup.units[0].capture.dictionary(string)
 	string = string.replace('$scoutname', scout.dictionary('$name'))
