@@ -289,13 +289,13 @@ func _on_new_slave_button_pressed():
 	globals.state.decisions = ['tishaemilytricked','chloebrothel','ivrantaken','goodroute']
 	#lobals.state.upcomingevents.append({code = 'tishaappearance',duration =1})
 	globals.state.upcomingevents.append({code = 'aynerisrapierstart', duration = 1})
-	for i in globals.characters.characters:
-		person = globals.characters.create(i)
-		person.loyal = 100
-		person.lust = 0
-		person.consent = true
-		person.attention = 100
-		globals.slaves = person
+#	for i in globals.characters.characters:
+#		person = globals.characters.create(i)
+#		person.loyal = 100
+#		person.lust = 0
+#		person.consent = true
+#		person.attention = 100
+#		globals.slaves = person
 
 func mansion():
 	_on_mansion_pressed()

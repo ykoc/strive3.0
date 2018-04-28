@@ -180,7 +180,7 @@ func itemsinventory():
 	array.clear()
 		
 	for i in globals.state.unstackables.values():
-		if (i.owner != null && str(i.owner) != 'backpack') && globals.state.findslave(i.owner) == null && i.owner != globals.player.id:
+		if (i.owner != null && str(i.owner) != 'backpack') && globals.state.findslave(i.owner) == null && str(i.owner) != globals.player.id:
 			i.owner = null
 		if i.owner != null:
 			continue
@@ -242,7 +242,7 @@ func itemsbackpack():
 		button.set_meta("category", tempitem.type)
 	array.clear()
 	for i in globals.state.unstackables.values():
-		if (i.owner != null && str(i.owner) != 'backpack') && globals.state.findslave(i.owner) == null && i.owner != globals.player.id:
+		if (i.owner != null && str(i.owner) != 'backpack') && globals.state.findslave(i.owner) == null && str(i.owner) != globals.player.id:
 			i.owner = null
 		if str(i.owner) != 'backpack':
 			continue

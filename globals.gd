@@ -152,6 +152,8 @@ tamer = load("res://files/buttons/mainscreen/32.png"),
 
 var noimage = load("res://files/buttons/noimagesmall.png")
 
+var punishcategories = ['spanking','whipping','nippleclap','clitclap','nosehook','mashshow','facesit','afacesit','grovel']
+
 func _init():
 	randomize()
 	loadsettings()

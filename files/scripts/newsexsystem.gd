@@ -13,7 +13,7 @@ var selectmode = 'normal'
 
 var takercategories = ['cunnilingus','rimjob','handjob','titjob','tailjob','blowjob']
 var analcategories = ['assfingering','rimjob','missionaryanal','doggyanal','lotusanal','revlotusanal','doubledilda','inerttaila','analvibrator','enemaplug']
-var punishcategories = ['spanking','whipping','nippleclap','clitclap','nosehook','mashshow','facesit','afacesit','grovel']
+var punishcategories = globals.punishcategories
 var penetratecategories = ['missionary','missionaryanal','doggy','doggyanal','lotus','lotusanal','revlotus','revlotusanal','doubledildo','doubledildoass','inserttailv','inserttaila','tribadism','frottage']
 
 var filter = ['nosehook','relaxinginsense','facesit','afacesit','grovel','enemaplug']
@@ -111,7 +111,7 @@ class member:
 			lube = lube + (sens/200)
 			lube = min(5+lewd/20,lube)
 	
-	func actioneffect(acceptance, values):
+	func actioneffect(acceptance, values, scenedict):
 		var lewdinput = 0
 		var lustinput = 0
 		var sensinput = 0
@@ -125,6 +125,11 @@ class member:
 		if values.has('pain'):
 			paininput = values.pain
 		
+		if scenedict.scene.code in globals.punishcategories:
+			if scenedict.givers.has(self):
+				person.asser += rand_range(1,2)
+			else:
+				person.asser -= rand_range(1,2)
 		
 		if acceptance == 'good':
 			sensinput *= rand_range(1.1,1.4)
@@ -634,13 +639,13 @@ func startscene(scenescript, cont = false, pretext = ''):
 	for i in givers: 
 		if scenescript.has_method('givereffect'):
 			effects = scenescript.givereffect(i)
-			i.actioneffect(effects[0], effects[1])
+			i.actioneffect(effects[0], effects[1], dict)
 		i.lube()
 		
 	for i in takers:
 		if scenescript.has_method('takereffect'):
 			effects = scenescript.takereffect(i)
-			i.actioneffect(effects[0], effects[1])
+			i.actioneffect(effects[0], effects[1], dict)
 		i.lube()
 	
 	#if scenescript.has(
@@ -710,11 +715,11 @@ func startscene(scenescript, cont = false, pretext = ''):
 		if i.scene.has_method("givereffect"):
 			for member in i.givers:
 				effects = i.scene.givereffect(member)
-				member.actioneffect(effects[0], effects[1])
+				member.actioneffect(effects[0], effects[1], dict)
 		if i.scene.has_method("takereffect"):
 			for member in i.takers:
 				effects = i.scene.takereffect(member)
-				member.actioneffect(effects[0], effects[1])
+				member.actioneffect(effects[0], effects[1], dict)
 	
 	
 	for i in participants:
