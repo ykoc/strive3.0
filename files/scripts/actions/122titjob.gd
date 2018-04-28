@@ -12,7 +12,10 @@ const giverconsent = 'basic'
 const takerconsent = 'any'
 
 func getname(state = null):
-	return "Titjob"
+	if givers.size() + takers.size() == 2:
+		return "Titjob"
+	else:
+		return "Smlt. Titjob"
 
 func getongoingname(givers, takers):
 	return "[name1] give[s/1] [a /1]titjob[/s1] to [name2]."
@@ -24,7 +27,7 @@ func getongoingdescription(givers, takers):
 
 func requirements():
 	var valid = true
-	if takers.size() < 1 || givers.size() != 1:
+	if takers.size() < 1 || givers.size() < 1:
 		valid = false
 	else:
 		for i in givers:

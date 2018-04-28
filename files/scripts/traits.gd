@@ -86,7 +86,8 @@ var traits = {
     "tags": [
       "sexual",
       "mental",
-      "perversy"
+      "perversy",
+	  "secondary",
     ],
     "conflict": [
       "Prude"
@@ -135,11 +136,11 @@ var traits = {
       "mental"
     ],
     "conflict": [
-      "Lesbian"
+      "Homosexual",
     ]
   },
-  "Lesbian": {
-    "name": "Lesbian",
+  "Homosexual": {
+    "name": "Homosexual",
     "description": "$name is only expecting to have same-sex affairs. \n\n[color=aqua]Same-sex encounters have no penalty, opposite sex actions are unpreferred. [/color]",
     "effect": {
       
@@ -151,23 +152,6 @@ var traits = {
     ],
     "conflict": [
       "Bisexual",
-      "Gay"
-    ]
-  },
-  "Gay": {
-    "name": "Gay",
-    "description": "$name is only expecting to have same-sex affairs. \n\n[color=aqua]Same-sex encounters have no penalty, opposite sex actions are unpreferred. [/color]",
-    "effect": {
-      
-    },
-    "tags": [
-      "sexual",
-      "mental",
-      "secondary"
-    ],
-    "conflict": [
-      "Bisexual",
-      "Lesbian"
     ]
   },
   "Monogamous": {
@@ -427,6 +411,22 @@ var traits = {
       "sexual",
       "mental",
       "perversy"
+    ],
+    "conflict": [
+      ""
+    ]
+	},
+  "Enjoys Anal": {
+    "name": "Enjoys Anal",
+    "description": "$name is quite comfortable with $his ass being used for pleasure and even favors it. \n\n[color=aqua]Anal actions are more effective and preferred. [/color]",
+    "effect": {
+      
+    },
+    "tags": [
+      "sexual",
+      "mental",
+      "perversy",
+	  "secondary"
     ],
     "conflict": [
       ""

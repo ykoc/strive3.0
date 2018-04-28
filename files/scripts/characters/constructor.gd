@@ -21,6 +21,7 @@ func getage(age):
 		age = agearray[rand_range(0,agearray.size())]
 	return age
 
+
 func newslave(race, age, sex, origins = 'slave'):
 	var temp
 	var temp2
@@ -36,8 +37,8 @@ func newslave(race, age, sex, origins = 'slave'):
 	if person.sex == 'random': getrandomsex(person)
 	for i in ['cour_base','conf_base','wit_base','charm_base']:
 		person.stats[i] = rand_range(35,65)
-	person.stats.dom_cur = rand_range(40,60)
-	person.id = OS.get_unix_time() + OS.get_ticks_msec() + round(rand_range(0,100))
+	person.id = str(globals.state.slavecounter)
+	globals.state.slavecounter += 1
 	changerace(person, 'Human')
 	changerace(person)
 	person.work = 'rest'

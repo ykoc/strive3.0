@@ -813,9 +813,9 @@ main_2_sexv = {
 		virgin = [true],
 	},
 	lines = [
-		" as [he1] {^rip:tear:break}[s/1] {^open:through} [partners2] hymen[/s2]",
-		" as [he1] claim[s/1] [partners2] {^virginit[y/ies2]:virgin puss[y/ies2]}",
-		" as [he1] {^break[s/1] in:deflower[s/1]} [partners2] {^unused:virgin} puss[y/ies2]",
+		" as [color=#ff5df8][he1] {^rip:tear:break}[s/1] {^open:through} [partners2] hymen[/s2][/color]",
+		" as [color=#ff5df8][he1] claim[s/1] [partners2] {^virginit[y/ies2]:virgin puss[y/ies2]}[/color]",
+		" as [color=#ff5df8][he1] {^break[s/1] in:deflower[s/1]} [partners2] {^unused:virgin} puss[y/ies2][/color]",
 	]},
 	
 	virgin_mean = {
@@ -824,7 +824,7 @@ main_2_sexv = {
 		virgin = [true],
 	},
 	lines = [
-		" as [he1] rob[s/1] [partner2] of [his2] {^virginit[y/ies2]:first time[/s2]}",
+		" as [color=#ff5df8] [he1] rob[s/1] [partner2] of [his2] {^virginit[y/ies2]:first time[/s2]}[/color]",
 	]},
 	
 	insert = {
@@ -873,8 +873,8 @@ main_2_sexa = {
 		virgin = [true],
 	},
 	lines = [
-		" as [he1] claim[s/1] [partners2] {^anal virginit[y/ies2]:virgin butthole[/s2]}",
-		" as [he1] {^break[s/1] in:deflower[s/1]} [partners2] {^unused:virgin} {^ass:butt}hole[/s2]",
+		" as [color=#ff5df8][he1] claim[s/1] [partners2] {^anal virginit[y/ies2]:virgin butthole[/s2]}[/color]",
+		" as [color=#ff5df8][he1] {^break[s/1] in:deflower[s/1]} [partners2] {^unused:virgin} {^ass:butt}hole[/s2][/color]",
 	]},
 	
 	virgin_mean = {
@@ -883,7 +883,7 @@ main_2_sexa = {
 		virgin = [true],
 	},
 	lines = [
-		" as [he1] rob[s/1] [partner2] of [his2] {^anal virginit[y/ies2]:first time[/s2]}",
+		" as [color=#ff5df8][he1] rob[s/1] [partner2] of [his2] {^anal virginit[y/ies2]:first time[/s2]}[/color]",
 	]},
 	
 	insert = {

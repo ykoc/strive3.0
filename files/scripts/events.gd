@@ -1518,9 +1518,11 @@ func sexscene(value):
 		sprite = [['yrisshocknaked', 'pos1']]
 		text = textnode.GornYrisAccept3
 	elif value == "chloemana":
+		image = 'chloebj'
 		sprite = [['chloeshy2','pos1']]
 		text = textnode.ChloeShaliqTakeMana
 	elif value == 'chloeforest':
+		image = 'chloewoods'
 		sprite = [['chloenakedshy', 'pos1']]
 		text = textnode.ChloeGroveFound + '\n\n' + textnode.ChloeGroveSex
 	elif value == "aynerispunish":
@@ -1537,7 +1539,7 @@ func sexscene(value):
 	elif value == "mapleflirt2":
 		sprite = [['fairynaked', 'pos1']]
 		text = textnode.MapleFlirt2
-	if value in ['emilyshowersex','showerrape','tishablackmail','tishareward','tishaemilysex','calivirgin','aynerissex','aynerispunish']:
+	if value in ['emilyshowersex','showerrape','tishablackmail','tishareward','tishaemilysex','calivirgin','aynerissex','aynerispunish','chloemana','chloeforest']:
 		buttons.append({text = "Close", function = 'closescene'})
 		globals.main.scene(self, image, text, buttons)
 		return
@@ -1693,7 +1695,7 @@ func tishadecision(number):
 		text = textnode.TishaEmilyBrandCompensation
 		sprite = [['tishanakedneutral','pos1']]
 		image = 'tishatable'
-		globals.charactergallery.tisha.scenes[1].unlocked = true
+		globals.charactergallery.tisha.scenes[0].unlocked = true
 		globals.charactergallery.tisha.nakedunlocked = true
 		buttons.append({text = 'Go with your word and release Emily', function = 'tishadecision', args = 10})
 		buttons.append({text = 'Keep Emily anyway', function = 'tishadecision', args = 9})
@@ -2141,6 +2143,7 @@ func chloevillage(stage = 0):
 	if stage == 0:
 		globals.main.get_node("explorationnode").zoneenter('shaliq')
 		globals.main.close_dialogue()
+		globals.main.closescene()
 		return
 	elif stage == 1:
 		text = textnode.ChloeShaliqOffer
@@ -2174,6 +2177,10 @@ func chloevillage(stage = 0):
 		else:
 			text = "Chloe gleams with joy, happily smiling as she runs off to put her new possession away.\n\n[color=aqua]You have learned the Entrancement Spell.[/color]"
 		globals.main.get_node("explorationnode").zoneenter('shaliq')
+		var image = 'chloebj'
+		buttons.append({text = 'Continue',function = 'chloevillage',args = 0})
+		globals.main.scene(self, image, text, buttons)
+		return
 	elif stage == 4:
 		if globals.state.sidequests.chloe == 4:
 			text = textnode.ChloeShaliqBusy
@@ -2229,7 +2236,7 @@ func chloevillage(stage = 0):
 			if globals.resources.day == chloevisit:
 				text = "You have already visited Chloe today."
 			else:
-				if rand_range(0,10) >= 6.6:
+				if randf() >= 0.7:
 					state = false
 					sprite = [['chloenakedhappy', 'pos1']]
 					buttons.append({text = "Take Chloe's Offer",function = 'chloevillage',args = 9})
@@ -2260,6 +2267,7 @@ func chloegrove(stage = 0):
 	var state = false
 	var sprite = [['chloenakedhappy', 'pos1','opac']]
 	var buttons = []
+	var image
 	
 	if stage == 0:
 		globals.state.sidequests.chloe = 7
@@ -2268,17 +2276,21 @@ func chloegrove(stage = 0):
 		buttons.append({text = 'Have sex with Chloe',function = 'chloegrove',args = 1})
 		buttons.append({text = 'Masturbate Chloe',function = 'chloegrove',args = 2})
 	elif stage in [1,2]:
-		if stage == 1:
-			sprite = [['chloenakedshy', 'pos1']]
-			globals.charactergallery.chloe.scenes[1].unlocked = true
-			text = textnode.ChloeGroveSex
-		elif stage == 2:
-			text = textnode.ChloeGroveMasturbate
 		globals.resources.mana += 15
 		sprite = [['chloenakedneutral', 'pos1']]
 		buttons.append({text = 'Continue',function = 'chloegrove',args = 3})
+		if stage == 1:
+			image = 'chloewoods'
+			sprite = [['chloenakedshy', 'pos1']]
+			globals.charactergallery.chloe.scenes[1].unlocked = true
+			text = textnode.ChloeGroveSex
+			globals.main.scene(self, image, text, buttons)
+			return
+		elif stage == 2:
+			text = textnode.ChloeGroveMasturbate
 	elif stage == 3:
 		globals.main.close_dialogue()
+		globals.main.closescene()
 		globals.main.get_node("explorationnode").zoneenter('shaliq')
 		
 		return

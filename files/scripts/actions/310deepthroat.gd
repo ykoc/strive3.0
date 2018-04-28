@@ -54,7 +54,7 @@ func givereffect(member):
 
 func takereffect(member):
 	var result
-	var effects = {sens = 45, pain = 3, tags = ['punish'], obed = rand_range(10,15), stress = rand_range(3,6)}
+	var effects = {sens = 45, pain = 3, tags = ['punish','pervert'], obed = rand_range(10,15), stress = rand_range(3,6)}
 	if (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 30) || member.person.traits.find('Masochist') >= 0:
 		result = 'good'
 		effects.lust = 50

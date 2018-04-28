@@ -68,6 +68,7 @@ func launch():
 		scenearray.append("amberguard")
 	scenearray.append("maple")
 	scenearray.append("ayda")
+	scenearray.append("sebastian")
 	if globals.state.sidequests.emily > 1:
 		scenearray.append("emilytisha")
 	if globals.state.sidequests.cali > 0:
@@ -231,6 +232,14 @@ func melissa():
 	var dict = {text = "", background = "wimborn", sprite = 'melissaneutral'}
 	dict.text = "Melissa has disappeared from Wimborn and hasn't been seen again. Some said she was one of perpetraitors, but you weren't able to confirm that. "
 	dict.spriteblack = true
+	return dict
+
+func sebastian():
+	var dict = {text = "", background = "wimborn", sprite = 'sebastian'}
+	if globals.state.decisions.has('goodroute'):
+		dict.text = "Despite his old affiliations, Sebastian managed to dodge any repression against Hade's supporters. After some time he returned to his business in Wimborn. "
+	else:
+		dict.text = "Sebastian stayed out of Hade's and Melissa's political games focusing on his business goals. After short time he managed to seize a considerable wealth. "
 	return dict
 
 func emilytisha():

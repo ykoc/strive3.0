@@ -112,6 +112,7 @@ func _on_leave_pressed():
 	if globals.state.calculateweight().overload == true:
 		get_parent().infotext("Your backpack is too heavy to leave",'red')
 		return
+	get_parent().sound("door")
 	gooutside()
 	get_parent().get_node("explorationnode").currentzone = get_parent().get_node("explorationnode").zones[globals.state.location]
 	get_parent().get_node("explorationnode").zoneenter(globals.state.location)

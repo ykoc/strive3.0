@@ -8,6 +8,7 @@ var sellingitempricemod = 0.2
 var basefoodconsumption = 10
 var skillpointsperlevel = 3
 var timeforinteraction = 20
+var consumerope = 1
 
 
 var list = {
@@ -20,4 +21,5 @@ sellingitempricemod = {descript = "Selling price modifier for all items", defaul
 basefoodconsumption = {descript = "Basic food consumption for characters per day", default = 10, min = 1, max = 100},
 skillpointsperlevel = {descript = "Attribute points gained on levelup", default = 3, min = 1, max = 10},
 timeforinteraction = {descript = "Number of actions you can perform during interaction sequence", default = 20, min = 1, max = 50},
+consumerope  = {descript = "Number of ropes to be consumed when capturing a slave in the wild", default = 1, min = 0, max = 5,}
 }

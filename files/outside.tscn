@@ -74,7 +74,7 @@
 [ext_resource path="res://files/buttons/inventory/33.png" type="Texture" id=72]
 [ext_resource path="res://files/buttons/bigpanel.png" type="Texture" id=73]
 [ext_resource path="res://files/buttons/inventory/1.png" type="Texture" id=74]
-[ext_resource path="res://files/buttons/map.png" type="Texture" id=75]
+[ext_resource path="res://files/map.scn" type="PackedScene" id=75]
 
 [sub_resource type="StyleBoxTexture" id=1]
 
@@ -397,7 +397,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="DynamicFont" id=21]
+[sub_resource type="DynamicFont" id=18]
 
 size = 63
 use_mipmaps = false
@@ -406,7 +406,7 @@ extra_spacing_char = 2
 font_data = ExtResource( 35 )
 _sections_unfolded = [ "Extra Spacing", "Font", "Font/fallback", "Resource", "Settings" ]
 
-[sub_resource type="StyleBoxTexture" id=22]
+[sub_resource type="StyleBoxTexture" id=19]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -425,7 +425,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=23]
+[sub_resource type="StyleBoxTexture" id=20]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -444,7 +444,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=24]
+[sub_resource type="StyleBoxTexture" id=21]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -456,6 +456,59 @@ margin_left = 10.0
 margin_right = 10.0
 margin_top = 10.0
 margin_bottom = 10.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=22]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 40 )
+region_rect = Rect2( 0, 0, 50, 50 )
+margin_left = 10.0
+margin_right = 10.0
+margin_top = 10.0
+margin_bottom = 10.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=23]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+margin_left = 0.0
+margin_right = 0.0
+margin_top = 0.0
+margin_bottom = 0.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=24]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+margin_left = 0.0
+margin_right = 0.0
+margin_top = 0.0
+margin_bottom = 0.0
 expand_margin_left = 0.0
 expand_margin_right = 0.0
 expand_margin_top = 0.0
@@ -464,59 +517,6 @@ modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
 [sub_resource type="StyleBoxTexture" id=25]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
-texture = ExtResource( 40 )
-region_rect = Rect2( 0, 0, 50, 50 )
-margin_left = 10.0
-margin_right = 10.0
-margin_top = 10.0
-margin_bottom = 10.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
-
-[sub_resource type="StyleBoxTexture" id=26]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
-margin_left = 0.0
-margin_right = 0.0
-margin_top = 0.0
-margin_bottom = 0.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
-
-[sub_resource type="StyleBoxTexture" id=27]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
-margin_left = 0.0
-margin_right = 0.0
-margin_top = 0.0
-margin_bottom = 0.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
-
-[sub_resource type="StyleBoxTexture" id=28]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -535,7 +535,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=29]
+[sub_resource type="StyleBoxTexture" id=26]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -554,7 +554,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=30]
+[sub_resource type="StyleBoxTexture" id=27]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -573,7 +573,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="DynamicFont" id=31]
+[sub_resource type="DynamicFont" id=28]
 
 size = 20
 use_mipmaps = false
@@ -581,7 +581,7 @@ use_filter = true
 extra_spacing_top = 3
 font_data = ExtResource( 49 )
 
-[sub_resource type="GDScript" id=32]
+[sub_resource type="GDScript" id=29]
 
 script/source = "extends Node
 
@@ -946,7 +946,7 @@ func _on_cancel_pressed():
 
 "
 
-[sub_resource type="DynamicFont" id=33]
+[sub_resource type="DynamicFont" id=30]
 
 size = 24
 use_mipmaps = false
@@ -955,7 +955,7 @@ extra_spacing_top = 1
 font_data = ExtResource( 49 )
 _sections_unfolded = [ "Settings" ]
 
-[sub_resource type="StyleBoxTexture" id=34]
+[sub_resource type="StyleBoxTexture" id=31]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -974,7 +974,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=35]
+[sub_resource type="StyleBoxTexture" id=32]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -993,7 +993,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=36]
+[sub_resource type="StyleBoxTexture" id=33]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -1012,7 +1012,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=37]
+[sub_resource type="StyleBoxTexture" id=34]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -1031,7 +1031,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=38]
+[sub_resource type="StyleBoxTexture" id=35]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -1050,7 +1050,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="Animation" id=39]
+[sub_resource type="Animation" id=36]
 
 length = 0.3
 loop = false
@@ -1080,7 +1080,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=40]
+[sub_resource type="Animation" id=37]
 
 length = 0.3
 loop = false
@@ -1298,6 +1298,7 @@ _sections_unfolded = [ "Anchor", "Rect", "Visibility" ]
 
 [node name="textpanelexplore" type="Panel" parent="." index="3"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -1549,6 +1550,7 @@ _sections_unfolded = [ "custom_colors" ]
 
 [node name="playergrouppanel" type="Panel" parent="." index="6"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -2654,7 +2656,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 21 )
+custom_fonts/font = SubResource( 18 )
 custom_colors/font_color = Color( 0.886275, 0.960938, 0.457947, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Test"
@@ -2738,7 +2740,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 22 )
+custom_styles/panel = SubResource( 19 )
 popup_exclusive = false
 _sections_unfolded = [ "Hint", "Rect" ]
 
@@ -2775,7 +2777,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 23 )
+custom_styles/panel = SubResource( 20 )
 _sections_unfolded = [ "Rect" ]
 
 [node name="itemdescript" type="RichTextLabel" parent="playergroupdetails/Panel" index="0"]
@@ -2932,11 +2934,11 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/hover = SubResource( 24 )
-custom_styles/pressed = SubResource( 25 )
-custom_styles/focus = SubResource( 26 )
-custom_styles/disabled = SubResource( 27 )
-custom_styles/normal = SubResource( 28 )
+custom_styles/hover = SubResource( 21 )
+custom_styles/pressed = SubResource( 22 )
+custom_styles/focus = SubResource( 23 )
+custom_styles/disabled = SubResource( 24 )
+custom_styles/normal = SubResource( 25 )
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
@@ -3058,11 +3060,11 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/hover = SubResource( 24 )
-custom_styles/pressed = SubResource( 25 )
-custom_styles/focus = SubResource( 26 )
-custom_styles/disabled = SubResource( 27 )
-custom_styles/normal = SubResource( 28 )
+custom_styles/hover = SubResource( 21 )
+custom_styles/pressed = SubResource( 22 )
+custom_styles/focus = SubResource( 23 )
+custom_styles/disabled = SubResource( 24 )
+custom_styles/normal = SubResource( 25 )
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
@@ -3310,8 +3312,8 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/fg = SubResource( 29 )
-custom_styles/bg = SubResource( 30 )
+custom_styles/fg = SubResource( 26 )
+custom_styles/bg = SubResource( 27 )
 min_value = 0.0
 max_value = 100.0
 step = 1.0
@@ -4915,7 +4917,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 31 )
+custom_fonts/font = SubResource( 28 )
 text = "Available spells"
 percent_visible = 1.0
 lines_skipped = 0
@@ -5557,7 +5559,7 @@ theme = ExtResource( 1 )
 texture = ExtResource( 51 )
 expand = true
 stretch_mode = 0
-script = SubResource( 32 )
+script = SubResource( 29 )
 _sections_unfolded = [ "Mouse", "Visibility" ]
 
 [node name="mode" type="TextureButton" parent="shoppanel/inventory" index="0"]
@@ -5956,7 +5958,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 33 )
+custom_fonts/font = SubResource( 30 )
 text = "100"
 percent_visible = 1.0
 lines_skipped = 0
@@ -6162,7 +6164,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 33 )
+custom_fonts/font = SubResource( 30 )
 text = "100"
 percent_visible = 1.0
 lines_skipped = 0
@@ -6259,7 +6261,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 34 )
+custom_styles/panel = SubResource( 31 )
 _sections_unfolded = [ "Mouse" ]
 __meta__ = {
 "_edit_lock_": true
@@ -6305,8 +6307,8 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_styles/fg = SubResource( 35 )
-custom_styles/bg = SubResource( 36 )
+custom_styles/fg = SubResource( 32 )
+custom_styles/bg = SubResource( 33 )
 min_value = 0.0
 max_value = 100.0
 step = 1.0
@@ -6384,7 +6386,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 37 )
+custom_styles/panel = SubResource( 34 )
 popup_exclusive = false
 
 [node name="RichTextLabel" type="RichTextLabel" parent="shoppanel/inventory/iteminfo" index="0"]
@@ -6473,7 +6475,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_styles/panel = SubResource( 38 )
+custom_styles/panel = SubResource( 35 )
 popup_exclusive = false
 _sections_unfolded = [ "custom_styles" ]
 
@@ -6732,31 +6734,37 @@ autoplay = "spritemovefairy"
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
-anims/show = SubResource( 39 )
-anims/spritemovefairy = SubResource( 40 )
+anims/show = SubResource( 36 )
+anims/spritemovefairy = SubResource( 37 )
 blend_times = [  ]
 
-[node name="TextureRect" type="TextureRect" parent="." index="18"]
+[node name="ScrollContainer" type="ScrollContainer" parent="." index="18"]
 
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 791.0
-margin_top = 180.0
-margin_right = 1295.0
-margin_bottom = 589.0
+margin_left = 909.0
+margin_top = 53.0
+margin_right = 1264.0
+margin_bottom = 427.0
 rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
+rect_clip_content = true
+mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 75 )
-expand = true
-stretch_mode = 6
-_sections_unfolded = [ "Hint" ]
+scroll_horizontal_enabled = true
+scroll_horizontal = 0
+scroll_vertical_enabled = true
+scroll_vertical = 0
+
+[node name="Control" parent="ScrollContainer" index="0" instance=ExtResource( 75 )]
+
+margin_right = 0.0
+margin_bottom = 0.0
+_sections_unfolded = [ "Size Flags" ]
 
 [connection signal="pressed" from="questlog" to="." method="_on_questlog_pressed"]
 

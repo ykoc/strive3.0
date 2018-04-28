@@ -64,6 +64,7 @@ func getsexfeatures(person):
 	if person.race.find("Beastkin") >= 0 && globals.rules.furrynipples == true:
 		person.titsextra = 3
 	if person.sex == 'male':
+		person.asser = rand_range(30,90)
 		dick = true
 		if person.age == 'child':
 			temp = ['flat']
@@ -72,6 +73,7 @@ func getsexfeatures(person):
 		person.asssize = getrandomfromarray(temp)
 		person.titssize = getrandomfromarray(temp)
 	else:
+		person.asser = rand_range(10,70)
 		pussy = true
 		if person.sex == 'futanari':
 			dick = true

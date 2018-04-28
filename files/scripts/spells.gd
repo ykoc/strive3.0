@@ -280,7 +280,7 @@ func dreameffect():
 	person.stress -= rand_range(25,50)
 	text = 'You cast sleep on $name, putting $him into deep rest until the next day. '
 	main.popup(person.dictionary(text))
-	main.rebuild_slave_list()
+	main._on_mansion_pressed()
 
 
 func invigorateeffect():

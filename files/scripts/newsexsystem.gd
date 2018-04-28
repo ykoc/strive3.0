@@ -9,6 +9,12 @@ var turns = 0
 var actions = []
 var ongoingactions = []
 var location
+var selectmode = 'normal'
+
+var takercategories = ['cunnilingus','rimjob','handjob','titjob','tailjob','blowjob']
+var analcategories = ['assfingering','rimjob','missionaryanal','doggyanal','lotusanal','revlotusanal','doubledilda','inerttaila','analvibrator','enemaplug']
+var punishcategories = ['spanking','whipping','nippleclap','clitclap','nosehook','mashshow','facesit','afacesit','grovel']
+var penetratecategories = ['missionary','missionaryanal','doggy','doggyanal','lotus','lotusanal','revlotus','revlotusanal','doubledildo','doubledildoass','inserttailv','inserttaila','tribadism','frottage']
 
 var filter = ['nosehook','relaxinginsense','facesit','afacesit','grovel','enemaplug']
 
@@ -92,6 +98,8 @@ class member:
 	var mode = 'normal'
 	var consent = true
 	
+	var actionshad = {addtraits = [], removetraits = [], samesex = 0, samesexorgasms = 0, oppositesex = 0, oppositesexorgasms = 0, punishments = 0, group = 0}
+	
 	func lust_set(value):
 		lust = min(value, 1000)
 	
@@ -130,24 +138,35 @@ class member:
 			if values.has('pain') == false:
 				person.stress += rand_range(5,10)
 		
-		if values.has('tags') && values.tags.has('punish'):
-			if (person.obed < 90 || mode == 'forced') && (!person.traits.has('Masochist') && !person.traits.has('Likes it rough')):
-				person.obed += values.obed
-				person.stress += values.stress
-				if person.effects.has("captured") && randf() >= values.obed/2:
-					person.effects.captured.duration -= 1
-				self.lust += lustinput/4
-				self.sens += sensinput/4
-			else:
-				self.lewd += lewdinput
+		if values.has('tags'):
+			if values.tags.has('punish'):
+				if (person.obed < 90 || mode == 'forced') && (!person.traits.has('Masochist') && !person.traits.has('Likes it rough')):
+					person.obed += values.obed
+					person.stress += values.stress
+					if person.effects.has("captured") && randf() >= values.obed/2:
+						person.effects.captured.duration -= 1
+					self.lust += lustinput/4
+					self.sens += sensinput/4
+				else:
+					self.lewd += lewdinput
+					self.lust += lustinput
+					self.sens += sensinput
+					if person.asser < 35 && randf() < 0.1:
+						actionshad.addtraits.append('Likes it rough')
+					if !person.traits.has('Masochist'):
+						person.stress += values.stress
+			if values.tags.has('pervert') && (acceptance == 'good' || person.traits.has('Pervert')):
 				self.lust += lustinput
 				self.sens += sensinput
-				if person.asser < 50 && randf() < 0.1:
-					person.add_trait("Likes it rough")
-				if !person.traits.has('Masochist'):
-					person.stress += values.stress
-			if randf() < 0.20 && sens >= 950:
-				person.add_trait("Masochist")
+				if lust >= 750 && randf() < 0.2:
+					actionshad.addtraits.append("Pervert")
+				else:
+					person.stress += rand_range(2,4)
+			elif values.tags.has('pervert'):
+				self.lust += lustinput/1.75
+				self.sens += sensinput/1.75
+			if values.tags.has('group'):
+				actionshad.group += 1
 		else:
 			self.lewd += lewdinput
 			self.lust += lustinput
@@ -173,6 +192,7 @@ func _ready():
 			var person = globals.newslave(globals.allracesarray[rand_range(0,globals.allracesarray.size())], 'random', 'random')
 			var newmember = member.new()
 			person.obed = 90
+			person.lewdness = 70
 			newmember.loyalty = person.loyal
 			newmember.submission = person.obed
 			newmember.person = person
@@ -189,11 +209,32 @@ func _ready():
 		clearstate()
 		rebuildparticipantslist()
 
+func _input(event):
+	if !event is InputEventKey || is_visible_in_tree() == false:
+		return
+	var dict = {49 : 1, 50 : 2, 51 : 3, 52 : 4,53 : 5,54 : 6,55 : 7,56 : 8, 16777351 :1, 16777352 : 2, 16777353 : 3, 16777354 : 4, 16777355 : 5, 16777356: 6, 16777357: 7, 16777358: 8}
+	if event.scancode in dict:
+		var key = dict[event.scancode]
+		if event.is_action_pressed(str(key)) == true && participants.size() >= key:
+			if !givers.has(participants[key-1]) && !takers.has(participants[key-1]):
+				$Panel/ScrollContainer/VBoxContainer.get_child(key).get_node('give').emit_signal("pressed")
+			else:
+				$Panel/ScrollContainer/VBoxContainer.get_child(key).get_node('take').emit_signal("pressed")
+	if event.is_action_pressed("F") && $Panel/passbutton.disabled == false:
+		_on_passbutton_pressed()
+
+
 func startsequence(actors, mode = null, secondactors = []):
 	participants.clear()
 	get_node("Control").hide()
 	for person in actors:
 		var newmember = member.new()
+		for i in actors + secondactors:
+			if person != i:
+				if person.sexexp.watchers.has(i.id):
+					person.sexexp.watchers[i.id] += 1
+				else:
+					person.sexexp.watchers[i.id] = 1
 		person.lastinteractionday = globals.resources.day
 		newmember.loyalty = person.loyal
 		newmember.submission = person.obed
@@ -212,6 +253,12 @@ func startsequence(actors, mode = null, secondactors = []):
 	if mode == 'abuse':
 		for person in secondactors:
 			var newmember = member.new()
+			for i in actors + secondactors:
+				if person != i:
+					if person.sexexp.watchers.has(i.id):
+						person.sexexp.watchers[i.id] += 1
+					else:
+						person.sexexp.watchers[i.id] = 1
 			person.lastinteractionday = globals.resources.day
 			newmember.loyalty = person.loyal
 			newmember.submission = person.obed
@@ -228,7 +275,6 @@ func startsequence(actors, mode = null, secondactors = []):
 			newmember.mode = 'forced'
 			newmember.consent = false
 			participants.append(newmember)
-	
 	get_node("Panel/sceneeffects").set_bbcode("You bring selected participants into your bedroom. ")
 	turns = variables.timeforinteraction
 	changecategory('caress')
@@ -252,6 +298,8 @@ func changecategory(name):
 func rebuildparticipantslist():
 	var newnode
 	var effects
+	if selectmode == 'ai':
+		clearstate()
 	for i in get_node("Panel/ScrollContainer/VBoxContainer").get_children() + get_node("Panel/GridContainer/GridContainer").get_children():
 		if !i.get_name() in ['Panel', 'Button']:
 			i.visible = false
@@ -279,6 +327,9 @@ func rebuildparticipantslist():
 		newnode.get_node("portrait").texture = globals.loadimage(i.person.imageportait)
 		newnode.get_node("portrait").connect("mouse_entered",self,'showbody',[i])
 		newnode.get_node("portrait").connect("mouse_exited",self,'hidebody')
+		if ai.has(i):
+			newnode.get_node('name').set('custom_colors/font_color', Color(1,0.2,0.8))
+			newnode.get_node('name').hint_tooltip = 'Leads'
 		
 		if i.person == globals.player:
 			newnode.get_node("mood").hide()
@@ -300,6 +351,97 @@ func rebuildparticipantslist():
 	var text = ''
 	
 	#check for double dildo scenes between participants
+	var doubledildo = doubledildocheck()
+	
+	for i in categories[selectedcategory]:
+		i.givers = givers
+		i.takers = takers
+		var result = checkaction(i, doubledildo)
+		if result[0] == 'false':
+			continue
+		newnode = get_node("Panel/GridContainer/GridContainer/Button").duplicate()
+		get_node("Panel/GridContainer/GridContainer").add_child(newnode)
+		newnode.visible = true
+		newnode.set_text(i.getname())
+		if result[0] == 'disabled':
+			newnode.disabled = true
+			newnode.hint_tooltip = result[1]
+		newnode.connect("pressed",self,'startscene',[i])
+		if i.canlast == true && newnode.disabled == false:
+			newnode.get_node("continue").visible = true
+			newnode.get_node("continue").connect("pressed",self,'startscenecontinue',[i])
+		for j in ongoingactions:
+			if j.scene.code == i.code && j.givers == i.givers && j.takers == i.takers:
+				newnode.get_node("continue").pressed = true
+	if selectedcategory == 'caress' && givers.size() >= 1 && givers[0].person != globals.player && selectmode != 'ai':
+		newnode = get_node("Panel/GridContainer/GridContainer/Button").duplicate()
+		get_node("Panel/GridContainer/GridContainer").add_child(newnode)
+		newnode.visible = true
+		if givers.size() < 2:
+			newnode.set_text(givers[0].person.dictionary("Let $name Lead"))
+		else:
+			newnode.set_text("Let Selected Lead")
+		newnode.connect("pressed",self,'activateai')
+	elif selectmode == 'ai':
+		newnode = get_node("Panel/GridContainer/GridContainer/Button").duplicate()
+		get_node("Panel/GridContainer/GridContainer").add_child(newnode)
+		newnode.visible = true
+		newnode.set_text("Stop")
+		newnode.connect("pressed",self,'activateai')
+	$Panel/GridContainer/GridContainer.move_child($Panel/GridContainer/GridContainer/Button, $Panel/GridContainer/GridContainer.get_child_count()-1)
+	for i in givers:
+		text += '[color=yellow]' + i.name + '[/color], '
+	if givers.size() == 0:
+		text += '[...] '
+	text += 'will do it ... to '
+	for i in takers:
+		text += '[color=aqua]' + i.name + '[/color], '
+	if takers.size() == 0:
+		text += "[...]"
+	else:
+		text = text.substr(0, text.length() -2)+ '. '
+	text += "\n\n"
+	for i in ongoingactions:
+		text += decoder(i.scene.getongoingname(i.givers,i.takers), i.givers, i.takers) + ' [url='+str(ongoingactions.find(i))+'][Interrupt][/url]\n'
+	
+	if givers.size() == 0 && selectmode != 'ai':
+		get_node("Panel/passbutton").set_disabled(true)
+	else:
+		get_node("Panel/passbutton").set_disabled(false)
+	
+	if selectmode == 'ai':
+		$Panel/passbutton.set_text("Observe")
+	else:
+		$Panel/passbutton.set_text("Pass")
+	
+	get_node("TextureFrame/Label").set_text(str(turns))
+	
+	get_node("Panel/sceneeffects1").set_bbcode(text)
+	
+	globals.state.actionblacklist = filter
+	
+	if turns == 0:
+		endencounter()
+
+var ai = []
+
+func activateai():
+	for i in givers:
+		if i.submission < 90 || i.consent == false:
+			$Control/Panel/RichTextLabel.bbcode_text = i.person.dictionary('$name refuses to participate. ')
+			return
+	ai.clear()
+	if selectmode != 'ai':
+		selectmode = 'ai'
+		for i in givers:
+			if i.person != globals.player:
+				ai.append(i)
+	else:
+		selectmode = 'normal'
+	rebuildparticipantslist()
+
+
+func doubledildocheck():
 	var doubledildo = false
 	var givercheck = false
 	var takercheck = false
@@ -318,54 +460,44 @@ func rebuildparticipantslist():
 		else:
 			givercheck = false
 			takercheck = false
-	
-	for i in categories[selectedcategory]:
-		i.givers = givers
-		i.takers = takers
-		if i.requirements() == false || filter.has(i.code):
+	return doubledildo
+
+func checkaction(action, doubledildo):
+	action.givers = givers
+	action.takers = takers
+	var disabled = false
+	var hint_tooltip = ''
+	if action.requirements() == false || filter.has(action.code):
+		return ['false']
+	elif doubledildo == true && action.category in ['caress','fucking'] && !action.code in ['doubledildo','doubledildoass','tribadism','frottage']:
+		return ['false']
+	for k in givers:
+		if k.person == globals.player:
 			continue
-		elif doubledildo == true && i.category in ['caress','fucking'] && !i.code in ['doubledildo','doubledildoass','tribadism','frottage']:
+		if action.giverconsent != 'any' && ((k.mode == 'forced' || k.person.obed < 80) && !k.person.traits.has('Masochist') && !k.person.traits.has('Likes it rough') ):
+			disabled = true
+			hint_tooltip = k.person.dictionary("$name refuses to perform this action (low obedience)")
 			continue
-		newnode = get_node("Panel/GridContainer/GridContainer/Button").duplicate()
-		get_node("Panel/GridContainer/GridContainer").add_child(newnode)
-		newnode.visible = true
-		newnode.set_text(i.getname())
-		newnode.connect("pressed",self,'startscene',[i])
-		if i.canlast == true:
-			newnode.get_node("continue").visible = true
-			newnode.get_node("continue").connect("pressed",self,'startscenecontinue',[i])
-		for j in ongoingactions:
-			if j.scene.code == i.code && j.givers == i.givers && j.takers == i.takers:
-				newnode.get_node("continue").pressed = true
-	$Panel/GridContainer/GridContainer.move_child($Panel/GridContainer/GridContainer/Button, $Panel/GridContainer/GridContainer.get_child_count()-1)
-	for i in givers:
-		text += '[color=yellow]' + i.name + '[/color], '
-	if givers.size() == 0:
-		text += '[...] '
-	text += 'will do it ... to '
-	for i in takers:
-		text += '[color=aqua]' + i.name + '[/color], '
-	if takers.size() == 0:
-		text += "[...]"
+		elif action.giverconsent == 'advanced' && k.lewd < 50:
+			disabled = true
+			hint_tooltip = k.person.dictionary("$name refuses to perform this action (low lewdness)")
+			continue
+	for k in takers:
+		if k.person == globals.player:
+			continue
+		if action.takerconsent != 'any' && ((k.mode == 'forced' || k.person.obed < 80) && !k.person.traits.has('Masochist') && !k.person.traits.has('Likes it rough')  ):
+			disabled = true
+			hint_tooltip = k.person.dictionary("$name refuses to perform this action (low obedience)")
+			continue
+		elif action.takerconsent == 'advanced' && k.lewd < 50:
+			disabled = true
+			hint_tooltip = k.person.dictionary("$name refuses to perform this action (low lewdness)")
+			continue
+	if disabled == true:
+		return ['disabled',hint_tooltip]
 	else:
-		text = text.substr(0, text.length() -2)+ '. '
-	text += "\n\n"
-	for i in ongoingactions:
-		text += decoder(i.scene.getongoingname(i.givers,i.takers), i.givers, i.takers) + ' [url='+str(ongoingactions.find(i))+'][Interrupt][/url]\n'
-	
-	if givers.size() == 0:
-		get_node("Panel/passbutton").set_disabled(true)
-	else:
-		get_node("Panel/passbutton").set_disabled(false)
-	
-	get_node("TextureFrame/Label").set_text(str(turns))
-	
-	get_node("Panel/sceneeffects1").set_bbcode(text)
-	
-	globals.state.actionblacklist = filter
-	
-	if turns == 0:
-		endencounter()
+		return ['allowed']
+
 
 func slavedescription(member):
 	get_parent().popup(member.person.descriptionsmall())
@@ -412,70 +544,47 @@ func switchsides(panel, side):
 		takers.append(person)
 	rebuildparticipantslist()
 
-func startscene(scenescript, cont = false):
-	var textdict = {mainevent = '', repeats = '', orgasms = ''}
+func startscene(scenescript, cont = false, pretext = ''):
+	var textdict = {mainevent = pretext, repeats = '', orgasms = ''}
 	var pain = 0
 	var effects
 	scenescript.givers = givers
 	scenescript.takers = takers
 	
-	for i in givers:
-		if i.person == globals.player:
-			continue
-		if scenescript.giverconsent != 'any' && ((i.mode == 'forced' || i.person.obed < 80) && !i.person.traits.has('Masochist') && !i.person.traits.has('Likes it rough') ):
-			get_node("Panel/sceneeffects").set_bbcode(i.person.dictionary("$name refused to do [color=yellow]" + scenescript.getname() + '[/color] (low obedience)'))
-			return
-		elif scenescript.giverconsent == 'advanced' && i.lewd < 50:
-			get_node("Panel/sceneeffects").set_bbcode(i.person.dictionary("$name refused to do [color=yellow]" + scenescript.getname() + '[/color] (low lewdness)'))
-			return
-	for i in takers:
-		if i.person == globals.player:
-			continue
-		if scenescript.takerconsent != 'any' && ((i.mode == 'forced' || i.person.obed < 80) && !i.person.traits.has('Masochist') && !i.person.traits.has('Likes it rough')  ):
-			get_node("Panel/sceneeffects").set_bbcode(i.person.dictionary("$name refused to do [color=yellow]" + scenescript.getname() + '[/color] (low obedience)'))
-			return
-		elif scenescript.takerconsent == 'advanced' && i.lewd < 50:
-			get_node("Panel/sceneeffects").set_bbcode(i.person.dictionary("$name refused to do [color=yellow]" + scenescript.getname() + '[/color] (low lewdness)'))
-			return
 	
-	if scenescript.code in ['doubledildo','doubledildoass','tribadism']:
-		for i in ongoingactions:
-			if i.scene.category == 'fucking' && (i.givers.has(givers[0]) || i.takers.has(givers[0]) || i.givers.has(takers[0]) || i.takers.has(takers[0])):
-				if i.givers == givers && i.takers == takers:
-					stopongoingaction(i)
-	if scenescript.code in ['strapon', 'rope']:
-		cont = true
-	#to make action switch on that hole even if they comes from another body part
-	if scenescript.code in ['cunnilingus','rimjob','facesit','afacesit','massagefoot','lickfeet']:
-		for i in ongoingactions:
-			if i.scene.category == 'fucking' && (i.givers.has(givers[0]) || i.takers.has(givers[0]) || i.givers.has(takers[0]) || i.takers.has(takers[0])):
-				if i.givers == givers && i.takers == takers:
-					if i.scene.code != 'strapon':
-						stopongoingaction(i)
-	if scenescript.category == 'fucking':
-		for i in ongoingactions:
-			if i.scene.code in ['cunnilingus','rimjob','facesit','afacesit','massagefoot','lickfeet'] && (i.givers.has(givers[0]) || i.takers.has(givers[0]) || i.givers.has(takers[0]) || i.takers.has(takers[0])):
-				if i.givers == givers && i.takers == takers:
-					stopongoingaction(i)
-	if scenescript.code == 'grovel':
-		for i in ongoingactions:
-			if i.scene.code in ['facesit','afacesit'] && (i.givers.has(givers[0]) || i.takers.has(givers[0]) || i.givers.has(takers[0]) || i.takers.has(takers[0])):
-				if i.givers == givers && i.takers == takers:
-					stopongoingaction(i)
-	if scenescript.code in ['facesit','afacesit']:
-		for i in ongoingactions:
-			if i.scene.code == 'grovel' && (i.givers.has(givers[0]) || i.takers.has(givers[0]) || i.givers.has(takers[0]) || i.takers.has(takers[0])):
-				if i.givers == givers && i.takers == takers:
-					stopongoingaction(i)
+	for i in givers + takers:
+		if isencountersamesex(givers,takers,i) == true:
+			i.actionshad.samesex += 1
+		else:
+			i.actionshad.oppositesex += 1
+		if i.person.sexexp.actions.has(scenescript.code):
+			i.person.sexexp.actions[scenescript.code] += 1
+		else:
+			i.person.sexexp.actions[scenescript.code] = 1
+		for k in givers + takers:
+			if k != i:
+				if i.person.sexexp.partners.has(k.person.id):
+					i.person.sexexp.partners[k.person.id] += 1
+				else:
+					i.person.sexexp.partners[k.person.id] = 1
+	
+	for i in participants:
+		if !givers.has(i) && !takers.has(i):
+			if i.person.sexexp.seenactions.has(scenescript.code):
+				i.person.sexexp.seenactions[scenescript.code] += 1
+			else:
+				i.person.sexexp.seenactions[scenescript.code] = 1
+	
+	
 	
 	#temporary support for scenes converted to centralized output and those not
 	#should be unified in the future
 	var centralized = false
 	if scenescript.has_method('initiate'):
-		textdict.mainevent = decoder(scenescript.initiate(), givers, takers)
+		textdict.mainevent += decoder(scenescript.initiate(), givers, takers)
 	else:
 		centralized = true
-		textdict.mainevent = output(scenescript, scenescript.initiate, givers, takers) + output(scenescript, scenescript.ongoing, givers, takers)
+		textdict.mainevent += output(scenescript, scenescript.initiate, givers, takers) + output(scenescript, scenescript.ongoing, givers, takers)
 		
 	turns -= 1
 	
@@ -515,6 +624,13 @@ func startscene(scenescript, cont = false):
 				stopongoingaction(i[scenescript.takerpart])
 			i[scenescript.takerpart] = dict
 	
+	if scenescript.get('takerpart2'):
+		givers[1][scenescript.giverpart] = dict
+		for i in takers:
+			if i[scenescript.takerpart2] != null:
+				stopongoingaction(i[scenescript.takerpart2])
+			i[scenescript.takerpart2] = dict
+	
 	for i in givers: 
 		if scenescript.has_method('givereffect'):
 			effects = scenescript.givereffect(i)
@@ -526,6 +642,40 @@ func startscene(scenescript, cont = false):
 			effects = scenescript.takereffect(i)
 			i.actioneffect(effects[0], effects[1])
 		i.lube()
+	
+	#if scenescript.has(
+	
+	if scenescript.code in ['doubledildo','doubledildoass','tribadism']:
+		for i in ongoingactions:
+			if i.scene.category == 'fucking' && (i.givers.has(givers[0]) || i.takers.has(givers[0]) || i.givers.has(takers[0]) || i.takers.has(takers[0])):
+				if i.givers == givers && i.takers == takers:
+					stopongoingaction(i)
+	if scenescript.code in ['strapon', 'rope']:
+		cont = true
+	#to make action switch on that hole even if they comes from another body part
+	if scenescript.code in ['cunnilingus','rimjob','facesit','afacesit','massagefoot','lickfeet']:
+		for i in ongoingactions:
+			if i.scene.category == 'fucking' && (i.givers.has(givers[0]) || i.takers.has(givers[0]) || i.givers.has(takers[0]) || i.takers.has(takers[0])):
+				if i.givers == givers && i.takers == takers:
+					if i.scene.code != 'strapon':
+						stopongoingaction(i)
+	if scenescript.category == 'fucking':
+		for i in ongoingactions:
+			if i.scene.code in ['cunnilingus','rimjob','facesit','afacesit','massagefoot','lickfeet'] && (i.givers.has(givers[0]) || i.takers.has(givers[0]) || i.givers.has(takers[0]) || i.takers.has(takers[0])):
+				if i.givers == givers && i.takers == takers:
+					stopongoingaction(i)
+	if scenescript.code == 'grovel':
+		for i in ongoingactions:
+			if i.scene.code in ['facesit','afacesit'] && (i.givers.has(givers[0]) || i.takers.has(givers[0]) || i.givers.has(takers[0]) || i.takers.has(takers[0])):
+				if i.givers == givers && i.takers == takers:
+					stopongoingaction(i)
+	if scenescript.code in ['facesit','afacesit']:
+		for i in ongoingactions:
+			if i.scene.code == 'grovel' && (i.givers.has(givers[0]) || i.takers.has(givers[0]) || i.givers.has(takers[0]) || i.takers.has(takers[0])):
+				if i.givers == givers && i.takers == takers:
+					stopongoingaction(i)
+	
+	
 	
 	var sceneexists = false
 	var temptext = ''
@@ -543,6 +693,20 @@ func startscene(scenescript, cont = false):
 	
 	
 	for i in ongoingactions:
+		for k in i.givers + i.takers:
+			k.person.sexexp.actions[i.scene.code] += 1
+			for j in i.givers + i.takers:
+				if j != k:
+					if k.person.sexexp.partners.has(j.person.id):
+						k.person.sexexp.partners[j.person.id] += 1
+					else:
+						k.person.sexexp.partners[j.person.id] = 1
+		for k in participants:
+			if !i.givers.has(k) && !i.takers.has(k):
+				if k.person.sexexp.seenactions.has(i.scene.code):
+					k.person.sexexp.seenactions[i.scene.code] += 1
+				else:
+					k.person.sexexp.seenactions[i.scene.code] = 1
 		if i.scene.has_method("givereffect"):
 			for member in i.givers:
 				effects = i.scene.givereffect(member)
@@ -554,12 +718,23 @@ func startscene(scenescript, cont = false):
 	
 	
 	for i in participants:
-		if i.sens >= 1000:
-			textdict.orgasms += '\n' + orgasm(i)
 		if i in givers+takers:
 			i.lastaction = dict
-		elif not i.lastaction in ongoingactions:
+			if i.sens >= 1000:
+				if i.person.sexexp.orgasms.has(i.lastaction.scene.code):
+					i.person.sexexp.orgasms[i.lastaction.scene.code] += 1
+				else:
+					i.person.sexexp.orgasms[i.lastaction.scene.code] = 1
+				for k in i.lastaction.givers + i.lastaction.takers:
+					if i != k:
+						if i.person.sexexp.orgasmpartners.has(k.person.id):
+							i.person.sexexp.orgasmpartners[k.person.id] += 1
+						else:
+							i.person.sexexp.orgasmpartners[k.person.id] = 1
+				textdict.orgasms += '\n' + orgasm(i)
+		if not i.lastaction in ongoingactions:
 			i.lastaction = null
+		
 	
 	if cont == true && sceneexists == false: 
 		ongoingactions.append(dict)
@@ -582,6 +757,7 @@ func startscene(scenescript, cont = false):
 	get_node("Panel/sceneeffects").set_bbcode(textdict.mainevent + "\n" + textdict.repeats + "\n" + textdict.orgasms)
 	#"[img]" + img.texture.load_path + "[/img]" + 
 	rebuildparticipantslist()
+	
 
 
 #Effects: pleasure, excitement, pain, deviancy, obedience 
@@ -850,16 +1026,56 @@ func orgasm(member):
 			temptext = "[names2]"
 		temptext += " {^entire :whole :}body {^twists:quivers:writhes} in {^pleasure:euphoria:extacy} as [he2] reach[es/2] {^climax:orgasm}."
 		text = decoder(temptext, null, [member])
+	
+	
+	if member.lastaction.scene.code in punishcategories:
+		if randf() >= 0.85 || member.person.effects.has("entranced"):
+			member.actionshad.addtraits.append("Masochist")
+	if member.lastaction.scene.code in analcategories:
+		if randf() >= 0.85 || member.person.effects.has('entranced'):
+			member.actionshad.addtraits.append("Enjoys Anal")
+	if isencountersamesex(member.lastaction.givers, member.lastaction.takers, member) == true:
+		member.actionshad.samesexorgasms += 1
+	else:
+		member.actionshad.oppositesexorgasms += 1
+#		if randf() >= 0.9 || member.person.effects.has('entranced'):
+#			if !member.person.traits.has("Bisexual"):
+#				member.person.add_trait("Bisexual")
+#			else:
+#				member.person.trait_remove("Bisexual")
+#				if member.person.sex == 'male':
+#					member.person.add_trait("Gay")
+#				else:
+#					member.person.add_trait("Lesbian")
+	
+	
 	return "[color=#ff5df8]" + text + "[/color]"
 
-func decoder(text, givers, takers):
-	return parser.decoder(text, givers, takers)
+func isencountersamesex(givers, takers, actor = null):
+	var actorpos = ''
+	var samesex = false
+	if givers.size() == 0 || takers.size() == 0:
+		return false
+	var giverssex = givers[0].sex
+	var takerssex = takers[0].sex
+	if givers.has(actor):
+		actorpos = 'giver'
+	elif takers.has(actor):
+		actorpos = 'taker'
+	
+	if (actorpos == 'giver' && ((actor.sex == 'male' && takerssex == 'male') || (actor.sex in ['female','futa'] && takerssex in ['female','futa']))) || (actorpos == 'taker' && ((actor.sex == 'male' && giverssex == 'male') || (actor.sex in ['female','futa'] && giverssex in ['female','futa']))) :
+		samesex = true
+	return samesex
+
+
+func decoder(text, tempgivers, temptakers):
+	return parser.decoder(text, tempgivers, temptakers)
 
 
 func _on_sceneeffects1_meta_clicked( meta ):
-	stopongoingaction(meta)
+	stopongoingaction(meta, true)
 
-func stopongoingaction(meta):
+func stopongoingaction(meta, rebuild = false):
 	var action
 	if typeof(meta) == TYPE_STRING:
 		action = ongoingactions[int(meta)]
@@ -873,11 +1089,15 @@ func stopongoingaction(meta):
 			i[action.scene.takerpart] = null
 	if action.scene.code == 'strapon' && action.givers[0]['penis'] != null:
 		stopongoingaction(action.givers[0]['penis'])
-	ongoingactions.erase(action)	
-	rebuildparticipantslist()
+	ongoingactions.erase(action)
+	if rebuild == true:
+		rebuildparticipantslist()
 
 func _on_passbutton_pressed():
-	startscene(categories.other[0])
+	if selectmode == 'normal':
+		startscene(categories.other[0])
+	else:
+		askslaveforaction(ai[rand_range(0, ai.size())])
 
 func _on_stopbutton_pressed():
 	endencounter()
@@ -891,6 +1111,27 @@ func endencounter():
 		i.person.lust = i.lust/10
 		i.person.lastsexday = globals.resources.day
 		text += i.person.dictionary("$name: Orgasms - ") + str(i.orgasms) 
+		
+		for trait in i.actionshad.addtraits:
+			i.person.add_trait(trait)
+		
+		if i.actionshad.samesex > i.actionshad.oppositesex && i.actionshad.samesexorgasms > 0:
+			if !i.person.traits.has("Bisexual") && !i.person.traits.has("Homosexual") && (randf() >= 0.5 || i.person.effects.has('entranced')):
+				i.person.add_trait("Bisexual")
+			elif i.person.traits.has("Bisexual") && (randf() >= 0.5 || i.person.effects.has('entranced')) && max(0.2,i.actionshad.samesex)/max(0.2, i.actionshad.oppositesex) > 4 :
+				i.person.trait_remove("Bisexual")
+				i.person.add_trait('Homosexual')
+		if i.actionshad.samesex < i.actionshad.oppositesex && i.actionshad.oppositesexorgasms > 0:
+			if (i.person.traits.has("Bisexual") || i.person.traits.has("Homosexual")) && (randf() >= 0.5 || i.person.effects.has('entranced')):
+				if i.person.traits.has("Bisexual") && (randf() >= 0.5 || i.person.effects.has('entranced')) && max(0.2,i.actionshad.oppositesex)/max(0.2, i.actionshad.samesex) > 4:
+					i.person.trait_remove("Bisexual")
+				else:
+					i.person.trait_remove("Homosexual")
+					i.person.add_trait("Bisexual")
+		if i.actionshad.group*0.01 > randf():
+			i.person.trait_remove("Monogamous")
+			i.person.add_trait("Fickle")
+		
 		if i.orgasms >= 1:
 			if i.person.stats.maf_cur*20 > rand_range(0,100) && i.person.getessence() != null:
 				text += ", Ingredient gained: [color=yellow]" + globals.itemdict[i.person.getessence()].name + "[/color]"
@@ -920,7 +1161,216 @@ func mformula(gain, mana):
     return mana + gain * max(0, mana/(mana-300)+1)
 
 
+
+var actioncategories = {
+caress = {dom = 'giver'},
+kiss = {dom = 'any'},
+fondletits = {dom = 'giver'},
+sucknipples = {dom = 'giver'},
+fingering = {dom = 'giver'},
+assfingering = {dom = 'giver'},
+cunnilingus = {dom = 'taker'},
+rimjob = {dom = 'taker'},
+handjob = {dom = 'taker'},
+blowjob = {dom = 'taker'},
+titjob = {dom = 'taker'},
+tailjob = {dom = 'taker'},
+footjob = {dom = 'giver'},
+
+missionary = {dom = 'giver'},
+missionaryanal = {dom = 'giver'},
+doggy = {dom = 'giver'},
+doggyanal = {dom = 'giver'},
+lotus = {dom = 'giver'},
+lotusanal = {dom = 'giver'},
+revlotus = {dom = 'giver'},
+revlotusanal = {dom = 'giver'},
+doubledildo = {dom = 'any'},
+doubledildoass = {dom = 'any'},
+inserttailv = {dom = 'giver'},
+inserttaila = {dom = 'giver'},
+tribadism = {dom = 'any'},
+frottage = {dom = 'any'},
+
+strapon = {dom = 'any'},
+
+spanking = {dom = 'giver'},
+whipping = {dom = 'giver'},
+deepthroat = {dom = 'giver'},
+nippleclap = {dom = 'giver'},
+clitclap = {dom = 'giver'},
+ringgag = {dom = 'giver'},
+blindfold = {dom = 'giver'},
+nosehook = {dom = 'giver'},
+vibrator = {dom = 'giver'},
+analvibrator = {dom = 'giver'},
+rope = {dom = 'giver'},
+milker = {dom = 'giver'},
+relaxinginsense = {dom = 'giver'},
+mastshow = {dom = 'giver'},
+grovel = {dom = 'giver'},
+facesit = {dom = 'giver'},
+afacesit = {dom = 'giver'},
+massagefoot = {dom = 'giver'},
+lickfeet = {dom = 'giver'},
+enemaplug = {dom = 'giver'}
+
+
+}
+
+func askslaveforaction(chosen):
+	#choosing target
+	var targets = []
+	clearstate()
+	var chosensex = chosen.person.sex
+	var debug = 'Chosing targets... \n'
+	for i in participants:
+		if i != chosen:
+			debug += i.name
+			var value = 10
+			if chosen.person.traits.has("Monogamous") && i.person != globals.player:
+				value = 0
+			elif chosen.person.traits.has("Fickle") || chosen.person.traits.has('Slutty'):
+				value = 25
+			if chosen.person.traits.has('Devoted') && i.person == globals.player:
+				value += 50
+			
+			if chosen.person.sexexp.orgasms.has(i.person.id):
+				value += chosen.person.sexexp.orgasms[i.person.id]*4
+			if chosen.person.sexexp.watchers.has(i.person.id):
+				value += (chosen.person.sexexp.watchers[i.person.id]-1)*2
+			if chosen.person.sexexp.partners.has(i.person.id):
+				value += chosen.person.sexexp.partners[i.person.id]/0.2
+			if isencountersamesex([chosen], [i], chosen) && chosen.person.traits.has('Bisexual') == false && chosen.person.traits.has('Homosexual') == false:
+				value = max(value/5,1)
+			elif isencountersamesex([chosen], [i], chosen) == false && chosen.person.traits.has('Homosexual'):
+				value = max(value/5,1)
+			debug += " - " + str(value) + '\n'
+			value = min(value, 120)
+			if value > 0:
+				targets.append([i, value])
+	var target = globals.weightedrandom(targets)
+	debug += 'final target - ' + target.name
+	
+	
+	debug += '\nChosing dom: \n'
+	var dom = [['giver',40],['taker', 10]]
+	
+	if target.person.sex != chosen.person.sex && chosen.person.sex == 'female':
+		dom[0][1] = 0
+	
+	if chosen.person.asser >= 75:
+		dom[1][1] = 0
+	elif chosen.person.asser <= 25:
+		dom[0][1] = 0
+	debug += str(dom) + "\n"
+	dom = globals.weightedrandom(dom)
+	
+	debug += 'final dom: ' + dom + '\n'
+	#choosing action
+	var chosenpos = ''
+	var actions = []
+	var chosenaction = null
+	
+	debug += 'chosing action: \n' 
+	for i in categories:
+		for j in categories[i]:
+			clearstate()
+			debug += j.code + ": "
+			if j.code == 'wait':
+				continue
+			if j.code in takercategories:
+				if dom == 'taker':
+					givers.append(chosen)
+					takers.append(target)
+				else:
+					takers.append(chosen)
+					givers.append(target)
+			else:
+				if dom == 'taker':
+					takers.append(chosen)
+					givers.append(target)
+				else:
+					givers.append(chosen)
+					takers.append(target)
+			var result = checkaction(j, doubledildocheck())
+			if result[0] == 'allowed':
+				var value = 0
+				if chosen.person.sexexp.actions.has(j.code):
+					value += chosen.person.sexexp.actions[j.code]/2
+				if chosen.person.sexexp.orgasms.has(j.code):
+					value += chosen.person.sexexp.orgasms[j.code]*4
+				if chosen.person.sexexp.seenactions.has(j.code):
+					value += chosen.person.sexexp.seenactions[j.code]/10
+				
+				if i in ['caress','fucking']:
+					value += 10
+				
+				if !chosen.person.traits.has("Enjoys Anal") && j.code in analcategories:
+					if chosenpos == 'giver' && !takercategories.has(j.code):
+						value -= 5
+					elif chosenpos == 'taker' && takercategories.has(j.code):
+						value -= 5
+				
+				
+				
+				if chosen.person.traits.has('Masochist') && j.code in punishcategories && chosenpos == 'taker':
+					value *= 2.5
+				if chosen.person.traits.has('Dominant') && j.code in punishcategories && chosenpos == 'giver':
+					value *= 2.5
+				if target.submission < 90  && j.code in punishcategories && chosenpos == 'giver':
+					value *= 3
+				if chosen.person.penis == 'none' && dom == 'giver' && j.code == 'strapon':
+					value *= 10
+				if chosen.person.traits.has("Pervert") && ((givers.has(chosen) && j.giverconsent == 'advanced') || (takers.has(chosen) && j.takerconsent == 'advanced')):
+					value += 15
+				
+				if chosen.person.vagvirgin == true && j.category == 'fucking' && !j.code in analcategories:
+					value -= 25
+				if chosen.person.assvirgin == true && j.category == 'fucking' && j.code in analcategories:
+					value -= 25
+				
+				if j.category == 'fucking':
+					value += chosen.lust/75
+					if chosen.lube < 5:
+						value -= chosen.lube*2
+				
+				if j.code in ['tribadism','doubledildo','doubledildoass','frottage'] && (chosen.strapon != null || target.strapon != null):
+					value = 0
+				
+				debug += str(value) + '\n'
+				if value >= 0:
+					actions.append([j, value])
+	
+	if actions.size() == 0:
+		actions.append([categories.other[0], 1])
+	chosenaction = globals.weightedrandom(actions)
+	clearstate()
+	if chosenaction.code in takercategories:
+		if dom == 'taker':
+			givers.append(chosen)
+			takers.append(target)
+		else:
+			takers.append(chosen)
+			givers.append(target)
+	else:
+		if dom == 'taker':
+			takers.append(chosen)
+			givers.append(target)
+		else:
+			givers.append(chosen)
+			takers.append(target)
+	var cont = false
+	var text = '[color=green][name1] initiates ' + chosenaction.getname() + ' with [name2].[/color]\n\n'
+	if chosenaction.canlast == true && randf() >= 0.7:
+		cont = true
+	$PopupPanel/RichTextLabel.bbcode_text = debug
+	#$PopupPanel.popup()
+	startscene(chosenaction, cont, decoder(text, [chosen], [target]))
+
 func _on_finishbutton_pressed():
+	ai.clear()
+	selectmode = 'normal'
 	get_parent().animationfade()
 	yield(get_parent(), 'animfinished')
 	hide()
@@ -959,3 +1409,7 @@ func _on_closeblacklist_pressed():
 	rebuildparticipantslist()
 
 
+
+
+func _on_debug_pressed():
+	$PopupPanel.popup()

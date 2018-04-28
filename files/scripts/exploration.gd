@@ -1242,7 +1242,8 @@ func mindreadslave(person):
 
 func captureslave(person):
 	var location
-	globals.state.backpack.stackables.rope -= 1
+	if variables.consumerope != 0:
+		globals.state.backpack.stackables.rope -= variables.consumerope
 	if globals.state.backpack.stackables.rope <= 0:
 		globals.state.backpack.stackables.erase('rope')
 	for i in person.gear:

@@ -974,6 +974,7 @@ margin_right = -197.0
 margin_bottom = -29.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
+hint_tooltip = "Hotkey: F"
 focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
@@ -986,9 +987,11 @@ group = null
 text = "Pass"
 flat = false
 align = 1
+_sections_unfolded = [ "Hint" ]
 
 [node name="bodyimage" type="TextureRect" parent="Panel" index="9"]
 
+editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -1095,6 +1098,7 @@ max_lines_visible = -1
 
 [node name="Control" type="Control" parent="." index="2"]
 
+editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -1184,6 +1188,7 @@ align = 1
 
 [node name="blacklist" type="Panel" parent="." index="3"]
 
+editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -1313,6 +1318,79 @@ selection_enabled = false
 override_selected_font_color = false
 _sections_unfolded = [ "BBCode" ]
 
+[node name="PopupPanel" type="PopupPanel" parent="." index="4"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 204.0
+margin_top = 64.0
+margin_right = 1277.0
+margin_bottom = 653.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+popup_exclusive = false
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PopupPanel" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 39.0
+margin_top = 18.0
+margin_right = 1026.0
+margin_bottom = 548.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+bbcode_enabled = false
+bbcode_text = ""
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = ""
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+
+[node name="debug" type="Button" parent="." index="5"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 220.0
+margin_top = 680.0
+margin_right = 340.0
+margin_bottom = 719.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Debug"
+flat = false
+align = 1
+
 [connection signal="meta_clicked" from="Panel/sceneeffects1" to="." method="_on_sceneeffects1_meta_clicked"]
 
 [connection signal="pressed" from="Panel/stopbutton" to="." method="_on_stopbutton_pressed"]
@@ -1324,5 +1402,7 @@ _sections_unfolded = [ "BBCode" ]
 [connection signal="pressed" from="Control/Panel/finishbutton" to="." method="_on_finishbutton_pressed"]
 
 [connection signal="pressed" from="blacklist/closeblacklist" to="." method="_on_closeblacklist_pressed"]
+
+[connection signal="pressed" from="debug" to="." method="_on_debug_pressed"]
 
 

@@ -53,7 +53,10 @@ func _on_trainingabils_pressed():
 			get_node("trainingabilspanel/ScrollContainer/VBoxContainer").add_child(newbutton)
 			newbutton.visible = true
 			newbutton.connect("pressed", self, "chooseability", [i])
-			newbutton.set_text(i.name)
+			newbutton.text = i.name
+			if person.ability.has(i.code):
+				newbutton.disabled = true
+				newbutton.hint_tooltip = person.dictionary("$name already learned this ability")
 
 
 func chooseability(ability):
@@ -67,7 +70,10 @@ func chooseability(ability):
 	confirmbutton.set_disabled(false)
 	
 	text = '[center]'+ ability.name + '[/center]\n' + ability.description + '\nCooldown:' + str(ability.cooldown) + '\nLearn requirements: ' 
-	
+	if ability.has('iconnorm'):
+		$trainingabilspanel/abilityicon.texture = ability.iconnorm
+	else:
+		$trainingabilspanel/abilityicon.texture = null
 	var array = []
 	for i in ability.reqs:
 		array.append(i)
@@ -167,7 +173,7 @@ func _on_castspell_pressed():
 			newspellbutton.visible = true
 			newspellbutton.connect('pressed', self, 'spellbuttonpressed', [i])
 			spelllist.add_child(newspellbutton)
-	if  spelllist.get_children().size() <= 1:
+	if spelllist.get_children().size() <= 1:
 		get_node("selectspellpanel/spellusebutton").set_disabled(true)
 		get_node("selectspellpanel/spellusedescription").set_bbcode('You have no fitting spells. ')
 	else:
@@ -201,7 +207,8 @@ func _on_spellusebutton_pressed():
 	spellnode.call(spellselected.effect)
 	person.attention = 0
 	get_node("selectspellpanel").visible = false
-	get_parent().slavetabopen()
+	if spellselected.code != 'dream':
+		get_parent().slavetabopen()
 	get_tree().get_current_scene().rebuild_slave_list()
 
 

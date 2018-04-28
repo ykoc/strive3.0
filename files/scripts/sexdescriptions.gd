@@ -151,6 +151,7 @@ func decoder(text, tempgivers = null, temptakers = null):
 	for i in replacements:
 		text = text.replace(i, replacements[i])
 	
+	text = splitrand(text)
 	#handle capitalization
 	text = capitallogic(text)
 	

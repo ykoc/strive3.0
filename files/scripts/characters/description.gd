@@ -69,6 +69,8 @@ func lowergenitals():
 			text += penisdescription[temp]
 	if person.balls != 'none':
 		text += getdescription('balls')
+	if person.assvirgin == true:
+		text += "$His rear [color=yellow]is still pristine[/color]. "
 	return text
 
 func piercing():

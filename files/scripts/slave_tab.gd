@@ -70,26 +70,19 @@ func slavetabopen():
 	elif person.imagefull != null && globals.loadimage(person.imagefull) != null:
 		$stats/basics/bodypanel/fullbody.set_texture(globals.loadimage(person.imagefull))
 	$stats/basics/bodypanel.visible = ($stats/basics/bodypanel/fullbody.get_texture() != null)
-	for i in $stats/basics/traits/traitlist.get_children() + $stats/basics/abilities/abilitylist.get_children():
+	for i in $stats/basics/traits/traitlist.get_children() + $stats/basics/sextraits/traitlist.get_children() :
 		if i.get_name() != 'Label':
 			i.visible = false
 			i.free()
 	for i in person.get_traits():
 		label = $stats/basics/traits/traitlist/Label.duplicate()
-		$stats/basics/traits/traitlist.add_child(label)
+		if i.tags.has("sexual"):
+			$stats/basics/sextraits/traitlist.add_child(label)
+		else:
+			$stats/basics/traits/traitlist.add_child(label)
 		label.visible = true
 		label.set_text(i.name)
 		label.connect("mouse_entered", self, 'traittooltip', [i])
-		label.connect("mouse_exited", self, 'traittooltiphide')
-	for i in person.ability:
-		var abil = globals.abilities.abilitydict[i]
-		if !abil.learnable:
-			continue
-		label = $stats/basics/abilities/abilitylist/Label.duplicate()
-		$stats/basics/abilities/abilitylist.add_child(label)
-		label.visible = true
-		label.set_text(abil.name)
-		label.connect("mouse_entered", self, 'abilitytooltip', [abil])
 		label.connect("mouse_exited", self, 'traittooltiphide')
 	for i in $stats/customization/rules.get_children():
 		if i.is_in_group('advrules'):
@@ -210,9 +203,6 @@ func _on_grade_mouse_entered():
 
 func traittooltip(trait):
 	globals.showtooltip(person.dictionary(trait.description))
-
-func abilitytooltip(ability):
-	globals.showtooltip(ability.description)
 
 func traittooltiphide():
 	globals.hidetooltip()
@@ -338,7 +328,7 @@ func _on_brandbutton_pressed():
 			confirm.set_meta('value', 2)
 
 func _on_cancel_pressed():
-	$"customization/clothes&relatives&customs/brandbutton/brandpopup".visible = false
+	$stats/customization/brandpopup.visible = false
 
 
 func _on_confirm_pressed():
