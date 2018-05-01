@@ -4,7 +4,7 @@ extends Node
 var spelldict = {}
 var effectdict = {}
 var guildslaves = {wimborn = [], gorn = [], frostford = [], umbra = []}
-var gameversion = 5800
+var gameversion = 5400
 var state = progress.new()
 var developmode = false
 var gameloaded = false
@@ -75,7 +75,6 @@ dungeon = load("res://files/music/dungeon.ogg"),
 intimate = load("res://files/music/intimate.ogg"),
 }
 var sounddict = {
-door = load("res://files/sounds/door.wav"),
 stab = load("res://files/sounds/stab.wav"),
 win = load("res://files/sounds/win.wav"),
 }
@@ -124,9 +123,6 @@ tishaemily = load("res://files/images/sexscenes/tishaemily.png"),
 calisex = load("res://files/images/sexscenes/calisex.png"),
 aynerispunish = load("res://files/images/sexscenes/aynerispunish.png"),
 aynerissex = load("res://files/images/sexscenes/aynerissex.png"),
-chloebj = load("res://files/images/sexscenes/chloebj.png"),
-chloewoods = load("res://files/images/sexscenes/chloewoods.png"),
-
 }
 var mansionupgradesdict = mansionupgrades.dict
 var gradeimages = {
@@ -152,8 +148,6 @@ tamer = load("res://files/buttons/mainscreen/32.png"),
 
 var noimage = load("res://files/buttons/noimagesmall.png")
 
-var punishcategories = ['spanking','whipping','nippleclap','clitclap','nosehook','mashshow','facesit','afacesit','grovel']
-
 func _init():
 	randomize()
 	loadsettings()
@@ -162,7 +156,7 @@ func _init():
 	var tempnode = Node.new()
 	tempnode.set_script(tempvars)
 	for i in variables.list:
-		if tempnode.get(i) != null:
+		if tempnode.has_meta(i):
 			variables[i] = tempnode[i]
 	tempnode.queue_free()
 
@@ -476,11 +470,34 @@ class progress:
 	var supplybuy = false
 	var tutorial = {basics = false, person = false, alchemy = false, jail = false, lab = false, farm = false, outside = false, combat = false}
 	var itemcounter = 0
-	var slavecounter = 0
 	var alisecloth = 'normal'
 	var decisions = []
 	var lorefound = []
-	var descriptsettings = {full = true, basic = true, appearance = true, genitals = true, piercing = true, tattoo = true, mods = true}
+#	var descriptsettings = {full = true, basic = true, appearance = true, genitals = true, piercing = true, tattoo = true, mods = true}
+#-----------------------------------------------------------------------------------------------
+	var descriptsettings = {
+		full = true, 
+		basic = true, 
+		appearance = true, 
+		genitals = true, 
+		piercing = true, 
+		tattoo = true, 
+		mods = true, 
+		bodystates = true, 
+		general = true, 
+		bodyparts = false, 
+		mouth = true, 
+		breasts = true, 
+		fingers = true, 
+		vagina = true, 
+		crevix = true, 
+		clitoris = true, 
+		penis = true, 
+		tail = true, 
+		anus = true,
+		feets = true
+		}
+#-----------------------------------------------------------------------------------------------
 	var mansionupgrades = {
 	farmcapacity = 0,
 	farmhatchery = 0,
@@ -566,7 +583,7 @@ class progress:
 	func findslave(id):
 		var rval
 		for i in range(0, globals.slaves.size()):
-			if globals.slaves[i].id == str(id):
+			if globals.slaves[i].id == id:
 				rval = globals.slaves[i]
 		return rval
 
@@ -598,6 +615,11 @@ class person:
 	var bodyshape = 'humanoid'
 	var skincov = 'none'
 	var furcolor = 'none'
+#-----------------------------------------
+	var scalescolor = 'none'
+	var scales = 'none'
+	var featherscolor = 'none'
+#-----------------------------------------
 	var ears = 'human'
 	var tail = 'none'
 	var wings = 'none'
@@ -618,19 +640,28 @@ class person:
 	var vagvirgin = true
 	var mouthvirgin = true
 	var assvirgin = true
-	var penisvirgin = true
 	var penis = 'none'
 	var balls = 'none'
 	var penistype = 'human'
 	var penisextra = 0
-	var sensvagina = 0
-	var sensmouth = 0
-	var senspenis = 0
-	var sensanal = 0
+	var penisvirgin = true
+#-------------------------------------
+	var sensvagina = rand_range(0.75,1.25)
+	var sensmouth = rand_range(0.75,1.25)
+	var sensbreast = rand_range(0.75,1.25)
+	var sensclit = rand_range(0.75,1.25)
+	var senstail = rand_range(0.75,1.25)
+	var senscrevix = rand_range(0.75,1.25)
+	var senspenis = rand_range(0.75,1.25)
+	var sensanal = rand_range(0.75,1.25)
+#-------------------------------------
 	var knowntechniques = []
 	
 	var preg = {fertility = 0, has_womb = true, duration = 0, baby = null}
-	var rules = {'silence':false, 'pet':false, 'contraception':false, 'aphrodisiac':false, 'masturbation':false, 'nudity':false, 'betterfood':false, 'personalbath':false,'cosmetics':false,'pocketmoney':false}
+#	var rules = {'silence':false, 'pet':false, 'contraception':false, 'aphrodisiac':false, 'masturbation':false, 'nudity':false, 'betterfood':false, 'personalbath':false,'cosmetics':false,'pocketmoney':false}
+#-------------------------------------
+	var rules = {'silence':false, 'pet':false, 'contraception':false, 'aphrodisiac':false, 'masturbation':false, 'nudity':false, 'betterfood':false, 'personalbath':false,'cosmetics':false,'pocketmoney':false,'cuminfood':false,'morningblowjob':false, 'repeatdaily':false}
+#-------------------------------------
 	var traits = []
 	var relatives = {father = -1, mother = -1, siblings = [], children =[]}
 	var gear = {costume = null, underwear = null, armor = null, weapon = null, accessory = null}
@@ -665,15 +696,78 @@ class person:
 	var sexuals = {actions = {}, unlocked = false, affection = 0, kinks = {}, unlocks = [], lastaction = ''}
 	var kinks = []
 	var forcedsex = false
-	var sexexp = {partners = {}, watchers = {}, actions = {}, seenactions = {}, orgasms = {}, orgasmpartners = {}}
+#	var sexexp = {}
+#-------------------------------------------------------------------------------------------------------------------------
+	var sexexp = {
+		cuminfood = 0,
+		cuminfooddetect = 0,
+		morningblowjob = 0,
+		morningblowswallow = 0,
+		oral = 0,
+		oralsex = 0,
+		oraltech = rand_range(0.75,1.25),
+		throat = 0,
+		swallow = 0,
+		swallowamount = 0,
+		swallowlove = 0,
+		breast = 0,
+		breastamount = 0,
+		milked = 0,
+		milkedamount = 0,
+		milkedlove = 0,
+		fingers = 0,
+		fingerstech = rand_range(0.75,1.25),
+		fingersamount = 0,
+		vagina = 0,
+		vaginasex = 0,
+		vaginatech = rand_range(0.75,1.25),
+		creampie = 0,
+		creampieamount = 0,
+		creampielove = 0,
+		crevix = 0,
+		crevixtech = rand_range(0.75,1.25),
+		crevixpie = 0,
+		crevixamount = 0,
+		crevixpielove = 0,
+		penis = 0,
+		penissex = 0,
+		penistech = rand_range(0.75,1.25),
+		penisamount = 0,
+		anal = 0,
+		analsex = 0,
+		analtech = rand_range(0.75,1.25),
+		analcreampie = 0,
+		analcreampieamount = 0,
+		analcreampielove = 0,
+		clit = 0,
+		clitamount = 0,
+		tail = 0,
+		tailtech = rand_range(0.75,1.25),
+		tailamount = 0,
+		feets = 0,
+		feetstech = rand_range(0.75,1.25),
+		feetsamount = 0,
+		orgasms = 0,
+		kiss = 0,
+		masturbation = 0,
+		cumbath = 0,
+		cumbathamount = 0,
+		submission = 0,
+		dominance = 0,
+		showingdescription = 0,
+		impregnationrisk = 0,
+		impregnationday = 0,
+		bloodlossdetected = false,
+		bloodlossday = false,
+		cycleday = 1#randi()%30+1
+		}#simple values.. neex to add parts lvl and parts experience / virginity taken / last person used parts
+#-------------------------------------------------------------------------------------------------------------------------
 	var sensation = {}
 	var metrics = {ownership = 0, jail = 0, mods = 0, brothel = 0, sex = 0, partners = [], randompartners = 0, item = 0, spell = 0, orgy = 0, threesome = 0, win = 0, capture = 0, goldearn = 0, foodearn = 0, manaearn = 0, birth = 0, preg = 0, vag = 0, anal = 0, oral = 0, roughsex = 0, roughsexlike = 0, orgasm = 0}
 	var fromguild = false
 	var masternoun = 'Master'
 	var lastinteractionday = 0
 	var lastsexday = 0
-	
-	
 	var stats = {
 		str_cur = 0,
 		str_max = 0,
@@ -1375,10 +1469,20 @@ func impregnation(mother, father = null, anyfather = false):
 		realfather = father.id
 	if mother.preg.has_womb == false || mother.preg.duration > 0 || mother == father:
 		return
-	var rand = rand_range(1,100)
-	if mother.preg.fertility < rand || (mother.preg.fertility < 20 && mother.preg.fertility > 1):
-		mother.preg.fertility += rand_range(3,5)
-		return
+#--------------------------------------------------------------------
+#	var rand = rand_range(1,100)
+#	if mother.preg.fertility < rand:
+#		mother.preg.fertility += rand_range(5,15)
+#		return
+	if mother.rules.contraception == true:
+		if randi()%100 >= 30:
+			return
+		if mother.sexexp.impregnationrisk != 1:# || mother.sexexp.ovulationdrug != 1: #may want to replace with item effect
+			return
+	else:
+		if mother.sexexp.impregnationrisk != 1:# || mother.sexexp.ovulationdrug != 1: #may want to replace with item effect
+			return
+#--------------------------------------------------------------------
 	var age = ''
 	var babyrace = mother.race
 	if globals.rules.children == true:
@@ -1525,7 +1629,9 @@ var heightarray = ['petite','short','average','tall','towering']
 var agesarray = ['child','teen','adult']
 var genitaliaarray = ['small','average','big']
 var originsarray = ['slave','poor','commoner','rich','noble']
-var longtails = ['cat','fox','wolf','demon','dragon','scruffy','snake tail','racoon']
+#-------------------------------------------------------------------------------------------
+var longtails = ['cat','fox','wolf','demon','dragon','scruffy','snake tail','racoon','tentacles']
+#-------------------------------------------------------------------------------------------
 var skincovarray = ['none','scales','feathers','full_body_fur', 'plants']
 var penistypearray = ['human','canine','feline','equine']
 var alltails = ['cat','fox','wolf','bunny','bird','demon','dragon','scruffy','snake tail','racoon']
@@ -1651,7 +1757,7 @@ func load_game(text):
 	state.babylist.clear()
 	for i in currentline.slaves:
 		newslave = person.new()
-		if i['@path'].find('.gdc') >= 0:
+		if i['@path'].find('.gdc'):
 			i['@path'] = i['@path'].replace('.gdc', '.gd')
 		if i['@subpath'] == '':
 			i['@subpath'] = 'person'
@@ -1684,15 +1790,14 @@ func load_game(text):
 
 func repairsave():
 	state.currentversion = gameversion
-	for person in [player] + slaves + state.babylist:
-		person.id = str(person.id)
-		if person.sexexp.has('partners') == false:
-			person.sexexp = {partners = {}, watchers = {}, actions = {}, seenactions = {}, orgasms = {}, orgasmpartners = {}}
+	for person in [player] + slaves:
+		if person.gear.costume == 'clothcommon':
+			person.gear.costume = null
+		if person.gear.underwear == 'underwearplain':
+			person.gear.underwear = null
 	for i in globals.state.unstackables.values():
 		if i.enchant == null:
 			i.enchant = ''
-	for i in globals.state.playergroup:
-		i = str(i)
 
 var showalisegreet = false
 
