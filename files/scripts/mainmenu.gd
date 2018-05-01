@@ -76,6 +76,7 @@ func _ready():
 #--------------------------------------------------------------
 
 
+
 var maintheme = globals.musicdict.maintheme
 
 func music():
@@ -706,6 +707,7 @@ func stage6():
 			if get_node("TextureFrame/newgame/stage6/furcolor").text != 'none':
 				get_node("TextureFrame/newgame/stage6/haircolor").text = i.replace("_", "/")
 #------------------------------	
+
 	get_node("TextureFrame/newgame/stage6/bodyshape").set_disabled(true)
 	get_node("TextureFrame/newgame/stage6/bodyshape").add_item(player.bodyshape)
 	get_node("TextureFrame/newgame/stage6/ears").set_disabled(true)
@@ -714,7 +716,6 @@ func stage6():
 	get_node("TextureFrame/newgame/stage6/tail").add_item(player.tail)
 	get_node("TextureFrame/newgame/stage6/penistype").add_item(player.penistype)
 	get_node("TextureFrame/newgame/stage6/penistype").set_disabled(true)
-	
 
 
 func optionselect(item,button):
@@ -771,6 +772,7 @@ var scalessdict = {
 "Lamia" : ['blue','red','gold','green','silver','black'],
 }
 #-------------------------------------------
+
 func stage5change():
 	var text = player.description()
 	get_node("TextureFrame/newgame/stage6/chardescript").set_bbcode(text)
@@ -1139,8 +1141,6 @@ func _on_confirmconstants_pressed():
 			variables[vari] = clamp(float(i.get_node("LineEdit").text), variables.list[vari].min, variables.list[vari].max)
 	globals.savevars()
 	_on_constants_pressed()
-
-
 #--------------------------------------------------------
 func _on_chardescript_meta_clicked(meta):
 	if globals.state.descriptsettings.has(meta):

@@ -9,7 +9,7 @@ var testslaveorigin = ['slave','poor','commoner','rich','noble']
 var currentslave = 0 setget currentslave_set
 var selectedslave = -1
 var texture = null
-var startcombatzone = "amberguardforest"
+var startcombatzone = "grove"
 var nameportallocation
 onready var maintext = '' setget maintext_set, maintext_get
 onready var exploration = get_node("explorationnode")
@@ -62,6 +62,7 @@ var musicvalue = 0
 func maintext_set(value):
 	var wild = $explorationnode.zones[$explorationnode.currentzone.code].combat == true
 	$outside/textpanel.visible = !wild
+	$outside/exploreprogress.visible = wild
 	$outside/textpanelexplore.visible = wild
 	$outside/textpanel/outsidetextbox.bbcode_text = value
 	$outside/textpanelexplore/outsidetextbox2.bbcode_text = value
@@ -136,7 +137,6 @@ func _ready():
 		get_node("startcombat").show()
 		get_node("new slave button").show()
 		get_node("debug").show()
-	_on_mansion_pressed()
 	rebuildrepeatablequests()
 	globals.main = self
 	globals.resources.panel = get_node("ResourcePanel")
@@ -189,8 +189,7 @@ func _ready():
 		self[i].get_node('Control').connect('mouse_entered', self, 'stattooltip',[i])
 		self[i].get_node('Control').connect('mouse_exited', globals, 'hidetooltip')
 		self[i].get_node('Button').connect("pressed",self,'statup', [i])
-
-
+	
 #-------------------------------------------------------------------------------------
 	if !get_node("MainScreen/slave_tab/stats/customization/rules").has_node("extrarules"):
 		var newlabel = Label.new()
@@ -280,6 +279,8 @@ func _ready():
 #	get_node("textpanel/dailyeventtext").connect("pressed",self,'_on_dailyeventtext_meta_clicked')
 	
 #-------------------------------------------------------------------------------------
+	
+	_on_mansion_pressed()
 	#startending()
 
 func sound(value):
@@ -359,7 +360,7 @@ func _on_new_slave_button_pressed():
 	globals.resources.upgradepoints += 100
 	
 	globals.state.sidequests.brothel = 1
-	globals.state.sidequests.ayneris = 6
+	globals.state.sidequests.chloe = 6
 	#globals.state.decisions.append('')
 	globals.state.rank = 3
 	globals.state.mainquest = 5
@@ -378,13 +379,13 @@ func _on_new_slave_button_pressed():
 	globals.state.decisions = ['tishaemilytricked','chloebrothel','ivrantaken','goodroute']
 	#lobals.state.upcomingevents.append({code = 'tishaappearance',duration =1})
 	globals.state.upcomingevents.append({code = 'aynerisrapierstart', duration = 1})
-	for i in globals.characters.characters:
-		person = globals.characters.create(i)
-		person.loyal = 100
-		person.lust = 100
-		person.consent = true
-		person.attention = 100
-		globals.slaves = person
+#	for i in globals.characters.characters:
+#		person = globals.characters.create(i)
+#		person.loyal = 100
+#		person.lust = 0
+#		person.consent = true
+#		person.attention = 100
+#		globals.slaves = person
 
 func mansion():
 	_on_mansion_pressed()
@@ -1746,14 +1747,13 @@ func background_set(text):
 	if player.is_playing() == true:
 		return
 	if OS.get_name() != "HTML5" && globals.rules.fadinganimation == true:
-		if get_node("TextureFrame").get_texture() == globals.backgrounds[text]:
-			yield(get_tree(), 'idle_frame')
-			emit_signal('animfinished')
-			return
-		animationfade()
-		yield(player, "animation_finished")
+		if get_node("TextureFrame").get_texture() != globals.backgrounds[text]:
+			animationfade()
+			yield(player, "animation_finished")
 	texture = globals.backgrounds[text]
 	get_node("TextureFrame").set_texture(texture)
+	yield(get_tree(), "idle_frame")
+	emit_signal('animfinished')
 
 
 func animationfade(value = 0.4, duration = 0.05):
@@ -1768,6 +1768,9 @@ func animationfade(value = 0.4, duration = 0.05):
 		yield(player, "animation_finished")
 		emit_signal("animfinished")
 		player.play_backwards("fadetoblack")
+	else:
+		yield(get_tree(), 'idle_frame')
+		emit_signal("animfinished")
 
 func screenanimation(text):
 	var player = get_node("screenchange/AnimationPlayer")
@@ -1838,8 +1841,7 @@ func _on_mansion_pressed():
 	var textnode = get_node("MainScreen/mansion/mansioninfo")
 	var text = ''
 	background_set('mansion')
-	if OS.get_name() != "HTML5" && globals.rules.fadinganimation == true:
-		yield(self, 'animfinished')
+	yield(self, 'animfinished')
 	hide_everything()
 	for i in get_tree().get_nodes_in_group("mansioncontrols"):
 		i.show()
@@ -1939,8 +1941,7 @@ func _on_mansion_pressed():
 
 func _on_jailbutton_pressed():
 	background_set('jail')
-	if OS.get_name() != "HTML5" && globals.rules.fadinganimation == true:
-		yield(self, 'animfinished')
+	yield(self, 'animfinished')
 	hide_everything()
 	get_node("MainScreen/mansion/jailpanel").show()
 	if globals.state.tutorial.jail == false:
@@ -2033,8 +2034,7 @@ var potselected
 
 func _on_alchemy_pressed():
 	background_set('alchemy' + str(globals.state.mansionupgrades.mansionalchemy))
-	if OS.get_name() != "HTML5" && globals.rules.fadinganimation == true:
-		yield(self, 'animfinished')
+	yield(self, 'animfinished')
 	hide_everything()
 	get_node("MainScreen/mansion/alchemypanel").show()
 	if globals.state.tutorial.alchemy == false:
@@ -2156,8 +2156,7 @@ func _on_library_pressed():
 		background_set('library1')
 	else:
 		background_set('library2')
-	if OS.get_name() != "HTML5" && globals.rules.fadinganimation == true:
-		yield(self, 'animfinished')
+	yield(self, 'animfinished')
 	hide_everything()
 	get_node("MainScreen/mansion/librarypanel").show()
 	var text = ''
@@ -3159,7 +3158,7 @@ func checkplayergroup():
 	for i in range(0, globals.state.playergroup.size()):
 		checked = false
 		for ii in globals.slaves:
-			if ii.id == globals.state.playergroup[i] && ii.away.duration <= 0 && ii.away.at != 'hidden':
+			if ii.id == str(globals.state.playergroup[i]) && ii.away.duration <= 0 && ii.away.at != 'hidden':
 				checked = true
 		if checked == false:
 			removed.append(i)
@@ -3646,6 +3645,4 @@ func _on_hideui_pressed():
 	$ResourcePanel.visible = !$ResourcePanel.visible
 
 
-func dailyeventtext_meta_clicked(meta):
-	get_node("dailyevents")._on_dailyeventtext_meta_clicked(meta)
 
