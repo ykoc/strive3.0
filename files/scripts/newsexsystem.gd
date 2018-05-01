@@ -1307,11 +1307,11 @@ func orgasm(member):
 				elif scene.scene.code == 'tailjob':
 #--------------------------------------------------------------------------------------
 					var part
-					if i.person.tail == 'tentacles':
-						part = 'tentacle'
-					else:
-						part = 'tail'
 					for i in scene.givers:
+						if i.person.tail == 'tentacles':
+							part = 'tentacle'
+						else:
+							part = 'tail'
 						i.person.sexexp.tailamount += 1*semenamount
 						i.tempsexexp.tailamount += 1*semenamount
 #--------------------------------------------------------------------------------------
@@ -1977,7 +1977,8 @@ func thissession(member):
 		else:
 			text += "Omitted. "
 	if member.tail != 'none':
-		if i.person.tail == 'tentacles':
+		var part
+		if member.person.tail == 'tentacles':
 			part = 'Tentacles'
 		else:
 			part = 'Tail'
