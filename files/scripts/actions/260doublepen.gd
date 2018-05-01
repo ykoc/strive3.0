@@ -54,9 +54,6 @@ func givereffect(member):
 	if member.person.penis == 'none':
 		effects.sens /= 1.2
 		effects.lust /= 1.2
-	member.person.sexexp.penis += 1
-	member.tempsexexp.penis += 1
-	member.person.sexexp.penistech += 0.01*increase
 	return [result, effects]
 
 func takereffect(member):
