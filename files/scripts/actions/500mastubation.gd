@@ -34,7 +34,7 @@ func requirements():
 #Disabling until something is decided about tools
 func givereffect(member):
 	var result
-	var effects = {lust = 0}
+	var effects = {lust = 10}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0):
 		result = 'good'
 	elif member.person.traits.find("Likes it rough") >= 0:
@@ -49,9 +49,9 @@ func takereffect(member):
 	var increase
 	var effects
 	if member.person.sex == 'female':
-		effects = {lust = 40, sens = 50*(member.person.sensclit+member.person.sexexp.fingerstech/2)}
+		effects = {lust = 40, sens = 50*(member.person.sensclit+member.person.sexexp.fingerstech/2), tags = ['pervert']}
 	else:
-		effects = {lust = 40, sens = 50*(member.person.senspenis+member.person.sexexp.fingerstech/2)}
+		effects = {lust = 40, sens = 50*(member.person.senspenis+member.person.sexexp.fingerstech/2), tags = ['pervert']}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lust >= 250):
 		result = 'good'
 		increase = 1.25

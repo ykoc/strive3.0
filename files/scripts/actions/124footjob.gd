@@ -40,7 +40,7 @@ func requirements():
 func givereffect(member):
 	var result
 	var increase
-	var effects = {lust = 50, lewd = 1}
+	var effects = {lust = 50, lewd = 1, tags = ['pervert']}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 30):
 		result = 'good'
 		increase = 1.25
@@ -61,7 +61,7 @@ func takereffect(member):
 	var increase
 	for i in givers:
 		givertech = i.person.sexexp.feetstech
-	var effects = {lust = 75, sens = 120*(member.person.senspenis+givertech/2), lewd =1}
+	var effects = {lust = 75, sens = 120*(member.person.senspenis+givertech/2), lewd =1, tags = ['pervert']}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && (member.lust >= 300 || member.lewd >= 30)):
 		result = 'good'
 		increase = 1.25

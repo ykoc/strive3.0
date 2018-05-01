@@ -40,6 +40,10 @@ func getongoingdescription(givers, takers):
 
 func givereffect(member):
 	var result
+	var takertech
+	var increase
+	for i in takers:
+		takertech = i.person.sexexp.vaginatech
 	var effects = {lust = 100, sens = 100, lewd = 2, tags = ['group']}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lust >= 300) && member.person.traits.has("Fickle"):
 		result = 'good'
@@ -50,10 +54,17 @@ func givereffect(member):
 	if member.person.penis == 'none':
 		effects.sens /= 1.2
 		effects.lust /= 1.2
+	member.person.sexexp.penis += 1
+	member.tempsexexp.penis += 1
+	member.person.sexexp.penistech += 0.01*increase
 	return [result, effects]
 
 func takereffect(member):
 	var result
+	var givertech
+	var increase
+	for i in givers:
+		givertech = i.person.sexexp.penistech
 	var effects = {lust = 100, sens = 120, lewd = 2, tags = ['group']}
 	if (member.consent == true || member.person.traits.find("Likes it rough") >= 0) && member.lust >= 400 && member.lube >= 3 && member.person.traits.has("Fickle"):
 		result = 'good'

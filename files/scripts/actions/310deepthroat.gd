@@ -68,7 +68,7 @@ func takereffect(member):
 	var increase
 	for i in givers:
 		giversens = i.person.sexexp.penistech
-	var effects = {sens = 45*(member.person.sexexp.oraltech+giversens/2), pain = 3, tags = ['punish'], obed = rand_range(10,15), stress = rand_range(3,6)}
+	var effects = {sens = 45*(member.person.sexexp.oraltech+giversens/2), pain = 3, tags = ['punish','pervert'], obed = rand_range(10,15), stress = rand_range(3,6)}
 	if (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 30) || member.person.traits.find('Masochist') >= 0:
 		result = 'good'
 		increase = 1.25
