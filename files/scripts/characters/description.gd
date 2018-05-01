@@ -353,15 +353,19 @@ func experiences():
 		else:
 			text += "Omitted. "
 	if person.tail != 'none':
+		if i.person.tail == 'tentacles':
+			part = 'Tentacles'
+		else:
+			part = 'Tail'
 		text += "\n"
 		text += "\n"
-		text += '[url=tail][color=#d1b970][Tail][/color][/url] '
+		text += '[url=tail][color=#d1b970]['+part+'][/color][/url] '
 		if globals.state.descriptsettings.tail == true:
 			var linesensetail = ''
 			var linexptail = ''
 			var linesensetailtemp = ''
 			if person.sexexp.tail > 0:
-				text += "\n"+"used $his tail "+str(floor(person.sexexp.tail))+" times"
+				text += "\n"+"was used "+str(floor(person.sexexp.tail))+" times"
 				linesensetailtemp = 'and '
 				if person.sexexp.tailamount > 0:
 					text += " and made other orgasms "+str(floor(person.sexexp.tailamount))+" times"
