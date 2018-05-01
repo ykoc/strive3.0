@@ -66,7 +66,7 @@ func basics():
 	else:
 		text += "[color=yellow]$name, [url=race]" + person.race + "[/url], " + person.age.capitalize() +'[/color]. '
 	return text
-	
+
 #-----------------bstates----------------------	
 func bstates():
 	var text = '\n'
@@ -471,7 +471,7 @@ func experiences():
 	if showmode == 'default':
 		text += "\n"
 		text += "\n"
-		text += "orgasmed "+str(floor(person.sexexp.orgasms))+" times"
+		text += "orgasmed "+str(floor(person.sexexp.orgasm))+" times"
 	#	text += " might turn pregnant on day "+str(floor(person.sexexp.impregnationcycle))
 	return text
 #------------------------------------------------
@@ -519,6 +519,8 @@ func lowergenitals():
 			text += penisdescription[temp]
 	if person.balls != 'none':
 		text += getdescription('balls')
+	if person.assvirgin == true:
+		text += "$His rear [color=yellow]is still pristine[/color]. "
 	return text
 
 func piercing():
