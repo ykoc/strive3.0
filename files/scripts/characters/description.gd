@@ -3,28 +3,478 @@ extends Node
 var person
 var showmode = 'default'
 
+#func getslavedescription(tempperson, mode = 'default'):
+#	showmode = mode
+#	person = tempperson
+#	var text = basics() + features() + genitals() + mods() + tattoo() + piercing()
+#	text = person.dictionary(text)
+#	if text.find('[furcolor]'):
+#		text = text.replace('[furcolor]', getdescription('furcolor'))
+#	
+#	
+#	return text
+#------------------------------------------------	
 func getslavedescription(tempperson, mode = 'default'):
 	showmode = mode
 	person = tempperson
-	var text = basics() + features() + genitals() + mods() + tattoo() + piercing()
-	if person.customdesc != '':
-		text += '\n\n' + person.customdesc
+	var text = ''
+	text = basetab()
 	text = person.dictionary(text)
 	if text.find('[furcolor]'):
 		text = text.replace('[furcolor]', getdescription('furcolor'))
 	
-	
 	return text
+	
+func getslavedescriptionex(tempperson, mode = 'default'):
+	showmode = mode
+	person = tempperson
+	var text = ''
+	if showmode == 'bstats':
+		text = thissession()
+	return text
+#------------------------------------------------
+
+#-----------------Base-Tab-------------------	
+func basetab():
+	var text = ''
+	var temptext = ''
+	if globals.state.descriptsettings.general == true:
+		text += "General description"
+		text += " / "
+		text += "[url=general][color=#d1b970]Switch to body information[/color][/url] "
+		temptext = basics() + features() + genitals() + mods() + tattoo() + piercing()
+	elif globals.state.descriptsettings.general == false:
+		text += "Body information"
+		text += " / "
+		text += "[url=general][color=#d1b970]Switch to general description[/color][/url]  "
+		temptext = bstates()
+	text += temptext
+	return text	
+#------------------------------------------------	
 
 func basics():
 	var text = ''
-	if showmode == 'default':
+#-----------------Basic------------------------
+#	if showmode == 'default':
+	text += "\n"
+	text += "\n"
+	if showmode != 'compact':
 		text += "[url=basic][color=#d1b970]Basics:[/color][/url] "
+#----------------------------------------------
 	if globals.state.descriptsettings.basic == true || showmode != 'default':
 		text += entry() + race() + getdescription('bodyshape') + getdescription('age') + getbeauty()
 	else:
 		text += "[color=yellow]$name, [url=race]" + person.race + "[/url], " + person.age.capitalize() +'[/color]. '
 	return text
+	
+#-----------------bstates----------------------	
+func bstates():
+	var text = '\n'
+	#if showmode == 'default':
+	text = "\n" + text
+	if globals.state.descriptsettings.bodystates == true || showmode != 'default':
+		text += experiences()
+	else:
+		text += "Omitted. "
+	return text
+#----------------------------------------------
+
+#-----------------Experience----------------------
+func experiences():
+	var text = ''
+	text += '[url=mouth][color=#d1b970][Mouth][/color][/url] '
+	if globals.state.descriptsettings.mouth == true:
+	# need to add kissing times ???
+		var linetechoral = ''
+		var linetechoraltemp = ''
+		if person.sexexp.oral > 0:
+			text += "\n"+"$he used $his mouth "+str(floor(person.sexexp.oral))+" times"
+			linetechoraltemp = 'and '
+			if person.sexexp.swallow > 0:# should spit if not enough experience but should swallow 1/4 of total original ammount
+				text += " and swallowed "+str(floor(person.sexexp.swallowamount))+" ml of cum"
+				var temptext = ''
+				if person.sexexp.swallow >= 50 && person.sexexp.swallowamount >= 500:
+					#text += "Loves swalowing cum so much $he cant live without it"#K
+					temptext += "$his body aches from the taste of cum"#TW
+				elif person.sexexp.swallow >= 40 && person.sexexp.swallowamount >= 400:
+			#		text += "Loves the tase of cum and starts to become adicted to it"
+					temptext += "$he can drink cum without any difficulty"#TW
+				elif person.sexexp.swallow >= 20 && person.sexexp.swallowamount >= 200:
+					temptext += "$he is not against swallowing the cum"
+				elif person.sexexp.swallow >= 10 && person.sexexp.swallowamount >= 100:
+					temptext += "$he cannot swallow all the cum just yet"
+				if temptext != '':
+					text += "\n" + temptext
+		else:
+			text += "$he never used $his mouth for anything sexual"
+		if person.sexexp.oraltech >= 2:
+			linetechoral += "could make anyone cum using $his mouth or tongue"
+		elif person.sexexp.oraltech >= 1.5:
+			linetechoral += "skilled enough to make others orgasms rapidly"
+		elif person.sexexp.oraltech >= 1.25:
+			linetechoral += "intermediary mouth sill expertise"
+		elif person.sexexp.oraltech >= 1:
+			linetechoral += "basic mouth skill knowledge"
+		if linetechoral != '':
+			text += "\n" + linetechoraltemp + linetechoral
+	else:
+		text += "Omitted. "
+	text += "\n"
+	text += "\n"
+	text += '[url=breasts][color=#d1b970][Breasts][/color][/url] '
+	if globals.state.descriptsettings.breasts == true:
+		var linesensebreast = ''
+		var linesensebreasttemp = ''
+		if person.sexexp.breast > 0:
+			text += "\n"+"$his breasts where used "+str(floor(person.sexexp.breast))+" times"
+			linesensebreasttemp = 'and '
+			if person.sexexp.milked > 0:
+				text += "\n"
+				text += "and where milked "+str(floor(person.sexexp.milked))+" times"
+				if person.sexexp.milkedamount > 0:
+					text += " for "+str(floor(person.sexexp.milkedamount))+" ml of milk"
+					var temptext = ''
+					if person.sexexp.milkedamount >= 500:
+						temptext += "$his got turned into a milk cow producing large amounts of milk"
+					elif person.sexexp.milkedamount >= 400:
+						temptext += "$he can produce a decent amount of milk"
+					elif person.sexexp.milkedamount >= 200:
+						temptext += "$he starts to get used to have her milk extracted"
+					elif person.sexexp.milkedamount >= 100:
+						temptext += "$he is not used to have her milk extracted"
+					if temptext != '':
+						text += "\n" + temptext
+		if person.sensbreast >= 1.5:
+			linesensebreast += "are so sensitive they could orgasm from a light touch to $her erected nipples"
+		elif person.sensbreast >= 1.25:
+			linesensebreast += "now sensitive enough to make $his nipples constantly erected"
+		elif person.sensbreast >= 1:
+			linesensebreast += "have a normal sensitivity"
+		elif person.sensbreast >= -1:
+			linesensebreast += "are somehow insensitive"
+		if linesensebreast != '':
+			text += "\n" + linesensebreasttemp + linesensebreast
+	else:
+		text += "Omitted. "
+	text += "\n"
+	text += "\n"
+	text += '[url=fingers][color=#d1b970][Fingers][/color][/url] '
+	if globals.state.descriptsettings.fingers == true:
+		var linetechfingers = ''
+		var linetechfingerstemp = ''
+		if person.sexexp.fingers > 0:
+			text += "\n"+"used $his fingers "+str(floor(person.sexexp.fingers))+" times"
+			linetechfingerstemp = 'and '
+			if person.sexexp.fingersamount > 0:
+				text += " and made other orgasms "+str(floor(person.sexexp.fingersamount))+" times"
+		if person.sexexp.fingerstech >= 2:
+			linetechfingers += "became lethal weapons"
+		elif person.sexexp.fingerstech >= 1.5:
+			linetechfingers += "dextrous enough to make others orgasms rapidly"
+		elif person.sexexp.fingerstech >= 1.25:
+			linetechfingers += "of avrage dexterity"
+		elif person.sexexp.fingerstech >= 1:
+			linetechfingers += "of common dexterity"
+		if linetechfingers != '':
+			text += "\n" + linetechfingerstemp + linetechfingers
+	else:
+		text += "Omitted. "
+	if person.sex != 'male':
+		text += "\n"
+		text += "\n"
+		text += '[url=vagina][color=#d1b970][Vagina][/color][/url] '
+		if globals.state.descriptsettings.vagina == true:
+			var linetight = ''
+			var linesense = ''
+			var linetechvagina = ''
+			if person.sexexp.vagina > 0:
+				text += "\n"+"$his vagina was used "+str(floor(person.sexexp.vagina))+" times"
+				if person.sexexp.vagina >= 15:
+				#	linetight += "$his gaping vagina can acomodate anything"
+					linetight += "$his vagina is now perfectly developed\n"
+					linetight += "and ompletely changed its form and shape to squirm and wriggle around your penis"
+				elif person.sexexp.vagina >= 10:
+					linetight += "$his vagina is now nicely developed\n"
+					linetight += "due to all the attention, it became a fine hole"
+				elif person.sexexp.vagina >= 5:
+					linetight += "$his tight vagina starts to losen a bit"
+				else:
+					linetight += "$his vagina is shut tight"
+				if person.sexexp.creampie > 0:
+					text += " and stuffed with "+str(floor(person.sexexp.creampieamount))+" ml of cum"
+					var temptext = ''
+					if person.sexexp.creampie > 50 && person.sexexp.creampieamount > 500:
+						temptext += "and feels euphoric from creampies."#TW
+					elif person.sexexp.creampie > 40 && person.sexexp.creampieamount > 400:
+						temptext += "and it throbs and aches from creampies."#TW
+					elif person.sexexp.creampie > 1 && person.sexexp.creampieamount > 30:
+						temptext += "and is starting to get used to the feeling of semen inside"
+					elif person.sexexp.creampie > 0 && person.sexexp.creampieamount > 0:
+						temptext += "and feels discomfort as it is not used having semen inside"
+					if temptext != '':
+						text += "\n" + temptext
+			else:
+				text += "$he never used $his vagina for anything sexual"
+				linetight += "$his vagina is shut tight"
+			text += "\n" + linetight
+			if person.sensvagina >= 1.5:
+				linesense += "and is so sensitive it constantly drools and aches to be filled"
+			elif person.sensvagina >= 1.25:
+				linesense += "and is very sensitive and could orgasm from a light touch"
+			elif person.sensvagina >= 1:
+				linesense += "and has a normal sensitivity"
+			elif person.sensvagina >= -1:
+				linesense += "and is somehow insensitive"
+			text += "\n" + linesense
+			if person.sexexp.vaginatech >= 2:
+				linetechvagina += "could make anyone cum using $his lewd vagina"
+			elif person.sexexp.vaginatech >= 1.5:
+				linetechvagina += "is skilled enough to make others orgasms rapidly"
+			elif person.sexexp.vaginatech >= 1.25:
+				linetechvagina += "has intermediary vaginal sill expertise"
+			elif person.sexexp.vaginatech >= 1:
+				linetechvagina += "has basic vaginal skill knowledge"
+			if linetechvagina != '':
+				text += "\n" + linetechvagina
+		else:
+			text += "Omitted. "
+		if person.sexexp.crevix > 0:
+			text += "\n"
+			text += "\n"
+			text += '[url=crevix][color=#d1b970][Crevix][/color][/url] '
+			if globals.state.descriptsettings.crevix == true:
+				var linesensecrevix = ''
+				var linetightcrevix = ''
+				var linetechcrevix = ''
+				text += "\n"+"$his crevix was inserted "+str(floor(person.sexexp.crevix))+" times"
+				if person.sexexp.crevix >= 15:
+				#	linetight += "$his gaping vagina can acomodate anything"
+					linetightcrevix += "$his crevix is now perfectly developed\n"
+					linetightcrevix += "and ompletely changed its form and shape to squirm and wriggle around your penis"
+				elif person.sexexp.crevix >= 10:
+					linetightcrevix += "$his crevix is now nicely developed\n"
+					linetightcrevix += "due to all the attention, it became a fine impregnation hole"
+				elif person.sexexp.crevix >= 5:
+					linetightcrevix += "$his tight crevix starts to losen a bit"
+				else:
+					linetightcrevix += "$his crevix is very tight"
+				if person.sexexp.crevixpie > 0:
+					text += " and stuffed with "+str(floor(person.sexexp.crevixamount))+" ml of cum"
+					var temptext = ''
+					if person.sexexp.crevixpie > 50 && person.sexexp.crevixamount > 500:
+						temptext += "and feels euphoric from been inserted and creampied."#TW
+					elif person.sexexp.crevixpie > 40 && person.sexexp.crevixamount > 400:
+						temptext += "and is now flexible enough to throbs and aches from creampies."#TW
+					elif person.sexexp.crevixpie > 1 && person.sexexp.crevixamount > 30:
+						temptext += "and is starting to relax a bit getting used to the feeling of semen inside"
+					elif person.sexexp.crevixpie > 0 && person.sexexp.crevixamount > 0:
+						temptext += "and hurts as its not used to be inserted and filled"
+					if temptext != '':
+						text += "\n" + temptext
+				text += "\n" + linetightcrevix
+				if person.senscrevix >= 1.5:
+					linesensecrevix += "and is so sensitive it constantly drools and aches to be filled"
+				elif person.senscrevix >= 1.25:
+					linesensecrevix += "and is very sensitive and could orgasm from a light touch"
+				elif person.senscrevix >= 1:
+					linesensecrevix += "and has a normal sensitivity"
+				elif person.senscrevix >= -1:
+					linesensecrevix += "and is somehow insensitive"
+				text += "\n" + linesensecrevix
+				if person.sexexp.crevixtech >= 2:
+					linetechcrevix += "could make anyone cum using $his lewd crevix"
+				elif person.sexexp.crevixtech >= 1.5:
+					linetechcrevix += "is skilled enough to make others orgasms rapidly"
+				elif person.sexexp.crevixtech >= 1.25:
+					linetechcrevix += "has intermediary crevix sill expertise"
+				elif person.sexexp.crevixtech >= 1:
+					linetechcrevix += "has basic crevix skill knowledge"
+				if linetechcrevix != '':
+					text += "\n" + linetechcrevix
+			else:
+				text += "Omitted. "
+		text += "\n"
+		text += "\n"
+		text += '[url=clitoris][color=#d1b970][Clitoris][/color][/url] '
+		if globals.state.descriptsettings.clitoris == true:
+			var linesenseclit = ''
+			var linesenseclittemp = ''
+			if person.sexexp.clit > 0:
+				text += "\n"+"$his clit was used "+str(floor(person.sexexp.clit))+" times"
+				linesenseclittemp = 'and '
+				if person.sexexp.clitamount > 0:
+					text += " and relased "+str(floor(person.sexexp.clitamount))+" ml of nectar"
+			if person.sensclit >= 1.5:
+				linesenseclit += "is so sensitive it could orgasm from a light touch to $her erected clit"
+			elif person.sensclit >= 1.25:
+				linesenseclit += "now sensitive enough to make $his clitoris constantly erected"
+			elif person.sensclit >= 1:
+				linesenseclit += "has a normal sensitivity"
+			elif person.sensclit >= -1:
+				linesenseclit += "is somehow insensitive"
+			if linesenseclit != '':
+				text += "\n" + linesenseclittemp + linesenseclit
+		else:
+			text += "Omitted. "
+	if person.sex != 'female':
+		text += "\n"
+		text += "\n"
+		text += '[url=penis][color=#d1b970][Penis][/color][/url] '
+		if globals.state.descriptsettings.penis == true:
+			var linesensepenis = ''
+			var linesensepenistemp = ''
+			var linetechpenis = ''
+			if person.sexexp.penis > 0:
+				text += "\n"+"$his penis was used "+str(floor(person.sexexp.penis))+" times"
+				linesensepenistemp = 'and '
+				if person.sexexp.penisamount > 0:
+					text += " and relased "+str(floor(person.sexexp.penisamount))+" ml of cum"
+			else:
+				text += "$he never used $his penis for anything sexual"
+			if person.senspenis >= 1.5:
+				linesensepenis += "is so sensitive it is constantly erected and could orgasm from a light touch"
+			elif person.senspenis >= 1.25:
+				linesensepenis += "is very sensitive and could orgasm from a light touch"
+			elif person.senspenis >= 1:
+				linesensepenis += "has a normal sensitivity"
+			elif person.senspenis >= -1:
+				linesensepenis += "is somehow insensitive"
+			text += "\n" + linesensepenistemp + linesensepenis
+			if person.sexexp.penistech >= 2:
+				linetechpenis += "could make anyone cum using $his horny penis"
+			elif person.sexexp.penistech >= 1.5:
+				linetechpenis += "is skilled enough to make others orgasms rapidly"
+			elif person.sexexp.penistech >= 1.25:
+				linetechpenis += "has intermediary penis sill expertise"
+			elif person.sexexp.penistech >= 1:
+				linetechpenis += "has basic penis skill knowledge"
+			if linetechpenis != '':
+				text += "\n" + linetechpenis
+		else:
+			text += "Omitted. "
+	if person.tail != 'none':
+		text += "\n"
+		text += "\n"
+		text += '[url=tail][color=#d1b970][Tail][/color][/url] '
+		if globals.state.descriptsettings.tail == true:
+			var linesensetail = ''
+			var linexptail = ''
+			var linesensetailtemp = ''
+			if person.sexexp.tail > 0:
+				text += "\n"+"used $his tail "+str(floor(person.sexexp.tail))+" times"
+				linesensetailtemp = 'and '
+				if person.sexexp.tailamount > 0:
+					text += " and made other orgasms "+str(floor(person.sexexp.tailamount))+" times"
+			if person.sexexp.tailtech >= 2:
+				linexptail += "became a third hand"
+			elif person.sexexp.tailtech >= 1.5:
+				linexptail += "dextrous enough to make others orgasms rapidly"
+			elif person.sexexp.tailtech >= 1.25:
+				linexptail += "of avrage dexterity"
+			elif person.sexexp.tailtech >= 1:
+				linexptail += "of common dexterity"
+			if person.senstail >= 1.5:
+				linesensetail += "is so sensitive it is constantly erected and could orgasm from a light touch"
+			elif person.senstail >= 1.25:
+				linesensetail += "is very sensitive and could orgasm from a light touch"
+			elif person.senstail >= 1:
+				linesensetail += "has a normal sensitivity"
+			elif person.senstail >= -1:
+				linesensetail += "is somehow insensitive"
+			if linesensetail != '':
+				text += "\n" + linesensetailtemp + linesensetail
+			if linexptail != '':
+				text += "\n" + linesensetailtemp + linexptail
+		else:
+			text += "Omitted. "
+	text += "\n"
+	text += "\n"
+	text += '[url=anus][color=#d1b970][Anus][/color][/url] '
+	if globals.state.descriptsettings.anus == true:
+		var linetightanal = ''
+		var linesenseanal = ''
+		var linetechanus = ''
+		if person.sexexp.anal > 0:
+			text += "\n"+"$his anus was used "+str(floor(person.sexexp.anal))+" times"
+			if person.sexexp.anal >= 15:
+			#	linetightanal += "$his gaping anus can acomodate anything"
+				linetightanal += "$his anus is now perfectly developed\n"
+				linetightanal += "and ompletely changed its form and shape to squirm and wriggle around your penis"
+			elif person.sexexp.anal >= 10:
+				linetightanal += "$his anus is now nicely developed\n"
+				linetightanal += "due to all the attention, it became a fine hole"
+			elif person.sexexp.anal >= 5:
+				linetightanal += "$his tight anus starts to losen a bit"
+			else:
+				linetightanal += "$his anus is shut tight"
+			if person.sexexp.analcreampie > 0:
+				text += " and stuffed with "+str(floor(person.sexexp.analcreampieamount))+" ml of cum"
+				var temptext = ''
+				if person.sexexp.analcreampie > 50 && person.sexexp.analcreampieamount > 500:
+					temptext += "feels euphoric from creampies."#TW
+				elif person.sexexp.analcreampie > 40 && person.sexexp.analcreampieamount > 400:
+					temptext += "it throbs and aches from creampies."#TW
+				elif person.sexexp.analcreampie > 1 && person.sexexp.analcreampieamount > 30:
+					temptext += "starting to get used to the feeling of something inside"
+				elif person.sexexp.analcreampie > 0 && person.sexexp.analcreampieamount > 0:
+					temptext += "feels discomfort as it is not used having something inside"
+				if temptext != '':
+					text += "\n" + temptext
+		else:
+			text += "$he never used $his anus for anything sexual"
+			linetightanal += "$his anus is shut tight"
+		text += "\n" + linetightanal
+		if person.sensanal >= 1.5:
+			linesenseanal += "and is so sensitive it constantly aches to be filled"
+		elif person.sensanal >= 1.25:
+			linesenseanal += "and is very sensitive and could orgasm from a light touch"
+		elif person.sensanal >= 1:
+			linesenseanal += "and has a normal sensitivity"
+		elif person.sensanal >= -1:
+			linesenseanal += "and is somehow insensitive"
+		text += "\n" + linesenseanal
+		if person.sexexp.analtech >= 2:
+			linetechanus += "could make anyone cum using $his horny anal"
+		elif person.sexexp.analtech >= 1.5:
+			linetechanus += "is skilled enough to make others orgasms rapidly"
+		elif person.sexexp.analtech >= 1.25:
+			linetechanus += "has intermediary anal sill expertise"
+		elif person.sexexp.analtech >= 1:
+			linetechanus += "has basic anal skill knowledge"
+		if linetechanus != '':
+			text += "\n" + linetechanus
+	else:
+		text += "Omitted. "
+	text += "\n"
+	text += "\n"
+	text += '[url=tail][color=#d1b970][Feets][/color][/url] '
+	if globals.state.descriptsettings.feets == true:
+		var linexpfeets = ''
+		var linesensefeetstemp = ''
+		if person.sexexp.feets > 0:
+			text += "\n"+"used $his feets "+str(floor(person.sexexp.feets))+" times"
+			linesensefeetstemp = 'and '
+			if person.sexexp.feetsamount > 0:
+				text += " and made other orgasms "+str(floor(person.sexexp.feetsamount))+" times"
+		if person.sexexp.feetstech >= 2:
+			linexpfeets += "became a third hand"
+		elif person.sexexp.feetstech >= 1.5:
+			linexpfeets += "dextrous enough to make others orgasms rapidly"
+		elif person.sexexp.feetstech >= 1.25:
+			linexpfeets += "of avrage dexterity"
+		elif person.sexexp.feetstech >= 1:
+			linexpfeets += "of common dexterity"
+		if linexpfeets != '':
+			text += "\n" + linesensefeetstemp + linexpfeets
+	else:
+		text += "Omitted. "
+	if showmode == 'default':
+		text += "\n"
+		text += "\n"
+		text += "orgasmed "+str(floor(person.sexexp.orgasms))+" times"
+	#	text += " might turn pregnant on day "+str(floor(person.sexexp.impregnationcycle))
+	return text
+#------------------------------------------------
 
 func features():
 	var text = '\n'
@@ -69,8 +519,6 @@ func lowergenitals():
 			text += penisdescription[temp]
 	if person.balls != 'none':
 		text += getdescription('balls')
-	if person.assvirgin == true:
-		text += "$His rear [color=yellow]is still pristine[/color]. "
 	return text
 
 func piercing():

@@ -147,6 +147,10 @@ Dragonkin = {
 	horns = ['short', 'long_straight', 'curved'],
 	wings = ['leather_black', 'leather_red'],
 	skincov = 'scales',
+#----------------------------------
+	scales = 'snake',
+	scalescolor = ['blue','red','gold','green','silver','black'],
+#----------------------------------
 	arms = 'scales',
 	legs = 'scales',
 	stats = {str_max = 6,
@@ -159,6 +163,9 @@ Taurus = {
 	details = "[color=aqua]Racial trait: milking is more effective. [/color]\n\n[color=yellow]Stat potential: Strength - 5, Agility - 3, Magic - 2, Endurance - 6 [/color]",
 	horns = 'long_straight',
 	ears = 'short_furry',
+#-----------------------------------------
+	furcolor = ['white', 'gray', 'orange_white','black_white','black_gray','black'],
+#-----------------------------------------
 	tail = 'scruffy',
 	stats = {str_max = 5,
 	agi_max = 3,
@@ -185,6 +192,10 @@ Lamia = {
 	tail = 'snake tail',
 	ears = 'pointy',
 	skincov = 'scales',
+#----------------------------------
+	scales = 'snake',
+	scalescolor = ['blue','red','gold','green','silver','black'],
+#----------------------------------
 	legs = 'snake',
 	eyecolor = ['blue', 'green', 'amber', 'red'],
 	eyeshape = 'slit',
@@ -203,6 +214,9 @@ Harpy = {
 	tail = 'bird',
 	ears = 'feathery',
 	skincov = 'feathers',
+#------------------------------------------
+	featherscolor = ['white', 'green', 'purple', 'blue', 'yellow', 'red', 'brown'],
+#------------------------------------------
 	arms = 'winged',
 	legs = 'avian',
 	surname = '',
@@ -219,6 +233,10 @@ Arachna = {
 	tail = 'spider abdomen',
 	ears = 'pointy',
 	skincov = 'scales',
+#----------------------------------
+	scales = 'shell',
+	scalescolor = ['blue','red','gold','green','silver','black'],
+#----------------------------------
 	legs = 'spider',
 	eyecolor = ['blue', 'green', 'amber', 'red'],
 	eyeshape = 'slit',
@@ -234,6 +252,9 @@ Centaur = {
 	bodyshape = 'halfhorse',
 	tail = 'horse',
 	ears = 'short_furry',
+#-----------------------------------------
+	furcolor = ['white', 'gray', 'orange_white','black_white','black_gray','black'],
+#-----------------------------------------
 	legs = 'horse',
 	stats = {str_max = 5,
 	agi_max = 5,
@@ -247,6 +268,10 @@ Nereid = {
 	bodyshape = 'halffish',
 	tail = 'fish',
 	ears = 'fins',
+#----------------------------------
+	scales = 'fish',
+	scalescolor = ['blue','red','gold','green','silver','black'],
+#----------------------------------
 	legs = 'webbed',
 	arms = 'webbed',
 	eyecolor = ['amber', 'red', 'turquoise'],
@@ -265,6 +290,10 @@ Scylla = {
 	details = "[color=aqua]Racial trait: cooking is more effective.[/color]\n\n[color=yellow]Stat potential: Strength - 5, Agility - 4, Magic - 5, Endurance - 4 [/color]",
 	tail = 'tentacles',
 	ears = 'pointy',
+#----------------------------------
+	scales = 'fish',
+	scalescolor = ['blue','red','gold','green','silver','black'],
+#----------------------------------
 	legs = 'tentacles',
 	eyecolor = ['blue', 'green', 'amber', 'red'],
 	surname = '',
