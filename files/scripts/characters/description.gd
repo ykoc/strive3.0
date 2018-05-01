@@ -353,7 +353,8 @@ func experiences():
 		else:
 			text += "Omitted. "
 	if person.tail != 'none':
-		if i.person.tail == 'tentacles':
+		var part
+		if person.tail == 'tentacles':
 			part = 'Tentacles'
 		else:
 			part = 'Tail'
