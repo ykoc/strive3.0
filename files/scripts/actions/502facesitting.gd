@@ -8,7 +8,7 @@ const canlast = true
 const giverpart = ''
 const takerpart = 'mouth'
 const virginloss = false
-const giverconsent = 'advanced'
+const giverconsent = 'basic'
 const takerconsent = 'any'
 
 func getname(state = null):
@@ -34,8 +34,8 @@ func requirements():
 #Disabling until something is decided about tools
 func givereffect(member):
 	var result
-	var effects = {lust = 30, tags = ['pervert']}
-	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 40):
+	var effects = {lust = 30}
+	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 10):
 		result = 'good'
 	elif member.person.traits.find("Likes it rough") >= 0:
 		result = 'average'
@@ -46,8 +46,8 @@ func givereffect(member):
 #Disabling until something is decided about tools
 func takereffect(member):
 	var result
-	var effects = {lust = 20, sens = 0, tags = ['punish','pervert']}
-	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 40):
+	var effects = {lust = 20, sens = 0}
+	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 10):
 		result = 'good'
 	elif member.person.traits.find("Likes it rough") >= 0:
 		result = 'average'

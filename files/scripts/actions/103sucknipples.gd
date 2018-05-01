@@ -44,26 +44,43 @@ func requirements():
 
 func givereffect(member):
 	var result
+	var increase
 	var effects = {lust = 50}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lust >= 150):
 		result = 'good'
+		increase = 1.25
 	elif member.person.traits.find("Likes it rough") >= 0:
 		result = 'average'
+		increase = 1
 	else:
 		result = 'bad'
+		increase = 0.75
+	member.person.sexexp.oral += 1
+	member.tempsexexp.oral += 1
+	member.person.sexexp.oraltech += 0.01*increase
 	return [result, effects]
 
 func takereffect(member):
 	var result
-	var effects = {lust = 50, sens = 90}
+	var givertech
+	var increase
+	for i in givers:
+		givertech = i.person.sexexp.oraltech
+	var effects = {lust = 50, sens = 90*(member.person.sensbreast+givertech/2)}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lust >= 150):
 		result = 'good'
+		increase = 1.25
 	elif member.person.traits.find("Likes it rough") >= 0:
 		result = 'average'
+		increase = 1
 	else:
 		result = 'bad'
+		increase = 0.75
 	if member.person.sex == 'male':
 		effects.sens /= 1.3
+	member.person.sexexp.breast += 1
+	member.tempsexexp.breast += 1
+	member.person.sensbreast += 0.01*increase
 	return [result, effects]
 
 func initiate():

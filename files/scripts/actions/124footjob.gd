@@ -33,30 +33,47 @@ func requirements():
 			if i.person.penis == 'none':
 				valid = false
 		for i in givers:
-			if i.person.legs in ['horse','spider', 'snake']:
+			if i.person.legs in ['horse','spider', 'snake', 'tentacles']:
 				valid = false
 	return valid
 
 func givereffect(member):
 	var result
-	var effects = {lust = 50, lewd = 1, tags = ['pervert']}
+	var increase
+	var effects = {lust = 50, lewd = 1}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 30):
 		result = 'good'
+		increase = 1.25
 	elif member.person.traits.find("Likes it rough") >= 0:
 		result = 'average'
+		increase = 1
 	else:
 		result = 'bad'
+		increase = 0.75
+	member.person.sexexp.feets += 1
+	member.tempsexexp.feets += 1
+	member.person.sexexp.feetstech += 0.01*increase
 	return [result, effects]
 
 func takereffect(member):
 	var result
-	var effects = {lust = 75, sens = 120, lewd = 1, tags = ['pervert']}
+	var givertech
+	var increase
+	for i in givers:
+		givertech = i.person.sexexp.feetstech
+	var effects = {lust = 75, sens = 120*(member.person.senspenis+givertech/2), lewd =1}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && (member.lust >= 300 || member.lewd >= 30)):
 		result = 'good'
+		increase = 1.25
 	elif member.person.traits.find("Likes it rough") >= 0:
 		result = 'average'
+		increase = 1
 	else:
 		result = 'bad'
+		increase = 0.75
+	member.person.sexexp.penis += 1
+	member.tempsexexp.penis += 1
+	member.person.senspenis += 0.01*increase
 	return [result, effects]
 
 

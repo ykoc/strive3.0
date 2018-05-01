@@ -46,15 +46,22 @@ func givereffect(member):
 #Disabling until something is decided about tools
 func takereffect(member):
 	var result
-	var effects = {lust = 50, sens = 90}
+	var increase
+	var effects = {lust = 50, sens = 90*(member.person.sensanal)}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 10):
 		result = 'good'
+		increase = 1.25
 	elif member.person.traits.find("Likes it rough") >= 0:
 		result = 'average'
+		increase = 1
 	else:
 		result = 'bad'
+		increase = 0.75
 	if member.person.sex == 'male':
 		effects.sens /= 1.3
+	member.person.sexexp.anal += 1
+	member.tempsexexp.anal += 1
+	member.person.sensanal += 1*increase
 	return [result, effects]
 
 func initiate():

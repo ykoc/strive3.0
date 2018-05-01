@@ -25,24 +25,50 @@ func requirements():
 
 func givereffect(member):
 	var result
+	var increase
 	var effects = {lust = 50}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lust >= 100):
 		result = 'good'
+		increase = 1.25
 	elif member.person.traits.find("Likes it rough") >= 0:
 		result = 'average'
+		increase = 1
 	else:
 		result = 'bad'
+		increase = 0.75
+	member.person.sexexp.fingers += 1
+	member.tempsexexp.fingers += 1
+	member.person.sexexp.fingerstech += 0.01*increase
 	return [result, effects]
 
 func takereffect(member):
 	var result
-	var effects = {lust = 50, sens = 75}
+	var givertech
+	var effects
+	var increase
+	for i in givers:
+		givertech = i.person.sexexp.fingerstech
+	if member.person.sex == 'female':
+		effects = {lust = 50, sens = 75*(member.person.sensclit+givertech/2)}
+	else:
+		effects = {lust = 50, sens = 75*(member.person.senspenis+givertech/2)}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lust >= 100):
 		result = 'good'
+		increase = 1.25
 	elif member.person.traits.find("Likes it rough") >= 0:
 		result = 'average'
+		increase = 1
 	else:
 		result = 'bad'
+		increase = 0.75
+	if member.person.sex == 'female':
+		member.person.sexexp.clit += 1
+		member.tempsexexp.clit += 1
+		member.person.sensclit += 0.01*increase
+	else:
+		member.person.sexexp.penis += 1
+		member.tempsexexp.penis += 1
+		member.person.senspenis += 0.01*increase
 	return [result, effects]
 
 func initiate():

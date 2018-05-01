@@ -43,26 +43,52 @@ func requirements():
 
 func givereffect(member):
 	var result
-	var effects = {lewd = 3, sens = 120}
+	var takertech
+	var increase
+	for i in takers:
+		takertech = i.person.sexexp.oraltech
+	var effects = {lewd = 3, sens = 120*(member.person.sexexp.penistech+takertech/2)}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 15):
 		result = 'good'
+		increase = 1.25
 	elif member.person.traits.find("Likes it rough") >= 0:
 		result = 'average'
+		increase = 1
 	else:
 		result = 'bad'
+		increase = 0.75
+	member.person.sexexp.penis += 1
+	member.tempsexexp.penis += 1
+	member.person.sexexp.penistech += 0.01*increase
 	return [result, effects]
 
 func takereffect(member):
 	var result
-	var effects = {sens = 45, pain = 3, tags = ['punish','pervert'], obed = rand_range(10,15), stress = rand_range(3,6)}
+	var giversens
+	var increase
+	for i in givers:
+		giversens = i.person.sexexp.penistech
+	var effects = {sens = 45*(member.person.sexexp.oraltech+giversens/2), pain = 3, tags = ['punish'], obed = rand_range(10,15), stress = rand_range(3,6)}
 	if (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 30) || member.person.traits.find('Masochist') >= 0:
 		result = 'good'
+		increase = 1.25
 		effects.lust = 50
 	elif member.person.traits.find("Likes it rough") >= 0 || member.lust >= 700:
 		result = 'average'
+		increase = 1
 		effects.lust = 20
 	else:
 		result = 'bad'
+		increase = 0.75
+	member.person.sexexp.oral += 1
+	member.person.sexexp.throat += 1
+	member.tempsexexp.oral += 1
+	member.tempsexexp.throat += 1
+	member.person.sexexp.oraltech += 0.01*increase
+#	if member.person.sexexp.oral >= 15:
+#		member.person.add_trait("Skilled tongue")
+#	if member.person.sexexp.throat >= 15:
+#		member.person.add_trait("Throat dumpster")
 	return [result, effects]
 
 func initiate():

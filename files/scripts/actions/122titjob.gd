@@ -12,10 +12,7 @@ const giverconsent = 'basic'
 const takerconsent = 'any'
 
 func getname(state = null):
-	if givers.size() + takers.size() == 2:
-		return "Titjob"
-	else:
-		return "Smlt. Titjob"
+	return "Titjob"
 
 func getongoingname(givers, takers):
 	return "[name1] give[s/1] [a /1]titjob[/s1] to [name2]."
@@ -27,7 +24,7 @@ func getongoingdescription(givers, takers):
 
 func requirements():
 	var valid = true
-	if takers.size() < 1 || givers.size() < 1:
+	if takers.size() < 1 || givers.size() != 1:
 		valid = false
 	else:
 		for i in givers:
@@ -42,24 +39,41 @@ func requirements():
 
 func givereffect(member):
 	var result
-	var effects = {lust = 65, lewd = 1}
+	var increase
+	var effects = {lust = 65, sens = 85*(member.person.sensbreast), lewd = 1}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 20):
 		result = 'good'
+		increase = 1.25
 	elif member.person.traits.find("Likes it rough") >= 0:
 		result = 'average'
+		increase = 1
 	else:
 		result = 'bad'
+		increase = 0.75
+	member.person.sexexp.breast += 1
+	member.tempsexexp.breast += 1
+	member.person.sexexp.fingerstech += 0.01*increase
 	return [result, effects]
 
 func takereffect(member):
 	var result
-	var effects = {lust = 75, sens = 100, lewd = 2}
+	var givertech
+	var increase
+	for i in givers:
+		givertech = i.person.sexexp.fingerstech#hands move the breasts to get technique but breast recieve the pleasure from theyr sense value
+	var effects = {lust = 75, sens = 100*(member.person.senspenis+givertech/2), lewd = 2}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lust >= 200):
 		result = 'good'
+		increase = 1.25
 	elif member.person.traits.find("Likes it rough") >= 0:
 		result = 'average'
+		increase = 1
 	else:
 		result = 'bad'
+		increase = 0.75
+	member.person.sexexp.penis += 1
+	member.tempsexexp.penis += 1
+	member.person.senspenis += 0.01*increase
 	return [result, effects]
 
 func initiate():

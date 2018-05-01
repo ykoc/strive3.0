@@ -41,25 +41,44 @@ func requirements():
 
 func givereffect(member):
 	var result
+	var increase
 	var effects = {lust = 50, lewd = 3}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 300):
 		result = 'good'
+		increase = 1.25
 	elif member.person.traits.find("Likes it rough") >= 0:
 		result = 'average'
+		increase = 1
 	else:
 		result = 'bad'
+		increase = 0.75
+	member.person.sexexp.oral += 1
+	member.tempsexexp.oral += 1
+	member.person.sexexp.oraltech += 0.01*increase
+#	if member.person.sexexp.oral >= 15:
+#		member.person.add_trait("Skilled tongue")
 	return [result, effects]
 
 func takereffect(member):
 	var result
-	var effects = {lust = 75, sens = 120, lewd = 3}
+	var givertech
+	var increase
+	for i in givers:
+		givertech = i.person.sexexp.oraltech
+	var effects = {lust = 75, sens = 120*(member.person.sensclit+givertech/2), lewd = 3}
 	member.lube()
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 150):
 		result = 'good'
+		increase = 1.25
 	elif member.person.traits.find("Likes it rough") >= 0:
 		result = 'average'
+		increase = 1
 	else:
 		result = 'bad'
+		increase = 0.75
+	member.person.sexexp.clit += 1
+	member.tempsexexp.clit += 1
+	member.person.sensclit += 0.01*increase
 	return [result, effects]
 
 func initiate():

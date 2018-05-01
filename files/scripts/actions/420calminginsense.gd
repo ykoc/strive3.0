@@ -6,6 +6,7 @@ var givers
 var takers
 const canlast = false
 const giverpart = ''
+#const takerpart = 'globaleffect'
 const takerpart = ''
 const virginloss = false
 const giverconsent = 'basic'
@@ -14,34 +15,46 @@ const takerconsent = 'any'
 func getname(state = null):
 	return "Relaxing Insense"
 
+func getongoingname(givers, takers):
+	return "[name1] [is1] under insense effect."
+
+func getongoingdescription(givers, takers):
+	return ""
+	
 func requirements():
 	var valid = true
 	if takers.size() < 1 || givers.size() < 1:
 		valid = false
 	elif givers.size() > 2:
 		valid = false
+#	for i in takers:
+#		if i.globaleffect != null:
+#			valid = false
 	return valid
 
 func givereffect(member):
 	var result
 	var effects = {lust = 0}
-	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 10):
-		result = 'good'
-	elif member.person.traits.find("Likes it rough") >= 0:
-		result = 'average'
-	else:
-		result = 'bad'
+	#if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 10):
+	#	result = 'good'
+	#elif member.person.traits.find("Likes it rough") >= 0:
+	result = 'average'
+	#else:
+	#	result = 'bad'
+	member.person.stress -= 5
 	return [result, effects]
 
 func takereffect(member):
 	var result
-	var effects = {lust = 50, sens = 90}
-	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 10):
-		result = 'good'
-	elif member.person.traits.find("Likes it rough") >= 0:
-		result = 'average'
-	else:
-		result = 'bad'
+	#var effects = {lust = 50, sens = 90}
+	var effects = {lust = 0, sens = 0}
+	#if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 10):
+	#	result = 'good'
+	#elif member.person.traits.find("Likes it rough") >= 0:
+	result = 'average'
+	#else:
+	#	result = 'bad'
+	member.person.stress -= 5
 	return [result, effects]
 
 func initiate():
