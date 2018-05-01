@@ -2034,7 +2034,7 @@ func thissession(member):
 		text += "Omitted. "
 	text += "\n"
 	text += "\n"
-	text += "orgasmed "+str(floor(member.tempsexexp.orgasms))+" times"
+	text += "orgasmed "+str(floor(member.tempsexexp.orgasm))+" times"
 	if get_node("Panel/sceneeffects").text != 'You bring selected participants into your bedroom. ':
 		text = decoder(text, null, [member])
 		text = splitrand(text)
