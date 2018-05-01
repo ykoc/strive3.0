@@ -4,7 +4,7 @@ extends Node
 var spelldict = {}
 var effectdict = {}
 var guildslaves = {wimborn = [], gorn = [], frostford = [], umbra = []}
-var gameversion = 5400
+var gameversion = 5800
 var state = progress.new()
 var developmode = false
 var gameloaded = false
@@ -75,6 +75,7 @@ dungeon = load("res://files/music/dungeon.ogg"),
 intimate = load("res://files/music/intimate.ogg"),
 }
 var sounddict = {
+door = load("res://files/sounds/door.wav"),
 stab = load("res://files/sounds/stab.wav"),
 win = load("res://files/sounds/win.wav"),
 }
@@ -123,6 +124,9 @@ tishaemily = load("res://files/images/sexscenes/tishaemily.png"),
 calisex = load("res://files/images/sexscenes/calisex.png"),
 aynerispunish = load("res://files/images/sexscenes/aynerispunish.png"),
 aynerissex = load("res://files/images/sexscenes/aynerissex.png"),
+chloebj = load("res://files/images/sexscenes/chloebj.png"),
+chloewoods = load("res://files/images/sexscenes/chloewoods.png"),
+
 }
 var mansionupgradesdict = mansionupgrades.dict
 var gradeimages = {
@@ -148,6 +152,8 @@ tamer = load("res://files/buttons/mainscreen/32.png"),
 
 var noimage = load("res://files/buttons/noimagesmall.png")
 
+var punishcategories = ['spanking','whipping','nippleclap','clitclap','nosehook','mashshow','facesit','afacesit','grovel']
+
 func _init():
 	randomize()
 	loadsettings()
@@ -156,7 +162,7 @@ func _init():
 	var tempnode = Node.new()
 	tempnode.set_script(tempvars)
 	for i in variables.list:
-		if tempnode.has_meta(i):
+		if tempnode.get(i) != null:
 			variables[i] = tempnode[i]
 	tempnode.queue_free()
 
@@ -470,6 +476,7 @@ class progress:
 	var supplybuy = false
 	var tutorial = {basics = false, person = false, alchemy = false, jail = false, lab = false, farm = false, outside = false, combat = false}
 	var itemcounter = 0
+	var slavecounter = 0
 	var alisecloth = 'normal'
 	var decisions = []
 	var lorefound = []
@@ -583,7 +590,7 @@ class progress:
 	func findslave(id):
 		var rval
 		for i in range(0, globals.slaves.size()):
-			if globals.slaves[i].id == id:
+			if globals.slaves[i].id == str(id):
 				rval = globals.slaves[i]
 		return rval
 
@@ -640,11 +647,11 @@ class person:
 	var vagvirgin = true
 	var mouthvirgin = true
 	var assvirgin = true
+	var penisvirgin = true
 	var penis = 'none'
 	var balls = 'none'
 	var penistype = 'human'
 	var penisextra = 0
-	var penisvirgin = true
 #-------------------------------------
 	var sensvagina = rand_range(0.75,1.25)
 	var sensmouth = rand_range(0.75,1.25)
@@ -696,9 +703,13 @@ class person:
 	var sexuals = {actions = {}, unlocked = false, affection = 0, kinks = {}, unlocks = [], lastaction = ''}
 	var kinks = []
 	var forcedsex = false
-#	var sexexp = {}
-#-------------------------------------------------------------------------------------------------------------------------
 	var sexexp = {
+		partners = {}, 
+		watchers = {}, 
+		actions = {}, 
+		seenactions = {}, 
+		orgasms = {}, 
+		orgasmpartners = {},
 		cuminfood = 0,
 		cuminfooddetect = 0,
 		morningblowjob = 0,
@@ -747,7 +758,7 @@ class person:
 		feets = 0,
 		feetstech = rand_range(0.75,1.25),
 		feetsamount = 0,
-		orgasms = 0,
+		orgasm = 0,
 		kiss = 0,
 		masturbation = 0,
 		cumbath = 0,
@@ -761,13 +772,14 @@ class person:
 		bloodlossday = false,
 		cycleday = 1#randi()%30+1
 		}#simple values.. neex to add parts lvl and parts experience / virginity taken / last person used parts
-#-------------------------------------------------------------------------------------------------------------------------
 	var sensation = {}
 	var metrics = {ownership = 0, jail = 0, mods = 0, brothel = 0, sex = 0, partners = [], randompartners = 0, item = 0, spell = 0, orgy = 0, threesome = 0, win = 0, capture = 0, goldearn = 0, foodearn = 0, manaearn = 0, birth = 0, preg = 0, vag = 0, anal = 0, oral = 0, roughsex = 0, roughsexlike = 0, orgasm = 0}
 	var fromguild = false
 	var masternoun = 'Master'
 	var lastinteractionday = 0
 	var lastsexday = 0
+	
+	
 	var stats = {
 		str_cur = 0,
 		str_max = 0,
@@ -1757,7 +1769,7 @@ func load_game(text):
 	state.babylist.clear()
 	for i in currentline.slaves:
 		newslave = person.new()
-		if i['@path'].find('.gdc'):
+		if i['@path'].find('.gdc') >= 0:
 			i['@path'] = i['@path'].replace('.gdc', '.gd')
 		if i['@subpath'] == '':
 			i['@subpath'] = 'person'
@@ -1790,14 +1802,15 @@ func load_game(text):
 
 func repairsave():
 	state.currentversion = gameversion
-	for person in [player] + slaves:
-		if person.gear.costume == 'clothcommon':
-			person.gear.costume = null
-		if person.gear.underwear == 'underwearplain':
-			person.gear.underwear = null
+	for person in [player] + slaves + state.babylist:
+		person.id = str(person.id)
+		if person.sexexp.has('partners') == false:
+			person.sexexp = {partners = {}, watchers = {}, actions = {}, seenactions = {}, orgasms = {}, orgasmpartners = {}}
 	for i in globals.state.unstackables.values():
 		if i.enchant == null:
 			i.enchant = ''
+	for i in globals.state.playergroup:
+		i = str(i)
 
 var showalisegreet = false
 
