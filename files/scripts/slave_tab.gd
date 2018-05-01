@@ -4,8 +4,34 @@ extends Node
 var person
 var tab
 var jobdict = globals.jobs.jobdict
-
+#----------------------------------------------------------------
 func _ready():
+	if !get_node("stats/customization/rules").has_node("cuminfood"):
+		var newcheckbox = CheckBox.new()
+		newcheckbox.name = "cuminfood"
+		newcheckbox.text = 'Mix cum in food'
+		newcheckbox.add_to_group('extrarules')
+		newcheckbox.add_to_group('slaverules')
+		newcheckbox.toggle_mode = true
+		newcheckbox.set("custom_colors/font_color_pressed", Color(0.09,0.64,0.05))
+#		newcheckbox.set("custom_fonts/font", load("res://Roundo-Medium.otf"))
+		get_node("stats/customization/rules").add_child(newcheckbox)
+		get_node("stats/customization/rules/cuminfood").rect_position = Vector2(29, 313)
+		get_node("stats/customization/rules/cuminfood").rect_size = Vector2(162, 28)
+
+	if !get_node("stats/customization/rules").has_node("morningblowjob"):
+		var newcheckbox = CheckBox.new()
+		newcheckbox.name = "morningblowjob"
+		newcheckbox.text = 'Give a morning blowjob'
+		newcheckbox.add_to_group('extrarules')
+		newcheckbox.add_to_group('slaverules')
+		newcheckbox.toggle_mode = true
+		newcheckbox.set("custom_colors/font_color_pressed", Color(0.09,0.64,0.05))
+#		newcheckbox.set("custom_fonts/font", load("res://Roundo-Medium.otf"))
+		get_node("stats/customization/rules").add_child(newcheckbox)
+		get_node("stats/customization/rules/morningblowjob").rect_position = Vector2(29, 335)
+		get_node("stats/customization/rules/morningblowjob").rect_size = Vector2(225, 28)
+#----------------------------------------------------------------
 	for i in $stats/customization/tattoopanel/VBoxContainer.get_children():
 		i.connect('pressed',self,'choosetattooarea',[i])
 	set_process_input(true)
@@ -16,6 +42,7 @@ func _ready():
 	for i in globals.statsdict:
 		self[i].get_node('Control').connect('mouse_entered', self, 'stattooltip',[i])
 		self[i].get_node('Control').connect('mouse_exited', globals, 'hidetooltip') 
+		
 
 func _input(event):
 	if get_tree().get_current_scene().get_node("screenchange/AnimationPlayer").is_playing() == true && get_tree().get_current_scene().get_node("screenchange/AnimationPlayer").get_current_animation() == "fadetoblack" || $stats/customization/nicknamepanel.is_visible() :
@@ -70,19 +97,26 @@ func slavetabopen():
 	elif person.imagefull != null && globals.loadimage(person.imagefull) != null:
 		$stats/basics/bodypanel/fullbody.set_texture(globals.loadimage(person.imagefull))
 	$stats/basics/bodypanel.visible = ($stats/basics/bodypanel/fullbody.get_texture() != null)
-	for i in $stats/basics/traits/traitlist.get_children() + $stats/basics/sextraits/traitlist.get_children() :
+	for i in $stats/basics/traits/traitlist.get_children() + $stats/basics/abilities/abilitylist.get_children():
 		if i.get_name() != 'Label':
 			i.visible = false
 			i.free()
 	for i in person.get_traits():
 		label = $stats/basics/traits/traitlist/Label.duplicate()
-		if i.tags.has("sexual"):
-			$stats/basics/sextraits/traitlist.add_child(label)
-		else:
-			$stats/basics/traits/traitlist.add_child(label)
+		$stats/basics/traits/traitlist.add_child(label)
 		label.visible = true
 		label.set_text(i.name)
 		label.connect("mouse_entered", self, 'traittooltip', [i])
+		label.connect("mouse_exited", self, 'traittooltiphide')
+	for i in person.ability:
+		var abil = globals.abilities.abilitydict[i]
+		if !abil.learnable:
+			continue
+		label = $stats/basics/abilities/abilitylist/Label.duplicate()
+		$stats/basics/abilities/abilitylist.add_child(label)
+		label.visible = true
+		label.set_text(abil.name)
+		label.connect("mouse_entered", self, 'abilitytooltip', [abil])
 		label.connect("mouse_exited", self, 'traittooltiphide')
 	for i in $stats/customization/rules.get_children():
 		if i.is_in_group('advrules'):
@@ -90,10 +124,35 @@ func slavetabopen():
 				i.visible = true
 			else:
 				i.visible = false
+#--------------------------------------------------------------------------------
+		if i.is_in_group('extrarules'):
+			if person.brand == 'advanced':
+				i.visible = true
+			else:
+				i.visible = false
+#--------------------------------------------------------------------------------
 	#regulationdescription()
 	for i in get_tree().get_nodes_in_group("slaverules"):
 		if person.rules.has(i.get_name()):
 			i.set_pressed(person.rules[i.get_name()])
+#--------------------------------------------------------------------------------
+	if get_node("stats/customization/rules/morningblowjob").pressed == true:
+		if person.sleep == 'jail':
+			get_node("stats/customization/rules/morningblowjob").pressed = false
+		else:
+			get_node("stats/customization/rules/morningblowjob").pressed = true
+	if person.sleep == 'jail':
+		get_node("stats/customization/rules/morningblowjob").visible = false
+	else:
+		if person.brand == 'advanced':
+			get_node("stats/customization/rules/morningblowjob").visible = true
+		else:
+			get_node("stats/customization/rules/morningblowjob").visible = false
+	if globals.itemdict.semen.amount < 10:
+		get_node("stats/customization/rules/cuminfood").disabled = true
+	else:
+		get_node("stats/customization/rules/cuminfood").disabled = false
+#--------------------------------------------------------------------------------
 	get_node("stats/workbutton").set_text(jobdict[person.work].name)
 	$stats/customization/brandbutton.set_text(person.brand.capitalize())
 	if globals.state.branding == 0:
@@ -203,6 +262,9 @@ func _on_grade_mouse_entered():
 
 func traittooltip(trait):
 	globals.showtooltip(person.dictionary(trait.description))
+
+func abilitytooltip(ability):
+	globals.showtooltip(ability.description)
 
 func traittooltiphide():
 	globals.hidetooltip()
@@ -328,7 +390,7 @@ func _on_brandbutton_pressed():
 			confirm.set_meta('value', 2)
 
 func _on_cancel_pressed():
-	$stats/customization/brandpopup.visible = false
+	$"customization/clothes&relatives&customs/brandbutton/brandpopup".visible = false
 
 
 func _on_confirm_pressed():
@@ -895,5 +957,3 @@ func _on_customize_pressed():
 	$stats/customize.pressed = true
 	$stats/basics.visible = false
 	$stats/customization.visible = true
-
-

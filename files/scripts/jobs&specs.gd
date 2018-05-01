@@ -1050,6 +1050,22 @@ func maid(person):
 	var temp = 5.5 + (person.sagi+person.send)*6
 	person.xp += temp/4
 	globals.state.condition = temp
-	text = "$name spent the day cleaning around the mansion. \n"
+#---------------------------------------------------------------
+# Filtering slaves how have heir bloodloss period and removing those who have that day discovered already..
+# then only selecting 1 in the remaining slaves.. (after filter if there is more than one it randomly choses)
+# random will postpone the slaves that are not chosen to next cycle but in the end all will be discovered
+# could discover more than one if needed but ill see how it goes this way first
+	var temparray = []
+	var randselected
+	var extratxt = ". "
+	for i in globals.slaves:
+		if person.sexexp.has('bloodlossday') == true && person.sexexp.has('bloodlossdetected') == false && i != person:
+			temparray.append(i)
+			if temparray.size() > 0:
+				randselected = temparray[rand_range(0,temparray.size()-1)]
+				randselected.sexexp.bloodlossdetected = true
+				extratxt = ", and found traces of blood stains in "+randselected.name+" laundry. "
+	text = "$name spent the day cleaning around the mansion"+extratxt+"\n"
+#---------------------------------------------------------------
 	var dict = {text = text}
 	return dict

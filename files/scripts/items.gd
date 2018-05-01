@@ -875,6 +875,20 @@ acctravelbag = {
 	amount = 0,
 	unlocked = true,
 },
+#--------------------------------------------------------------------
+semen = {
+	code = 'semen',
+	name = 'Master Cum',
+	icon = load("res://files/images/items/semen.png"),
+	description = "Extracted using Self masturbation(extraction) or when a slave on morning blowjob rule does not swallow the load. \nIs used to mix cum in your slave food",
+	effect = [],
+	recipe = '',
+	cost = 10,
+	type = 'ingredient',
+	amount = 0,
+	unlocked = true,
+},
+#--------------------------------------------------------------------
 #newitems
 weaponelvensword = {
 	code = 'weaponelvensword',

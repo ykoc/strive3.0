@@ -218,8 +218,10 @@ func forestfind(stage = 0):
 	var origins = ['slave','poor','commoner']
 	if stage == 0:
 		slave2 = globals.newslave(globals.wimbornraces[rand_range(0,globals.wimbornraces.size())], age[rand_range(0, age.size())], 'random', origins[rand_range(0, origins.size())])
-		showntext = person.dictionary(eventstext[currentevent][stage])
-		showntext += slave2.descriptionsmall() + slave2.dictionary(" What would you like to do with $him?")
+#----------------------------------------------------------------------
+		showntext = person.dictionary(eventstext[currentevent][stage]+"\n\n")
+#----------------------------------------------------------------------
+		showntext += slave2.descriptionsmall() + " What would you like to do with $him?"
 		tempbuttons = [[slave2.dictionary('Imprison the $child'), 1], [slave2.dictionary('Return $him to town (-25 energy)'),2], [slave2.dictionary("Don't bother with $him"), 3]]
 	if stage == 1:
 		showntext = slave2.dictionary(eventstext[currentevent][stage])
@@ -637,7 +639,7 @@ func pervertevent(stage = 0):
 		globals.player.energy -= 25
 	elif stage == 2:
 		person.lastsexday = globals.resources.day
-		slave2.lastsexday = globals.resources.day
+		slave2.lastesexday = globals.resources.day
 		person.loyal += rand_range(5,10)
 		person.lust = -rand_range(10,20)
 		slave2.obed += -rand_range(10,30)
@@ -651,3 +653,9 @@ func pervertevent(stage = 0):
 	dictionary()
 	showevent()
 
+#-----------------------------------------------------------------------------------------
+func _on_dailyeventtext_meta_clicked(meta):
+	if globals.state.descriptsettings.has(meta):
+		globals.state.descriptsettings[meta] = !globals.state.descriptsettings[meta]
+		forestfind()
+#-----------------------------------------------------------------------------------------

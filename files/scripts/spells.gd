@@ -232,6 +232,12 @@ func mindreadeffect():
 		for i in person.traits:
 			text += ' ' + i
 		text += '.'
+#------------------------------------------------------------------
+	#if person.sexexp.bloodlossdetected == true:
+	text += "\nImpregnation risk at: Day "+ str(person.sexexp.cycleday)
+	if person.sexexp.impregnationday == 1:
+		text += " [color=red]Danger Day !![/color]"
+#------------------------------------------------------------------
 	if person.preg.duration > 0:
 		text += "\nPregnancy: " + str(person.preg.duration)
 	if person.lastsexday != 0:
@@ -280,7 +286,7 @@ func dreameffect():
 	person.stress -= rand_range(25,50)
 	text = 'You cast sleep on $name, putting $him into deep rest until the next day. '
 	main.popup(person.dictionary(text))
-	main._on_mansion_pressed()
+	main.rebuild_slave_list()
 
 
 func invigorateeffect():

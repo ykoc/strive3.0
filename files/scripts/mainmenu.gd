@@ -37,7 +37,43 @@ func _ready():
 #		get_tree().set_screen_stretch(1, 1, Vector2(globals.rules.screenwidth,globals.rules.screenheight))
 	charcreateinitiate()
 	globals.modsfile._ready()
-
+#--------------------------------------------------------------
+	get_node("TextureFrame/newgame/stage6/chardescript").connect("meta_clicked",self,'_on_chardescript_meta_clicked')
+	get_node("TextureFrame/newgame/stage6/furcolor").connect("item_selected",self,'_on_furcolor_item_selected')
+	
+	if !get_node("TextureFrame/newgame/stage6").has_node("scalescolor"):
+		var newopbutton = OptionButton.new()
+		newopbutton.name = "scalescolor"
+		newopbutton.add_to_group('lookoption')
+		get_node("TextureFrame/newgame/stage6").add_child(newopbutton)
+		get_node("TextureFrame/newgame/stage6/scalescolor").rect_position = Vector2(532, 73)
+		get_node("TextureFrame/newgame/stage6/scalescolor").rect_size = Vector2(148, 39)
+		get_node("TextureFrame/newgame/stage6/scalescolor").connect("item_selected",self,'_on_scalescolor_item_selected')
+		var newlabel = Label.new()
+		newlabel.name = "Label"
+		newlabel.text = 'Scales Color'
+		newlabel.align = HALIGN_CENTER
+		get_node("TextureFrame/newgame/stage6/scalescolor").add_child(newlabel)
+		get_node("TextureFrame/newgame/stage6/scalescolor/Label").rect_position = Vector2(13, -14)
+		get_node("TextureFrame/newgame/stage6/scalescolor/Label").rect_size = Vector2(114, 20)
+		
+	if !get_node("TextureFrame/newgame/stage6").has_node("featherscolor"):
+		var newopbutton1 = OptionButton.new()
+		newopbutton1.name = "featherscolor"
+		newopbutton1.add_to_group('lookoption')
+		get_node("TextureFrame/newgame/stage6").add_child(newopbutton1)
+		get_node("TextureFrame/newgame/stage6/featherscolor").rect_position = Vector2(532, 73)
+		get_node("TextureFrame/newgame/stage6/featherscolor").rect_size = Vector2(148, 39)
+		get_node("TextureFrame/newgame/stage6/featherscolor").connect("item_selected",self,'_on_featherscolor_item_selected')
+		var newlabel = Label.new()
+		newlabel.name = "Label"
+		newlabel.text = 'Feathers Color'
+		newlabel.align = HALIGN_CENTER
+		get_node("TextureFrame/newgame/stage6/featherscolor").add_child(newlabel)
+		get_node("TextureFrame/newgame/stage6/featherscolor/Label").rect_position = Vector2(13, -14)
+		get_node("TextureFrame/newgame/stage6/featherscolor/Label").rect_size = Vector2(114, 20)
+		
+#--------------------------------------------------------------
 
 
 var maintheme = globals.musicdict.maintheme
@@ -551,6 +587,20 @@ var malesizes = ['masculine', 'flat']
 var femalesizes = ['flat','small','average','big','huge']
 
 func stage6():
+#----------------------------------------------------
+	if scalessdict.has(player.race):
+		get_node("TextureFrame/newgame/stage6/scalescolor").visible = true
+		get_node("TextureFrame/newgame/stage6/furcolor").visible = false
+		get_node("TextureFrame/newgame/stage6/featherscolor").visible = false
+	elif feathersdict.has(player.race):
+		get_node("TextureFrame/newgame/stage6/featherscolor").visible = true
+		get_node("TextureFrame/newgame/stage6/scalescolor").visible = false
+		get_node("TextureFrame/newgame/stage6/furcolor").visible = false
+	else:
+		get_node("TextureFrame/newgame/stage6/scalescolor").visible = false
+		get_node("TextureFrame/newgame/stage6/furcolor").visible = true
+		get_node("TextureFrame/newgame/stage6/featherscolor").visible = false
+#--------------------------------------------------------------
 	for i in get_tree().get_nodes_in_group("lookline"):
 		i.set_text(player[i.get_name()])
 	get_node("TextureFrame/newgame/stage6/virgin").set_pressed(player.vagvirgin)
@@ -620,15 +670,42 @@ func stage6():
 		array = wingsdict.human
 	for i in array:
 		get_node("TextureFrame/newgame/stage6/wings").add_item(i.replace("_", " "))
-	if furcolordict.has(player.race):
-		array = furcolordict[player.race]
+#-------------------------------
+	#SCALES
+	if scalessdict.has(player.race):
+		array = scalessdict[player.race]
+	else:
+		array = []
+	for i in array:
+		get_node("TextureFrame/newgame/stage6/scalescolor").add_item(i)
+		if player.scalescolor == i:
+			get_node("TextureFrame/newgame/stage6/scalescolor").select(get_node("TextureFrame/newgame/stage6/scalescolor").get_item_count()-1)
+
+	#FEATHERS
+	if feathersdict.has(player.race):
+		array = feathersdict[player.race]
+	else:
+		array = []
+	for i in array:
+		get_node("TextureFrame/newgame/stage6/featherscolor").add_item(i)
+		if player.featherscolor == i:
+			get_node("TextureFrame/newgame/stage6/featherscolor").select(get_node("TextureFrame/newgame/stage6/featherscolor").get_item_count()-1)
+			if get_node("TextureFrame/newgame/stage6/featherscolor").text != 'none':
+				get_node("TextureFrame/newgame/stage6/haircolor").text = i.replace("_", "/")
+	#FUR
+	if furcolordict.has(player.race.replace('Halfkin', 'Beastkin')):
+		array = furcolordict[player.race.replace('Halfkin', 'Beastkin')]
+#-------------------------------
 	else:
 		array = furcolordict.human
 	for i in array:
 		get_node("TextureFrame/newgame/stage6/furcolor").add_item(i.replace("_", " "))
 		if player.furcolor == i:
 			get_node("TextureFrame/newgame/stage6/furcolor").select(get_node("TextureFrame/newgame/stage6/furcolor").get_item_count()-1)
-	
+#------------------------------
+			if get_node("TextureFrame/newgame/stage6/furcolor").text != 'none':
+				get_node("TextureFrame/newgame/stage6/haircolor").text = i.replace("_", "/")
+#------------------------------	
 	get_node("TextureFrame/newgame/stage6/bodyshape").set_disabled(true)
 	get_node("TextureFrame/newgame/stage6/bodyshape").add_item(player.bodyshape)
 	get_node("TextureFrame/newgame/stage6/ears").set_disabled(true)
@@ -637,6 +714,7 @@ func stage6():
 	get_node("TextureFrame/newgame/stage6/tail").add_item(player.tail)
 	get_node("TextureFrame/newgame/stage6/penistype").add_item(player.penistype)
 	get_node("TextureFrame/newgame/stage6/penistype").set_disabled(true)
+	
 
 
 func optionselect(item,button):
@@ -677,8 +755,22 @@ human = ['none'],
 "Beastkin Wolf" : ['gray', 'black_gray', 'brown'],
 "Beastkin Bunny" : ['white', 'gray'],
 "Beastkin Tanuki" : ['black_gray'],
+#-------------------------------------------
+"Taurus" : ['white', 'gray', 'orange_white','black_white','black_gray','black'],
+"Centaur" : ['white', 'gray', 'orange_white','black_white','black_gray','black'],
 }
-
+var feathersdict = {
+#human = ['none'],
+"Harpy" : ['white', 'green', 'purple', 'blue', 'yellow', 'red', 'brown'],
+}
+var scalessdict = {
+#human = ['none'],
+"Dragonkin" : ['blue','red','gold','green','silver','black'],
+"Nereid" : ['blue','red','gold','green','silver','black'],
+"Arachna" : ['blue','red','gold','green','silver','black'],
+"Lamia" : ['blue','red','gold','green','silver','black'],
+}
+#-------------------------------------------
 func stage5change():
 	var text = player.description()
 	get_node("TextureFrame/newgame/stage6/chardescript").set_bbcode(text)
@@ -1047,3 +1139,20 @@ func _on_confirmconstants_pressed():
 			variables[vari] = clamp(float(i.get_node("LineEdit").text), variables.list[vari].min, variables.list[vari].max)
 	globals.savevars()
 	_on_constants_pressed()
+
+
+#--------------------------------------------------------
+func _on_chardescript_meta_clicked(meta):
+	if globals.state.descriptsettings.has(meta):
+		globals.state.descriptsettings[meta] = !globals.state.descriptsettings[meta]
+		stage6()
+		
+func _on_furcolor_item_selected(id):
+	if get_node("TextureFrame/newgame/stage6/furcolor").text != 'none':
+		get_node("TextureFrame/newgame/stage6/haircolor").text = get_node("TextureFrame/newgame/stage6/furcolor").text.replace(" ", "/")
+	
+func _on_featherscolor_item_selected(id):
+	if get_node("TextureFrame/newgame/stage6/featherscolor").text != 'none':
+		get_node("TextureFrame/newgame/stage6/haircolor").text = get_node("TextureFrame/newgame/stage6/featherscolor").text.replace(" ", "/")
+	
+#--------------------------------------------------------

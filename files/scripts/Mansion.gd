@@ -9,7 +9,7 @@ var testslaveorigin = ['slave','poor','commoner','rich','noble']
 var currentslave = 0 setget currentslave_set
 var selectedslave = -1
 var texture = null
-var startcombatzone = "grove"
+var startcombatzone = "amberguardforest"
 var nameportallocation
 onready var maintext = '' setget maintext_set, maintext_get
 onready var exploration = get_node("explorationnode")
@@ -62,7 +62,6 @@ var musicvalue = 0
 func maintext_set(value):
 	var wild = $explorationnode.zones[$explorationnode.currentzone.code].combat == true
 	$outside/textpanel.visible = !wild
-	$outside/exploreprogress.visible = wild
 	$outside/textpanelexplore.visible = wild
 	$outside/textpanel/outsidetextbox.bbcode_text = value
 	$outside/textpanelexplore/outsidetextbox2.bbcode_text = value
@@ -137,6 +136,7 @@ func _ready():
 		get_node("startcombat").show()
 		get_node("new slave button").show()
 		get_node("debug").show()
+	_on_mansion_pressed()
 	rebuildrepeatablequests()
 	globals.main = self
 	globals.resources.panel = get_node("ResourcePanel")
@@ -189,8 +189,97 @@ func _ready():
 		self[i].get_node('Control').connect('mouse_entered', self, 'stattooltip',[i])
 		self[i].get_node('Control').connect('mouse_exited', globals, 'hidetooltip')
 		self[i].get_node('Button').connect("pressed",self,'statup', [i])
+
+
+#-------------------------------------------------------------------------------------
+	if !get_node("MainScreen/slave_tab/stats/customization/rules").has_node("extrarules"):
+		var newlabel = Label.new()
+		newlabel.name = "extrarules"
+		newlabel.text = 'Extra Rules'
+		newlabel.align = HALIGN_CENTER
+		newlabel.add_to_group('extrarules')
+		newlabel.set("custom_colors/font_color", Color(1,1,0))
+#		newlabel.set("custom_fonts/font", load("res://Roundo-Medium.otf"))
+		get_node("MainScreen/slave_tab/stats/customization/rules").add_child(newlabel)
+		get_node("MainScreen/slave_tab/stats/customization/rules/extrarules").rect_position = Vector2(77, 295)
+		get_node("MainScreen/slave_tab/stats/customization/rules/extrarules").rect_size = Vector2(109, 20)
+
+	if !get_node("MainScreen/slave_tab/stats/customization/rules").has_node("cuminfood"):
+		var newcheckbox = CheckBox.new()
+		newcheckbox.name = "cuminfood"
+		newcheckbox.text = 'Mix cum in food'
+		newcheckbox.add_to_group('extrarules')
+		newcheckbox.add_to_group('slaverules')
+		newcheckbox.toggle_mode = true
+		newcheckbox.set("custom_colors/font_color_pressed", Color(0.09,0.64,0.05))
+#		newcheckbox.set("custom_fonts/font", load("res://Roundo-Medium.otf"))
+		get_node("MainScreen/slave_tab/stats/customization/rules").add_child(newcheckbox)
+		get_node("MainScreen/slave_tab/stats/customization/rules/cuminfood").rect_position = Vector2(29, 313)
+		get_node("MainScreen/slave_tab/stats/customization/rules/cuminfood").rect_size = Vector2(162, 28)
+
+	if !get_node("MainScreen/slave_tab/stats/customization/rules").has_node("morningblowjob"):
+		var newcheckbox = CheckBox.new()
+		newcheckbox.name = "morningblowjob"
+		newcheckbox.text = 'Give a morning blowjob'
+		newcheckbox.add_to_group('extrarules')
+		newcheckbox.add_to_group('slaverules')
+		newcheckbox.toggle_mode = true
+		newcheckbox.set("custom_colors/font_color_pressed", Color(0.09,0.64,0.05))
+#		newcheckbox.set("custom_fonts/font", load("res://Roundo-Medium.otf"))
+		get_node("MainScreen/slave_tab/stats/customization/rules").add_child(newcheckbox)
+		get_node("MainScreen/slave_tab/stats/customization/rules/morningblowjob").rect_position = Vector2(29, 335)
+		get_node("MainScreen/slave_tab/stats/customization/rules/morningblowjob").rect_size = Vector2(225, 28)
+		
+	get_node("MainScreen/slave_tab/stats/customization/rules/rules").rect_position = Vector2(68, 14)
+	get_node("MainScreen/slave_tab/stats/customization/rules/contraception").rect_position = Vector2(29, 31)
+	get_node("MainScreen/slave_tab/stats/customization/rules/aphrodisiac").rect_position = Vector2(29, 53)
+	get_node("MainScreen/slave_tab/stats/customization/rules/luxuryrules").rect_position = Vector2(82, 78)
+	get_node("MainScreen/slave_tab/stats/customization/rules/betterfood").rect_position = Vector2(29, 94)
+	get_node("MainScreen/slave_tab/stats/customization/rules/personalbath").rect_position = Vector2(29, 116)
+	get_node("MainScreen/slave_tab/stats/customization/rules/cosmetics").rect_position = Vector2(29, 138)
+	get_node("MainScreen/slave_tab/stats/customization/rules/pocketmoney").rect_position = Vector2(29, 160)
+	get_node("MainScreen/slave_tab/stats/customization/rules/advrules").rect_position = Vector2(72, 185)
+	get_node("MainScreen/slave_tab/stats/customization/rules/silence").rect_position = Vector2(29, 202)
+	get_node("MainScreen/slave_tab/stats/customization/rules/pet").rect_position = Vector2(29, 224)
+	get_node("MainScreen/slave_tab/stats/customization/rules/masturbation").rect_position = Vector2(29, 246)
+	get_node("MainScreen/slave_tab/stats/customization/rules/nudity").rect_position = Vector2(29, 268)
 	
-	_on_mansion_pressed()
+	if !get_node("MainScreen/mansion/selfinspect").has_node("selfextraction"):
+		var newbutton = Button.new()
+		newbutton.name = "selfextraction"
+		newbutton.text = 'Self Extraction'
+		get_node("MainScreen/mansion/selfinspect").add_child(newbutton)
+		get_node("MainScreen/mansion/selfinspect/selfextraction").rect_position = Vector2(781, 338)
+		get_node("MainScreen/mansion/selfinspect/selfextraction").rect_size = Vector2(139, 20)
+		get_node("MainScreen/mansion/selfinspect/selfextraction").connect("pressed",self,'_on_selfextraction_pressed')
+	
+	if !get_node("MainScreen/mansion/selfinspect").has_node("repeatdaily"):
+		var newcheckbox = CheckBox.new()
+		newcheckbox.name = "repeatdaily"
+		newcheckbox.text = 'Repeat daily'
+		newcheckbox.add_to_group('peronalrules')
+		newcheckbox.toggle_mode = true
+		newcheckbox.set("custom_colors/font_color_pressed", Color(0.09,0.64,0.05))
+#		newcheckbox.set("custom_fonts/font", load("res://Roundo-Medium.otf"))
+		get_node("MainScreen/mansion/selfinspect").add_child(newcheckbox)
+		get_node("MainScreen/mansion/selfinspect/repeatdaily").rect_position = Vector2(786, 378)
+		get_node("MainScreen/mansion/selfinspect/repeatdaily").rect_size = Vector2(136, 20)
+		get_node("MainScreen/mansion/selfinspect/repeatdaily").connect("pressed",self,'_on_repeatdaily_pressed')
+		
+	for i in get_tree().get_nodes_in_group("peronalrules"):
+		var person
+		person = globals.player
+		if person.rules.has(i.get_name()):
+			i.set_pressed(person.rules[i.get_name()])
+		if globals.player.rules.repeatdaily == true:
+			get_node("MainScreen/mansion/selfinspect/selfextraction").disabled = true
+		else:
+			get_node("MainScreen/mansion/selfinspect/selfextraction").disabled = false	
+		
+	get_node("dailyevents/textpanel/dailyeventtext").connect("meta_clicked",self,'dailyeventtext_meta_clicked')
+#	get_node("textpanel/dailyeventtext").connect("pressed",self,'_on_dailyeventtext_meta_clicked')
+	
+#-------------------------------------------------------------------------------------
 	#startending()
 
 func sound(value):
@@ -270,7 +359,7 @@ func _on_new_slave_button_pressed():
 	globals.resources.upgradepoints += 100
 	
 	globals.state.sidequests.brothel = 1
-	globals.state.sidequests.chloe = 6
+	globals.state.sidequests.ayneris = 6
 	#globals.state.decisions.append('')
 	globals.state.rank = 3
 	globals.state.mainquest = 5
@@ -289,13 +378,13 @@ func _on_new_slave_button_pressed():
 	globals.state.decisions = ['tishaemilytricked','chloebrothel','ivrantaken','goodroute']
 	#lobals.state.upcomingevents.append({code = 'tishaappearance',duration =1})
 	globals.state.upcomingevents.append({code = 'aynerisrapierstart', duration = 1})
-#	for i in globals.characters.characters:
-#		person = globals.characters.create(i)
-#		person.loyal = 100
-#		person.lust = 0
-#		person.consent = true
-#		person.attention = 100
-#		globals.slaves = person
+	for i in globals.characters.characters:
+		person = globals.characters.create(i)
+		person.loyal = 100
+		person.lust = 100
+		person.consent = true
+		person.attention = 100
+		globals.slaves = person
 
 func mansion():
 	_on_mansion_pressed()
@@ -500,7 +589,9 @@ func _on_end_pressed():
 	text1.set_bbcode('')
 	text2.set_bbcode('')
 	count = 0
-	
+#----------------------------------------------------------------
+	var nextmorningenergydrain = 100
+#----------------------------------------------------------------	
 	if globals.player.preg.duration >= 1:
 		globals.player.preg.duration += 1
 		if globals.player.preg.duration == 5:
@@ -518,6 +609,18 @@ func _on_end_pressed():
 				globals.state.condition = -1.0
 	
 	for person in globals.slaves:
+#--------------------------------------------------------------------------------------
+		if globals.resources.day == person.sexexp.cycleday+15:
+			person.sexexp.cycleday +=15
+			person.sexexp.bloodlossday = true
+		else:
+			person.sexexp.bloodlossday = false
+		if globals.resources.day == person.sexexp.cycleday:
+			person.sexexp.impregnationday = 1
+		else:
+			person.sexexp.impregnationday = 0
+
+#--------------------------------------------------------------------------------------
 		person.metrics.ownership += 1
 		var handcuffs = false
 		for i in person.gear.values():
@@ -566,6 +669,18 @@ func _on_end_pressed():
 							globals.resources.food += workdict.food
 							person.metrics.foodearn += workdict.food
 			text1.set_bbcode(text1.get_bbcode()+person.dictionary(text))
+#-----------------------------------------------------------------
+			person.sexexp.cuminfooddetect = 1
+			person.sexexp.morningblowswallow = 0
+			if rand_range(0,2) > 1:
+				person.sexexp.cuminfooddetect = 0
+			if rand_range(0,2) > 1:
+				person.sexexp.morningblowswallow = 1
+			if globals.player.rules.repeatdaily == true:
+				if globals.itemdict.semen.amount < 10:
+					person.rules.cuminfood = false
+					text0.set_bbcode(text0.get_bbcode()+person.dictionary('[color=yellow]you do not have enough stored semen to mix in with $name food.[/color]\n'))
+#-----------------------------------------------------------------
 			######## Counting food
 			if globals.resources.food >= 5:
 				person.loyal += rand_range(0,1)
@@ -655,6 +770,9 @@ func _on_end_pressed():
 				else:
 					text2.set_bbcode(text2.get_bbcode() + person.dictionary('$name keeps you company at night and you grew closer.\n'))
 			elif person.sleep == 'jail':
+#-------------------------------------------------------------------------
+				person.rules.morningblowjob = false
+#-------------------------------------------------------------------------
 				person.metrics.jail += 1
 				person.obed += 25 - person.conf/6
 				person.energy += rand_range(20,30) + person.stats.end_cur*6
@@ -670,6 +788,67 @@ func _on_end_pressed():
 				person.stress += rand_range(10,15)
 				person.obed -= rand_range(10,20)
 				text0.bbcode_text += person.dictionary("[color=red]$name is suffering from unquenched lust.[/color]\n")
+#-------------------------------------------------------------------------
+			if person.rules.morningblowjob == true:
+				person.rules.morningblowjob = true
+			else:
+				person.rules.morningblowjob = false
+			if person.rules.cuminfood == true:
+				if person.sexexp.swallowlove >= 1 || person.sexexp.cuminfooddetect == 0:
+					person.sexexp.cuminfood += 1
+					globals.itemdict.semen.amount -= 10
+					if person.sexexp.cuminfood > 10 && randf() <= 0.1:
+						person.sexexp.swallowlove += 1
+						text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=yellow]$name addiction to cum swallowing increased without $him knowledge.[/color]\n"))
+					else:
+						if person.sexexp.swallowlove >= 2:
+							text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=yellow]$name likes having cum in $him food.[/color]\n"))
+						elif person.sexexp.swallowlove >= 1:
+							text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=yellow]$name starts to like having cum in $him food.[/color]\n"))
+						else:
+							text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=yellow]$name ate $him food not knowing cum was mixed in it.[/color]\n"))
+				else:
+					text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=yellow]$name detected something strange in $him food and decided to not eat what you gave $him, but instead stole some food to eat.[/color]\n"))
+					globals.resources.food -= 10
+			if person.rules.morningblowjob == true:
+				if nextmorningenergydrain >= 10:
+					nextmorningenergydrain -= 10
+					var semenamount
+					var semenamount1
+					if globals.player.balls == 'none':
+						semenamount = 0
+						semenamount1 = 0
+					elif globals.player.balls == 'small':
+						semenamount = 2
+						semenamount1 = 10
+					elif globals.player.balls == 'average':
+						semenamount = 4
+						semenamount1 = 20
+					elif globals.player.balls == 'big':
+						semenamount = 6
+						semenamount1 = 30
+					if person.obed >= 80 || person.sexexp.swallowlove >= 1:
+						person.sexexp.morningblowjob += 1
+						if person.sexexp.morningblowswallow == 1 && person.sexexp.morningblowjob > 10:
+							person.obed += 5
+							if randf() <= 0.1:
+								person.sexexp.swallowlove += 1
+								text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=yellow]$name finished you off swallowing all your seed and got more accustomed to swallowing cum.[/color]\n"))
+								globals.resources.food += semenamount
+							else:
+								text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=yellow]$name finished you off swallowing all your seed, reducing $him food usage by "+str(semenamount)+"[/color]\n"))
+								globals.resources.food += semenamount
+						else:# not in the mood to swallow
+							text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=yellow]$name finished you off but wasnt in the mood to swallow the load, but instead filled a vial with it that you put into storage for "+str(semenamount1)+" ml of semen[/color]\n"))
+							globals.itemdict.semen.amount += semenamount1
+							person.obed += 5
+					else:# refuse
+						text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=yellow]$name refused to give you a morning blowjob, and you lost some energy trying to enforce the rule.[/color]\n"))
+						person.obed -= 5
+				else:
+					person.rules.morningblowjob = false
+					text0.set_bbcode(text0.get_bbcode()+person.dictionary("[color=yellow]not enough remaining energy to get blown next morning by $name.[/color]\n"))
+#-------------------------------------------------------------------------
 			#Races
 			if person.race == 'Elf':
 				person.asser = person.conf
@@ -958,7 +1137,29 @@ func _on_end_pressed():
 	if globals.state.mansionupgrades.foodpreservation == 0 && globals.resources.food >= globals.resources.foodcaparray[globals.state.mansionupgrades.foodcapacity]*0.80:
 		globals.resources.food -= globals.resources.food*0.03
 		text0.set_bbcode(text0.get_bbcode() + '[color=yellow]Some of your food reserves have spoiled.[/color]\n')
-	
+#---------------------------------------------------------------------------
+	if globals.itemdict.semen.amount > 20:
+		globals.itemdict.semen.amount -= globals.itemdict.semen.amount*0.5
+		text0.set_bbcode(text0.get_bbcode() + '[color=yellow]Some of the semen you had in reserves has spoiled.[/color]\n')
+	if globals.player.rules.repeatdaily == true:
+		if nextmorningenergydrain >= 20:
+			nextmorningenergydrain -= 20
+			var semenamount
+			if globals.player.balls == 'none':
+				semenamount = 0
+			elif globals.player.balls == 'small':
+				semenamount = 10
+			elif globals.player.balls == 'average':
+				semenamount = 20
+			elif globals.player.balls == 'big':
+				semenamount = 30
+		#	if globals.itemdict.semen.amount > 0:	
+			globals.itemdict.semen.amount += semenamount
+			text0.set_bbcode(text0.get_bbcode()+"[color=yellow]you where able to store "+ str(semenamount)+" ml of cum after your morning masturbation session, but at the cost of some energy.[/color]\n")
+		else:
+			globals.player.rules.repeatdaily = false
+			text0.set_bbcode(text0.get_bbcode()+"[color=yellow]not enough remaining energy to masturbate yoursel.[/color]\n")
+#---------------------------------------------------------------------------	
 	if globals.resources.food >= 5:
 		if chef != null:
 			globals.resources.food -= max(3, variables.basefoodconsumption - (chef.sagi + (chef.wit/20))/2)
@@ -1146,6 +1347,14 @@ func startnewday():
 	else:
 		alisehide()
 	_on_mansion_pressed()
+#--------------------------------------------------------------------
+	if globals.player.rules.repeatdaily == true:
+		globals.player.energy -= 20
+	for person in globals.slaves:
+		if person.away.duration == 0:
+			if person.rules.morningblowjob == true:
+				globals.player.energy -= 10
+#--------------------------------------------------------------------
 #	if globals.state.supporter == false && int(globals.resources.day)%100 == 0:
 #		get_node("sellout").show()
 
@@ -1537,13 +1746,14 @@ func background_set(text):
 	if player.is_playing() == true:
 		return
 	if OS.get_name() != "HTML5" && globals.rules.fadinganimation == true:
-		if get_node("TextureFrame").get_texture() != globals.backgrounds[text]:
-			animationfade()
-			yield(player, "animation_finished")
+		if get_node("TextureFrame").get_texture() == globals.backgrounds[text]:
+			yield(get_tree(), 'idle_frame')
+			emit_signal('animfinished')
+			return
+		animationfade()
+		yield(player, "animation_finished")
 	texture = globals.backgrounds[text]
 	get_node("TextureFrame").set_texture(texture)
-	yield(get_tree(), "idle_frame")
-	emit_signal('animfinished')
 
 
 func animationfade(value = 0.4, duration = 0.05):
@@ -1558,9 +1768,6 @@ func animationfade(value = 0.4, duration = 0.05):
 		yield(player, "animation_finished")
 		emit_signal("animfinished")
 		player.play_backwards("fadetoblack")
-	else:
-		yield(get_tree(), 'idle_frame')
-		emit_signal("animfinished")
 
 func screenanimation(text):
 	var player = get_node("screenchange/AnimationPlayer")
@@ -1631,7 +1838,8 @@ func _on_mansion_pressed():
 	var textnode = get_node("MainScreen/mansion/mansioninfo")
 	var text = ''
 	background_set('mansion')
-	yield(self, 'animfinished')
+	if OS.get_name() != "HTML5" && globals.rules.fadinganimation == true:
+		yield(self, 'animfinished')
 	hide_everything()
 	for i in get_tree().get_nodes_in_group("mansioncontrols"):
 		i.show()
@@ -1731,7 +1939,8 @@ func _on_mansion_pressed():
 
 func _on_jailbutton_pressed():
 	background_set('jail')
-	yield(self, 'animfinished')
+	if OS.get_name() != "HTML5" && globals.rules.fadinganimation == true:
+		yield(self, 'animfinished')
 	hide_everything()
 	get_node("MainScreen/mansion/jailpanel").show()
 	if globals.state.tutorial.jail == false:
@@ -1824,7 +2033,8 @@ var potselected
 
 func _on_alchemy_pressed():
 	background_set('alchemy' + str(globals.state.mansionupgrades.mansionalchemy))
-	yield(self, 'animfinished')
+	if OS.get_name() != "HTML5" && globals.rules.fadinganimation == true:
+		yield(self, 'animfinished')
 	hide_everything()
 	get_node("MainScreen/mansion/alchemypanel").show()
 	if globals.state.tutorial.alchemy == false:
@@ -1946,7 +2156,8 @@ func _on_library_pressed():
 		background_set('library1')
 	else:
 		background_set('library2')
-	yield(self, 'animfinished')
+	if OS.get_name() != "HTML5" && globals.rules.fadinganimation == true:
+		yield(self, 'animfinished')
 	hide_everything()
 	get_node("MainScreen/mansion/librarypanel").show()
 	var text = ''
@@ -2344,7 +2555,34 @@ func _on_selfbutton_pressed():
 	get_node("MainScreen/mansion/selfinspect/mainstatlabel").set_bbcode(text)
 	updatestats(person)
 
+#---------------------------------------------------------
+func _on_selfextraction_pressed():
+	var semenamount
+	if globals.player.balls == 'none':
+		semenamount = 0
+	elif globals.player.balls == 'small':
+		semenamount = 10
+	elif globals.player.balls == 'average':
+		semenamount = 20
+	elif globals.player.balls == 'big':
+		semenamount = 30
+#	if globals.itemdict.semen.amount > 0:	
+	globals.itemdict.semen.amount += semenamount
+	if globals.player.energy >= 20:
+		globals.player.energy -= 20
+	_on_selfbutton_pressed()
+	#else:
 
+func _on_repeatdaily_pressed():
+	if globals.player.rules.repeatdaily == false:
+		globals.player.rules.repeatdaily = true
+		get_node("MainScreen/mansion/selfinspect/selfextraction").disabled = true
+	else:
+		globals.player.rules.repeatdaily = false
+		get_node("MainScreen/mansion/selfinspect/selfextraction").disabled = false
+	_on_selfbutton_pressed()
+	
+#---------------------------------------------------------
 
 
 func stattooltip(value):
@@ -2921,7 +3159,7 @@ func checkplayergroup():
 	for i in range(0, globals.state.playergroup.size()):
 		checked = false
 		for ii in globals.slaves:
-			if ii.id == str(globals.state.playergroup[i]) && ii.away.duration <= 0 && ii.away.at != 'hidden':
+			if ii.id == globals.state.playergroup[i] && ii.away.duration <= 0 && ii.away.at != 'hidden':
 				checked = true
 		if checked == false:
 			removed.append(i)
@@ -3408,4 +3646,6 @@ func _on_hideui_pressed():
 	$ResourcePanel.visible = !$ResourcePanel.visible
 
 
+func dailyeventtext_meta_clicked(meta):
+	get_node("dailyevents")._on_dailyeventtext_meta_clicked(meta)
 
