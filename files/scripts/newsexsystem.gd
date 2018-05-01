@@ -1306,11 +1306,16 @@ func orgasm(member):
 #--------------------------------------------------------------------------------------
 				elif scene.scene.code == 'tailjob':
 #--------------------------------------------------------------------------------------
+					var part
+					if i.person.tail == 'tentacles':
+						part = 'tentacle'
+					else:
+						part = 'tail'
 					for i in scene.givers:
 						i.person.sexexp.tailamount += 1*semenamount
 						i.tempsexexp.tailamount += 1*semenamount
 #--------------------------------------------------------------------------------------
-					penistext += " {^sticky:white:hot} {^semen:seed:cum} {^sprays onto:shoots all over:covers} [names1] tail[/s1] as [he2] ejaculate[s/2]."
+					penistext += " {^sticky:white:hot} {^semen:seed:cum} {^sprays onto:shoots all over:covers} [names1] "+part+"[/s1] as [he2] ejaculate[s/2]."
 				elif scene.scene.giverpart == '':
 					penistext += " {^semen:seed:cum} {^pours onto:shoots onto:falls to} the {^ground:floor} as [he2] ejaculate[s/2]."
 #-------------------------------------------------------------------------------------
@@ -1972,9 +1977,13 @@ func thissession(member):
 		else:
 			text += "Omitted. "
 	if member.tail != 'none':
+		if i.person.tail == 'tentacles':
+			part = 'Tentacles'
+		else:
+			part = 'Tail'
 		text += "\n"
 		text += "\n"
-		text += '[url=tail][color=#d1b970][Tail][/color][/url] '
+		text += '[url=tail][color=#d1b970]['+part+'][/color][/url] '
 		if globals.state.descriptsettings.tail == true:
 			if member.tempsexexp.tail > 0:
 				text += "\n"+"was [color=yellow]used[/color] "+str(floor(member.tempsexexp.tail))+" times"
@@ -2016,8 +2025,8 @@ func thissession(member):
 	text += "\n"
 	text += '[url=feets][color=#d1b970][Feets][/color][/url] '
 	if globals.state.descriptsettings.feets == true:
-		if member.tempsexexp.tail > 0:
-			text += "\n"+"where [color=yellow]used[/color] "+str(floor(member.tempsexexp.tail))+" times"
+		if member.tempsexexp.feets > 0:
+			text += "\n"+"where [color=yellow]used[/color] "+str(floor(member.tempsexexp.feets))+" times"
 			if member.tempsexexp.feetsamount > 0:
 				text += " and where [color=yellow]covered[/color] with "+str(floor(member.tempsexexp.feetsamount))+" ml of cum"
 #				if member.tempsexexp.fingersamount > 100:
