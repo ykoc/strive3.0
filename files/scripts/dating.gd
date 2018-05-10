@@ -78,7 +78,7 @@ var actionsdict = {
 		reqs = 'true',
 		descript = 'Have a friendly chat',
 		effect = 'chat',
-		disablereqs = "person.traits.has('Mute')",
+		disablereqs = "!person.traits.has('Mute')",
 	},
 	intimate = {
 		group = "Actions",
@@ -86,7 +86,7 @@ var actionsdict = {
 		descript = 'Have an intimate talk',
 		reqs = 'true',
 		effect = 'intimate',
-		disablereqs = "person.traits.has('Mute')",
+		disablereqs = "!person.traits.has('Mute')",
 	},
 	touch = {
 		group = "Actions",
