@@ -1,6 +1,8 @@
 
 extends Node
 
+signal textshown
+
 var nocaptures = false
 var area
 var currentenemies
@@ -18,7 +20,8 @@ var trappername
 class fighter:
 	var name
 	var person
-	var health
+	var pasthealth = 0
+	var health setget health_set
 	var healthmax
 	var speed
 	var speedbase
@@ -46,13 +49,19 @@ class fighter:
 	var aimemory = ''
 	var geareffects = []
 	
+	func health_set(value):
+		var damage = value - pasthealth
+#		if damage != 0:
+#			globals.main.get_node('combat').animatetext(damage, button)
+		health = value
+		pasthealth = health
 	
 	func sendbuff():
 		var temptarget
 		if (action.target == 'enemy' && self.party == 'ally') || (self.party == 'enemy' && action.target in ['ally','self']):
-			temptarget = globals.get_tree().get_current_scene().get_node('combat').enemygroup[target]
+			temptarget = globals.main.get_node('combat').enemygroup[target]
 		else:
-			temptarget = globals.get_tree().get_current_scene().get_node('combat').playergroup[target]
+			temptarget = globals.main.get_node('combat').playergroup[target]
 		temptarget.getbuff(makebuff(action.effect, [temptarget], [self]))
 #		var effect = str2var(var2str(globals.abilities.effects[action.effect]))
 #		var buff = {duration = effect.duration, name = effect.name, code = effect.code, type = effect.type, stats = {}}
@@ -93,7 +102,7 @@ class fighter:
 			effects.erase(buffcode)
 	func makebuff(code, targets, casters = null):
 		var effect = str2var(var2str(globals.abilities.effects[code]))
-		var buff = {duration = effect.duration, name = effect.name, code = effect.code, type = effect.type, stats = {}}
+		var buff = {duration = effect.duration, name = effect.name, code = effect.code, type = effect.type, stats = {}, icon = effect.icon}
 		for i in effect.stats:
 			var temp = i[1].split(',')
 			temp = Array(temp)
@@ -110,6 +119,11 @@ class fighter:
 			buff.stats[i[0]] = globals.evaluate(temp2)
 		return buff
 
+func animatetext(text, node):
+	var newnode = $floattext.duplicate()
+	add_child(newnode)
+	newnode.animatetext(text, node)
+
 
 func start_battle(nosound = false):
 	get_parent().animationfade(0.4)
@@ -119,9 +133,10 @@ func start_battle(nosound = false):
 	var combatant
 	trapper = false
 	get_node("autoattack").set_pressed(globals.rules.autoattack)
-	get_tree().get_current_scene().get_node("outside").hide()
+	globals.main.get_node("outside").hide()
+	globals.main.get_node("ResourcePanel").hide()
 	if nosound == false:
-		get_tree().get_current_scene().music_set('combat')
+		globals.main.music_set('combat')
 	deads = []
 	playergroup.clear()
 	enemygroup.clear()
@@ -133,10 +148,12 @@ func start_battle(nosound = false):
 	combatant = fighter.new()
 	combatant.person = slave
 	combatant.name = slave.name_short()
+	combatant.pasthealth = slave.health
 	combatant.health = slave.health
 	combatant.healthmax = slave.stats.health_max
 	combatant.speed = 10 + slave.sagi*3
 	combatant.power = 3 + slave.sstr*2
+	combatant.icon = slave.imageportait
 	if slave.race == 'Seraph':
 		combatant.speed += 4
 	elif slave.race.find('Wolf') >= 0:
@@ -176,10 +193,12 @@ func start_battle(nosound = false):
 		combatant = fighter.new()
 		combatant.person = slave
 		combatant.name = slave.dictionary('$name')
+		combatant.pasthealth = slave.health
 		combatant.health = slave.health
 		combatant.healthmax = slave.stats.health_max
 		combatant.speed = 6 + slave.sagi*3
 		combatant.power = 3 + slave.sstr*2
+		combatant.icon = slave.imageportait
 		if slave.race == 'Seraph':
 			combatant.speed += 4
 		elif slave.race.find('Wolf') >= 0:
@@ -237,6 +256,7 @@ func start_battle(nosound = false):
 		combatant.ai = 'attack'
 		if combatant.person == null:
 			combatant.name = i.name
+			combatant.pasthealth = i.stats.health
 			combatant.healthmax = i.stats.health
 			combatant.speed = i.stats.speed
 			combatant.power = i.stats.power
@@ -267,6 +287,7 @@ func start_battle(nosound = false):
 				trappername = slave.name_short()
 			combatant.person = slave
 			combatant.name = i.name
+			combatant.pasthealth = slave.health
 			combatant.health = slave.health
 			combatant.healthmax = slave.stats.health_max
 			combatant.speed = 6 + slave.sagi*3
@@ -309,7 +330,7 @@ func start_battle(nosound = false):
 	updatepanels()
 	
 	if globals.state.tutorial.combat == false:
-		get_tree().get_current_scene().get_node("tutorialnode").combat()
+		globals.main.get_node("tutorialnode").combat()
 	
 
 func damage(combatant, value):
@@ -336,19 +357,20 @@ func _process(delta):
 		button = get_node("grouppanel/groupline").get_child(playergroup.find(i)+1)
 		if i.action == null && i.state != 'chasing':
 			i.target = null
-			button.get_node('Panel').hide()
 		else:
-			button.get_node('Panel').show()
-		if i.target == null:
-			button.get_node('target').set_text('Nothing')
-			if i.state == 'chasing':
-				button.get_node('target').set_text('Chasing')
-		elif i.action.target == 'enemy':
-			button.get_node('target').set_text(i.action.name + ' - ' + enemygroup[i.target].name)
-		elif i.action.target == 'ally':
-			button.get_node('target').set_text(i.action.name + ' - ' + playergroup[i.target].name)
-		elif i.action.target == 'self':
-			button.get_node('target').set_text(i.action.name)
+			button.texture_normal = load("res://files/buttons/combat/8.1.png")
+		button.get_node('action').visible = !i.target == null
+		if button.get_node('action').visible:
+			button.get_node('action').set_texture(i.action.iconnorm)
+			button.get_node('target').visible = true
+			if i.action.target == 'enemy':
+				button.get_node('target').set_texture(enemygroup[i.target].icon)
+			elif i.action.target == 'ally' && playergroup[i.target].icon != null:
+				button.get_node('target').set_texture(playergroup[i.target].icon)
+			elif i.action.target == 'self' && i.icon != null:
+				button.get_node('target').set_texture(load((i.icon)))
+			else:
+				button.get_node('target').set_texture(null)
 	if selectedcombatant != null:
 		get_node("grouppanel/groupline").get_child(playergroup.find(selectedcombatant)+1)
 	else:
@@ -383,7 +405,7 @@ func _process(delta):
 	#get_node("combatlog").set_bbcode(text)
 
 func _input(event):
-	if event.is_echo() == true || event.is_pressed() == false || get_node("abilitites/Panel").visible == true || self.visible == false:
+	if event.is_echo() == true || event.is_pressed() == false || get_node("abilitites/Panel").visible == true || self.is_visible_in_tree() == false:
 		return
 	if get_node("win").visible == true && event.is_action_pressed("F") == true:
 		_on_winconfirm_pressed()
@@ -406,7 +428,7 @@ func _input(event):
 		updatepanels()
 		for i in get_node("grouppanel/skilline").get_children():
 			i.set_pressed(false)
-	if event.is_action_pressed("F") == true && selectmode == null && get_node("escapewarn").visible != true:
+	if event.is_action_pressed("F") == true && selectmode == null && get_node("escapewarn").visible != true && $confirm.disabled == false:
 		_on_confirm_pressed()
 	elif event.is_action_pressed("F") == true && get_node("escapewarn").visible == true:
 		_on_escapeconfirm_pressed()
@@ -432,27 +454,48 @@ func updatepanels():
 		newbutton = get_node("grouppanel/groupline/character").duplicate()
 		if slave.imageportait != null:
 			newbutton.get_node("portait").set_texture(globals.loadimage(slave.imageportait))
-		newbutton.show()
+		newbutton.visible = true
 		get_node("grouppanel/groupline").add_child(newbutton)
 		newbutton.get_node("name").set_text(combatant.name)
-		if (combatant.health/combatant.healthmax) < 0.35:
-			newbutton.get_node("hp").set('custom_colors/font_color', Color(1,0.29,0.29,1))
-		newbutton.get_node("hp").set_text('HP: ' + str(ceil(combatant.health)) +'/'+ str(ceil(combatant.healthmax)))
-		newbutton.get_node("energy").set_text('E:'+str(floor(combatant.energy)) +'/'+ str(floor(combatant.energymax)))
-		newbutton.get_node("power").set_text('P:'+str(round(combatant.power)))
-		newbutton.get_node("speed").set_text('S:'+str(round(combatant.speed)))
+#		if (combatant.health/combatant.healthmax) < 0.35:
+#			newbutton.get_node("hp").set('custom_colors/font_color', Color(1,0.29,0.29,1))
+		#newbutton.get_node("hp").set_text('HP: ' + str(ceil(combatant.health)) +'/'+ str(ceil(combatant.healthmax)))
+		newbutton.get_node("hp").value = (combatant.health/combatant.healthmax)*100
+		newbutton.get_node("hp/Label").text = str(combatant.health) + "/" + str(combatant.healthmax)
+		newbutton.get_node("en").value = (float(combatant.energy)/combatant.energymax)*100
+		newbutton.get_node("en/Label").text = str(combatant.energy) + "/" + str(combatant.energymax)
+		if combatant.person != globals.player:
+			newbutton.get_node("stress").visible = true
+			newbutton.get_node("stress").value = (float(combatant.person.stress)/combatant.person.stats.stress_max)*100
+			newbutton.get_node("stress/Label").text = str(combatant.person.stress)
+#		newbutton.get_node("power").set_text('P:'+str(round(combatant.power)))
+#		newbutton.get_node("speed").set_text('S:'+str(round(combatant.speed)))
 		newbutton.set_meta("char", combatant)
-		newbutton.connect("mouse_entered", self, 'bufftooltip', [combatant])
-		newbutton.connect("mouse_exited", self, 'bufftooltiphide')
+		for i in combatant.effects.values():
+			var newnode = $grouppanel/groupline/character/buffscontainer/TextureRect.duplicate()
+			newbutton.get_node("buffscontainer").add_child(newnode)
+			newnode.visible = true
+			newnode.texture = i.icon
+			newnode.connect("mouse_entered", self, 'bufftooltip', [i])
+			newnode.connect("mouse_exited", self, 'bufftooltiphide')
 		newbutton.connect("pressed",self,'choosecharacter',[combatant])
+		newbutton.get_node("info").connect("pressed",self,'showinfochar',[combatant])
+		combatant.button = newbutton
 	for combatant in enemygroup:
 		if combatant.state in ['normal']:
 			var slave = combatant.person
-			newbutton = get_node("enemypanel/enemyline/character").duplicate()
+			newbutton = get_node("enemypanel/ScrollContainer/enemyline/character").duplicate()
 			if combatant.icon != null:
 				newbutton.get_node("icon").set_texture(combatant.icon)
 			newbutton.show()
-			get_node("enemypanel/enemyline").add_child(newbutton)
+			get_node("enemypanel/ScrollContainer/enemyline").add_child(newbutton)
+			for i in combatant.effects.values():
+				var newnode = $grouppanel/groupline/character/buffscontainer/TextureRect.duplicate()
+				newbutton.get_node("buffscontainer").add_child(newnode)
+				newnode.visible = true
+				newnode.texture = i.icon
+				newnode.connect("mouse_entered", self, 'bufftooltip', [i])
+				newnode.connect("mouse_exited", self, 'bufftooltiphide')
 			newbutton.set_meta("char", combatant)
 			newbutton.get_node("name").set_text(combatant.name)
 			newbutton.get_node("hpbar").set_value((combatant.health/combatant.healthmax)*100)
@@ -463,31 +506,26 @@ func updatepanels():
 			newbutton.connect("mouse_entered", self, 'enemytooltip', [combatant])
 			newbutton.connect("mouse_exited", self, 'enemytooltiphide')
 			combatant.button = newbutton
-	$enemypanel/enemyline.move_child($enemypanel/enemyline/character, $enemypanel/enemyline.get_children().size())
+	$enemypanel/ScrollContainer/enemyline.move_child($enemypanel/ScrollContainer/enemyline/character, $enemypanel/ScrollContainer/enemyline.get_children().size())
 
-func bufftooltip(combatant):
-	var text = ''
-	for i in combatant.effects.values():
-		if text != '':
-			text += '\n'
-		text += i.name + ". "
-		if i.duration >= 1:
-			text += 'Duration: ' + str(i.duration)+ ' turns, '
-		text += str(i.stats).replace('(','').replace(')','')
-	if text != "":
-		globals.showtooltip(text)
+func bufftooltip(buff):
+	var text = '[center][color=yellow]' + buff.name + "[/color][/center]\n "
+	text += str(buff.stats).replace('(','').replace(')','')
+	if buff.duration >= 1:
+		text += '\nDuration: ' + str(buff.duration)+ ' turns'
+	globals.showtooltip(text)
 
+func showinfochar(combatant):
+	get_parent().get_node('outside').opencharacter(combatant.person, true, combatant)
 
 func bufftooltiphide():
 	globals.hidetooltip()
 
 func clearpanels():
-	for i in get_node("enemypanel/enemyline").get_children() + $grouppanel/groupline.get_children():
+	for i in get_node("enemypanel/ScrollContainer/enemyline").get_children() + $grouppanel/groupline.get_children():
 		if i.get_name() != 'character':
 			i.hide()
 			i.queue_free()
-	$enemypanel/enemyline.rect_size = $enemypanel/enemyline.rect_min_size
-	$grouppanel/groupline.rect_size = $grouppanel/groupline.rect_min_size
 
 func choosecharacter(combatant):
 	var newbutton
@@ -518,7 +556,6 @@ func choosecharacter(combatant):
 #			else:
 #				newbutton.get_node("Panel").hide()
 			newbutton.show()
-			newbutton.get_node("Label").set_text(i.name)
 			
 			newbutton.get_node("number").set_text(str(get_node("grouppanel/skilline").get_children().size()-1))
 			newbutton.set_meta("skill", i)
@@ -533,9 +570,9 @@ func choosecharacter(combatant):
 				if combatant.action.name == i.name:
 					newbutton.set_pressed(true)
 			if newbutton.is_disabled():
-				newbutton.get_node("Label").set('custom_colors/font_color', Color(1,0,0,1))
+				newbutton.get_node("number").set('custom_colors/font_color', Color(1,0,0,1))
 			elif newbutton.is_pressed():
-				newbutton.get_node("Label").set('custom_colors/font_color', Color(0,1,1,1))
+				newbutton.get_node("number").set('custom_colors/font_color', Color(0,1,1,1))
 			newbutton.set_meta('skill', i)
 	elif selectmode == 'ally':
 		for i in get_node("grouppanel/groupline/").get_children():
@@ -561,7 +598,7 @@ func activateskill(skill, combatant):
 	if selectmode != null:
 		selectmode = null
 	combatant.target = null
-	get_node("tooltippanel").hide()
+	globals.hidetooltip()
 	if combatant.energy < skill.costenergy:
 		get_node("warning").set_text("Not enough energy")
 		get_node("warning").modulate.a = 1
@@ -680,7 +717,7 @@ func actionexecute(actor, target, skill):
 					else:
 						damage = damage - damage*0.35
 			elif skill.type == 'spell':
-				damage = (actor.magic * 2.5) * skill.power
+				damage = max(1,(actor.magic * 2.5)) * skill.power
 				if skill.code == 'mindblast':
 					damage += target.healthmax/5
 			if target.person != null and target.person.traits.has("Sturdy"):
@@ -695,15 +732,18 @@ func actionexecute(actor, target, skill):
 			if actor.energy <= 0: damage = damage*0.66
 			if hit != 'miss' && hit != 'glance':
 				var power = powercompare(actor.power, target.power)
+				var enddamage = 0
 				if power == 'overpower':
-					target.health -= damage*1.3
-					text = text + "$name's  force overpowers " + target.name + ' and deals great damage.(' + str(round(damage*1.3)) + ")" 
+					enddamage = damage*1.3
+					text = text + "$name's force overpowers " + target.name + ' and deals great damage.(' + str(round(enddamage*1.3)) + ")" 
 				elif power == 'normal' || hit == 'precise':
-					target.health -= damage
-					text = text + "$name damages " + target.name + '.(' + str(round(damage)) + ")" 
+					enddamage = damage
+					text = text + "$name damages " + target.name + '.(' + str(round(enddamage)) + ")" 
 				else:
-					target.health -= damage/1.75
+					enddamage = damage/1.75
 					text = text + "$name's attack struggles to ovecome " + target.name + "'s defence and falls in efficiency.(" + str(round(damage/1.75)) + ")" 
+				target.health -= enddamage
+				
 			elif hit == 'glance':
 				target.health -= damage/2
 				text = text + "$name's attack lacks in speed and only partly damages " + target.name + ".(" + str(round(damage/2)) + ")" 
@@ -724,11 +764,11 @@ func actionexecute(actor, target, skill):
 				actor.health = min(actor.health + (targethealthinit - target.health)/4,actor.healthmax)
 				text += actor.name + ' recovered some health back.' 
 	elif skill.target == 'self':
-		if skill.code == 'escape' && globals.get_tree().get_current_scene().get_node("explorationnode").launchonwin == null:
+		if skill.code == 'escape' && globals.main.get_node("explorationnode").launchonwin == null:
 			actor.state = 'stopfight'
 			actor.energy = max(actor.energy - skill.costenergy,0)
-		elif skill.code == 'escape' && globals.get_tree().get_current_scene().get_node("explorationnode").launchonwin != null:
-			globals.get_tree().get_current_scene().popup("You can't escape from this fight")
+		elif skill.code == 'escape' && globals.main.get_node("explorationnode").launchonwin != null:
+			globals.main.popup("You can't escape from this fight")
 	elif skill.target == 'ally':
 		if group == 'enemy':#Checking for blockers
 			targetparty = enemygroup
@@ -830,15 +870,11 @@ func showskilltooltip(skill):
 	var text = ''
 	text += '[center]' + skill.name + '[/center]\n\n' + skill.description +'\nBasic cooldown: ' + str(skill.cooldown)
 	if selectedcombatant.cooldowns.has(skill.code):
-		text += '\n\nTurns until use: ' + str(selectedcombatant.cooldowns[skill.code])
-	get_node("tooltippanel").show()
-	get_node("tooltippanel/tooltiptext").set_bbcode(text)
-	var pos = get_global_mouse_position()
-	pos.y -= find_node('tooltippanel').get_rect().size.y*1.3
-	get_node("tooltippanel").set_position(pos)
+		text += '\n\nCooldown: ' + str(selectedcombatant.cooldowns[skill.code])
+	globals.showtooltip(text)
 
 func hideskilltooltip():
-	get_node("tooltippanel").hide()
+	globals.hidetooltip()
 
 func enemytooltip(enemy):
 	var text = ''
@@ -851,19 +887,17 @@ func enemytooltip(enemy):
 			text += "\nGrade: " + enemy.person.origins
 #	if enemy.person != null:
 #		text += enemygear[enemy.person.gear.armor].name + "\n" + enemygear[enemy.person.gear.weapon].name
-	get_node("tooltippanel/tooltiptext").set_bbcode(text)
-	get_node("tooltippanel").show()
-	var pos = get_global_mouse_position()
-	get_node("tooltippanel").set_global_position(pos)
+	globals.showtooltip(text)
 
 func enemytooltiphide():
-	get_node("tooltippanel").hide()
+	globals.hidetooltip()
 
 func _on_confirm_pressed():
 	if selectmode != null:
 		get_node("warning").set_text("Select target first.")
 		get_node("warning").modulate.a = 1
 		return
+	$confirm.disabled = true
 	var text = ''
 	for combatant in playergroup:
 		if combatant.action == null && combatant.state in ['normal']:
@@ -981,8 +1015,11 @@ func resolution(text = ''):
 			text += '\n[color=#ff4949]'+ i.name + ' has fallen. [/color]'
 			playergroup.remove(playergroup.find(i))
 			if i.person == globals.player:
-				get_tree().get_current_scene().get_node("gameover").show()
-				get_tree().get_current_scene().get_node("gameover/Panel/text").set_bbcode("[center]You have died. \nGame over.[/center]")
+				globals.main.animationfade(1)
+				$confirm.disabled = true
+				yield(globals.main, 'animfinished')
+				globals.main.get_node("gameover").show()
+				globals.main.get_node("gameover/Panel/text").set_bbcode("[center]You have died. \nGame over.[/center]")
 				return
 			else:
 				var slave = i.person
@@ -1017,9 +1054,10 @@ func resolution(text = ''):
 		for i in playergroup:
 			i.person.stats.energy_cur = i.energy
 			i.person.stats.health_cur = i.health
-		get_tree().get_current_scene().get_node("explorationnode").enemyleave()
-		get_tree().get_current_scene().popup('You hastly escape from the fight. ')
-		get_tree().get_current_scene().get_node("outside").show()
+		globals.main.get_node("explorationnode").enemyleave()
+		globals.main.popup('You hastly escape from the fight. ')
+		globals.main.get_node("outside").show()
+		globals.main.get_node("ResourcePanel").show()
 		return
 	else:
 		for i in enemygroup:
@@ -1029,12 +1067,13 @@ func resolution(text = ''):
 		choosecharacter(selectedcombatant)
 	get_node("combatlog").set_bbcode(get_node("combatlog").get_bbcode() + text)
 	updatepanels()
+	$confirm.disabled = false
 	deselecteverything()
 
 func capturesequence(enemy):
 	enemy.button.get_node('name').set_text(enemy.button.get_node('name').get_text() + ' - Escaping!')
 	get_node("escapewarn").show()
-	get_node("escapewarn/escapedescript").set_bbcode(combatantdictionary(enemy, "$name tries to escape. Send someone to stop them? (cost 30 energy and will be unable to attack for 1 turn)"))
+	get_node("escapewarn/escapedescript").set_bbcode(combatantdictionary(enemy, "$name tries to escape. Send someone to stop them? (costs 30 energy and will be unable to act for 1 turn)"))
 	get_node("escapewarn/escapeoption").clear()
 	get_node("escapewarn/escapeoption").set_meta('slave',enemy)
 	get_node("escapewarn/escapeoption").add_item("Let them escape")
@@ -1062,11 +1101,12 @@ func victory():
 #	deads.invert()
 #	for i in deads:
 #		currentenemies.remove(i)
-	get_tree().get_current_scene().get_node("explorationnode").enemygroup.units = currentenemies
+	globals.main.get_node("explorationnode").enemygroup.units = currentenemies
 	clearpanels()
 	hide()
-	get_tree().get_current_scene().get_node("outside").show()
-	get_tree().get_current_scene().get_node("explorationnode").enemydefeated()
+	globals.main.get_node("outside").show()
+	globals.main.get_node("ResourcePanel").show()
+	globals.main.get_node("explorationnode").enemydefeated()
 
 
 
@@ -1178,9 +1218,6 @@ func _on_use_pressed():
 	var skill = get_node("abilitites/Panel/abilitydescript").get_meta('ability')
 	get_node("abilitites/Panel").hide()
 	activateskill(skill, selectedcombatant)
-	
-	
-	
 
 
 

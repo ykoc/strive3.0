@@ -17,6 +17,7 @@ func _ready():
 	for i in globals.statsdict:
 		self[i].get_parent().get_node("Control").connect("mouse_entered", self, 'showtooltip', [i])
 		self[i].get_parent().get_node("Control").connect("mouse_exited", globals, 'hidetooltip')
+	
 
 func showtooltip(value):
 	var text = globals.statsdescript[value]
@@ -58,7 +59,7 @@ func show():
 			elif i.tags.find('detrimental') >= 0:
 				text2 = "[color=#ff4949]" + text2 + '[/color]'
 			text2 += ', '
-			text += text2
+		text += text2
 		text = text.substr(0, text.length() - 2) + '.'
 	get_node("traittext").set_bbcode(person.dictionary(text))
 	if mode == 'full':

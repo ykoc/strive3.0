@@ -44,13 +44,13 @@ func genitals():
 	if globals.state.descriptsettings.genitals == true || showmode != 'default':
 		text = "\n" + text + getdescription("titssize") + gettitsextra() + getdescription("asssize") + lowergenitals()
 		if person.preg.duration > 24:
-			text += "\n\nThe unborn child forces $his belly to protrude massively; $he is going to give birth soon."
+			text += "\n\n$his unborn child forces $his belly to protrude massively; $he will give birth soon."
 		elif person.preg.duration > 16:
-			text += "\n\n$His advanced pregnancy is clearly evident by the moderate bulge in $his belly."
+			text += "\n\n$His advanced pregnancy is clearly evident by the prominent bulge in $his belly."
 		elif person.preg.duration > 8:
-			text += "\n\nThe unborn fetus causes $his belly to bulge slightly."
+			text += "\n\n$His unborn fetus causes $his belly to bulge slightly."
 		if person.preg.has_womb == false && person.sex != 'male':
-			text += "\n\n[color=yellow]$name is sterile and won't be able to get pregnant.[/color]"
+			text += "\n\n[color=yellow]$name is sterile.[/color]"
 	else:
 		text += "Omitted. "
 	
@@ -60,7 +60,7 @@ func lowergenitals():
 	var text = ''
 	if person.vagina == 'normal':
 		if person.vagvirgin == true && person.vagina != 'none':
-			text = '$He has a tight, [color=yellow]virgin pussy[/color] below $his waist. '
+			text = '$He has a tight, [color=yellow]virgin pussy[/color]. '
 		else:
 			text = '$He has a [color=yellow]normal pussy[/color] below $his waist. '
 	if person.penis != 'none':
@@ -69,8 +69,6 @@ func lowergenitals():
 			text += penisdescription[temp]
 	if person.balls != 'none':
 		text += getdescription('balls')
-	if person.assvirgin == true:
-		text += "$His rear [color=yellow]is still pristine[/color]. "
 	return text
 
 func piercing():
@@ -90,21 +88,21 @@ func piercing():
 	elif person.piercing.lips == 'stud':
 		text += '$His lip has a [color=aqua]small stud[/color] in it. '
 	if person.piercing.tongue == 'stud':
-		text += '$His tongue has a shiny [color=aqua]stud[/color], which can be seen when $he talks. '
+		text += '$His tongue has a shiny [color=aqua]stud[/color], visible when $he talks. '
 	if person.piercing.nipples == 'stud':
-		text += '$His nipples are pierced and decorated with [color=aqua]a pair of small studs[/color]. '
+		text += '$His pierced nipples are decorated with [color=aqua]a pair of small studs[/color]. '
 	elif person.piercing.nipples == 'ring':
-		text += '$His nipples are pierced and [color=aqua]pair of rings[/color] can be seen in them. '
+		text += '$His pierced nipples contain a [color=aqua]pair of rings[/color]. '
 	elif person.piercing.nipples == 'chain':
-		text += 'Her nipples are pierced and a [color=aqua]small degrading chain[/color] connects them. '
+		text += 'Her pierced nipples are connected by a [color=aqua]small degrading chain[/color]. '
 	if person.piercing.clit == 'ring':
 		text += '$His clit is pierced with a [color=aqua]ring[/color]. '
 	elif person.piercing.clit == 'stud':
 		text += '$His clit has a [color=aqua]small stud[/color] in it. '
 	if person.piercing.labia == 'ring':
-		text += '$His labia is pierced and decorated with [color=aqua]a pair of rings[/color]. '
+		text += '$His pierced labia is decorated with [color=aqua]a pair of rings[/color]. '
 	elif person.piercing.labia == 'stud':
-		text += '$His labia is pierced and decorated with a [color=aqua]small stud[/color]. '
+		text += '$His pierced labia is decorated with a [color=aqua]small stud[/color]. '
 	if person.piercing.penis == 'ring':
 		text += '$His cock has a considerable [color=aqua]ring[/color] on the tip. '
 	elif person.piercing.penis == 'stud':
@@ -125,7 +123,7 @@ func tattoo():
 			sametattoo = false
 			break
 	if sametattoo == true:
-		text += "$name's entire body is tattoed with [color=yellow]" + tattoooptions[person.tattoo.face].name + '[/color] pattern, featuring complex ' + tattoooptions[person.tattoo.face].descript + '. '
+		text += "$name's entire body is tattooed with [color=yellow]" + tattoooptions[person.tattoo.face].name + '[/color] pattern, featuring complex ' + tattoooptions[person.tattoo.face].descript + '. '
 	else:
 		if person.tattoo.face != 'none' && person.tattooshow.face == true:
 			text += tattoosdescript.face.start + '[color=yellow]' + tattoooptions[person.tattoo.face].name + '[/color]' + tattoosdescript.face.end + tattoooptions[person.tattoo.face].descript + '. '
@@ -150,19 +148,19 @@ func mods():
 	var text = ''
 	
 	if person.mods.has('hollownipples') == true:
-		text += '[color=#B05DB0]$His breasts has been modified and are flexible and sensitive enough for penetration. [/color]'
+		text += '[color=#B05DB0]$His nipples are magically modified allowing them to stretch and be penetrated. [/color]'
 	if person.mods.has('augmentfur'):
-		text += "[color=#B05DB0]$His fur is magically augmented and provides extra resistance against harmful effects.[/color]\n"
+		text += "[color=#B05DB0]$His fur is magically augmented to provide extra protection against harmful effects.[/color]\n"
 	if person.mods.has('augmenttongue'):
-		text += "[color=#B05DB0]$His tongue is unusually long which allows better performance during oral sex [/color]\n"
+		text += "[color=#B05DB0]$His tongue is unusually long increasing performance during oral sex [/color]\n"
 	if person.mods.has('augmentscales'):
-		text += "[color=#B05DB0]$His scales are thicker than normal and provide extra protection against impacts.[/color]\n"
+		text += "[color=#B05DB0]$His scales are magically modified to be thicker than normal and provide extra protection.[/color]\n"
 	if person.mods.has('augmenthearing'):
-		text += "[color=#B05DB0]$His hearing is magically augmented and more sensitive to the surroundings.[/color]\n"
+		text += "[color=#B05DB0]$His hearing is magically augmented increasing $his awareness of $his surroundings.[/color]\n"
 	if person.mods.has('augmentstr'):
-		text += "[color=#B05DB0]$His muscles has been magically improved and can perform greater feats with proper training.[/color]\n"
+		text += "[color=#B05DB0]Through magical modification, the potential of $his muscles has increased.[/color]\n"
 	if person.mods.has('augmentagi'):
-		text += "[color=#B05DB0]$His reflexes and flexibility has been magically improved and $his physic potential way higher than usual.[/color]\n"
+		text += "[color=#B05DB0]Through magical modification, $his pre-existing limitations on $his reflexes and flexibility no longer hold $him back.[/color]\n"
 	
 	if text != '':
 		text = "\n[url=mods]Mods: [/url]" + text
@@ -255,13 +253,13 @@ static func getstatus(person):
 	if person.obed <= 20:
 		text = '[color=#ff4949]$name barely pays any attention to you, as if demonstrating $his independence. [/color]'
 	elif person.obed <= 40:
-		text = '[color=#FFA500]$name prefers to avoid looking at you and reacts poorly to your commands. [/color]'
+		text = '[color=#FFA500]$name avoids looking at you reacting poorly to any command. [/color]'
 	elif person.obed <= 60:
-		text = "[color=yellow]$name shows some respect to you, but it is clear that $he forces $himself to do it. [/color]"
+		text = "[color=yellow]$name shows some respect, but it is clear that it is forced. [/color]"
 	elif person.obed <= 80:
-		text = '[color=#adff2f]$name is pretty considerate and tries to appeal to you, showing that your opinion is important to $him. [/color]' 
+		text = '[color=#adff2f]$name tries to appeal to you, showing that your opinion is important to $him. [/color]' 
 	else:
-		text = '[color=green]$name grasps your every word and gives you all of the attention that $he can muster. [/color]'
+		text = '[color=green]$name holds your word as law and gives you all of the attention that $he can muster. [/color]'
 	
 	text = text + '\n\n'
 	
@@ -274,24 +272,24 @@ static func getstatus(person):
 	elif person.stress <= 80:
 		text = text + '[color=#FFA500]$name looks really stressed.[/color] '
 	else:
-		text = text + '[color=#ff4949]$name looks terrible, almost on the verge of breaking.[/color] '
+		text = text + '[color=#ff4949]$name looks terrible, as if $he could break apart at any moment.[/color] '
 	
 	text = text + '\n\n'
 	
 	if person.loyal <= 20:
-		text = text + '[color=#ff4949]$name does not show any signs of attachment to you. [/color]' 
+		text = text + '[color=#ff4949]$name’s face is cold showing no sign of attachment. [/color]' 
 	elif person.loyal <= 40:
-		text = text + "[color=#FFA500]$name's attitude gives away some affection $he holds for you. [/color]"
+		text = text + "[color=#FFA500]$name's attitude gives away some of the affection $he holds for you. [/color]"
 	elif person.loyal <= 60:
 		text = text + '[color=yellow]$name shows considerable loyalty to you as $his master.[/color] '
 	elif person.loyal <= 80:
-		text = text + '[color=#adff2f]$name shows a strong bond and deep feelings that $he has towards you.[/color] '
+		text = text + '[color=#adff2f]$name face shows the strong bond and deep feelings they hold for you.[/color] '
 	else:
 		text = text + "[color=green]To $name, nothing is more important than you and your will.[/color] "
 	
 	
 	if person.effects.has('captured') == true:
-		text = text + '\n\n[color=#ff4949]Due to recent events $name is very rebellous towards you.[/color]'
+		text = text + '\n\n[color=#ff4949]Due to recent events $name rebels against your control.[/color]'
 	text = person.dictionary(text)
 	
 	return text
@@ -314,7 +312,7 @@ func getBabyDescription(person):
 	dict = {
 	human = 'normal',
 	short_furry = 'short and furry',
-	long_pointy_furry = 'long an furry',
+	long_pointy_furry = 'long and furry',
 	pointy = 'pointy',
 	long_round_furry = 'of a bunny',
 	long_droopy_furry = 'of a bunny',
@@ -341,8 +339,8 @@ var penisdescription = {
 	feline_average = '$He has a barbed [color=yellow]cat dick[/color] growing from $his crotch, big enough to rival an average human. ',
 	feline_big = 'There is a frighteningly [color=yellow]large feline cock[/color] hanging between $his thighs, its sizable barbs making it somewhat intimidating. ', 
 	equine_small = 'Below $his waist hangs a [color=yellow]smallish equine cock[/color], which is still respectable compared to the average man. ',
-	equine_average= 'There is a [color=yellow]sizable equine cock[/color] growing from $his nethers, which, while small on a horse, is still thicker and heavier than the average human tool. ',
-	equine_big = 'A [color=yellow]massive equine cock[/color] hangs heavily below $his waist, it’s mottled texture not quite matching the rest of $his skin. ',
+	equine_average= 'A [color=yellow]sizable equine cock[/color] grows from $his nethers, which, while small on a horse, is still thicker and heavier than the average human tool. ',
+	equine_big = 'A [color=yellow]massive equine cock[/color] hangs heavily below $his waist, its mottled texture not quite matching the rest of $his skin. ',
 }
 
 var tattoosdescript = { #this goes like : start + tattoo theme + end + tattoo description: I.e On $his face you see a notable nature themed tattoo, depicting flowers and vines
@@ -355,12 +353,12 @@ var tattoosdescript = { #this goes like : start + tattoo theme + end + tattoo de
 	}
 	
 var tattoooptions = {
-	none = {name = 'none', descript = "", applydescript = "Select a theme for future tattoo"},
-	nature = {name = 'nature', descript = " flowers and vines", function = "naturetattoo", applydescript = "Nature thematic tattoo will increase $name's beauty. "},
-	tribal = {name = 'tribal',descript = " totemic markings and symbols", function = "tribaltattoo", applydescript = "Tribal thematic tattoo will increase $name's scouting performance. "},
-	degrading = {name = 'derogatory', descript = " rude words and lewd drawings", function = "degradingtattoo", applydescript = "Derogatory tattoo will promote $name's lust and enforce obedience. "},
-	animalistic = {name = 'beastly', descript = " realistic beasts and insects", function = "animaltattoo", applydescript = "Animalistic tattoo will boost $name's energy regeneration. "},
-	magic = {name = "energy", descript = " empowering patterns and runes", function = "manatattoo", applydescript = "Magic tattoo will increase $name's Magic Affinity. "},
+	none = {name = 'none', descript = "", applydescript = "Select a tattoo theme."},
+	nature = {name = 'nature', descript = " flowers and vines", function = "naturetattoo", applydescript = "A nature themed tattoo will increase $name's beauty. "},
+	tribal = {name = 'tribal',descript = " totemic markings and symbols", function = "tribaltattoo", applydescript = "A tribal themed tattoo will increase $name's scouting performance. "},
+	degrading = {name = 'derogatory', descript = " rude words and lewd drawings", function = "degradingtattoo", applydescript = "A derogatory themed tattoo will enhance $name's lust and enforce obedience. "},
+	animalistic = {name = 'beastly', descript = " realistic beasts and insects", function = "animaltattoo", applydescript = "An animalistic themed tattoo will boost $name's energy regeneration. "},
+	magic = {name = "energy", descript = " empowering patterns and runes", function = "manatattoo", applydescript = "A magic tattoo themed will increase $name's Magic Affinity. "},
 	}
 
 
@@ -381,8 +379,8 @@ bodyshape = {
 	teen = "$He's a young-looking [color=aqua]teen[/color]. ",
 	adult = "$He's a fully-grown [color=aqua]adult[/color] $sex. ",
 },beauty = {
-	ugly = '$He appears rather [color=yellow]unsavory[/color] to look at. ',
-	boring = '$His looks are rather [color=yellow]bland and unimpressive[/color]. ',
+	ugly = '$He is rather [color=yellow]unsavory[/color] to look at. ',
+	boring = '$His looks are [color=yellow]bland and unimpressive[/color]. ',
 	normal = '$He appears to be pretty [color=yellow]average[/color] looking. ',
 	cute = '$His looks are quite [color=yellow]cute[/color] and appealing. ',
 	pretty = '$He looks unusually [color=yellow]pretty[/color] and attracts some attention. ',
@@ -421,9 +419,9 @@ ears = {
 	short_furry = '$He has a pair of fluffy, [color=aqua]medium-sized animal-like ears[/color]. ',
 	long_pointy_furry = '$He has a pair of fluffy, [color=aqua]lengthy, animal-like ears[/color]. ',
 	pointy = '$He has unnaturally long, [color=aqua]pointed[/color] ears. ',
-	long_round_furry = '$He has a pair of [color=aqua]standing bunny ears[/color] over $his head. ',
-	long_droopy_furry = '$He has a pair of [color=aqua]droppy, bunny ears[/color] on $his head. ',
-	feathery = "There's a pair of clutched [color=aqua]feathery ears[/color] on sides of " + '$His head. ',
+	long_round_furry = '$He has a pair of [color=aqua]standing bunny ears[/color] rising above $his head. ',
+	long_droopy_furry = '$He has a pair of [color=aqua]droopy, bunny ears[/color] on $his head. ',
+	feathery = "There's a pair of clutched [color=aqua]feathery ears[/color] on the sides of " + '$His head. ',
 	fins = '$His ears look like a pair of [color=aqua]fins[/color]. ',
 },
 skin = {
@@ -443,7 +441,7 @@ skin = {
 },
 skincov = {
 	none = '',
-	plants = 'Various leaves and bits of [color=aqua]plant matter[/color] naturally cover parts of $his body. ',
+	plants = 'Various leaves and bits of [color=aqua]plant matter[/color] cover parts of $his body. ',
 	scales = '$His skin is partly covered with [color=aqua]scales[/color]. ',
 	feathers = '$His body is covered in [color=aqua]bird-like feathers[/color] in many places. ',
 	full_body_fur = '$His body is covered in thick, soft [color=aqua]fur of [furcolor]',
@@ -461,15 +459,15 @@ furcolor ={ # fur color
 },
 #arms = {
 #	scales = '$His' + globals.fastif(person['legs'] == 'scales', ' arms and legs', ' arms') + ' are covered in [color=aqua]scales[/color]. ',
-#	winged = "$His arms shaped in close resemblance of [color=aqua]bird's wings[/color]. ",
+#	winged = "$His arms closely resemblance a [color=aqua]bird's wings[/color]. ",
 #	webbed = '$His' + globals.fastif(person['legs'] == 'webbed', ' hands and feet', ' hands') + ' have [color=aqua]webbed digits[/color]. ', 
 #	fur_covered = '$His' + globals.fastif(person['legs'] == 'fur_covered', ' arms and legs', ' arms') + ' are covered in [color=aqua]fur[/color]. ',
 #},
 wings = {
 	none = '',
-	feathered_black = 'On $hisback, $he has folded, [color=aqua]black, feathery wings[/color]. ',
-	feathered_white = 'On $hisback, $he has folded, [color=aqua]white, feathery wings[/color]. ',
-	feathered_brown = 'On $hisback, $he has folded, [color=aqua]brown, feathery wings[/color]. ',
+	feathered_black = 'On $his back, $he has folded, [color=aqua]black, feathery wings[/color]. ',
+	feathered_white = 'On $his back, $he has folded, [color=aqua]white, feathery wings[/color]. ',
+	feathered_brown = 'On $his back, $he has folded, [color=aqua]brown, feathery wings[/color]. ',
 	insect = 'On $his back rests translucent [color=aqua]fairy wings[/color]. ',
 	leather_black = 'Hidden on $his back is a pair of bat-like, [color=aqua]black leather wings[/color]. ',
 	leather_red = 'Hidden on $his back is a pair of bat-like, [color=aqua]red leather wings[/color]. ',
@@ -481,7 +479,7 @@ tail = {
 	wolf = "Below $his waist there's a short, fluffy, [color=aqua]wolf tail[/color]. ",
 	bunny = '$He has a [color=aqua]small ball of fluff[/color] behind $his rear. ',
 	racoon = '$He has a plump, fluffy [color=aqua]raccoon tail[/color]. ',
-	scruffy = 'Behind $his back you notice a long tail covered in a thin layer of fur and ending in a [color=aqua]scruffy brush[/color]. ',
+	scruffy = 'Behind $his back you notice a long tail covered in a thin layer of fur which ends in a [color=aqua]scruffy brush[/color]. ',
 	demon = '$He has a long, thin, [color=aqua]demonic tail[/color] ending in a pointed tip. ',
 	dragon = 'Trailing somewhat behind $his back is a [color=aqua]scaled tail[/color]. ',
 	bird = '$He has a [color=aqua]feathery bird tail[/color] on $his rear. ', 
@@ -495,8 +493,8 @@ height = {
 	tiny = '$His stature is [color=aqua]extremely small[/color], barely half the size of a normal person. ',
 	petite = '$His stature is quite [color=aqua]petite[/color]. ',
 	short = '$His height is quite [color=aqua]short[/color]. ',
-	average = '$He is of pretty normal, [color=aqua]average[/color] height. ',
-	tall = '$He is quite [color=aqua]tall[/color] compared to an average person. ',
+	average = '$He is of [color=aqua]average[/color] height. ',
+	tall = '$He is quite [color=aqua]tall[/color] compared to the average person. ',
 	towering = '$He is unusually tall, [color=aqua]towering[/color] over others. ',
 },
 titssize = {
@@ -510,7 +508,7 @@ titssize = {
 asssize = {#ass strings
 	flat = '$His butt is skinny and [color=yellow]flat[/color]. ',
 	small = '$He has a [color=yellow]small[/color], firm butt. ',
-	average= '$He has a nice, [color=yellow]pert[/color] ass you could bounce a coin off of. ',
+	average= '$He has a nice, [color=yellow]pert[/color] ass you could bounce a coin off. ',
 	big = '$He has a pleasantly [color=yellow]plump[/color], heart-shaped ass that jiggles enticingly with each step. ',
 	huge = '$He has a [color=yellow]huge[/color], attention-grabbing ass. ',
 	masculine = '$His ass definitively has a [color=yellow]masculine[/color] shape. ',
@@ -521,3 +519,4 @@ balls = {
 	big = '$He has a [color=yellow]huge[/color] pair of balls weighing down $his scrotum. ',
 },
 }
+

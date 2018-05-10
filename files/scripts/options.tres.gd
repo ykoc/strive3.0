@@ -251,6 +251,8 @@ func _on_soundslider_value_changed( value ):
 	if get_tree().get_current_scene().find_node("music"):
 		get_tree().get_current_scene().get_node("music").play()
 		get_tree().get_current_scene().get_node("music").set_volume_db(round(value/3))
+	if get_tree().get_current_scene().find_node("soundeffect"):
+		get_tree().get_current_scene().get_node("soundeffect").set_volume_db(round(value/3))
 
 
 func _on_receive_pressed():

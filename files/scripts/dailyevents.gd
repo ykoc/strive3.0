@@ -144,6 +144,7 @@ func play(stage = 0):
 		person.charm += rand_range(0,10)
 		person.loyal += rand_range(10,15)
 		person.obed += rand_range(15,25)
+		person.learningpoints += rand_range(3,6)
 	elif stage == 3:
 		person.lust = -rand_range(5,10)
 		person.lewdness += rand_range(3,5)

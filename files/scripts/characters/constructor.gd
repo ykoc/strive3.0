@@ -152,7 +152,14 @@ func get_caste(person, caste):
 			person.skillpoints -= 1
 		spin -= 1
 	
-	person.add_trait(globals.origins.traits('any').name)
+	
+	if randf() >= 0.8:
+		spin = 2
+	else:
+		spin = 1
+	while spin > 0:
+		person.add_trait(globals.origins.traits('any').name)
+		spin -= 1
 	if person.traits.find("Fickle") >= 0:
 		person.sexuals.unlocks.append("swing")
 

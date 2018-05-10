@@ -78,6 +78,8 @@ var sounddict = {
 door = load("res://files/sounds/door.wav"),
 stab = load("res://files/sounds/stab.wav"),
 win = load("res://files/sounds/win.wav"),
+teleport = load("res://files/sounds/teleport.wav"),
+fall = load("res://files/sounds/fall.wav"),
 }
 var backgrounds = {
 mansion = load("res://files/backgrounds/mansion.png"),
@@ -126,7 +128,9 @@ aynerispunish = load("res://files/images/sexscenes/aynerispunish.png"),
 aynerissex = load("res://files/images/sexscenes/aynerissex.png"),
 chloebj = load("res://files/images/sexscenes/chloebj.png"),
 chloewoods = load("res://files/images/sexscenes/chloewoods.png"),
-
+maplebj = load("res://files/images/sexscenes/maplebj.png"),
+maplesex = load("res://files/images/sexscenes/maplesex.png"),
+yrisbj = load("res://files/images/sexscenes/yrisbj.png"),
 }
 var mansionupgradesdict = mansionupgrades.dict
 var gradeimages = {
@@ -559,7 +563,7 @@ class progress:
 	func findbaby(id):
 		var rval
 		for i in babylist:
-			if i.id == id:
+			if str(i.id) == str(id):
 				rval = i
 		return rval
 	
@@ -672,6 +676,7 @@ class person:
 	var masternoun = 'Master'
 	var lastinteractionday = 0
 	var lastsexday = 0
+	var learningpoints = 0 setget learningpoints_set
 	
 	
 	var stats = {
@@ -970,6 +975,21 @@ class person:
 		if self == globals.player:
 			stats.stress_cur = 0
 		
+	func learningpoints_set(value):
+		
+		var difference = learningpoints - value
+		var string = ""
+		var text = ""
+		var color
+		if difference < 0:
+			difference = abs(difference)
+			string = difference
+			text = self.dictionary("$name has acquired " + str(string) + " learning points. " )
+			color = 'green'
+		
+		if globals.get_tree().get_current_scene().has_node("infotext") && globals.slaves.find(self) >= 0 && away.at != 'hidden':
+			globals.get_tree().get_current_scene().infotext(text,color)
+		learningpoints = value
 	
 	func tox_set(value):
 		stats.tox_cur = clamp(value, stats.tox_min,stats.tox_max)
@@ -1416,21 +1436,20 @@ var baby
 
 
 func showtooltip(text):
+	var screen = get_viewport().get_visible_rect()
+	var tooltip = main.get_node("tooltip")
 	main.get_node("tooltip/RichTextLabel").set_bbcode(text)
 	var pos = main.get_global_mouse_position()
 	pos = Vector2(pos.x+20, pos.y+20)
-	main.get_node("tooltip").set_position(pos)
-	var screen = get_viewport().get_visible_rect()
-	var tooltipsize = main.get_node("tooltip").get_rect()
-	if tooltipsize.position.x + tooltipsize.size.x >= screen.size.x:
-		main.get_node("tooltip").set_position(Vector2(tooltipsize.position.x + (screen.size.x - (tooltipsize.position.x + tooltipsize.size.x)) , tooltipsize.position.y))
-	tooltipsize = main.get_node("tooltip").get_rect()
-	if tooltipsize.position.y + tooltipsize.size.y >= screen.size.y:
-		main.get_node("tooltip").set_position(Vector2(tooltipsize.position.x, tooltipsize.position.y + (screen.size.y - (tooltipsize.position.y + tooltipsize.size.y))-10))
-	main.get_node("tooltip").visible = true
+	tooltip.set_position(pos)
+	tooltip.visible = true
 	yield(get_tree(), "idle_frame")
-	main.get_node("tooltip/RichTextLabel").set_size(Vector2(main.get_node("tooltip/RichTextLabel").get_size().x, main.get_node("tooltip/RichTextLabel").get_v_scroll().get_max()))
-	main.get_node("tooltip").set_size(Vector2(main.get_node("tooltip").get_size().x, main.get_node("tooltip/RichTextLabel").get_size().y + 30))
+	tooltip.get_node("RichTextLabel").rect_size.y = main.get_node("tooltip/RichTextLabel").get_v_scroll().get_max()
+	tooltip.rect_size.y = main.get_node("tooltip/RichTextLabel").rect_size.y + 30
+	if tooltip.get_rect().end.x >= screen.size.x:
+		tooltip.rect_global_position.x -= tooltip.get_rect().end.x - screen.size.x
+	if tooltip.get_rect().end.y >= screen.size.y:
+		tooltip.rect_global_position.y -= tooltip.get_rect().end.y - screen.size.y
 
 
 func hidetooltip():

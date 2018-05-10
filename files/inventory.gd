@@ -419,10 +419,19 @@ func info(button):
 	get_node("iteminfo/TextureFrame").set_texture(button.get_node('icon').get_texture())
 	get_node("iteminfo").popup()
 
-func discard(button):
+var discardbutton
+
+func discardconfirm():
+	discard(discardbutton, true)
+
+func discard(button, confirm = false):
 	var item = button.get_meta('item')
 	if state == 'inventory' or (item.has('owner') && item.owner != null):
 		if item.has('id'):
+			if confirm == false && item.enchant != '':
+				discardbutton = button
+				get_parent().yesnopopup("Confirm discard?", 'discardconfirm', self)
+				return
 			var itemarray = button.get_meta('itemarray')
 			var tempitem = itemarray[itemarray.size()-1]
 			globals.state.unstackables.erase(tempitem.id)

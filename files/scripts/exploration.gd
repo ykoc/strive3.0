@@ -525,6 +525,7 @@ func zoneenter(zone):
 
 func teleportmansion():
 	globals.resources.gold -= 25
+	globals.main.sound("teleport")
 	mansionreturn()
 
 func deepzone(currentzonecode):
@@ -1647,23 +1648,28 @@ func gornyrisaccept(stage):
 	var state = false
 	var buttons = []
 	var sprite = []
+	var image
 	if stage == 0:
 		sprite = [['yrisnormal', 'pos1']]
 		text = globals.questtext.GornYrisRefuse
 		buttons.append({text = "Continue", function = 'gornyrisleave', args = null})
 	elif stage == 1:
 		sprite = [['yrisnormalnaked', 'pos1']]
+		image = 'yrisbj'
 		globals.charactergallery.yris.scenes[0].unlocked = true
 		globals.charactergallery.yris.nakedunlocked = true
 		text = globals.questtext.GornYrisAccept1
 		globals.resources.gold -= 200
 		globals.resources.mana += 15
 		globals.state.sidequests.yris = 2
+		buttons.append({text = "Close", function = 'closescene'})
 		state = true
 	elif stage == 2:
 		sprite = [['yrisnormalnaked', 'pos1']]
 		text = globals.questtext.GornYrisAcceptRepeat
+		image = 'yrisbj'
 		state = true
+		buttons.append({text = "Close", function = 'closescene'})
 		globals.resources.gold -= 200
 		globals.resources.mana += 15
 	elif stage == 3:
@@ -1708,7 +1714,14 @@ func gornyrisaccept(stage):
 		var person = globals.characters.create("Yris")
 		globals.slaves = person
 	gornbar()
-	main.dialogue(state, self, text, buttons, sprite)
+	if image != null:
+		main.close_dialogue()
+		main.scene(self, image, text, buttons)
+	else:
+		main.dialogue(state, self, text, buttons, sprite)
+
+func closescene():
+	main.closescene()
 
 func amberguard():
 	var array = []

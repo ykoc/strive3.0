@@ -15,6 +15,8 @@ func requirements():
 	var valid = true
 	if takers.size() < 1 || givers.size() < 1:
 		valid = false
+	elif takers.size() < 2 && givers.size() < 2:
+		valid = false
 	for i in givers:
 		if i.person.penis == 'none' && i.strapon == null:
 			valid = false

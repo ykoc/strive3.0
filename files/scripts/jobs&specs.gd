@@ -41,7 +41,7 @@ tags = ['wild','physical'],
 code = 'library',
 name = "Library",
 type = 'basic',
-description = '$name will manage the library and study.\n\n[color=yellow]Provides experience based on Wit and Library level.\nEffeciency decreases with level.[/color]',
+description = '$name will manage the library and study.\n\n[color=yellow]Provides Experience and Learning Points based on Wit and Library level.\nExperience effeciency decreases with level.[/color]',
 workline = "$name will be studying at the library.",
 reqs = 'true',
 unlockreqs = 'true',
@@ -575,7 +575,6 @@ func hunt(person):#agility, strength, endurance, courage
 		food *= 1.25
 	globals.itemdict.supply.amount += round(food/12)
 	person.xp += food/7
-	person.cour += rand_range(0,2)
 	food = min(food, (person.sstr+person.send)*30+40)
 	text += "In the end $he brought [color=aqua]" + str(round(food)) + "[/color] food and [color=yellow]" + str(round(food/12)) + "[/color] supplies. \n"
 	if person.smaf * 3 + 3 >= rand_range(0,100):
@@ -587,11 +586,13 @@ func hunt(person):#agility, strength, endurance, courage
 
 func library(person):
 	var text = "$name spends $his time studying in library.\n"
-	person.wit += rand_range(1,3)
 	if person.race == 'Gnome':
 		person.xp += max((30 + 5*globals.state.mansionupgrades.mansionlibrary + person.wit/12) - (person.level-1)*8,0)
 	else:
 		person.xp += max((15 + 5*globals.state.mansionupgrades.mansionlibrary + person.wit/12) - (person.level-1)*8,0)
+	person.trainingpoints += ceil(person.wit/20)+globals.state.mansionupgrades.mansionlibrary
+	if person.traits.has("Clever"):
+		person.trainingpoints += 2
 	var dict = {text = text}
 	return dict
 
@@ -858,7 +859,6 @@ func artistwimborn(person):
 	gold = round(gold)
 	person.stress += rand_range(10,15)
 	person.xp += gold/7
-	person.charm += rand_range(0,2)
 	text += "$He earned [color=yellow]"+str(gold)+"[/color] gold by the end of day.\n"
 	var dict = {text = text, gold = gold}
 	return dict
@@ -1004,8 +1004,6 @@ func fucktoywimborn(person):
 		gold = gold * 1.15
 	if person.lewdness < 45:
 		text += "\nBrothel owner complained that $name does not have sufficient skill and didn't satisfy many customers. $His salary was cut by half. \n"
-		person.conf += -rand_range(5,10)
-		person.cour += -rand_range(5,10)
 		person.metrics.sex += round(rand_range(2,4))
 		gold = gold/2
 		person.metrics.randompartners += round(rand_range(1,4))

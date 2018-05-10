@@ -2,7 +2,7 @@
 extends Node
 
 var test = File.new()
-var testslaverace = globals.allracesarray
+var testslaverace = ["Human"] #globals.allracesarray
 var testslaveage = 'random'
 var testslavegender = 'random'
 var testslaveorigin = ['slave','poor','commoner','rich','noble']
@@ -194,9 +194,10 @@ func _ready():
 	#startending()
 
 func sound(value):
-	$soundeffect.stream = globals.sounddict[value]
-	$soundeffect.playing = true
-	$soundeffect.autoplay = false
+	if globals.rules.musicvol > 0:
+		$soundeffect.stream = globals.sounddict[value]
+		$soundeffect.playing = true
+		$soundeffect.autoplay = false
 
 func startending():
 	var name = globals.player.name + " - Main Quest Completed"
@@ -256,9 +257,6 @@ func _on_new_slave_button_pressed():
 	globals.state.reputation.wimborn = 41
 	globals.state.sidequests.ivran = 'potionreceived'
 	globals.player.ability.append("mindread")
-	globals.player.abilityactive.append("mindread")
-	globals.player.abilityactive.append("sedation")
-	globals.player.abilityactive += ["aimedstrike"]
 	globals.player.ability.append('heal')
 	#globals.player.stats.maf_cur = 3
 	globals.state.branding = 2
@@ -270,10 +268,10 @@ func _on_new_slave_button_pressed():
 	globals.resources.upgradepoints += 100
 	
 	globals.state.sidequests.brothel = 1
-	globals.state.sidequests.chloe = 6
+	globals.state.sidequests.maple = 3
 	#globals.state.decisions.append('')
 	globals.state.rank = 3
-	globals.state.mainquest = 5
+	globals.state.mainquest = 2
 	globals.resources.mana = 200
 	globals.state.farm = 3
 	globals.state.mansionupgrades.mansionlab = 1
@@ -289,13 +287,14 @@ func _on_new_slave_button_pressed():
 	globals.state.decisions = ['tishaemilytricked','chloebrothel','ivrantaken','goodroute']
 	#lobals.state.upcomingevents.append({code = 'tishaappearance',duration =1})
 	globals.state.upcomingevents.append({code = 'aynerisrapierstart', duration = 1})
-#	for i in globals.characters.characters:
-#		person = globals.characters.create(i)
-#		person.loyal = 100
-#		person.lust = 0
-#		person.consent = true
-#		person.attention = 100
-#		globals.slaves = person
+	for i in globals.characters.characters:
+		person = globals.characters.create(i)
+		person.loyal = 100
+		person.lust = 0
+		person.consent = true
+		person.attention = 100
+		person.learningpoints = 50
+		globals.slaves = person
 
 func mansion():
 	_on_mansion_pressed()
@@ -329,7 +328,7 @@ func _on_combatgroup_pressed():
 func getridof():
 	var person = globals.slaves[get_tree().get_current_scene().currentslave]
 	person.removefrommansion()
-	if get_node("dialogue").visible:
+	if get_node("dialogue").is_visible_in_tree() && $MainScreen/slave_tab.is_visible_in_tree():
 		close_dialogue()
 	rebuild_slave_list()
 	if get_node("MainScreen").visible:
@@ -597,7 +596,7 @@ func _on_end_pressed():
 			if person.obed < 50 && person.loyal < 25 && person.sleep != 'jail'&& person.sleep != 'farm'&& person.brand != 'advanced':
 				if rand_range(0,3) < 1 && globals.resources.gold > 34:
 					text0.set_bbcode(text0.get_bbcode()+person.dictionary('You notice that some of your food is gone.\n'))
-					globals.resources.food -= -rand_range(35,70)
+					globals.resources.food -= rand_range(35,70)
 				elif rand_range(0,3) < 1 && globals.resources.gold > 19:
 					text0.set_bbcode(text0.get_bbcode()+person.dictionary('You notice that some of your gold is missing.\n'))
 					globals.resources.gold -= rand_range(20,40)
@@ -767,20 +766,6 @@ func _on_end_pressed():
 					get_node("spellnode").slave = person
 					text0.set_bbcode(text0.get_bbcode()+get_node("spellnode").mutate(person.toxicity/30, true) + "\n\n")
 				person.toxicity -= rand_range(1,5)
-#			if person.gear.armor == null && person.gear.costume == null:
-#				person.obed += rand_range(10,20)
-#				if person.traits.find('Pervert') >= 0 && person.traits.find('Sex-crazed') < 0 && person.conf > 40:
-#					person.stress += rand_range(10,15)
-#					text2.set_bbcode(text2.get_bbcode() + person.dictionary("Your denial of upper clothing to $name causes $him to take you more seriously, but $he certainly is stressed out having to walk around almost naked.\n"))
-#				else:
-#					text2.set_bbcode(text2.get_bbcode() + person.dictionary("Your denial of upper clothing to $name causes $him to take you more seriously, however, it does not seem that $he's feels too bothered about being almost naked.\n"))
-#			if person.gear.underwear == null:
-#				person.lust = rand_range(5,10)
-#				if person.traits.find('Pervert') < 0 && person.traits.find('Sex-crazed') < 0:
-#					person.obed -= rand_range(10,20)
-#					text2.set_bbcode(text2.get_bbcode() + person.dictionary("Wearing no underwear causes $name to become more open to dirty behavior, although $he does not seem to be very happy about it.\n"))
-#				else:
-#					text2.set_bbcode(text2.get_bbcode() + person.dictionary("Wearing no underwear causes $name to become more open to dirty behavior, but $he seems to accept it surprisingly well.\n"))
 			if person.stress > 80 && person.sleep != 'jail' && person.sleep != 'farm' && person.away.duration < 1:
 				text0.set_bbcode(text0.get_bbcode() + person.dictionary("$name complained "+globals.fastif(headgirl == null, "to you, ", "to your headgirl, ")+"that $he's having it too hard and hoped to get some rest.\n"))
 			if person.stress >= 100 && person.cour+person.conf+person.wit+person.charm > 50:
@@ -858,7 +843,6 @@ func _on_end_pressed():
 					person.add_effect(i, true)
 		count+=1
 	if headgirl != null && globals.state.headgirlbehavior != 'none':
-		headgirl.conf += rand_range(1,4)
 		var headgirlconf = headgirl.conf
 		if headgirl.spec == 'executor':
 			headgirlconf = 100
@@ -878,7 +862,6 @@ func _on_end_pressed():
 						i.loyal += rand_range(1,3)
 					i.stress += -(headgirl.charm/6)
 	if jailer != null:
-		jailer.conf += rand_range(1,4)
 		var jailerconf = jailer.conf
 		if jailer.spec == 'executor':
 			jailerconf = 100
@@ -1530,7 +1513,7 @@ func hide_everything():
 	get_node("MainScreen/mansion/upgradespanel").hide()
 	globals.hidetooltip()
 
-
+var background setget background_set, background_get
 
 func background_set(text):
 	var player = get_node("screenchange/AnimationPlayer")
@@ -1545,6 +1528,8 @@ func background_set(text):
 	yield(get_tree(), "idle_frame")
 	emit_signal('animfinished')
 
+func background_get():
+	return 
 
 func animationfade(value = 0.4, duration = 0.05):
 	var player = $screenchange/AnimationPlayer
@@ -1608,6 +1593,7 @@ func music_set(text):
 	music.set_stream(path)
 	music.play(0)
 	music.set_volume_db(globals.rules.musicvol)
+	$soundeffect.set_volume_db(globals.rules.musicvol)
 
 
 func _on_music_finished():
@@ -2586,7 +2572,7 @@ func _on_selfrelatives_pressed():
 		var found = false
 		if typeof(mother) == 2 || typeof(mother) == 3:
 			for i in globals.slaves:
-				if i.id == person.relatives.mother && i != person:
+				if i.id == str(person.relatives.mother) && i != person:
 					mother = i
 					found = true
 					newlabel.set_text(i.dictionary('Mother - $name, $race'))
@@ -2601,7 +2587,7 @@ func _on_selfrelatives_pressed():
 		var found = false
 		if typeof(father) == 2 || typeof(father) == 3:
 			for i in globals.slaves:
-				if i.id == person.relatives.father:
+				if i.id == str(person.relatives.father):
 					father = i
 					found = true
 					newlabel.set_text(i.dictionary('Father - $name, $race'))
@@ -2702,6 +2688,7 @@ func portalbuttonpressed(newbutton, portal):
 
 func _on_traveltoportal_pressed():
 	if nameportallocation != null:
+		sound("teleport")
 		get_node("MainScreen/mansion/portalspanel").hide()
 		get_node("outside").gooutside()
 		get_node("explorationnode").call('zoneenter', nameportallocation)
@@ -2921,7 +2908,7 @@ func checkplayergroup():
 	for i in range(0, globals.state.playergroup.size()):
 		checked = false
 		for ii in globals.slaves:
-			if ii.id == str(globals.state.playergroup[i]) && ii.away.duration <= 0 && ii.away.at != 'hidden':
+			if str(ii.id) == str(globals.state.playergroup[i]) && ii.away.duration <= 0 && ii.away.at != 'hidden':
 				checked = true
 		if checked == false:
 			removed.append(i)
@@ -3190,8 +3177,8 @@ func _on_sexbutton_pressed():
 	sexassist.clear()
 	sexselect()
 
-var sexarray = ['sex','abuse']
-var sexmode = 'sex'
+var sexarray = ['meet','sex','abuse']
+var sexmode = 'meet'
 
 func sexselect():
 	var newbutton
@@ -3202,7 +3189,22 @@ func sexselect():
 			i.hide()
 			i.queue_free()
 	for i in globals.slaves:
-		if sexmode == 'sex':
+		if sexmode == 'meet':
+			if i.away.duration != 0 || i.sleep == 'farm':
+				continue
+			newbutton = get_node("sexselect/ScrollContainer/VBoxContainer/Button").duplicate()
+			get_node("sexselect/ScrollContainer/VBoxContainer").add_child(newbutton)
+			newbutton.set_text(i.dictionary('$name'))
+			newbutton.show()
+			if sexslaves.find(i) >= 0:
+				newbutton.set_pressed(true)
+			elif sexslaves.size() >= 1:
+				newbutton.disabled = true
+			newbutton.connect("pressed",self,'selectsexslave',[newbutton, i])
+			if i.lastinteractionday == globals.resources.day:
+				newbutton.set_disabled(true)
+				newbutton.set_tooltip(i.dictionary('You have already interacted with $name today.'))
+		elif sexmode == 'sex':
 			if i.consent == false || i.away.duration != 0 || i.sleep in ['jail','farm']:
 				continue
 			newbutton = get_node("sexselect/ScrollContainer/VBoxContainer/Button").duplicate()
@@ -3269,7 +3271,11 @@ func selectassist(button, person):
 func updatedescription():
 	var text = ''
 	
-	if sexmode == 'sex':
+	if sexmode == 'meet':
+		text += "[center][color=yellow]Interact[/color][/center]\nBuild relationship or train your servant:\n"
+		for i in sexslaves:
+			text += i.dictionary('$name') + ", "
+	elif sexmode == 'sex':
 		if sexslaves.size() <= 1:
 			text += "[center][color=yellow]Consensual Sex[/color][/center]"
 		elif sexslaves.size() in [2,3]:
@@ -3322,16 +3328,19 @@ func _on_startbutton_pressed():
 		globals.itemdict.aphroditebrew.amount -= 1
 	animationfade()
 	yield(self, 'animfinished')
-	if sexmode == 'abuse':
+	get_node("Navigation").hide()
+	get_node('MainScreen').hide()
+	get_node("charlistcontrol").hide()
+	get_node("sexselect").hide()
+	if sexmode == 'meet':
+		$date.initiate(sexslaves[0])
+		return
+	elif sexmode == 'abuse':
 		mode = 'abuse'
 		get_node("interactions").startsequence([globals.player] + sexassist, mode, sexslaves)
 	else:
 		get_node("interactions").startsequence([globals.player] + sexslaves + sexassist, mode)
-	get_node("Navigation").hide()
-	get_node('MainScreen').hide()
-	get_node("charlistcontrol").hide()
 	get_node("interactions").show()
-	get_node("sexselect").hide()
 
 func _on_cancelbutton_pressed():
 	get_node("sexselect").hide()

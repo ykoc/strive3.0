@@ -25,7 +25,7 @@ func show():
 	if OS.get_name() != 'HTML5' && globals.rules.fadinganimation == true:
 		yield(get_tree().get_current_scene(), 'animfinished')
 	self.visible = true
-	get_node("upgradepoints").set_text("Free upgrade points:"+str(globals.resources.upgradepoints))
+	get_node("upgradepoints").set_text("Available upgrade points:"+str(globals.resources.upgradepoints))
 	selectedupgrade = null
 	selectedcategory = null
 	get_node("categories/VBoxContainer/farm").visible = globals.state.farm >= 3
@@ -86,7 +86,7 @@ func upgradeselected(upgrade):
 		if currentupgradelevel == 1:
 			noprice = true
 			canpurchase = false
-			text += "\n[color=green]This upgrade is already purchased.[/color]"
+			text += "\n[color=green]You’ve already purchased this upgrade..[/color]"
 	else:
 		if currentupgradelevel < limit:
 			if currentupgradelevel >= 1 && upgrade.has("description2"):
@@ -95,7 +95,7 @@ func upgradeselected(upgrade):
 		else:
 			noprice = true
 			canpurchase = true
-			text += "\n\n[color=green]This improvement is already purchased.[/color]"
+			text += "\n\n[color=green]You cannot upgrade this any further.[/color]"
 	purchaseupgrade.set_meta('upgrade',upgrade)
 	
 	if upgrade.has("valuename"):
@@ -148,4 +148,7 @@ func purchasconfirm():
 	categoryselect(selectedcategory)
 	upgradeselected(upgrade)
 	get_node("upgradepoints").set_text("Free upgrade points:"+str(globals.resources.upgradepoints))
+
+
+
 

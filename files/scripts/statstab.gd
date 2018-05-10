@@ -39,8 +39,15 @@ func _on_trainingabils_pressed():
 			i.visible = true
 			i.free()
 	
-	get_node("trainingabilspanel/abilitytext").set_bbcode('')
+	for i in ['cour','conf','wit','charm']:
+		get_node("trainingabilspanel/" +i ).text = globals.statsdict[i] + ": " + str(person[i]) + "/" + str(min(person.stats[globals.maxstatdict[i]], person.originvalue[person.origins]))
+		get_node("trainingabilspanel/"+i+"/Button").disabled = !(person.stats[i+'_base'] < min(person.stats[globals.maxstatdict[i]], person.originvalue[person.origins]) && person.learningpoints >= variables.learnpointsperstat)
+		get_node("trainingabilspanel/"+i+"/Button2").disabled = !(person.stats[i+'_base']+5 <= min(person.stats[globals.maxstatdict[i]], person.originvalue[person.origins]) && person.learningpoints >= variables.learnpointsperstat*5)
+		
 	
+	$trainingabilspanel/learningpoints.text = "Free Learn Points: " + str(person.learningpoints)
+	get_node("trainingabilspanel/abilitytext").set_bbcode('')
+	$trainingabilspanel/abilityicon.texture = null
 	var array = []
 	for i in globals.abilities.abilitydict.values():
 		if i.attributes.find('onlyself') < 0:
@@ -95,6 +102,9 @@ func chooseability(ability):
 			text += '[color=green]'+dict[i] + ': ' + str(ability.reqs[i]) + '[/color], '
 	text = text.substr(0, text.length() - 2) + '.'
 	
+	if ability.has("learncost"):
+		text += "\nRequred skillpoints: [color=aqua]" + str(ability.learncost) + "[/color]"
+	
 	confirmbutton.set_meta('abil', ability)
 	
 	
@@ -124,6 +134,7 @@ func levelfirst(first, second):
 
 func _on_abilcancel_pressed():
 	get_node("trainingabilspanel").visible = false
+	get_parent().slavetabopen()
 
 
 func _on_abilityconfirm_pressed():
@@ -132,6 +143,11 @@ func _on_abilityconfirm_pressed():
 		return
 	elif person.ability.find(abil.code) >= 0:
 		return
+	elif abil.has('learncost') && person.learningpoints < abil.learncost:
+		globals.main.infotext(person.dictionary("$name does not have enough learning points."),"red")
+		return
+	if abil.has("learncost"):
+		person.learningpoints -= abil.learncost
 	person.ability.append(abil.code)
 	person.abilityactive.append(abil.code)
 	globals.resources.gold -= abil.price
@@ -279,12 +295,12 @@ func _on_talk_pressed(mode = 'talk'):
 			text += "\n\n[color=yellow]Your investigation shown, that " + person.dictionary(person.levelupreqs.speech) + '[/color]'
 			if person.levelupreqs.activate == 'fromtalk':
 				buttons.append({text = person.levelupreqs.button, function = 'levelup', args = person.levelupreqs.effect})
-		if person.sleep != 'jail':
-			buttons.append({text = person.dictionary("Praise $name"), function = '_on_talk_pressed', args = 'praise'})
-		buttons.append({text = person.dictionary("Punish $name"), function = '_on_talk_pressed', args = 'punish'})
-		if person.sleep != 'jail' && person.consent == false:
-			buttons.append({text = person.dictionary("Propose intimate relationship (25 energy)"), function = 'unlocksex'})
-			if globals.player.energy < 25: buttons[buttons.size()-1].disabled = true
+#		if person.sleep != 'jail':
+#			buttons.append({text = person.dictionary("Praise $name"), function = '_on_talk_pressed', args = 'praise'})
+#		buttons.append({text = person.dictionary("Punish $name"), function = '_on_talk_pressed', args = 'punish'})
+#		if person.sleep != 'jail' && person.consent == false:
+#			buttons.append({text = person.dictionary("Propose intimate relationship (25 energy)"), function = 'unlocksex'})
+#			if globals.player.energy < 25: buttons[buttons.size()-1].disabled = true
 		buttons.append({text = person.dictionary("Order to call you ..."), function = 'callorder'})
 		buttons.append({text = person.dictionary("Release $name"), function = 'release'})
 	elif mode == 'praise':
@@ -351,10 +367,10 @@ func unlocksex():
 	if person.obed < 40:
 		text += "$name gives you an indignant look and laughs your suggestion off. [color=yellow]$His lack of respect of you will have to be corrected first[/color]  "
 	else:
-		difficulty = person.loyal/3 + person.sexuals.affection + person.lust/10 + person.sexuals.actions.size()*2
+		difficulty = person.loyal/3 + person.lust/10
 		if person.sex == globals.player.sex:
 			difficulty -= 10
-		if person.relatives.father == 0 || person.relatives.mother == 0:
+		if str(person.relatives.father) == '0' || str(person.relatives.mother) == '0':
 			difficulty -= 10
 		for i in person.traits:
 			if i == 'Prude':

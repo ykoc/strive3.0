@@ -9,7 +9,7 @@
 flags = 4
 load_path = "res://.import/2.png-4cf966d13a2c7ebfca9f08501bafd5bd.stex"
 
-[node name="options" type="WindowDialog" index="0"]
+[node name="options" type="WindowDialog"]
 
 anchor_left = 0.5
 anchor_top = 0.5
@@ -53,8 +53,6 @@ tabs_visible = true
 
 [node name="Settings" type="Tabs" parent="TabContainer" index="0"]
 
-editor/display_folded = true
-visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -286,17 +284,17 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 21.0
+margin_left = 14.0
 margin_top = -25.0
-margin_right = 121.0
-margin_bottom = -7.0
+margin_right = 146.0
+margin_bottom = -5.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 0
-text = "Music volume"
+text = "Master Volume"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
@@ -769,6 +767,7 @@ _sections_unfolded = [ "Hint" ]
 
 [node name="Supporter section" type="Tabs" parent="TabContainer" index="2"]
 
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -1436,6 +1435,7 @@ suffix = ""
 
 [node name="supporterpanel" type="AcceptDialog" parent="TabContainer/Supporter section" index="7"]
 
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0

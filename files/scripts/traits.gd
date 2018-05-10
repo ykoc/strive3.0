@@ -64,7 +64,7 @@ var traits = {
   },
   "Masochist": {
     "name": "Masochist",
-    "description": "$name enjoys pain far more than $he should. \n\n[color=aqua]Physical punishments penalty lowered, physical punishments cause lust to grow. [/color]",
+    "description": "$name enjoys pain far more than $he should. \n\n[color=aqua]Physical punishments more effective and cause lust to grow. [/color]",
     "effect": {
       
     },
@@ -215,7 +215,6 @@ var traits = {
     "description": "$name's body is much less durable than most. $His physical potential is severely impaired. \n\n[color=aqua]Max Strength -2, Max Agi -1. [/color]",
     "effect": {
       "code": "frail",
-      "conf_max": -25,
       "agi_max": -1,
       "str_max": -2
     },
@@ -245,15 +244,25 @@ var traits = {
   },
   "Coward": {
     "name": "Coward",
-    "description": "$name is of a meek character and has a difficult time handling $himself in physical confrontations. \n\n[color=aqua]Physical punishments build obedience quicker, -max courage, stress in combat grows twice as fast. [/color]",
+    "description": "$name is of a meek character and has a difficult time handling $himself in physical confrontations. \n\n[color=aqua]Physical punishments build obedience quicker, stress in combat grows twice as fast. [/color]",
     "effect": {
-      "code": "coward",
-      "cour_max": -50,
-      "obed_mod": 30,
     },
     "tags": [
       "detrimental",
       "mental"
+    ],
+    "conflict": [
+      ""
+    ]
+  },
+  "Alcohol Intolerance": {
+    "name": "Alcohol Intolerance",
+    "description": "$name does not stomach alcoholic beverages too well. \n\n[color=aqua]Alcohol intakes make slave drunker lot quicker. [/color]",
+    "effect": {
+    },
+    "tags": [
+      "detrimental",
+      "physical"
     ],
     "conflict": [
       ""
@@ -292,12 +301,8 @@ var traits = {
   },
   "Clever": {
     "name": "Clever",
-    "description": "$name is more prone to creative thinking than an average person, which makes $him both resourceful and disobedient. \n\n[color=aqua]+Wit, +Confidence, -Obedience. [/color]",
+    "description": "$name is more prone to creative thinking than an average person, which makes $him learn faster. \n\n[color=aqua]Teach effectiveness increased by 25%. [/color]",
     "effect": {
-      "code": "clever",
-      "wit_cur": 20,
-      "conf_cur": 15,
-      "obed_mod": -20
     },
     "tags": [
       "mental"
@@ -539,7 +544,7 @@ var traits = {
   },
   "Authority": {
     "name": "Authority",
-    "description": "[color=aqua]If above 95 obedience, all other slaves gain +5 obedience per day. [/color]",
+    "description": "[color=aqua]If obedience above 95 , all other slaves gain +5 obedience per day. [/color]",
     "effect": {
       
     },

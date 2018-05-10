@@ -405,7 +405,7 @@ func mutate(power=2, silent = false):
 			person.titssize = globals.sizearray[rand_range(0,globals.sizearray.size())]
 		elif line == 'ass':
 			text += "$name's butt size has changed. "
-			person.ass = globals.sizearray[rand_range(0,globals.sizearray.size())]
+			person.asssize = globals.sizearray[rand_range(0,globals.sizearray.size())]
 		elif line == 'penis':
 			if (globals.rules.futa == false && person.sex != 'male'):
 				power += 1

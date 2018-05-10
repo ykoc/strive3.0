@@ -1509,6 +1509,7 @@ func sexscene(value):
 		sprite = [['calinakedhappy','pos1']]
 		text = textnode.CaliAcceptProposal + '\n' + textnode.CaliProposalSexMale
 	elif value == 'yrisblowjob':
+		image = 'yrisbj'
 		sprite = [['yrisnormal', 'pos1']]
 		text = textnode.GornYrisAccept1
 	elif value == 'yrissex':
@@ -1534,12 +1535,14 @@ func sexscene(value):
 		sprite = [['aynerisangry','pos1']]
 		text = textnode.AynerisPunish2
 	elif value == "mapleflirt":
+		image = 'maplebj'
 		sprite = [['fairy', 'pos1']]
 		text = textnode.MapleFlirt
 	elif value == "mapleflirt2":
+		image = 'maplesex'
 		sprite = [['fairynaked', 'pos1']]
 		text = textnode.MapleFlirt2
-	if value in ['emilyshowersex','showerrape','tishablackmail','tishareward','tishaemilysex','calivirgin','aynerissex','aynerispunish','chloemana','chloeforest']:
+	if image != null:
 		buttons.append({text = "Close", function = 'closescene'})
 		globals.main.scene(self, image, text, buttons)
 		return

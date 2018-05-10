@@ -1,7 +1,7 @@
 
 extends Node
 
-onready var main = get_tree().get_current_scene()
+onready var main = get_parent()
 onready var buttoncontainer = $buttonpanel/outsidebuttoncontainer
 onready var button = $buttonpanel/outsidebuttoncontainer/buttontemplate
 onready var questtext = globals.questtext
@@ -28,6 +28,9 @@ func _ready():
 	for i in ['sstr','sagi','smaf','send']:
 		$playergrouppanel/characterinfo/stats.get_node(i).connect("mouse_entered",self,'statinfo',[i])
 		$playergrouppanel/characterinfo/stats.get_node(i).connect("mouse_exited",self,'iteminfoclose')
+	for i in ['power','speed','armor','protection']:
+		$playergrouppanel/characterinfo/combstats.get_node(i).connect("mouse_entered",self,'statinfo',[i])
+		$playergrouppanel/characterinfo/combstats.get_node(i).connect("mouse_exited",self,'iteminfoclose')
 	#get_node("playergroupdetails/TabContainer").connect("visibility_changed", self, "_on_TabContainer_tab_changed")
 
 
@@ -44,9 +47,12 @@ func _input(event):
 	var dict = {49 : 1, 50 : 2, 51 : 3, 52 : 4,53 : 5,54 : 6,55 : 7,56 : 8, 16777351 :1, 16777352 : 2, 16777353 : 3, 16777354 : 4, 16777355 : 5, 16777356: 6, 16777357: 7, 16777358: 8}
 	if event.scancode in dict:
 		var key = dict[event.scancode]
-		if event.is_action_pressed(str(key)) == true && buttoncontainer.get_children().size() >= key+1 && self.is_visible() == true && get_parent().get_node("dialogue").visible == false && buttoncontainer.get_child(key).disabled == false:
+		if event.is_action_pressed(str(key)) == true && buttoncontainer.get_children().size() >= key+1 && self.is_visible() == true && get_parent().get_node("scene").visible == false && get_parent().get_node("dialogue").visible == false && buttoncontainer.get_child(key).disabled == false:
 			get_parent().get_node("chooseslavepopup").visible = false
 			buttoncontainer.get_child(key).emit_signal("pressed")
+		elif event.is_action_pressed(str(key)) == true && get_parent().get_node("scene").is_visible_in_tree():
+			if get_parent().get_node("scene/popupbuttoncenter/popupbuttons").get_children().size() >= key+1 && get_parent().get_node("scene/popupbuttoncenter/popupbuttons").get_child(key).is_disabled() == false:
+				get_parent().get_node("scene/popupbuttoncenter/popupbuttons").get_child(key).emit_signal("pressed")
 		elif event.is_action_pressed(str(key)) == true && get_parent().get_node("dialogue").visible == true && get_parent().get_node("dialogue/popupbuttoncenter/popupbuttons").get_children().size() >= key+1:
 			if get_parent().get_node("dialogue/popupbuttoncenter/popupbuttons").get_child(key).is_disabled() == false:
 				get_parent().get_node("dialogue/popupbuttoncenter/popupbuttons").get_child(key).emit_signal("pressed")
@@ -56,9 +62,6 @@ func _input(event):
 		elif event.is_action_pressed(str(key)) == true && get_parent().get_node("dailyevents").visible == true && get_parent().get_node("dailyevents/buttonpanel/ScrollContainer/VBoxContainer").get_children().size() >= key+1:
 			if get_parent().get_node("dailyevents/buttonpanel/ScrollContainer/VBoxContainer").get_child(key).is_disabled() == false:
 				get_parent().get_node("dailyevents/buttonpanel/ScrollContainer/VBoxContainer").get_child(key).emit_signal("pressed")
-		elif event.is_action_pressed(str(key)) == true && get_parent().get_node("scene").visible == true && get_parent().get_node("scene/popupbuttoncenter/popupbuttons").get_children().size() >= key+1:
-			if get_parent().get_node("scene/popupbuttoncenter/popupbuttons").get_child(key).is_disabled() == false:
-				get_parent().get_node("scene/popupbuttoncenter/popupbuttons").get_child(key).emit_signal("pressed")
 	if event.is_action_pressed("B") && get_node("playergrouppanel/details").is_visible_in_tree():
 		_on_details_pressed()
 
@@ -180,7 +183,7 @@ func statinfo(stat):
 
 var partyselectedchar = null
 
-func opencharacter(person):
+func opencharacter(person, combat = false, combatant = null):
 	partyselectedchar = person
 	$playergrouppanel/characterinfo.popup()
 	buildbars($playergrouppanel/characterinfo, person)
@@ -212,6 +215,14 @@ func opencharacter(person):
 		$playergrouppanel/characterinfo/spec.texture = globals.specimages[person.spec]
 	$playergrouppanel/characterinfo/grade.visible = person != globals.player
 	$playergrouppanel/characterinfo/spec.visible = person != globals.player
+	$playergrouppanel/characterinfo/switch.visible = combat
+	$playergrouppanel/characterinfo/combstats.visible = combat
+	$playergrouppanel/characterinfo/stats.visible = !combat
+	if combat == true:
+		for i in ['power','speed','armor','protection']:
+			get_node("playergrouppanel/characterinfo/combstats/" + i + '/Label').text = str(combatant[i])
+			if i == 'protection':
+				get_node("playergrouppanel/characterinfo/combstats/" + i + '/Label').text += '%'
 
 func abilitytoggle(ability):
 	if !partyselectedchar.abilityactive.has(ability):
@@ -219,6 +230,8 @@ func abilitytoggle(ability):
 	else:
 		partyselectedchar.abilityactive.erase(ability)
 	iteminfoclose()
+	if get_parent().get_node('combat').is_visible_in_tree():
+		get_parent().get_node('combat').update()
 
 func _on_grade_mouse_entered():
 	var text = ''
@@ -460,6 +473,7 @@ func slaveguildfairy(stage = 0):
 	var sprites
 	var state = true
 	var buttons = []
+	var image
 	if stage == 0:
 		text = questtext.GuildFairyMainQuest
 		globals.state.mainquest = 3.1
@@ -474,15 +488,19 @@ func slaveguildfairy(stage = 0):
 		if globals.state.sidequests.maple == 1:
 			sprites = [['fairy','pos1']]
 			text = questtext.MapleFlirt
+			image = 'maplebj'
 			globals.state.sidequests.maple = 2
 			globals.state.upcomingevents.append({code = 'mapletimepass', duration = 3})
 			globals.charactergallery.maple.scenes[0].unlocked = true
+			buttons.append({text = "Close", function = 'closescene'})
 		elif globals.state.sidequests.maple == 3:
 			sprites = [['fairynaked','pos1']]
 			text = questtext.MapleFlirt2
+			image = 'maplesex'
 			globals.state.sidequests.maple = 4
 			globals.charactergallery.maple.nakedunlocked = true
 			globals.charactergallery.maple.scenes[1].unlocked = true
+			buttons.append({text = "Close", function = 'closescene'})
 		slaveguild()
 	elif stage == 3:
 		if globals.state.sidequests.maple == 4:
@@ -509,7 +527,10 @@ func slaveguildfairy(stage = 0):
 		globals.slaves = globals.characters.create("Maple")
 		town()
 		slaveguild()
-	main.dialogue(state, self, globals.player.dictionary(text), buttons, sprites)
+	if image != null:
+		globals.main.scene(globals.main, image, text, buttons)
+	else:
+		main.dialogue(state, self, globals.player.dictionary(text), buttons, sprites)
 
 func togorn():
 	get_node("playergrouppanel/VBoxContainer").visible = true
@@ -878,6 +899,8 @@ func slaveforquestselected(person):
 			ref = globals.hairlengtharray.find(person.hairlength)
 		if i[0] == 'titssize':
 			ref = globals.sizearray.find(person.titssize)
+		if i[0] == 'penis':
+			ref = globals.genitaliaarray.find(person.penis)
 		if i[0] == 'sexuals.unlocks':
 			ref = person.sexuals.unlocks.size()
 		if i[0] == 'origins':
@@ -917,7 +940,7 @@ sex = 'Sex',obed = 'Obedience', cour = 'Courage',conf = 'Confidence',wit = 'Wit'
 'sexuals.unlocks' : "Unlocked Sex Categories",
 'sstr' : 'Strength', 'sagi' : 'Agility', 'smaf' : 'Magic Affinity', 'send' : 'Endurance',
 loyal = 'Loyalty', race = 'Race', age = 'Age', hairlength = 'Hair Length', origins = 'Origins',
-bodyshape = 'Type', haircolor = 'Hair Color', 'titssize' : 'Breasts Size',
+bodyshape = 'Type', haircolor = 'Hair Color', 'titssize' : 'Breasts Size', 'penis' : "Penis Size",
 }
 
 func slavequesttext(quest):
@@ -940,6 +963,8 @@ func slavequesttext(quest):
 			text2 = text2 + 'Hair length — ' + str(globals.hairlengtharray[i[2]]) + ';\n'
 		elif i[0] == 'titssize':
 			text2 = text2 + 'Breast size — ' + str(globals.sizearray[i[2]]) + operators[i[1]]
+		elif i[0] == 'penis':
+			text2 = text2 + 'Penis size — ' + str(globals.genitaliaarray[i[2]]) + operators[i[1]]
 		elif i[0] == 'origins':
 			text2 = text2 + 'Origins — ' + str(i[2]) + operators[i[1]]
 		else:
@@ -990,7 +1015,7 @@ func serviceselected(person = null):
 		slaveserviceselected = null
 		get_node("slaveservicepanel/selectslavebutton").set_text('Select person')
 		get_node("slaveservicepanel/serviceconfirm").set_disabled(true)
-		mansion.maintext = 'person service allows you to perform many special, important operations with your servants. Select servant, then choose desired action. \n\n[color=yellow]This will cost money and likely withdraw servant for a time. Choose operation for further information.[/color]'
+		mansion.maintext = 'Slave service allows you to perform many special, important operations with your servants. Select servant, then choose desired action. \n\n[color=yellow]This will cost money and likely withdraw servant for a time. Choose operation for further information.[/color]'
 	else:
 		slaveserviceselected = person
 		get_node("slaveservicepanel/selectslavebutton").set_text('Deselect')
@@ -1190,7 +1215,7 @@ subjugate = {
 code = 'subjugate',
 name = 'Demote',
 number = 5,
-reqs = "person.origins != 'person'",
+reqs = "person.origins != 'slave'",
 description = "[color=yellow]This option will lower servant's grade. [/color]",
 price = 50,
 confirm = "You leave $name in the custody of guild trainers, who will accustom $him to the less luxurious life. ",
@@ -1257,7 +1282,7 @@ func mageorderquest1(person = null):
 	if globals.state.mainquest == 0:
 		sprites = [['chancellor','pos1','opac']]
 		globals.state.mainquest = 1
-		text = ("After some time you find a chancellor: a senior member responsible for accepting new applicants. You give a small knock to announce your presence, and the old man looks up from his paperwork with a sneer. You begin to introduce yourself, but he raises a hand to stop you.\n\n— Yes, yes, I already know who you are. You’ve been a hot topic these past few days, a trend that shall die soon, I’m sure. Allow me to hazard a guess, now that you’ve inherited that senile fool’s mansion, you’re here to apply for membership, correct? Well, I’ll have you know that I have no intention of shaming this institution, nor disgracing myself, by admitting a nameless imbecile such as yourself. Leave now, there are more important matters for me to attend to.\n\nHe returns to his work and waves his hand to shoo you away, but you came here for a purpose, and refuse to leave without seeing it fulfilled. You argue the case for your membership for several minutes; the chancellor growing visibly more frustrated with your presence every second you remain. Before long, he’s had enough of your filibustering and slams a hand on his desk.\n\n— Bah! If you so desperately want to gain membership, then so be it! If you can fulfil a simple request I've not had time to deal with, I shall consider your membership. Now, listen carefully, I will not repeat myself!\n\n— I’ve been looking for a secretary; one who is attractive, knows how to serve, and human. I would go to the person Guild for this, but my duties here rarely permit me the time. Bring me a girl who meets my criteria, and I shall accept your membership. Now leave, before I force you to.\n\n[color=green]Your main quest has been updated. [/color]")
+		text = ("After some time you find a chancellor: a senior member responsible for accepting new applicants. You give a small knock to announce your presence, and the old man looks up from his paperwork with a sneer. You begin to introduce yourself, but he raises a hand to stop you.\n\n— Yes, yes, I already know who you are. You’ve been a hot topic these past few days, a trend that shall die soon, I’m sure. Allow me to hazard a guess, now that you’ve inherited that senile fool’s mansion, you’re here to apply for membership, correct? Well, I’ll have you know that I have no intention of shaming this institution, nor disgracing myself, by admitting a nameless imbecile such as yourself. Leave now, there are more important matters for me to attend to.\n\nHe returns to his work and waves his hand to shoo you away, but you came here for a purpose, and refuse to leave without seeing it fulfilled. You argue the case for your membership for several minutes; the chancellor growing visibly more frustrated with your presence every second you remain. Before long, he’s had enough of your filibustering and slams a hand on his desk.\n\n— Bah! If you so desperately want to gain membership, then so be it! If you can fulfil a simple request I've not had time to deal with, I shall consider your membership. Now, listen carefully, I will not repeat myself!\n\n— I’ve been looking for a secretary; one who is attractive, knows how to serve, and human. I would go to the Slaver Guild for this, but my duties here rarely permit me the time. Bring me a girl who meets my criteria, and I shall accept your membership. Now leave, before I force you to.\n\n[color=green]Your main quest has been updated. [/color]")
 	elif globals.state.mainquest == 1:
 		if questgiveawayslave == null:
 			sprites = [['chancellor','pos1','opac']]
@@ -1436,7 +1461,7 @@ func mageorderquest2():
 		sprites = [['melissafriendly','pos1']]
 		globals.state.mainquest = 3
 		globals.resources.gold += 250
-		text = "— Marvelous! So here's the first thing we have on our hands. You likely know of the Brands and their utility. But those are the result of crude and very old work; surely anyone would want something much more efficient. For that, we have invented an upgrade to the old brands. They are generally referred to as 'Refined Brands' and are not very well known by the masses. The idea is pretty simple; to make the brand and branded person follow complex rules instead of just submissive basics. I can't overstate how amazingly useful it is, but those old fools at the council don't seem to bother.\n\n— The main issue is the magic essence, which is pretty hard to gather in large amounts as it is produced by fairies. Yeah, those shortstacks with childish behavior. Getting your hands on one seems to be getting harder and harder by the day. I want you to find me one, and in exchange I'll promote you, and share with you the knowledge of how to place a Refined Brand on a person.\n\n— You will likely find fairies in the Far Eerie Woods or elven grove. It's a devilish looking place beyond the elven parts of the forest. That place is likely affected by a taint or some magical phenomenon that nobody can quite figure out. All of the creatures there seem to lose  their sentience and become hostile to outsiders. Fairies are not generally like that, so I figured you may be able to tame one if you get her out of there. If not, she'd still be useful to us. Now, if you’ll excuse me, I still have some affairs to attend to today. Be careful, honey.\n\n[color=green]Your main quest has been updated. [/color]"
+		text = "— Marvelous! So here's the first thing we have on our hands. You likely know of the Brands and their utility. But those are the result of crude and very old work; surely anyone would want something much more efficient. For that, we have invented an upgrade to the old brands. They are generally referred to as 'Refined Brands' and are not very well known by the masses. The idea is pretty simple; to make the brand and branded person follow complex rules instead of just submissive basics. I can't overstate how amazingly useful it is, but those old fools at the council don't seem to bother.\n\n— The main issue is the magic essence, which is pretty hard to gather in large amounts as it is produced by fairies. Yeah, those shortstacks with childish behavior. Getting your hands on one seems to be getting harder and harder by the day. I want you to find me one, and in exchange I'll promote you, and share with you the knowledge of how to place a Refined Brand on a slave.\n\n— You will likely find fairies in the Far Eerie Woods or elven grove. It's a devilish looking place beyond the elven parts of the forest. That place is likely affected by a taint or some magical phenomenon that nobody can quite figure out. All of the creatures there seem to lose  their sentience and become hostile to outsiders. Fairies are not generally like that, so I figured you may be able to tame one if you get her out of there. If not, she'd still be useful to us. Now, if you’ll excuse me, I still have some affairs to attend to today. Be careful, honey.\n\n[color=green]Your main quest has been updated. [/color]"
 	main.dialogue(true, self, text, buttons, sprites)
 
 
@@ -1588,7 +1613,6 @@ var mode
 
 #-----------------------------------------------------------------------
 func shoppanelclosecheck():
-	print("panel close check")
 	if get_node("shoppanel/Panel").visible == false:
 		get_node("shoppanel").visible = false
 		get_node("shoppanel/Panel").visible = true
@@ -2001,7 +2025,7 @@ func sebastian():
 		globals.itemdict.maturingpot.unlocked = true
 	elif globals.state.mainquest >= 7 && globals.state.farm == 0:
 		globals.state.farm = 1
-		mansion.maintext = "— Hey, "+globals.player.name+"! You took care of that little errand? Great, great! So what are you up to? Me? I'm working with not-so-easy-to-get merchandise. Since you're working with Melissa, I suppose you'd be interested as well! Yes, rare black market ingredients, mythical creatures, and forbidden magical devices; I tend to deal with many of those! Of course the service won't be cheap, as the rarity and legality is the main issue.\n\n— I can offer you one rare person every couple of days, but I'll warn you: I only deal with rare species. Their obedience and branding is entirely up to you, so don't come back complaining if they bite you in your sleep!\n\nHe gives a mirthful chuckle.\n\n— Otherwise, a plesure doing business with you. I'll let you know when I get something in that might interest you. Speaking of which, I have one proposal which may interest you, as I heard you own a nice isolated place, and tend to keep slaves around to help you."
+		mansion.maintext = "— Hey, "+globals.player.name+"! You took care of that little errand? Great, great! So what are you up to? Me? I'm working with not-so-easy-to-get merchandise. Since you're working with Melissa, I suppose you'd be interested as well! Yes, rare black market ingredients, mythical creatures, and forbidden magical devices; I tend to deal with many of those! Of course the service won't be cheap, as the rarity and legality is the main issue.\n\n— I can offer you one rare slave every couple of days, but I'll warn you: I only deal with rare species. Their obedience and branding is entirely up to you, so don't come back complaining if they bite you in your sleep!\n\nHe gives a mirthful chuckle.\n\n— Otherwise, a plesure doing business with you. I'll let you know when I get something in that might interest you. Speaking of which, I have one proposal which may interest you, as I heard you own a nice isolated place, and tend to keep slaves around to help you."
 	elif globals.state.mainquest >= 7:
 		if globals.state.sebastianorder.taken == false:
 			mansion.maintext = "— Glad to see you well, "+globals.player.name+"! How are you doing? Got a special order?"
@@ -2192,7 +2216,7 @@ func brothel(person = null):
 		array.insert(0,{name = 'Request your servants work here', function = 'brothelquest'})
 	elif globals.state.sidequests.brothel == 1:
 		if person == null:
-			array.insert(0,{name = 'Offer person for quest', function = 'selectslavebrothelquest'})
+			array.insert(0,{name = 'Offer slave for quest', function = 'selectslavebrothelquest'})
 		else:
 			if person.race in ['Elf','Dark Elf','Drow']:
 				mansion.maintext = "— An elf, indeed. So, do you wanna trade?"
@@ -2200,7 +2224,7 @@ func brothel(person = null):
 				questgiveawayslave = person
 			else:
 				mansion.maintext = "— I don't think this is an Elf. Please, don't waste my time. "
-				array = [{name = 'Offer person for quest', function = 'selectslavebrothelquest'},{name = 'Leave',function = 'backstreets'}]
+				array = [{name = 'Offer slave for quest', function = 'selectslavebrothelquest'},{name = 'Leave',function = 'backstreets'}]
 				questgiveawayslave = null
 	buildbuttons(array)
 
@@ -2223,7 +2247,7 @@ func brothelquest():
 
 func _on_slavedescription_meta_clicked( meta ):
 	if meta == 'race':
-		get_tree().get_current_scene().showracedescript(selectedslave)
+		get_parent().showracedescript(selectedslave)
 
 func calibarquest():
 	globals.events.calibar()
@@ -2231,7 +2255,7 @@ func calibarquest():
 
 
 func _on_questlog_pressed():
-	get_tree().get_current_scene()._on_questlog_pressed()
+	get_parent()._on_questlog_pressed()
 
 
 var backpackselecteditem
@@ -2381,6 +2405,7 @@ func useitem(item, person):
 			get_parent().popup("After activating Teleportation Seal, you appear inside of your mansion, leaving your party behind. Hopefully they will find a way back in near time. ")
 			for i in globals.state.playergroup:
 				globals.state.findslave(i).away.duration = round(rand_range(1,3))
+			globals.main.sound("teleport")
 			mansion()
 		elif globals.slaves.find(person) >= 0:
 			get_parent().popup(person.dictionary("After activating Teleportation Seal, $name slowly dissipates in bright sparkles."))
@@ -2395,15 +2420,15 @@ func useitem(item, person):
 
 
 func usespell(spell, person):
-	get_tree().get_current_scene().get_node('spellnode').person = person
+	get_parent().get_node('spellnode').person = person
 	if spell.code == 'heal':
-		get_tree().get_current_scene().get_node('spellnode').healeffect()
+		get_parent().get_node('spellnode').healeffect()
 	elif spell.code == 'invigorate':
-		get_tree().get_current_scene().get_node('spellnode').invigorateeffect()
+		get_parent().get_node('spellnode').invigorateeffect()
 	elif spell.code == 'mindread' && person != globals.player:
-		get_tree().get_current_scene().get_node('spellnode').mindreadeffect()
+		get_parent().get_node('spellnode').mindreadeffect()
 	elif spell.code == 'guidance':
-		get_tree().get_current_scene().get_node('spellnode').guidanceeffect()
+		get_parent().get_node('spellnode').guidanceeffect()
 	_on_details_pressed()
 	playergrouppanel()
 
@@ -2417,7 +2442,7 @@ func _on_usebutton_pressed():
 func _on_discardbutton_pressed():
 	var item = backpackselecteditem
 	globals.state.backpack.stackables[item.code] -= 1
-	get_tree().get_current_scene().infotext('Discarded '+item.name,'red')
+	get_parent().infotext('Discarded '+item.name,'red')
 	if globals.state.backpack.stackables[item.code] <= 0:
 		globals.state.backpack.stackables.erase(item.code)
 	_on_details_pressed()
@@ -2447,22 +2472,22 @@ func _on_capturedclose_pressed():
 	get_node("playergroupdetails/capturedslave").visible = false
 
 func inspectslave(person):
-	get_tree().get_current_scene().popup(person.descriptionsmall())
+	get_parent().popup(person.descriptionsmall())
 
 func freecaptured(person):
 	partyselectedslave = person
-	get_tree().get_current_scene().yesnopopup("Free this person?", 'freetrue',self)
+	get_parent().yesnopopup("Free this person?", 'freetrue',self)
 
 func freetrue():
 	get_node("playergroupdetails/capturedslave").visible = false
 	globals.state.capturedgroup.erase(partyselectedslave)
-	get_tree().get_current_scene().infotext('You have released '+ partyselectedslave.name + 'yellow')
+	get_parent().infotext('You have released '+ partyselectedslave.name + 'yellow')
 	_on_details_pressed()
 
 func _on_capturedmindread_pressed():
 	get_node("playergroupdetails/capturedslave").visible = false
-	get_tree().get_current_scene().get_node("spellnode").person = captureeselected
-	get_tree().get_current_scene().get_node("spellnode").mindreadeffect()
+	get_parent().get_node("spellnode").person = captureeselected
+	get_parent().get_node("spellnode").mindreadeffect()
 
 
 
@@ -2490,6 +2515,11 @@ func _on_return_pressed():
 
 func _on_outsidetextbox_meta_clicked(meta):
 	if meta == 'race':
-		get_tree().get_current_scene().showracedescript(selectedslave)
+		get_parent().showracedescript(selectedslave)
 
 
+
+
+func _on_switch_pressed():
+	$playergrouppanel/characterinfo/combstats.visible = !$playergrouppanel/characterinfo/combstats.visible
+	$playergrouppanel/characterinfo/stats.visible = !$playergrouppanel/characterinfo/stats.visible

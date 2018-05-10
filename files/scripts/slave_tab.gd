@@ -9,6 +9,7 @@ func _ready():
 	for i in $stats/customization/tattoopanel/VBoxContainer.get_children():
 		i.connect('pressed',self,'choosetattooarea',[i])
 	set_process_input(true)
+	$stats/trainingabilspanel/learncost.text = "Learning points per stat: " + str(variables.learnpointsperstat)
 	for i in get_tree().get_nodes_in_group('slaverules'):
 		i.connect("pressed", self, 'rulecheck', [i])
 	for i in [sstr,sagi, smaf, send]:
@@ -16,6 +17,9 @@ func _ready():
 	for i in globals.statsdict:
 		self[i].get_node('Control').connect('mouse_entered', self, 'stattooltip',[i])
 		self[i].get_node('Control').connect('mouse_exited', globals, 'hidetooltip') 
+	for i in ['cour','conf','wit','charm']:
+		get_node("stats/trainingabilspanel/" +i + '/Button').connect("pressed", self, 'mentalup',[i])
+		get_node("stats/trainingabilspanel/" +i + '/Button2').connect("pressed", self, 'mentalup5',[i])
 
 func _input(event):
 	if get_tree().get_current_scene().get_node("screenchange/AnimationPlayer").is_playing() == true && get_tree().get_current_scene().get_node("screenchange/AnimationPlayer").get_current_animation() == "fadetoblack" || $stats/customization/nicknamepanel.is_visible() :
@@ -26,6 +30,16 @@ func _input(event):
 			var key = dict[event.scancode]
 			if event.is_action_pressed(str(key)) == true && self.is_visible() == true && get_tree().get_current_scene().get_node("dialogue").is_hidden() == true:
 				set_current_tab(key-1)
+
+func mentalup(mental):
+	person[mental] += 1
+	person.learningpoints -= variables.learnpointsperstat
+	$stats._on_trainingabils_pressed()
+
+func mentalup5(mental):
+	person[mental] += 5
+	person.learningpoints -= variables.learnpointsperstat*5
+	$stats._on_trainingabils_pressed()
 
 onready var nakedspritesdict = {
 	Cali = {cons = 'calinakedhappy', rape = 'calinakedsad', clothcons = 'calineutral', clothrape = 'calisad'},
@@ -476,7 +490,7 @@ func _on_relativesbutton_pressed():
 			newlabel.set_text(i.dictionary("$name - $sibling, $race"))
 	#children
 	for i in globals.slaves:
-		if i.relatives.mother == person.id || i.relatives.father == person.id:
+		if str(i.relatives.mother) == person.id || str(i.relatives.father) == person.id:
 			newlabel = childrenlist.get_node("Label").duplicate()
 			newlabel.visible = true
 			childrenlist.add_child(newlabel)
@@ -698,7 +712,7 @@ func _on_piercing_pressed():
 		if i.get_name() != 'piercingline' :
 			i.visible = false
 			i.queue_free()
-	if person.sexuals.unlocked == true:
+	if person.consent == true:
 		$stats/customization/piercingpanel/piercestate.set_text(person.dictionary('$name does not seems to mind you pierce $his private places.'))
 	else:
 		$stats/customization/piercingpanel/piercestate.set_text(person.dictionary('$name refuses to let you pierice $his private places'))
@@ -714,7 +728,7 @@ func _on_piercing_pressed():
 	
 	
 	for ii in array:
-		if ii.requirement == null || (person.sexuals.unlocked == true&& ii.requirement == 'lewdness') || (person.penis != 'none' && person.sexuals.unlocked == true && ii.id == 10) || (person.vagina == 'normal' && person.sexuals.unlocked == true && (ii.id == 8 || ii.id == 9)):
+		if ii.requirement == null || (person.consent == true && ii.requirement == 'lewdness') || (person.penis != 'none' && person.consent == true && ii.id == 10) || (person.vagina == 'normal' && person.consent == true && (ii.id == 8 || ii.id == 9)):
 			var newline = $stats/customization/piercingpanel/ScrollContainer/VBoxContainer/piercingline.duplicate()
 			newline.visible = true
 			$stats/customization/piercingpanel/ScrollContainer/VBoxContainer/.add_child(newline)

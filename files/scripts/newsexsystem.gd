@@ -12,7 +12,7 @@ var location
 var selectmode = 'normal'
 
 var takercategories = ['cunnilingus','rimjob','handjob','titjob','tailjob','blowjob']
-var analcategories = ['assfingering','rimjob','missionaryanal','doggyanal','lotusanal','revlotusanal','doubledilda','inerttaila','analvibrator','enemaplug']
+var analcategories = ['assfingering','rimjob','missionaryanal','doggyanal','lotusanal','revlotusanal','doubledilda','inerttaila','analvibrator','enemaplug','insertinturnsass']
 var punishcategories = globals.punishcategories
 var penetratecategories = ['missionary','missionaryanal','doggy','doggyanal','lotus','lotusanal','revlotus','revlotusanal','doubledildo','doubledildoass','inserttailv','inserttaila','tribadism','frottage']
 
@@ -159,6 +159,8 @@ class member:
 					if person.asser < 35 && randf() < 0.1:
 						actionshad.addtraits.append('Likes it rough')
 					if !person.traits.has('Masochist'):
+						if values.has('stress') == false:
+							values.stress = rand_range(2,6)
 						person.stress += values.stress
 			if values.tags.has('pervert') && (acceptance == 'good' || person.traits.has('Pervert')):
 				self.lust += lustinput
@@ -172,6 +174,9 @@ class member:
 				self.sens += sensinput/1.75
 			if values.tags.has('group'):
 				actionshad.group += 1
+				self.lewd += lewdinput
+				self.lust += lustinput
+				self.sens += sensinput
 		else:
 			self.lewd += lewdinput
 			self.lust += lustinput
@@ -620,9 +625,11 @@ func startscene(scenescript, cont = false, pretext = ''):
 	
 	for i in givers:
 		if scenescript.giverpart != '':
+			#print(i.name + " " + str(i[scenescript.giverpart]) + str(scenescript.giverpart))
 			if i[scenescript.giverpart] != null:
 				stopongoingaction(i[scenescript.giverpart])
 			i[scenescript.giverpart] = dict
+	
 	for i in takers:
 		if scenescript.takerpart != '':
 			if i[scenescript.takerpart] != null:
@@ -650,14 +657,15 @@ func startscene(scenescript, cont = false, pretext = ''):
 	
 	#if scenescript.has(
 	
+	
+	if scenescript.code in ['strapon', 'rope']:
+		cont = true
+	#to make action switch on that hole even if they comes from another body part
 	if scenescript.code in ['doubledildo','doubledildoass','tribadism']:
 		for i in ongoingactions:
 			if i.scene.category == 'fucking' && (i.givers.has(givers[0]) || i.takers.has(givers[0]) || i.givers.has(takers[0]) || i.takers.has(takers[0])):
 				if i.givers == givers && i.takers == takers:
 					stopongoingaction(i)
-	if scenescript.code in ['strapon', 'rope']:
-		cont = true
-	#to make action switch on that hole even if they comes from another body part
 	if scenescript.code in ['cunnilingus','rimjob','facesit','afacesit','massagefoot','lickfeet']:
 		for i in ongoingactions:
 			if i.scene.category == 'fucking' && (i.givers.has(givers[0]) || i.takers.has(givers[0]) || i.givers.has(takers[0]) || i.takers.has(takers[0])):
@@ -715,11 +723,11 @@ func startscene(scenescript, cont = false, pretext = ''):
 		if i.scene.has_method("givereffect"):
 			for member in i.givers:
 				effects = i.scene.givereffect(member)
-				member.actioneffect(effects[0], effects[1], dict)
+				member.actioneffect(effects[0], effects[1], i)
 		if i.scene.has_method("takereffect"):
 			for member in i.takers:
 				effects = i.scene.takereffect(member)
-				member.actioneffect(effects[0], effects[1], dict)
+				member.actioneffect(effects[0], effects[1], i)
 	
 	
 	for i in participants:
@@ -743,7 +751,6 @@ func startscene(scenescript, cont = false, pretext = ''):
 	
 	if cont == true && sceneexists == false: 
 		ongoingactions.append(dict)
-		
 	else:
 		for i in givers:
 			if scenescript.giverpart != '':
@@ -752,15 +759,8 @@ func startscene(scenescript, cont = false, pretext = ''):
 			if scenescript.takerpart != '':
 				i[scenescript.takerpart] = null
 	
-#	for i in textdict:
-#		while textdict[i].find('[image') >= 0:
-#			textdict[i]
-#	var img = TextureRect.new()
-#	img.rect_size = Vector2(30,30)
-#	img.expand = true
-#	img.texture = load("res://files/images/cali/caliportrait.png")
+	
 	get_node("Panel/sceneeffects").set_bbcode(textdict.mainevent + "\n" + textdict.repeats + "\n" + textdict.orgasms)
-	#"[img]" + img.texture.load_path + "[/img]" + 
 	rebuildparticipantslist()
 	
 
@@ -895,10 +895,10 @@ func orgasm(member):
 	member.lust -= 300
 	var scene
 	var text
-	var temptext
-	var penistext
-	var vaginatext
-	var anustext
+	var temptext = ''
+	var penistext = ''
+	var vaginatext = ''
+	var anustext = ''
 	member.orgasms += 1
 	if participants.size() == 2 && member.person != globals.player:
 		member.person.loyal += rand_range(1,4)
@@ -973,11 +973,15 @@ func orgasm(member):
 				if scene.scene.takerpart == '':
 					penistext += " {^semen:seed:cum} {^pours onto:shoots onto:falls to} the {^ground:floor} as [he1] ejaculate[s/1]."
 				elif ['anus','vagina','mouth'].has(scene.scene.takerpart):
-					temptext = scene.scene.takerpart.replace('anus', '[anus2]').replace('vagina','[pussy2]')
+					if scene.scene.get('takerpart2') && scene.scene.givers[1] == member:
+						temptext = scene.scene.takerpart2.replace('anus', '[anus2]').replace('vagina','[pussy2]')
+					else:
+						temptext = scene.scene.takerpart.replace('anus', '[anus2]').replace('vagina','[pussy2]')
+						if scene.scene.takerpart == 'vagina':
+							for i in scene.takers:
+								globals.impregnation(i.person, member.person)
 					penistext += " {^semen:seed:cum} {^pours:shoots:pumps:sprays} into [names2] " + temptext + " as [he1] ejaculate[s/1]."
-					if scene.scene.takerpart == 'vagina':
-						for i in scene.takers:
-							globals.impregnation(i.person, member.person)
+					
 				penistext = decoder(penistext, [member], scene.takers)
 			#penis in taker slot
 			elif scene.takers.find(member) >= 0:
@@ -1006,23 +1010,8 @@ func orgasm(member):
 				penistext = "[name2] {^can't hold back any longer:reach[es/2] [his2] limit} and"
 			penistext += " {^a jet of :a rope of :}{^semen:cum} {^fires:squirts:shoots} from {^the tip of :}[his2] {^neglected :throbbing ::}[penis2]."
 			penistext = decoder(penistext, null, [member])
-	if vaginatext != null:
-		if anustext != null:
-			if penistext != null:
-				text = vaginatext + " " + anustext + " " + penistext
-			else:
-				text = vaginatext + " " + anustext
-		elif penistext != null:
-			text = vaginatext + " " + penistext
-		else:
-			text = vaginatext
-	elif anustext != null:
-		if penistext != null:
-			text = anustext + " " + penistext
-		else:
-			text = anustext
-	elif penistext != null:
-		text = penistext
+	if vaginatext != '' || anustext != '' || penistext != '':
+		text = vaginatext + " " + anustext + " " + penistext
 	#final default condition
 	else:
 		if randf() < 0.4:
@@ -1043,15 +1032,6 @@ func orgasm(member):
 		member.actionshad.samesexorgasms += 1
 	else:
 		member.actionshad.oppositesexorgasms += 1
-#		if randf() >= 0.9 || member.person.effects.has('entranced'):
-#			if !member.person.traits.has("Bisexual"):
-#				member.person.add_trait("Bisexual")
-#			else:
-#				member.person.trait_remove("Bisexual")
-#				if member.person.sex == 'male':
-#					member.person.add_trait("Gay")
-#				else:
-#					member.person.add_trait("Lesbian")
 	
 	
 	return "[color=#ff5df8]" + text + "[/color]"
@@ -1092,6 +1072,8 @@ func stopongoingaction(meta, rebuild = false):
 	for i in action.takers:
 		if action.scene.takerpart != '':
 			i[action.scene.takerpart] = null
+		if action.scene.get("takerpart2"):
+			i[action.scene.takerpart2] = null
 	if action.scene.code == 'strapon' && action.givers[0]['penis'] != null:
 		stopongoingaction(action.givers[0]['penis'])
 	ongoingactions.erase(action)
@@ -1418,3 +1400,21 @@ func _on_closeblacklist_pressed():
 
 func _on_debug_pressed():
 	$PopupPanel.popup()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

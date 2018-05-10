@@ -28,7 +28,7 @@ func _ready():
 	for i in five:
 		text += i + ', '
 	text.erase(text.length()-2, 2)
-	text += "\n\nIcons: http://game-icons.net \nOST: The Sixth Gate Music \n'Mystery Bazaar', 'Corruption' by Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 3.0 License\nhttp://creativecommons.org/licenses/by/3.0/"
+	text += "\n\nIcons: http://game-icons.net \nOST: The Sixth Gate Music"
 	text += "\n\nSponsored links: \n\nHomura - https://homurascaptions.com"
 	get_node("TextureFrame/creditpanel/RichTextLabel").set_bbcode(text)
 	if globals.rules.fullscreen == true:
