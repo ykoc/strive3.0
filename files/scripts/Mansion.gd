@@ -999,7 +999,7 @@ func _on_end_pressed():
 	else:
 		text = text + 'Your food storage grew by [color=aqua]' + str(globals.resources.food - start_food) + '[/color] units of food.\n'
 	text0.set_bbcode(text0.get_bbcode() + text)
-	globals.state.sexactions = globals.player.send/2 + 1
+	globals.state.sexactions = globals.player.send + 2
 	if deads_array.size() > 0:
 		results = 'worst'
 		deads_array.invert()

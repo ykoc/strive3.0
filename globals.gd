@@ -570,7 +570,7 @@ class progress:
 	func findslave(id):
 		var rval
 		for i in range(0, globals.slaves.size()):
-			if globals.slaves[i].id == str(id):
+			if str(globals.slaves[i].id) == str(id):
 				rval = globals.slaves[i]
 		return rval
 

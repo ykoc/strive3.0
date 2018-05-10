@@ -661,7 +661,7 @@ func propose(person, counter):
 			difficulty -= 10
 		if str(person.relatives.father) == '0' || str(person.relatives.mother) == '0':
 			difficulty -= 10
-		for i in person.traits.has('Prude'):
+		if person.traits.has('Prude'):
 			difficulty -= 5
 		if difficulty <= 100:
 			text += "[he2] shows a troubled face and rejects your proposal. "
@@ -967,6 +967,7 @@ func drunkness():
 
 func calculateresults():
 	var text = ''
+	globals.hidetooltip()
 	var obed = 0
 	var stress = 0
 	var loyal = 0

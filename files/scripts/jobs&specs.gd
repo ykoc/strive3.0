@@ -590,9 +590,9 @@ func library(person):
 		person.xp += max((30 + 5*globals.state.mansionupgrades.mansionlibrary + person.wit/12) - (person.level-1)*8,0)
 	else:
 		person.xp += max((15 + 5*globals.state.mansionupgrades.mansionlibrary + person.wit/12) - (person.level-1)*8,0)
-	person.trainingpoints += ceil(person.wit/20)+globals.state.mansionupgrades.mansionlibrary
+	person.learningpoints += ceil(person.wit/20)+globals.state.mansionupgrades.mansionlibrary
 	if person.traits.has("Clever"):
-		person.trainingpoints += 2
+		person.learningpoints += 2
 	var dict = {text = text}
 	return dict
 

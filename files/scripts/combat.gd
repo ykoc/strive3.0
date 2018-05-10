@@ -366,7 +366,7 @@ func _process(delta):
 			if i.action.target == 'enemy':
 				button.get_node('target').set_texture(enemygroup[i.target].icon)
 			elif i.action.target == 'ally' && playergroup[i.target].icon != null:
-				button.get_node('target').set_texture(playergroup[i.target].icon)
+				button.get_node('target').set_texture(globals.loadimage(playergroup[i.target].icon))
 			elif i.action.target == 'self' && i.icon != null:
 				button.get_node('target').set_texture(load((i.icon)))
 			else:
