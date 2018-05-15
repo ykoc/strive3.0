@@ -218,11 +218,13 @@ func _on_spellcancelbutton_pressed():
 
 func _on_spellusebutton_pressed():
 	person.metrics.spell += 1
-	var spellnode = get_tree().get_current_scene().get_node('spellnode')
+	var spellnode = globals.spells
 	spellnode.person = person
-	spellnode.call(spellselected.effect)
+	spellnode.caster = globals.player
+	var text = spellnode.call(spellselected.effect)
 	person.attention = 0
 	get_node("selectspellpanel").visible = false
+	globals.main.popup(text)
 	if spellselected.code != 'dream':
 		get_parent().slavetabopen()
 	get_tree().get_current_scene().rebuild_slave_list()

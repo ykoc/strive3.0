@@ -15,19 +15,14 @@ var showntext = '' setget showtext_set,showtext_get
 var turns = 0 setget turns_set,turns_get
 
 var helpdescript = {
-	mood = '[center]Mood[/center]\n A high mood increases loyalty and reduces stress after interaction is finished\nMood grows from positive interactions and decreases from negative interactions. Its also affected by loyalty.',
-	fear = '[center]Fear[/center]\nFear increases obedience, however, it will also increase stress\nFear is raised through punishment and reduced through praise and is affected by Courage',
+	mood = '[center]Mood[/center]\nA high mood increases loyalty and reduces stress after interaction is finished\nMood grows from positive interactions and decreases from negative interactions. Its also affected by loyalty.',
+	fear = '[center]Fear[/center]\nFear helps to keep obedience high for long period of time. Its built with disciplinary actions but often comes with stress. ',
 	stress = '[center]Stress[/center]\nStress accumulates from injury in combat,  poor treatment or unsanitary conditions\nHigh amounts of stress over a long period of time can reduce performance and loyalty',
 	
 	}
 
 func fear_set(value):
 	var difference = value - fear
-	if difference > 0:
-		var charcour = (person.cour/person.stats.cour_max)
-		fear = max(0,value-difference*charcour/2)
-	else:
-		fear = max(0,value)
 	if difference != 0:
 		if difference > 0:
 			$fear/Label.text = "+"
@@ -36,7 +31,9 @@ func fear_set(value):
 			$fear/Label.text = "—"
 			$fear/Label.set('custom_colors/font_color', Color(0,1,0))
 		$fear/Label/AnimationPlayer.play("fade")
-	$fear.value = value*2
+	person.fear = value
+	fear = person.fear
+	$fear.value = value
 
 func stress_set(value):
 	var difference = value - stress
@@ -200,6 +197,21 @@ var actionsdict = {
 		reqs = "location == 'dungeon'",
 		effect = 'horse',
 	},
+	castfear = {
+		group = "P&P",
+		name = 'Cast Fear',
+		descript = "Punish $name with Fear spell. \n[color=aqua]Costs " + str(globals.spelldict.fear.manacost) + " mana.[/color]",
+		reqs = "globals.spelldict.fear.learned == true && globals.resources.mana >= globals.spelldict.fear.manacost",
+		effect = 'castfear',
+	},
+	castsedate = {
+		group = "P&P",
+		name = 'Cast Sedation',
+		descript = "Use Sedation spell on $name. \n[color=aqua]Costs " + str(globals.spelldict.sedation.manacost) + " mana.[/color]",
+		reqs = "globals.spelldict.sedation.learned == true && globals.resources.mana >= globals.spelldict.sedation.manacost",
+		effect = 'castsedate',
+	},
+	
 	
 	teach = {
 		group = "Actions",
@@ -212,10 +224,19 @@ var actionsdict = {
 	gift = {
 		group = "Items",
 		name = "Make Gift",
-		descript = "Make a small decorative gift for $name. Requires 10 gold.",
+		descript = "Make a small decorative gift for $name. \n[color=yellow]Requires 10 gold.[/color]",
 		reqs = "!location == 'dungeon'",
 		disablereqs = 'globals.resources.gold >= 10',
 		effect = 'gift',
+		onetime = true,
+	},
+	sweets = {
+		group = "Items",
+		name = "Buy Sweets",
+		descript = "Purchase sweets from street vendor for $name\n[color=yellow]Requires 5 gold.[/color]",
+		reqs = "location == 'town'",
+		disablereqs = 'globals.resources.gold >= 5',
+		effect = 'sweets',
 		onetime = true,
 	},
 	tea = {
@@ -282,8 +303,8 @@ func initiate(tempperson):
 	var text = ''
 	self.visible = true
 	self.mood = 0
-	self.fear = 0
 	self.drunkness = 0
+	globals.spells.caster = globals.player
 	date = false
 	$sexswitch.visible = false
 	$end.visible = false
@@ -305,9 +326,12 @@ func initiate(tempperson):
 	newclass.name = person.name_short()
 	dateclassarray.append(newclass)
 	
+	person.attention = 0
+	
 	jail = person.sleep == 'jail'
 	
 	self.stress = person.stress
+	self.fear = person.fear
 	self.turns = 10
 	$fullbody.set_texture(null)
 	if nakedspritesdict.has(person.unique):
@@ -433,7 +457,11 @@ func updatelist():
 			newnode.connect("pressed",self,'moveto', [i.code])
 #			newnode.connect("mouse_entered",self,'actiontooltip', [i.descript])
 #			newnode.connect("mouse_exited",globals,'hidetooltip')
+	globals.hidetooltip()
 	$panel/ScrollContainer/GridContainer.move_child($panel/ScrollContainer/GridContainer/Button, $panel/ScrollContainer/GridContainer.get_children().size())
+	$mana/Label.text = str(globals.resources.mana)
+	$gold/Label.text = str(globals.resources.gold)
+	$supply/Label.text = str(globals.itemdict.supply.amount)
 
 func moveto(newloc):
 	self.location = newloc
@@ -486,7 +514,7 @@ func doaction(action):
 			self.mood += 3
 			self.showntext += decoder("\n\n[color=yellow]Location influence:[/color] [name2] finds this place to be rather joyful...")
 		elif location == 'dungeon':
-			fear += 3
+			fear += 4
 			self.showntext += decoder("\n\n[color=yellow]Location influence:[/color] [name2] finds this place to be rather grim...")
 	drunkness()
 	updatelist()
@@ -710,27 +738,20 @@ func praise(person, counter):
 	var text = ''
 	text += "You praise [name2] for [his2] recent behavoir. "
 	
-	if person.obed >= 85 && person.praise == 0 && counter < 2:
+	if person.obed >= 85 && counter < 2:
 		self.mood += 3
-		self.fear -= 1
 		if person.race == 'Human':
-			person.praise = 4
-		else:
-			person.praise = 2
+			pass
 		self.stress -= rand_range(5,10)
 		text = text + "[he2] listens to your praise with joy evident on [his2] face.  "
 	elif person.obed >= 85:
 		text = text + "[he2] takes your words respectfully but without great joy. You’ve probably overpraised [him2] lately. "
-		person.praise += 1
 		
 	else:
 		text = text + "[he2] takes your praise arrogantly, gaining joy from it. "
 		if person.race == 'Human':
-			person.praise = 2
-		else:
-			person.praise = 1
+			pass
 		self.mood += 3
-		self.fear -= 3
 		person.loyal -= rand_range(1,2)
 	
 	return text
@@ -741,7 +762,7 @@ func pathead(person, counter):
 	
 	if counter < 5 || randf() >= 0.4:
 		self.mood += 2
-		self.fear -= 2
+		self.stress -= 3
 		text = text + "[he2] takes it with joy evident on [his2] face.  "
 	else:
 		text = text + "[he2] seems to be bored from repeated action. "
@@ -751,73 +772,30 @@ func pathead(person, counter):
 func scold(person, counter):
 	var text = ''
 	text += "You scold [name2] for [his2] recent faults. "
-	if person.obed < 85 && person.punish.expect == false:
-		if person.effects.has('captured') == true:
-			person.effects.captured.duration -= 1
-		text = text + "\n[he2] seems to be taking your reprimand seriously."
-		person.punish.expect = true
-		if person.race == 'Human':
-			person.punish.strength = 10 - person.cour/25
-		else:
-			person.punish.strength = 5 - person.cour/25
-		self.mood -= 2
-		self.fear += 2
-	elif person.obed >= 85:
-		text = text + '\n[he2] unhappy to your reprimand, as [he2] does not believe [he2] has offended you.'
-		self.mood -= 5
-		self.fear += 2
-	else:
-		text = text + "\n[he2] does not seem very afraid of your threats, as you haven't followed through on them previously."
-		self.mood -= 3
-		self.fear += 1
-		person.punish.expect = true
-		if person.race == 'Human':
-			person.punish.strength = 10 - person.cour/25
-		else:
-			person.punish.strength = 5 - person.cour/25
-		if person.effects.has('captured') == true:
-			person.effects.captured.duration += 1
+	self.mood -= 2
+	self.fear += 7
 	
+	text += punishaddedeffect()
 	return text
 
 
 func punishaddedeffect():
 	var text = ''
-	if person.obed < 75 || person.traits.has('Masochist') == true:
-		if person.effects.has('captured') == true:
-			person.effects.captured.duration -= 1
-			self.stress += rand_range(8,14)
-			self.mood -= 3
-			text = text + "\n[he2] glares at you with sorrow and hatred, showing leftovers of a yet untamed spirit."
-		else:
-			text = text + "\n[he2] begs for mercy and takes your lesson to heart."
-			self.stress += rand_range(4,8)
-			self.fear += 1
-		if person.punish.expect == true:
-			self.mood += 1
-			self.fear += 1
-			if person.race == 'Human':
-				person.punish.strength += 10 - person.cour/25
-			else:
-				person.punish.strength += 5 - person.cour/25
-		else:
-			self.stress += rand_range(3,6)
-			self.mood -= 2
-			self.fear += 4
-	else:
-		text = text + "\n[he2] obediently takes [his2] punishment and begs for your forgiveness, but [name2] doesn't feel like [he2] truly deserves such a treatment."
-		self.mood -= 2
-		self.fear += 2
-		self.stress += rand_range(5,10)
-	if person.traits.has("Masochist"):
+	self.stress += 8
+	if person.traits.has("Masochist") && randf() >= 0.5:
+		text += "[Masochist][name2] seems to take [his2] punishment with some unusualenthusiasm... "
 		person.lust += rand_range(2,4)
 		self.mood += 3
+		self.stress -= 5
+	if person.traits.has("Coward"):
+		self.fear += 5
+		text += "[Coward][name2] reacts strongly to your aggression. "
 	return text
 
 func slap(person, counter):
 	var text = ''
 	text += "You slap [name2] across the face as punishment. [his2] cheek gets red. "
-	self.fear += 2
+	self.fear += 6
 	self.mood -= 2
 	text += punishaddedeffect()
 	return text
@@ -826,7 +804,7 @@ func flag(person, counter):
 	var text = ''
 	text += "You put [name2] on the punishment table, and after exposing [his2] rear, punish it with force. "
 	
-	self.fear += 3
+	self.fear += 9
 	self.mood -= 3
 	
 	text += punishaddedeffect()
@@ -836,7 +814,7 @@ func whip(person, counter):
 	var text = ''
 	text += "You put [name2] on the punishment table, and after exposing [his2] rear, whip it with force. "
 	
-	self.fear += 4
+	self.fear += 11
 	self.mood -= 3
 	
 	text += punishaddedeffect()
@@ -846,7 +824,7 @@ func horse(person, counter):
 	var text = ''
 	text += "You tie [name2] securely to the wooden horse with [his2] legs spread wide. [he2] cries with pain under [his2] own weight. "
 	
-	self.fear += 4
+	self.fear += 12
 	self.mood -= 4
 	person.lust += rand_range(5,10)
 	
@@ -858,7 +836,7 @@ func wax(person, counter):
 	var text = ''
 	text += "You put [name2] on the punishment table and after exposing [his2] body you drip hot wax over it making [him2] cry with pain. "
 	
-	self.fear += 2
+	self.fear += 11
 	self.mood -= 3
 	
 	text += punishaddedeffect()
@@ -872,15 +850,15 @@ func teach(person, counter):
 		value += value*0.25
 	text += "You spend some time with [name2], teaching [him2]. "
 	
-	if mood >= 5 || counter < 4:
+	if stress < 10+person.wit/2 || counter < 4:
 		person.learningpoints += value
-		
-		mood -= 1
+		self.mood -= 1
+		self.stress += 10 - person.wit/15
 		text += "[name2] learns new things under your watch. " 
 		if person.traits.has("Clever"):
-			text += "\n[color=green]Trait bonus: Clever[/color]"
+			text += "\n[Clever]Bonus points"
 	else:
-		text += "[name2] looks heavily bored,not taking the lesson seriously. " 
+		text += "[name2] looks heavily bored, not taking the lesson seriously. " 
 	
 	if drunkness > 0:
 		text += "\nLesson was less effective due to [name2]'s alcohol intoxication. "
@@ -892,25 +870,42 @@ func gift(person, counter):
 	text += "You present [name2] with a small decorative gift. "
 	
 	if person.obed >= 75:
-		self.mood += 5
-		self.fear -= 4
+		self.mood += 7
+		person.loyal += 4
 		if person.race == 'Human':
-			person.praise = 6
-		else:
-			person.praise = 3
+			pass
 		text = text + "[he2] accepts your gift with a pleasant smile on [his2] face.  "
 		
 	else:
 		text = text + "[he2] takes your gift arrogantly, barely respecting your intention. "
 		if person.race == 'Human':
-			person.praise = 2
-		else:
-			person.praise = 1
+			pass
 		self.mood += 3
-		self.fear -= 3
 	
 	
 	globals.resources.gold -= 10
+	
+	return text
+
+func sweets(person, counter):
+	var text = ''
+	text += "You purchase some candies for [name2] from a local vendor. "
+	
+	if person.obed >= 55:
+		self.mood += 6
+		person.loyal += 3
+		if person.race == 'Human':
+			pass
+		text = text + "[he2] joyfull accepts them and enjoys the sweet taste.  "
+		
+	else:
+		text = text + "[he2] takes your gift arrogantly, barely respecting your intention. "
+		if person.race == 'Human':
+			pass
+		self.mood += 3
+	
+	
+	globals.resources.gold -= 5
 	
 	return text
 
@@ -940,7 +935,7 @@ func wine(person, counter):
 		if counter < 3:
 			text += "[he2] drinks with you and [his2] mood seems to improve."
 			self.mood += 4
-			self.stress -= rand_range(5,10)
+			self.stress -= rand_range(6,12)
 			drunkness += 1
 		else:
 			self.mood += 2
@@ -953,6 +948,30 @@ func wine(person, counter):
 		drunkness += 1
 	
 	return text
+
+func castfear(person, counter):
+	var text = ''
+	var spell = globals.spelldict.fear
+	person.metrics.spell += 1
+	var spellnode = globals.spells
+	spellnode.person = person
+	text = spellnode.call(spell.effect)
+	updatebars()
+	return text
+
+func castsedate(person, counter):
+	var text = ''
+	var spell = globals.spelldict.sedation
+	person.metrics.spell += 1
+	var spellnode = globals.spells
+	spellnode.person = person
+	text = spellnode.call(spell.effect)
+	updatebars()
+	return text
+
+func updatebars():
+	self.fear = person.fear
+	self.stress = person.stress
 
 func stop(person, counter):
 	var text = ''
@@ -968,17 +987,13 @@ func drunkness():
 func calculateresults():
 	var text = ''
 	globals.hidetooltip()
-	var obed = 0
-	var stress = 0
+	var tempfear = 0
 	var loyal = 0
-	var charcour = (person.cour/person.stats.cour_max)*100
-	var charconf = (person.conf/person.stats.conf_max)*100
-	obed = fear*1.2
-	stress = max((fear-5)*2,0) - mood/4
-	loyal = 3+(mood/10-fear/1.75)
+	tempfear = fear
+	loyal = 2+(mood/10)
 	text += "\nFinal results: "
-	text += "\nObedience: " + str(floor(obed)) + "\nLoyalty: " + str(floor(loyal)) + "\nStress: " + str(floor(stress))
-	var dict = {obed = obed, stress = stress, loyal = loyal}
+	text += "\nFear: " + str(floor(tempfear)) + "\nLoyalty: " + str(floor(loyal))
+	var dict = {loyal = loyal}
 	
 	for i in dict:
 		person[i] += dict[i]
@@ -999,6 +1014,5 @@ func _on_confirmsex_pressed():
 	get_parent().sexmode = 'sexmode'
 	get_parent().sexslaves = [person]
 	get_parent()._on_startbutton_pressed()
-
 
 

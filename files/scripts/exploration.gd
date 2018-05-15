@@ -1064,8 +1064,8 @@ func inspectenemy():
 	globals.get_tree().get_current_scene().popup(enemygroup.captured.descriptionsmall())
 
 func mindreadcapturee(state = 'encounter'):
-	globals.get_tree().get_current_scene().get_node("spellnode").person = enemygroup.captured
-	globals.get_tree().get_current_scene().get_node("spellnode").mindreadeffect()
+	globals.spells.person = enemygroup.captured
+	globals.spells.mindreadeffect()
 	if state == 'win':
 		enemydefeated()
 	elif state == 'slavers':
@@ -1237,8 +1237,8 @@ func buildcapturelist():
 		newbutton.get_node("choice").connect("item_selected",self, 'defeatedchoice', [defeated.units[i], newbutton.get_node("choice")])
 
 func mindreadslave(person):
-	globals.get_tree().get_current_scene().get_node("spellnode").person = person
-	globals.get_tree().get_current_scene().get_node("spellnode").mindreadeffect()
+	globals.spells.person = person
+	globals.spells.mindreadeffect()
 	buildcapturelist()
 
 func captureslave(person):
@@ -1675,6 +1675,8 @@ func gornyrisaccept(stage):
 	elif stage == 3:
 		sprite = [['yrisnormalnaked', 'pos1']]
 		text = globals.questtext.GornYrisAccept2
+		image = 'yrissex'
+		buttons.append({text = "Close", function = 'closescene'})
 		globals.charactergallery.yris.scenes[1].unlocked = true
 		globals.state.sidequests.yris += 1
 		globals.itemdict.deterrentpot.amount -= 1
@@ -1683,6 +1685,7 @@ func gornyrisaccept(stage):
 	elif stage == 4:
 		sprite = [['yrisshocknaked', 'pos1']]
 		globals.charactergallery.yris.scenes[2].unlocked = true
+		image = 'yrissex'
 		globals.itemdict.deterrentpot.amount -= 1
 		text = globals.questtext.GornYrisAccept3
 		buttons.append({text = "Reveal everything", function = 'gornyrisaccept', args = 5})
@@ -1718,6 +1721,7 @@ func gornyrisaccept(stage):
 		main.close_dialogue()
 		main.scene(self, image, text, buttons)
 	else:
+		main.closescene()
 		main.dialogue(state, self, text, buttons, sprite)
 
 func closescene():

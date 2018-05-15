@@ -1073,7 +1073,7 @@ func calibar1(value):
 		globals.state.sidequests.calibarsex = 'forced'
 		buttons.append(['Return','calibar'])
 	elif value == 7:
-		if cali.lewd >= 30 && cali.consent == true:
+		if cali.lewdness >= 30 && cali.consent == true:
 			text = textnode.CaliBarPersuadeSuccess
 			globals.state.sidequests.calibarsex = 'agreed'
 			buttons.append(['Return','calibar'])
@@ -1513,9 +1513,11 @@ func sexscene(value):
 		sprite = [['yrisnormal', 'pos1']]
 		text = textnode.GornYrisAccept1
 	elif value == 'yrissex':
+		image = 'yrissex'
 		sprite = [['yrisnormalnaked', 'pos1']]
 		text = textnode.GornYrisAccept2
 	elif value == 'yrissex2':
+		image = 'yrissex'
 		sprite = [['yrisshocknaked', 'pos1']]
 		text = textnode.GornYrisAccept3
 	elif value == "chloemana":

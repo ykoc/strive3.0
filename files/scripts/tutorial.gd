@@ -55,10 +55,10 @@ slavelevel = [
 {text = "Higher levels require harder conditions to be met before your servants can advance. However, it's also possible to change the condition to a new random one with some alchemy. ", choice = 'person'},
 ],
 slavecond = [
-{sprite = 'wink1', text = "There are three things you need to have knowledge of regarding your servants.  These are: Obedience, Stress and Loyalty."},
+{sprite = 'wink1', text = "There are four things you need to have knowledge of regarding your servants.  These are: Obedience, Fear, Stress and Loyalty."},
 {text = "All of these are important. Let's start off with Obedience.  You simply can't force a servant to do work unless you cater to their needs or savagely control them.  A disobedient servant is a recipe for disaster as they can refuse to follow orders, publicly cause discord, or escape your control. "},
 {sprite = 'happy2', text = "Obedience can generally be raised by your interactions with the servant and the punishments you hand out to them. However, don't overdo punishments or overpraise your pets as that can cause disobedience."},
-{text = 'If you are an effective master, you will understand how to hand out just enough punishment and praise to keep your pets "in line".'},
+{text = 'Fear is the main thing which can keep obedience high earl on. Punishments cause Fear to grow, which in turn makes them more obedient from some time. However, you might need to keep them scared constantly for regular effect.'},
 {text = "Stress is the gauge which shows a servant's reaction to recent events happening to them. A high stress can cause mental and emotional scarring to a servant and will impede your progress with them."},
 {text = "Lastly, Loyalty is the long-term affection servants hold for you, some call it 'love' and some call it infatuation.  You can call it whatever you wish to. ", choice = 'person'},
 ],

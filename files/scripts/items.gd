@@ -1040,6 +1040,17 @@ func beauty(value):
 func lust(value):
 	person.lust += value
 
+func fear(value):
+	var text = ''
+	person.fear_raw(value)
+	return text 
+
+func stress(value):
+	var text = ''
+	person.stress -= value
+	return text
+
+
 func checkreqs(item):
 	if item.reqs == null:
 		return true

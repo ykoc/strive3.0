@@ -324,8 +324,7 @@ func accident(stage = 0):
 	if stage == 1:
 		globals.player.energy -= 25
 		person.obed += rand_range(20,35)
-		person.punish.expect = true
-		person.punish.strength = 3
+		person.fear += 35
 	elif stage == 2:
 		person.loyal += rand_range(3,6)
 	buttons = tempbuttons

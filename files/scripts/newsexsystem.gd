@@ -18,11 +18,7 @@ var penetratecategories = ['missionary','missionaryanal','doggy','doggyanal','lo
 
 var filter = ['nosehook','relaxinginsense','facesit','afacesit','grovel','enemaplug']
 
-var sexicons = {
-female = load("res://files/buttons/sexicons/female.png"),
-male = load("res://files/buttons/sexicons/male.png"),
-futanari = load("res://files/buttons/sexicons/futa.png"),
-}
+
 var statsicons = {
 lub1 = load("res://files/buttons/sexicons/lub1.png"),
 lub2 = load("res://files/buttons/sexicons/lub2.png"),
@@ -286,6 +282,8 @@ func startsequence(actors, mode = null, secondactors = []):
 			newmember.consent = false
 			participants.append(newmember)
 	get_node("Panel/sceneeffects").set_bbcode("You bring selected participants into your bedroom. ")
+	for i in participants:
+		i.person.attention = 0
 	turns = variables.timeforinteraction
 	changecategory('caress')
 	clearstate()
@@ -325,7 +323,7 @@ func rebuildparticipantslist():
 		elif takers.find(i) >= 0:
 			newnode.get_node("take").set_pressed(true)
 		newnode.set_meta("person", i)
-		newnode.get_node("sex").set_texture(sexicons[i.person.sex])
+		newnode.get_node("sex").set_texture(globals.sexicon[i.person.sex])
 		newnode.get_node("sex").set_tooltip(i.person.sex)
 		newnode.get_node("lust").set_texture(statsicons['lust' + str(max(1,ceil(i.lust/200)))])
 		newnode.get_node("sens").set_texture(statsicons['sens' + str(max(1,ceil(i.sens/200)))])

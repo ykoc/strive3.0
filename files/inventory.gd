@@ -3,6 +3,8 @@ extends Node
 var state
 var location = 'mansion'
 var selectedslave
+var filter = ''
+
 
 var categories = {everything = true, potion = false, ingredient = false, gear = false, supply = false}
 onready var itemgrid = get_node("ScrollContainer/GridContainer")
@@ -35,25 +37,7 @@ orc = {male = load("res://files/buttons/inventory/shades/Orc_-M.png"), female = 
 }
 
 
-#,'weaponclaymore','clothpet','clothkimono','underwearlacy','weaponaynerisrapier'
 func _ready():
-#	var i = 3
-#	if globals.player.name == '':
-#		globals.player = globals.newslave(globals.allracesarray[rand_range(0,globals.allracesarray.size())], 'random', 'random')
-#		while i > 0:
-#			i -= 1
-#			var person = globals.newslave(globals.allracesarray[rand_range(0,globals.allracesarray.size())], 'random', 'random')
-#			globals.slaves = person
-	
-	
-#	for i in globals.itemdict.values():
-#		i.unlocked = true
-#		if !i.type in ['gear','dummy']:
-#			i.amount += 10
-#	for i in ['armorchain','armorchain','armorchain','armorchain','armorchain']:
-#		var tmpitem = globals.items.createunstackable(i)
-#		globals.items.enchantrand(tmpitem)
-#		globals.state.unstackables[str(tmpitem.id)] = tmpitem
 	
 	
 	
@@ -64,7 +48,6 @@ func _ready():
 	for i in get_tree().get_nodes_in_group("invcategory"):
 		i.connect("pressed",self,'selectcategory',[i])
 	
-#	open()
 
 
 
@@ -110,6 +93,7 @@ func unequip(gear):
 
 func open(place = 'mansion', part = 'inventory', keepslave = false):
 	
+	
 	location = place
 	state = part
 	if keepslave == false:
@@ -154,7 +138,7 @@ func itemsinventory():
 	var tempitem
 	
 	for i in globals.itemdict.values():
-		if i.amount < 1 || i.type in ['gear','dummy']:
+		if i.amount < 1 || i.type in ['gear','dummy'] || (filter != '' && (i.name.findn(filter) < 0 && i.description.findn(filter) < 0)):
 			continue
 		array.append(i)
 	array.sort_custom(globals.items,'sortitems')
@@ -178,22 +162,24 @@ func itemsinventory():
 			button.get_node("icon").set_texture(i.icon)
 		itemgrid.add_child(button)
 	array.clear()
-		
+	
 	for i in globals.state.unstackables.values():
 		if (i.owner != null && str(i.owner) != 'backpack') && globals.state.findslave(i.owner) == null && str(i.owner) != globals.player.id:
 			i.owner = null
-		if i.owner != null:
+		if i.owner != null || (filter != '' && (i.name.findn(filter) < 0 && i.description.findn(filter) < 0)):
 			continue
 		var entryexists = false
 		for k in array:
-			if k.size() > 0 && k[0].code == i.code && str(k[0].effects) == str(i.effects) :
+			if k.size() > 0 && k[0].code == i.code && k[0].name == i.name && str(k[0].effects) == str(i.effects) :
 				k.append(i)
 				entryexists = true
 				break
 		if entryexists == false:
 			array.append([])
 			array[array.size()-1].append(i)
-		
+	
+	#array.sort_custom(self, 'sortgear')
+	
 	for i in array:
 		button = get_node("ScrollContainer/GridContainer/Button").duplicate()
 		button.visible = true
@@ -208,6 +194,8 @@ func itemsinventory():
 		button.set_meta("itemarray", i)
 		button.set_meta("number", i.size())
 		button.set_meta("category", 'gear')
+		button.get_node("rename").visible = true
+		button.get_node("rename").connect("pressed",self,"renameitem",[i[0]])
 		if i[0].enchant == 'basic':
 			button.get_node("Label").set('custom_colors/font_color', Color(0,0.5,0))
 		elif i[0].enchant == 'unique':
@@ -215,6 +203,12 @@ func itemsinventory():
 		if i[0].icon != null:
 			button.get_node("icon").set_texture(load(i[0].icon))
 		itemgrid.add_child(button)
+
+func sortgear(first, second):
+	if first[0].name[0] < second[0].name[0]:
+		return second
+	else:
+		return first
 
 func itemsbackpack():
 	var itemgrid = get_node("ScrollContainer/GridContainer")
@@ -224,6 +218,8 @@ func itemsbackpack():
 	var tempitem
 	for i in globals.state.backpack.stackables:
 		tempitem = globals.itemdict[i]
+		if (filter != '' && (tempitem.name.findn(filter) < 0 && tempitem.description.findn(filter) < 0)):
+			continue
 		button = get_node("ScrollContainer/GridContainer/Button").duplicate()
 		get_node("ScrollContainer/GridContainer").add_child(button)
 		button.visible = true
@@ -244,17 +240,19 @@ func itemsbackpack():
 	for i in globals.state.unstackables.values():
 		if (i.owner != null && str(i.owner) != 'backpack') && globals.state.findslave(i.owner) == null && str(i.owner) != globals.player.id:
 			i.owner = null
-		if str(i.owner) != 'backpack':
+		if str(i.owner) != 'backpack' || (filter != '' && (i.name.findn(filter) < 0 && i.description.findn(filter) < 0)):
 			continue
 		var entryexists = false
 		for k in array:
-			if k.size() > 0 && k[0].code == i.code && str(k[0].effects) == str(i.effects) :
+			if k.size() > 0 && k[0].code == i.code && k[0].name == i.name && str(k[0].effects) == str(i.effects) :
 				k.append(i)
 				entryexists = true
 				break
 		if entryexists == false:
 			array.append([])
 			array[array.size()-1].append(i)
+	
+	array.sort_custom(self, 'sortgear')
 	
 	for i in array:
 		
@@ -271,12 +269,20 @@ func itemsbackpack():
 		button.set_meta("itemarray", i)
 		button.set_meta("number", i.size())
 		button.set_meta("category", 'gear')
+		button.get_node("rename").visible = true
+		button.get_node("rename").connect("pressed",self,"renameitem",[i[0]])
 		if i[0].enchant != '':
 			button.get_node("Label").set('custom_colors/font_color', Color(0,0.5,0))
 		if i[0].icon != null:
 			button.get_node("icon").set_texture(load(i[0].icon))
 		get_node("ScrollContainer/GridContainer").add_child(button)
 
+var renameitem
+
+func renameitem(item):
+	renameitem = item
+	$itemrename.popup()
+	$itemrename/TextEdit.text = item.name
 
 func slavelist():
 	var button
@@ -525,6 +531,8 @@ func hairdyeeffect():
 
 func _on_inventoryclose_pressed():
 	self.visible = false
+	filter = ''
+	$search.text = ''
 	if get_parent().get_node("MainScreen/slave_tab").visible:
 		get_parent().get_node("MainScreen/slave_tab").slavetabopen()
 
@@ -741,3 +749,22 @@ func _on_amnesiaconf_pressed():
 	selectedslave.name = $amnesia/name.text
 	selectedslave.surname = $amnesia/surname.text
 	slavelist()
+
+
+func _on_LineEdit_text_changed(new_text):
+	filter = new_text
+	clearitems()
+	if state != 'backpack':
+		itemsinventory()
+	else:
+		itemsbackpack()
+
+
+func _on_renameconfirm_pressed():
+	renameitem.name = $itemrename/TextEdit.text
+	$itemrename.visible = false
+	updateitems()
+
+
+func _on_renamecancel_pressed():
+	$itemrename.visible = false

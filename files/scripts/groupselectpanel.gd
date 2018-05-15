@@ -20,7 +20,7 @@ func show():
 		get_node("grouppanel/ScrollContainer/VBoxContainer").add_child(newbutton)
 		newbutton.visible = true
 		newbutton.set_text(person.name_long() + ' ' + person.race)
-		if globals.state.playergroup.find(person.id) >= 0:
+		if globals.state.playergroup.has(str(person.id)):
 			newbutton.set_pressed(true)
 		elif globals.state.playergroup.size() >= 3 || person.energy <= 10 || person.stress >= 80 || person.loyal + person.obed < 90 || person.sleep == 'jail' || person.away.duration != 0:
 			newbutton.set_disabled(true)

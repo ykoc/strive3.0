@@ -80,7 +80,7 @@ func maintext_get():
 func currentslave_set(value):
 	currentslave = value
 	globals.items.person = globals.slaves[currentslave]
-	get_node("spellnode").person = globals.slaves[currentslave]
+	globals.spells.person = globals.slaves[currentslave]
 
 func _input(event):
 	var anythingvisible = false
@@ -156,7 +156,7 @@ func _ready():
 				k.unlocked = true
 		_on_new_slave_button_pressed()
 	rebuild_slave_list()
-	get_node("spellnode").main = get_tree().get_current_scene()
+	globals.spells.main = get_tree().get_current_scene()
 	get_node("birthpanel/raise/childpanel/child").connect('pressed', self, 'babyage', ['child'])
 	get_node("birthpanel/raise/childpanel/teen").connect('pressed', self, 'babyage', ['teen'])
 	get_node("birthpanel/raise/childpanel/adult").connect('pressed', self, 'babyage', ['adult'])
@@ -268,7 +268,7 @@ func _on_new_slave_button_pressed():
 	globals.resources.upgradepoints += 100
 	
 	globals.state.sidequests.brothel = 1
-	globals.state.sidequests.maple = 3
+	globals.state.sidequests.yris = 3
 	#globals.state.decisions.append('')
 	globals.state.rank = 3
 	globals.state.mainquest = 2
@@ -584,7 +584,7 @@ func _on_end_pressed():
 			else:
 				person.stress += 20
 				person.health -= rand_range(person.stats.health_max/6,person.stats.health_max/4)
-				person.obed += -max(35 - person.loyal/3,10)
+				person.obed -= max(35 - person.loyal/3,10)
 				if person.health < 1:
 					text = person.dictionary('[color=#ff4949]$name has died of starvation.[/color]\n')
 					deads_array.append({number = count, reason = text})
@@ -685,7 +685,7 @@ func _on_end_pressed():
 						if rand_range(0,100) < 10:
 							person.trait_remove("Uncivilized")
 							text0.set_bbcode(text0.get_bbcode() + i.dictionary("[color=green]$name managed to lift ") + person.dictionary("$name out of $his wild behavior and turn into a socially functioning person.[/color]\n "))
-			if person.traits.find("Clingy") >= 0 && person.attention > 75 && rand_range(0,2) > 1:
+			if person.traits.find("Clingy") >= 0 && person.loyal >= 15 && person.attention > 75 && randf() > 0.5:
 				person.obed -= rand_range(10,30)
 				person.loyal -= rand_range(1,5)
 				text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=yellow]$name is annoyed by you paying no attention to $him. [/color]\n"))
@@ -743,28 +743,35 @@ func _on_end_pressed():
 				person.lust += rand_range(5,10)
 				if person.lewdness < 40 && !person.traits.has("Pervert") && !person.traits.has("Sex-crazed"):
 					person.stress += rand_range(5,10)
-			if person.punish.expect == true:
-				person.punish.strength = -1
-				person.obed += 15-person.cour/10
-				if person.punish.strength <= 0:
-					person.punish.expect = false
-			if person.praise > 0:
-				person.praise -= 1
-				person.obed += rand_range(5,10)
 			for i in person.gear.values():
 				if i != null && globals.state.unstackables.has(i):
 					var tempitem = globals.state.unstackables[i]
+					globals.items.person = person
 					for k in tempitem.effects:
 						if k.type == 'onendday':
-							text2.set_bbcode(text2.get_bbcode() + person.dictionary(globals.items.call(k.effect, person)))
+							if k.has('effectvalue'):
+								text2.bbcode_text += person.dictionary(globals.items.call(k.effect, k.effectvalue))
+							else:
+								text2.set_bbcode(text2.get_bbcode() + person.dictionary(globals.items.call(k.effect, person)))
+			if person.fear > 0:
+				var fearreduction = 10 + person.conf/20
+				if person.sleep == 'jail':
+					fearreduction -= fearreduction*0.3
+				if person.fear - fearreduction > 0:
+					person.obed += 20
+					person.fear -= fearreduction
+				else:
+					person.obed += 20 - abs(person.fear - fearreduction)*1.5
+					text2 += person.dictionary("[color=yellow]$name seems to be no longer afraid of you.[/color]\n")
+					person.fear = 0
 			if person.toxicity > 0:
 				if person.toxicity > 35 && rand_range(0,10) > 6.5:
 					person.stress += rand_range(10,15)
 					person.health -= rand_range(10,15)
 					text2.set_bbcode(text2.get_bbcode() + person.dictionary("$name suffers from magical toxicity.\n"))
 				if person.toxicity > 60 && rand_range(0,10) > 7.5:
-					get_node("spellnode").slave = person
-					text0.set_bbcode(text0.get_bbcode()+get_node("spellnode").mutate(person.toxicity/30, true) + "\n\n")
+					globals.spells.person = person
+					text0.set_bbcode(text0.get_bbcode()+globals.spells.mutate(person.toxicity/30, true) + "\n\n")
 				person.toxicity -= rand_range(1,5)
 			if person.stress > 80 && person.sleep != 'jail' && person.sleep != 'farm' && person.away.duration < 1:
 				text0.set_bbcode(text0.get_bbcode() + person.dictionary("$name complained "+globals.fastif(headgirl == null, "to you, ", "to your headgirl, ")+"that $he's having it too hard and hoped to get some rest.\n"))
@@ -999,7 +1006,8 @@ func _on_end_pressed():
 	else:
 		text = text + 'Your food storage grew by [color=aqua]' + str(globals.resources.food - start_food) + '[/color] units of food.\n'
 	text0.set_bbcode(text0.get_bbcode() + text)
-	globals.state.sexactions = globals.player.send + 2
+	globals.state.sexactions = ceil(globals.player.send/2) + 1
+	globals.state.nonsexactions = ceil(globals.player.send/2) + 1
 	if deads_array.size() > 0:
 		results = 'worst'
 		deads_array.invert()
@@ -1632,7 +1640,7 @@ func _on_mansion_pressed():
 	get_node("Navigation").show()
 	get_node("ResourcePanel/menu").disabled = false
 	get_node("ResourcePanel/helpglossary").disabled = false
-	get_node("MainScreen/mansion/sexbutton").set_disabled(globals.state.sexactions < 1)
+	get_node("MainScreen/mansion/sexbutton").set_disabled(globals.state.sexactions < 1 && globals.state.nonsexactions < 1)
 	if globals.player.imageportait != null && globals.loadimage(globals.player.imageportait):
 		$Navigation/personal/TextureRect.texture = globals.loadimage(globals.player.imageportait)
 	else:
@@ -2173,7 +2181,7 @@ func _on_spellbook_pressed():
 	var array = []
 	for i in globals.spelldict.values():
 		array.append(i)
-	array.sort_custom(get_node("spellnode"),'sortspells')
+	array.sort_custom(globals.spells,'sortspells')
 	get_node("spellbooknode/spellbooklist/spelldescription").set_bbcode('')
 	for i in array:
 		if i.learned == true && i.type == spellscategory:
@@ -3274,7 +3282,7 @@ func updatedescription():
 	if sexmode == 'meet':
 		text += "[center][color=yellow]Interact[/color][/center]\nBuild relationship or train your servant:\n"
 		for i in sexslaves:
-			text += i.dictionary('$name') + ", "
+			text += i.dictionary('[color=aqua]$name[/color]') + ". "
 	elif sexmode == 'sex':
 		if sexslaves.size() <= 1:
 			text += "[center][color=yellow]Consensual Sex[/color][/center]"
@@ -3285,31 +3293,39 @@ func updatedescription():
 			text += "\n[color=aqua]Aphrodite's Brew[/color] is required to initialize an orgy. "
 		text += "\nConsent is required from participants. \nCurrent participants: "
 		for i in sexslaves:
-			text += i.dictionary('$name') + ", "
+			text += i.dictionary('[color=aqua]$name[/color]') + ", "
 		text = text.substr(0, text.length() - 2) + '.\nClick Start to initiate.'
 	elif sexmode == 'abuse':
 		text += "[center][color=yellow]Rape[/color][/center]"
 		text += "\nRequires a target and an optional assistant. Can be initiated with prisoners. \nCurrent target: "
 		for i in sexslaves:
-			text += i.dictionary('$name') + ". "
+			text += i.dictionary('[color=aqua]$name[/color]') + ". "
 		text += "\nCurrent assistant: "
 		for i in sexassist:
-			text += i.dictionary('$name') + ". "
+			text += i.dictionary('[color=aqua]$name[/color]') + ". "
 		text += '\nClick Start to initiate.'
 		get_node("sexselect/startbutton").set_disabled(sexslaves.size() == 1 && sexassist.size() <= 1)
-	text += "\nInteractions left for today: " + str(globals.state.sexactions)
+	text += "\n\nNon-sex Interactions left for today: " + str(globals.state.nonsexactions)
+	text += "\nSex Interactions left for today: " + str(globals.state.sexactions)
 	
-	if sexslaves.size() >= 4 && sexmode == 'sex':
-		get_node("sexselect/startbutton").set_disabled(globals.itemdict.aphroditebrew.amount < 1)
+	var enablebutton = true
+	
+	if sexslaves.size() >= 4 && sexmode == 'sex' && globals.itemdict.aphroditebrew.amount < 1:
+		enablebutton = false
 	elif sexslaves.size() == 0:
-		get_node("sexselect/startbutton").set_disabled(true)
-	else:
-		get_node("sexselect/startbutton").set_disabled(false)
+		enablebutton = false
+	if (sexmode == 'meet' && globals.state.nonsexactions < 1) || (sexmode != 'meet' && globals.state.sexactions < 1):
+		enablebutton = false 
+	
+	$sexselect/startbutton.disabled = !enablebutton
 	get_node("sexselect/sextext").set_bbcode(text)
 
 
 func _on_startbutton_pressed():
-	globals.state.sexactions -= 1
+	if sexmode == 'meet':
+		globals.state.nonsexactions -= 1
+	else:
+		globals.state.sexactions -= 1
 	if globals.state.sidequests.emily == 16:
 		var emily = false
 		var tisha = false

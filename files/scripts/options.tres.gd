@@ -28,7 +28,7 @@ func _ready():
 		get_node("TabContainer/Game/noadults").set_pressed(globals.rules.noadults)
 	else:
 		get_node("TabContainer/Game/noadults").hide()
-	if globals.state.password == 'bxjsfybp':
+	if globals.state.password == 'fkfynroh':
 		get_node("TabContainer/Supporter section/cheats").set_disabled(false)
 		get_node("TabContainer/Supporter section/cheatpasswordenter").set_disabled(true)
 	else:

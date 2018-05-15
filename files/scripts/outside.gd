@@ -231,7 +231,8 @@ func abilitytoggle(ability):
 		partyselectedchar.abilityactive.erase(ability)
 	iteminfoclose()
 	if get_parent().get_node('combat').is_visible_in_tree():
-		get_parent().get_node('combat').update()
+		get_parent().get_node('combat').selectedcombatant = partyselectedchar
+		get_parent().get_node("combat").updateabilities(get_parent().get_node('combat').findcombatantfromslave(partyselectedchar))
 
 func _on_grade_mouse_entered():
 	var text = ''
@@ -270,6 +271,9 @@ func buildbars(parentnode, person):
 	parentnode.get_node("en").value = (float(person.energy)/person.stats.energy_max)*100
 	parentnode.get_node("en").hint_tooltip = "Energy: " + str(person.energy) + "/" + str(person.stats.energy_max)
 	parentnode.get_node("portait").set_texture(globals.loadimage(person.imageportait))
+	if parentnode.get_parent() == $playergrouppanel/VBoxContainer:
+		parentnode.get_node("xp").value = person.xp
+		parentnode.get_node("xp").hint_tooltip = "Experience: " + str(person.xp) + "/100"
 	if person != globals.player:
 		parentnode.get_node("stress").visible = true
 		parentnode.get_node("lust").visible = true
@@ -278,52 +282,6 @@ func buildbars(parentnode, person):
 	else:
 		parentnode.get_node("stress").visible = false
 		parentnode.get_node("lust").visible = false
-
-
-func utilitypanel(panel):
-	panel.get_node("utilitypanel").popup()
-	panel.get_node('utilitypanel').set_pos(Vector2(panel.get_global_pos().x,panel.get_global_pos().y - 70))
-	for i in panel.get_node("utilitypanel/HBoxContainer").get_children():
-		if i.get_name() != 'Button':
-			i.visible = false
-			i.queue_free()
-	var newbutton
-	for i in ['bandage','teleportseal']:
-		newbutton = panel.get_node("utilitypanel/HBoxContainer/Button").duplicate()
-		panel.get_node("utilitypanel/HBoxContainer/").add_child(newbutton)
-		newbutton.visible = true
-		if globals.state.backpack.stackables.has(i) && globals.state.backpack.stackables[i] >= 1:
-			newbutton.set_disabled(false)
-			newbutton.get_node('amount').set_text(str(globals.state.backpack.stackables[i]))
-		else:
-			newbutton.set_disabled(true)
-			newbutton.get_node("amount").set_text('0')
-		newbutton.get_node('icon').set_texture(globals.itemdict[i].icon)
-		newbutton.connect("pressed", self, 'useitem', [globals.itemdict[i], panel.get_meta('person')])
-		var text = '[center]' + globals.itemdict[i].name + '[/center]\n' + globals.itemdict[i].description
-		if i == 'teleportseal' && globals.player == panel.get_meta('person'):
-			text += "\n\n[color=#ff4949]Your captured slaves will be freed and your party will take time to return home on their own. [/color]"
-		newbutton.connect("mouse_entered", globals, 'showtooltip', [text])
-		newbutton.connect("mouse_exited", globals, 'hidetooltip')
-	for i in ['heal','invigorate']:
-		if globals.player == panel.get_meta('person') && i == 'invigorate':
-			return
-		newbutton = panel.get_node("utilitypanel/HBoxContainer/Button").duplicate()
-		panel.get_node("utilitypanel/HBoxContainer/").add_child(newbutton)
-		newbutton.visible = true
-		newbutton.get_node('amount').set_text(str(globals.spelldict[i].manacost))
-		newbutton.get_node('icon').set_texture(load("res://files/buttons/cast.png"))
-		if globals.spelldict[i].learned == true && globals.resources.mana >= globals.spelldict[i].manacost:
-			newbutton.get_node('amount').set('custom_colors/font_color', Color(0,1,0))
-		else:
-			newbutton.set_disabled(true)
-			newbutton.get_node('amount').set('custom_colors/font_color', Color(1,0,0))
-		newbutton.connect("pressed", self, 'usespell', [globals.spelldict[i], panel.get_meta('person')])
-		var text = '[center]' + globals.spelldict[i].name + '[/center]' + '\n' + globals.spelldict[i].description + '\nMana cost: ' + str(globals.spelldict[i].manacost)
-		newbutton.connect("mouse_entered", globals, 'showtooltip', [text])
-		newbutton.connect("mouse_exited", globals, 'hidetooltip')
-
-
 
 func town():
 	main.get_node("explorationnode").zoneenter('wimborn')
@@ -547,6 +505,7 @@ var mindread = false
 var sellslavelocation
 var guildlocation
 
+
 func slaveguildslaves():
 	get_node("slavebuypanel").visible = true
 	var slavelist = get_node("slavebuypanel/slavebuypanel/ScrollContainer/VBoxContainer")
@@ -559,7 +518,7 @@ func slaveguildslaves():
 		var newbutton = slavebutton.duplicate()
 		slavelist.add_child(newbutton)
 		newbutton.visible = true
-		newbutton.get_node('name').set_text(person.dictionary('$name, ')+ person.race + ', '+ person.sex)
+		newbutton.get_node('name').set_text(person.dictionary('$name, ')+ person.race)
 		newbutton.get_node('age').set_text(person.age.capitalize())
 		newbutton.get_node('origins').set_text(person.dictionary('Grade: '+person.origins))
 		var price = max(person.buyprice()*0.8,50)
@@ -571,6 +530,7 @@ func slaveguildslaves():
 		newbutton.set_meta('person', person)
 		newbutton.get_node('price').set_text(str(price)+ ' gold')
 		newbutton.set_meta('price', price)
+		newbutton.get_node("sex").texture = globals.sexicon[person.sex]
 		newbutton.connect('pressed',self,'selectslavebuy',[person])
 	if guildlocation != 'outside':
 		mansion.maintext = 'You get a simple catalogue with currently present slaves available for purchase.'
@@ -2420,15 +2380,17 @@ func useitem(item, person):
 
 
 func usespell(spell, person):
-	get_parent().get_node('spellnode').person = person
+	var text = ''
+	globals.spells.person = person
 	if spell.code == 'heal':
-		get_parent().get_node('spellnode').healeffect()
+		text = globals.spells.healeffect()
 	elif spell.code == 'invigorate':
-		get_parent().get_node('spellnode').invigorateeffect()
+		text = globals.spells.invigorateeffect()
 	elif spell.code == 'mindread' && person != globals.player:
-		get_parent().get_node('spellnode').mindreadeffect()
+		text = globals.spells.mindreadeffect()
 	elif spell.code == 'guidance':
-		get_parent().get_node('spellnode').guidanceeffect()
+		text = globals.spells.guidanceeffect()
+	main.popup(text)
 	_on_details_pressed()
 	playergrouppanel()
 
@@ -2486,8 +2448,8 @@ func freetrue():
 
 func _on_capturedmindread_pressed():
 	get_node("playergroupdetails/capturedslave").visible = false
-	get_parent().get_node("spellnode").person = captureeselected
-	get_parent().get_node("spellnode").mindreadeffect()
+	globals.spells.person = captureeselected
+	globals.main.popup(globals.spells.mindreadeffect())
 
 
 

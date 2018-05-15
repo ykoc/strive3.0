@@ -29,8 +29,8 @@ class fighter:
 	var powerbase
 	var magic
 	var magicbase
-	var energy
-	var energymax
+	var energy = 0 setget energy_set
+	var energymax = 0
 	var armor
 	var armorbase
 	var protection
@@ -55,6 +55,9 @@ class fighter:
 #			globals.main.get_node('combat').animatetext(damage, button)
 		health = value
 		pasthealth = health
+	
+	func energy_set(value):
+		energy = clamp(round(value),0,energymax)
 	
 	func sendbuff():
 		var temptarget
@@ -159,8 +162,8 @@ func start_battle(nosound = false):
 	elif slave.race.find('Wolf') >= 0:
 		combatant.power += 2 
 	combatant.magic = slave.smaf
-	combatant.energy = slave.stats.energy_cur
 	combatant.energymax = slave.stats.energy_max
+	combatant.energy = slave.stats.energy_cur
 	combatant.armor = slave.stats.armor_cur
 	combatant.protection = 0
 	combatant.abilities = {}
@@ -171,10 +174,7 @@ func start_battle(nosound = false):
 	combatant.action = null
 	combatant.target = null
 	combatant.party = 'ally'
-	for i in slave.abilityactive:
-		combatant.activeabilities.append(globals.abilities.abilitydict[i])
-	for i in slave.ability:
-		combatant.abilities[i] = globals.abilities.abilitydict[i]
+	updateabilities(combatant)
 	for i in slave.gear.values():
 		if i != null:
 			var tempitem = globals.state.unstackables[i]
@@ -206,8 +206,8 @@ func start_battle(nosound = false):
 		if slave.spec == 'assassin':
 			combatant.speed += 5
 		combatant.magic = slave.smaf
-		combatant.energy = slave.stats.energy_cur
 		combatant.energymax = slave.stats.energy_max
+		combatant.energy = slave.stats.energy_cur
 		combatant.armor = slave.stats.armor_cur
 		combatant.protection = 0
 		combatant.state = 'normal'
@@ -218,10 +218,7 @@ func start_battle(nosound = false):
 		combatant.action = null
 		combatant.target = null
 		combatant.party = 'ally'
-		for i in slave.abilityactive:
-			combatant.activeabilities.append(globals.abilities.abilitydict[i])
-		for i in slave.ability:
-			combatant.abilities[i] = globals.abilities.abilitydict[i]
+		updateabilities(combatant)
 		for i in slave.gear.values():
 			if i != null:
 				var tempitem = globals.state.unstackables[i]
@@ -261,8 +258,8 @@ func start_battle(nosound = false):
 			combatant.speed = i.stats.speed
 			combatant.power = i.stats.power
 			combatant.magic = i.stats.magic
-			combatant.energy = i.stats.energy
 			combatant.energymax = i.stats.energy
+			combatant.energy = i.stats.energy
 			combatant.armor = i.stats.armor
 			combatant.protection = 0
 			combatant.state = 'normal'
@@ -331,7 +328,16 @@ func start_battle(nosound = false):
 	
 	if globals.state.tutorial.combat == false:
 		globals.main.get_node("tutorialnode").combat()
-	
+
+func updateabilities(combatant):
+	combatant.activeabilities.clear()
+	combatant.abilities.clear()
+	for i in combatant.person.abilityactive:
+		combatant.activeabilities.append(globals.abilities.abilitydict[i])
+	for i in combatant.person.ability:
+		combatant.abilities[i] = globals.abilities.abilitydict[i]
+	choosecharacter(combatant)
+
 
 func damage(combatant, value):
 	combatant.power += value
@@ -753,14 +759,14 @@ func actionexecute(actor, target, skill):
 				target.energy -= (targethealthinit - target.health)/5
 			else:
 				target.energy -= (targethealthinit - target.health)/2.5
-			if skill.attributes.find('allparty') >= 0:
+			if skill.attributes.has('allparty'):
 				text += "\nStrong attack affects everyone in opposing party."
 				for i in targetparty:
 					if i != target:
 						i.health -= damage
 			if target.energy < 0:
 				target.energy = 0
-			if skill.attributes.find('lifesteal') >= 0:
+			if skill.attributes.has('lifesteal'):
 				actor.health = min(actor.health + (targethealthinit - target.health)/4,actor.healthmax)
 				text += actor.name + ' recovered some health back.' 
 	elif skill.target == 'self':
@@ -1200,11 +1206,10 @@ func selectabilityfromlist(ability):
 
 func toggleabilityfromlist(ability, checkbox):
 	if checkbox.is_pressed() == true && selectedcombatant.activeabilities.has(ability) == false:
-		selectedcombatant.activeabilities.append(ability)
 		selectedcombatant.person.abilityactive.append(ability.code)
 	else:
-		selectedcombatant.activeabilities.remove(selectedcombatant.activeabilities.find(ability))
 		selectedcombatant.person.abilityactive.erase(ability.code)
+	updateabilities(selectedcombatant)
 	_on_abilitites_pressed()
 
 
@@ -1229,3 +1234,8 @@ func _on_autowin_pressed():
 
 func _on_autoattack_pressed():
 	globals.rules.autoattack = get_node("autoattack").is_pressed()
+
+func findcombatantfromslave(person):
+	for i in playergroup:
+		if i.person == person:
+			return i

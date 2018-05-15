@@ -15,6 +15,9 @@ enchconf = {name = "+% Confidence", id = 'costumeconf', effect = "conf", mineffe
 enchwit = {name = "+% Wit", id = 'costumewit', effect = "wit", mineffect = 10, maxeffect = 20, itemtypes = ['costume'], type = 'onequip'},
 enchcharm = {name = "+% Charm", id = 'costumecharm', effect = "charm", mineffect = 10, maxeffect = 20, itemtypes = ['costume'], type = 'onequip'},
 enchbeauty = {name = "+% Beauty", id = 'costumebeauty', effect = "beauty", mineffect = 5, maxeffect = 15, itemtypes = ['costume'], type = 'onequip'},
+enchfear = {name = "+% Fear per day", id = 'costumefear', effect = "fear", mineffect = 5, maxeffect = 8, itemtypes = ['costume'], type = 'onendday'},
+enchfearaccess = {name = "+% Fear per day", id = 'costumefear', effect = "fear", mineffect = 3, maxeffect = 6, itemtypes = ['accessory'], type = 'onendday'},
+enchstress = {name = "-% Stress per day", id = 'costumefear', effect = "stress", mineffect = 5, maxeffect = 8, itemtypes = ['costume'], type = 'onendday'},
 
 }
 

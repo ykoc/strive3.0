@@ -1,10 +1,9 @@
 
 extends Node
 
-var spelldict = {}
 var effectdict = {}
 var guildslaves = {wimborn = [], gorn = [], frostford = [], umbra = []}
-var gameversion = 5800
+var gameversion = 5900
 var state = progress.new()
 var developmode = false
 var gameloaded = false
@@ -25,6 +24,8 @@ var abilities = load("res://files/scripts/abilities.gd").new()
 var effects = load("res://files/scripts/effects.gd").new()
 var events = load("res://files/scripts/events.gd").new()
 var items = load("res://files/scripts/items.gd").new()
+var spells = load("res://files/scripts/spells.gd").new()
+var spelldict = spells.spelllist
 var itemdict = items.itemlist
 var questtext = events.textnode
 var racefile = load("res://files/scripts/characters/races.gd").new()
@@ -131,6 +132,7 @@ chloewoods = load("res://files/images/sexscenes/chloewoods.png"),
 maplebj = load("res://files/images/sexscenes/maplebj.png"),
 maplesex = load("res://files/images/sexscenes/maplesex.png"),
 yrisbj = load("res://files/images/sexscenes/yrisbj.png"),
+yrissex = load("res://files/images/sexscenes/yrissex.png"),
 }
 var mansionupgradesdict = mansionupgrades.dict
 var gradeimages = {
@@ -153,6 +155,13 @@ nympho = load("res://files/buttons/mainscreen/36.png"),
 merchant = load("res://files/buttons/mainscreen/35.png"),
 tamer = load("res://files/buttons/mainscreen/32.png"),
 }
+
+var sexicon = {
+female = load("res://files/buttons/sexicons/female.png"),
+male = load("res://files/buttons/sexicons/male.png"),
+futanari = load("res://files/buttons/sexicons/futa.png"),
+}
+
 
 var noimage = load("res://files/buttons/noimagesmall.png")
 
@@ -511,6 +520,7 @@ class progress:
 	var restday = 0
 	var defaultmasternoun = "Master"
 	var sexactions = 1
+	var nonsexactions = 1
 	var actionblacklist = []
 	
 	func calculateweight():
@@ -613,6 +623,8 @@ class person:
 	var asser = 0
 	var pubichair = 'clean'
 	
+	var fear = 0 setget fear_set,fear_get
+	
 	var lewdness = 0 setget lewdness_set
 	var lactation = false
 	var titsextra = 0
@@ -655,8 +667,6 @@ class person:
 	var realxp = 0
 	var skillpoints = 2
 	var levelupreqs = {} setget levelupreqs_set
-	var punish = {expect = false, strength = 0}
-	var praise = 0
 	var away = {duration = 0, at = ''}
 	var cattle = {is_cattle = false, work = '', used_for = 'food'}
 	var mods = {}
@@ -750,6 +760,9 @@ class person:
 	var smaf setget maf_set,maf_get
 	var send setget end_set,end_get
 	
+	func fear_raw(value):
+		fear += value
+	
 	func get_traits():
 		var array = []
 		for i in traits:
@@ -794,7 +807,18 @@ class person:
 		levelupreqs = value
 	
 	func lewdness_set(value):
-		lewdness = clamp(value, 0, 120)
+		lewdness = clamp(round(value), 0, 120)
+	
+	func fear_set(value):
+		var difference = value - fear
+		if difference > 0:
+			difference = difference - difference*self.cour/200
+		
+		fear += round(difference)
+		fear = clamp(fear, 0, 100+self.wit/2)
+	
+	func fear_get():
+		return fear
 	
 	func levelup():
 		levelupreqs.clear()
@@ -1710,8 +1734,7 @@ func repairsave():
 	for i in globals.state.unstackables.values():
 		if i.enchant == null:
 			i.enchant = ''
-	for i in globals.state.playergroup:
-		i = str(i)
+	globals.state.playergroup.clear()
 
 var showalisegreet = false
 

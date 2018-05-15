@@ -186,9 +186,9 @@ func entry():
 		else:
 			text = 'You see '
 		if person.nickname == '':
-			text = text + person.name + ' ' + person.surname + '. '
+			text += person.name + ' ' + person.surname + '. '
 		else:
-			text = text + person.name + ' "'+person.nickname+'" ' + person.surname + '. '
+			text += person.name + ' "'+person.nickname+'" ' + person.surname + '. '
 	else:
 		
 		text = 'Tied and bound [color=yellow]$sex[/color] looking at you with fear and hatred. '
@@ -247,49 +247,62 @@ func gettitsextra():
 	return text
 
 static func getstatus(person):
-	var text
-	var name = person.name_short()
+	var text = ''
+	text += 'Fear: '
+	if person.fear <= 20:
+		text += '[color=yellow]$name is not really afraid of you. [/color]'
+	elif person.fear <= 40:
+		text += '[color=#adff2f]$name has some concerns about your anger. [/color]'
+	elif person.fear <= 60:
+		text += "[color=green]$name knows well you can punish $him hastly. [/color]"
+	elif person.fear <= 80:
+		text += '[color=#adff2f]$name shows heavy signs of fear with you around. [/color]' 
+	else:
+		text += '[color=#FFA500]$name trembles with fear whenever you are mentioned. [/color]'
+	text += '\n'
+	text += "Obedience: "
 	
 	if person.obed <= 20:
-		text = '[color=#ff4949]$name barely pays any attention to you, as if demonstrating $his independence. [/color]'
+		text += '[color=#ff4949]$name barely pays any attention to you, as if demonstrating $his independence. [/color]'
 	elif person.obed <= 40:
-		text = '[color=#FFA500]$name avoids looking at you reacting poorly to any command. [/color]'
+		text += '[color=#FFA500]$name avoids looking at you reacting poorly to any command. [/color]'
 	elif person.obed <= 60:
-		text = "[color=yellow]$name shows some respect, but it is clear that it is forced. [/color]"
+		text += "[color=yellow]$name shows some respect, but it is clear that it is forced. [/color]"
 	elif person.obed <= 80:
-		text = '[color=#adff2f]$name tries to appeal to you, showing that your opinion is important to $him. [/color]' 
+		text += '[color=#adff2f]$name tries to appeal to you, showing that your opinion is important to $him. [/color]' 
 	else:
-		text = '[color=green]$name holds your word as law and gives you all of the attention that $he can muster. [/color]'
+		text += '[color=green]$name holds your word as law and gives you all of the attention that $he can muster. [/color]'
 	
-	text = text + '\n\n'
-	
+	text += '\n'
+	text += "Stress: "
 	if person.stress <= 20:
-		text = text + '[color=green]Overall $name acts content and lively[/color]. ' 
+		text += '[color=green]Overall $name acts content and lively[/color]. ' 
 	elif person.stress <= 40:
-		text = text + '[color=#adff2f]$name looks slightly down and tired.[/color] '
+		text += '[color=#adff2f]$name looks slightly down and tired.[/color] '
 	elif person.stress <= 60:
-		text = text + '[color=yellow]$name looks somewhat depressed.[/color] '
+		text += '[color=yellow]$name looks somewhat depressed.[/color] '
 	elif person.stress <= 80:
-		text = text + '[color=#FFA500]$name looks really stressed.[/color] '
+		text += '[color=#FFA500]$name looks really stressed.[/color] '
 	else:
-		text = text + '[color=#ff4949]$name looks terrible, as if $he could break apart at any moment.[/color] '
+		text += '[color=#ff4949]$name looks terrible, as if $he could break apart at any moment.[/color] '
 	
-	text = text + '\n\n'
+	text += '\n'
 	
+	text += "Loyalty: "
 	if person.loyal <= 20:
-		text = text + '[color=#ff4949]$name’s face is cold showing no sign of attachment. [/color]' 
+		text += '[color=#ff4949]$name’s face is cold showing no sign of attachment. [/color]' 
 	elif person.loyal <= 40:
-		text = text + "[color=#FFA500]$name's attitude gives away some of the affection $he holds for you. [/color]"
+		text += "[color=#FFA500]$name's attitude gives away some of the affection $he holds for you. [/color]"
 	elif person.loyal <= 60:
-		text = text + '[color=yellow]$name shows considerable loyalty to you as $his master.[/color] '
+		text += '[color=yellow]$name shows considerable loyalty to you as $his master.[/color] '
 	elif person.loyal <= 80:
-		text = text + '[color=#adff2f]$name face shows the strong bond and deep feelings they hold for you.[/color] '
+		text += '[color=#adff2f]$name face shows the strong bond and deep feelings they hold for you.[/color] '
 	else:
-		text = text + "[color=green]To $name, nothing is more important than you and your will.[/color] "
+		text += "[color=green]To $name, nothing is more important than you and your will.[/color] "
 	
 	
 	if person.effects.has('captured') == true:
-		text = text + '\n\n[color=#ff4949]Due to recent events $name rebels against your control.[/color]'
+		text += '\n[color=#ff4949]Due to recent events $name rebels against your control.[/color]'
 	text = person.dictionary(text)
 	
 	return text
@@ -304,11 +317,11 @@ func getBabyDescription(person):
 	feathers = "It has bird feathers in some places. ",
 	full_body_fur = "It shows the beginnings of fur. ",
 	}
-	text = text + dict[person.skincov]
+	text += dict[person.skincov]
 	if person.tail != 'none':
-		text = text + '$He appears to have small tail, inherited from one of the parents. '
+		text += '$He appears to have small tail, inherited from one of the parents. '
 	if person.horns != 'none':
-		text = text + '$He has pair of tiny horns on $his head. '
+		text += '$He has pair of tiny horns on $his head. '
 	dict = {
 	human = 'normal',
 	short_furry = 'short and furry',
@@ -319,7 +332,7 @@ func getBabyDescription(person):
 	feathery = "feathery",
 	fins = 'fin-like',
 	}
-	text = text + '$His ears are ' + dict[person.ears] + '. '
+	text += '$His ears are ' + dict[person.ears] + '. '
 	
 	text = person.dictionary(text)
 	return text

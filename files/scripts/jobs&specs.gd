@@ -374,7 +374,7 @@ vacation = {reqs = 'true', speech = "you should provide $name with [color=aqua]3
 relationship = {reqs = "person.consent == false && person.tags.find('nosex') < 0", speech = "you should unlock [color=aqua]intimacy[/color] with $name to unlock $his potential.", descript = "$name needs to have [color=aqua]intimacy unlocked[/color] to advance $his level. ", execfunc = 'startrelationship'},
 wincombat = {reqs = 'true', speech = "you should let $name to [color=aqua]win in a fight[/color] to unlock $his potential.", descript = "$name needs to [color=aqua]win in a fight[/color] to advance $his level. ", execfunc = 'wincombat'},
 improvegrade = {reqs = 'globals.originsarray.find(person.origins) <= 3', speech = "you should raise $name's [color=aqua]grade[/color] to unlock $his potential.", descript = "$name needs to [color=aqua]raise $his grade[/color] to advance $his level. ", execfunc = 'raisegrade'},
-specialization = {reqs = 'person.spec == null', speech = "you should let $name's [color=aqua]to learn specialization[/color] to unlock $his potential.", descript = "$name needs to [color=aqua]learn specialization[/color] to advance $his level. ", execfunc = 'getspec'},
+specialization = {reqs = 'person.spec == null && person.level >= 4', speech = "you should let $name's [color=aqua]to learn specialization[/color] to unlock $his potential.", descript = "$name needs to [color=aqua]learn specialization[/color] to advance $his level. ", execfunc = 'getspec'},
 }
 
 var requestsbylevel = {
