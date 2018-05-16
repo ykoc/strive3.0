@@ -762,7 +762,7 @@ func _on_end_pressed():
 					person.fear -= fearreduction
 				else:
 					person.obed += 20 - abs(person.fear - fearreduction)*1.5
-					text2 += person.dictionary("[color=yellow]$name seems to be no longer afraid of you.[/color]\n")
+					text2.bbcode_text += person.dictionary("[color=yellow]$name seems to be no longer afraid of you.[/color]\n")
 					person.fear = 0
 			if person.toxicity > 0:
 				if person.toxicity > 35 && rand_range(0,10) > 6.5:

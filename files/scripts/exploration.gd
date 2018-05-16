@@ -1065,7 +1065,7 @@ func inspectenemy():
 
 func mindreadcapturee(state = 'encounter'):
 	globals.spells.person = enemygroup.captured
-	globals.spells.mindreadeffect()
+	globals.main.popup(globals.spells.mindreadeffect())
 	if state == 'win':
 		enemydefeated()
 	elif state == 'slavers':
@@ -1073,13 +1073,6 @@ func mindreadcapturee(state = 'encounter'):
 	else:
 		encounterbuttons()
 
-func mindreadenemy():
-	var spell = globals.spelldict.mindread
-	var text = ''
-	globals.resources.mana -= spell.manacost
-	globals.get_tree().get_current_scene().popup(str(enemygroup.stats))
-	
-	encounterbuttons()
 
 func enemyleave():
 	progress += 1.0
@@ -1238,7 +1231,7 @@ func buildcapturelist():
 
 func mindreadslave(person):
 	globals.spells.person = person
-	globals.spells.mindreadeffect()
+	globals.main.popup(globals.spells.mindreadeffect())
 	buildcapturelist()
 
 func captureslave(person):
