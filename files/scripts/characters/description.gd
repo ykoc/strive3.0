@@ -275,16 +275,16 @@ static func getstatus(person):
 	
 	text += '\n'
 	text += "Stress: "
-	if person.stress <= 20:
+	if person.stress < 33:
 		text += '[color=green]Overall $name acts content and lively[/color]. ' 
-	elif person.stress <= 40:
-		text += '[color=#adff2f]$name looks slightly down and tired.[/color] '
-	elif person.stress <= 60:
+	elif person.stress < 66:
 		text += '[color=yellow]$name looks somewhat depressed.[/color] '
-	elif person.stress <= 80:
-		text += '[color=#FFA500]$name looks really stressed.[/color] '
+	elif person.stress < 99:
+		text += '[color=#FFA500]$name looks heavily stressed.[/color] '
 	else:
 		text += '[color=#ff4949]$name looks terrible, as if $he could break apart at any moment.[/color] '
+#	elif person.stress <= 60:
+#	
 	
 	text += '\n'
 	

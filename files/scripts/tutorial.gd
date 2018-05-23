@@ -34,6 +34,7 @@ basicstext = [
 {sprite = 'wink1',text = "You can find your current Money and Food stock in the panel at the top of the screen. "},
 {text = 'To earn food and income you will need to assign your servants to various occupations, then end the current day by clicking the button at the bottom of the screen or by pressing your "F" key.'},
 {sprite = 'happy1',text = "You can see the current available servants you have on the right hand side of screen. "},
+{text = "Take a note of [color=aqua]Interactions[/color] buttons: that is the place you can set up actions with your slaves!"},
 {text = "Once you are familiar with your new abode and the depth of it, feel free to leave it and explore your surroundings. "},
 {funct = 'closeorcont'},
 ],
@@ -88,6 +89,17 @@ slavesex = [
 {text = "Having vaginal intercourse can and will get your ladies pregnant.  Keep this in mind while choosing specific actions! Taking care of your offspring isn't something you should take lightly."},
 {text = "Don't think that because you aren't sexually active with your servant doesn't mean that they aren't sexually active. "},
 {text = "Even if you don't touch them, they still can get into naughty situations and masturbate here and there. ", choice = 'person'},
+],
+interactions = [
+{sprite = 'happy1',text = "Nice find! This panel here allows you to interact with any of your slaves. There are two types of interactions."},
+{text = "Basic interactions, which help you build a relationship with your slaves. Sexual interactions, however, increase loyalty, produce mana and allow the both of you, or maybe more, to have fun at the same time."}, 
+{text = "Be careful, though, you only have a limited number of interactions per day. You can increase this number by increasing your [color=aqua]Endurance[/color], though."},
+{text = "Basic interactions can increase their [color=aqua]Mood[/color] or [color=aqua]Fear[/color]. Improving mood helps raise Loyalty, while increasing Fear helps build discipline."},
+{sprite = 'happy2',text = "Try interacting with your slaves in different locations, you may find they make your actions more impactful Certain items and spells can also boost the effect of your actions."},
+{text = "Once you’ve developed a relationship with your slave, you can unlock consensual sexual actions."},
+{text = "Slaves can have different sexual preferences as they can be modified by certain traits. Even, after intimacy is unlocked, your lover may still refuse to perform certain sexual actions. These actions will require the slave to have a higher level of [color=aqua]Lewdness[/color] before they will consent."},
+{text = "In either case, feel free to experiment and have fun!"},
+{funct = 'closeorcont'},
 ],
 slaveend = [
 {sprite = 'happy1', text = "In case you forget anything, don't hesitate to ask!"}, 
@@ -215,7 +227,6 @@ person = [
 {text = 'Conditions', funct = 'slavecond'},
 {text = 'Grade', funct = 'slavegrade'},
 {text = "Jobs", funct = 'slavejobs'},
-{text = 'Sexuality', funct = 'slavesex'},
 {text = 'I know what I need', funct = 'slaveend'},
 ],
 help = [
@@ -229,6 +240,7 @@ gamehelp = [
 {text = "Return", funct = "help"},
 {text = "Basics", funct = 'basics'},
 {text = "Servants", funct = 'slavechoice', reqs = 'globals.state.tutorial.person == true'},
+{text = "Interactions", funct = 'interactions', reqs = 'globals.state.tutorial.interactions == true'},
 {text = "Jail", funct = "jail", reqs = 'globals.state.tutorial.jail == true'},
 {text = "Alchemy", funct = 'alchemy', reqs = 'globals.state.tutorial.alchemy == true'},
 {text = "Laboratory", funct = 'lab', reqs = 'globals.state.tutorial.lab == true'},
@@ -330,7 +342,7 @@ func show(dict):
 			if OS.get_name() != "HTML5":
 				set_process_input(false)
 				set_process(false)
-				yield(get_parent().get_node("AnimationPlayer"), 'finished')
+				yield(get_parent().get_node("AnimationPlayer"), 'animation_finished')
 				set_process_input(true)
 				set_process(true)
 		get_node("speech").show()
@@ -493,6 +505,10 @@ func slavejobs():
 
 func slavesex():
 	self.currentdict = textdict.slavesex
+
+func interactions():
+	globals.state.tutorial.interactions = true
+	self.currentdict = textdict.interactions
 
 func slaveend():
 	globals.state.tutorial.person = true

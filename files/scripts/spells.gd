@@ -360,8 +360,9 @@ func sortspells(first, second):
 
 func mutateeffect():
 	globals.resources.mana -= spelllist.mutate.manacost
-	mutate(2)
-	get_parent().rebuild_slave_list()
+	var text = mutate(2)
+	globals.main.rebuild_slave_list()
+	return text
 
 func mutate(power=2, silent = false):
 	var array = ['height','tits','ass','penis','balls','penistype','skin','skincov','eyecolor','eyeshape','haircolor','hairlength','ears','tail','wings','horns','beauty','lactation','nipples','lust','amnesia','pregnancy']

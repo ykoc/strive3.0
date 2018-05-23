@@ -613,7 +613,7 @@ func open(place = 'mansion', part = 'inventory', keepslave = false):
 	state = part
 	updateitems()
 	calculateweight()
-	
+	get_node(\"mode\").set_normal_texture(modetextures[state])
 	self.visible = true
 
 func updateitems():
@@ -917,7 +917,6 @@ func _on_confirm_pressed():
 	elif item.code.find('teleport') >= 0 && item.code != 'teleportseal':
 		globals.items.call(item.effect, item)
 		selecteditem = null
-		return
 	else:
 		globals.resources.gold -= price*amount
 	clearitems()

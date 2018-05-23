@@ -93,7 +93,6 @@ func unequip(gear):
 
 func open(place = 'mansion', part = 'inventory', keepslave = false):
 	
-	
 	location = place
 	state = part
 	if keepslave == false:
@@ -103,7 +102,7 @@ func open(place = 'mansion', part = 'inventory', keepslave = false):
 	updateitems()
 	calculateweight()
 	slavelist()
-	
+	get_node("mode").set_normal_texture(modetextures[state])
 	self.visible = true
 
 func updateitems():

@@ -240,8 +240,9 @@ func _on_new_slave_button_pressed():
 	for i in ['conf','cour','charm','wit']:
 		person[i] = 100
 	person.ability.append('debilitate')
-	for i in globals.state.portals.values():
-		i.enabled = true
+	globals.state.location = 'gorn'
+#	for i in globals.state.portals.values():
+#		i.enabled = true
 	for i in globals.spelldict.values():
 		i.learned = true
 	for i in globals.itemdict.values():
@@ -290,6 +291,8 @@ func _on_new_slave_button_pressed():
 	for i in globals.characters.characters:
 		person = globals.characters.create(i)
 		person.loyal = 100
+		person.stress = 0
+		person.obed = 100
 		person.lust = 0
 		person.consent = true
 		person.attention = 100
@@ -568,9 +571,6 @@ func _on_end_pressed():
 			######## Counting food
 			if globals.resources.food >= 5:
 				person.loyal += rand_range(0,1)
-				person.stress += rand_range(-5,-10)
-				if person.race == 'Fairy':
-					person.stress += rand_range(-10,-15)
 				person.health += rand_range(2,5)
 				person.obed += person.loyal/5 - (person.cour+person.conf)/10
 				var consumption = variables.basefoodconsumption
@@ -618,57 +618,6 @@ func _on_end_pressed():
 						deads_array.append({number = count, reason = temptext})
 					else:
 						text0.set_bbcode(text0.get_bbcode()+person.dictionary('[color=#ff4949]$name attempted to escape during the night but being handcuffed slowed them down and they were quickly discovered![/color]\n'))
-			#sleep conditions
-			if person.lust < 25 || person.traits.has('Sex-crazed'):
-				person.lust += round(rand_range(3,6))
-			if person.sleep == 'communal' && globals.count_sleepers()['communal'] > globals.state.mansionupgrades.mansioncommunal:
-				person.stress += rand_range(5,15)
-				person.health -= rand_range(1,5)
-				text2.set_bbcode(text2.get_bbcode() + person.dictionary('$name suffers from communal room being overcrowded.\n'))
-			elif person.sleep == 'communal':
-				person.stress += -rand_range(5,10)
-				person.health += rand_range(1,3)
-				person.energy += rand_range(20,30)+ person.stats.end_cur*6
-			elif person.sleep == 'personal':
-				person.stress += rand_range(-10,-15)
-				person.health += rand_range(2,6)
-				person.energy += rand_range(40,50)+ person.stats.end_cur*6
-				text2.set_bbcode(text2.get_bbcode() + person.dictionary('$name sleeps in a private room, which helps $him heal faster and provides some stress relief.\n'))
-				if person.lust >= 50 && person.rules.masturbation == false && person.tags.find('nosex') < 0:
-					person.lust -= rand_range(15,25)
-					person.lastsexday = globals.resources.day
-					text2.set_bbcode(text2.get_bbcode() + person.dictionary('In an attempt to calm $his lust, $he spent some time busying $himself in feverish masturbation, making use of $his private room.\n'))
-			elif person.sleep == 'your':
-				person.loyal += rand_range(1,4)
-				person.energy += rand_range(25,45)+ person.stats.end_cur*6
-				person.sexuals.affection += round(rand_range(1,2))
-				if person.loyal > 30:
-					person.stress -= person.loyal/7
-				if person.lust > 40 && person.consent && person.vagvirgin == false && person.tags.find('nosex') < 0:
-					text2.set_bbcode(text2.get_bbcode() + person.dictionary('$name went down on you being unable to calm $his lust.\n'))
-					person.lust -= rand_range(15,25)
-					person.metrics.sex += 1
-					person.lastsexday = globals.resources.day
-					globals.resources.mana += 2
-					globals.impregnation(person, globals.player)
-				else:
-					text2.set_bbcode(text2.get_bbcode() + person.dictionary('$name keeps you company at night and you grew closer.\n'))
-			elif person.sleep == 'jail':
-				person.metrics.jail += 1
-				person.obed += 25 - person.conf/6
-				person.energy += rand_range(20,30) + person.stats.end_cur*6
-				if person.stress > 30:
-					person.stress -= rand_range(5,10)
-				else:
-					if globals.state.mansionupgrades.jailtreatment == 0:
-						person.stress += person.conf/10
-			if person.lust >= 90 && person.rules.masturbation == true && !person.traits.has('Sex-crazed') && (rand_range(0,10)>7 || person.effects.has('stimulated')) && globals.resources.day - person.lastsexday >= 5:
-				person.add_trait('Sex-crazed')
-				text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=yellow]Left greatly excited and prohibited from masturbating, $name desperate state led $him to become insanely obsessed with sex.[/color]\n"))
-			elif person.lust >= 75 && globals.resources.day - person.lastsexday >= 5:
-				person.stress += rand_range(10,15)
-				person.obed -= rand_range(10,20)
-				text0.bbcode_text += person.dictionary("[color=red]$name is suffering from unquenched lust.[/color]\n")
 			#Races
 			if person.race == 'Elf':
 				person.asser = person.conf
@@ -773,18 +722,86 @@ func _on_end_pressed():
 					globals.spells.person = person
 					text0.set_bbcode(text0.get_bbcode()+globals.spells.mutate(person.toxicity/30, true) + "\n\n")
 				person.toxicity -= rand_range(1,5)
-			if person.stress > 80 && person.sleep != 'jail' && person.sleep != 'farm' && person.away.duration < 1:
-				text0.set_bbcode(text0.get_bbcode() + person.dictionary("$name complained "+globals.fastif(headgirl == null, "to you, ", "to your headgirl, ")+"that $he's having it too hard and hoped to get some rest.\n"))
-			if person.stress >= 100 && person.cour+person.conf+person.wit+person.charm > 50:
-				text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=#ff4949]$name had a severe mental breakdown due to high stress.[/color] \n"))
-				person.cour += -rand_range(5,person.cour/4)
-				person.conf += -rand_range(5,person.conf/4)
-				person.wit += -rand_range(5,person.wit/4)
-				person.charm += -rand_range(5,person.charm/4)
-				if person.effects.has('captured') == true:
-					person.add_effect(globals.effectdict.captured, true)
-				person.health -= rand_range(0,person.stats.health_max/6)
-			if person.skillpoints == -1:
+			
+			
+			if person.stress >= 33 && randf() <= 0.3:
+				if randf() >= 0.5:
+					person.obed -= (person.stress - 33)/2
+				else:
+					person.energy -= rand_range(15,30)
+				#text0.bbcode_text += person.dictionary("[color=#ff4949]$name suffers from stress [/color]")
+			
+			if person.stress >= 66 && randf() <= 0.3:
+				if randf() >= 0.5:
+					person.loyal -= rand_range(5,10)
+				else:
+					person.health -= person.stats.health_max/7
+			
+			if person.stress >= 99:
+				print(true)
+				person.health = 1
+				person.mentalbreakdown()
+			
+			
+			person.stress -= rand_range(5,10)
+			if person.race == 'Fairy':
+				person.stress -= rand_range(10,15)
+			
+			#sleep conditions
+			if person.lust < 25 || person.traits.has('Sex-crazed'):
+				person.lust += round(rand_range(3,6))
+			if person.sleep == 'communal' && globals.count_sleepers()['communal'] > globals.state.mansionupgrades.mansioncommunal:
+				person.stress += rand_range(5,15)
+				person.health -= rand_range(1,5)
+				text2.set_bbcode(text2.get_bbcode() + person.dictionary('$name suffers from communal room being overcrowded.\n'))
+			elif person.sleep == 'communal':
+				person.stress -= rand_range(5,10)
+				person.health += rand_range(1,3)
+				person.energy += rand_range(20,30)+ person.stats.end_cur*6
+			elif person.sleep == 'personal':
+				person.stress -= rand_range(10,15)
+				person.health += rand_range(2,6)
+				person.energy += rand_range(40,50)+ person.stats.end_cur*6
+				text2.set_bbcode(text2.get_bbcode() + person.dictionary('$name sleeps in a private room, which helps $him heal faster and provides some stress relief.\n'))
+				if person.lust >= 50 && person.rules.masturbation == false && person.tags.find('nosex') < 0:
+					person.lust -= rand_range(15,25)
+					person.lastsexday = globals.resources.day
+					text2.set_bbcode(text2.get_bbcode() + person.dictionary('In an attempt to calm $his lust, $he spent some time busying $himself in feverish masturbation, making use of $his private room.\n'))
+			elif person.sleep == 'your':
+				person.loyal += rand_range(1,4)
+				person.energy += rand_range(25,45)+ person.stats.end_cur*6
+				person.sexuals.affection += round(rand_range(1,2))
+				if person.loyal > 30:
+					person.stress -= person.loyal/7
+				if person.lust > 40 && person.consent && person.vagvirgin == false && person.tags.find('nosex') < 0:
+					text2.set_bbcode(text2.get_bbcode() + person.dictionary('$name went down on you being unable to calm $his lust.\n'))
+					person.lust -= rand_range(15,25)
+					person.metrics.sex += 1
+					person.lastsexday = globals.resources.day
+					globals.resources.mana += 2
+					globals.impregnation(person, globals.player)
+				else:
+					text2.set_bbcode(text2.get_bbcode() + person.dictionary('$name keeps you company at night and you grew closer.\n'))
+			elif person.sleep == 'jail':
+				person.metrics.jail += 1
+				person.obed += 25 - person.conf/6
+				person.energy += rand_range(20,30) + person.stats.end_cur*6
+				if person.stress > 66:
+					person.stress -= rand_range(5,10)
+				else:
+					if globals.state.mansionupgrades.jailtreatment == 0:
+						person.stress += person.conf/10
+			if person.lust >= 90 && person.rules.masturbation == true && !person.traits.has('Sex-crazed') && (rand_range(0,10)>7 || person.effects.has('stimulated')) && globals.resources.day - person.lastsexday >= 5:
+				person.add_trait('Sex-crazed')
+				text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=yellow]Left greatly excited and prohibited from masturbating, $name desperate state led $him to become insanely obsessed with sex.[/color]\n"))
+			elif person.lust >= 75 && globals.resources.day - person.lastsexday >= 5:
+				person.stress += rand_range(10,15)
+				person.obed -= rand_range(10,20)
+				text0.bbcode_text += person.dictionary("[color=red]$name is suffering from unquenched lust.[/color]\n")
+			
+			
+			
+			if person.skillpoints < 0:
 				person.skillpoints = 0
 			if person.attention < 150 && person.sleep != 'your':
 				person.attention += rand_range(5,7)
@@ -811,7 +828,7 @@ func _on_end_pressed():
 								text0.set_bbcode(text0.get_bbcode() + headgirl.dictionary('[color=yellow]$name reports, that ') + person.dictionary('$name appears to be pregnant. [/color]\n'))
 							elif person.preg.duration == 23:
 								text0.set_bbcode(text0.get_bbcode() + headgirl.dictionary('[color=yellow]$name reports, that ') + person.dictionary('$name will likely give birth soon. [/color]\n'))
-				if rand_range(0,100) < 40:
+				if randf() < 0.4:
 					person.stress += rand_range(15,20)
 			if person.away.duration == 0 && !person.sleep in ['jail','farm'] && !person.traits.has("Grateful"):
 				var personluxury = person.calculateluxury()
@@ -834,6 +851,8 @@ func _on_end_pressed():
 				text0.set_bbcode(text0.get_bbcode() + person.dictionary("$name returned to the mansion and went back to $his duty. \n"))
 		for i in person.effects.values():
 			if i.has('duration') && i.code != 'captured':
+				if person.fear >= 50 && randf() >= 0.4:
+					i.duration -= 1
 				if person.race != 'Dark Elf' || rand_range(0,1) > 0.5:
 					i.duration -= 1
 				if i.duration <= 0:
@@ -858,7 +877,7 @@ func _on_end_pressed():
 				headgirl.xp += 3
 				if i.obed < 65 && globals.state.headgirlbehavior == 'strict':
 					var obedbase = i.obed
-					i.obed += (-(i.cour/15) + headgirlconf/3)
+					i.fear += (-(i.cour/15) + headgirlconf/7)
 					i.stress += rand_range(5,10)
 					if i.obed <= obedbase:
 						text0.set_bbcode(text0.get_bbcode() + i.dictionary('$name was acting frivolously. ') + headgirl.dictionary('$name tried to put ') + i.dictionary("$him in place, but failed to make any impact.\n\n"))
@@ -866,8 +885,8 @@ func _on_end_pressed():
 						text0.set_bbcode(text0.get_bbcode() + i.dictionary('$name was acting frivolously, but ') + headgirl.dictionary('$name managed to make ') + i.dictionary("$him submit to your authority and slightly improve $his behavior.\n\n"))
 				elif globals.state.headgirlbehavior == 'kind':
 					if rand_range(0,100) < headgirl.charm:
-						i.loyal += rand_range(1,3)
-					i.stress += -(headgirl.charm/6)
+						i.obed += rand_range(3,5) + headgirl.charm/15
+					i.stress -= (headgirl.charm/6)
 	if jailer != null:
 		var jailerconf = jailer.conf
 		if jailer.spec == 'executor':
@@ -900,7 +919,7 @@ func _on_end_pressed():
 						production = production*1.2
 				production = production * (0.4 + farmmanager.wit * 0.004 + farmconf * 0.002)
 				if globals.state.mansionupgrades.farmtreatment == 0:
-					person.stress += 50 - (0.25*farmmanager.charm)
+					person.stress += 30 - (0.25*farmmanager.charm)
 				if person.farmoutcome == false:
 					globals.resources.food += production
 					person.metrics.foodearn += round(production)
@@ -919,11 +938,11 @@ func _on_end_pressed():
 				person.obed += -rand_range(15,20)
 				text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=yellow]$name was distressed by mansion's poor condition. [/color]\n"))
 			elif globals.state.condition >= 15 && rand_range(0,10) >= 5:
-				person.stress += rand_range(10,25)
+				person.stress += rand_range(10,20)
 				person.obed += -rand_range(15,35)
 				text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=yellow]$name was distressed by mansion's poor condition. [/color]\n"))
 			elif rand_range(0,10) >= 4:
-				person.stress += rand_range(25,30)
+				person.stress += rand_range(15,25)
 				person.health -= rand_range(5,10)
 				text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=#ff4949]Mansion's terrible condition causes $name a lot of stress and impacted $his health. [/color]\n"))
 	#####          Outside Events
@@ -990,6 +1009,7 @@ func _on_end_pressed():
 	else:
 		globals.player.energy += 100
 	globals.player.health += 50
+	
 	
 	#####         Results
 	if start_gold < globals.resources.gold:
@@ -1646,11 +1666,6 @@ func _on_mansion_pressed():
 	else:
 		$Navigation/personal/TextureRect.texture = selftexture
 	$ResourcePanel/clean.set_text(str(round(globals.state.condition)) + '%')
-	#var portals = false
-	#for i in globals.state.portals.values():
-	#	if i.enabled == true:
-	#		portals = true
-	#$MainScreen/mansion/portals.set_disabled(!portals)
 	textnode.show()
 	var sleepers = globals.count_sleepers()
 	text = 'You are at your mansion, which is located near [color=aqua]'+ globals.state.location.capitalize()+'[/color].\n\n'
@@ -2617,7 +2632,7 @@ func _on_selfrelatives_pressed():
 			newlabel.set_text(i.dictionary("$name - $sibling, $race"))
 	#children
 	for i in globals.slaves:
-		if i.relatives.mother == person.id || i.relatives.father == person.id:
+		if str(i.relatives.mother) == str(person.id) || str(i.relatives.father) == str(person.id):
 			newlabel = childrenlist.get_node("Label").duplicate()
 			newlabel.show()
 			childrenlist.add_child(newlabel)
@@ -2669,7 +2684,7 @@ func _on_portals_pressed():
 	for i in globals.state.portals.values():
 		var newbutton = button.duplicate()
 		list.add_child(newbutton)
-		if i.code !='wimborn':
+		if i.code != globals.state.location:
 			newbutton.show()
 		if i.enabled == true:
 			newbutton.disabled = false
@@ -2964,7 +2979,7 @@ func _on_popupclosebutton_pressed():
 
 
 func infotext(newtext, color = null):
-	if (enddayprocess == true && newtext.findn("trait") < 0) || newtext == '' || (get_node("combat").visible && !get_node("combat/win").visible):
+	if (enddayprocess == true && (newtext.findn("food") >= 0 || newtext.findn("gold") >= 0)) || newtext == '' || $date.visible || (get_node("combat").visible && !get_node("combat/win").visible): #(enddayprocess == true && newtext.findn("trait") < 0) ||
 		return
 	if get_node("infotext").get_children().size() >= 15:
 		get_node("infotext").get_child(get_node("infotext").get_children().size() - 14).queue_free()
@@ -2984,6 +2999,7 @@ func infotext(newtext, color = null):
 	timer.connect("timeout", self, 'infotextfade', [label])
 	timer.set_name("timer")
 	label.add_child(timer)
+	$infotext.rect_size = $infotext.rect_min_size
 	get_node("infotext").add_child(label)
 	label.show()
 
@@ -3184,6 +3200,8 @@ func _on_sexbutton_pressed():
 	sexslaves.clear()
 	sexassist.clear()
 	sexselect()
+	if globals.state.tutorial.interactions == false:
+		get_node("tutorialnode").interactions()
 
 var sexarray = ['meet','sex','abuse']
 var sexmode = 'meet'

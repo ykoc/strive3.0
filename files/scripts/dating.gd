@@ -2,6 +2,7 @@ extends Node
 
 var location
 var person
+var public = false
 var mood = 0.0 setget mood_set,mood_get
 var fear = 0.0 setget fear_set
 var stress = 0.0 setget stress_set
@@ -197,6 +198,20 @@ var actionsdict = {
 		reqs = "location == 'dungeon'",
 		effect = 'horse',
 	},
+	publicpunish = {
+		group = "P&P",
+		name = 'Invite others',
+		descript = "Invite other slaves to observe $name's punishments. Observing punishments builds fear and stress, although, at lower rate. However, it also gives punished more stress and lowers loyalty. ",
+		reqs = "location == 'dungeon' && public == false",
+		effect = 'public',
+	},
+	publicpunishoff = {
+		group = "P&P",
+		name = 'Disperse others',
+		descript = "Make other slaves leave and not observe $name's punishments. ",
+		reqs = "location == 'dungeon' && public == true",
+		effect = 'public',
+	},
 	castfear = {
 		group = "P&P",
 		name = 'Cast Fear',
@@ -306,6 +321,7 @@ func initiate(tempperson):
 	self.drunkness = 0
 	globals.spells.caster = globals.player
 	date = false
+	public = false
 	$sexswitch.visible = false
 	$end.visible = false
 	$textfield/RichTextLabel.clear()
@@ -485,12 +501,13 @@ func actiontooltip(descript):
 
 func evaluate(input): #used to read strings as conditions when needed
 	var script = GDScript.new()
-	script.set_source_code("var person\nvar location\nfunc eval():\n\treturn " + input)
+	script.set_source_code("var person\nvar location\nvar public\nfunc eval():\n\treturn " + input)
 	script.reload()
 	var obj = Reference.new()
 	obj.set_script(script)
 	obj.person = person
 	obj.location = location
+	obj.public = public
 	return obj.eval()
 
 
@@ -514,7 +531,7 @@ func doaction(action):
 			self.mood += 3
 			self.showntext += decoder("\n\n[color=yellow]Location influence:[/color] [name2] finds this place to be rather joyful...")
 		elif location == 'dungeon':
-			fear += 4
+			self.fear += 4
 			self.showntext += decoder("\n\n[color=yellow]Location influence:[/color] [name2] finds this place to be rather grim...")
 	drunkness()
 	updatelist()
@@ -783,13 +800,28 @@ func punishaddedeffect():
 	var text = ''
 	self.stress += 8
 	if person.traits.has("Masochist") && randf() >= 0.5:
-		text += "[Masochist][name2] seems to take [his2] punishment with some unusualenthusiasm... "
+		text += "[Masochist][name2] seems to take [his2] punishment with some unusual enthusiasm... "
 		person.lust += rand_range(2,4)
 		self.mood += 3
 		self.stress -= 5
 	if person.traits.has("Coward"):
 		self.fear += 5
 		text += "[Coward][name2] reacts strongly to your aggression. "
+	if public == true:
+		var slavearray = []
+		for i in globals.slaves:
+			if i.away.duration == 0 && i.sleep != 'farm' && i != person:
+				slavearray.append(i)
+		if slavearray.size() > 0:
+			text += "\n\n[color=yellow]Invited slaves watch over [name2] in awe. [/color] "
+			self.stress += 4
+			for i in slavearray:
+				i.fear += 3
+				i.stress += 3
+				if actionhistory.back() in ['woodenhorse','flagellate']:
+					i.lust += 2
+	
+	
 	return text
 
 func slap(person, counter):
@@ -969,6 +1001,16 @@ func castsedate(person, counter):
 	updatebars()
 	return text
 
+
+func public(person, counter):
+	var text = ''
+	public = !public
+	if public == true:
+		text = "You order everyone into dungeon and make them watch over [name2]'s disgrace. "
+	else:
+		text = "You order everyone to get back to their business leaving you and [name2] alone. "
+	return text
+
 func updatebars():
 	self.fear = person.fear
 	self.stress = person.stress
@@ -989,11 +1031,13 @@ func calculateresults():
 	globals.hidetooltip()
 	var tempfear = 0
 	var loyal = 0
+	var obed = 0
 	tempfear = fear
 	loyal = 2+(mood/10)
+	obed = mood/1.5
 	text += "\nFinal results: "
-	text += "\nFear: " + str(floor(tempfear)) + "\nLoyalty: " + str(floor(loyal))
-	var dict = {loyal = loyal}
+	text += "\nFear: " + str(floor(tempfear)) + "\nLoyalty: " + str(floor(loyal)) + "\nObedience: " + str(floor(obed))
+	var dict = {loyal = loyal, obed = obed}
 	
 	for i in dict:
 		person[i] += dict[i]
@@ -1014,5 +1058,4 @@ func _on_confirmsex_pressed():
 	get_parent().sexmode = 'sexmode'
 	get_parent().sexslaves = [person]
 	get_parent()._on_startbutton_pressed()
-
 

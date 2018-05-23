@@ -487,7 +487,7 @@ class progress:
 	var supplykeep = 10
 	var foodbuy = 200
 	var supplybuy = false
-	var tutorial = {basics = false, person = false, alchemy = false, jail = false, lab = false, farm = false, outside = false, combat = false}
+	var tutorial = {basics = false, person = false, alchemy = false, jail = false, lab = false, farm = false, outside = false, combat = false, interactions = false}
 	var itemcounter = 0
 	var slavecounter = 0
 	var alisecloth = 'normal'
@@ -719,7 +719,7 @@ class person:
 		obed_min = 0,
 		obed_mod = 0,
 		stress_cur = 0.0,
-		stress_max = 150,
+		stress_max = 120,
 		stress_min = 0,
 		stress_mod = 0,
 		tox_cur = 0.0,
@@ -779,10 +779,9 @@ class person:
 				traitexists = true
 			for ii in i.conflict:
 				if trait.name == ii:
-					print('conflicting trait detected')
 					conflictexists = true
 		if traitexists || conflictexists:
-			print("Can't apply: trait exists or conflicting with another trait")
+			return
 		else:
 			traits.append(trait.name)
 			if globals.get_tree().get_current_scene().has_node("infotext") && globals.slaves.find(self) >= 0 && away.at != 'hidden':
@@ -896,6 +895,8 @@ class person:
 	func health_set(value):
 		stats.health_max = ((variables.basehealth + stats.end_cur*variables.healthperend) + floor(level/2)*5 )*stats.health_bonus
 		stats.health_cur = min(floor(value), stats.health_max) 
+		if stats.health_cur <= 0:
+			death()
 	
 	func obed_set(value):
 		var difference = stats.obed_cur - value
@@ -928,8 +929,8 @@ class person:
 		stats.obed_cur = max(min(stats.obed_cur, stats.obed_max),stats.obed_min)
 		if stats.obed_cur < 50 && spec == 'executor':
 			stats.obed_cur = 50
-		if globals.get_tree().get_current_scene().has_node("infotext") && globals.slaves.find(self) >= 0 && away.at != 'hidden':
-			globals.get_tree().get_current_scene().infotext(text,color)
+#		if globals.get_tree().get_current_scene().has_node("infotext") && globals.slaves.find(self) >= 0 && away.at != 'hidden':
+#			globals.get_tree().get_current_scene().infotext(text,color)
 	
 	func loyal_set(value):
 		var difference = stats.loyal_cur - value
@@ -961,44 +962,45 @@ class person:
 		
 		
 		stats.loyal_cur = max(min(stats.loyal_cur, stats.loyal_max),stats.loyal_min)
-		if globals.get_tree().get_current_scene().has_node("infotext") && globals.slaves.find(self) >= 0 && away.at != 'hidden':
-			globals.get_tree().get_current_scene().infotext(text,color)
+#		if globals.get_tree().get_current_scene().has_node("infotext") && globals.slaves.find(self) >= 0 && away.at != 'hidden':
+#			globals.get_tree().get_current_scene().infotext(text,color)
 	
 	func stress_set(value):
 		
-		var difference = stats.stress_cur - value
-		var string = ""
+		var difference = value - stats.stress_cur 
+		difference = difference*(1+stats.stress_mod/100)
+		var endvalue = stats.stress_cur + difference
 		var text = ""
 		var color
-		if difference < 0:
-			difference = abs(difference)
-			if abs(difference) < 15:
-				string = "(+)"
-			elif abs(difference) < 30:
-				string = "(++)"
-			else:
-				string = "(+++)"
-			stats.stress_cur += difference*(1 + stats.stress_mod/100)
-			text = self.dictionary("$name's stress has grown " + string)
+		if stats.stress_cur < 99 && endvalue >= 99:
+			text += "$name is about to suffer from mental breakdown... "
 			color = 'red'
-		else:
-			difference = abs(difference)
-			if abs(difference) < 15:
-				string = "(-)"
-			elif abs(difference) < 30:
-				string = "(--)"
-			else:
-				string = "(---)"
-			text = self.dictionary("$name's stress has reduced " + string)
+		if stats.stress_cur < 66 && endvalue >= 66:
+			text += "$name has became considerably stressful"
+			color = 'red'
+		elif (stats.stress_cur < 33 || stats.stress_cur >= 66) && (endvalue >= 33 && endvalue < 66):
+			text += "$name has became mildly stressful. "
+			color = 'yellow'
+		elif stats.stress_cur >= 33 && endvalue < 33:
+			text += "$name is no longer stressed. "
 			color = 'green'
-			stats.stress_cur -= difference*(1 + stats.stress_mod/100)
 		
-		stats.stress_cur = clamp(stats.stress_cur, stats.stress_min, 150)
-		if globals.get_tree().get_current_scene().has_node("infotext") && globals.slaves.find(self) >= 0 && away.at != 'hidden':
-			globals.get_tree().get_current_scene().infotext(text,color)
+		stats.stress_cur = clamp(endvalue, stats.stress_min, stats.stress_max)
+		if text != '' && globals.get_tree().get_current_scene().has_node("infotext") && globals.slaves.has(self) && away.at != 'hidden':
+			globals.get_tree().get_current_scene().infotext(self.dictionary(text),color)
 		if self == globals.player:
 			stats.stress_cur = 0
-		
+	
+	func mentalbreakdown():
+		self.cour -= rand_range(5,self.cour/4)
+		self.conf -= rand_range(5,self.conf/4)
+		self.wit -= rand_range(5,self.wit/4)
+		self.charm -= rand_range(5,self.charm/4)
+		if self.effects.has('captured'):
+			self.add_effect(globals.effectdict.captured, true)
+		self.health -= rand_range(0,self.stats.health_max/5)
+		self.stress -= 30
+	
 	func learningpoints_set(value):
 		
 		var difference = learningpoints - value
@@ -1142,14 +1144,14 @@ class person:
 		return obed
 	
 	func stress_icon():
-		var stress
-		if stats.stress_cur >= 70: 
-			stress = load("res://files/buttons/icons/stress/3.png")
-		elif stats.stress_cur > 35:
-			stress = load("res://files/buttons/icons/stress/1.png")
+		var icon
+		if stats.stress_cur >= 66: 
+			icon = load("res://files/buttons/icons/stress/3.png")
+		elif stats.stress_cur >= 33:
+			icon = load("res://files/buttons/icons/stress/1.png")
 		else:
-			stress = load("res://files/buttons/icons/stress/2.png")
-		return stress
+			icon = load("res://files/buttons/icons/stress/2.png")
+		return icon
 	
 	
 	func name_long():
@@ -1348,12 +1350,16 @@ class person:
 		price = max(round(price), 10)
 		return price
 	
+	func death():
+		if globals.slaves.has(self):
+			globals.main.infotext(self.dictionary("$name has deceased. "),'red')
+			removefrommansion()
 	
 	func removefrommansion():
 		globals.slaves.erase(self)
-		globals.get_tree().get_current_scene().infotext(self.dictionary("$name $surname is no longer in your posession. "),'red')
+		globals.main.infotext(self.dictionary("$name $surname is no longer in your posession. "),'red')
 		for i in gear.values():
-			if !i in ['underwearplain','clothcommon'] && i != null:
+			if i != null:
 				globals.state.unstackables[i].owner = null
 	
 	func fetch(dict):

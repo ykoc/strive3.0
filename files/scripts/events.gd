@@ -1643,7 +1643,7 @@ func tishaappearance():
 	sprite = [['emily2normal','pos2','opac2'],['tishaangry','pos1','opac']]
 	globals.charactergallery.tisha.unlocked = true
 	if emily.loyal >= 25:
-		text += textnode.TishaEmilyLoyal
+		text += globals.player.dictionary(textnode.TishaEmilyLoyal)
 		sprite = [['emily2happy','pos2','opac2'],['tishashocked','pos1','opac']]
 		emilystate = 'loyal'
 		buttons.append(['Make Emily leave', 'tishadecision', 1])

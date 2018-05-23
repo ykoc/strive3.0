@@ -535,6 +535,8 @@ func deepzone(currentzonecode):
 
 func rest():
 	globals.state.backpack.stackables.supply -= 3
+	if globals.state.backpack.stackables.supply <= 0:
+		globals.state.backpack.stackables.erase("supply")
 	globals.player.health += globals.player.stats.health_max/4
 	globals.player.energy += globals.player.stats.energy_max
 	globals.resources.food -= 5
@@ -1265,6 +1267,7 @@ func captureeffect(person):
 	
 	var effect = globals.effectdict.captured
 	var dict = {'slave':0.7, 'poor':1,'commoner':1.2,"rich": 2, "noble": 4}
+	person.fear += rand_range(30, 25+person.cour/4)
 	effect.duration = round((4 + (person.conf+person.cour)/20) * dict[person.origins])
 	person.add_effect(effect)
 	globals.state.capturedgroup.append(person)
@@ -1410,6 +1413,7 @@ func _on_confirmwinning_pressed(secondary = false): #0 leave, 1 capture, 2 rape,
 	var orgyarray = []
 	var location
 	var reward = false
+	var killed = false
 	if currentzone.tags.find("wimborn") >= 0:
 		location = 'wimborn'
 	elif currentzone.tags.find("frostford") >= 0:
@@ -1437,6 +1441,7 @@ func _on_confirmwinning_pressed(secondary = false): #0 leave, 1 capture, 2 rape,
 			orgy = true
 			orgyarray.append(defeated.units[i])
 		elif defeated.select[i] == 2:
+			killed = true
 			if !defeated.faction[i] in ['monster','bandit']:
 				globals.state.reputation[location] -= 3
 			elif defeated.faction[i] == 'bandit':
@@ -1444,6 +1449,12 @@ func _on_confirmwinning_pressed(secondary = false): #0 leave, 1 capture, 2 rape,
 			if defeated.faction[i] == 'elf':
 				globals.state.reputation.amberguard -= 3
 			text += defeated.names[i] + " has been killed. \n"
+	if killed == true:
+		text += "[color=yellow]Your execution strikes fear into your group and captives. [/color]"
+		for i in globals.state.capturedgroup:
+			if i.fear < 80:
+				i.fear += rand_range(20,35)
+		#for i in captured
 	get_node("winningpanel").visible = false
 	enemyleave()
 	get_node("winningpanel/defeateddescript").set_bbcode('')
@@ -1456,6 +1467,8 @@ func _on_confirmwinning_pressed(secondary = false): #0 leave, 1 capture, 2 rape,
 			text += "You undress sole defeated and without further hesitation mercilessly rape " + orgyarray[0].dictionary("$race $child") + ". \n"
 		for i in globals.state.playergroup:
 			var person = globals.state.findslave(i)
+			if killed == true && person.fear < 50 && person.loyal < 40:
+				person.fear += rand_range(20,30)
 			if person.sexuals.unlocked == false:
 				if person.loyal < 30:
 					text+= person.dictionary('\n$name watches at your actions with digust, eventually averting $his eyes. ')

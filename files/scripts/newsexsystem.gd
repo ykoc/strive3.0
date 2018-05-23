@@ -12,7 +12,7 @@ var location
 var selectmode = 'normal'
 
 var takercategories = ['cunnilingus','rimjob','handjob','titjob','tailjob','blowjob']
-var analcategories = ['assfingering','rimjob','missionaryanal','doggyanal','lotusanal','revlotusanal','doubledilda','inerttaila','analvibrator','enemaplug','insertinturnsass']
+var analcategories = ['assfingering','rimjob','missionaryanal','doggyanal','lotusanal','revlotusanal','doubledildoass','inerttaila','analvibrator','enemaplug','insertinturnsass']
 var punishcategories = globals.punishcategories
 var penetratecategories = ['missionary','missionaryanal','doggy','doggyanal','lotus','lotusanal','revlotus','revlotusanal','doubledildo','doubledildoass','inserttailv','inserttaila','tribadism','frottage']
 
@@ -142,6 +142,10 @@ class member:
 		if values.has('tags'):
 			if values.tags.has('punish'):
 				if (person.obed < 90 || mode == 'forced') && (!person.traits.has('Masochist') && !person.traits.has('Likes it rough')):
+					if values.has('obed') == false:
+						values.obed = 0
+					if values.has("stress") == false:
+						values.stress = rand_range(3,5)
 					person.obed += values.obed
 					person.stress += values.stress
 					if person.effects.has("captured") && randf() >= values.obed/2:
@@ -1020,10 +1024,13 @@ func orgasm(member):
 		text = decoder(temptext, null, [member])
 	
 	
-	if member.lastaction.scene.code in punishcategories:
+	if member.lastaction.scene.code in punishcategories && member.lastaction.takers.has(member):
 		if randf() >= 0.85 || member.person.effects.has("entranced"):
 			member.actionshad.addtraits.append("Masochist")
-	if member.lastaction.scene.code in analcategories:
+#	if member.lastaction.scene.code in punishcategories && member.lastaction.givers.has(member) && member.person.asser >= 60:
+#		if randf() >= 0.85 || member.person.effects.has("entranced"):
+#			member.actionshad.addtraits.append("Dominant")
+	if member.lastaction.scene.code in analcategories && (member.lastaction.takers.has(member) || member.lastaction.scene.code == 'doubledildoass'):
 		if randf() >= 0.85 || member.person.effects.has('entranced'):
 			member.actionshad.addtraits.append("Enjoys Anal")
 	if isencountersamesex(member.lastaction.givers, member.lastaction.takers, member) == true:
@@ -1208,7 +1215,17 @@ func askslaveforaction(chosen):
 	var targets = []
 	clearstate()
 	var chosensex = chosen.person.sex
-	var debug = 'Chosing targets... \n'
+	var debug = ""
+	var group = false
+	var target
+	
+	
+	
+	
+	
+	
+	debug += 'Chosing targets... \n'
+	
 	for i in participants:
 		if i != chosen:
 			debug += i.name
@@ -1234,14 +1251,17 @@ func askslaveforaction(chosen):
 			value = min(value, 120)
 			if value > 0:
 				targets.append([i, value])
-	var target = globals.weightedrandom(targets)
+	target = globals.weightedrandom(targets)
 	debug += 'final target - ' + target.name
+	
+	
+	
 	
 	
 	debug += '\nChosing dom: \n'
 	var dom = [['giver',40],['taker', 10]]
 	
-	if target.person.sex != chosen.person.sex && chosen.person.sex == 'female':
+	if target.person.sex != chosen.person.sex && chosen.person.sex == 'female' && (chosen.person.asser < 75 || !chosen.person.traits.has("Dominant")):
 		dom[0][1] = 0
 	
 	if chosen.person.asser >= 75:
@@ -1252,11 +1272,44 @@ func askslaveforaction(chosen):
 	dom = globals.weightedrandom(dom)
 	
 	debug += 'final dom: ' + dom + '\n'
+	
+	var groupchosen = [chosen] 
+	var grouptarget = [target]
+	
+	if participants.size() >= 3:
+		if randf() >= 0.5 && chosen.person.traits.has("Monogamous") == false:
+			group = true
+	var freeparticipants = []
+	
+	if group == true:
+		debug += "Group action attempt:\n"
+		for i in participants:
+			if i != chosen && i != target && randf() >= 0.5:
+				freeparticipants.append(i)
+		
+		while freeparticipants.size() > 0:
+			var targetgroup
+			var newparticipant = freeparticipants[randi()%freeparticipants.size()]
+			var samesex = isencountersamesex([newparticipant], [chosen], chosen)
+			if chosen.person.traits.has("Bisexual"):
+				targetgroup = 'any'
+			elif (chosen.person.traits.has("Homosexual") && samesex) || !samesex:
+				targetgroup = 'target'
+			elif chosen.person.traits.has("Homosexual"):
+				targetgroup = 'any'
+			else:
+				targetgroup = 'chosen'
+			if (targetgroup == 'any' && randf() >= 0.5) || targetgroup == 'chosen':
+				groupchosen.append(newparticipant)
+			else: 
+				grouptarget.append(newparticipant)
+			
+			freeparticipants.erase(newparticipant)
+	
 	#choosing action
 	var chosenpos = ''
 	var actions = []
 	var chosenaction = null
-	
 	debug += 'chosing action: \n' 
 	for i in categories:
 		for j in categories[i]:
@@ -1266,18 +1319,18 @@ func askslaveforaction(chosen):
 				continue
 			if j.code in takercategories:
 				if dom == 'taker':
-					givers.append(chosen)
-					takers.append(target)
+					givers += groupchosen
+					takers += grouptarget
 				else:
-					takers.append(chosen)
-					givers.append(target)
+					takers += groupchosen
+					givers += grouptarget
 			else:
 				if dom == 'taker':
-					takers.append(chosen)
-					givers.append(target)
+					takers += groupchosen
+					givers += grouptarget
 				else:
-					givers.append(chosen)
-					takers.append(target)
+					givers += groupchosen
+					takers += grouptarget
 			var result = checkaction(j, doubledildocheck())
 			if result[0] == 'allowed':
 				var value = 0
@@ -1326,32 +1379,31 @@ func askslaveforaction(chosen):
 				debug += str(value) + '\n'
 				if value >= 0:
 					actions.append([j, value])
-	
 	if actions.size() == 0:
 		actions.append([categories.other[0], 1])
 	chosenaction = globals.weightedrandom(actions)
 	clearstate()
 	if chosenaction.code in takercategories:
 		if dom == 'taker':
-			givers.append(chosen)
-			takers.append(target)
+			givers = groupchosen
+			takers = grouptarget
 		else:
-			takers.append(chosen)
-			givers.append(target)
+			takers = groupchosen
+			givers = grouptarget
 	else:
 		if dom == 'taker':
-			takers.append(chosen)
-			givers.append(target)
+			takers = groupchosen
+			givers = grouptarget
 		else:
-			givers.append(chosen)
-			takers.append(target)
+			givers = groupchosen
+			takers = grouptarget
 	var cont = false
 	var text = '[color=green][name1] initiates ' + chosenaction.getname() + ' with [name2].[/color]\n\n'
-	if chosenaction.canlast == true && randf() >= 0.7:
+	if chosenaction.canlast == true && randf() >= 0.2:
 		cont = true
 	$PopupPanel/RichTextLabel.bbcode_text = debug
 	#$PopupPanel.popup()
-	startscene(chosenaction, cont, decoder(text, [chosen], [target]))
+	startscene(chosenaction, cont, decoder(text, groupchosen, grouptarget))
 
 func _on_finishbutton_pressed():
 	ai.clear()
