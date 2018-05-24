@@ -1398,6 +1398,8 @@ func askslaveforaction(chosen):
 			givers = groupchosen
 			takers = grouptarget
 	var cont = false
+	chosenaction.givers = givers
+	chosenaction.takers = takers
 	var text = '[color=green][name1] initiates ' + chosenaction.getname() + ' with [name2].[/color]\n\n'
 	if chosenaction.canlast == true && randf() >= 0.2:
 		cont = true

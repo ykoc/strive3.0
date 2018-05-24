@@ -1690,6 +1690,9 @@ func load_game(text):
 	for i in statetemp.sidequests:
 		if state.sidequests.has(i) == false:
 			state.sidequests[i] = statetemp.sidequests[i]
+	for i in statetemp.tutorial:
+		if state.tutorial.has(i) == false:
+			state.tutorial[i] = statetemp.tutorial[i]
 	state.itemlist = {}
 	for i in state.spelllist:
 		spelldict[i].learned = true
