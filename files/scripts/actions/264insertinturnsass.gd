@@ -26,11 +26,11 @@ func getname(state = null):
 	return "Fuck ass in turns"
 
 func getongoingname(givers, takers):
-	return "[name1] [fuck1] [name2] [anus2] periodically taking turns and switching."
+	return "[name1] [fuck1] [names2] [anus2] periodically taking turns and switching."
 
 func getongoingdescription(givers, takers):
 	var temparray = []
-	temparray += ["[name1] continue {^passionately :eagerly :} [fucking1] [name2]'s [anus2] in turns."]
+	temparray += ["[name1] continue {^passionately :eagerly :} [fucking1] [names2] [anus2] in turns."]
 	return temparray[randi()%temparray.size()]
 
 
@@ -65,7 +65,7 @@ func takereffect(member):
 func initiate():
 	var text = ''
 	var temparray = []
-	temparray += ["[name1] [fuck1] [name2] [anus2] periodically taking turns and switching."]
+	temparray += ["[name1] [fuck1] [names2] [anus2] periodically taking turns and switching."]
 	text += temparray[randi()%temparray.size()]
 	temparray.clear()
 	return text

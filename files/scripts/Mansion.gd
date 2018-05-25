@@ -295,6 +295,8 @@ func _on_new_slave_button_pressed():
 		person.obed = 100
 		person.lust = 0
 		person.consent = true
+		person.asser = 100
+		person.lewdness = 100
 		person.attention = 100
 		person.learningpoints = 50
 		globals.slaves = person

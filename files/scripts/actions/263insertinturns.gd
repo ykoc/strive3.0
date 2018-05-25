@@ -68,7 +68,7 @@ func takereffect(member):
 func initiate():
 	var text = ''
 	var temparray = []
-	temparray += ["[name1] [fuck1] [name2] [pussy2] periodically taking turns and switching."]
+	temparray += ["[name1] [fuck1] [names2] [pussy2] periodically taking turns and switching."]
 	text += temparray[randi()%temparray.size()]
 	temparray.clear()
 	return text
