@@ -205,8 +205,8 @@ func spellbuttonpressed(spell):
 	for i in get_tree().get_nodes_in_group('spells'):
 		if i.get_text() != spell.name && i.is_pressed() == true:
 			i.set_pressed(false)
-	description.set_bbcode(spell.description + '\nMana cost - ' + str(spell.manacost))
-	if spell.manacost > globals.resources.mana:
+	description.set_bbcode(spell.description + '\nMana cost - ' + str(globals.spells.spellcost(spell)))
+	if globals.spells.spellcost(spell) > globals.resources.mana:
 		get_node("selectspellpanel/spellusebutton").set_disabled(true)
 	else:
 		get_node("selectspellpanel/spellusebutton").set_disabled(false)

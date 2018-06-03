@@ -622,7 +622,8 @@ func _on_applybutton_pressed():
 	for i in get_node("stats/customization/tattoopanel/VBoxContainer").get_children():
 		if i.get_name() == selectedpart:
 			choosetattooarea(i)
-	slavetabopen()
+	if person != globals.player:
+		slavetabopen()
 
 func _on_tattoo_pressed():
 	$stats/customization/tattoopanel.popup()
@@ -712,7 +713,7 @@ func _on_piercing_pressed():
 		if i.get_name() != 'piercingline' :
 			i.visible = false
 			i.queue_free()
-	if person.consent == true:
+	if person.consent == true || person == globals.player:
 		$stats/customization/piercingpanel/piercestate.set_text(person.dictionary('$name does not seems to mind you pierce $his private places.'))
 	else:
 		$stats/customization/piercingpanel/piercestate.set_text(person.dictionary('$name refuses to let you pierice $his private places'))
@@ -752,7 +753,8 @@ func pierceselect(ID, node):
 	else:
 		person.piercing[node] = piercingdict[node].options[ID-1]
 	_on_piercing_pressed()
-	slavetabopen()
+	if person != globals.player:
+		slavetabopen()
 
 func _on_closebutton_pressed():
 	$stats/customization/piercingpanel.visible = false

@@ -66,23 +66,6 @@ class fighter:
 		else:
 			temptarget = globals.main.get_node('combat').playergroup[target]
 		temptarget.getbuff(makebuff(action.effect, [temptarget], [self]))
-#		var effect = str2var(var2str(globals.abilities.effects[action.effect]))
-#		var buff = {duration = effect.duration, name = effect.name, code = effect.code, type = effect.type, stats = {}}
-#		for i in effect.stats:
-#			var temp = i[1].split(',')
-#			temp = Array(temp)
-#			for ii in range(0, temp.size()):
-#				if temp[ii].find('caster') >= 0:
-#					var temp2 = temp[ii].split('.')
-#					temp[ii] = self[temp2[1]]
-#				elif temp[ii].find('target') >= 0:
-#					var temp2 = temp[ii].split('.')
-#					temp[ii] = action.target[temp2[1]]
-#			var temp2 = ''
-#			for i in temp:
-#				temp2 += str(i)
-#			buff.stats[i[0]] = globals.evaluate(temp2)
-#		temptarget.getbuff(buff)
 	
 	
 	func getbuff(buff):
@@ -103,6 +86,7 @@ class fighter:
 			for i in effects[buffcode].stats:
 				self[i] = self[i] - effects[buffcode].stats[i]
 			effects.erase(buffcode)
+	
 	func makebuff(code, targets, casters = null):
 		var effect = str2var(var2str(globals.abilities.effects[code]))
 		var buff = {duration = effect.duration, name = effect.name, code = effect.code, type = effect.type, stats = {}, icon = effect.icon}
@@ -236,7 +220,6 @@ func start_battle(nosound = false):
 		else:
 			combatant.removebuff('luststrong')
 			combatant.removebuff('lustweak')
-		
 		playergroup.append(combatant)
 	
 	#build enemy group
@@ -454,18 +437,22 @@ func _input(event):
 func updatepanels():
 	var newbutton
 	clearpanels()
+	$resources/mana/Label.text = str(globals.resources.mana)
 	for combatant in playergroup:
 		var slave = combatant.person
 		var temp = ''
+		if combatant.energy > 0 && combatant.passives.has('exhausted'):
+			combatant.removebuff('exhaust')
+			combatant.passives.erase("exhaust")
+		elif combatant.energy <= 0:
+			combatant.getbuff(combatant.makebuff('exhaust', combatant))
+			passive(combatant, 'exhaust')
 		newbutton = get_node("grouppanel/groupline/character").duplicate()
 		if slave.imageportait != null:
 			newbutton.get_node("portait").set_texture(globals.loadimage(slave.imageportait))
 		newbutton.visible = true
 		get_node("grouppanel/groupline").add_child(newbutton)
 		newbutton.get_node("name").set_text(combatant.name)
-#		if (combatant.health/combatant.healthmax) < 0.35:
-#			newbutton.get_node("hp").set('custom_colors/font_color', Color(1,0.29,0.29,1))
-		#newbutton.get_node("hp").set_text('HP: ' + str(ceil(combatant.health)) +'/'+ str(ceil(combatant.healthmax)))
 		newbutton.get_node("hp").value = (combatant.health/combatant.healthmax)*100
 		newbutton.get_node("hp/Label").text = str(combatant.health) + "/" + str(combatant.healthmax)
 		newbutton.get_node("en").value = (float(combatant.energy)/combatant.energymax)*100
@@ -474,8 +461,6 @@ func updatepanels():
 			newbutton.get_node("stress").visible = true
 			newbutton.get_node("stress").value = (float(combatant.person.stress)/combatant.person.stats.stress_max)*100
 			newbutton.get_node("stress/Label").text = str(combatant.person.stress)
-#		newbutton.get_node("power").set_text('P:'+str(round(combatant.power)))
-#		newbutton.get_node("speed").set_text('S:'+str(round(combatant.speed)))
 		newbutton.set_meta("char", combatant)
 		for i in combatant.effects.values():
 			var newnode = $grouppanel/groupline/character/buffscontainer/TextureRect.duplicate()
@@ -515,8 +500,9 @@ func updatepanels():
 	$enemypanel/ScrollContainer/enemyline.move_child($enemypanel/ScrollContainer/enemyline/character, $enemypanel/ScrollContainer/enemyline.get_children().size())
 
 func bufftooltip(buff):
-	var text = '[center][color=yellow]' + buff.name + "[/color][/center]\n "
-	text += str(buff.stats).replace('(','').replace(')','')
+	var text = '[center][color=yellow]' + buff.name + "[/color][/center]"
+	if str(buff.stats).replace('(','').replace(')','') != '':
+		text += "\n" + str(buff.stats).replace('(','').replace(')','')
 	if buff.duration >= 1:
 		text += '\nDuration: ' + str(buff.duration)+ ' turns'
 	globals.showtooltip(text)
@@ -557,10 +543,6 @@ func choosecharacter(combatant):
 			newbutton = get_node("grouppanel/skilline/skill").duplicate()
 			get_node("grouppanel/skilline").add_child(newbutton)
 			newbutton.set_disabled(combatant.cooldowns.has(i.code))
-#			if combatant.cooldowns.has(i.code):
-#				newbutton.set_disabled(true)
-#			else:
-#				newbutton.get_node("Panel").hide()
 			newbutton.show()
 			
 			newbutton.get_node("number").set_text(str(get_node("grouppanel/skilline").get_children().size()-1))
@@ -610,19 +592,21 @@ func activateskill(skill, combatant):
 		get_node("warning").modulate.a = 1
 		deselecteverything()
 		return
-	if globals.resources.mana < skill.costmana:
-		get_node("warning").set_text("Not enough mana")
-		get_node("warning").modulate.a = 1
-		deselecteverything()
-		return
+	if skill.costmana > 0:
+		var cost = skill.costmana
+		if globals.state.spec == 'Mage':
+			cost = round(cost/2)
+		if globals.resources.mana < cost:
+			get_node("warning").set_text("Not enough mana")
+			get_node("warning").modulate.a = 1
+			deselecteverything()
+			return
 	if combatant.cooldowns.has(skill.code):
 		get_node("warning").set_text("Skill is on cooldown")
 		get_node("warning").modulate.a = 1
 		deselecteverything()
 		return
 	combatant.action = skill
-	#get_node("grouppanel/groupline").get_child(playergroup.find(combatant)+1).get_node('target').set_text(combatant.action.name)
-	#get_node("grouppanel/groupline").get_child(playergroup.find(combatant)+1).get_node('Panel').hide()
 	for i in get_node("grouppanel/skilline").get_children():
 			if i.has_meta('skill'):
 				if i.get_meta('skill') != skill:
@@ -672,7 +656,11 @@ func actionexecute(actor, target, skill):
 	if playergroup.find(actor) >= 0:
 		text = actor.person.dictionary(skill.usetext) 
 		group = 'player'
-		globals.resources.mana -= skill.costmana
+		if skill.costmana > 0:
+			var cost = skill.costmana
+			if globals.state.spec == 'Mage':
+				cost = round(cost/2)
+			globals.resources.mana -= cost
 	else:
 		group = 'enemy'
 		text = skill.usetext 
@@ -726,6 +714,8 @@ func actionexecute(actor, target, skill):
 				damage = max(1,(actor.magic * 2.5)) * skill.power
 				if skill.code == 'mindblast':
 					damage += target.healthmax/5
+				if globals.state.spec == 'Mage' && group == 'player':
+					damage *= 1.2
 			if target.person != null and target.person.traits.has("Sturdy"):
 				damage = damage*0.85
 			actor.energy = max(actor.energy - skill.costenergy,0)
@@ -735,7 +725,7 @@ func actionexecute(actor, target, skill):
 				damage = damage*1.3
 				text = text + "$name's swift attack lands precisely at desirable spot. " 
 			if damage < 0: damage = 0
-			if actor.energy <= 0: damage = damage*0.66
+			if actor.passives.has("exhaust"): damage = damage*0.66
 			if hit != 'miss' && hit != 'glance':
 				var power = powercompare(actor.power, target.power)
 				var enddamage = 0
@@ -874,7 +864,15 @@ func powercompare(attackpower, targetpower):
 
 func showskilltooltip(skill):
 	var text = ''
-	text += '[center]' + skill.name + '[/center]\n\n' + skill.description +'\nBasic cooldown: ' + str(skill.cooldown)
+	text += '[center]' + skill.name + '[/center]\n\n' + skill.description 
+	if skill.costenergy > 0:
+		text += "\n[color=yellow]Energy: " + str(skill.costenergy) + "[/color]"
+	if skill.costmana > 0:
+		var cost = skill.costmana
+		if globals.state.spec == 'Mage':
+			cost = round(cost/2)
+		text += "\n[color=aqua]Mana: " + str(cost) + "[/color]"
+	text += '\nBasic cooldown: ' + str(skill.cooldown)
 	if selectedcombatant.cooldowns.has(skill.code):
 		text += '\n\nCooldown: ' + str(selectedcombatant.cooldowns[skill.code])
 	globals.showtooltip(text)
@@ -1195,7 +1193,10 @@ func selectabilityfromlist(ability):
 				i.set_pressed(false)
 	var tempabil = selectedcombatant.abilities[ability.code]
 	get_node("abilitites/Panel/abilitydescript").set_meta('ability', tempabil)
-	if selectedcombatant.energy < tempabil.costenergy || selectedcombatant.cooldowns.has(tempabil.code) || globals.resources.mana < tempabil.costmana :
+	var cost = tempabil.costmana
+	if globals.state.spec == 'Magi':
+		cost = round(cost/2)
+	if selectedcombatant.energy < tempabil.costenergy || selectedcombatant.cooldowns.has(tempabil.code) || globals.resources.mana < cost :
 		get_node("abilitites/Panel/use").set_disabled(true)
 	else:
 		get_node("abilitites/Panel/use").set_disabled(false)

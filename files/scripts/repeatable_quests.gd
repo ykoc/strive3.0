@@ -269,6 +269,8 @@ func generatequest(town, difficulty = 'easy'):
 			quest.description = questarray[i].description
 			quest.time = questarray[i].time
 			quest.reward = questarray[i].reward
+			if globals.state.spec == 'Slaver':
+				quest.reward = round(quest.reward * 1.33)
 			quest.location = town
 			quest.reqs = questarray[i].reqs
 			quest.taken = false

@@ -1958,6 +1958,7 @@ align = 1
 
 [node name="itemrename" type="PopupPanel" parent="." index="17"]
 
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0

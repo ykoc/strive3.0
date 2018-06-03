@@ -87,7 +87,7 @@ func launch():
 	timer.start()
 
 func show(dict):
-	get_node("background").set_texture(globals.backgrounds[dict.background])
+	get_node("background").texture = globals.backgrounds[dict.background]
 	get_node("textpanel/RichTextLabel").set_bbcode('[color=yellow]'+dict.text+'[/color]')
 	if dict.sprite != null:
 		get_node("character").set_texture(globals.spritedict[dict.sprite])
@@ -114,12 +114,12 @@ func advance():
 		if scenearray.find(currentscene)+1 >= scenearray.size():
 			stage = 'credits'
 			get_parent().animationfade(2)
-			yield(player, 'animation_finished')
+			yield(get_parent(), "animfinished")
 			advance()
 			return
 		currentscene = scenearray[scenearray.find(currentscene)+1]
 		get_parent().animationfade(2)
-		yield(player, 'animation_finished')
+		yield(get_parent(), "animfinished")
 		show(call(currentscene))
 		timer.set_wait_time(15)
 		timer.start()
@@ -143,7 +143,7 @@ func advance():
 		get_node("TextureFrame/RichTextLabel1").visible = false
 		get_node("TextureFrame/VBoxContainer").visible = false
 		get_parent().animationfade(2)
-		yield(player,'animation_finished')
+		yield(get_parent(), "animfinished")
 		get_node("TextureFrame/alise").visible = true
 
 
@@ -155,7 +155,7 @@ func _on_continue_pressed():
 	get_parent()._on_mansion_pressed()
 	get_node("TextureFrame/alise/continue").disconnect("pressed",self,'_on_continue_pressed')
 	player.play('blackout')
-	yield(player, 'animation_finished')
+	yield(get_parent(), "animfinished")
 	get_parent().close_dialogue('instant')
 	visible = false
 	player.play_backwards("slowfade")

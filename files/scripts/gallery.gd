@@ -411,6 +411,7 @@ zoesadnaked = load("res://files/images/zoe/zoesadnaked.png"),
 theron = load("res://files/images/theron.png"),
 garthor = load("res://files/images/garthor.png"),
 
+hadesillh = load("res://files/images/hadesillhoute.png"),
 hadeneutral = load("res://files/images/hadeneutral.png"),
 hadesmile = load("res://files/images/hadesmile.png"),
 hadesad = load("res://files/images/hadesad.png"),

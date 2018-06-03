@@ -12,6 +12,38 @@ var consumerope = 1
 var learnpointsperstat = 3
 
 
+
+#slave prices constants
+var priceperlevel = 40
+var priceperbasebeauty = 2.5
+var priceperbonusbeauty = 1.5
+var pricebonusvirgin = 0.15
+var pricebonusfuta = 0.1
+var pricebonusbadtrait = -0.1
+var pricebonustoxicity = -0.33
+var priceuncivilized = -0.5
+var priceminimum = 5
+var priceminimumsell = 10
+
+var racepricemods = { #race mod will apply to _base_ price as baseprice*mod
+	Elf = 1.5, "Dark Elf" : 1.5, Orc = 1.5, Goblin = 1.5, Gnome = 1.5,
+	Drow = 2.5, Demon = 2.5, Seraph = 2.5,
+	"Beaskin Cat" : 1.75, "Beaskin Wolf" : 1.75, "Beaskin Tanuki" : 1.75, "Beaskin Bunny" : 1.75,
+	"Halfkin Cat" : 1.75, "Halfkin Wolf" : 1.75, "Halfkin Tanuki" : 1.75, "Halfkin Bunny" : 1.75,
+	"Beaskin Fox" : 2, "Halfkin Fox" : 2, Fairy = 2, Dryad = 2, Taurus = 2,
+	Slim = 2.5, Lamia = 2.5, Arachna = 2.5, Harpy = 2.5, Scylla = 2.5,
+	Dragonkin = 3.5,
+	}
+var gradepricemod = { # grade and age mods will be added as bonus to base price which starts at 1 [baseprice*(1+value)]
+	slave = -0.2, poor = 0, commoner = 0.2, rich = 0.5, noble = 1
+	}
+var agepricemods = {
+	child = 0, teen = 0, adult = 0
+}
+
+var luxuryreqs = {slave = 0, poor = 5, commoner = 15,rich = 25, noble = 40}
+
+
 var list = {
 basehealth = {descript = "Character's health before modifiers", default = 50, min = 1, max = 1000},
 healthperend = {descript = "Bonus health per point of endurance",default = 25, min = 0, max = 1000},

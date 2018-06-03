@@ -299,7 +299,7 @@ func mansion():
 	main._on_mansion_pressed()
 
 func gooutside():
-	if OS.get_name() != "HTML5" && globals.rules.fadinganimation == true:
+	if OS.get_name() != "HTML5":
 		yield(main, 'animfinished')
 	get_node("playergrouppanel/VBoxContainer").visible = true
 	main.checkplayergroup()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://mainfont.tres" type="DynamicFont" id=1]
 [ext_resource path="res://files/buttons/chek-Active.png" type="Texture" id=2]
@@ -28,6 +28,7 @@
 [ext_resource path="res://files/theme.tres" type="Theme" id=26]
 [ext_resource path="res://files/paneltexturebland.tres" type="StyleBox" id=27]
 [ext_resource path="res://files/floattext.gd" type="Script" id=28]
+[ext_resource path="res://files/buttons/mana2.png" type="Texture" id=29]
 
 [sub_resource type="StyleBoxTexture" id=1]
 
@@ -562,6 +563,7 @@ _sections_unfolded = [ "custom_colors", "custom_constants", "custom_fonts", "cus
 
 [node name="stress" type="TextureProgress" parent="grouppanel/groupline/character" index="4"]
 
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -725,7 +727,6 @@ _sections_unfolded = [ "Rect" ]
 
 [node name="enemypanel" type="Panel" parent="." index="3"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -885,22 +886,25 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = -37.0
-margin_top = 19.0
-margin_right = 146.0
-margin_bottom = 39.0
+margin_left = 8.0
+margin_top = 1.0
+margin_right = 103.0
+margin_bottom = 44.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 0
-text = "Name"
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "Name Surname"
 align = 1
 valign = 1
+autowrap = true
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+_sections_unfolded = [ "custom_colors" ]
 
 [node name="buffscontainer" type="HBoxContainer" parent="enemypanel/ScrollContainer/enemyline/character" index="3"]
 
@@ -1666,6 +1670,64 @@ playback_default_blend_time = 0.0
 playback_speed = 1.0
 anims/fade = SubResource( 10 )
 blend_times = [  ]
+
+[node name="resources" type="Panel" parent="." index="15"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 40.0
+margin_top = 712.0
+margin_right = 319.0
+margin_bottom = 768.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="mana" type="TextureRect" parent="resources" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 7.0
+margin_top = 6.0
+margin_right = 37.0
+margin_bottom = 46.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Mana"
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 29 )
+stretch_mode = 0
+_sections_unfolded = [ "Hint" ]
+
+[node name="Label" type="Label" parent="resources/mana" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 33.0
+margin_top = 10.0
+margin_right = 73.0
+margin_bottom = 30.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
 [connection signal="pressed" from="confirm" to="." method="_on_confirm_pressed"]
 

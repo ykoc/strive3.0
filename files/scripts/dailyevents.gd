@@ -220,10 +220,12 @@ func forestfind(stage = 0):
 	if stage == 0:
 		slave2 = globals.newslave(globals.wimbornraces[rand_range(0,globals.wimbornraces.size())], age[rand_range(0, age.size())], 'random', origins[rand_range(0, origins.size())])
 		showntext = person.dictionary(eventstext[currentevent][stage])
+		slave2.fromguild = true
 		showntext += slave2.descriptionsmall() + slave2.dictionary(" What would you like to do with $him?")
 		tempbuttons = [[slave2.dictionary('Imprison the $child'), 1], [slave2.dictionary('Return $him to town (-25 energy)'),2], [slave2.dictionary("Don't bother with $him"), 3]]
 	if stage == 1:
 		showntext = slave2.dictionary(eventstext[currentevent][stage])
+		slave2.fromguild = false
 		globals.get_tree().get_current_scene().get_node("explorationnode").captureslave(slave2)
 	elif stage == 2:
 		showntext = slave2.dictionary(eventstext[currentevent][stage])
@@ -474,8 +476,10 @@ func escapedslave(stage = 0):
 	var origins = ['slave','poor']
 	if stage == 0:
 		slave2 = globals.newslave(globals.wimbornraces[rand_range(0,globals.wimbornraces.size())], age[rand_range(0, age.size())], 'random', origins[rand_range(0, origins.size())])
+		slave2.fromguild = true
 		tempbuttons = [[slave2.dictionary("Keep $him to yourself"),1],[slave2.dictionary("Return $him to the city (-25 energy)"),2], ["Ignore", 3]]
 	if stage == 1:
+		slave2.fromguild = false
 		globals.slaves = slave2
 	elif stage == 2:
 		globals.resources.gold += rand_range(50,150)

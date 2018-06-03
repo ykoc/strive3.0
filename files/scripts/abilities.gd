@@ -635,6 +635,14 @@ code = 'luststrong',
 type = 'passive',
 stats = [['speed', '-(5,)'],['power','-(3,)']],
 },
+exhaust = {
+icon = load("res://files/buttons/exhaust.png"),
+duration = -1,
+name = "Exhausted (-33% damage)",
+code = 'exhaust',
+type = 'passive',
+stats = [],
+},
 }
 
 func restorehealth(caster, target):

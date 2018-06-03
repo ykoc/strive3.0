@@ -18,7 +18,7 @@ onready var slavepanel = get_node("MainScreen/slave_tab")
 signal animfinished
 
 func _process(delta):
-	if get_node("dialogue").visible == false && get_node("popupmessage").visible == false && checkforevents == true:
+	if !$screenchange/AnimationPlayer.is_playing() && get_node("dialogue").visible == false && get_node("popupmessage").visible == false && checkforevents == true:
 		nextdayevents()
 		checkforevents = false
 	for i in get_tree().get_nodes_in_group("messages"):
@@ -130,6 +130,12 @@ func _input(event):
 	elif event.is_action_pressed("L") && get_node("MainScreen").is_visible_in_tree():
 		_on_questlog_pressed()
 
+func clearscreen():
+	$Navigation.visible = false
+	$MainScreen.visible = false
+	$charlistcontrol.visible = false
+	#$FinishDayPanel.visible = false
+
 func _ready():
 	get_node("music").set_meta('currentsong', 'none')
 	if OS.get_executable_path() == 'C:\\Users\\1\\Desktop\\godot\\Godot_v3.0.2-stable_win64.exe':
@@ -202,11 +208,14 @@ func sound(value):
 func startending():
 	var name = globals.player.name + " - Main Quest Completed"
 	var scene = load("res://files/ending.tscn").instance()
+	close_dialogue()
 	animationfade(3)
-	yield(get_node("screenchange/AnimationPlayer"), 'animation_finished')
+	
+	yield(self, 'animfinished')
+	#_on_mansion_pressed()
 	scene.add_to_group('blockmaininput')
-	add_child(scene)
-	move_child(scene, 40)
+	scene.add_to_group('blockoutsideinput')
+	add_child_below_node($tooltip, scene)
 	scene.launch()
 	music_set('ending')
 	#scene.advance()
@@ -240,7 +249,7 @@ func _on_new_slave_button_pressed():
 	for i in ['conf','cour','charm','wit']:
 		person[i] = 100
 	person.ability.append('debilitate')
-	globals.state.location = 'gorn'
+	#globals.state.location = 'gorn'
 #	for i in globals.state.portals.values():
 #		i.enabled = true
 	for i in globals.spelldict.values():
@@ -272,7 +281,8 @@ func _on_new_slave_button_pressed():
 	globals.state.sidequests.yris = 3
 	#globals.state.decisions.append('')
 	globals.state.rank = 3
-	globals.state.mainquest = 2
+	globals.state.mainquest = 40
+	globals.state.plotsceneseen = ['garthorscene','hade1','hade2','frostfordscene']#,'slaverguild']
 	globals.resources.mana = 200
 	globals.state.farm = 3
 	globals.state.mansionupgrades.mansionlab = 1
@@ -286,8 +296,6 @@ func _on_new_slave_button_pressed():
 	globals.state.reputation.frostford = 50
 	globals.state.condition -= 100
 	globals.state.decisions = ['tishaemilytricked','chloebrothel','ivrantaken','goodroute']
-	#lobals.state.upcomingevents.append({code = 'tishaappearance',duration =1})
-	globals.state.upcomingevents.append({code = 'aynerisrapierstart', duration = 1})
 	for i in globals.characters.characters:
 		person = globals.characters.create(i)
 		person.loyal = 100
@@ -560,7 +568,7 @@ func _on_end_pressed():
 								person.loyal += rand_range(1,3)
 								text += "[color=green]$name has been influenced by local townfolk, which is loyal towards you. [/color]\n"
 						text = workdict.text
-						if person.spec == 'housekeeper' && person.work in ['rest','chef','library','nurse','maid','headgirl','farmmanager','labassist','jailer']:
+						if person.spec == 'housekeeper' && person.work in ['rest','cooking','library','nurse','maid','headgirl','farmmanager','labassist','jailer']:
 							globals.state.condition += (5.5 + (person.sagi+person.send)*6)/2
 							text2.set_bbcode(text2.get_bbcode() + person.dictionary("$name has managed to clean the mansion a bit while being around. \n"))
 						if workdict.has("gold"):
@@ -740,7 +748,6 @@ func _on_end_pressed():
 					person.health -= person.stats.health_max/7
 			
 			if person.stress >= 99:
-				print(true)
 				person.health = 1
 				person.mentalbreakdown()
 			
@@ -1087,6 +1094,38 @@ func nextdayevents():
 			get_node("dailyevents").call(event)
 			dailyevent = true
 			return
+	if globals.state.sandbox == false && globals.state.mainquest < 42:
+		if globals.state.mainquest >= 16 && !globals.state.plotsceneseen.has('garthorscene') &&!$scene.is_visible_in_tree() && !$dialogue.is_visible_in_tree():
+			globals.events.garthorscene()
+			globals.state.plotsceneseen.append('garthorscene')
+			checkforevents = true
+			return
+		elif globals.state.mainquest >= 18 && !globals.state.plotsceneseen.has('hade1') &&!$scene.is_visible_in_tree() && !$dialogue.is_visible_in_tree():
+			globals.events.hadescene1()
+			globals.state.plotsceneseen.append('hade1')
+			checkforevents = true
+			return
+		elif globals.state.mainquest >= 24 && !globals.state.plotsceneseen.has('hade2') &&!$scene.is_visible_in_tree() && !$dialogue.is_visible_in_tree():
+			globals.events.hadescene2()
+			globals.state.plotsceneseen.append('hade2')
+			checkforevents = true
+			return
+		elif globals.state.mainquest >= 27 && !globals.state.plotsceneseen.has('slaverguild') &&!$scene.is_visible_in_tree() && !$dialogue.is_visible_in_tree():
+			globals.events.slaverguild()
+			globals.state.plotsceneseen.append('slaverguild')
+			checkforevents = true
+			return
+		elif globals.state.mainquest >= 36 && !globals.state.plotsceneseen.has('frostfordscene') &&!$scene.is_visible_in_tree() && !$dialogue.is_visible_in_tree():
+			globals.events.frostfordscene()
+			globals.state.plotsceneseen.append('frostfordscene')
+			checkforevents = true
+			return
+		
+		elif globals.state.mainquest >= 40 && !globals.state.plotsceneseen.has('hademelissa') &&!$scene.is_visible_in_tree() && !$dialogue.is_visible_in_tree():
+			globals.events.hademelissa()
+			globals.state.plotsceneseen.append('hademelissa')
+			checkforevents = true
+			return
 	startnewday()
 
 var dailyevent = false
@@ -1366,11 +1405,11 @@ func closescene():
 	get_node("scene").hide()
 
 func _on_menu_pressed():
-	music_set('pause')
+	#music_set('pause')
 	get_node("menucontrol").popup()
 
 func _on_closemenu_pressed():
-	music_set('start')
+	#music_set('start')
 	get_node("menucontrol").hide()
 
 func _on_closegamebuttonm_pressed():
@@ -1561,13 +1600,14 @@ func background_set(text):
 func background_get():
 	return 
 
+func backgroundinstant(text):
+	get_node("TextureFrame").set_texture(globals.backgrounds[text])
+
 func animationfade(value = 0.4, duration = 0.05):
 	var player = $screenchange/AnimationPlayer
 	player.get_animation("fadetoblack").length = value + duration
-	#print(var2str(player.get_animation("fadetoblack").track_get_key_value(0,0)))
 	player.get_animation("fadetoblack").track_remove_key(0, 1)
 	player.get_animation("fadetoblack").track_insert_key(0, value, Color(1,1,1,1)) 
-	#print(player.get_animation('fadetoblack').track_set_key_value(0,1))
 	if OS.get_name() != 'HTML5' && globals.rules.fadinganimation == true:
 		player.play('fadetoblack')
 		yield(player, "animation_finished")
@@ -1595,7 +1635,6 @@ func music_set(text):
 		music.playing = true
 	if text == 'stop':
 		musicfading = true
-		music.stop()
 		return
 	elif text == 'pause':
 		musicfading = true
@@ -2058,7 +2097,7 @@ var mainquestdict = {
 '32': "Return to Zoe while having total 500 units of food, 15 Nature Essences and 5 Fluid Substances.",
 '33': "Return to Theron.",
 '34': "Return to Theron.",
-'35':"Return to Theron.",
+'35': "Return to Theron.",
 '36': "Visit Melissa",
 '37': "Visit Garthor at Gorn",
 '38': "Search for Ayda at her shop",
@@ -2213,7 +2252,7 @@ func spellbookselected(spell):
 	var text = ''
 	for i in get_tree().get_nodes_in_group("spellbutton"):
 		if i.get_text() != spell.name: i.set_pressed(false)
-	text = '[center]'+ spell.name + '[/center]\n\n' + spell.description + '\n\nType: ' + spell.type.capitalize() + '\n\nMana: ' + str(spell.manacost)
+	text = '[center]'+ spell.name + '[/center]\n\n' + spell.description + '\n\nType: ' + spell.type.capitalize() + '\n\nMana: ' + str(globals.spells.spellcost(spell))
 	if spell.combat == true:
 		text += '\n\nCan be used in combat'
 	get_node("spellbooknode/spellbooklist/spelldescription").set_bbcode(text)
@@ -2352,8 +2391,20 @@ func _on_selfbutton_pressed():
 	for i in globals.state.reputation:
 		text += i.capitalize() + " - "+ reputationword(globals.state.reputation[i]) + ", "
 	text += "\nYour mage order rank: " + dict[int(globals.state.rank)]
+	text += "\n\nYour speciality: [color=yellow]" + globals.state.spec + "[/color]\nBonuses: " + globals.playerspecs[globals.state.spec]
+	
 	get_node("MainScreen/mansion/selfinspect/mainstatlabel").set_bbcode(text)
 	updatestats(person)
+	if globals.state.mansionupgrades.mansionparlor >= 1:
+		$MainScreen/mansion/selfinspect/selftattoo.set_disabled(false)
+		$MainScreen/mansion/selfinspect/selfpierce.set_disabled(false)
+		$MainScreen/mansion/selfinspect/selftattoo.set_tooltip("")
+		$MainScreen/mansion/selfinspect/selfpierce.set_tooltip("")
+	else:
+		$MainScreen/mansion/selfinspect/selftattoo.set_disabled(true)
+		$MainScreen/mansion/selfinspect/selfpierce.set_disabled(true)
+		$MainScreen/mansion/selfinspect/selftattoo.set_tooltip("Unlock Beauty Parlor to access Tattoo options. ")
+		$MainScreen/mansion/selfinspect/selfpierce.set_tooltip("Unlock Beauty Parlor to access Piercing options. ")
 
 
 
@@ -2419,12 +2470,6 @@ noble = load("res://files/buttons/mainscreen/44.png"),
 func _on_selfinspectclose_pressed():
 	get_node("MainScreen/mansion/selfinspect").hide()
 	_on_mansion_pressed()
-
-
-func _on_selfgear_pressed():
-	globals.items.person = globals.player
-	get_node("paperdoll").person = globals.player
-	get_node("paperdoll").showup()
 
 
 func reputationword(value):
@@ -2528,8 +2573,7 @@ func _on_abilityclose_pressed():
 	get_node("MainScreen/mansion/selfinspect/selfabilitypanel").hide()
 
 
-func _on_selfpotion_pressed():
-	_on_inventory_pressed('self')
+
 
 var potionselected
 
@@ -2669,7 +2713,7 @@ func _on_portals_pressed():
 		infotext("Your backpack is too heavy to leave", 'red')
 		return
 	_on_mansion_pressed()
-	if OS.get_name() != 'HTML5' && globals.rules.fadinganimation == true:
+	if OS.get_name() != 'HTML5':
 		yield(self, 'animfinished')
 	var list = get_node("MainScreen/mansion/portalspanel/ScrollContainer/VBoxContainer")
 	var button = get_node("MainScreen/mansion/portalspanel/ScrollContainer/VBoxContainer/portalbutton")
@@ -3454,3 +3498,13 @@ func _on_hideui_pressed():
 
 
 
+
+
+func _on_selfpierce_pressed():
+	$MainScreen/slave_tab.person = globals.player
+	$MainScreen/slave_tab._on_piercing_pressed()
+
+
+func _on_selftattoo_pressed():
+	$MainScreen/slave_tab.person = globals.player
+	$MainScreen/slave_tab._on_tattoo_pressed()

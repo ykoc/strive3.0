@@ -2,7 +2,7 @@
 
 [ext_resource path="res://files/theme.tres" type="Theme" id=1]
 [ext_resource path="res://files/scripts/ending.gd" type="Script" id=2]
-[ext_resource path="res://files/backgrounds/town.png" type="Texture" id=3]
+[ext_resource path="res://files/images/melissa/melissafriendly.png" type="Texture" id=3]
 [ext_resource path="res://files/buttons/effects/blur.shader" type="Shader" id=4]
 [ext_resource path="res://files/buttons/effects/white.png" type="Texture" id=5]
 [ext_resource path="res://files/buttons/1panelsmall.png" type="Texture" id=6]
@@ -10,14 +10,14 @@
 [ext_resource path="res://files/buttons/img-backG-popup.png" type="Texture" id=8]
 [ext_resource path="res://files/images/alise/002.png" type="Texture" id=9]
 
-[sub_resource type="ShaderMaterial" id=115]
+[sub_resource type="ShaderMaterial" id=1]
 
 render_priority = 1
 shader = ExtResource( 4 )
 shader_param/amount = 0.8
 _sections_unfolded = [ "shader_param" ]
 
-[sub_resource type="StyleBoxTexture" id=116]
+[sub_resource type="StyleBoxTexture" id=2]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -36,7 +36,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="DynamicFont" id=117]
+[sub_resource type="DynamicFont" id=3]
 
 size = 17
 use_mipmaps = false
@@ -44,7 +44,7 @@ use_filter = true
 extra_spacing_top = 1
 font_data = ExtResource( 7 )
 
-[sub_resource type="DynamicFont" id=118]
+[sub_resource type="DynamicFont" id=4]
 
 size = 26
 use_mipmaps = false
@@ -52,7 +52,7 @@ use_filter = true
 extra_spacing_top = 1
 font_data = ExtResource( 7 )
 
-[sub_resource type="DynamicFont" id=119]
+[sub_resource type="DynamicFont" id=5]
 
 size = 26
 use_mipmaps = false
@@ -60,7 +60,7 @@ use_filter = true
 extra_spacing_top = 1
 font_data = ExtResource( 7 )
 
-[sub_resource type="DynamicFont" id=120]
+[sub_resource type="DynamicFont" id=6]
 
 size = 26
 use_mipmaps = false
@@ -103,10 +103,11 @@ size_flags_vertical = 2
 texture = ExtResource( 3 )
 expand = true
 stretch_mode = 7
+_sections_unfolded = [ "Material", "Visibility" ]
 
 [node name="TextureRect" type="TextureRect" parent="." index="1"]
 
-material = SubResource( 115 )
+material = SubResource( 1 )
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -166,7 +167,6 @@ _sections_unfolded = [ "Rect" ]
 
 [node name="textpanel" type="Panel" parent="." index="4"]
 
-editor/display_folded = true
 anchor_left = 1.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -181,7 +181,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 116 )
+custom_styles/panel = SubResource( 2 )
 _sections_unfolded = [ "Rect" ]
 
 [node name="RichTextLabel" type="RichTextLabel" parent="textpanel" index="0"]
@@ -200,7 +200,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_fonts/normal_font = SubResource( 117 )
+custom_fonts/normal_font = SubResource( 3 )
 bbcode_enabled = true
 bbcode_text = "[color=yellow][center]Wimborn remained prosperous, continuing to influence its surroundings with you as The Order’s local Headmaster. [/center][/color]"
 visible_characters = -1
@@ -251,7 +251,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_fonts/normal_font = SubResource( 118 )
+custom_fonts/normal_font = SubResource( 4 )
 bbcode_enabled = true
 bbcode_text = "[center]Strive for Power
 
@@ -310,7 +310,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_fonts/normal_font = SubResource( 119 )
+custom_fonts/normal_font = SubResource( 5 )
 bbcode_enabled = true
 bbcode_text = "[center]Special thanks for Patreon supporters, and everyone who played or tested
 
@@ -403,7 +403,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 120 )
+custom_fonts/font = SubResource( 6 )
 align = 1
 percent_visible = 1.0
 lines_skipped = 0
@@ -424,7 +424,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 120 )
+custom_fonts/font = SubResource( 6 )
 align = 1
 percent_visible = 1.0
 lines_skipped = 0
@@ -445,7 +445,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 120 )
+custom_fonts/font = SubResource( 6 )
 align = 1
 percent_visible = 1.0
 lines_skipped = 0

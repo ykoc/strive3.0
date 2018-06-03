@@ -295,7 +295,7 @@ ranger = {
 name = "Ranger",
 code = 'ranger',
 descript = "Rangers are quick and resourceful individuals who are at home in any natural environment.. Not only do they have an eye for better opportunities, but also can spot richer prey. ",
-descriptbonus = "+50% drop rate from combat encounters, forage and hunt efficiency + 25%, scouting bonus",
+descriptbonus = "+40% drop rate from combat encounters, forage and hunt efficiency + 25%, scouting bonus",
 descriptreqs = "Wit 75+, Endurance 3+.",
 reqs = "person.wit >= 75 && person.send >= 3"
 },

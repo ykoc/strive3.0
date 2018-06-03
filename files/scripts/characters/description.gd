@@ -89,6 +89,9 @@ func piercing():
 		text += '$His lip has a [color=aqua]small stud[/color] in it. '
 	if person.piercing.tongue == 'stud':
 		text += '$His tongue has a shiny [color=aqua]stud[/color], visible when $he talks. '
+	if person.piercing.navel == 'stud':
+		text += "$His navel is pierced with a [color=aqua]small stud[/color]."
+	
 	if person.piercing.nipples == 'stud':
 		text += '$His pierced nipples are decorated with [color=aqua]a pair of small studs[/color]. '
 	elif person.piercing.nipples == 'ring':

@@ -212,10 +212,16 @@ guidance = {
 	},
 }
 
+func spellcost(spell):
+	var cost = spell.manacost
+	if globals.state.spec == 'Mage':
+		cost = cost/2
+	return cost
+
 func mindreadeffect():
 	var spell = globals.spelldict.mindread
 	var text = ''
-	globals.resources.mana -= spell.manacost
+	globals.resources.mana -= spellcost(spell)
 	text = "You peer into $name's soul. $He is of " + person.origins + " origins. \nObedience: " + str(round(person.obed)) + ", Fear: " + str(person.fear) + ', Stress: '+ str(round(person.stress)) + ', Loyalty: ' + str(round(person.loyal)) + ', Lust: '+ str(round(person.lust)) + ', Courage: ' + str(round(person.cour)) + ', Confidence: ' + str(round(person.conf)) + ', Wit: '+ str(round(person.wit)) + ', Charm: ' + str(round(person.charm)) + ", Toxicity: " + str(floor(person.toxicity)) + ", Lewdness: " + str(floor(person.lewdness)) 
 	text += "\nStrength: " + str(person.sstr) + ", Agility: " + str(person.sagi) + ", Magic Affinity: " + str(person.smaf) + ", Endurance: " + str(person.send)
 	text += "\nBase Beauty: " + str(person.beautybase) + ', Temporal Beauty: ' + str(person.beautytemp)
@@ -236,7 +242,7 @@ func mindreadeffect():
 func sedationeffect():
 	var text = ''
 	var spell = globals.spelldict.sedation
-	globals.resources.mana -= spell.manacost
+	globals.resources.mana -= spellcost(spell)
 	if person.effects.has('sedated'):
 		text = "You cast Sedation spell on the $name but it appears $he is already under its effect. "
 		return person.dictionary(text)
@@ -250,9 +256,9 @@ func sedationeffect():
 func healeffect():
 	var text = ''
 	var spell = globals.spelldict.heal
-	globals.resources.mana -= spell.manacost
+	globals.resources.mana -= spellcost(spell)
 	if person.health < person.stats.health_max:
-		person.health += rand_range(20,30) + globals.player.smaf*5
+		person.health += rand_range(20,30) + globals.player.smaf*7
 		if globals.player != person:
 			text = "After you finish casting the spell, $name's wounds close up. "
 			if person.loyal < 20:
@@ -269,7 +275,7 @@ func healeffect():
 func dreameffect():
 	var text = ''
 	var spell = globals.spelldict.dream
-	globals.resources.mana -= spell.manacost
+	globals.resources.mana -= spellcost(spell)
 	person.away.duration = 1
 	person.energy = person.stats.energy_max
 	person.stress -= rand_range(25,35) + caster.smaf*5
@@ -281,7 +287,7 @@ func dreameffect():
 func invigorateeffect():
 	var text = ''
 	var spell = globals.spelldict.invigorate
-	globals.resources.mana -= spell.manacost
+	globals.resources.mana -= spellcost(spell)
 	person.energy += person.stats.energy_max/2
 	person.stress += rand_range(25,35)-globals.player.smaf*4
 	globals.player.energy += 50
@@ -292,7 +298,7 @@ func entrancementeffect():
 	var text = ''
 	var spell = globals.spelldict.entrancement
 	var exists = false
-	globals.resources.mana -= spell.manacost
+	globals.resources.mana -= spellcost(spell)
 	if person.effects.has('entranced') == false:
 		text = "Light gradually fades from $name's eyes, and $his gaze becomes downcast. $He seems ready to accept whatever you tell $him. "
 		person.add_effect(globals.effectdict.entranced)
@@ -303,7 +309,7 @@ func entrancementeffect():
 func feareffect():
 	var text = "You grab hold of $name's shoulders and hold $his gaze. At first, $he’s calm, but the longer you stare into $his eyes, the more $he trembles in fear. Soon, panic takes over $his stare. "
 	var spell = globals.spelldict.fear
-	globals.resources.mana -= spell.manacost
+	globals.resources.mana -= spellcost(spell)
 	person.fear += 20+caster.smaf*10
 	person.stress += 20-caster.smaf*3
 	if person.effects.has('captured') == true:
@@ -315,7 +321,7 @@ func feareffect():
 func dominationeffect():
 	var text = ''
 	var spell = globals.spelldict.domination
-	globals.resources.mana -= spell.manacost
+	globals.resources.mana -= spellcost(spell)
 	if rand_range(0,100) < 20 && globals.player.smaf < 5:
 		text = "Your spell badly damages $name's mind as $he twiches and yells under its' effect."
 		person.cour -= rand_range(1,25)
@@ -339,7 +345,7 @@ func dominationeffect():
 
 func guidanceeffect():
 	var spell = globals.spelldict.guidance
-	globals.resources.mana -= spell.manacost
+	globals.resources.mana -= spellcost(spell)
 	var text = 'You cast guidance and move forward through the area avoiding any unnecessary encounters. '
 	
 	if main.exploration.currentzone.tags.has("noreturn"):
@@ -359,7 +365,7 @@ func sortspells(first, second):
 		return true
 
 func mutateeffect():
-	globals.resources.mana -= spelllist.mutate.manacost
+	globals.resources.mana -= spellcost(spelllist.mutate)
 	var text = mutate(2)
 	globals.main.rebuild_slave_list()
 	return text

@@ -5,6 +5,8 @@ var emilystate = 0
 var outside
 #Mainquests
 
+func closedialogue():
+	globals.main.close_dialogue()
 
 func gornpalace():
 	var text = ''
@@ -79,7 +81,6 @@ func gornpalaceivran(stage):
 		ivran.skin = 'brown'
 		ivran.eyecolor = 'amber'
 		ivran.vagvirgin = true
-		#ivran.pussy.first = 'none'
 		ivran.stats.cour_base = 65
 		ivran.stats.conf_base = 83
 		ivran.stats.wit_base = 55
@@ -94,18 +95,197 @@ func gornpalaceivran(stage):
 		buttons = [['Continue','ivranname']]
 		state = false
 	elif stage == 4:
-		globals.main.close_dialogue()
+		closedialogue()
 		return
 	
 	globals.main.dialogue(state, self, text, buttons, sprite)
 
 func ivranname():
 	globals.main.setname(ivran)
-	globals.main.close_dialogue()
+	closedialogue()
 	
 	globals.slaves = ivran
 
+func garthorscene(stage = 0):
+	var text
+	var state = false
+	var buttons = []
+	var sprite = null
+	if stage == 0:
+		globals.main.animationfade(1.5)
+		yield(globals.main, 'animfinished')
+		globals.main.music_set('gorn')
+		globals.main.backgroundinstant('gorn')
+		globals.main.clearscreen()
+		sprite = [['garthor','pos1'],['hadesillh','pos2']]
+		text = textnode.garthorscene1
+		buttons.append(['Continue','garthorscene',1])
+	elif stage == 1:
+		sprite = [['garthor','pos1'],['hadesillh','pos2']]
+		text = textnode.garthorscene2
+		buttons.append(['Continue','garthorscene',2])
+	elif stage == 2:
+		globals.main.animationfade(1.5)
+		yield(globals.main, 'animfinished')
+		sprite = [['hadesillh','pos2']]
+		text = textnode.garthorscene3
+		buttons.append(['Close', 'garthorscene',3])
+	elif stage == 3:
+		globals.main.animationfade(1.5)
+		closedialogue()
+		if OS.get_name() != "HTML5":
+			yield(globals.main, 'animfinished')
+		globals.main.backgroundinstant('mansion')
+		globals.main._on_mansion_pressed()
+		return
+	
+	globals.main.dialogue(state, self, text, buttons, sprite)
 
+func hadescene1(stage = 0):
+	var text
+	var state = false
+	var buttons = []
+	var sprite = null
+	if stage == 0:
+		globals.main.animationfade(1.5)
+		yield(globals.main, 'animfinished')
+		globals.main.music_set('explore')
+		#globals.main.music_set('gorn')
+		globals.main.backgroundinstant('mainorder')
+		globals.main.clearscreen()
+		sprite = [['hadesillh','pos1']]
+		text = textnode.hadepast1
+		buttons.append(['Continue','hadescene1',1])
+	elif stage == 1:
+		sprite = [['hadesillh','pos1']]
+		text = textnode.hadepast2
+		buttons.append(['Close', 'hadescene1',2])
+	elif stage == 2:
+		globals.main.animationfade(1.5)
+		closedialogue()
+		if OS.get_name() != "HTML5":
+			yield(globals.main, 'animfinished')
+		globals.main.backgroundinstant('mansion')
+		globals.main._on_mansion_pressed()
+		return
+	
+	globals.main.dialogue(state, self, text, buttons, sprite)
+
+
+func hadescene2(stage = 0):
+	var text
+	var state = false
+	var buttons = []
+	var sprite = null
+	if stage == 0:
+		globals.main.animationfade(1.5)
+		yield(globals.main, 'animfinished')
+		globals.main.backgroundinstant('mainorder')
+		globals.main.music_set('explore')
+		globals.main.clearscreen()
+		sprite = [['hadesillh','pos1']]
+		text = textnode.hadepast3
+		buttons.append(['Continue','hadescene2',1])
+	elif stage == 1:
+		sprite = [['hadesillh','pos1']]
+		text = textnode.hadepast4
+		buttons.append(['Close', 'hadescene2',2])
+	elif stage == 2:
+		globals.main.animationfade(1.5)
+		closedialogue()
+		if OS.get_name() != "HTML5":
+			yield(globals.main, 'animfinished')
+		globals.main.backgroundinstant('mansion')
+		globals.main._on_mansion_pressed()
+		return
+	
+	globals.main.dialogue(state, self, text, buttons, sprite)
+
+func frostfordscene(stage = 0):
+	var text
+	var state = false
+	var buttons = []
+	var sprite = null
+	if stage == 0:
+		globals.main.animationfade(1.5)
+		yield(globals.main, 'animfinished')
+		globals.main.music_set('dungeon')
+		globals.main.backgroundinstant('tunnels')
+		globals.main.clearscreen()
+		sprite = [['hadesillh','pos1']]
+		if globals.state.decisions.has("theronfired"):
+			text = textnode.hadefrostford
+		elif globals.state.decisions.has("dryaddefeated"):
+			text = textnode.hadefrostford3
+		else:
+			text = textnode.hadefrostford2
+		buttons.append(['Close','frostfordscene',1])
+	elif stage == 1:
+		globals.main.animationfade(1.5)
+		closedialogue()
+		if OS.get_name() != "HTML5":
+			yield(globals.main, 'animfinished')
+		globals.main.backgroundinstant('mansion')
+		globals.main._on_mansion_pressed()
+		return
+	
+	globals.main.dialogue(state, self, text, buttons, sprite)
+
+func slaverguild(stage = 0):
+	var text
+	var state = false
+	var buttons = []
+	var sprite = null
+	if stage == 0:
+		globals.main.animationfade(1.5)
+		yield(globals.main, 'animfinished')
+		globals.main.music_set('dungeon')
+		globals.main.backgroundinstant('slaverguild')
+		globals.main.clearscreen()
+		text = textnode.slaverguild
+		buttons.append(['Continue','slaverguild',1])
+	elif stage == 1:
+		text = textnode.slaverguild2
+		buttons.append(['Close', 'slaverguild',2])
+	elif stage == 2:
+		globals.main.animationfade(1.5)
+		closedialogue()
+		if OS.get_name() != "HTML5":
+			yield(globals.main, 'animfinished')
+		globals.main.backgroundinstant('mansion')
+		globals.main._on_mansion_pressed()
+		return
+	
+	globals.main.dialogue(state, self, text, buttons, sprite)
+
+func hademelissa(stage = 0):
+	var text
+	var state = false
+	var buttons = []
+	var sprite = null
+	if stage == 0:
+		globals.main.animationfade(1.5)
+		sprite = [['hadeneutral','pos1'],['melissaworried','pos2']]
+		yield(globals.main, 'animfinished')
+		globals.main.music_set('stop')
+		globals.main.backgroundinstant('slaverguild')
+		globals.main.clearscreen()
+		text = textnode.hademelissaend
+		buttons.append(['Close','hademelissa',1])
+#	elif stage == 1:
+#		text = textnode.slaverguild2
+#		buttons.append(['Close', 'slaverguild',2])
+	elif stage == 1:
+		globals.main.animationfade(1.5)
+		closedialogue()
+		if OS.get_name() != "HTML5":
+			yield(globals.main, 'animfinished')
+		globals.main.music_set('start')
+		globals.main.backgroundinstant('mansion')
+		globals.main._on_mansion_pressed()
+		return
+	
+	globals.main.dialogue(state, self, text, buttons, sprite)
 
 func gornivran():
 	var text = textnode.MainQuestGornIvranFind
@@ -115,13 +295,13 @@ func gornivran():
 	globals.main.dialogue(false, self, text, buttons, sprite)
 
 func gornivranfight():
-	globals.main.close_dialogue()
+	closedialogue()
 	globals.main.get_node("explorationnode").launchonwin = 'gornivranwin'
 	globals.main.get_node("combat").nocaptures = true
 	globals.main.get_node("explorationnode").enemyfight()
 
 func gornivranleave():
-	globals.main.close_dialogue()
+	closedialogue()
 
 func gornivranwin():
 	var text 
@@ -330,7 +510,7 @@ func frostfordcityhall(stage = 0):
 		sprite = [['zoesad','pos1']]
 		globals.state.sidequests.zoe = 100
 	elif stage == 4:
-		globals.main.close_dialogue()
+		closedialogue()
 		return
 	elif stage == 5:
 		sprite = [['theron','pos1']]
@@ -410,13 +590,13 @@ func dryadfight(stage = 0):
 		buttons.append({text = "Continue", function = 'dryadfight', args = 1})
 		globals.main.dialogue(false, self, text, buttons, sprite)
 	elif stage == 1:
-		globals.main.close_dialogue()
+		closedialogue()
 		globals.main.get_node("explorationnode").buildenemies("frostforddryadquest")
 		globals.main.get_node("explorationnode").launchonwin = 'dryadfightwin'
 		globals.main.get_node("combat").nocaptures = true
 		globals.main.get_node("explorationnode").enemyfight()
 	elif stage == 2:
-		globals.main.close_dialogue()
+		closedialogue()
 		globals.main.get_node("explorationnode").buildenemies("frostfordzoequest")
 		globals.main.get_node("explorationnode").launchonwin = 'zoefightwin'
 		globals.main.get_node("combat").nocaptures = true
@@ -524,7 +704,7 @@ func mountainelfcamp(stage = 0):
 	elif stage == 1:
 		globals.state.mainquest = 40
 		globals.state.decisions.append("mainquestelves")
-		globals.main.close_dialogue()
+		closedialogue()
 		globals.main.get_node("explorationnode").buildenemies("finaleslavers")
 		globals.main.get_node("explorationnode").launchonwin = 'mountainwin'
 		globals.main.get_node("combat").nocaptures = true
@@ -533,7 +713,7 @@ func mountainelfcamp(stage = 0):
 	elif stage == 2:
 		globals.state.mainquest = 40
 		globals.state.decisions.append("mainquestslavers")
-		globals.main.close_dialogue()
+		closedialogue()
 		globals.main.get_node("explorationnode").buildenemies("finaleelves")
 		globals.main.get_node("explorationnode").launchonwin = 'mountainwin'
 		globals.main.get_node("combat").nocaptures = true
@@ -639,7 +819,7 @@ func semifinalfight():
 	
 	globals.main.get_node("explorationnode").launchonwin = 'semifinalewin'
 	globals.main.get_node("combat").nocaptures = true
-	globals.main.close_dialogue()
+	closedialogue()
 	globals.main.get_node("explorationnode").enemyfight()
 
 func semifinalewin():
@@ -693,7 +873,7 @@ func orderfinale(stage = 0):
 			buttons.append({text = "Continue", function = 'orderfinale', args = 1})
 		elif stage == 1:
 			globals.main.background_set('mainorderfinale')
-			globals.main.close_dialogue()
+			closedialogue()
 			if OS.get_name() != "HTML5" && globals.rules.fadinganimation == true:
 				yield(globals.main, 'animfinished')
 			outside.clearbuttons()
@@ -708,7 +888,7 @@ func orderfinale(stage = 0):
 			globals.main.get_node("explorationnode").buildenemies("finalehade")
 			globals.main.get_node("explorationnode").launchonwin = 'finalemelissa'
 			globals.main.get_node("combat").nocaptures = true
-			globals.main.close_dialogue()
+			closedialogue()
 			globals.main.get_node("explorationnode").enemyfight(true)
 			return
 	elif globals.state.decisions.has('badroute'):
@@ -723,7 +903,7 @@ func orderfinale(stage = 0):
 			buttons.append({text = "Continue", function = 'orderfinale', args = 1})
 		elif stage == 1:
 			globals.main.background_set('mainorderfinale')
-			globals.main.close_dialogue()
+			closedialogue()
 			if OS.get_name() != "HTML5" && globals.rules.fadinganimation == true:
 				yield(globals.main, 'animfinished')
 			outside.clearbuttons()
@@ -738,7 +918,7 @@ func orderfinale(stage = 0):
 			globals.main.get_node("explorationnode").buildenemies("finalecouncil")
 			globals.main.get_node("explorationnode").launchonwin = 'finalebadroute'
 			globals.main.get_node("combat").nocaptures = true
-			globals.main.close_dialogue()
+			closedialogue()
 			globals.main.get_node("explorationnode").enemyfight(true)
 			return
 	globals.main.dialogue(state, self, text, buttons, sprite, background)
@@ -928,7 +1108,7 @@ func caliproposal(stage = 0):
 		buttons = [["Accept Cali's feelings",'caliproposal',1],['Stay friends','caliproposal',2]]
 		state = false
 	elif stage == 1:
-		globals.main.close_dialogue()
+		closedialogue()
 		image = 'calisex'
 		sprite = [['calinakedhappy','pos1']]
 		text = textnode.CaliAcceptProposal
@@ -1176,7 +1356,7 @@ func calibanditcampattack():
 	main.dialogue(false,self,text,buttons)
 
 func calibanditcampfight():
-	globals.main.close_dialogue()
+	closedialogue()
 	globals.main.get_node("explorationnode").launchonwin = 'calibanditcampwin'
 	globals.main.get_node("combat").nocaptures = true
 	globals.main.get_node("explorationnode").enemyfight()
@@ -1253,7 +1433,7 @@ func calislavercamppay(choice):
 		buttons.append(['Attack','calislaver',5])
 		globals.main.dialogue(state, self, text, buttons)
 	elif choice == 2:
-		globals.main.close_dialogue()
+		closedialogue()
 
 func calislaver(choice):
 	var text = ""
@@ -1280,19 +1460,19 @@ func calislaver(choice):
 		text = textnode.CaliSlaverNoSell
 		buttons.append(['Leave', 'calislaver',6])
 	elif choice == 5:
-		globals.main.close_dialogue()
+		closedialogue()
 		globals.main.get_node("explorationnode").buildenemies("CaliBossSlaver")
 		globals.main.get_node("combat").nocaptures = true
 		globals.main.get_node("explorationnode").launchonwin = 'calislaverscampwin'
 		globals.main.get_node("explorationnode").enemyfight()
 		return
 	elif choice == 6:
-		globals.main.close_dialogue()
+		closedialogue()
 		globals.state.sidequests.cali = 25
 		globals.main.get_node("explorationnode").zoneenter('wimbornoutskirts')
 		return
 	elif choice == 7:
-		globals.main.close_dialogue()
+		closedialogue()
 		globals.state.sidequests.cali = 100
 		globals.main.get_node("explorationnode").zoneenter('wimbornoutskirts')
 		return
@@ -1329,7 +1509,7 @@ func calistraybandit():
 	if cali == null:
 		globals.main.popup("You should probably bring Cali along for this, she could confirm if this is in fact the bandit that captured her.")
 		return
-	globals.main.close_dialogue()
+	closedialogue()
 	globals.main.get_node("explorationnode").buildenemies("CaliStrayBandit")
 	globals.main.get_node("combat").nocaptures = true
 	globals.main.get_node("explorationnode").launchonwin = 'calistraybanditwin'
@@ -1613,7 +1793,7 @@ func emilymansion(stage = 0):
 	if stage in [1,2]:
 		globals.main.scene(self, image, text, buttons)
 		globals.main._on_mansion_pressed()
-		globals.main.close_dialogue()
+		closedialogue()
 		return
 	globals.main.dialogue(state,self,text,buttons,sprite)
 
@@ -1762,7 +1942,7 @@ func tishadecision(number):
 	if number in [5]:
 		globals.main.scene(self, image, text, buttons)
 		globals.main._on_mansion_pressed()
-		globals.main.close_dialogue()
+		closedialogue()
 		return
 	globals.main.rebuild_slave_list()
 	globals.main.dialogue(state,self,text,buttons,sprite)
@@ -1893,7 +2073,7 @@ func tishabackstreets(stage = 0):
 		buttons.append(['Leave', 'tishabackstreets', 2])
 	elif stage == 1:
 		main.get_node("explorationnode").buildenemies("tishaquestenemy")
-		globals.main.close_dialogue()
+		closedialogue()
 		globals.main.get_node("explorationnode").launchonwin = 'tishabackstreetswin'
 		globals.main.get_node("combat").nocaptures = true
 		globals.main.get_node("explorationnode").enemyfight()
@@ -1938,7 +2118,7 @@ func tishagornguild(stage = 0):
 		buttons.append(['Brand', 'tishagornguild', 3])
 		buttons.append(['Refuse', 'tishagornguild', 4])
 	elif stage == 2:
-		globals.main.close_dialogue()
+		closedialogue()
 		globals.main.get_node("outside").slaveguild('gorn')
 		return
 	elif stage == 3:
@@ -2028,7 +2208,7 @@ func tishagornguild(stage = 0):
 	if stage in [7,8]:
 		globals.main.scene(self, image, text, buttons)
 		globals.main._on_mansion_pressed()
-		globals.main.close_dialogue()
+		closedialogue()
 		return
 	globals.main.dialogue(state,self,text,buttons, sprite)
 
@@ -2131,7 +2311,7 @@ func chloeforest(stage = 0):
 		buttons.append({text = 'Continue',function = 'chloeforest',args = 6})
 	elif stage == 6:
 		globals.main.get_node("explorationnode").zoneenter('forest')
-		globals.main.close_dialogue()
+		closedialogue()
 		return
 	elif stage == 7:
 		text = textnode.ChloeShaliq
@@ -2147,7 +2327,7 @@ func chloevillage(stage = 0):
 	var buttons = []
 	if stage == 0:
 		globals.main.get_node("explorationnode").zoneenter('shaliq')
-		globals.main.close_dialogue()
+		closedialogue()
 		globals.main.closescene()
 		return
 	elif stage == 1:
@@ -2294,7 +2474,7 @@ func chloegrove(stage = 0):
 		elif stage == 2:
 			text = textnode.ChloeGroveMasturbate
 	elif stage == 3:
-		globals.main.close_dialogue()
+		closedialogue()
 		globals.main.closescene()
 		globals.main.get_node("explorationnode").zoneenter('shaliq')
 		
@@ -2353,7 +2533,7 @@ func aynerisforest(stage = 0):
 			globals.main.get_node("explorationnode").buildenemies("ayneris1")
 		else:
 			globals.main.get_node("explorationnode").buildenemies("ayneris2")
-		globals.main.close_dialogue()
+		closedialogue()
 		globals.main.get_node("explorationnode").launchonwin = 'ayneriswin'
 		globals.main.get_node("combat").nocaptures = true
 		globals.main.get_node("explorationnode").enemyfight()
@@ -2378,7 +2558,7 @@ func aynerisforest(stage = 0):
 		state = true
 	if stage in [2,4]:
 		buttons = [{text = "Leave", function = 'closescene'}]
-		globals.main.close_dialogue()
+		closedialogue()
 		globals.main.scene(self, image, text, buttons)
 		return
 	globals.main.dialogue(state, self, text, buttons, sprites)
@@ -2422,8 +2602,6 @@ func aynerismarket(stage = 0):
 		sprites = [['aynerisneutral','pos1']]
 		text = textnode.AynerisOfferJoin
 		var person = globals.characters.create("Ayneris")
-		var tmpitem = globals.items.createunstackable('weaponaynerisrapier')
-		globals.state.unstackables[str(tmpitem.id)] = tmpitem
 		globals.slaves = person
 		globals.state.sidequests.ayneris = 5
 		globals.state.upcomingevents.append({code = "aynerisrapierstart", duration = 10})

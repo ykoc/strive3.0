@@ -120,18 +120,6 @@ static func newslave(race, age, sex, origins = 'slave'):
 	person.sexuals.actions.kiss = 0
 	person.sexuals.actions.massage = 0
 	globals.assets.getSexFeatures(person)
-#	if person.vagvirgn == true:
-#		person.pussy.first = 'none'
-#		if rand_range(0,1) >= 0.7:
-#			person.sexuals.unlocks.append('petting')
-#			if rand_range(0,1) >= 0.5:
-#				person.sexuals.unlocks.append('oral')
-#	elif person.sex != 'male':
-#		person.pussy.first = 'unknown'
-#		person.sexuals.unlocks.append('petting')
-#		person.sexuals.unlocks.append('vaginal')
-#		if rand_range(0,1) >= 0.5:
-#			person.sexuals.unlocks.append('oral')
 	if person.race.find('Halfkin') >= 0 || (person.race.find('Beastkin') >= 0 && globals.rules['furry'] == false):
 		person.race = person.race.replace('Beastkin', 'Halfkin')
 		person.bodyshape = 'humanoid'

@@ -1142,13 +1142,17 @@ func enemydefeated():
 			var chance = unit.rewardpool[i]
 			var bonus = 1
 			if ranger == true:
-				bonus += 0.5
+				bonus += 0.4
 			if deeperregion:
 				bonus += 0.25
+			if globals.state.spec == "Hunter":
+				bonus += 0.2
 			chance = chance*bonus
 			if rand_range(0,100) <= chance:
 				if i == 'gold':
 					goldearned += round(rand_range(unit.rewardgold[0], unit.rewardgold[1]))
+					if globals.state.spec == 'Hunter':
+						goldearned *= 2
 				else:
 					if globals.itemdict.has(i):
 						var item = globals.itemdict[i]
@@ -1522,7 +1526,10 @@ func capturedecide(stage): #1 - no reward, 2 - material, 3 - sex, 4 - join
 	elif stage == 2:
 		if randf() >= 0.25:
 			text = "After getting through $his belongings, $name passes you some valueable and gold. "
-			globals.resources.gold += round(rand_range(3,6)*10)
+			var goldreward = round(rand_range(3,6)*10)
+			if globals.state.spec == 'Hunter':
+				goldreward *= 2
+			globals.resources.gold += goldreward
 		else:
 			text = "After getting through $his belongings, $name passes you a piece of gear. "
 			var gear = {number = 1, enchantchance = 75 }

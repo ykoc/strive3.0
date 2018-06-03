@@ -754,6 +754,21 @@ armorrobe = {
 	amount = 0,
 	unlocked = true,
 },
+weapondaggerrust = {
+	code = 'weapondaggerrust',
+	name = 'Rusty Dagger',
+	icon = "res://files/images/items/weapondaggerrust.png",
+	description = "An alleged weapon. You really should find something else... ",
+	effect = [{type = 'incombat', effect = 'damage', effectvalue = 2, descript = "+2 Damage"}],
+	recipe = '',
+	reqs = null,
+	cost = 10,
+	type = 'gear',
+	subtype = 'weapon',
+	weight = 5,
+	amount = 0,
+	unlocked = true,
+},
 weapondagger = {
 	code = 'weapondagger',
 	name = 'Dagger',
@@ -1029,7 +1044,7 @@ func charm(value):
 	person.stats.charm_base += value
 
 func health(value):
-	person.stats.health_max += value
+	person.stats.health_bonus += value
 
 func energy(value):
 	person.stats.energy_max += value
@@ -1364,7 +1379,10 @@ func recipemake(item):
 		var ingredient = globals.itemdict[i]
 		var amount = self[recipe][i]
 		ingredient.amount -= amount
-	item.amount += 1
+	if globals.state.spec == 'Alchemist':
+		item.amount += 2
+	else:
+		item.amount += 1
 
 
 var recipeaphrodisiac = {

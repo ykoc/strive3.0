@@ -167,6 +167,13 @@ var noimage = load("res://files/buttons/noimagesmall.png")
 
 var punishcategories = ['spanking','whipping','nippleclap','clitclap','nosehook','mashshow','facesit','afacesit','grovel']
 
+var playerspecs = {
+Slaver = "+100% gold from selling captured slaves\n+33% gold reward from slave delivery tasks",
+Hunter = "+100% gold drop from random encounters\n+20% gear drop chance\nBonus to preventing ambushes",
+Alchemist = "Start with an alchemy room\nDouble potion production\nSelling potions earn 100% more gold",
+Mage = "-50% mana cost of spells\nCombat spell deal 20% more damage",
+}
+
 func _init():
 	randomize()
 	loadsettings()
@@ -178,6 +185,10 @@ func _init():
 		if tempnode.get(i) != null:
 			variables[i] = tempnode[i]
 	tempnode.queue_free()
+	loadmods()
+
+func loadmods():
+	pass
 
 func savevars():
 	var file = File.new()
@@ -453,6 +464,7 @@ class progress:
 	var nopoplimit = false
 	var condition = 85 setget cond_set
 	var conditionmod = 1.3
+	var spec = ''
 	var farm = 0 
 	var apiary = 0
 	var branding = 0
@@ -514,6 +526,7 @@ class progress:
 	mansionnursery = 0,
 	mansionparlor = 0,
 	}
+	var plotsceneseen = []
 	var capturedgroup = []
 	var ghostrep = {wimborn = 0, frostford = 0, gorn = 0, amberguard = 0}
 	var backpack = {stackables = {}, unstackables = []}
@@ -894,7 +907,7 @@ class person:
 	
 	func health_set(value):
 		stats.health_max = ((variables.basehealth + stats.end_cur*variables.healthperend) + floor(level/2)*5 )*stats.health_bonus
-		stats.health_cur = min(floor(value), stats.health_max) 
+		stats.health_cur = clamp(floor(value), 0, stats.health_max) 
 		if stats.health_cur <= 0:
 			death()
 	
@@ -998,7 +1011,8 @@ class person:
 		self.charm -= rand_range(5,self.charm/4)
 		if self.effects.has('captured'):
 			self.add_effect(globals.effectdict.captured, true)
-		self.health -= rand_range(0,self.stats.health_max/5)
+		if sleep != 'farm':
+			self.health -= rand_range(0,self.stats.health_max/5)
 		self.stress -= 30
 	
 	func learningpoints_set(value):
@@ -1120,6 +1134,8 @@ class person:
 		number = self.sagi*3 + self.wit/10
 		if mods.has('augmenthearing'):
 			number += 3
+		if globals.state.spec == 'Hunter':
+			number += 10
 		return number
 	
 	
@@ -1288,52 +1304,45 @@ class person:
 		return luxurydict
 	
 	func calculateluxury():
-		var luxurydict = {'slave' : 0,poor = 5,commoner = 15,rich = 25,noble = 40}
-		var luxury = luxurydict[origins]
+		var luxury = variables.luxuryreqs[origins]
 		if traits.has("Ascetic"):
 			luxury = luxury/2
 		return luxury
 	
+	
+	
 	func calculateprice():
 		var price = 0
-		price = beautybase*2.5 + beautytemp*1.5
-		price += (level-1)*50
+		var bonus = 1
+		price = beautybase*variables.priceperbasebeauty + beautytemp*variables.priceperbonusbeauty
+		price += (level-1)*variables.priceperlevel
+		if variables.racepricemods.has(race):
+			price = price*variables.racepricemods[race]
 		if vagvirgin == true:
-			price = price*1.2
+			bonus += variables.pricebonusvirgin
 		if sex == 'futanari':
-			price = price*1.1
+			bonus += variables.pricebonusfuta
 		for i in get_traits():
-			if i.tags.find('detrimental') >= 0:
-				price = price*0.80
-		if race == 'Elf' || race == 'Dark Elf' || race == 'Orc' || race == 'Goblin'||race == 'Gnome':
-			price = price*1.5
-		elif race == 'Drow'|| race == 'Demon' || race == 'Seraph':
-			price = price*2.5
-		elif (race.find('Beastkin') >= 0 || race.find('Halfkin') >= 0) && race.find('Fox') < 0:
-			price = price*1.75
-		elif race == 'Fairy'|| race == 'Dryad' || race == 'Taurus' || race.find('Fox') >= 0:
-			price = price*2
-		elif race == 'Slime'||race == 'Lamia' || race == 'Arachna' || race == 'Harpy' || race == 'Scylla':
-			price = price*2.5
-		elif race == 'Dragonkin':
-			price = price*3.5
+			if i.tags.has('detrimental'):
+				bonus += variables.pricebonusbadtrait
+
 		if self.toxicity >= 60:
-			price = price/2
-		if origins == 'slave':
-			price = price*0.8
-		elif origins == 'poor':
-			price = price*1
-		elif origins == 'commoner':
-			price = price*1.2
-		elif origins == 'rich':
-			price = price*1.5
-		elif origins == 'noble':
-			price = price*2
-		if traits.has('Uncivilized') == true:
-			price = price/1.5
+			bonus -= variables.pricebonustoxicity
+		
+		if variables.gradepricemod.has(origins):
+			bonus += variables.gradepricemod[origins]
+		if variables.agepricemods.has(age):
+			bonus += variables.agepricemods[age]
+		
+		
+		if traits.has('Uncivilized'):
+			bonus -= variables.priceuncivilized
+		
+		
+		price = price*bonus
 		
 		if price < 0:
-			price = 5
+			price = variables.priceminimum
 		return round(price)
 	
 	func buyprice():
@@ -1347,7 +1356,9 @@ class person:
 		for i in globals.slaves:
 			if i.traits.has("Influential"):
 				price *= 1.2
-		price = max(round(price), 10)
+		price = max(round(price), variables.priceminimumsell)
+		if globals.state.spec == 'Slaver' && fromguild == false:
+			price *= 2
 		return price
 	
 	func death():

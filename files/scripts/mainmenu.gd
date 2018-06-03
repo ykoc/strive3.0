@@ -8,6 +8,7 @@ var ten = globals.patronlist.ten
 func _ready():
 	buildportraitarray()
 	
+	
 	globals.showalisegreet = false
 	if OS.get_name() == "HTML5":
 		globals.rules.custommouse = false
@@ -242,7 +243,7 @@ var currentrace = 'Human'
 var racebonus = "Human"
 var currentage = 'adult'
 var currentsex = 'male'
-var background = 'noble'
+var background = 'Slaver'
 var player
 
 func charcreateinitiate():
@@ -369,7 +370,7 @@ func _on_quickstart_pressed():
 	if globals.rules.futa == false:
 		sexarray.erase('futanari')
 	currentsex = sexarray[rand_range(0,sexarray.size())]
-	var tempbackground = ['mercenary','farmer','noble','mage']
+	var tempbackground = ['Slaver']
 	background = tempbackground[rand_range(0,tempbackground.size())]
 	slavetemplate.race = globals.allracesarray[rand_range(0, globals.allracesarray.size())]
 	slavetemplate.age = agearray[rand_range(0,agearray.size())]
@@ -705,11 +706,11 @@ func stage7():
 		if i != get_node("TextureFrame/newgame/stage7/backgroundcontainer/VBoxContainer/Button"):
 			i.visible = false
 			i.queue_free()
-	for i in backgrounddict.values():
+	for i in playerspecs:
 		var newbutton = get_node("TextureFrame/newgame/stage7/backgroundcontainer/VBoxContainer/Button").duplicate()
 		get_node("TextureFrame/newgame/stage7/backgroundcontainer/VBoxContainer").add_child(newbutton)
 		newbutton.visible = true
-		newbutton.set_text(i.name)
+		newbutton.set_text(i)
 		newbutton.set_meta('bg', i)
 		newbutton.connect("pressed",self,'selectbackground', [newbutton])
 
@@ -718,8 +719,11 @@ func selectbackground(button):
 		if i != button:
 			i.set_pressed(false)
 	var tempbackground = button.get_meta('bg')
-	background = tempbackground.code
-	get_node("TextureFrame/newgame/stage7/backgroundtext").set_bbcode(tempbackground.descript)
+	background = tempbackground
+	var text = playerspecs[tempbackground]
+	if background in ['Mage', 'Alchemist']:
+		text += "\n\n[color=yellow]Not recommended for inexperienced players.[/color]"
+	get_node("TextureFrame/newgame/stage7/backgroundtext").set_bbcode(text)
 
 func _on_backgroundconfirm_pressed():
 	if player == null:
@@ -740,6 +744,7 @@ var startslave
 var startslavebackground = 'Stranger'
 var startslavehobby = 'Physical'
 var slavetemplate = {race = 'Human', age = 'adult', sex = 'female'}
+var slavetrait = ''
 
 func stage8():
 	get_node("TextureFrame/newgame/stage8/slaveage").clear()
@@ -776,8 +781,8 @@ func stage8():
 			i.visible = false
 			i.queue_free()
 	for i in ['$sibling', 'Servant','Childhood Friend','Stranger']:
-		if !background in ['noble', 'mage'] && i == 'Servant':
-			continue
+#		if !background in ['noble', 'mage'] && i == 'Servant':
+#			continue
 		var newbutton = get_node("TextureFrame/newgame/stage8/backgroundcontainer/VBoxContainer/Button").duplicate()
 		newbutton.visible = true
 		newbutton.set_meta('bg', i)
@@ -798,6 +803,12 @@ func stage8():
 		get_node("TextureFrame/newgame/stage8/hobbycontainer/VBoxContainer").add_child(newbutton)
 		newbutton.set_text(i)
 		newbutton.connect("pressed",self,'slavehobby', [newbutton])
+	var text = "Trait: "
+	if slavetrait != '':
+		text += slavetrait
+	else:
+		text += "None"
+	$TextureFrame/newgame/stage8/traits.text = text
 	get_node("TextureFrame/newgame/stage8/slavename").set_text(startslave.name)
 	get_node("TextureFrame/newgame/stage8/slavesurname").set_text(startslave.surname)
 
@@ -878,26 +889,39 @@ func _on_slaveconfirm_pressed():
 			i += 15
 	else:
 		globals.state.reputation.wimborn += 30
-	if background == 'mercenary':
-		for i in ['armorleather','armorleather','weaponsword','weaponsword']:
-			var tempitem = globals.items.createunstackable(i)
-			globals.state.unstackables[str(tempitem.id)] = tempitem
-	elif background == 'farmer':
-		globals.resources.gold += 250
-		globals.resources.food += 250
-	elif background == 'noble':
-		globals.resources.gold += 300
-		for i in ['clothmaid','clothmaid']:
-			var tempitem = globals.items.createunstackable(i)
-			globals.state.unstackables[str(tempitem.id)] = tempitem
-	elif background == 'mage':
-		globals.spelldict.heal.learned = true
-		globals.player.ability.append('heal')
-		globals.player.abilityactive.append('heal')
+	globals.state.spec = background
+	if background == 'Alchemist':
 		globals.state.mansionupgrades.mansionalchemy += 1
 		var array = ['aphrodisiac','hairgrowthpot','amnesiapot','lactationpot','miscariagepot','stimulantpot','deterrentpot']
 		for i in array:
 			globals.itemdict[i].unlocked = true
+	var tempitem
+	if background == 'Hunter':
+		tempitem = globals.items.createunstackable("weapondagger")
+		globals.state.unstackables[str(tempitem.id)] = tempitem
+	else:
+		tempitem = globals.items.createunstackable("weapondaggerrust")
+		globals.state.unstackables[str(tempitem.id)] = tempitem
+#	if background == 'mercenary':
+#		for i in ['armorleather','armorleather','weaponsword','weaponsword']:
+#			var tempitem = globals.items.createunstackable(i)
+#			globals.state.unstackables[str(tempitem.id)] = tempitem
+#	elif background == 'farmer':
+#		globals.resources.gold += 250
+#		globals.resources.food += 250
+#	elif background == 'noble':
+#		globals.resources.gold += 300
+#		for i in ['clothmaid','clothmaid']:
+#			var tempitem = globals.items.createunstackable(i)
+#			globals.state.unstackables[str(tempitem.id)] = tempitem
+#	elif background == 'mage':
+#		globals.spelldict.heal.learned = true
+#		globals.player.ability.append('heal')
+#		globals.player.abilityactive.append('heal')
+#		globals.state.mansionupgrades.mansionalchemy += 1
+#		var array = ['aphrodisiac','hairgrowthpot','amnesiapot','lactationpot','miscariagepot','stimulantpot','deterrentpot']
+#		for i in array:
+#			globals.itemdict[i].unlocked = true
 	
 	
 	for i in ['conf','cour','wit','charm']:
@@ -923,6 +947,10 @@ func _on_slaveconfirm_pressed():
 		startslave.loyal += 20
 		startslave.stats.obed_min += 35
 	
+	if slavetrait != '':
+		startslave.add_trait(slavetrait)
+	startslave.add_trait('Grateful')
+	
 	globals.slaves = startslave
 	
 	
@@ -939,7 +967,7 @@ func _on_slaveconfirm_pressed():
 		globals.resources.gold += 5000
 		globals.resources.food += 500
 		globals.resources.mana += 100
-		globals.state.mainquest = 17
+		globals.state.mainquest = 42
 		globals.state.rank = 4
 		globals.state.sidequests.brothel = 2
 		globals.state.branding = 2
@@ -974,6 +1002,8 @@ mage = {code = 'mage', name = "Researcher", descript = "Despite being born in a 
 }
 
 
+
+var playerspecs = globals.playerspecs
 
 
 
@@ -1047,3 +1077,33 @@ func _on_confirmconstants_pressed():
 			variables[vari] = clamp(float(i.get_node("LineEdit").text), variables.list[vari].min, variables.list[vari].max)
 	globals.savevars()
 	_on_constants_pressed()
+
+
+func _on_traits_pressed():
+	$TextureFrame/newgame/stage8/traitpanel.popup()
+	for i in $TextureFrame/newgame/stage8/traitpanel/ScrollContainer/VBoxContainer.get_children():
+		if i.name != 'Button':
+			i.visible = false
+			i.queue_free()
+	for i in globals.origins.traitlist.values():
+		if i.tags.has("secondary"):
+			continue
+		var newbutton = $TextureFrame/newgame/stage8/traitpanel/ScrollContainer/VBoxContainer/Button.duplicate()
+		newbutton.visible = true
+		$TextureFrame/newgame/stage8/traitpanel/ScrollContainer/VBoxContainer.add_child(newbutton)
+		newbutton.text = i.name
+		
+		if i.name == slavetrait:
+			newbutton.pressed = true
+		newbutton.connect("pressed",self,'traittoggle',[i])
+
+func traittoggle(trait):
+	slavetrait = trait.name
+	$TextureFrame/newgame/stage8/traitpanel/Label.text = startslave.dictionary(trait.name)
+	$TextureFrame/newgame/stage8/traitpanel/RichTextLabel.bbcode_text = startslave.dictionary(trait.description)
+	_on_traits_pressed()
+
+
+func _on_traitclose_pressed():
+	$TextureFrame/newgame/stage8/traitpanel.visible = false
+	stage8()
