@@ -268,7 +268,7 @@ func hademelissa(stage = 0):
 		sprite = [['hadeneutral','pos1'],['melissaworried','pos2']]
 		yield(globals.main, 'animfinished')
 		globals.main.music_set('stop')
-		globals.main.backgroundinstant('slaverguild')
+		globals.main.backgroundinstant('nightdesert')
 		globals.main.clearscreen()
 		text = textnode.hademelissaend
 		buttons.append(['Close','hademelissa',1])
@@ -1022,7 +1022,7 @@ func calievent1():
 			globals.state.sidequests.cali = 100
 	else:
 		globals.state.sidequests.cali = 13
-		return '\n[color=yellow]Cali seems to be concerned about something, maybe you should ask what’s wrong.[/color]'
+		return '\n[color=yellow]Cali seems to be concerned about something, maybe you should talk to her.[/color]'
 
 func calirun():
 	var cali = null

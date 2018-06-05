@@ -79,7 +79,7 @@ reqs = "true",
 combat = true,
 code = 'elvenforest',
 name = 'Elven Grove',
-description = "This portion of the forest is located dangerously close to eleven lands. They take poorly to intruders in their part of the woods so you should remain on your guard.",
+description = "This portion of the forest is located dangerously close to elven lands. They take poorly to intruders in their part of the woods so you should remain on your guard.",
 enemies = [{value = 'wolveswithperson', weight = 0.4},{value = 'fairy', weight = 2},{value = 'solobear', weight = 6},{value = 'elfguards',weight = 6},{value = 'plantseasy', weight = 6},{value = 'wolveseasy', weight = 8},{value = 'blockedsection', weight = 0.5}],
 encounters = [],
 length = 5,
@@ -1135,9 +1135,10 @@ func enemydefeated():
 			defeated.select.append(0)
 			defeated.faction.append(unit.faction)
 			for i in unit.capture.gear.values():
-				if i != null && randf() * 100 <= variables.geardropchance:
-					enemyloot.unstackables.append(enemygear[i])
-				i = null
+				if i != null:
+					globals.items.unequipitemraw(enemygear[i],unit.capture)
+					if randf() * 100 <= variables.geardropchance:
+						enemyloot.unstackables.append(enemygear[i])
 		for i in unit.rewardpool:
 			var chance = unit.rewardpool[i]
 			var bonus = 1

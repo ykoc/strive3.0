@@ -29,7 +29,7 @@ func requirements():
 			if i.person.penis == 'none':
 				valid = false
 		for i in takers:
-			if !i.person.person.mods.has("hollownipples"):
+			if !i.person.mods.has("hollownipples"):
 				valid = false
 	return valid
 

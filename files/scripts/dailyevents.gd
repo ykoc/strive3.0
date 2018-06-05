@@ -124,7 +124,6 @@ func showevent():
 
 func finishevent():
 	self.visible = false
-	get_parent().nextdayevents()
 
 ######################EVENTS
 

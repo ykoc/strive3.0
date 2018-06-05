@@ -78,18 +78,16 @@ func gearinfo(gear):
 
 func unequip(gear):
 	var item = globals.state.unstackables[selectedslave.gear[gear]]
+	if state == 'backpack':
+		globals.items.backpack = true
+	else:
+		globals.items.backpack = false
 	if selectedslave != null && selectedslave.gear[gear] != null:
-		globals.items.person = selectedslave
-		if location == 'mansion':
-			item.owner = null
-		else:
-			item.owner = 'backpack'
-		for i in item.effects:
-			if i.type == 'onequip':
-				globals.items.call(i.effect, -i.effectvalue)
-		selectedslave.gear[gear] = null
+		globals.items.unequipitem(item.id, selectedslave)
 		slavegear(selectedslave)
+		slavelist()
 		updateitems()
+		calculateweight()
 
 func open(place = 'mansion', part = 'inventory', keepslave = false):
 	
@@ -394,21 +392,12 @@ func use(button):
 				button.visible = false
 				button.queue_free()
 	else:
-		if item.reqs != null:
-			if globals.items.checkreqs(item) == false:
-				get_parent().infotext(person.dictionary("$name does not pass the requirements for ") + item.name, 'red')
-				return
-		if person.gear[item.type] != null:
-			tempitem = globals.state.unstackables[person.gear[item.type]]
-			for i in tempitem.effects:
-				if i.type == 'onequip':
-					globals.items.call(i.effect, -i.effectvalue)
-			tempitem.owner = null
-		person.gear[item.type] = item.id
-		item.owner = person.id
-		for i in item.effects:
-			if i.type == 'onequip':
-				globals.items.call(i.effect, i.effectvalue)
+		if state == 'backpack':
+			globals.items.backpack = true
+		else:
+			globals.items.backpack = false
+		if globals.items.equipitem(item.id, person) == 'failure':
+			return
 		var itemarray = button.get_meta('itemarray')
 		itemarray.erase(item)
 		button.get_node('number').set_text(str(itemarray.size()))
@@ -418,6 +407,7 @@ func use(button):
 		updateitems()
 		calculateweight()
 		slavegear(person)
+		slavelist()
 
 func info(button):
 	get_node("iteminfo/RichTextLabel").set_bbcode(globals.itemdescription(button.get_meta('item')))

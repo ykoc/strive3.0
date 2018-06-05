@@ -234,7 +234,7 @@ func questarray():
 	quest018 = {
 	code = '018',
 	shortdescription = "Fresh blood for our troupe!",
-	description = "A traveling cirus is looking to take in a new performer. Male or female doesn't matter, just that they be young, flexible, and a quick learner. ",
+	description = "A traveling circus is looking to take in a new performer. Male or female doesn't matter, just that they be young, flexible, and a quick learner. ",
 	reqs = [['obed','gte', 80], ['sagi', 'gte', 2], ['wit','gte',40], ['age','neq','adult']],
 	reqstemp = [],
 	time = round(rand_range(7,9)),
@@ -246,7 +246,7 @@ func questarray():
 	code = '010',
 	questreq = globals.rules.male_chance >= 15,
 	shortdescription = "An anonymous woman desires a real man to satisfy her.",
-	description = "A sexually frustrated wife is looking for a male slave to give her the attention is desperately craves. Looks should not be very high, to avoidhusband's suspicion. Must be well endowed with good stamina! ",
+	description = "A sexually frustrated wife is looking for a male slave to give her the attention is desperately craves. Looks should not be very high, to avoid husband's suspicion. Must be well endowed with good stamina! ",
 	reqs = [['sex', 'eq', 'male'], ['obed','gte', 80],['send','gte',2],['beauty','lte',40],['penis','gte',1]],
 	reqstemp = [],
 	time = round(rand_range(7,12)),

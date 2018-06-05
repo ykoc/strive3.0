@@ -434,7 +434,7 @@ func _on_relativesbutton_pressed():
 	newlabel = parentslist.get_node("Label").duplicate()
 	parentslist.add_child(newlabel)
 	newlabel.visible = true
-	if mother == -1:
+	if str(mother) == str(-1):
 		newlabel.set_text('Mother - unknown')
 	else:
 		var found = false
@@ -470,18 +470,18 @@ func _on_relativesbutton_pressed():
 			if found == false:
 				newlabel.set_text('Father - unknown')
 	####### Siblings
-	if person.relatives.mother == globals.player.relatives.mother || person.relatives.father == globals.player.relatives.father || person.relatives.mother == globals.player.relatives.father ||person.relatives.mother == globals.player.relatives.father:
+	if str(person.relatives.mother) == str(globals.player.relatives.mother) || str(person.relatives.father) == str(globals.player.relatives.father) || str(person.relatives.mother) == str(globals.player.relatives.father) ||str(person.relatives.mother) == str(globals.player.relatives.father):
 		newlabel = siblingslist.get_node("Label").duplicate()
 		newlabel.visible = true
 		siblingslist.add_child(newlabel)
 		newlabel.set_text(globals.player.dictionary("You ($name $surname, $sibling)"))
 	for i in globals.slaves:
 		var found = false
-		if i != person && i.relatives.mother != -1:
-			if (i.relatives.mother == person.relatives.mother|| i.relatives.mother == person.relatives.father) :
+		if i != person && str(i.relatives.mother) != str(-1):
+			if (str(i.relatives.mother) == str(person.relatives.mother)|| str(i.relatives.mother) == str(person.relatives.father)) :
 				found = true
-		if i != person && i.relatives.father != -1:
-			if (i.relatives.father == person.relatives.mother || i.relatives.father == person.relatives.father) :
+		if i != person && str(i.relatives.father) != str(-1):
+			if str((i.relatives.father) == str(person.relatives.mother) || str(i.relatives.father) == str(person.relatives.father)) :
 				found = true
 		if found == true:
 			newlabel = siblingslist.get_node("Label").duplicate()

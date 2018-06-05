@@ -988,7 +988,7 @@ armorrogue = {
 	name = "Rogue's Armor",
 	icon = "res://files/images/items/roguearmor.png",
 	description = "An unearthy semi-living object which can be weared. Feeds on the fluids of wearer which periodically stimulates in private places. ",
-	effect = [{type = 'incombat', effect = 'protection', effectvalue = 45, descript = "45% Protection"},{type = 'incombat', effect = 'armor', effectvalue = 89, descript = "+8 Armor"},{type = 'onequip', effect = 'energy', effectvalue = 20, descript = "+20 Energy"}],
+	effect = [{type = 'incombat', effect = 'protection', effectvalue = 45, descript = "45% Protection"},{type = 'incombat', effect = 'armor', effectvalue = 8, descript = "+8 Armor"},{type = 'onequip', effect = 'energy', effectvalue = 20, descript = "+20 Energy"}],
 	recipe = '',
 	reqs = null,
 	cost = 500,
@@ -1045,6 +1045,7 @@ func charm(value):
 
 func health(value):
 	person.stats.health_bonus += value
+	person.health += 0
 
 func energy(value):
 	person.stats.energy_max += value
@@ -1465,27 +1466,54 @@ aphrodisiac = 2,
 stimulantpot = 1,
 taintedessenceing = 2
 }
-#func _on_cancel_pressed():
-#	get_node("hairdyepanel").set_hidden(true)
-#
-#
-#func _on_hairdyepanel_visibility_changed():
-#	if get_node("itemnode/hairdyepanel/TextEdit").get_text() == '':
-#		get_node("itemnode/hairdyepanel/confirm").set_disabled(true)
-#	else:
-#		get_node("itemnode/hairdyepanel/confirm").set_disabled(false)
-#
-#
-#func _on_confirm_pressed():
-#	person.haircolor = get_node("itemnode/hairdyepanel/TextEdit").get_text()
-#	get_node("itemnode/hairdyepanel").set_hidden(true)
-#	var temp = globals.itemdict['hairdye']
-#	temp.amount -= 1
-#	globals.main.hide_everything()
+#unstackable item management
 
-#func _on_TextEdit_text_changed( text ):
-#	_on_hairdyepanel_visibility_changed()
+var backpack = false
 
+func equipitem(itemid, person = person): 
+	var item = globals.state.unstackables[itemid]
+	self.person = person
+	
+	if checkreqs(item) == false:
+		globals.main.infotext(person.dictionary("$name does not pass the requirements for ") + item.name, 'red')
+		return 'failure'
+	
+	if person.gear[item.type] != null:
+		unequipitem(person.gear[item.type], person)
+	
+	person.gear[item.type] = item.id
+	item.owner = person.id
+	
+	for i in item.effects:
+		if i.type == 'onequip':
+			call(i.effect, i.effectvalue)
+	
+
+func unequipitem(itemid, person = person):
+	var item = globals.state.unstackables[itemid]
+	self.person = person
+	
+	person.gear[item.type] = null
+	for i in item.effects:
+		if i.type == 'onequip':
+			call(i.effect, -i.effectvalue)
+	if backpack == true:
+		item.owner = 'backpack'
+	else:
+		item.owner = null
+
+func unequipitemraw(item, person = person):
+	self.person = person
+	person.gear[item.type] = null
+	for i in item.effects:
+		if i.type == 'onequip':
+			call(i.effect, -i.effectvalue)
+	item.owner = null
+
+func unequipall(person):
+	for i in person.gear.values():
+		if i != null:
+			unequipitem(i, person)
 
 func sortitems(first, second):
 	var type = ['potion','ingredient']

@@ -46,8 +46,8 @@ var main
 var slaves = [] setget slaves_set
 var starting_pc_races = ['Human', 'Elf', 'Dark Elf', 'Orc', 'Demon', 'Beastkin Cat', 'Beastkin Wolf', 'Beastkin Fox', 'Halfkin Cat', 'Halfkin Wolf', 'Halfkin Fox', 'Taurus']
 var wimbornraces = ['Human', 'Elf', 'Dark Elf', 'Demon', 'Beastkin Cat', 'Beastkin Wolf','Beastkin Tanuki','Beastkin Bunny', 'Halfkin Cat', 'Halfkin Wolf', 'Halfkin Tanuki','Halfkin Bunny','Taurus','Fairy']
-var gornraces = ['Human', 'Orc', 'Goblin', 'Gnome', 'Taurus', 'Centaur','Beastkin Cat', 'Beastkin Tanuki','Beastkin Bunny', 'Halfkin Cat','Halfkin Bunny','Halfkin Bunny', 'Harpy']
-var frostfordraces = ['Human','Elf','Drow','Beastkin Cat', 'Beastkin Wolf', 'Beastkin Fox', 'Beastkin Tanuki','Beastkin Bunny', 'Halfkin Cat', 'Halfkin Wolf', 'Halfkin Fox','Halfkin Bunny','Halfkin Bunny', 'Nereid']
+var gornraces = ['Human', 'Orc', 'Goblin', 'Gnome', 'Taurus', 'Centaur','Beastkin Cat', 'Beastkin Tanuki','Beastkin Bunny', 'Halfkin Cat','Halfkin Bunny','Harpy']
+var frostfordraces = ['Human','Elf','Drow','Beastkin Cat', 'Beastkin Wolf', 'Beastkin Fox', 'Beastkin Tanuki','Beastkin Bunny', 'Halfkin Cat', 'Halfkin Wolf', 'Halfkin Fox','Halfkin Bunny', 'Nereid']
 var allracesarray = ['Human', 'Elf', 'Dark Elf', 'Orc', 'Drow','Beastkin Cat', 'Beastkin Wolf', 'Beastkin Fox','Beastkin Tanuki','Beastkin Bunny', 'Halfkin Cat', 'Halfkin Wolf', 'Halfkin Fox','Halfkin Tanuki','Halfkin Bunny','Taurus', 'Demon', 'Seraph', 'Gnome','Goblin','Centaur','Lamia','Arachna','Scylla', 'Slime', 'Harpy','Dryad','Fairy','Nereid','Dragonkin']
 var banditraces = ['Human', 'Elf', 'Dark Elf', 'Demon', 'Cat', 'Wolf','Bunny','Taurus','Orc','Goblin']
 var monsterraces = ['Centaur','Lamia','Arachna','Scylla', 'Slime', 'Harpy','Nereid']
@@ -114,6 +114,7 @@ tunnels = load("res://files/backgrounds/tunnels.png"),
 mainorder = load("res://files/backgrounds/mainorder.png"),
 mainorderfinale = load("res://files/backgrounds/mainorderfinale.png"),
 umbra = load("res://files/backgrounds/umbra.png"),
+nightdesert = load("res://files/backgrounds/nightdesert.jpeg"),
 }
 var scenes = {
 finale = load("res://files/images/scene/finale.png"),
@@ -745,7 +746,7 @@ class person:
 		health_cur = 0,
 		health_max = 100,
 		health_base = 0,
-		health_bonus = 1,
+		health_bonus = 0,
 		energy_cur = 75,
 		energy_max = 100,
 		energy_mod = 0,
@@ -906,7 +907,7 @@ class person:
 	
 	
 	func health_set(value):
-		stats.health_max = ((variables.basehealth + stats.end_cur*variables.healthperend) + floor(level/2)*5 )*stats.health_bonus
+		stats.health_max = ((variables.basehealth + stats.end_cur*variables.healthperend) + floor(level/2)*5) + stats.health_bonus
 		stats.health_cur = clamp(floor(value), 0, stats.health_max) 
 		if stats.health_cur <= 0:
 			death()
@@ -1012,7 +1013,7 @@ class person:
 		if self.effects.has('captured'):
 			self.add_effect(globals.effectdict.captured, true)
 		if sleep != 'farm':
-			self.health -= rand_range(0,self.stats.health_max/5)
+			self.health -= rand_range(0, stats.health_max/5)
 		self.stress -= 30
 	
 	func learningpoints_set(value):
@@ -1369,9 +1370,7 @@ class person:
 	func removefrommansion():
 		globals.slaves.erase(self)
 		globals.main.infotext(self.dictionary("$name $surname is no longer in your posession. "),'red')
-		for i in gear.values():
-			if i != null:
-				globals.state.unstackables[i].owner = null
+		globals.items.unequipall(self)
 	
 	func fetch(dict):
 		for key in dict:
@@ -1434,11 +1433,11 @@ func impregnation(mother, father = null, anyfather = false):
 		if father.penis == 'none':
 			return
 		realfather = father.id
-	if mother.preg.has_womb == false || mother.preg.duration > 0 || mother == father:
+	if mother.preg.has_womb == false || mother.preg.duration > 0 || mother == father || mother.effects.has("contraceptive"):
 		return
 	var rand = rand_range(1,100)
-	if mother.preg.fertility < rand || (mother.preg.fertility < 20 && mother.preg.fertility > 1):
-		mother.preg.fertility += rand_range(3,5)
+	if mother.preg.fertility < rand:
+		mother.preg.fertility += rand_range(5,10)
 		return
 	var age = ''
 	var babyrace = mother.race

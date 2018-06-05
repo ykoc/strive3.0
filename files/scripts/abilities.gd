@@ -643,6 +643,14 @@ code = 'exhaust',
 type = 'passive',
 stats = [],
 },
+pregnancy = {
+icon = load("res://files/buttons/abils/pregnant.png"),
+duration = -1,
+name = "Pregnant (-25% speed)",
+code = 'pregnancy',
+type = 'passive',
+stats = [],
+},
 }
 
 func restorehealth(caster, target):

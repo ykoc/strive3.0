@@ -139,6 +139,9 @@ func start_battle(nosound = false):
 	combatant.health = slave.health
 	combatant.healthmax = slave.stats.health_max
 	combatant.speed = 10 + slave.sagi*3
+	if slave.preg.duration > variables.pregduration/3:
+		combatant.speed = round(combatant.speed - combatant.speed*0.25)
+		combatant.getbuff(combatant.makebuff('pregnancy', combatant))
 	combatant.power = 3 + slave.sstr*2
 	combatant.icon = slave.imageportait
 	if slave.race == 'Seraph':
@@ -202,6 +205,9 @@ func start_battle(nosound = false):
 		combatant.action = null
 		combatant.target = null
 		combatant.party = 'ally'
+		if slave.preg.duration > variables.pregduration/3:
+			combatant.speed = round(combatant.speed - combatant.speed*0.25)
+			combatant.getbuff(combatant.makebuff('pregnancy', combatant))
 		updateabilities(combatant)
 		for i in slave.gear.values():
 			if i != null:
@@ -253,10 +259,6 @@ func start_battle(nosound = false):
 			combatant.target = null
 			combatant.party = 'enemy'
 			combatant.button = null
-			if get_parent().get_node("explorationnode").deeperregion:
-				combatant.power = ceil(combatant.power * 1.25)
-				combatant.healthmax = ceil(combatant.healthmax * 1.5)
-				combatant.speed = ceil(combatant.speed + 5)
 			combatant.health = combatant.healthmax
 			for ii in i.stats.abilities:
 				combatant.abilities.append(globals.abilities.abilitydict[ii])
@@ -291,6 +293,10 @@ func start_battle(nosound = false):
 			combatant.action = null
 			combatant.target = null
 			combatant.party = 'ally'
+			if get_parent().get_node("explorationnode").deeperregion:
+				combatant.power = ceil(combatant.power * 1.25)
+				combatant.healthmax = ceil(combatant.healthmax * 1.5)
+				combatant.speed = ceil(combatant.speed + 5)
 			for i in slave.abilityactive:
 				combatant.activeabilities.append(globals.abilities.abilitydict[i])
 			for i in slave.ability:

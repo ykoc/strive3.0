@@ -96,7 +96,7 @@ dryad = {units = [['dryad',1,1]], awareness = 0, captured = null, special = null
 description = 'You spot a wild [color=aqua]$race $child[/color] walking through the woods.',
 },
 monstergirl = {units = [['monstergirl',1,1]], awareness = 0, captured = null, special = null, escape = 6,
-description =  "You come across a rare $race monster $child. $He hasn't spotted you yet. ",
+description =  "You come across a rare [color=aqua]$race monster $child[/color]. $He hasn't spotted you yet. ",
 descriptionescape = "A wild $race escapes from you before you get close to $him. ",
 },
 monstergirlfew = {units = [['monstergirl',2,4]], awareness = 0, captured = null, special = null, escape = 12,

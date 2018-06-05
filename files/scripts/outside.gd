@@ -301,6 +301,7 @@ func mansion():
 func gooutside():
 	if OS.get_name() != "HTML5":
 		yield(main, 'animfinished')
+	globals.hidetooltip()
 	get_node("playergrouppanel/VBoxContainer").visible = true
 	main.checkplayergroup()
 	get_parent().get_node("hideui").visible = true
@@ -2058,7 +2059,7 @@ func sebastianpay():
 	var person = globals.state.sebastianslave
 	if globals.resources.gold >= person.buyprice():
 		var effect = globals.effectdict.captured
-		var dict = {'person':0.7, 'poor':1,'commoner':1.2,"rich": 2, "noble": 4}
+		var dict = {'slave':0.7, 'poor':1,'commoner':1.2,"rich": 2, "noble": 4}
 		effect.duration = round((4 + (person.conf+person.cour)/20) * dict[person.origins])
 		person.add_effect(effect)
 		person.sleep = 'jail'
@@ -2080,7 +2081,7 @@ func _on_sebastianconfirm_pressed():
 	globals.state.sebastianorder.taken = true
 	globals.state.sebastianorder.duration = round(rand_range(3,5))
 	globals.resources.gold -= 100
-	var caste = ['person','poor','commoner','rich','noble']
+	var caste = ['slave','poor','commoner','rich','noble']
 	globals.state.sebastianslave = globals.newslave(globals.state.sebastianorder.race, 'random', 'random', caste[rand_range(0,caste.size())])
 	mansion.maintext = "— "+race+", huh? Got ya! Come see me in "+ str(globals.state.sebastianorder.duration)+ " days and don't forget the coins! Those are not cheap after all. "
 	get_node("sebastiannode").visible = false

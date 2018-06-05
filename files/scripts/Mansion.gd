@@ -17,10 +17,17 @@ onready var slavepanel = get_node("MainScreen/slave_tab")
 
 signal animfinished
 
+
+var checkforevents = false
+
 func _process(delta):
-	if !$screenchange/AnimationPlayer.is_playing() && get_node("dialogue").visible == false && get_node("popupmessage").visible == false && checkforevents == true:
-		nextdayevents()
+	$screenchange.visible = (float($screenchange.modulate.a) > 0)
+	if self.checkforevents == true && !$screenchange/AnimationPlayer.is_playing():
+		for i in get_tree().get_nodes_in_group("blocknextdayevents"):
+			if i.is_visible_in_tree():
+				return
 		checkforevents = false
+		nextdayevents()
 	for i in get_tree().get_nodes_in_group("messages"):
 		if i.modulate.a > 0:
 			i.modulate.a = (i.modulate.a - delta)
@@ -34,7 +41,6 @@ func _process(delta):
 		shaking = false
 		_timer = 0.0
 	
-	$screenchange.visible = (float($screenchange.modulate.a) > 0)
 	if musicfading == true && get_node("music").get_volume_db() != 0 && get_node("music").playing:
 		get_node("music").set_volume_db(get_node('music').get_volume_db() - delta*20)
 		if get_node("music").get_volume_db() <= 0:
@@ -250,8 +256,8 @@ func _on_new_slave_button_pressed():
 		person[i] = 100
 	person.ability.append('debilitate')
 	#globals.state.location = 'gorn'
-#	for i in globals.state.portals.values():
-#		i.enabled = true
+	for i in globals.state.portals.values():
+		i.enabled = true
 	for i in globals.spelldict.values():
 		i.learned = true
 	for i in globals.itemdict.values():
@@ -266,6 +272,7 @@ func _on_new_slave_button_pressed():
 	person.stats.health_cur = 5
 	globals.state.reputation.wimborn = 41
 	globals.state.sidequests.ivran = 'potionreceived'
+	globals.state.mansionupgrades.mansionnursery = 1
 	globals.player.ability.append("mindread")
 	globals.player.ability.append('heal')
 	#globals.player.stats.maf_cur = 3
@@ -282,7 +289,7 @@ func _on_new_slave_button_pressed():
 	#globals.state.decisions.append('')
 	globals.state.rank = 3
 	globals.state.mainquest = 40
-	globals.state.plotsceneseen = ['garthorscene','hade1','hade2','frostfordscene']#,'slaverguild']
+	#globals.state.plotsceneseen = ['garthorscene','hade1','hade2','frostfordscene']#,'slaverguild']
 	globals.resources.mana = 200
 	globals.state.farm = 3
 	globals.state.mansionupgrades.mansionlab = 1
@@ -296,18 +303,18 @@ func _on_new_slave_button_pressed():
 	globals.state.reputation.frostford = 50
 	globals.state.condition -= 100
 	globals.state.decisions = ['tishaemilytricked','chloebrothel','ivrantaken','goodroute']
-	for i in globals.characters.characters:
-		person = globals.characters.create(i)
-		person.loyal = 100
-		person.stress = 0
-		person.obed = 100
-		person.lust = 0
-		person.consent = true
-		person.asser = 100
-		person.lewdness = 100
-		person.attention = 100
-		person.learningpoints = 50
-		globals.slaves = person
+#	for i in globals.characters.characters:
+#		person = globals.characters.create(i)
+#		person.loyal = 100
+#		person.stress = 0
+#		person.obed = 100
+#		person.lust = 0
+#		person.consent = true
+#		person.asser = 100
+#		person.lewdness = 100
+#		person.attention = 100
+#		person.learningpoints = 50
+#		globals.slaves = person
 
 func mansion():
 	_on_mansion_pressed()
@@ -464,12 +471,11 @@ func _on_prisonbutton_pressed():
 	showprisoners = !showprisoners
 	rebuild_slave_list()
 
-var enddayprocess = false
-
 func _on_end_pressed():
 	if globals.state.mainquest == 41:
 		popup("You can't afford to wait. You must go to the Mage's Order.")
 		return
+	
 	
 	var text = ''
 	var temp = ''
@@ -492,8 +498,8 @@ func _on_end_pressed():
 	var gold_consumption = 0
 	var lacksupply = false
 	var results = 'normal'
-	enddayprocess = true
 	_on_mansion_pressed()
+	yield(self, 'animfinished')
 	for i in range(globals.slaves.size()):
 		if globals.slaves[i].away.duration == 0:
 			if globals.slaves[i].work == 'cooking':
@@ -670,9 +676,10 @@ func _on_end_pressed():
 						i.xp += 5
 			#Rules and clothes effect
 			if person.rules.contraception == true:
-				if globals.resources.gold >= 5:
+				if globals.resources.gold >= 5 && !person.effects.has("contraceptive"):
 					globals.resources.gold -= 5
-					person.preg.fertility = max(person.preg.fertility - rand_range(10,15), 0)
+					var effect = globals.effectdict.captured
+					person.add_effect(effect)
 					gold_consumption += 5
 				else:
 					text0.set_bbcode(text0.get_bbcode()+person.dictionary("[color=#ff4949]You could't afford to provide $name with contraceptives.[/color]\n"))
@@ -955,6 +962,8 @@ func _on_end_pressed():
 				person.health -= rand_range(5,10)
 				text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=#ff4949]Mansion's terrible condition causes $name a lot of stress and impacted $his health. [/color]\n"))
 	#####          Outside Events
+	
+	
 	for i in globals.guildslaves:
 		for person in globals.guildslaves[i]:
 			count = 0
@@ -1012,13 +1021,8 @@ func _on_end_pressed():
 		globals.player.value += 1
 		globals.player.skillpoints += 1
 		text0.set_bbcode(text0.get_bbcode() + '[color=green]You have leveled up and earned an additional skillpoint. [/color]\n')
-	
-	if globals.player.preg.duration > variables.pregduration/3:
-		globals.player.energy += 60
-	else:
-		globals.player.energy += 100
 	globals.player.health += 50
-	
+	globals.player.energy += 100
 	
 	#####         Results
 	if start_gold < globals.resources.gold:
@@ -1048,18 +1052,16 @@ func _on_end_pressed():
 	aliseresults = results
 	if lacksupply == true:
 		text0.set_bbcode(text0.get_bbcode()+"[color=#ff4949]You have expended your supplies and some of the actions couldn't be finished. [/color]\n")
-	enddayprocess = false
-	dailyevent = false
 	nextdayevents()
 
 var aliseresults
-var checkforevents = false
 
 func nextdayevents():
+	get_node("FinishDayPanel").hide()
 	var player = globals.player
 	if player.preg.duration > variables.pregduration && player.preg.baby != null:
 		childbirth(player)
-		get_node("FinishDayPanel").hide()
+		checkforevents = true
 		return
 	for i in globals.slaves:
 		if i.preg.baby != null && (i.preg.duration > variables.pregduration || (i.race == 'Goblin' && i.preg.duration > variables.pregduration/2)):
@@ -1069,8 +1071,10 @@ func nextdayevents():
 				i.away.duration = 3
 			i.away.at = 'in labor'
 			childbirth(i)
-			get_node("FinishDayPanel").hide()
+			checkforevents = true
 			return
+	
+	
 	for i in globals.state.upcomingevents:
 		if $scene.is_visible_in_tree() == true:
 			continue
@@ -1078,11 +1082,12 @@ func nextdayevents():
 			i.duration -= 1
 		if i.duration <= 0:
 			var text = globals.events.call(i.code)
+			globals.state.upcomingevents.erase(i)
 			if text != null:
 				get_node("FinishDayPanel/FinishDayScreen/Global Report").set_bbcode(get_node("FinishDayPanel/FinishDayScreen/Global Report").get_bbcode() + text)
-			globals.state.upcomingevents.erase(i)
-			checkforevents = true
-			return
+			else:
+				checkforevents = true
+				return
 	globals.state.dailyeventcountdown -= 1
 	if globals.state.dailyeventcountdown <= 0 && !$scene.is_visible_in_tree() && !$dialogue.is_visible_in_tree():
 		var event
@@ -1092,9 +1097,10 @@ func nextdayevents():
 			get_node("dailyevents").show()
 			get_node("dailyevents").currentevent = event
 			get_node("dailyevents").call(event)
-			dailyevent = true
+			checkforevents = true
 			return
-	if globals.state.sandbox == false && globals.state.mainquest < 42:
+	if globals.state.sandbox == false && globals.state.mainquest < 42 && !$scene.is_visible_in_tree() && !$dialogue.is_visible_in_tree():
+		
 		if globals.state.mainquest >= 16 && !globals.state.plotsceneseen.has('garthorscene') &&!$scene.is_visible_in_tree() && !$dialogue.is_visible_in_tree():
 			globals.events.garthorscene()
 			globals.state.plotsceneseen.append('garthorscene')
@@ -1128,7 +1134,7 @@ func nextdayevents():
 			return
 	startnewday()
 
-var dailyevent = false
+
 
 func launchrandomevent():
 	var rval
@@ -1193,7 +1199,7 @@ func startnewday():
 #	globals.save_game('autosave')
 	if globals.rules.enddayalise == 0:
 		alisebuild(aliseresults)
-	elif globals.rules.enddayalise == 1 && dailyevent == true:
+	elif globals.rules.enddayalise == 1:
 		alisebuild(aliseresults)
 	else:
 		alisehide()
@@ -2304,7 +2310,6 @@ func childbirth(person):
 
 func _on_giveaway_pressed():
 	get_node("birthpanel").hide()
-	nextdayevents()
 
 func _on_raise_pressed():
 	get_node("birthpanel/raise/childpanel").show()
@@ -2351,7 +2356,6 @@ func babyage(age):
 	baby = null
 	get_node("birthpanel").hide()
 	get_node("birthpanel/raise/childpanel").hide()
-	nextdayevents()
 
 
 
@@ -3025,7 +3029,7 @@ func _on_popupclosebutton_pressed():
 
 
 func infotext(newtext, color = null):
-	if (enddayprocess == true && (newtext.findn("food") >= 0 || newtext.findn("gold") >= 0)) || newtext == '' || $date.visible || (get_node("combat").visible && !get_node("combat/win").visible): #(enddayprocess == true && newtext.findn("trait") < 0) ||
+	if ( (newtext.findn("food") >= 0 || newtext.findn("gold") >= 0)) || newtext == '' || $date.visible || (get_node("combat").visible && !get_node("combat/win").visible): 
 		return
 	if get_node("infotext").get_children().size() >= 15:
 		get_node("infotext").get_child(get_node("infotext").get_children().size() - 14).queue_free()
@@ -3508,3 +3512,8 @@ func _on_selfpierce_pressed():
 func _on_selftattoo_pressed():
 	$MainScreen/slave_tab.person = globals.player
 	$MainScreen/slave_tab._on_tattoo_pressed()
+
+
+
+func _on_Mansion_animfinished():
+	pass

@@ -15,7 +15,7 @@ func _on_lab_pressed(person = null):
 	var text = "Your basement laboratory is set and functioning. Rows of books and manuscripts can be found on your work table and shelves. Restricting and enhancing equipment kept clean and working at the far walls. "
 	if labassist == null:
 		main.background_set('lab')
-		if OS.get_name() != 'HTML5' && globals.rules.fadinganimation == true:
+		if OS.get_name() != 'HTML5':
 			yield(main, 'animfinished')
 		main.hide_everything()
 		get_node("labstart").set_disabled(true)
@@ -23,7 +23,7 @@ func _on_lab_pressed(person = null):
 		text = text + "\n[color=yellow]You need to assign a Lab Assistant before you can conduct any modifications. [/color]"
 	else:
 		main.background_set('lab')
-		if OS.get_name() != 'HTML5' && globals.rules.fadinganimation == true:
+		if OS.get_name() != 'HTML5':
 			yield(main, 'animfinished')
 		main.hide_everything()
 		labassist.work = 'labassist'

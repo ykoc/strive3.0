@@ -53,13 +53,12 @@ func show():
 		text = "$name has trait(s): "
 		var text2 = ''
 		for i in person.get_traits():
-			text2 += '[url=' + i.name + ']' + i.name + "[/url]"
+			text2 = '[url=' + i.name + ']' + i.name + "[/url]"
 			if i.tags.find('sexual') >= 0:
 				text2 = "[color=#ff5ace]" + text2 + '[/color]'
 			elif i.tags.find('detrimental') >= 0:
 				text2 = "[color=#ff4949]" + text2 + '[/color]'
-			text2 += ', '
-		text += text2
+			text += text2 + ', '
 		text = text.substr(0, text.length() - 2) + '.'
 	get_node("traittext").set_bbcode(person.dictionary(text))
 	if mode == 'full':
