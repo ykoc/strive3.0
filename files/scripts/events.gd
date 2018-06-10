@@ -1888,6 +1888,7 @@ func tishadecision(number):
 		globals.resources.mana += 15
 		state = false
 		var person = globals.characters.create("Tisha")
+		globals.connectrelatives(person, emily, 'sibling')
 		globals.slaves = person
 	elif number == 6:
 		text = textnode.TishaEmilyLeaveFree
@@ -2099,6 +2100,12 @@ func tishagornguild(stage = 0):
 	var sprite 
 	var image
 	
+	var emily
+	
+	for i in globals.slaves:
+		if i.unique == 'Emily':
+			emily = i
+	
 	if stage == 0:
 		sprite = [['tishaangry', 'pos1', 'opac']]
 		if globals.state.sidequests.emily == 14:
@@ -2126,6 +2133,7 @@ func tishagornguild(stage = 0):
 		sprite = [['tishashocked', 'pos1']]
 		globals.state.sidequests.emily = 101
 		var person = globals.characters.create("Tisha")
+		globals.connectrelatives(person, emily, 'sibling')
 		person.brand = 'basic'
 		globals.slaves = person
 		state = true
@@ -2179,6 +2187,7 @@ func tishagornguild(stage = 0):
 		text = textnode.TishaOfferJob
 		sprite = [['tishanakedhappy', 'pos1']]
 		var person = globals.characters.create("Tisha")
+		globals.connectrelatives(person, emily, 'sibling')
 		person.consent = true
 		person.sexuals.unlocks.append('petting')
 		person.sexuals.unlocks.append('oral')

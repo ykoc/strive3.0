@@ -154,8 +154,6 @@ func _ready():
 	globals.resources.panel = get_node("ResourcePanel")
 	if globals.player.name == '':
 		globals.player = globals.newslave('Human', 'teen', 'male')
-		globals.player.relatives.father = 0
-		globals.player.relatives.mother = 0
 		globals.player.ability.append('escape')
 		globals.player.ability.append('acidspit')
 		globals.player.abilityactive.append('escape')
@@ -168,6 +166,7 @@ func _ready():
 				k.unlocked = true
 		_on_new_slave_button_pressed()
 	rebuild_slave_list()
+	globals.player.consent = true
 	globals.spells.main = get_tree().get_current_scene()
 	get_node("birthpanel/raise/childpanel/child").connect('pressed', self, 'babyage', ['child'])
 	get_node("birthpanel/raise/childpanel/teen").connect('pressed', self, 'babyage', ['teen'])
@@ -201,6 +200,11 @@ func _ready():
 		self[i].get_node('Control').connect('mouse_entered', self, 'stattooltip',[i])
 		self[i].get_node('Control').connect('mouse_exited', globals, 'hidetooltip')
 		self[i].get_node('Button').connect("pressed",self,'statup', [i])
+	
+	
+	$MainScreen/mansion/selfinspect/relativespanel/relativestext.connect("meta_hover_started",self,'relativeshover')
+	$MainScreen/mansion/selfinspect/relativespanel/relativestext.connect("meta_hover_ended",globals, 'slavetooltiphide')
+	$MainScreen/mansion/selfinspect/relativespanel/relativestext.connect("meta_clicked",self, "relativesselected")
 	
 	_on_mansion_pressed()
 	#startending()
@@ -249,6 +253,10 @@ func _on_new_slave_button_pressed():
 	person.sexuals.unlocks.append('group')
 	person.sexuals.unlocks.append('swing')
 	person.lust = 100
+	person.spec = 'bodyguard'
+	person.add_effect(globals.effectdict.contraceptive)
+	globals.connectrelatives(globals.player, person, 'sibling')
+	globals.impregnation(person)
 	#slave.tattoo.face = 'nature'
 	person.attention = 70
 	person.skillpoints = 100
@@ -258,8 +266,8 @@ func _on_new_slave_button_pressed():
 	#globals.state.location = 'gorn'
 	for i in globals.state.portals.values():
 		i.enabled = true
-	for i in globals.spelldict.values():
-		i.learned = true
+	#for i in globals.spelldict.values():
+	#	i.learned = true
 	for i in globals.itemdict.values():
 		i.unlocked = true
 		if !i.type in ['gear','dummy']:
@@ -288,7 +296,7 @@ func _on_new_slave_button_pressed():
 	globals.state.sidequests.yris = 3
 	#globals.state.decisions.append('')
 	globals.state.rank = 3
-	globals.state.mainquest = 40
+	globals.state.mainquest = 20
 	#globals.state.plotsceneseen = ['garthorscene','hade1','hade2','frostfordscene']#,'slaverguild']
 	globals.resources.mana = 200
 	globals.state.farm = 3
@@ -303,18 +311,18 @@ func _on_new_slave_button_pressed():
 	globals.state.reputation.frostford = 50
 	globals.state.condition -= 100
 	globals.state.decisions = ['tishaemilytricked','chloebrothel','ivrantaken','goodroute']
-#	for i in globals.characters.characters:
-#		person = globals.characters.create(i)
-#		person.loyal = 100
-#		person.stress = 0
-#		person.obed = 100
-#		person.lust = 0
-#		person.consent = true
-#		person.asser = 100
-#		person.lewdness = 100
-#		person.attention = 100
-#		person.learningpoints = 50
-#		globals.slaves = person
+	for i in globals.characters.characters:
+		person = globals.characters.create(i)
+		person.loyal = 100
+		person.stress = 0
+		person.obed = 100
+		person.lust = 0
+		person.consent = true
+		person.asser = 100
+		person.lewdness = 100
+		person.attention = 100
+		person.learningpoints = 50
+		globals.slaves = person
 
 func mansion():
 	_on_mansion_pressed()
@@ -381,6 +389,8 @@ func rebuild_slave_list():
 			if person.xp >= 100:
 				text = text + "(+)"
 			node.find_node('name').set_text(text)
+			node.find_node('name').connect("mouse_entered", globals, 'slavetooltip', [person])
+			node.find_node('name').connect("mouse_exited", globals, 'slavetooltiphide')
 			node.get_node('slavename/name').connect('pressed', self, 'openslavetab', [person])
 			node.find_node('health').set_normal_texture(person.health_icon())
 			node.find_node('healthvalue').set_text(str(round(person.health)))
@@ -521,7 +531,7 @@ func _on_end_pressed():
 	
 	if globals.player.preg.duration >= 1:
 		globals.player.preg.duration += 1
-		if globals.player.preg.duration == 5:
+		if globals.player.preg.duration == floor(variables.pregduration/6):
 			text0.set_bbcode(text0.get_bbcode() + "[color=yellow]You feel morning sickness. It seems you are pregnant. [/color]\n")
 	
 	for person in globals.slaves:
@@ -676,13 +686,14 @@ func _on_end_pressed():
 						i.xp += 5
 			#Rules and clothes effect
 			if person.rules.contraception == true:
-				if globals.resources.gold >= 5 && !person.effects.has("contraceptive"):
-					globals.resources.gold -= 5
-					var effect = globals.effectdict.captured
-					person.add_effect(effect)
-					gold_consumption += 5
-				else:
-					text0.set_bbcode(text0.get_bbcode()+person.dictionary("[color=#ff4949]You could't afford to provide $name with contraceptives.[/color]\n"))
+				if !person.effects.has("contraceptive"):
+					if globals.resources.gold >= 5:
+						globals.resources.gold -= 5
+						var effect = globals.effectdict.contraceptive
+						person.add_effect(effect)
+						gold_consumption += 5
+					else:
+						text0.set_bbcode(text0.get_bbcode()+person.dictionary("[color=#ff4949]You could't afford to provide $name with contraceptives.[/color]\n"))
 			if person.rules.aphrodisiac == true:
 				var value
 				if person.spec != 'housekeeper':
@@ -755,7 +766,6 @@ func _on_end_pressed():
 					person.health -= person.stats.health_max/7
 			
 			if person.stress >= 99:
-				person.health = 1
 				person.mentalbreakdown()
 			
 			
@@ -829,20 +839,20 @@ func _on_end_pressed():
 					person.preg.duration = 0
 					person.stress += rand_range(35,50)
 				if person.race == 'Goblin':
-					if person.preg.duration > 5:
+					if person.preg.duration > variables.pregduration/6:
 						person.lactation = true
 						if headgirl != null:
-							if person.preg.duration == 6:
+							if person.preg.duration == floor(variables.pregduration/5):
 								text0.set_bbcode(text0.get_bbcode() + headgirl.dictionary('[color=yellow]$name reports, that ') + person.dictionary('$name appears to be pregnant. [/color]\n'))
-							elif person.preg.duration == 12:
+							elif person.preg.duration == floor(variables.pregduration/2.7):
 								text0.set_bbcode(text0.get_bbcode() + headgirl.dictionary('[color=yellow]$name reports, that ') + person.dictionary('$name will likely give birth soon. [/color]\n'))
 				else:
 					if person.preg.duration > 10:
 						person.lactation = true
 						if headgirl != null:
-							if person.preg.duration == 11:
+							if person.preg.duration == floor(variables.pregduration/2.5):
 								text0.set_bbcode(text0.get_bbcode() + headgirl.dictionary('[color=yellow]$name reports, that ') + person.dictionary('$name appears to be pregnant. [/color]\n'))
-							elif person.preg.duration == 23:
+							elif person.preg.duration == floor(variables.pregduration/1.3):
 								text0.set_bbcode(text0.get_bbcode() + headgirl.dictionary('[color=yellow]$name reports, that ') + person.dictionary('$name will likely give birth soon. [/color]\n'))
 				if randf() < 0.4:
 					person.stress += rand_range(15,20)
@@ -2395,7 +2405,8 @@ func _on_selfbutton_pressed():
 	for i in globals.state.reputation:
 		text += i.capitalize() + " - "+ reputationword(globals.state.reputation[i]) + ", "
 	text += "\nYour mage order rank: " + dict[int(globals.state.rank)]
-	text += "\n\nYour speciality: [color=yellow]" + globals.state.spec + "[/color]\nBonuses: " + globals.playerspecs[globals.state.spec]
+	if globals.state.spec != "":
+		text += "\n\nYour speciality: [color=yellow]" + globals.state.spec + "[/color]\nBonuses: " + globals.playerspecs[globals.state.spec]
 	
 	get_node("MainScreen/mansion/selfinspect/mainstatlabel").set_bbcode(text)
 	updatestats(person)
@@ -2611,82 +2622,76 @@ func _on_potionusebutton_pressed():
 		itemnode.call(potionselected.effect)
 	get_node("MainScreen/mansion/selfinspect/selectpotionpanel").hide()
 
-
+var counter = 0
+var slavearray = []
 
 func _on_selfrelatives_pressed():
-	get_node("MainScreen/mansion/selfinspect/relativespanel").show()
+	get_node("MainScreen/mansion/selfinspect/relativespanel").popup()
+	var text = ''
 	var person = globals.player
-	var mother = person.relatives.mother
-	var father = person.relatives.father
-	var id = person.id
-	var parentslist = get_node("MainScreen/mansion/selfinspect/relativespanel/parentscontainer/parentscontainer")
-	var siblingslist = get_node("MainScreen/mansion/selfinspect/relativespanel/siblingscontainer/siblingscontainer")
-	var childrenlist = get_node("MainScreen/mansion/selfinspect/relativespanel/childrencontainer/childrencontainer")
-	var newlabel
-	for i in parentslist.get_children():
-		if i != parentslist.get_node('Label'):
-			i.hide()
-			i.queue_free()
-	for i in siblingslist.get_children():
-		if i != siblingslist.get_node('Label'):
-			i.hide()
-			i.queue_free()
-	for i in childrenlist.get_children():
-		if i != childrenlist.get_node('Label'):
-			i.hide()
-			i.queue_free()
-	############PARENTS
-	newlabel = parentslist.get_node("Label").duplicate()
-	parentslist.add_child(newlabel)
-	newlabel.show()
-	if mother == -1:
-		newlabel.set_text('Mother - unknown')
+	var relativesdata = globals.state.relativesdata
+	var entry = relativesdata[person.id]
+	var entry2
+	counter = 0
+	slavearray.clear()
+	text += '[center]Parents[/center]\n'
+	for i in ['father','mother']:
+		if int(entry[i]) <= 0:
+			text += i.capitalize() + ": Unknown\n"
+		else:
+			if relativesdata.has(entry[i]):
+				entry2 = relativesdata[entry[i]]
+				text += i.capitalize() + ": " + getentrytext(entry2) + "\n"
+			else:
+				text += i.capitalize() + ": Unknown\n"
+	
+	if entry.siblings.size() > 0:
+		text += '\n[center]Siblings[/center]\n'
+		for i in entry.siblings:
+			entry2 = relativesdata[i]
+			if entry2.sex == 'male':
+				text += "Brother: " 
+			else:
+				text += "Sister: "
+			text += getentrytext(entry2) + "\n"
+	
+	if entry.children.size() > 0:
+		text += '\n[center]Children[/center]\n'
+		for i in entry.siblings:
+			entry2 = relativesdata[i]
+			if entry2.sex == 'male':
+				text += "Son: " 
+			else:
+				text += "Daughter: "
+			text += getentrytext(entry2) + "\n"
+	$MainScreen/mansion/selfinspect/relativespanel/relativestext.set_meta("slaves", slavearray)
+	$MainScreen/mansion/selfinspect/relativespanel/relativestext.bbcode_text = text
+
+
+func getentrytext(entry):
+	var text = ''
+	if globals.state.findslave(entry.id) != null:
+		text += '[url=person' + str(counter) + '][color=yellow]' + entry.name + '[/color][/url]'
+		slavearray.append(globals.state.findslave(entry.id))
+		counter += 1
 	else:
-		var found = false
-		if typeof(mother) == 2 || typeof(mother) == 3:
-			for i in globals.slaves:
-				if i.id == str(person.relatives.mother) && i != person:
-					mother = i
-					found = true
-					newlabel.set_text(i.dictionary('Mother - $name, $race'))
-			if found == false:
-				newlabel.set_text('Mother - unknown')
-	newlabel = parentslist.get_node("Label").duplicate()
-	newlabel.show()
-	parentslist.add_child(newlabel)
-	if father == -1:
-		newlabel.set_text('Father - unknown')
+		text += entry.name
+	text += ", " + entry.race
+	return text
+
+func relativeshover(meta):
+	var tempslave = slavearray[int(meta.replace('person',''))]
+	globals.slavetooltip(tempslave)
+
+func relativesselected(meta):
+	var tempslave = slavearray[int(meta.replace('person',''))]
+	globals.slavetooltiphide()
+	$MainScreen/mansion/selfinspect/relativespanel.visible = false
+	globals.openslave(tempslave)
+	if tempslave != globals.player:
+		globals.main.get_node('MainScreen/slave_tab')._on_relativesbutton_pressed()
 	else:
-		var found = false
-		if typeof(father) == 2 || typeof(father) == 3:
-			for i in globals.slaves:
-				if i.id == str(person.relatives.father):
-					father = i
-					found = true
-					newlabel.set_text(i.dictionary('Father - $name, $race'))
-			if found == false:
-				newlabel.set_text('Father - unknown')
-	####### Siblings
-	for i in globals.slaves:
-		var found = false
-		if i != person && i.relatives.mother != -1:
-			if (i.relatives.mother == person.relatives.mother|| i.relatives.mother == person.relatives.father) :
-				found = true
-		if i != person && i.relatives.father != -1:
-			if (i.relatives.father == person.relatives.mother || i.relatives.father == person.relatives.father) :
-				found = true
-		if found == true:
-			newlabel = siblingslist.get_node("Label").duplicate()
-			newlabel.show()
-			siblingslist.add_child(newlabel)
-			newlabel.set_text(i.dictionary("$name - $sibling, $race"))
-	#children
-	for i in globals.slaves:
-		if str(i.relatives.mother) == str(person.id) || str(i.relatives.father) == str(person.id):
-			newlabel = childrenlist.get_node("Label").duplicate()
-			newlabel.show()
-			childrenlist.add_child(newlabel)
-			newlabel.set_text(i.dictionary("$name $sex $race"))
+		globals.main._on_selfrelatives_pressed()
 
 
 func _on_relativesclose_pressed():

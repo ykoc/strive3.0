@@ -276,9 +276,11 @@ func buildbars(parentnode, person):
 		parentnode.get_node("xp").hint_tooltip = "Experience: " + str(person.xp) + "/100"
 	if person != globals.player:
 		parentnode.get_node("stress").visible = true
-		parentnode.get_node("lust").visible = true
+		#parentnode.get_node("lust").visible = true
 		parentnode.get_node("stress").value = (float(person.stress)/person.stats.stress_max)*100
-		parentnode.get_node("lust").value = (float(person.lust)/person.stats.lust_max)*100
+		parentnode.get_node('stress').hint_tooltip = "Stress: " + str(person.stress)
+		#parentnode.get_node("lust").value = (float(person.lust)/person.stats.lust_max)*100
+		
 	else:
 		parentnode.get_node("stress").visible = false
 		parentnode.get_node("lust").visible = false
@@ -632,6 +634,7 @@ func _on_purchasebutton_pressed():
 		main.popup('You pay ' + str(selectedslaveprice) + selectedslave.dictionary(" gold for $name. With that, guild's helper brands $him for you and $he's sent to your mansion. "))
 		mansion.maintext = globals.player.dictionary("A finest choice, $sir. Anyone else caught your attention?")
 		selectedslave.brand = 'basic'
+	selectedslave.sleep = 'communal'
 	slavearray.remove(slavearray.find(selectedslave))
 	slaveguildslaves()
 	clearselection('buy')
@@ -879,6 +882,12 @@ func slaveforquestselected(person):
 				text = text + '[color=#ff4949]' + repeatablesdict[i[0]] + '[/color]\n'
 			else:
 				text = text + '[color=green]' + repeatablesdict[i[0]] + '[/color]\n'
+		elif i[1] == 'neq':
+			if ref == ref2:
+				slavefits = false
+				text = text + '[color=#ff4949]' + repeatablesdict[i[0]] + '[/color]\n'
+			else:
+				text = text + '[color=green]' + repeatablesdict[i[0]] + '[/color]\n'
 		elif i[1] == 'lte':
 			if ref > ref2:
 				slavefits = false
@@ -939,6 +948,8 @@ func slavequesttext(quest):
 		quest.description = quest.description.replace("$sex",sex)
 	if quest.description.find('$race')>= 0:
 		quest.description = quest.description.replace("$race",race)
+	if quest.description.find('$him') >= 0:
+		quest.description = quest.description.replace("$him",him(sex))
 	if quest.taken == true:
 		get_node("slaveguildquestpanel/questcancel").visible = true
 		get_node("slaveguildquestpanel/questaccept").set_text('Offer person')
@@ -954,6 +965,12 @@ func slavequesttext(quest):
 
 var slaveserviceselected
 var serviceoperation
+
+func him(sex):
+	if sex == 'male':
+		return 'him'
+	else:
+		return 'her'
 
 func slaveservice():
 	clearbuttons()

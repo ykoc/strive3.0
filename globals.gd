@@ -144,7 +144,7 @@ rich = load("res://files/buttons/mainscreen/43.png"),
 noble = load("res://files/buttons/mainscreen/44.png"),
 }
 var specimages = {
-null = null,
+Null = null,
 geisha = load("res://files/buttons/mainscreen/33.png"),
 ranger = load("res://files/buttons/mainscreen/37.png"),
 executor = load("res://files/buttons/mainscreen/39.png"),
@@ -271,6 +271,8 @@ func clearstate():
 	events = load("res://files/scripts/events.gd").new()
 	items = load("res://files/scripts/items.gd").new()
 	itemdict = items.itemlist
+	spells = load("res://files/scripts/spells.gd").new()
+	spelldict = spells.spelllist
 	resources.reset()
 
 func newslave(race, age, sex, origins = 'slave'):
@@ -506,6 +508,7 @@ class progress:
 	var alisecloth = 'normal'
 	var decisions = []
 	var lorefound = []
+	var relativesdata = {}
 	var descriptsettings = {full = true, basic = true, appearance = true, genitals = true, piercing = true, tattoo = true, mods = true}
 	var mansionupgrades = {
 	farmcapacity = 0,
@@ -593,6 +596,8 @@ class progress:
 	
 	func findslave(id):
 		var rval
+		if str(globals.player.id) == str(id):
+			return globals.player
 		for i in range(0, globals.slaves.size()):
 			if str(globals.slaves[i].id) == str(id):
 				rval = globals.slaves[i]
@@ -662,7 +667,6 @@ class person:
 	var preg = {fertility = 0, has_womb = true, duration = 0, baby = null}
 	var rules = {'silence':false, 'pet':false, 'contraception':false, 'aphrodisiac':false, 'masturbation':false, 'nudity':false, 'betterfood':false, 'personalbath':false,'cosmetics':false,'pocketmoney':false}
 	var traits = []
-	var relatives = {father = -1, mother = -1, siblings = [], children =[]}
 	var gear = {costume = null, underwear = null, armor = null, weapon = null, accessory = null}
 	var genes = {}
 	var effects = {}
@@ -1172,13 +1176,15 @@ class person:
 	
 	
 	func name_long():
+		var text = ''
 		if nickname == '':
-			if surname != "":
-				return name + ' ' + surname
-			else:
-				return name
+			text = name
 		else:
-			return nickname
+			text = '"' + nickname + '" ' + name
+		if surname != "":
+			text += " " + surname
+		
+		return text
 	
 	func name_short():
 		if nickname == '':
@@ -1432,7 +1438,7 @@ func impregnation(mother, father = null, anyfather = false):
 	else:
 		if father.penis == 'none':
 			return
-		realfather = father.id
+#		realfather = father.id
 	if mother.preg.has_womb == false || mother.preg.duration > 0 || mother == father || mother.effects.has("contraceptive"):
 		return
 	var rand = rand_range(1,100)
@@ -1465,8 +1471,9 @@ func impregnation(mother, father = null, anyfather = false):
 		baby.beautybase = father.beautybase
 	else:
 		baby.beautybase = mother.beautybase
-	baby.relatives.father = realfather
-	baby.relatives.mother = mother.id
+	connectrelatives(mother, baby, 'mother')
+	if realfather != -1:
+		connectrelatives(father, baby, 'father')
 	mother.preg.baby = baby.id
 	mother.preg.duration = 1
 	mother.metrics.preg += 1
@@ -1474,6 +1481,42 @@ func impregnation(mother, father = null, anyfather = false):
 
 var baby
 
+
+func connectrelatives(person1, person2, way):
+	if person1 == null || person2 == null:
+		return
+	if globals.state.relativesdata.has(person1.id) == false:
+		createrelativesdata(person1)
+	if globals.state.relativesdata.has(person2.id) == false:
+		createrelativesdata(person2)
+	if way in ['mother','father']:
+		var entry = globals.state.relativesdata[person1.id]
+		entry.children.append(person2.id)
+		for i in entry.children:
+			if i != person2.id:
+				var entry2 = globals.state.relativesdata[i]
+				connectrelatives(person2, entry2, 'sibling')
+		entry = globals.state.relativesdata[person2.id]
+		entry[way] = person1.id
+	elif way == 'sibling':
+		var entry = globals.state.relativesdata[person1.id]
+		var entry2 = globals.state.relativesdata[person2.id]
+		if entry.siblings.has(entry2.id) == false: entry.siblings.append(entry2.id)
+		if entry2.siblings.has(entry.id) == false: entry2.siblings.append(entry.id)
+		for i in entry.siblings + entry2.siblings:
+			if !globals.state.relativesdata[i].siblings.has(entry.id) && i != entry.id:
+				globals.state.relativesdata[i].siblings.append(entry.id)
+			if !globals.state.relativesdata[i].siblings.has(entry2.id) && i != entry2.id:
+				globals.state.relativesdata[i].siblings.append(entry2.id)
+			if !entry.siblings.has(i) && i != entry.id:
+				entry.siblings.append(i)
+			if !entry2.siblings.has(i) && i != entry2.id:
+				entry2.siblings.append(i)
+
+
+func createrelativesdata(person):
+	var newdata = {name = person.name_long(), id = person.id, race = person.race, sex = person.sex, mother = -1, father = -1, siblings = [], halfsiblings = [], children = []}
+	globals.state.relativesdata[person.id] = newdata
 
 func showtooltip(text):
 	var screen = get_viewport().get_visible_rect()
@@ -1491,9 +1534,49 @@ func showtooltip(text):
 	if tooltip.get_rect().end.y >= screen.size.y:
 		tooltip.rect_global_position.y -= tooltip.get_rect().end.y - screen.size.y
 
-
 func hidetooltip():
 	main.get_node("tooltip").visible = false
+
+func slavetooltip(person):
+	var text = ''
+	var node = get_tree().get_current_scene().get_node('slavetooltip')
+	if node == null:
+		return
+	node.visible = true
+	text += "Level: " + str(person.level)
+	text += "\n[color=yellow]" + person.race.capitalize() + "[/color]\n" + person.age.capitalize()
+	node.get_node("portrait").texture = loadimage(person.imageportait)
+	node.get_node("portrait").visible = !node.get_node('portrait').texture == null
+	node.get_node("name").text = person.name_long()
+	if globals.player == person:
+		node.get_node("name").set('custom_colors/font_color', Color(1,1,0))
+		node.get_node("name").text = "Master " + node.get_node("name").text
+	else:
+		node.get_node("name").set('custom_colors/font_color', Color(1,1,1))
+	node.get_node("spec").set_texture(specimages[str(person.spec)])
+	node.get_node("grade").set_texture(gradeimages[person.origins])
+	node.get_node("spec").visible = !globals.player == person
+	node.get_node("grade").visible = !globals.player == person
+	node.get_node("text").bbcode_text = text
+	node.get_node("sex").texture = globals.sexicon[person.sex]
+	
+	var screen = get_viewport().get_visible_rect()
+	var pos = main.get_global_mouse_position()
+	pos = Vector2(pos.x+20, pos.y+20)
+	node.set_position(pos)
+	if node.get_rect().end.x >= screen.size.x:
+		node.rect_global_position.x -= node.get_rect().end.x - screen.size.x
+	if node.get_rect().end.y >= screen.size.y:
+		node.rect_global_position.y -= node.get_rect().end.y - screen.size.y
+
+func slavetooltiphide(empty = null):
+	get_tree().get_current_scene().get_node('slavetooltip').visible = false
+
+func openslave(person):
+	if person == globals.player:
+		main._on_selfbutton_pressed()
+	elif globals.slaves.has(person) && person.away.duration == 0:
+		main.openslavetab(person)
 
 static func merge(target, patch):
 	for key in patch:

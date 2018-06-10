@@ -857,8 +857,6 @@ func _on_slavefinetune_pressed():
 func _on_slaveconfirm_pressed():
 	#Racebonus
 	get_tree().change_scene("res://files/Mansion.scn")
-	globals.player.relatives.father = 0
-	globals.player.relatives.mother = 0
 	globals.player.ability.append('escape')
 	globals.player.abilityactive.append('escape')
 	globals.player.ability.append("protect")
@@ -930,8 +928,7 @@ func _on_slaveconfirm_pressed():
 	startslave.obed = 90
 	startslave.beautybase = 40
 	if startslave.memory.find('$sibling') >= 0:
-		startslave.relatives.mother = 0
-		startslave.relatives.father = 0
+		globals.connectrelatives(startslave, globals.player, 'sibling')
 	
 	if startslavehobby == 'Physical':
 		startslave.cour += 25

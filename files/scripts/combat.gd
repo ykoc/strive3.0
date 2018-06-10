@@ -309,6 +309,7 @@ func start_battle(nosound = false):
 							call(k.effect, combatant, k.effectvalue)
 						if k.type in ['incombatphyattack', 'incombatturn']:
 							combatant.geareffects.append(k)
+			combatant.health = combatant.healthmax
 		enemygroup.append(combatant)
 	set_process(true)
 	set_process_input(true)
@@ -460,13 +461,13 @@ func updatepanels():
 		get_node("grouppanel/groupline").add_child(newbutton)
 		newbutton.get_node("name").set_text(combatant.name)
 		newbutton.get_node("hp").value = (combatant.health/combatant.healthmax)*100
-		newbutton.get_node("hp/Label").text = str(combatant.health) + "/" + str(combatant.healthmax)
+		newbutton.get_node("hp/Label").text = str(ceil(combatant.health)) + "/" + str(combatant.healthmax)
 		newbutton.get_node("en").value = (float(combatant.energy)/combatant.energymax)*100
-		newbutton.get_node("en/Label").text = str(combatant.energy) + "/" + str(combatant.energymax)
+		newbutton.get_node("en/Label").text = str(ceil(combatant.energy)) + "/" + str(combatant.energymax)
 		if combatant.person != globals.player:
 			newbutton.get_node("stress").visible = true
 			newbutton.get_node("stress").value = (float(combatant.person.stress)/combatant.person.stats.stress_max)*100
-			newbutton.get_node("stress/Label").text = str(combatant.person.stress)
+			newbutton.get_node("stress/Label").text = str(ceil(combatant.person.stress))
 		newbutton.set_meta("char", combatant)
 		for i in combatant.effects.values():
 			var newnode = $grouppanel/groupline/character/buffscontainer/TextureRect.duplicate()
@@ -903,6 +904,7 @@ func enemytooltiphide():
 	globals.hidetooltip()
 
 func _on_confirm_pressed():
+	globals.hidetooltip()
 	if selectmode != null:
 		get_node("warning").set_text("Select target first.")
 		get_node("warning").modulate.a = 1
@@ -988,6 +990,7 @@ func _on_confirm_pressed():
 
 func resolution(text = ''):
 	var counter = 0
+	globals.hidetooltip()
 	for i in playergroup:
 		i.person.stress += 3
 		for effect in i.effects.values():

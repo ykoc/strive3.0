@@ -1325,6 +1325,8 @@ func stimulanteffect():
 		return("Apparently, $name isn't greatly affected by drinking the potion as the previous effect hasn't worn off yet.")
 
 func deterrenteffect():
+	if person.traits.has("Sex-crazed"):
+		person.trait_remove('Sex-crazed')
 	if person == globals.player:
 		return('You decide this potion is not going to benefit you at all.')
 	if person.effects.has('numbed') == false:
@@ -1332,8 +1334,7 @@ func deterrenteffect():
 		return('After ingesting the potion, $name starts to act somewhat more dull then before. ')
 	else:
 		return("Apparently, $name isn't greatly affected by drinking the potion as the previous effect hasn't worn off yet.")
-	if person.traits.has("Sex-crazed"):
-		person.trait_remove('Sex-crazed')
+	
 
 func beautyeffect():
 	var text = ''

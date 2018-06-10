@@ -90,6 +90,7 @@ class member:
 	var anus
 	var tail
 	var strapon
+	var nipples
 	var posh1
 	var mode = 'normal'
 	var consent = true
@@ -203,6 +204,7 @@ func _ready():
 			var newmember = member.new()
 			person.obed = 90
 			person.lewdness = 70
+			person.mods['hollownipples'] = 'hollownipples'
 			newmember.loyalty = person.loyal
 			newmember.submission = person.obed
 			newmember.person = person
@@ -983,7 +985,9 @@ func orgasm(member):
 							for i in scene.takers:
 								globals.impregnation(i.person, member.person)
 					penistext += " {^semen:seed:cum} {^pours:shoots:pumps:sprays} into [names2] " + temptext + " as [he1] ejaculate[s/1]."
-					
+				elif scene.scene.takerpart == 'nipples':
+					penistext += " {^semen:seed:cum} fills [names2] hollow nipples. "
+				
 				penistext = decoder(penistext, [member], scene.takers)
 			#penis in taker slot
 			elif scene.takers.find(member) >= 0:
@@ -1154,61 +1158,61 @@ func mformula(gain, mana):
 
 
 
-var actioncategories = {
-caress = {dom = 'giver'},
-kiss = {dom = 'any'},
-fondletits = {dom = 'giver'},
-sucknipples = {dom = 'giver'},
-fingering = {dom = 'giver'},
-assfingering = {dom = 'giver'},
-cunnilingus = {dom = 'taker'},
-rimjob = {dom = 'taker'},
-handjob = {dom = 'taker'},
-blowjob = {dom = 'taker'},
-titjob = {dom = 'taker'},
-tailjob = {dom = 'taker'},
-footjob = {dom = 'giver'},
-
-missionary = {dom = 'giver'},
-missionaryanal = {dom = 'giver'},
-doggy = {dom = 'giver'},
-doggyanal = {dom = 'giver'},
-lotus = {dom = 'giver'},
-lotusanal = {dom = 'giver'},
-revlotus = {dom = 'giver'},
-revlotusanal = {dom = 'giver'},
-doubledildo = {dom = 'any'},
-doubledildoass = {dom = 'any'},
-inserttailv = {dom = 'giver'},
-inserttaila = {dom = 'giver'},
-tribadism = {dom = 'any'},
-frottage = {dom = 'any'},
-
-strapon = {dom = 'any'},
-
-spanking = {dom = 'giver'},
-whipping = {dom = 'giver'},
-deepthroat = {dom = 'giver'},
-nippleclap = {dom = 'giver'},
-clitclap = {dom = 'giver'},
-ringgag = {dom = 'giver'},
-blindfold = {dom = 'giver'},
-nosehook = {dom = 'giver'},
-vibrator = {dom = 'giver'},
-analvibrator = {dom = 'giver'},
-rope = {dom = 'giver'},
-milker = {dom = 'giver'},
-relaxinginsense = {dom = 'giver'},
-mastshow = {dom = 'giver'},
-grovel = {dom = 'giver'},
-facesit = {dom = 'giver'},
-afacesit = {dom = 'giver'},
-massagefoot = {dom = 'giver'},
-lickfeet = {dom = 'giver'},
-enemaplug = {dom = 'giver'}
-
-
-}
+#var actioncategories = {
+#caress = {dom = 'giver'},
+#kiss = {dom = 'any'},
+#fondletits = {dom = 'giver'},
+#sucknipples = {dom = 'giver'},
+#fingering = {dom = 'giver'},
+#assfingering = {dom = 'giver'},
+#cunnilingus = {dom = 'taker'},
+#rimjob = {dom = 'taker'},
+#handjob = {dom = 'taker'},
+#blowjob = {dom = 'taker'},
+#titjob = {dom = 'taker'},
+#tailjob = {dom = 'taker'},
+#footjob = {dom = 'giver'},
+#
+#missionary = {dom = 'giver'},
+#missionaryanal = {dom = 'giver'},
+#doggy = {dom = 'giver'},
+#doggyanal = {dom = 'giver'},
+#lotus = {dom = 'giver'},
+#lotusanal = {dom = 'giver'},
+#revlotus = {dom = 'giver'},
+#revlotusanal = {dom = 'giver'},
+#doubledildo = {dom = 'any'},
+#doubledildoass = {dom = 'any'},
+#inserttailv = {dom = 'giver'},
+#inserttaila = {dom = 'giver'},
+#tribadism = {dom = 'any'},
+#frottage = {dom = 'any'},
+#
+#strapon = {dom = 'any'},
+#
+#spanking = {dom = 'giver'},
+#whipping = {dom = 'giver'},
+#deepthroat = {dom = 'giver'},
+#nippleclap = {dom = 'giver'},
+#clitclap = {dom = 'giver'},
+#ringgag = {dom = 'giver'},
+#blindfold = {dom = 'giver'},
+#nosehook = {dom = 'giver'},
+#vibrator = {dom = 'giver'},
+#analvibrator = {dom = 'giver'},
+#rope = {dom = 'giver'},
+#milker = {dom = 'giver'},
+#relaxinginsense = {dom = 'giver'},
+#mastshow = {dom = 'giver'},
+#grovel = {dom = 'giver'},
+#facesit = {dom = 'giver'},
+#afacesit = {dom = 'giver'},
+#massagefoot = {dom = 'giver'},
+#lickfeet = {dom = 'giver'},
+#enemaplug = {dom = 'giver'}
+#
+#
+#}
 
 func askslaveforaction(chosen):
 	#choosing target

@@ -58,7 +58,7 @@ func takereffect(member):
 
 func initiate():
 	var text = ''
-	text += "[name1] and [name2] {^rub:grind:press} [their] [penis3] {^together:against one another}."
+	text += "[name1] uses [his1] [penis1] to {^fuck:penetrate} [names2] {^lubricating:elastic:stretching} nipples."
 	return text
 
 func reaction(member):

@@ -225,7 +225,7 @@ func forestfind(stage = 0):
 	if stage == 1:
 		showntext = slave2.dictionary(eventstext[currentevent][stage])
 		slave2.fromguild = false
-		globals.get_tree().get_current_scene().get_node("explorationnode").captureslave(slave2)
+		globals.get_tree().get_current_scene().get_node("explorationnode").captureeffect(slave2)
 	elif stage == 2:
 		showntext = slave2.dictionary(eventstext[currentevent][stage])
 		globals.resources.gold += rand_range(50,100)

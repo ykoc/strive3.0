@@ -4,11 +4,13 @@ extends Node
 var person
 var tab
 var jobdict = globals.jobs.jobdict
+var showfullbody = true
 
 func _ready():
 	for i in $stats/customization/tattoopanel/VBoxContainer.get_children():
 		i.connect('pressed',self,'choosetattooarea',[i])
 	set_process_input(true)
+	relativesdata = globals.state.relativesdata
 	$stats/trainingabilspanel/learncost.text = "Learning points per stat: " + str(variables.learnpointsperstat)
 	for i in get_tree().get_nodes_in_group('slaverules'):
 		i.connect("pressed", self, 'rulecheck', [i])
@@ -17,6 +19,11 @@ func _ready():
 	for i in globals.statsdict:
 		self[i].get_node('Control').connect('mouse_entered', self, 'stattooltip',[i])
 		self[i].get_node('Control').connect('mouse_exited', globals, 'hidetooltip') 
+	
+	$stats/customization/relativespanel/relativestext.connect("meta_hover_started",self,'relativeshover')
+	$stats/customization/relativespanel/relativestext.connect("meta_hover_ended",globals, 'slavetooltiphide')
+	$stats/customization/relativespanel/relativestext.connect("meta_clicked",self, "relativesselected")
+	
 	for i in ['cour','conf','wit','charm']:
 		get_node("stats/trainingabilspanel/" +i + '/Button').connect("pressed", self, 'mentalup',[i])
 		get_node("stats/trainingabilspanel/" +i + '/Button2').connect("pressed", self, 'mentalup5',[i])
@@ -75,15 +82,18 @@ func slavetabopen():
 	$stats/basics/slavedescript.set_bbcode(text)
 	text = person.status()
 	$stats/statustext.set_bbcode(text)
-	$stats/basics/bodypanel/fullbody.set_texture(null)
-	if nakedspritesdict.has(person.unique):
-		if person.obed >= 50 || person.stress < 10:
-			$stats/basics/bodypanel/fullbody.set_texture(globals.spritedict[nakedspritesdict[person.unique].clothcons])
-		else:
-			$stats/basics/bodypanel/fullbody.set_texture(globals.spritedict[nakedspritesdict[person.unique].clothrape])
-	elif person.imagefull != null && globals.loadimage(person.imagefull) != null:
-		$stats/basics/bodypanel/fullbody.set_texture(globals.loadimage(person.imagefull))
-	$stats/basics/bodypanel.visible = ($stats/basics/bodypanel/fullbody.get_texture() != null)
+	if showfullbody == true:
+		$stats/basics/bodypanel/fullbody.set_texture(null)
+		if nakedspritesdict.has(person.unique):
+			if person.obed >= 50 || person.stress < 10:
+				$stats/basics/bodypanel/fullbody.set_texture(globals.spritedict[nakedspritesdict[person.unique].clothcons])
+			else:
+				$stats/basics/bodypanel/fullbody.set_texture(globals.spritedict[nakedspritesdict[person.unique].clothrape])
+		elif person.imagefull != null && globals.loadimage(person.imagefull) != null:
+			$stats/basics/bodypanel/fullbody.set_texture(globals.loadimage(person.imagefull))
+		$stats/basics/bodypanel.visible = ($stats/basics/bodypanel/fullbody.get_texture() != null)
+	else:
+		$stats/basics/bodypanel.visible = false
 	for i in $stats/basics/traits/traitlist.get_children() + $stats/basics/sextraits/traitlist.get_children() :
 		if i.get_name() != 'Label':
 			i.visible = false
@@ -136,6 +146,8 @@ func slavetabopen():
 	if globals.state.tutorial.has('person') && globals.state.tutorial.person == false:
 		globals.state.tutorial.person = true
 		get_tree().get_current_scene().get_node("tutorialnode").slaveinitiate()
+	
+	$stats/basics/fullbodycheck.pressed = showfullbody
 	
 	if person.work == 'jailer':
 		get_node("stats/workbutton").set_text('Jailer')
@@ -408,94 +420,79 @@ func _on_slavedescript_meta_clicked( meta ):
 		globals.state.descriptsettings[meta] = !globals.state.descriptsettings[meta]
 	slavetabopen()
 
+var relativesdata
+
+var counter = 0
+var slavearray = []
 
 func _on_relativesbutton_pressed():
+	var text = ''
 	$stats/customization/relativespanel.popup()
-	var mother = person.relatives.mother
-	var father = person.relatives.father
-	var id = person.id
-	var parentslist = $stats/customization/relativespanel/parentscontainer/parentscontainer
-	var siblingslist = $stats/customization/relativespanel/siblingscontainer/siblingscontainer
-	var childrenlist = $stats/customization/relativespanel/childrencontainer/childrencontainer
-	var newlabel
-	for i in parentslist.get_children():
-		if i != parentslist.get_node('Label'):
-			i.visible = false
-			i.queue_free()
-	for i in siblingslist.get_children():
-		if i != siblingslist.get_node('Label'):
-			i.visible = false
-			i.queue_free()
-	for i in childrenlist.get_children():
-		if i != childrenlist.get_node('Label'):
-			i.visible = false
-			i.queue_free()
-	############PARENTS
-	newlabel = parentslist.get_node("Label").duplicate()
-	parentslist.add_child(newlabel)
-	newlabel.visible = true
-	if str(mother) == str(-1):
-		newlabel.set_text('Mother - unknown')
-	else:
-		var found = false
-		if globals.player.id == mother:
-			found = true
-			mother = globals.player
-			newlabel.set_text('Mother - You')
-		if typeof(mother) == 2 || typeof(mother) == 3:
-			for i in globals.slaves:
-				if i.id == person.relatives.mother && i != person:
-					mother = i
-					found = true
-					newlabel.set_text(i.dictionary('Mother - $name, $race'))
-			if found == false:
-				newlabel.set_text('Mother - unknown')
-	newlabel = parentslist.get_node("Label").duplicate()
-	newlabel.visible = true
-	parentslist.add_child(newlabel)
-	if father == -1:
-		newlabel.set_text('Father - unknown')
-	else:
-		var found = false
-		if globals.player.id == father:
-			found = true
-			father = globals.player
-			newlabel.set_text('Father - You')
-		if typeof(father) == 2 || typeof(father) == 3:
-			for i in globals.slaves:
-				if i.id == person.relatives.father:
-					father = i
-					found = true
-					newlabel.set_text(i.dictionary('Father - $name, $race'))
-			if found == false:
-				newlabel.set_text('Father - unknown')
-	####### Siblings
-	if str(person.relatives.mother) == str(globals.player.relatives.mother) || str(person.relatives.father) == str(globals.player.relatives.father) || str(person.relatives.mother) == str(globals.player.relatives.father) ||str(person.relatives.mother) == str(globals.player.relatives.father):
-		newlabel = siblingslist.get_node("Label").duplicate()
-		newlabel.visible = true
-		siblingslist.add_child(newlabel)
-		newlabel.set_text(globals.player.dictionary("You ($name $surname, $sibling)"))
-	for i in globals.slaves:
-		var found = false
-		if i != person && str(i.relatives.mother) != str(-1):
-			if (str(i.relatives.mother) == str(person.relatives.mother)|| str(i.relatives.mother) == str(person.relatives.father)) :
-				found = true
-		if i != person && str(i.relatives.father) != str(-1):
-			if str((i.relatives.father) == str(person.relatives.mother) || str(i.relatives.father) == str(person.relatives.father)) :
-				found = true
-		if found == true:
-			newlabel = siblingslist.get_node("Label").duplicate()
-			newlabel.visible = true
-			siblingslist.add_child(newlabel)
-			newlabel.set_text(i.dictionary("$name - $sibling, $race"))
-	#children
-	for i in globals.slaves:
-		if str(i.relatives.mother) == person.id || str(i.relatives.father) == person.id:
-			newlabel = childrenlist.get_node("Label").duplicate()
-			newlabel.visible = true
-			childrenlist.add_child(newlabel)
-			newlabel.set_text(i.dictionary("$name $sex $race"))
+	if relativesdata.has(person.id) == false:
+		text = person.dictionary("You don't know anything about $name's relatives. ")
+		$stats/customization/relativespanel/relativestext.bbcode_text = text
+		return
+	var entry = relativesdata[person.id]
+	var entry2
+	counter = 0
+	slavearray.clear()
+	text += '[center]Parents[/center]\n'
+	for i in ['father','mother']:
+		if int(entry[i]) <= 0:
+			text += i.capitalize() + ": Unknown\n"
+		else:
+			if relativesdata.has(entry[i]):
+				entry2 = relativesdata[entry[i]]
+				text += i.capitalize() + ": " + getentrytext(entry2) + "\n"
+			else:
+				text += i.capitalize() + ": Unknown\n"
+	
+	if entry.siblings.size() > 0:
+		text += '\n[center]Siblings[/center]\n'
+		for i in entry.siblings:
+			entry2 = relativesdata[i]
+			if entry2.sex == 'male':
+				text += "Brother: " 
+			else:
+				text += "Sister: "
+			text += getentrytext(entry2) + "\n"
+	
+	if entry.children.size() > 0:
+		text += '\n[center]Children[/center]\n'
+		for i in entry.siblings:
+			entry2 = relativesdata[i]
+			if entry2.sex == 'male':
+				text += "Son: " 
+			else:
+				text += "Daughter: "
+			text += getentrytext(entry2) + "\n"
+	$stats/customization/relativespanel/relativestext.set_meta("slaves", slavearray)
+	$stats/customization/relativespanel/relativestext.bbcode_text = text
 
+func getentrytext(entry):
+	var text = ''
+	if globals.state.findslave(entry.id) != null:
+		text += '[url=person' + str(counter) + '][color=yellow]' + entry.name + '[/color][/url]'
+		slavearray.append(globals.state.findslave(entry.id))
+		counter += 1
+	else:
+		text += entry.name
+	text += ", " + entry.race
+	return text
+
+func relativeshover(meta):
+	var tempslave = slavearray[int(meta.replace('person',''))]
+	globals.slavetooltip(tempslave)
+
+func relativesselected(meta):
+	var tempslave = slavearray[int(meta.replace('person',''))]
+	$stats/customization/relativespanel.visible = false
+	globals.slavetooltiphide()
+	globals.openslave(tempslave)
+	if tempslave != globals.player:
+		globals.main.get_node('MainScreen/slave_tab')._on_relativesbutton_pressed()
+	else:
+		globals.main._on_selfrelatives_pressed()
 
 func _on_relativesclose_pressed():
 	$stats/customization/relativespanel.visible = false
@@ -717,7 +714,7 @@ func _on_piercing_pressed():
 		$stats/customization/piercingpanel/piercestate.set_text(person.dictionary('$name does not seems to mind you pierce $his private places.'))
 	else:
 		$stats/customization/piercingpanel/piercestate.set_text(person.dictionary('$name refuses to let you pierice $his private places'))
-	
+	$stats/customization/piercingpanel/piercestate.visible = person != globals.player
 	for i in piercingdict:
 		if person.piercing.has(i) == false:
 			person.piercing[i] = null
@@ -727,9 +724,8 @@ func _on_piercing_pressed():
 		array.append(i)
 	array.sort_custom(self, 'idsort')
 	
-	
 	for ii in array:
-		if ii.requirement == null || (person.consent == true && ii.requirement == 'lewdness') || (person.penis != 'none' && person.consent == true && ii.id == 10) || (person.vagina == 'normal' && person.consent == true && (ii.id == 8 || ii.id == 9)):
+		if ii.requirement == null || ( person.consent == true && ii.requirement == 'lewdness') || (person.penis != 'none' && person.consent == true && ii.id == 10) || (person.vagina == 'normal' && person.consent == true && (ii.id == 8 || ii.id == 9)):
 			var newline = $stats/customization/piercingpanel/ScrollContainer/VBoxContainer/piercingline.duplicate()
 			newline.visible = true
 			$stats/customization/piercingpanel/ScrollContainer/VBoxContainer/.add_child(newline)
@@ -858,10 +854,7 @@ func updatestats():
 	else:
 		person.imageportait = null
 		$stats/statspanel/TextureRect/portrait.set_texture(null)
-	if person.spec != null:
-		$stats/statspanel/spec.set_texture(specimages[person.spec])
-	else:
-		$stats/statspanel/spec.set_texture(null)
+	$stats/statspanel/spec.set_texture(specimages[str(person.spec)])
 	if person.xp >= 100 && person.levelupreqs.empty():
 		$stats/basics/levelupreqs.set_bbcode(person.dictionary("You don't know what might unlock $name's potential further, yet. "))
 	elif person.xp >= 100:
@@ -913,3 +906,8 @@ func _on_customize_pressed():
 	$stats/customization.visible = true
 
 
+
+
+func _on_fullbodycheck_pressed():
+	showfullbody = $stats/basics/fullbodycheck.pressed
+	slavetabopen()

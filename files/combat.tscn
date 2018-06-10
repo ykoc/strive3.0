@@ -30,6 +30,8 @@
 [ext_resource path="res://files/floattext.gd" type="Script" id=28]
 [ext_resource path="res://files/buttons/mana2.png" type="Texture" id=29]
 
+
+
 [sub_resource type="StyleBoxTexture" id=1]
 
 content_margin_left = -1.0
@@ -364,7 +366,6 @@ max_lines_visible = -1
 
 [node name="groupline" type="HBoxContainer" parent="grouppanel" index="1"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -465,6 +466,7 @@ margin_right = 150.0
 margin_bottom = 169.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
+hint_tooltip = "Health"
 mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -482,7 +484,7 @@ texture_progress = ExtResource( 15 )
 radial_fill_degrees = 360.0
 radial_center_offset = Vector2( 0, 0 )
 nine_patch_stretch = false
-_sections_unfolded = [ "Textures" ]
+_sections_unfolded = [ "Focus", "Hint", "Textures" ]
 
 [node name="Label" type="Label" parent="grouppanel/groupline/character/hp" index="0"]
 
@@ -519,6 +521,7 @@ margin_right = 150.0
 margin_bottom = 195.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
+hint_tooltip = "Energy"
 mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -536,7 +539,7 @@ texture_progress = ExtResource( 16 )
 radial_fill_degrees = 360.0
 radial_center_offset = Vector2( 0, 0 )
 nine_patch_stretch = false
-_sections_unfolded = [ "Textures" ]
+_sections_unfolded = [ "Hint", "Textures" ]
 
 [node name="Label" type="Label" parent="grouppanel/groupline/character/en" index="0"]
 
@@ -574,6 +577,7 @@ margin_right = 150.0
 margin_bottom = 213.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
+hint_tooltip = "Stress"
 mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -591,7 +595,7 @@ texture_progress = ExtResource( 17 )
 radial_fill_degrees = 360.0
 radial_center_offset = Vector2( 0, 0 )
 nine_patch_stretch = false
-_sections_unfolded = [ "Textures" ]
+_sections_unfolded = [ "Hint", "Textures" ]
 
 [node name="Label" type="Label" parent="grouppanel/groupline/character/stress" index="0"]
 

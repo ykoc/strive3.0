@@ -1261,7 +1261,8 @@ func captureslave(person):
 			location = 'gorn'
 		elif currentzone.tags.find("amberguard") >= 0:
 			location = 'amberguard'
-		globals.state.reputation[location] -= 1
+		if location != null:
+			globals.state.reputation[location] -= 1
 	defeated.names.remove(defeated.units.find(person))
 	defeated.units.erase(person)
 	get_tree().get_current_scene().infotext("New captive added to your group",'green')

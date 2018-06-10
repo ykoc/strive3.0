@@ -43,11 +43,11 @@ func genitals():
 		text += '[url=genitals][color=#d1b970]Privates:[/color][/url] '
 	if globals.state.descriptsettings.genitals == true || showmode != 'default':
 		text = "\n" + text + getdescription("titssize") + gettitsextra() + getdescription("asssize") + lowergenitals()
-		if person.preg.duration > 24:
+		if person.preg.duration > variables.pregduration/1.5:
 			text += "\n\n$his unborn child forces $his belly to protrude massively; $he will give birth soon."
-		elif person.preg.duration > 16:
+		elif person.preg.duration > variables.pregduration/2:
 			text += "\n\n$His advanced pregnancy is clearly evident by the prominent bulge in $his belly."
-		elif person.preg.duration > 8:
+		elif person.preg.duration > variables.pregduration/4:
 			text += "\n\n$His unborn fetus causes $his belly to bulge slightly."
 		if person.preg.has_womb == false && person.sex != 'male':
 			text += "\n\n[color=yellow]$name is sterile.[/color]"
