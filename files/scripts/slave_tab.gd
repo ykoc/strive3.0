@@ -11,7 +11,7 @@ func _ready():
 		i.connect('pressed',self,'choosetattooarea',[i])
 	set_process_input(true)
 	relativesdata = globals.state.relativesdata
-	$stats/trainingabilspanel/learncost.text = "Learning points per stat: " + str(variables.learnpointsperstat)
+	$stats/trainingabilspanel/learncost.text = "Learning points per attribute: " + str(variables.learnpointsperstat)
 	for i in get_tree().get_nodes_in_group('slaverules'):
 		i.connect("pressed", self, 'rulecheck', [i])
 	for i in [sstr,sagi, smaf, send]:

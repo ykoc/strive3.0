@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/hadesad.png-666b11906639590db76bc1c53db5f71a.stex"
+path="res://.import/hade2smile.png-c1a4b9460fd2bda54e108c9df129862e.stex"
 
 [deps]
 
-source_file="res://files/images/hadesad.png"
-source_md5="918ae88f01f509f30412bd00e23aa5c3"
+source_file="res://files/images/hade/hade2smile.png"
+source_md5="0c3b911bea7e0138e6cbb6d638562374"
 
-dest_files=[ "res://.import/hadesad.png-666b11906639590db76bc1c53db5f71a.stex" ]
-dest_md5="0a6a0011346bb151b1b666d69609d5e9"
+dest_files=[ "res://.import/hade2smile.png-c1a4b9460fd2bda54e108c9df129862e.stex" ]
+dest_md5="78b4b324c1b834500d2bb5e89e572c22"
 
 [params]
 

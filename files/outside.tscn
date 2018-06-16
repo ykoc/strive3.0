@@ -1,4 +1,4 @@
-[gd_scene load_steps=117 format=2]
+[gd_scene load_steps=118 format=2]
 
 [ext_resource path="res://files/theme.tres" type="Theme" id=1]
 [ext_resource path="res://files/scripts/outside.gd" type="Script" id=2]
@@ -52,35 +52,34 @@
 [ext_resource path="res://files/buttons/inspect.png" type="Texture" id=50]
 [ext_resource path="res://files/buttongrouptheme.tres" type="Theme" id=51]
 [ext_resource path="res://files/buttons/sexicons/male.png" type="Texture" id=52]
-[ext_resource path="res://statspanel.tscn" type="PackedScene" id=53]
-[ext_resource path="res://files/theme slavetab.tres" type="Theme" id=54]
-[ext_resource path="res://files/buttons/inventory/11-litter.png" type="Texture" id=55]
-[ext_resource path="res://files/buttons/inventory/12_chest.png" type="Texture" id=56]
-[ext_resource path="res://files/buttons/inventory/14(1).png" type="Texture" id=57]
-[ext_resource path="res://files/buttons/inventory/14(2).png" type="Texture" id=58]
-[ext_resource path="res://files/buttons/inventory/15(1).png" type="Texture" id=59]
-[ext_resource path="res://files/buttons/inventory/15(2).png" type="Texture" id=60]
-[ext_resource path="res://files/buttons/inventory/31.png" type="Texture" id=61]
-[ext_resource path="res://files/buttons/inventory/32.png" type="Texture" id=62]
-[ext_resource path="res://files/buttons/inventory/16(1).png" type="Texture" id=63]
-[ext_resource path="res://files/buttons/inventory/16(2).png" type="Texture" id=64]
-[ext_resource path="res://files/buttons/inventory/17(1).png" type="Texture" id=65]
-[ext_resource path="res://files/buttons/inventory/17(2).png" type="Texture" id=66]
-[ext_resource path="res://files/buttons/inventory/6-(item).png" type="Texture" id=67]
-[ext_resource path="res://files/images/items/armorleather.png" type="Texture" id=68]
-[ext_resource path="res://files/buttons/inventory/18(1).png" type="Texture" id=69]
-[ext_resource path="res://files/buttons/inventory/18(2).png" type="Texture" id=70]
-[ext_resource path="res://files/buttons/inventory/21(1).png" type="Texture" id=71]
-[ext_resource path="res://files/buttons/inventory/21(2).png" type="Texture" id=72]
-[ext_resource path="res://files/buttons/mainscreen/gold.png" type="Texture" id=73]
-[ext_resource path="res://files/buttons/inventory/5.png" type="Texture" id=74]
-[ext_resource path="res://files/buttons/inventorypanel.png" type="Texture" id=75]
-[ext_resource path="res://files/buttons/inventory/33.png" type="Texture" id=76]
-[ext_resource path="res://files/buttons/bigpanel.png" type="Texture" id=77]
-[ext_resource path="res://files/buttons/inventory/1.png" type="Texture" id=78]
-[ext_resource path="res://files/map.scn" type="PackedScene" id=79]
-
-
+[ext_resource path="res://files/buttons/mainscreen/41.png" type="Texture" id=53]
+[ext_resource path="res://statspanel.tscn" type="PackedScene" id=54]
+[ext_resource path="res://files/theme slavetab.tres" type="Theme" id=55]
+[ext_resource path="res://files/buttons/inventory/11-litter.png" type="Texture" id=56]
+[ext_resource path="res://files/buttons/inventory/12_chest.png" type="Texture" id=57]
+[ext_resource path="res://files/buttons/inventory/14(1).png" type="Texture" id=58]
+[ext_resource path="res://files/buttons/inventory/14(2).png" type="Texture" id=59]
+[ext_resource path="res://files/buttons/inventory/15(1).png" type="Texture" id=60]
+[ext_resource path="res://files/buttons/inventory/15(2).png" type="Texture" id=61]
+[ext_resource path="res://files/buttons/inventory/31.png" type="Texture" id=62]
+[ext_resource path="res://files/buttons/inventory/32.png" type="Texture" id=63]
+[ext_resource path="res://files/buttons/inventory/16(1).png" type="Texture" id=64]
+[ext_resource path="res://files/buttons/inventory/16(2).png" type="Texture" id=65]
+[ext_resource path="res://files/buttons/inventory/17(1).png" type="Texture" id=66]
+[ext_resource path="res://files/buttons/inventory/17(2).png" type="Texture" id=67]
+[ext_resource path="res://files/buttons/inventory/6-(item).png" type="Texture" id=68]
+[ext_resource path="res://files/images/items/armorleather.png" type="Texture" id=69]
+[ext_resource path="res://files/buttons/inventory/18(1).png" type="Texture" id=70]
+[ext_resource path="res://files/buttons/inventory/18(2).png" type="Texture" id=71]
+[ext_resource path="res://files/buttons/inventory/21(1).png" type="Texture" id=72]
+[ext_resource path="res://files/buttons/inventory/21(2).png" type="Texture" id=73]
+[ext_resource path="res://files/buttons/mainscreen/gold.png" type="Texture" id=74]
+[ext_resource path="res://files/buttons/inventory/5.png" type="Texture" id=75]
+[ext_resource path="res://files/buttons/inventorypanel.png" type="Texture" id=76]
+[ext_resource path="res://files/buttons/inventory/33.png" type="Texture" id=77]
+[ext_resource path="res://files/buttons/bigpanel.png" type="Texture" id=78]
+[ext_resource path="res://files/buttons/inventory/1.png" type="Texture" id=79]
+[ext_resource path="res://files/map.scn" type="PackedScene" id=80]
 
 [sub_resource type="StyleBoxTexture" id=1]
 
@@ -958,6 +957,22 @@ func _on_search_text_changed(new_text):
 		itemsinventory()
 	else:
 		itemsbackpack()
+
+
+func _on_add5_pressed():
+	if $amountselect/SpinBox.value == 1:
+		$amountselect/SpinBox.value = 0
+	$amountselect/SpinBox.value += 5
+
+
+func _on_add10_pressed():
+	if $amountselect/SpinBox.value == 1:
+		$amountselect/SpinBox.value = 0
+	$amountselect/SpinBox.value += 10
+
+
+func _on_addmax_pressed():
+	$amountselect/SpinBox.value = 99
 "
 
 [sub_resource type="DynamicFont" id=30]
@@ -975,7 +990,7 @@ content_margin_left = -1.0
 content_margin_right = -1.0
 content_margin_top = -1.0
 content_margin_bottom = -1.0
-texture = ExtResource( 75 )
+texture = ExtResource( 76 )
 region_rect = Rect2( 0, 0, 613, 833 )
 margin_left = 0.0
 margin_right = 0.0
@@ -1032,7 +1047,7 @@ content_margin_left = -1.0
 content_margin_right = -1.0
 content_margin_top = -1.0
 content_margin_bottom = -1.0
-texture = ExtResource( 76 )
+texture = ExtResource( 77 )
 region_rect = Rect2( 0, 0, 1318, 493 )
 margin_left = 0.0
 margin_right = 0.0
@@ -1051,7 +1066,7 @@ content_margin_left = -1.0
 content_margin_right = -1.0
 content_margin_top = -1.0
 content_margin_bottom = -1.0
-texture = ExtResource( 77 )
+texture = ExtResource( 78 )
 region_rect = Rect2( 0, 0, 500, 460 )
 margin_left = 0.0
 margin_right = 0.0
@@ -3843,10 +3858,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 13.0
-margin_top = 5.0
-margin_right = 127.0
-margin_bottom = 27.0
+margin_left = 43.0
+margin_top = 9.0
+margin_right = 157.0
+margin_bottom = 31.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -3866,10 +3881,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 13.0
-margin_top = 26.0
-margin_right = 54.0
-margin_bottom = 48.0
+margin_left = 44.0
+margin_top = 41.0
+margin_right = 85.0
+margin_bottom = 63.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -3882,39 +3897,16 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="origins" type="Label" parent="slavebuypanel/slavebuypanel/ScrollContainer/VBoxContainer/slavebutton" index="2"]
+[node name="price" type="Label" parent="slavebuypanel/slavebuypanel/ScrollContainer/VBoxContainer/slavebutton" index="2"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 14.0
-margin_top = 47.0
-margin_right = 153.0
-margin_bottom = 69.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 0
-custom_fonts/font = ExtResource( 6 )
-text = "From rich family"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Mouse" ]
-
-[node name="price" type="Label" parent="slavebuypanel/slavebuypanel/ScrollContainer/VBoxContainer/slavebutton" index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 179.0
-margin_top = 27.0
-margin_right = 251.0
-margin_bottom = 47.0
+margin_left = 178.0
+margin_top = 52.0
+margin_right = 250.0
+margin_bottom = 72.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -3927,16 +3919,16 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="sex" type="TextureRect" parent="slavebuypanel/slavebuypanel/ScrollContainer/VBoxContainer/slavebutton" index="4"]
+[node name="sex" type="TextureRect" parent="slavebuypanel/slavebuypanel/ScrollContainer/VBoxContainer/slavebutton" index="3"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 227.0
-margin_top = 45.0
-margin_right = 253.0
-margin_bottom = 70.0
+margin_left = 14.0
+margin_top = 36.0
+margin_right = 40.0
+margin_bottom = 61.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -3946,6 +3938,27 @@ size_flags_vertical = 1
 texture = ExtResource( 52 )
 expand = true
 stretch_mode = 6
+
+[node name="grade" type="TextureRect" parent="slavebuypanel/slavebuypanel/ScrollContainer/VBoxContainer/slavebutton" index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 12.0
+margin_top = 5.0
+margin_right = 40.0
+margin_bottom = 31.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 53 )
+expand = true
+stretch_mode = 6
+_sections_unfolded = [ "Mouse" ]
 
 [node name="purchasebutton" type="Button" parent="slavebuypanel" index="1"]
 
@@ -4053,8 +4066,9 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="statspanel" parent="slavebuypanel" index="5" instance=ExtResource( 53 )]
+[node name="statspanel" parent="slavebuypanel" index="5" instance=ExtResource( 54 )]
 
+editor/display_folded = true
 margin_left = 623.0
 margin_top = 60.0
 margin_right = 1071.0
@@ -4229,8 +4243,6 @@ visible = false
 
 [node name="slavesellpanel" type="Control" parent="." index="11"]
 
-editor/display_folded = true
-visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -4290,9 +4302,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 280.0
+margin_right = 260.0
 margin_bottom = 50.0
-rect_min_size = Vector2( 280, 50 )
+rect_min_size = Vector2( 260, 50 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -4307,7 +4319,7 @@ shortcut = null
 group = null
 flat = false
 align = 1
-_sections_unfolded = [ "Size Flags" ]
+_sections_unfolded = [ "Hint", "Rect", "Size Flags" ]
 
 [node name="name" type="Label" parent="slavesellpanel/ScrollContainer/VBoxContainer/slavebutton" index="0"]
 
@@ -4315,10 +4327,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 14.0
-margin_top = 6.0
-margin_right = 119.0
-margin_bottom = 28.0
+margin_left = 59.0
+margin_top = 8.0
+margin_right = 173.0
+margin_bottom = 30.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -4337,10 +4349,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 206.0
-margin_top = 25.0
-margin_right = 269.0
-margin_bottom = 45.0
+margin_left = 144.0
+margin_top = 27.0
+margin_right = 216.0
+margin_bottom = 47.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -4348,10 +4360,53 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 0
 custom_fonts/font = ExtResource( 6 )
+custom_colors/font_color = Color( 0.845959, 0.90625, 0.134521, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "150 gold"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+_sections_unfolded = [ "custom_colors", "custom_constants" ]
+
+[node name="grade" type="TextureRect" parent="slavesellpanel/ScrollContainer/VBoxContainer/slavebutton" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 11.0
+margin_top = 6.0
+margin_right = 28.0
+margin_bottom = 29.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 53 )
+expand = true
+stretch_mode = 6
+
+[node name="sex" type="TextureRect" parent="slavesellpanel/ScrollContainer/VBoxContainer/slavebutton" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 31.0
+margin_top = 6.0
+margin_right = 54.0
+margin_bottom = 29.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 52 )
+expand = true
+stretch_mode = 6
 
 [node name="slavesellbutton" type="Button" parent="slavesellpanel" index="1"]
 
@@ -5249,7 +5304,6 @@ _sections_unfolded = [ "Rect" ]
 "blockoutsideinput",
 ]]
 
-editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -5282,7 +5336,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-theme = ExtResource( 54 )
+theme = ExtResource( 55 )
 
 [node name="buybutton" type="Button" parent="shoppanel/Panel" index="0"]
 
@@ -5409,310 +5463,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="itempanel" type="Panel" parent="shoppanel" index="1"]
-
-editor/display_folded = true
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 244.0
-margin_top = 64.0
-margin_right = -436.0
-margin_bottom = -46.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-_sections_unfolded = [ "Rect" ]
-
-[node name="iconbig" type="TextureRect" parent="shoppanel/itempanel" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 301.0
-margin_top = 26.0
-margin_right = -66.0
-margin_bottom = -351.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-expand = true
-stretch_mode = 5
-_sections_unfolded = [ "Rect" ]
-
-[node name="ScrollContainer" type="ScrollContainer" parent="shoppanel/itempanel" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 1.0
-margin_left = 22.0
-margin_top = 17.0
-margin_right = 240.0
-margin_bottom = -64.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-scroll_horizontal_enabled = false
-scroll_horizontal = 0
-scroll_vertical_enabled = true
-scroll_vertical = 0
-_sections_unfolded = [ "Rect", "Scroll" ]
-
-[node name="GridContainer" type="GridContainer" parent="shoppanel/itempanel/ScrollContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-columns = 4
-_sections_unfolded = [ "Anchor" ]
-
-[node name="Button" type="TextureButton" parent="shoppanel/itempanel/ScrollContainer/GridContainer" index="0"]
-
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 50.0
-margin_bottom = 50.0
-rect_min_size = Vector2( 50, 50 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 0
-size_flags_vertical = 0
-toggle_mode = true
-enabled_focus_mode = 2
-shortcut = null
-group = null
-texture_pressed = ExtResource( 44 )
-texture_hover = ExtResource( 45 )
-expand = true
-_sections_unfolded = [ "Size Flags", "Theme" ]
-
-[node name="icon" type="TextureRect" parent="shoppanel/itempanel/ScrollContainer/GridContainer/Button" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 42.0
-margin_bottom = 42.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-expand = true
-stretch_mode = 7
-_sections_unfolded = [ "Mouse" ]
-
-[node name="price" type="Label" parent="shoppanel/itempanel/ScrollContainer/GridContainer/Button" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 17.0
-margin_top = 33.0
-margin_right = 47.0
-margin_bottom = 51.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 0
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-text = "1234"
-align = 2
-valign = 1
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="amount" type="Label" parent="shoppanel/itempanel/ScrollContainer/GridContainer/Button" index="2"]
-
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 17.0
-margin_top = -1.0
-margin_right = 47.0
-margin_bottom = 17.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 0
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-text = "15"
-align = 2
-valign = 1
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="name" type="Label" parent="shoppanel/itempanel/ScrollContainer/GridContainer/Button" index="3"]
-
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 0
-align = 1
-valign = 1
-autowrap = true
-clip_text = true
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="itemdescript" type="RichTextLabel" parent="shoppanel/itempanel" index="2"]
-
-anchor_left = 0.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 275.0
-margin_top = -321.0
-margin_right = -34.0
-margin_bottom = -82.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-bbcode_enabled = true
-bbcode_text = ""
-visible_characters = -1
-percent_visible = 1.0
-meta_underlined = true
-tab_size = 4
-text = ""
-scroll_active = true
-scroll_following = false
-selection_enabled = false
-override_selected_font_color = false
-_sections_unfolded = [ "Rect" ]
-
-[node name="buysellbutton" type="Button" parent="shoppanel/itempanel" index="3"]
-
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -537.0
-margin_top = -54.0
-margin_right = -380.0
-margin_bottom = -15.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Buy"
-flat = false
-align = 1
-_sections_unfolded = [ "Rect" ]
-
-[node name="SpinBox" type="SpinBox" parent="shoppanel/itempanel/buysellbutton" index="0" groups=[
-"blockoutsideinput",
-]]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 346.0
-margin_top = 2.0
-margin_right = 424.0
-margin_bottom = 40.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-min_value = 0.0
-max_value = 100.0
-step = 1.0
-page = 0.0
-value = 1.0
-exp_edit = false
-rounded = false
-editable = true
-prefix = ""
-suffix = ""
-
-[node name="buysellbackpack" type="Button" parent="shoppanel/itempanel" index="4"]
-
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -373.0
-margin_top = -54.0
-margin_right = -216.0
-margin_bottom = -15.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Buy to backpack"
-flat = false
-align = 1
-_sections_unfolded = [ "Rect" ]
-
-[node name="inventory" type="TextureRect" parent="shoppanel" index="2"]
+[node name="inventory" type="TextureRect" parent="shoppanel" index="1"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -5725,7 +5476,7 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 theme = ExtResource( 1 )
-texture = ExtResource( 55 )
+texture = ExtResource( 56 )
 expand = true
 stretch_mode = 0
 script = SubResource( 29 )
@@ -5752,7 +5503,7 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 56 )
+texture_normal = ExtResource( 57 )
 expand = true
 _sections_unfolded = [ "Rect" ]
 
@@ -5775,13 +5526,13 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-theme = ExtResource( 54 )
+theme = ExtResource( 55 )
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 57 )
-texture_pressed = ExtResource( 58 )
+texture_normal = ExtResource( 58 )
+texture_pressed = ExtResource( 59 )
 expand = true
 _sections_unfolded = [ "Rect" ]
 
@@ -5804,13 +5555,13 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-theme = ExtResource( 54 )
+theme = ExtResource( 55 )
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 59 )
-texture_pressed = ExtResource( 60 )
+texture_normal = ExtResource( 60 )
+texture_pressed = ExtResource( 61 )
 expand = true
 _sections_unfolded = [ "Rect" ]
 
@@ -5833,13 +5584,13 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-theme = ExtResource( 54 )
+theme = ExtResource( 55 )
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 61 )
-texture_pressed = ExtResource( 62 )
+texture_normal = ExtResource( 62 )
+texture_pressed = ExtResource( 63 )
 expand = true
 _sections_unfolded = [ "Rect" ]
 
@@ -5862,13 +5613,13 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-theme = ExtResource( 54 )
+theme = ExtResource( 55 )
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 63 )
-texture_pressed = ExtResource( 64 )
+texture_normal = ExtResource( 64 )
+texture_pressed = ExtResource( 65 )
 expand = true
 _sections_unfolded = [ "Rect" ]
 
@@ -5891,13 +5642,13 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-theme = ExtResource( 54 )
+theme = ExtResource( 55 )
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 65 )
-texture_pressed = ExtResource( 66 )
+texture_normal = ExtResource( 66 )
+texture_pressed = ExtResource( 67 )
 expand = true
 _sections_unfolded = [ "Rect" ]
 
@@ -5984,7 +5735,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 0
-texture = ExtResource( 67 )
+texture = ExtResource( 68 )
 expand = true
 stretch_mode = 0
 _sections_unfolded = [ "Mouse", "Size Flags" ]
@@ -6005,7 +5756,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-texture = ExtResource( 68 )
+texture = ExtResource( 69 )
 expand = true
 stretch_mode = 6
 _sections_unfolded = [ "Mouse" ]
@@ -6079,8 +5830,8 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 69 )
-texture_pressed = ExtResource( 70 )
+texture_normal = ExtResource( 70 )
+texture_pressed = ExtResource( 71 )
 expand = true
 _sections_unfolded = [ "Hint", "Mouse", "Rect" ]
 
@@ -6106,9 +5857,9 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 71 )
-texture_pressed = ExtResource( 72 )
-texture_hover = ExtResource( 72 )
+texture_normal = ExtResource( 72 )
+texture_pressed = ExtResource( 73 )
+texture_hover = ExtResource( 73 )
 expand = true
 _sections_unfolded = [ "Hint", "Rect", "Textures" ]
 
@@ -6152,7 +5903,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 73 )
+texture = ExtResource( 74 )
 expand = true
 stretch_mode = 0
 _sections_unfolded = [ "Hint", "Rect" ]
@@ -6218,7 +5969,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 0
-texture = ExtResource( 67 )
+texture = ExtResource( 68 )
 expand = true
 stretch_mode = 0
 _sections_unfolded = [ "Mouse", "Size Flags" ]
@@ -6239,7 +5990,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-texture = ExtResource( 68 )
+texture = ExtResource( 69 )
 expand = true
 stretch_mode = 6
 _sections_unfolded = [ "Mouse" ]
@@ -6314,8 +6065,8 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 69 )
-texture_pressed = ExtResource( 70 )
+texture_normal = ExtResource( 70 )
+texture_pressed = ExtResource( 71 )
 expand = true
 _sections_unfolded = [ "Hint", "Mouse" ]
 
@@ -6359,7 +6110,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 73 )
+texture = ExtResource( 74 )
 expand = true
 stretch_mode = 0
 _sections_unfolded = [ "Hint", "Rect" ]
@@ -6386,9 +6137,9 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 71 )
-texture_pressed = ExtResource( 72 )
-texture_hover = ExtResource( 72 )
+texture_normal = ExtResource( 72 )
+texture_pressed = ExtResource( 73 )
+texture_hover = ExtResource( 73 )
 expand = true
 _sections_unfolded = [ "Hint", "Rect", "Textures" ]
 
@@ -6408,7 +6159,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-texture = ExtResource( 74 )
+texture = ExtResource( 75 )
 expand = true
 stretch_mode = 0
 _sections_unfolded = [ "Mouse" ]
@@ -6628,7 +6379,7 @@ _sections_unfolded = [ "custom_fonts" ]
 
 [node name="amountselect" type="PopupPanel" parent="shoppanel/inventory" index="16"]
 
-visible = false
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -6673,7 +6424,85 @@ flat = false
 align = 1
 _sections_unfolded = [ "Rect" ]
 
-[node name="cancel" type="Button" parent="shoppanel/inventory/amountselect" index="1"]
+[node name="add5" type="Button" parent="shoppanel/inventory/amountselect" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 161.0
+margin_top = 136.0
+margin_right = 204.0
+margin_bottom = 175.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "+5"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="add10" type="Button" parent="shoppanel/inventory/amountselect" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 211.0
+margin_top = 136.0
+margin_right = 255.0
+margin_bottom = 175.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "+10"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="addmax" type="Button" parent="shoppanel/inventory/amountselect" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 262.0
+margin_top = 136.0
+margin_right = 323.0
+margin_bottom = 175.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "+max"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="cancel" type="Button" parent="shoppanel/inventory/amountselect" index="4"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -6699,7 +6528,7 @@ flat = false
 align = 1
 _sections_unfolded = [ "Rect" ]
 
-[node name="RichTextLabel" type="RichTextLabel" parent="shoppanel/inventory/amountselect" index="2"]
+[node name="RichTextLabel" type="RichTextLabel" parent="shoppanel/inventory/amountselect" index="5"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -6728,15 +6557,15 @@ selection_enabled = false
 override_selected_font_color = false
 _sections_unfolded = [ "BBCode", "Theme" ]
 
-[node name="SpinBox" type="SpinBox" parent="shoppanel/inventory/amountselect" index="3"]
+[node name="SpinBox" type="SpinBox" parent="shoppanel/inventory/amountselect" index="6"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 164.0
+margin_left = 74.0
 margin_top = 138.0
-margin_right = 242.0
+margin_right = 152.0
 margin_bottom = 172.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -6771,7 +6600,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 73 )
+texture = ExtResource( 74 )
 expand = true
 stretch_mode = 0
 
@@ -6787,7 +6616,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-texture = ExtResource( 78 )
+texture = ExtResource( 79 )
 expand = true
 stretch_mode = 0
 _sections_unfolded = [ "Mouse" ]
@@ -6954,7 +6783,7 @@ scroll_horizontal = 0
 scroll_vertical_enabled = true
 scroll_vertical = 0
 
-[node name="Control" parent="ScrollContainer" index="0" instance=ExtResource( 79 )]
+[node name="Control" parent="ScrollContainer" index="0" instance=ExtResource( 80 )]
 
 margin_right = 0.0
 margin_bottom = 0.0
@@ -7024,10 +6853,6 @@ _sections_unfolded = [ "Size Flags" ]
 
 [connection signal="pressed" from="shoppanel/Panel/closebutton" to="." method="shopclose"]
 
-[connection signal="pressed" from="shoppanel/itempanel/buysellbutton" to="." method="_on_buysellbutton_pressed"]
-
-[connection signal="pressed" from="shoppanel/itempanel/buysellbackpack" to="." method="_on_buysellbackpack_pressed"]
-
 [connection signal="pressed" from="shoppanel/inventory/mode" to="shoppanel/inventory" method="_on_mode_pressed"]
 
 [connection signal="pressed" from="shoppanel/inventory/inventoryclose" to="shoppanel/inventory" method="_on_inventoryclose_pressed"]
@@ -7035,6 +6860,12 @@ _sections_unfolded = [ "Size Flags" ]
 [connection signal="gui_input" from="shoppanel/inventory/iteminfo" to="shoppanel/inventory" method="_on_iteminfo_input_event"]
 
 [connection signal="pressed" from="shoppanel/inventory/amountselect/confirm" to="shoppanel/inventory" method="_on_confirm_pressed"]
+
+[connection signal="pressed" from="shoppanel/inventory/amountselect/add5" to="shoppanel/inventory" method="_on_add5_pressed"]
+
+[connection signal="pressed" from="shoppanel/inventory/amountselect/add10" to="shoppanel/inventory" method="_on_add10_pressed"]
+
+[connection signal="pressed" from="shoppanel/inventory/amountselect/addmax" to="shoppanel/inventory" method="_on_addmax_pressed"]
 
 [connection signal="pressed" from="shoppanel/inventory/amountselect/cancel" to="shoppanel/inventory" method="_on_cancel_pressed"]
 

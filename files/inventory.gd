@@ -109,6 +109,7 @@ func updateitems():
 		itemsinventory()
 	elif state == 'backpack':
 		itemsbackpack()
+	$moveall.visible = state == 'backpack'
 	categoryitems()
 
 var modetextures = {inventory = load("res://files/buttons/inventory/12_chest.png"), backpack = load("res://files/buttons/inventory/13_bag.png")}
@@ -757,3 +758,10 @@ func _on_renameconfirm_pressed():
 
 func _on_renamecancel_pressed():
 	$itemrename.visible = false
+
+
+func _on_moveall_pressed():
+	for i in $ScrollContainer/GridContainer.get_children():
+		if i.name != 'Button':
+			while int(i.get_node("number").text) >= 1:
+				movefrombackpack(i)

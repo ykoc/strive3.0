@@ -9,8 +9,9 @@ var testslaveorigin = ['slave','poor','commoner','rich','noble']
 var currentslave = 0 setget currentslave_set
 var selectedslave = -1
 var texture = null
-var startcombatzone = "grove"
+var startcombatzone = "elvenforest"
 var nameportallocation
+var enddayprocess = false
 onready var maintext = '' setget maintext_set, maintext_get
 onready var exploration = get_node("explorationnode")
 onready var slavepanel = get_node("MainScreen/slave_tab")
@@ -149,6 +150,7 @@ func _ready():
 		get_node("startcombat").show()
 		get_node("new slave button").show()
 		get_node("debug").show()
+		globals.player.name = ''
 	rebuildrepeatablequests()
 	globals.main = self
 	globals.resources.panel = get_node("ResourcePanel")
@@ -206,8 +208,21 @@ func _ready():
 	$MainScreen/mansion/selfinspect/relativespanel/relativestext.connect("meta_hover_ended",globals, 'slavetooltiphide')
 	$MainScreen/mansion/selfinspect/relativespanel/relativestext.connect("meta_clicked",self, "relativesselected")
 	
+	$MainScreen/mansion/mansioninfo.connect("meta_hover_started",self,'slavehover')
+	$MainScreen/mansion/mansioninfo.connect("meta_hover_ended",globals, 'slavetooltiphide')
+	$MainScreen/mansion/mansioninfo.connect("meta_clicked",self, "slaveclicked")
+	
 	_on_mansion_pressed()
 	#startending()
+
+func slavehover(meta):
+	var tempslave = slavearray[int(meta.replace('person',''))]
+	globals.slavetooltip(tempslave)
+
+func slaveclicked(meta):
+	var tempslave = slavearray[int(meta.replace('person',''))]
+	globals.slavetooltiphide()
+	globals.openslave(tempslave)
 
 func sound(value):
 	if globals.rules.musicvol > 0:
@@ -296,7 +311,7 @@ func _on_new_slave_button_pressed():
 	globals.state.sidequests.yris = 3
 	#globals.state.decisions.append('')
 	globals.state.rank = 3
-	globals.state.mainquest = 20
+	globals.state.mainquest = 40
 	#globals.state.plotsceneseen = ['garthorscene','hade1','hade2','frostfordscene']#,'slaverguild']
 	globals.resources.mana = 200
 	globals.state.farm = 3
@@ -485,6 +500,7 @@ func _on_end_pressed():
 	if globals.state.mainquest == 41:
 		popup("You can't afford to wait. You must go to the Mage's Order.")
 		return
+	enddayprocess = true
 	
 	
 	var text = ''
@@ -1214,6 +1230,8 @@ func startnewday():
 	else:
 		alisehide()
 	_on_mansion_pressed()
+	
+	enddayprocess = false
 #	if globals.state.supporter == false && int(globals.resources.day)%100 == 0:
 #		get_node("sellout").show()
 
@@ -1748,10 +1766,14 @@ func _on_mansion_pressed():
 	if globals.state.playergroup.size() <= 0:
 		text = text + 'Nobody is assigned to follow you.\n\n'
 	else:
+		var counter = 0
+		slavearray.clear()
 		for i in globals.state.playergroup:
 			var person = globals.state.findslave(i)
 			if person != null:
-				text = text + person.dictionary('$name is assigned to your group.\n')
+				slavearray.append(person)
+				text += person.dictionary('[url=person' + str(counter) + '][color=yellow]$name[/color][/url] is assigned to your group.\n')
+				counter += 1
 			else:
 				globals.state.playergroup.erase(i)
 	textnode.set_bbcode(text)
@@ -2118,6 +2140,7 @@ var mainquestdict = {
 '37': "Visit Garthor at Gorn",
 '38': "Search for Ayda at her shop",
 '39': "Search for Ayda at Gorn's Mountain region",
+'40': "Return to Wimborn's Mage Order",
 '41': "Return to Wimborn's Mage Order",
 '42': "Main story quest Finished"
 }
@@ -3034,7 +3057,7 @@ func _on_popupclosebutton_pressed():
 
 
 func infotext(newtext, color = null):
-	if ( (newtext.findn("food") >= 0 || newtext.findn("gold") >= 0)) || newtext == '' || $date.visible || (get_node("combat").visible && !get_node("combat/win").visible): 
+	if ( (newtext.findn("food") >= 0 || newtext.findn("gold") >= 0) && enddayprocess == true) || newtext == '' || $date.visible || (get_node("combat").visible && !get_node("combat/win").visible): 
 		return
 	if get_node("infotext").get_children().size() >= 15:
 		get_node("infotext").get_child(get_node("infotext").get_children().size() - 14).queue_free()
@@ -3520,5 +3543,4 @@ func _on_selftattoo_pressed():
 
 
 
-func _on_Mansion_animfinished():
-	pass
+

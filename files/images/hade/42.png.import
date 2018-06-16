@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/hadeangry.png-c25d3ad0918d7f02e4d5e887dd3a3dcd.stex"
+path="res://.import/42.png-5d88c151ce4b9b3482479a0453a8e8bc.stex"
 
 [deps]
 
-source_file="res://files/images/hadeangry.png"
-source_md5="259b4d275b1e136d72a6094dfc672aaa"
+source_file="res://files/images/hade/42.png"
+source_md5="7ecd79ef76a45e961a307349c1c9f081"
 
-dest_files=[ "res://.import/hadeangry.png-c25d3ad0918d7f02e4d5e887dd3a3dcd.stex" ]
-dest_md5="7bc6045e1de8a889ea4fb82ccdccfb3d"
+dest_files=[ "res://.import/42.png-5d88c151ce4b9b3482479a0453a8e8bc.stex" ]
+dest_md5="dabee28c5773b5313ebba165d64d3d1e"
 
 [params]
 

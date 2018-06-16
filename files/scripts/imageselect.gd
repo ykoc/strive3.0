@@ -7,7 +7,22 @@ var portaitsbuilt = false
 var bodybuilt = false
 var portraitspath = globals.setfolders.portraits
 var bodypath = globals.setfolders.fullbody
-var portaitsfolder = 'file://' + OS.get_user_data_dir() + '/portraits'
+
+#func _ready():
+#	loadportraitsdata()
+
+#func loadportraitsdata():
+#	var currentpath = portraitspath
+#	var dir = Directory.new()
+#	var filecheck = File.new()
+#	if dir.dir_exists(currentpath) == false:
+#		dir.make_dir(currentpath)
+#	if !globals.dir_contents(currentpath).has(currentpath + "/!portraitdata.txt"):
+#		File.new().open(currentpath + "/!portraitdata.txt", File.WRITE)
+#	for i in  globals.dir_contents(currentpath):
+#		if filecheck.file_exists(i) && (i.find('.png') >= 0 || i.find('.jpg') >= 0):
+#			pass
+
 
 func mode_set(value):
 	if mode != value:
@@ -51,8 +66,9 @@ func buildimagelist(type = mode):
 			get_node("ScrollContainer/GridContainer").add_child(node)
 			node.get_node("pic").set_texture(globals.loadimage(i))
 			node.connect('pressed', self, 'setslaveimage', [i])
-			node.get_node("Label").set_text(i.replacen(currentpath,'').replacen('.jpg','').replacen('.png',''))
+			node.get_node("Label").set_text(i.replacen(currentpath + '/','').replacen('.jpg','').replacen('.png',''))
 			node.set_meta("type", i)
+	$ScrollContainer/GridContainer.move_child($ScrollContainer/GridContainer/Button, $ScrollContainer/GridContainer.get_children().size())
 	resort()
 
 
@@ -69,7 +85,7 @@ func resort():
 	
 	
 	for i in get_node("ScrollContainer/GridContainer").get_children():
-		i.visible = false
+		i.hide()
 		if i == get_node("ScrollContainer/GridContainer/Button"):
 			continue
 		if strictsearch == true:
@@ -77,7 +93,7 @@ func resort():
 				continue 
 		if strictsearch == false && get_node("search").get_text() != '' && i.get_node("Label").get_text().findn(get_node("search").get_text()) < 0:
 			continue
-		i.visible = true
+		i.show()
 		counter += 1
 	if counter < 1:
 		get_node("noimagestext").visible = true

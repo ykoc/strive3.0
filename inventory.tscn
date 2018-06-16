@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=2]
+[gd_scene load_steps=63 format=2]
 
 [ext_resource path="res://files/theme.tres" type="Theme" id=1]
 [ext_resource path="res://files/buttons/inventory/11-litter.png" type="Texture" id=2]
@@ -54,6 +54,9 @@
 [ext_resource path="res://files/buttons/inventory/5.png" type="Texture" id=52]
 [ext_resource path="res://files/buttons/inventory/33.png" type="Texture" id=53]
 [ext_resource path="res://files/buttons/menupanel.png" type="Texture" id=54]
+[ext_resource path="res://files/buttons/arrows/down.png" type="Texture" id=55]
+[ext_resource path="res://files/buttons/arrows/down-press.png" type="Texture" id=56]
+[ext_resource path="res://files/buttons/arrows/down-hl.png" type="Texture" id=57]
 
 [sub_resource type="StyleBoxTexture" id=1]
 
@@ -192,9 +195,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 16.0
+margin_left = 7.0
 margin_top = 29.0
-margin_right = 112.0
+margin_right = 103.0
 margin_bottom = 78.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -358,7 +361,6 @@ _sections_unfolded = [ "Rect" ]
 
 [node name="ScrollContainer" type="ScrollContainer" parent="." index="7"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -1958,6 +1960,7 @@ align = 1
 
 [node name="itemrename" type="PopupPanel" parent="." index="17"]
 
+editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -2206,6 +2209,34 @@ caret_blink_speed = 0.65
 caret_position = 0
 _sections_unfolded = [ "Placeholder" ]
 
+[node name="moveall" type="TextureButton" parent="." index="20"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 102.0
+margin_top = 26.0
+margin_right = 155.0
+margin_bottom = 80.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Move everything to storage"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 55 )
+texture_pressed = ExtResource( 56 )
+texture_hover = ExtResource( 57 )
+expand = true
+_sections_unfolded = [ "Hint", "Textures" ]
+
 [connection signal="pressed" from="mode" to="." method="_on_mode_pressed"]
 
 [connection signal="pressed" from="inventoryclose" to="." method="_on_inventoryclose_pressed"]
@@ -2223,5 +2254,7 @@ _sections_unfolded = [ "Placeholder" ]
 [connection signal="pressed" from="amnesia/amnesiaconf" to="." method="_on_amnesiaconf_pressed"]
 
 [connection signal="text_changed" from="search" to="." method="_on_LineEdit_text_changed"]
+
+[connection signal="pressed" from="moveall" to="." method="_on_moveall_pressed"]
 
 

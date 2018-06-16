@@ -49,18 +49,18 @@ func gornpalaceivran(stage):
 		text = textnode.MainQuestGornIvranExecute + textnode.MainQuestGornAydaSolo
 		globals.state.sidequests.ivran = 'killed'
 		globals.state.mainquest = 16
-		globals.main.get_node("explorationnode").zoneenter('gorn')
+		globals.main.exploration.zoneenter('gorn')
 	elif stage == 2:
 		sprite = [['garthor','pos1']]
 		text = textnode.MainQuestGornIvranImprison + textnode.MainQuestGornAydaSolo
 		globals.state.sidequests.ivran = 'imprisoned'
 		globals.state.mainquest = 16
-		globals.main.get_node("explorationnode").zoneenter('gorn')
+		globals.main.exploration.zoneenter('gorn')
 	elif stage == 3 && !globals.state.sidequests.ivran in ['tobetaken','tobealtered','potionreceived']:
 		sprite = [['garthor','pos1']]
 		text = textnode.MainQuestGornIvranKeep
 		globals.state.sidequests.ivran = 'tobetaken'
-		globals.main.get_node("explorationnode").zoneenter('gorn')
+		globals.main.exploration.zoneenter('gorn')
 	elif stage == 3 && globals.state.sidequests.ivran in ['tobetaken','tobealtered']:
 		text = "Garthor refuses to give you Ivran as is. You should find his acquaintance. "
 	elif stage == 3 && globals.state.sidequests.ivran == 'potionreceived':
@@ -153,11 +153,11 @@ func hadescene1(stage = 0):
 		#globals.main.music_set('gorn')
 		globals.main.backgroundinstant('mainorder')
 		globals.main.clearscreen()
-		sprite = [['hadesillh','pos1']]
+		sprite = [['hade2neutral','pos1']]
 		text = textnode.hadepast1
 		buttons.append(['Continue','hadescene1',1])
 	elif stage == 1:
-		sprite = [['hadesillh','pos1']]
+		sprite = [['hade2smile','pos1']]
 		text = textnode.hadepast2
 		buttons.append(['Close', 'hadescene1',2])
 	elif stage == 2:
@@ -183,11 +183,11 @@ func hadescene2(stage = 0):
 		globals.main.backgroundinstant('mainorder')
 		globals.main.music_set('explore')
 		globals.main.clearscreen()
-		sprite = [['hadesillh','pos1']]
+		sprite = [['hade2angry','pos1']]
 		text = textnode.hadepast3
 		buttons.append(['Continue','hadescene2',1])
 	elif stage == 1:
-		sprite = [['hadesillh','pos1']]
+		sprite = [['hade2neutral','pos1']]
 		text = textnode.hadepast4
 		buttons.append(['Close', 'hadescene2',2])
 	elif stage == 2:
@@ -291,14 +291,14 @@ func gornivran():
 	var text = textnode.MainQuestGornIvranFind
 	var sprite
 	var buttons = [['Attack','gornivranfight'],['Leave','gornivranleave']]
-	globals.main.get_node("explorationnode").buildenemies("ivranquestenemy")
+	globals.main.exploration.buildenemies("ivranquestenemy")
 	globals.main.dialogue(false, self, text, buttons, sprite)
 
 func gornivranfight():
 	closedialogue()
-	globals.main.get_node("explorationnode").launchonwin = 'gornivranwin'
+	globals.main.exploration.launchonwin = 'gornivranwin'
 	globals.main.get_node("combat").nocaptures = true
-	globals.main.get_node("explorationnode").enemyfight()
+	globals.main.exploration.enemyfight()
 
 func gornivranleave():
 	closedialogue()
@@ -311,7 +311,7 @@ func gornivranwin():
 	globals.state.sidequests.ivran = ''
 	globals.state.upcomingevents.append({code = 'gornwaitday', duration = 1})
 	globals.state.mainquest = 14
-	globals.main.get_node("explorationnode").zoneenter('gorn')
+	globals.main.exploration.zoneenter('gorn')
 	globals.main.dialogue(true, self, text, buttons, sprite)
 
 func gornwaitday():
@@ -361,7 +361,7 @@ func gornayda():
 	
 
 func leaveayda():
-	globals.main.get_node("explorationnode").zoneenter('gorn')
+	globals.main.exploration.zoneenter('gorn')
 
 func aydashop():
 	outside.shopinitiate("aydashop")
@@ -441,7 +441,7 @@ func undercitybosswin():
 	if globals.state.lorefound.find('amberguardlog3') < 0:
 		globals.state.lorefound.append('amberguardlog3')
 		text += "[color=yellow]\n\nYou've found some old writings in the ruins. Does not look like what you came for, but you can read them later.[/color]"
-	globals.main.get_node("explorationnode").zoneenter('undercityruins')
+	globals.main.exploration.zoneenter('undercityruins')
 	text += "\n[color=green]After searching through the building ruins you managed to find 1 [color=aqua]" + reward.name + "[/color]. [/color]"
 	globals.main.popup(text)
 
@@ -533,7 +533,7 @@ func frostfordcityhall(stage = 0):
 		sprite = [['zoeneutral','pos1']]
 		text = textnode.MainQuestFrostfordZoeLeave
 		globals.state.decisions.append('zoewander')
-	globals.main.get_node("explorationnode").zoneenter('frostford')
+	globals.main.exploration.zoneenter('frostford')
 	globals.main.dialogue(state, self, text, buttons, sprite)
 
 func frostforddryad():
@@ -568,7 +568,7 @@ func frostforddryad():
 			state = false
 		else:
 			text = "You don't have everything Zoe asked you to bring. "
-	globals.main.get_node("explorationnode").zoneenter('frostfordoutskirts')
+	globals.main.exploration.zoneenter('frostfordoutskirts')
 	globals.main.dialogue(state, self, text, buttons, sprite)
 
 func frostforddryadzoe(stage = 0):
@@ -591,16 +591,16 @@ func dryadfight(stage = 0):
 		globals.main.dialogue(false, self, text, buttons, sprite)
 	elif stage == 1:
 		closedialogue()
-		globals.main.get_node("explorationnode").buildenemies("frostforddryadquest")
-		globals.main.get_node("explorationnode").launchonwin = 'dryadfightwin'
+		globals.main.exploration.buildenemies("frostforddryadquest")
+		globals.main.exploration.launchonwin = 'dryadfightwin'
 		globals.main.get_node("combat").nocaptures = true
-		globals.main.get_node("explorationnode").enemyfight()
+		globals.main.exploration.enemyfight()
 	elif stage == 2:
 		closedialogue()
-		globals.main.get_node("explorationnode").buildenemies("frostfordzoequest")
-		globals.main.get_node("explorationnode").launchonwin = 'zoefightwin'
+		globals.main.exploration.buildenemies("frostfordzoequest")
+		globals.main.exploration.launchonwin = 'zoefightwin'
 		globals.main.get_node("combat").nocaptures = true
-		globals.main.get_node("explorationnode").enemyfight()
+		globals.main.exploration.enemyfight()
 		
 
 func dryadfightwin():
@@ -609,7 +609,7 @@ func dryadfightwin():
 	var buttons = []
 	text = textnode.MainQuestFrostfordForestWin
 	globals.state.mainquest = 35
-	globals.main.get_node("explorationnode").zoneenter('frostfordoutskirts')
+	globals.main.exploration.zoneenter('frostfordoutskirts')
 	globals.main.dialogue(true, self, text, buttons, sprite)
 
 func zoefightwin(stage = 0):
@@ -618,7 +618,7 @@ func zoefightwin(stage = 0):
 	var sprite
 	var buttons = []
 	text = textnode.MainQuestFrostfordForestReturnZoeWin
-	globals.main.get_node("explorationnode").zoneenter('frostfordoutskirts')
+	globals.main.exploration.zoneenter('frostfordoutskirts')
 	buttons.append({text = "Select party member", function = 'zoechooseslave', args = null})
 	buttons.append({text = "Refuse", function = "zoerefusehelp", args = 0})
 	globals.main.dialogue(state, self, text, buttons, sprite)
@@ -705,19 +705,19 @@ func mountainelfcamp(stage = 0):
 		globals.state.mainquest = 40
 		globals.state.decisions.append("mainquestelves")
 		closedialogue()
-		globals.main.get_node("explorationnode").buildenemies("finaleslavers")
-		globals.main.get_node("explorationnode").launchonwin = 'mountainwin'
+		globals.main.exploration.buildenemies("finaleslavers")
+		globals.main.exploration.launchonwin = 'mountainwin'
 		globals.main.get_node("combat").nocaptures = true
-		globals.main.get_node("explorationnode").enemyfight()
+		globals.main.exploration.enemyfight()
 		
 	elif stage == 2:
 		globals.state.mainquest = 40
 		globals.state.decisions.append("mainquestslavers")
 		closedialogue()
-		globals.main.get_node("explorationnode").buildenemies("finaleelves")
-		globals.main.get_node("explorationnode").launchonwin = 'mountainwin'
+		globals.main.exploration.buildenemies("finaleelves")
+		globals.main.exploration.launchonwin = 'mountainwin'
 		globals.main.get_node("combat").nocaptures = true
-		globals.main.get_node("explorationnode").enemyfight()
+		globals.main.exploration.enemyfight()
 #Sidequests
 
 func mountainwin(stage = 0):
@@ -785,13 +785,13 @@ func mountainwin(stage = 0):
 		globals.state.decisions.append('badroute')
 		sprite = [['hadesmile','pos1']]
 		text = textnode.MainQuestFinaleBadAccept
-		globals.main.get_node("explorationnode").zoneenter('mountaincave')
+		globals.main.exploration.zoneenter('mountaincave')
 	elif stage == 4:
 		state = true
 		globals.state.decisions.append('goodroute')
 		sprite = [['hadeangry','pos1']]
 		text = textnode.MainQuestFinaleGoodChoice
-		globals.main.get_node("explorationnode").zoneenter('mountaincave')
+		globals.main.exploration.zoneenter('mountaincave')
 		
 	globals.main.dialogue(state, self, text, buttons, sprite)
 
@@ -813,14 +813,14 @@ func davidencounter(stage = 0):
 
 func semifinalfight():
 	if globals.state.decisions.has("goodroute"):
-		globals.main.get_node("explorationnode").buildenemies("finalegarthor")
+		globals.main.exploration.buildenemies("finalegarthor")
 	elif globals.state.decisions.has("badroute"):
-		globals.main.get_node("explorationnode").buildenemies("finaledavid")
+		globals.main.exploration.buildenemies("finaledavid")
 	
-	globals.main.get_node("explorationnode").launchonwin = 'semifinalewin'
+	globals.main.exploration.launchonwin = 'semifinalewin'
 	globals.main.get_node("combat").nocaptures = true
 	closedialogue()
-	globals.main.get_node("explorationnode").enemyfight()
+	globals.main.exploration.enemyfight()
 
 func semifinalewin():
 	var text = ''
@@ -835,7 +835,7 @@ func semifinalewin():
 		buttons.append({text = "Leave", function = 'garthordecide', args = 2})
 	elif globals.state.decisions.has("badroute"):
 		text = "As David's body drops on the ground you continue on your way paying it no additional attention. "
-		globals.main.get_node("explorationnode").zoneenter('gornoutskirts')
+		globals.main.exploration.zoneenter('gornoutskirts')
 	globals.main.dialogue(state, self, text, buttons, sprite)
 
 func garthordecide(stage = 0):
@@ -849,7 +849,7 @@ func garthordecide(stage = 0):
 		text = textnode.MainQuestFinaleGoodChoiceKillGarthor
 	elif stage == 2:
 		text = textnode.MainQuestFinaleGoodChoiceLeaveGarthor
-	globals.main.get_node("explorationnode").zoneenter('mountains')
+	globals.main.exploration.zoneenter('mountains')
 	globals.main.dialogue(state, self, text, buttons, sprite)
 
 func orderfinale(stage = 0):
@@ -885,11 +885,11 @@ func orderfinale(stage = 0):
 			text = textnode.MainQuestFinaleGoodHade
 			buttons.append({text = "Engage Hade", function = 'orderfinale', args = 3})
 		elif stage == 3:
-			globals.main.get_node("explorationnode").buildenemies("finalehade")
-			globals.main.get_node("explorationnode").launchonwin = 'finalemelissa'
+			globals.main.exploration.buildenemies("finalehade")
+			globals.main.exploration.launchonwin = 'finalemelissa'
 			globals.main.get_node("combat").nocaptures = true
 			closedialogue()
-			globals.main.get_node("explorationnode").enemyfight(true)
+			globals.main.exploration.enemyfight(true)
 			return
 	elif globals.state.decisions.has('badroute'):
 		if stage == 0:
@@ -915,11 +915,11 @@ func orderfinale(stage = 0):
 			text = textnode.MainQuestFinaleBadOrder2
 			buttons.append({text = "Fight", function = 'orderfinale', args = 3})
 		elif stage -- 3:
-			globals.main.get_node("explorationnode").buildenemies("finalecouncil")
-			globals.main.get_node("explorationnode").launchonwin = 'finalebadroute'
+			globals.main.exploration.buildenemies("finalecouncil")
+			globals.main.exploration.launchonwin = 'finalebadroute'
 			globals.main.get_node("combat").nocaptures = true
 			closedialogue()
-			globals.main.get_node("explorationnode").enemyfight(true)
+			globals.main.exploration.enemyfight(true)
 			return
 	globals.main.dialogue(state, self, text, buttons, sprite, background)
 
@@ -972,7 +972,7 @@ func finalemelissa(stage = 0):
 	elif stage == 4:
 		text = finaleperson.dictionary("You subdue and capture Melissa, but $name is above saving... ")
 		globals.main.closescene()
-		var sprite = [["melissaworried", 'pos1', 'opac'], ['hadesad','pos2','opac']]
+		var sprite = [["melissaworried", 'pos1', 'opac'], ['hadeneutral','pos2','opac']]
 		buttons.append({text = "...", function = 'ending'})
 		globals.main.dialogue(state, self, text, buttons, sprite)
 		return
@@ -980,7 +980,7 @@ func finalemelissa(stage = 0):
 		text = "With Hade's defeat you secure this victory..."
 		globals.main.closescene()
 		globals.state.decisions.append("melissanoslave")
-		var sprite = [['hadesad','pos1','opac']]
+		var sprite = [['hadeneutral','pos1','opac']]
 		buttons.append({text = "...", function = 'ending'})
 		globals.main.dialogue(state, self, text, buttons, sprite)
 		return
@@ -1276,7 +1276,7 @@ func calibar1(value):
 func calivillage():
 	globals.main.dialogue(true,self,globals.player.dictionaryplayer(textnode.CaliVillageEnter1))
 	globals.state.sidequests.cali = 18
-	globals.main.get_node("explorationnode").zoneenter('shaliq')
+	globals.main.exploration.zoneenter('shaliq')
 
 func calivillage2():
 	var text = ''
@@ -1315,7 +1315,7 @@ func calibanditcamp():
 		text = "As you carefully scout out the situation you realize that there’s probably more here than you can easily handle at once. A bandit is examining the captive girl with interest, while another is trying to bandage up a nasty body wound. Two more are drinking heavily from an open cask of mead, and and the body of a stabbed bandit lies dead near the center of the camp."
 	elif calibanditcampstage == 3:
 		text = "As you carefully scout out the situation you realize that there’s probably more here than you can easily handle at once. A bandit is examining the captive girl with interest, while another is trying to bandage up a nasty stomach wound. Two bandits are lying in a drunken stupor near the mead cask and the body of a stabbed bandit lies dead near the center of the camp."
-	if globals.main.get_node("explorationnode").scout.wit >= 70 && calibanditcampstage != 1 && calibanditcampstage != 3 && globals.main.get_node("explorationnode").scout != globals.player:
+	if globals.main.exploration.scout.wit >= 70 && calibanditcampstage != 1 && calibanditcampstage != 3 && globals.main.exploration.scout != globals.player:
 		buttons.append(["Poison the bandit’s mead", 'calibanditcampaction', 1])
 	if globals.spelldict.domination.learned == true && calibanditcampstage != 2 && calibanditcampstage != 3 && globals.spelldict.domination.manacost <= globals.resources.mana:
 		buttons.append(["Dominate the wandering sentry", 'calibanditcampaction', 2])
@@ -1357,9 +1357,9 @@ func calibanditcampattack():
 
 func calibanditcampfight():
 	closedialogue()
-	globals.main.get_node("explorationnode").launchonwin = 'calibanditcampwin'
+	globals.main.exploration.launchonwin = 'calibanditcampwin'
 	globals.main.get_node("combat").nocaptures = true
-	globals.main.get_node("explorationnode").enemyfight()
+	globals.main.exploration.enemyfight()
 
 func calibanditcampwin():
 	var buttons = []
@@ -1381,7 +1381,7 @@ func calibanditcampchoice(choice):
 		globals.state.decisions.append("tiataken")
 		person.obed += -100
 		person.sleep = 'jail'
-		globals.main.get_node("explorationnode").captureeffect(person)
+		globals.main.exploration.captureeffect(person)
 		globals.state.sidequests.cali = 20
 	elif choice == 3:
 		texttemp = textnode.CaliSeduceGirl
@@ -1461,20 +1461,20 @@ func calislaver(choice):
 		buttons.append(['Leave', 'calislaver',6])
 	elif choice == 5:
 		closedialogue()
-		globals.main.get_node("explorationnode").buildenemies("CaliBossSlaver")
+		globals.main.exploration.buildenemies("CaliBossSlaver")
 		globals.main.get_node("combat").nocaptures = true
-		globals.main.get_node("explorationnode").launchonwin = 'calislaverscampwin'
-		globals.main.get_node("explorationnode").enemyfight()
+		globals.main.exploration.launchonwin = 'calislaverscampwin'
+		globals.main.exploration.enemyfight()
 		return
 	elif choice == 6:
 		closedialogue()
 		globals.state.sidequests.cali = 25
-		globals.main.get_node("explorationnode").zoneenter('wimbornoutskirts')
+		globals.main.exploration.zoneenter('wimbornoutskirts')
 		return
 	elif choice == 7:
 		closedialogue()
 		globals.state.sidequests.cali = 100
-		globals.main.get_node("explorationnode").zoneenter('wimbornoutskirts')
+		globals.main.exploration.zoneenter('wimbornoutskirts')
 		return
 	globals.main.dialogue(false, self, text, buttons, sprite)
 
@@ -1495,7 +1495,7 @@ func calislaverscampwin():
 		text = textnode.CaliSlaversFightWinWithout
 	globals.state.sidequests.cali = 25
 	globals.main.dialogue(true, self, globals.player.dictionaryplayer(text), null, sprite)
-	globals.main.get_node("explorationnode").zoneenter('wimbornoutskirts')
+	globals.main.exploration.zoneenter('wimbornoutskirts')
 
 
 func calistraybandit():
@@ -1510,14 +1510,14 @@ func calistraybandit():
 		globals.main.popup("You should probably bring Cali along for this, she could confirm if this is in fact the bandit that captured her.")
 		return
 	closedialogue()
-	globals.main.get_node("explorationnode").buildenemies("CaliStrayBandit")
+	globals.main.exploration.buildenemies("CaliStrayBandit")
 	globals.main.get_node("combat").nocaptures = true
-	globals.main.get_node("explorationnode").launchonwin = 'calistraybanditwin'
-	globals.main.get_node("explorationnode").enemyfight()
+	globals.main.exploration.launchonwin = 'calistraybanditwin'
+	globals.main.exploration.enemyfight()
 
 func calistraybanditwin():
 	var sprite = [['calineutral','pos1','opac']]
-	globals.main.get_node("explorationnode").zoneenter('wimbornoutskirts')
+	globals.main.exploration.zoneenter('wimbornoutskirts')
 	globals.main.dialogue(true,self,globals.player.dictionaryplayer(textnode.CaliStrayBanditWin), null, sprite)
 	globals.state.sidequests.cali = 26
 	if globals.state.sidequests.calibarsex in ['none','sebastianfinish']:
@@ -1605,7 +1605,7 @@ func calibadend(choice):
 		globals.state.decisions.append('calibadleft')
 	globals.resources.upgradepoints += 10
 	cali.add_trait("Grateful")
-	globals.main.get_node("explorationnode").zoneenter('wimbornoutskirts')
+	globals.main.exploration.zoneenter('wimbornoutskirts')
 	globals.main.dialogue(true,self,globals.player.dictionaryplayer(text),null,sprite)
 	globals.state.sidequests.cali = 102
 
@@ -1638,7 +1638,7 @@ func caligoodend(choice):
 		globals.main._on_mansion_pressed()
 		globals.state.decisions.append('calistayedwithyou')
 	if choice != 3:
-		globals.main.get_node("explorationnode").zoneenter('wimbornoutskirts')
+		globals.main.exploration.zoneenter('wimbornoutskirts')
 	globals.resources.upgradepoints += 15
 	cali.add_trait("Grateful")
 	globals.main.dialogue(true,self,globals.player.dictionaryplayer(text),null,sprite)
@@ -2075,9 +2075,9 @@ func tishabackstreets(stage = 0):
 	elif stage == 1:
 		main.get_node("explorationnode").buildenemies("tishaquestenemy")
 		closedialogue()
-		globals.main.get_node("explorationnode").launchonwin = 'tishabackstreetswin'
+		globals.main.exploration.launchonwin = 'tishabackstreetswin'
 		globals.main.get_node("combat").nocaptures = true
-		globals.main.get_node("explorationnode").enemyfight()
+		globals.main.exploration.enemyfight()
 		return
 	elif stage == 2:
 		main.close_dialogue()
@@ -2319,13 +2319,13 @@ func chloeforest(stage = 0):
 		text = textnode.ChloeEncounterRefuse
 		buttons.append({text = 'Continue',function = 'chloeforest',args = 6})
 	elif stage == 6:
-		globals.main.get_node("explorationnode").zoneenter('forest')
+		globals.main.exploration.zoneenter('forest')
 		closedialogue()
 		return
 	elif stage == 7:
 		text = textnode.ChloeShaliq
 		globals.state.sidequests.chloe = 2
-		globals.main.get_node("explorationnode").zoneenter('shaliq')
+		globals.main.exploration.zoneenter('shaliq')
 		buttons.append({text = 'Leave',function = 'chloevillage',args = 0})
 	globals.main.dialogue(state,self,text,buttons,sprite)
 
@@ -2335,7 +2335,7 @@ func chloevillage(stage = 0):
 	var sprite = [['chloehappy2', 'pos1','opac']]
 	var buttons = []
 	if stage == 0:
-		globals.main.get_node("explorationnode").zoneenter('shaliq')
+		globals.main.exploration.zoneenter('shaliq')
 		closedialogue()
 		globals.main.closescene()
 		return
@@ -2370,7 +2370,7 @@ func chloevillage(stage = 0):
 			text = textnode.ChloeShaliqTakeMana
 		else:
 			text = "Chloe gleams with joy, happily smiling as she runs off to put her new possession away.\n\n[color=aqua]You have learned the Entrancement Spell.[/color]"
-		globals.main.get_node("explorationnode").zoneenter('shaliq')
+		globals.main.exploration.zoneenter('shaliq')
 		var image = 'chloebj'
 		buttons.append({text = 'Continue',function = 'chloevillage',args = 0})
 		globals.main.scene(self, image, text, buttons)
@@ -2485,7 +2485,7 @@ func chloegrove(stage = 0):
 	elif stage == 3:
 		closedialogue()
 		globals.main.closescene()
-		globals.main.get_node("explorationnode").zoneenter('shaliq')
+		globals.main.exploration.zoneenter('shaliq')
 		
 		return
 		
@@ -2539,13 +2539,13 @@ func aynerisforest(stage = 0):
 		buttons.append({text = 'Fight', function = 'aynerisforest', args = 1})
 	elif stage == 1:
 		if globals.state.sidequests.ayneris == 0:
-			globals.main.get_node("explorationnode").buildenemies("ayneris1")
+			globals.main.exploration.buildenemies("ayneris1")
 		else:
-			globals.main.get_node("explorationnode").buildenemies("ayneris2")
+			globals.main.exploration.buildenemies("ayneris2")
 		closedialogue()
-		globals.main.get_node("explorationnode").launchonwin = 'ayneriswin'
+		globals.main.exploration.launchonwin = 'ayneriswin'
 		globals.main.get_node("combat").nocaptures = true
-		globals.main.get_node("explorationnode").enemyfight()
+		globals.main.exploration.enemyfight()
 		return
 	elif stage == 2:
 		image = 'aynerispunish'
@@ -2577,7 +2577,7 @@ func ayneriswin():
 	var text = ''
 	var buttons = []
 	var sprites = []
-	globals.main.get_node("explorationnode").zoneenter("amberguardforest")
+	globals.main.exploration.zoneenter("amberguardforest")
 	if globals.state.sidequests.ayneris == 0:
 		sprites = [['aynerisangry','pos1']]
 		globals.charactergallery.ayneris.unlocked = true

@@ -7,10 +7,10 @@ path="res://.import/40.png-0f9a02860d95fc39aac89fbfaeabd757.stex"
 [deps]
 
 source_file="res://files/buttons/mainscreen/40.png"
-source_md5="df1cd54e7d954f2bedb36415123f4302"
+source_md5="f72cd5684e19d15580f281bf53bd6f9b"
 
 dest_files=[ "res://.import/40.png-0f9a02860d95fc39aac89fbfaeabd757.stex" ]
-dest_md5="f269b1938df0c923259813c9f23ff0b0"
+dest_md5="e8bfaa08e853f2a8d833e49df4771ebf"
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/normal_map=0
 flags/repeat=0
 flags/filter=true
-flags/mipmaps=false
+flags/mipmaps=true
 flags/anisotropic=false
 flags/srgb=2
 process/fix_alpha_border=true

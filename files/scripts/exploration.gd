@@ -80,7 +80,7 @@ combat = true,
 code = 'elvenforest',
 name = 'Elven Grove',
 description = "This portion of the forest is located dangerously close to elven lands. They take poorly to intruders in their part of the woods so you should remain on your guard.",
-enemies = [{value = 'wolveswithperson', weight = 0.4},{value = 'fairy', weight = 2},{value = 'solobear', weight = 6},{value = 'elfguards',weight = 6},{value = 'plantseasy', weight = 6},{value = 'wolveseasy', weight = 8},{value = 'blockedsection', weight = 0.5}],
+enemies = [{value = 'wolveswithperson', weight = 4},{value = 'fairy', weight = 2},{value = 'solobear', weight = 6},{value = 'elfguards',weight = 6},{value = 'plantseasy', weight = 6},{value = 'wolveseasy', weight = 6},{value = 'blockedsection', weight = 1}],
 encounters = [],
 length = 5,
 exits = ['amberguard','forest'],
@@ -615,103 +615,14 @@ func enemyencounter():
 					break
 		if enemygroup.empty() == true:
 			buildenemies()
-		var counter = 0
-		for i in enemygroup.units:
-			if i.capture == true:
-				var race = ''
-				var sex = ''
-				var age = ''
-				var origins = ''
-				var rand = 0
-				if i.capturerace.find('area') >= 0:
-					race = globals.weightedrandom(currentzone.races)
-				elif i.capturerace.find('any') >= 0:
-					race = globals.allracesarray[rand_range(0,globals.allracesarray.size())]
-				elif i.capturerace.find('bandits') >= 0:
-					if rand_range(0,10) <= 7:
-						race = 'Human'
-					else:
-						race = globals.banditraces[rand_range(0,globals.banditraces.size())]
-				else:
-					rand = rand_range(0,100)
-					for ii in i.capturerace:
-						if rand < ii[1]:
-							race = ii[0]
-							break
-				race = globals.checkfurryrace(race)
-				if i.capturesex.find('any') >= 0:
-					sex = 'random'
-				else:
-					rand = rand_range(0,100)
-					for ii in i.capturesex:
-						if rand < ii[1]:
-							sex = ii[0]
-							break
-				age = globals.weightedrandom(i.captureagepool)
-				origins = globals.weightedrandom(i.captureoriginspool)
-				if deeperregion == true && globals.originsarray.find(origins) < 4 && rand_range(0,1) > 0.3:
-					origins = globals.originsarray[globals.originsarray.find(origins)+1]
-				var slavetemp = globals.newslave(race, age, sex, origins)
-				enemylevelup(slavetemp, currentzone.levelrange)
-				slavetemp.health = 500
-				enemygroup.units[counter].capture = slavetemp
-				var gear = {}
-				for k in ['armor','weapon','costume','underwear','accessory']:
-					if !combatdata.enemyequips[i.gear].has(k):
-						continue
-					gear[k] = globals.weightedrandom(combatdata.enemyequips[i.gear][k])
-					if gear[k] == 'nothing':
-						continue
-					var enchant = false
-					var item
-					if gear[k].find("+") >= 0:
-						enchant = true
-						gear[k] = gear[k].replace("+","")
-					item = globals.items.createunstackable(gear[k])
-					if enchant:
-						globals.items.enchantrand(item)
-					enemygear[item.id] = item
-					slavetemp.gear[k] = item.id
-				
-			counter += 1
+#		for i in enemygroup.units:
+#			if i.capture == true:
+#				buildslave(i)
 		if enemygroup.captured != null:
 			var group = enemygroup.captured
 			enemygroup.captured = []
 			for i in group:
-				var person = capturespool[i]
-				var race = ''
-				var sex = ''
-				var age = ''
-				var origins = ''
-				var rand = 0
-				if person.race.find('area') >= 0:
-					race = globals.weightedrandom(currentzone.races)
-				elif person.race.find('any') >= 0:
-					race = globals.allracesarray[rand_range(0,globals.allracesarray.size())]
-				elif person.race.find('bandits') >= 0:
-					race = globals.banditraces[rand_range(0,globals.banditraces.size())]
-				else:
-					rand = rand_range(0,100)
-					for i in person.race:
-						if rand < i[1]:
-							race = i[0]
-							break
-				if person.sex.find('any') >= 0:
-					sex = 'random'
-				else:
-					rand = rand_range(0,100)
-					for i in person.sex:
-						if rand < i[1]:
-							sex = i[0]
-							break
-				rand = rand_range(0,100)
-				race = globals.checkfurryrace(race)
-				age = globals.weightedrandom(person.agepool)
-				origins = globals.weightedrandom(person.originspool)
-				if deeperregion == true && globals.originsarray.find(origins) < 4 && rand_range(0,1) > 0.3:
-					origins = globals.originsarray[globals.originsarray.find(origins)+1]
-				person = globals.newslave(race, age, sex, origins)
-				enemygroup.captured.append(person)
+				enemygroup.captured.append(buildslave(capturespool[i]))
 	enemyawareness = enemygroup.awareness
 	if deeperregion == true:
 		enemyawareness *= 1.25
@@ -736,6 +647,63 @@ func enemyencounter():
 			return
 	mansion.maintext = text
 	enemyinfo()
+
+func buildslave(i):
+	var race = ''
+	var sex = ''
+	var age = ''
+	var origins = ''
+	var rand = 0
+	if i.capturerace.find('area') >= 0:
+		race = globals.weightedrandom(currentzone.races)
+	elif i.capturerace.find('any') >= 0:
+		race = globals.allracesarray[rand_range(0,globals.allracesarray.size())]
+	elif i.capturerace.find('bandits') >= 0:
+		if rand_range(0,10) <= 7:
+			race = 'Human'
+		else:
+			race = globals.banditraces[rand_range(0,globals.banditraces.size())]
+	else:
+		race = globals.weightedrandom(i.capturerace)
+	race = globals.checkfurryrace(race)
+	
+	
+	
+	if i.capturesex.find('any') >= 0:
+		sex = 'random'
+	else:
+		sex = globals.weightedrandom(i.capturesex)
+	age = globals.weightedrandom(i.captureagepool)
+	origins = globals.weightedrandom(i.captureoriginspool)
+	if deeperregion == true && globals.originsarray.find(origins) < 4 && randf() > 0.3:
+		origins = globals.originsarray[globals.originsarray.find(origins)+1]
+	var slavetemp = globals.newslave(race, age, sex, origins)
+	enemylevelup(slavetemp, [1,3]) #currentzone.levelrange)
+	
+	slavetemp.health = slavetemp.stats.health_max
+	i.capture = slavetemp
+	
+	if i.has('gear'):
+		return
+		var gear = {}
+		for k in ['armor','weapon','costume','underwear','accessory']:
+			if !combatdata.enemyequips[i.gear].has(k):
+				continue
+			gear[k] = globals.weightedrandom(combatdata.enemyequips[i.gear][k])
+			if gear[k] == 'nothing':
+				continue
+			var enchant = false
+			var item
+			if gear[k].find("+") >= 0:
+				enchant = true
+				gear[k] = gear[k].replace("+","")
+			item = globals.items.createunstackable(gear[k])
+			if enchant:
+				globals.items.enchantrand(item)
+			enemygear[item.id] = item
+			globals.items.equipitem(item.id, slavetemp, true)
+		slavetemp.health = slavetemp.stats.health_max
+	return slavetemp
 
 func enemyinfo():
 	var text = ''
@@ -773,10 +741,10 @@ func enemylevelup(person, levelarray):
 				continue
 			person[tempstat] += 1
 			points -= 1
+	person.health = person.stats.health_max
 
 func buildenemies(enemyname = null):
 	if enemyname == null:
-		var rand = max(rand_range(0,100)-scout.sagi*3,0)
 		enemygroup = str2var(var2str(enemygrouppools[globals.weightedrandom(currentzone.enemies)]))
 	else:
 		enemygroup = str2var(var2str(enemygrouppools[enemyname]))
@@ -801,6 +769,9 @@ func buildenemies(enemyname = null):
 				newunit.name = newunit.name + " " + str(unitcounter[newunit.name])
 			enemygroup.units.append(newunit)
 			count -= 1
+	for i in enemygroup.units:
+		if i.capture == true:
+			buildslave(i)
 
 
 func encounterbuttons(state = null):
@@ -1229,6 +1200,8 @@ func buildcapturelist():
 			newbutton.get_node('capture').set_disabled(true)
 		newbutton.get_node("Label").set_text(defeated.names[i] + ' ' + defeated.units[i].sex+ ' ' + defeated.units[i].race)
 		newbutton.connect("pressed", self, 'defeatedselected', [defeated.units[i]])
+		newbutton.connect("mouse_entered", globals, 'slavetooltip', [defeated.units[i]])
+		newbutton.connect("mouse_exited", globals, 'slavetooltiphide')
 		newbutton.get_node("choice").set_meta('person', defeated.units[i])
 		newbutton.get_node("mindread").connect("pressed",self,'mindreadslave', [defeated.units[i]])
 		if globals.resources.mana < globals.spelldict.mindread.manacost && globals.spelldict.mindread.learned:
@@ -1373,6 +1346,11 @@ func moveitemtobackpack(button):
 		enemyloot.unstackables.erase(item)
 	itemtooltiphide()
 	builditemlists()
+
+
+func _on_takeallbutton_pressed():
+	for i in $winningpanel/lootpanel/enemyloot/VBoxContainer.get_children():
+		i.emit_signal('pressed')
 
 func moveitemtoenemy(button):
 	var item = button.get_meta('item')
@@ -1521,6 +1499,10 @@ func capturedecide(stage): #1 - no reward, 2 - material, 3 - sex, 4 - join
 		location = 'frostford'
 	elif currentzone.tags.find("gorn") >= 0:
 		location = 'gorn'
+	elif currentzone.tags.find("amberguard") >= 0:
+		location = 'amberguard'
+	else:
+		location = 'wimborn'
 	
 	if stage == 1:
 		text = rewardslave.dictionary("$race ").capitalize() + "$child is surprised by your generosity, and after thanking you again, leaves. "
@@ -2082,3 +2064,5 @@ func unloadgroup():
 		if item.type in ['ingredient']:
 			item.amount += globals.state.backpack.stackables[i]
 			globals.state.backpack.stackables.erase(i)
+
+

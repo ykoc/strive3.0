@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://mainfont.tres" type="DynamicFont" id=1]
 [ext_resource path="res://files/buttons/chek-Active.png" type="Texture" id=2]
@@ -7,30 +7,28 @@
 [ext_resource path="res://files/buttons/img-kurs.png" type="Texture" id=5]
 [ext_resource path="res://files/buttons/img-kurs-act.png" type="Texture" id=6]
 [ext_resource path="res://files/buttons/img-scr.png" type="Texture" id=7]
-[ext_resource path="res://files/scripts/combat.gd" type="Script" id=8]
+[ext_resource path="res://files/scripts/combatnew.gd" type="Script" id=8]
 [ext_resource path="res://files/buttons/combat/4.png" type="Texture" id=9]
 [ext_resource path="res://files/buttons/combat/16.png" type="Texture" id=10]
-[ext_resource path="res://files/buttons/combat/3.png" type="Texture" id=11]
-[ext_resource path="res://files/buttons/combat/8.png" type="Texture" id=12]
-[ext_resource path="res://files/buttons/combat/9.png" type="Texture" id=13]
-[ext_resource path="res://files/buttons/combat/12.png" type="Texture" id=14]
-[ext_resource path="res://files/buttons/combat/13.png" type="Texture" id=15]
-[ext_resource path="res://files/buttons/combat/14.png" type="Texture" id=16]
-[ext_resource path="res://files/buttons/combat/15.png" type="Texture" id=17]
-[ext_resource path="res://files/buttons/abils/Attack.png" type="Texture" id=18]
-[ext_resource path="res://files/buttons/combat/5.png" type="Texture" id=19]
-[ext_resource path="res://files/buttons/combat/2.png" type="Texture" id=20]
-[ext_resource path="res://files/buttons/combat/6.png" type="Texture" id=21]
-[ext_resource path="res://files/buttons/combat/10.png" type="Texture" id=22]
-[ext_resource path="res://files/buttons/combat/11.png" type="Texture" id=23]
-[ext_resource path="res://mainfont.font" type="BitmapFont" id=24]
+[ext_resource path="res://mainfont.font" type="BitmapFont" id=11]
+[ext_resource path="res://files/buttons/combat/3.png" type="Texture" id=12]
+[ext_resource path="res://files/buttons/combat/8.png" type="Texture" id=13]
+[ext_resource path="res://files/buttons/combat/9.png" type="Texture" id=14]
+[ext_resource path="res://files/buttons/combat/12.png" type="Texture" id=15]
+[ext_resource path="res://files/buttons/combat/13.png" type="Texture" id=16]
+[ext_resource path="res://files/buttons/combat/14.png" type="Texture" id=17]
+[ext_resource path="res://files/buttons/combat/15.png" type="Texture" id=18]
+[ext_resource path="res://files/buttons/abils/Attack.png" type="Texture" id=19]
+[ext_resource path="res://files/buttons/combat/5.png" type="Texture" id=20]
+[ext_resource path="res://files/buttons/combat/2.png" type="Texture" id=21]
+[ext_resource path="res://files/buttons/combat/6.png" type="Texture" id=22]
+[ext_resource path="res://files/buttons/combat/10.png" type="Texture" id=23]
+[ext_resource path="res://files/buttons/combat/11.png" type="Texture" id=24]
 [ext_resource path="res://Roundo-Medium.otf" type="DynamicFontData" id=25]
 [ext_resource path="res://files/theme.tres" type="Theme" id=26]
 [ext_resource path="res://files/paneltexturebland.tres" type="StyleBox" id=27]
 [ext_resource path="res://files/floattext.gd" type="Script" id=28]
 [ext_resource path="res://files/buttons/mana2.png" type="Texture" id=29]
-
-
 
 [sub_resource type="StyleBoxTexture" id=1]
 
@@ -150,7 +148,7 @@ content_margin_left = -1.0
 content_margin_right = -1.0
 content_margin_top = -1.0
 content_margin_bottom = -1.0
-texture = ExtResource( 11 )
+texture = ExtResource( 12 )
 region_rect = Rect2( 0, 0, 1487, 157 )
 margin_left = 0.0
 margin_right = 0.0
@@ -163,13 +161,32 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=7]
+[sub_resource type="Animation" id=7]
+
+resource_name = "attack"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="StyleBoxTexture" id=8]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
 content_margin_top = -1.0
 content_margin_bottom = -1.0
-texture = ExtResource( 20 )
+texture = ExtResource( 21 )
 region_rect = Rect2( 0, 0, 1784, 228 )
 margin_left = 0.0
 margin_right = 0.0
@@ -182,14 +199,6 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="DynamicFont" id=8]
-
-size = 30
-use_mipmaps = false
-use_filter = true
-extra_spacing_top = 3
-font_data = ExtResource( 25 )
-
 [sub_resource type="DynamicFont" id=9]
 
 size = 30
@@ -198,9 +207,16 @@ use_filter = true
 extra_spacing_top = 3
 font_data = ExtResource( 25 )
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="DynamicFont" id=10]
 
-resource_name = "fade"
+size = 30
+use_mipmaps = false
+use_filter = true
+extra_spacing_top = 3
+font_data = ExtResource( 25 )
+
+[sub_resource type="Animation" id=11]
+
 length = 2.0
 loop = false
 step = 0.1
@@ -217,7 +233,38 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[node name="combat" type="Control"]
+[sub_resource type="Animation" id=12]
+
+resource_name = "flyout"
+length = 2.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -87 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[node name="combat" type="Control" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -258,12 +305,13 @@ stretch_mode = 6
 
 [node name="TextureRect2" type="TextureRect" parent="." index="1"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 233.0
-margin_top = 160.0
+margin_top = 211.0
 margin_right = 1135.0
 margin_bottom = 389.0
 rect_pivot_offset = Vector2( 0, 0 )
@@ -274,7 +322,37 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 texture = ExtResource( 10 )
 expand = true
-stretch_mode = 6
+stretch_mode = 0
+
+[node name="combatlog" type="RichTextLabel" parent="TextureRect2" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 12.0
+margin_top = 11.0
+margin_right = -13.0
+margin_bottom = -10.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_fonts/normal_font = ExtResource( 11 )
+bbcode_enabled = true
+bbcode_text = ""
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = ""
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+_sections_unfolded = [ "BBCode", "Rect", "custom_colors", "custom_constants", "custom_fonts", "custom_styles" ]
 
 [node name="grouppanel" type="Panel" parent="." index="2"]
 
@@ -301,9 +379,9 @@ anchor_top = 1.0
 anchor_right = 0.0
 anchor_bottom = 1.0
 margin_left = 217.0
-margin_top = -263.0
+margin_top = -278.0
 margin_right = 1133.0
-margin_bottom = -188.0
+margin_bottom = -203.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -330,7 +408,7 @@ rect_clip_content = false
 focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
-size_flags_horizontal = 6
+size_flags_horizontal = 0
 size_flags_vertical = 0
 toggle_mode = true
 enabled_focus_mode = 2
@@ -406,14 +484,14 @@ toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 12 )
-texture_pressed = ExtResource( 13 )
-texture_hover = ExtResource( 13 )
+texture_normal = ExtResource( 13 )
+texture_pressed = ExtResource( 14 )
+texture_hover = ExtResource( 14 )
 expand = true
 stretch_mode = 5
-_sections_unfolded = [ "Size Flags", "Textures", "custom_styles" ]
+_sections_unfolded = [ "Grow Direction", "Margin", "Rect", "Size Flags", "Textures", "custom_styles" ]
 
-[node name="portait" type="TextureRect" parent="grouppanel/groupline/character" index="0"]
+[node name="portrait" type="TextureRect" parent="grouppanel/groupline/character" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -439,9 +517,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 65.0
+margin_left = 26.0
 margin_top = 26.0
-margin_right = 115.0
+margin_right = 152.0
 margin_bottom = 46.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -450,12 +528,14 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 0
 text = "Name"
+align = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
 [node name="hp" type="TextureProgress" parent="grouppanel/groupline/character" index="2"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -478,9 +558,9 @@ page = 0.0
 value = 50.0
 exp_edit = false
 rounded = false
-texture_under = ExtResource( 14 )
+texture_under = ExtResource( 15 )
 texture_over = null
-texture_progress = ExtResource( 15 )
+texture_progress = ExtResource( 16 )
 radial_fill_degrees = 360.0
 radial_center_offset = Vector2( 0, 0 )
 nine_patch_stretch = false
@@ -511,6 +591,7 @@ _sections_unfolded = [ "Material", "custom_colors", "custom_constants" ]
 
 [node name="en" type="TextureProgress" parent="grouppanel/groupline/character" index="3"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -533,9 +614,9 @@ page = 0.0
 value = 50.0
 exp_edit = false
 rounded = false
-texture_under = ExtResource( 14 )
+texture_under = ExtResource( 15 )
 texture_over = null
-texture_progress = ExtResource( 16 )
+texture_progress = ExtResource( 17 )
 radial_fill_degrees = 360.0
 radial_center_offset = Vector2( 0, 0 )
 nine_patch_stretch = false
@@ -566,6 +647,7 @@ _sections_unfolded = [ "custom_colors", "custom_constants", "custom_fonts", "cus
 
 [node name="stress" type="TextureProgress" parent="grouppanel/groupline/character" index="4"]
 
+editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -589,9 +671,9 @@ page = 0.0
 value = 50.0
 exp_edit = false
 rounded = false
-texture_under = ExtResource( 14 )
+texture_under = ExtResource( 15 )
 texture_over = null
-texture_progress = ExtResource( 17 )
+texture_progress = ExtResource( 18 )
 radial_fill_degrees = 360.0
 radial_center_offset = Vector2( 0, 0 )
 nine_patch_stretch = false
@@ -659,7 +741,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 18 )
+texture = ExtResource( 19 )
 expand = true
 stretch_mode = 0
 _sections_unfolded = [ "Rect" ]
@@ -685,7 +767,7 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 19 )
+texture_normal = ExtResource( 20 )
 expand = true
 _sections_unfolded = [ "Textures" ]
 
@@ -724,10 +806,20 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 18 )
+texture = ExtResource( 19 )
 expand = true
 stretch_mode = 0
 _sections_unfolded = [ "Rect" ]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="grouppanel/groupline/character" index="9"]
+
+root_node = NodePath("..")
+autoplay = ""
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.0
+anims/attack = SubResource( 7 )
+blend_times = [  ]
 
 [node name="enemypanel" type="Panel" parent="." index="3"]
 
@@ -736,46 +828,27 @@ anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 0.0
 margin_left = 4.0
-margin_top = 2.0
-margin_bottom = 153.0
+margin_top = 52.0
+margin_bottom = 203.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 7 )
+custom_styles/panel = SubResource( 8 )
 _sections_unfolded = [ "Rect", "custom_styles" ]
 
-[node name="ScrollContainer" type="ScrollContainer" parent="enemypanel" index="0"]
+[node name="enemyline" type="HBoxContainer" parent="enemypanel" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 61.0
-margin_right = 1303.0
-margin_bottom = 159.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-scroll_horizontal_enabled = true
-scroll_horizontal = 0
-scroll_vertical_enabled = false
-scroll_vertical = 0
-_sections_unfolded = [ "Scroll" ]
-
-[node name="enemyline" type="HBoxContainer" parent="enemypanel/ScrollContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 621.0
-margin_right = 621.0
+margin_left = 92.0
+margin_top = 10.0
+margin_right = 1257.0
+margin_bottom = 131.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -785,14 +858,15 @@ size_flags_vertical = 0
 alignment = 1
 _sections_unfolded = [ "Rect", "Size Flags", "custom_constants" ]
 
-[node name="character" type="TextureButton" parent="enemypanel/ScrollContainer/enemyline" index="0"]
+[node name="character" type="TextureButton" parent="enemypanel/enemyline" index="0"]
 
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 110.0
+margin_left = 527.0
+margin_right = 637.0
 margin_bottom = 146.0
 rect_min_size = Vector2( 110, 146 )
 rect_pivot_offset = Vector2( 0, 0 )
@@ -805,12 +879,12 @@ toggle_mode = false
 enabled_focus_mode = 0
 shortcut = null
 group = null
-texture_normal = ExtResource( 21 )
+texture_normal = ExtResource( 22 )
 expand = true
 stretch_mode = 5
 _sections_unfolded = [ "Rect", "Size Flags", "Textures", "Theme", "custom_styles" ]
 
-[node name="icon" type="TextureRect" parent="enemypanel/ScrollContainer/enemyline/character" index="0"]
+[node name="portrait" type="TextureRect" parent="enemypanel/enemyline/character" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -829,9 +903,9 @@ size_flags_horizontal = 2
 size_flags_vertical = 2
 expand = true
 stretch_mode = 0
-_sections_unfolded = [ "Hint", "Mouse", "Rect" ]
+_sections_unfolded = [ "Hint", "Mouse", "Rect", "Visibility" ]
 
-[node name="hpbar" type="TextureProgress" parent="enemypanel/ScrollContainer/enemyline/character" index="1"]
+[node name="hp" type="TextureProgress" parent="enemypanel/enemyline/character" index="1"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -854,15 +928,15 @@ page = 0.0
 value = 50.0
 exp_edit = false
 rounded = false
-texture_under = ExtResource( 22 )
+texture_under = ExtResource( 23 )
 texture_over = null
-texture_progress = ExtResource( 23 )
+texture_progress = ExtResource( 24 )
 radial_fill_degrees = 360.0
 radial_center_offset = Vector2( 0, 0 )
 nine_patch_stretch = false
 _sections_unfolded = [ "Mouse", "Percent", "Textures" ]
 
-[node name="hp" type="Label" parent="enemypanel/ScrollContainer/enemyline/character/hpbar" index="0"]
+[node name="Label" type="Label" parent="enemypanel/enemyline/character/hp" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -884,7 +958,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="name" type="Label" parent="enemypanel/ScrollContainer/enemyline/character" index="2"]
+[node name="name" type="Label" parent="enemypanel/enemyline/character" index="2"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -910,7 +984,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_colors" ]
 
-[node name="buffscontainer" type="HBoxContainer" parent="enemypanel/ScrollContainer/enemyline/character" index="3"]
+[node name="buffscontainer" type="HBoxContainer" parent="enemypanel/enemyline/character" index="3"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -928,7 +1002,7 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 alignment = 0
 
-[node name="TextureRect" type="TextureRect" parent="enemypanel/ScrollContainer/enemyline/character/buffscontainer" index="0"]
+[node name="TextureRect" type="TextureRect" parent="enemypanel/enemyline/character/buffscontainer" index="0"]
 
 visible = false
 anchor_left = 0.0
@@ -944,42 +1018,34 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 18 )
+texture = ExtResource( 19 )
 expand = true
 stretch_mode = 0
 _sections_unfolded = [ "Rect" ]
 
-[node name="combatlog" type="RichTextLabel" parent="." index="4"]
+[node name="ScrollContainer" type="ScrollContainer" parent="enemypanel" index="1"]
 
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 245.0
-margin_top = 169.0
-margin_right = -236.0
-margin_bottom = -387.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 61.0
+margin_right = 1303.0
+margin_bottom = 159.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = true
 mouse_filter = 0
 mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-custom_fonts/normal_font = ExtResource( 24 )
-bbcode_enabled = true
-bbcode_text = "Test"
-visible_characters = -1
-percent_visible = 1.0
-meta_underlined = true
-tab_size = 4
-text = "Test"
-scroll_active = true
-scroll_following = false
-selection_enabled = false
-override_selected_font_color = false
-_sections_unfolded = [ "BBCode", "Rect", "custom_colors", "custom_constants", "custom_fonts", "custom_styles" ]
+size_flags_horizontal = 1
+size_flags_vertical = 1
+scroll_horizontal_enabled = true
+scroll_horizontal = 0
+scroll_vertical_enabled = false
+scroll_vertical = 0
+_sections_unfolded = [ "Scroll" ]
 
-[node name="warning" type="Label" parent="." index="5"]
+[node name="warning" type="Label" parent="." index="4"]
 
 visible = false
 anchor_left = 1.0
@@ -996,7 +1062,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 text = "Cant"
 align = 1
 percent_visible = 1.0
@@ -1004,7 +1070,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Hint", "Rect" ]
 
-[node name="confirm" type="Button" parent="." index="6"]
+[node name="confirm" type="Button" parent="." index="5"]
 
 anchor_left = 1.0
 anchor_top = 1.0
@@ -1032,7 +1098,7 @@ flat = false
 align = 1
 _sections_unfolded = [ "Hint", "Rect" ]
 
-[node name="autowin" type="Button" parent="." index="7"]
+[node name="autowin" type="Button" parent="." index="6"]
 
 visible = false
 anchor_left = 1.0
@@ -1059,7 +1125,7 @@ text = "autowin"
 flat = false
 align = 1
 
-[node name="abilitites" type="Button" parent="." index="8"]
+[node name="abilitites" type="Button" parent="." index="7"]
 
 editor/display_folded = true
 anchor_left = 1.0
@@ -1299,7 +1365,7 @@ text = "Close"
 flat = false
 align = 1
 
-[node name="escapewarn" type="Panel" parent="." index="9"]
+[node name="escapewarn" type="Panel" parent="." index="8"]
 
 editor/display_folded = true
 visible = false
@@ -1422,7 +1488,7 @@ flat = false
 align = 1
 _sections_unfolded = [ "Rect" ]
 
-[node name="win" type="Panel" parent="." index="10"]
+[node name="win" type="Panel" parent="." index="9"]
 
 editor/display_folded = true
 visible = false
@@ -1513,7 +1579,7 @@ text = "Confirm"
 flat = false
 align = 1
 
-[node name="selectedskill" type="RichTextLabel" parent="." index="11"]
+[node name="selectedskill" type="RichTextLabel" parent="." index="10"]
 
 visible = false
 anchor_left = 1.0
@@ -1530,7 +1596,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_fonts/normal_font = SubResource( 9 )
+custom_fonts/normal_font = SubResource( 10 )
 bbcode_enabled = true
 bbcode_text = "[center]Choose target: [/center]
 [center][color=yellow]Ability: [/color][/center]"
@@ -1546,7 +1612,7 @@ selection_enabled = false
 override_selected_font_color = false
 _sections_unfolded = [ "Rect" ]
 
-[node name="bufftooltip" type="Panel" parent="." index="12"]
+[node name="bufftooltip" type="Panel" parent="." index="11"]
 
 editor/display_folded = true
 visible = false
@@ -1611,7 +1677,7 @@ selection_enabled = false
 override_selected_font_color = false
 _sections_unfolded = [ "Rect", "Size Flags" ]
 
-[node name="autoattack" type="CheckBox" parent="." index="13"]
+[node name="autoattack" type="CheckBox" parent="." index="12"]
 
 anchor_left = 1.0
 anchor_top = 1.0
@@ -1638,32 +1704,29 @@ flat = false
 align = 0
 _sections_unfolded = [ "Hint", "Rect" ]
 
-[node name="floattext" type="Label" parent="." index="14"]
+[node name="floattext" type="Label" parent="." index="13"]
 
-editor/display_folded = true
 visible = false
-modulate = Color( 1, 1, 1, 0 )
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 471.0
-margin_top = 527.0
-margin_right = 623.0
-margin_bottom = 547.0
+margin_right = 147.0
+margin_bottom = 20.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-text = "Test"
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "-50"
 align = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 script = ExtResource( 28 )
-_sections_unfolded = [ "Visibility" ]
+_sections_unfolded = [ "Rect", "Visibility", "custom_colors" ]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="floattext" index="0"]
 
@@ -1672,19 +1735,20 @@ autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
-anims/fade = SubResource( 10 )
+anims/fade = SubResource( 11 )
+anims/flyout = SubResource( 12 )
 blend_times = [  ]
 
-[node name="resources" type="Panel" parent="." index="15"]
+[node name="resources" type="Panel" parent="." index="14"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 40.0
-margin_top = 712.0
-margin_right = 319.0
-margin_bottom = 768.0
+margin_left = 21.0
+margin_top = 232.0
+margin_right = 199.0
+margin_bottom = 288.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -1732,6 +1796,51 @@ size_flags_vertical = 4
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+
+[node name="tooltip" type="Panel" parent="." index="15"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 304.0
+margin_bottom = 179.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="tooltip" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 11.0
+margin_top = 12.0
+margin_right = 287.0
+margin_bottom = 156.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+bbcode_enabled = true
+bbcode_text = ""
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = ""
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+_sections_unfolded = [ "BBCode" ]
 
 [connection signal="pressed" from="confirm" to="." method="_on_confirm_pressed"]
 

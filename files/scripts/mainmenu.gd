@@ -854,8 +854,13 @@ func _on_slavefinetune_pressed():
 	stage6()
 	stage5change()
 
+var firecheck = false
+
 func _on_slaveconfirm_pressed():
 	#Racebonus
+	if firecheck == true:
+		return
+	firecheck = true
 	get_tree().change_scene("res://files/Mansion.scn")
 	globals.player.ability.append('escape')
 	globals.player.abilityactive.append('escape')

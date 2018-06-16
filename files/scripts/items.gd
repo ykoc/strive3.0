@@ -1082,6 +1082,8 @@ func checkreqs(item):
 				return false
 	return true
 
+
+
 ### CLOTH EFFECTS
 func sundresseffect(person):
 	person.stress -= rand_range(4,8)
@@ -1471,11 +1473,15 @@ taintedessenceing = 2
 
 var backpack = false
 
-func equipitem(itemid, person = person): 
-	var item = globals.state.unstackables[itemid]
+func equipitem(itemid, person = person, notplayer = false): 
+	var item 
+	if notplayer == true:
+		item = globals.main.get_node('explorationnode').enemygear[itemid]
+	else:
+		item = globals.state.unstackables[itemid]
 	self.person = person
 	
-	if checkreqs(item) == false:
+	if checkreqs(item) == false && notplayer == false:
 		globals.main.infotext(person.dictionary("$name does not pass the requirements for ") + item.name, 'red')
 		return 'failure'
 	

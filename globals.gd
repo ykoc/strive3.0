@@ -36,6 +36,7 @@ var jobs = load("res://files/scripts/jobs&specs.gd").new()
 var mansionupgrades = load("res://files/scripts/mansionupgrades.gd").new()
 var gallery = load("res://files/scripts/gallery.gd").new()
 var slavedialogues = load("res://files/scripts/slavedialogues.gd").new()
+var explorationscrips = load("res://files/scripts/explorationmechanics.gd").new()
 var characters = gallery
 var patronlist = load("res://files/scripts/patronlists.gd").new()
 
@@ -163,6 +164,7 @@ male = load("res://files/buttons/sexicons/male.png"),
 futanari = load("res://files/buttons/sexicons/futa.png"),
 }
 
+#var combatencounterdata = explorationscrips.enemygroup
 
 var noimage = load("res://files/buttons/noimagesmall.png")
 
@@ -1395,6 +1397,17 @@ class person:
 				if sexuals.actions.has(ii) == false:
 					sexuals.actions[ii] = 0
 
+func randomportrait(person):
+	var portraitbase
+	var imagearray = []
+	
+	for i in portraitbase:
+		if i.has(person[i]) == false:
+			continue
+		imagearray.append(i)
+	
+	person.imageportait = imagearray[randi()*imagearray.size()]
+
 
 static func count_sleepers():
 	var your_bed = 0
@@ -1539,7 +1552,7 @@ func hidetooltip():
 
 func slavetooltip(person):
 	var text = ''
-	var node = get_tree().get_current_scene().get_node('slavetooltip')
+	var node = main.get_node('slavetooltip')
 	if node == null:
 		return
 	node.visible = true
@@ -1577,6 +1590,18 @@ func openslave(person):
 		main._on_selfbutton_pressed()
 	elif globals.slaves.has(person) && person.away.duration == 0:
 		main.openslavetab(person)
+
+func gradetooltip(person):
+	var text = ''
+	for i in globals.originsarray:
+		if i == person.origins:
+			text += '[color=green] ' + i.capitalize() + '[/color]'
+		else:
+			text += i.capitalize()
+		if i != 'noble':
+			text += ' - '
+	text += '\n\n' + globals.dictionary.getOriginDescription(person)
+	globals.showtooltip(text)
 
 static func merge(target, patch):
 	for key in patch:

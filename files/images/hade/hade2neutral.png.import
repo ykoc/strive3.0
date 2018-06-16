@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/hadesillhoute.png-b7c39cb75b2b83ffdd62799779a9d936.stex"
+path="res://.import/hade2neutral.png-0429421d533c75369660914c40efc46c.stex"
 
 [deps]
 
-source_file="res://files/images/hadesillhoute.png"
-source_md5="b4324278c0947f2f4744b009b22d5b70"
+source_file="res://files/images/hade/hade2neutral.png"
+source_md5="d8f332fd1835ea7d510e5630f201aa10"
 
-dest_files=[ "res://.import/hadesillhoute.png-b7c39cb75b2b83ffdd62799779a9d936.stex" ]
-dest_md5="aa23246138d71c05928f04d82b8b5ffe"
+dest_files=[ "res://.import/hade2neutral.png-0429421d533c75369660914c40efc46c.stex" ]
+dest_md5="e00d5dc4b74a9e7a6531393fb769457b"
 
 [params]
 

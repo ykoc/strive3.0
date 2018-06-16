@@ -211,8 +211,7 @@ func opencharacter(person, combat = false, combatant = null):
 	for i in ['sstr','sagi','smaf','send']:
 		$playergrouppanel/characterinfo/stats.get_node(i+'/Label').text = str(person[i]) + "/" +str(min(person.stats[globals.maxstatdict[i]], person.originvalue[person.origins]))
 	$playergrouppanel/characterinfo/grade.texture = globals.gradeimages[person.origins]
-	if person.spec != null:
-		$playergrouppanel/characterinfo/spec.texture = globals.specimages[person.spec]
+	$playergrouppanel/characterinfo/spec.texture = globals.specimages[str(person.spec)]
 	$playergrouppanel/characterinfo/grade.visible = person != globals.player
 	$playergrouppanel/characterinfo/spec.visible = person != globals.player
 	$playergrouppanel/characterinfo/switch.visible = combat
@@ -523,7 +522,9 @@ func slaveguildslaves():
 		newbutton.visible = true
 		newbutton.get_node('name').set_text(person.dictionary('$name, ')+ person.race)
 		newbutton.get_node('age').set_text(person.age.capitalize())
-		newbutton.get_node('origins').set_text(person.dictionary('Grade: '+person.origins))
+		newbutton.get_node("grade").texture = globals.gradeimages[person.origins]
+		newbutton.get_node("grade").connect("mouse_entered", globals, 'gradetooltip',[person])
+		newbutton.get_node("grade").connect("mouse_exited",globals, 'hidetooltip')
 		var price = max(person.buyprice()*0.8,50)
 		if globals.state.reputation.has(location) && globals.state.reputation[location] <= -10 && location != 'umbra':
 			price *= (abs(globals.state.reputation[location])/20.0)
@@ -534,6 +535,7 @@ func slaveguildslaves():
 		newbutton.get_node('price').set_text(str(price)+ ' gold')
 		newbutton.set_meta('price', price)
 		newbutton.get_node("sex").texture = globals.sexicon[person.sex]
+		newbutton.get_node("sex").hint_tooltip = person.sex
 		newbutton.connect('pressed',self,'selectslavebuy',[person])
 	if guildlocation != 'outside':
 		mansion.maintext = 'You get a simple catalogue with currently present slaves available for purchase.'
@@ -695,7 +697,13 @@ func sellslavelist(type = 'guild'):
 			var newbutton = slavebutton.duplicate()
 			slavelist.add_child(newbutton)
 			newbutton.visible = true
-			newbutton.get_node('name').set_text(person.dictionary('$name, ')+ person.race + ', '+ person.sex + ', ' + person.age + ', ' + person.work)
+			newbutton.get_node("grade").texture = globals.gradeimages[person.origins]
+			newbutton.get_node("grade").connect("mouse_entered", globals, 'gradetooltip',[person])
+			newbutton.get_node("grade").connect("mouse_exited",globals, 'hidetooltip')
+			
+			newbutton.get_node("sex").texture = globals.sexicon[person.sex]
+			newbutton.get_node("sex").hint_tooltip = person.sex
+			newbutton.get_node('name').set_text(person.dictionary('$name, ')+ person.race + ', ' + person.age + ', ' + person.work)
 			if type == 'guild':
 				newbutton.get_node('price').set_text(str(person.sellprice()) + ' gold')
 			elif type == 'sebastian':
@@ -1610,7 +1618,7 @@ func shopinitiate(shopname):
 #-----------------------------------------------------------------------
 		get_node("shoppanel/Panel/title").set_text(currentshop.name)
 		get_node("shoppanel").visible = true
-		get_node("shoppanel/itempanel").visible = false
+		#get_node("shoppanel/itempanel").visible = false
 	if currentshop.has('sprite'):
 		setcharacter(currentshop.sprite)
 		get_node("AnimationPlayer").play("show")
@@ -2264,24 +2272,22 @@ func _on_details_pressed(empty = null):
 		newbutton.set_meta("person", i)
 		newbutton.get_node("setfree").connect("pressed",self,'freecaptured', [i])
 		newbutton.get_node("inspect").connect("pressed",self,'inspectslave', [i])
+		newbutton.connect("mouse_entered", globals, 'slavetooltip', [i])
+		newbutton.connect("mouse_exited", globals, 'slavetooltiphide')
 		newbutton.set_text(i.race + " " + i.sex.capitalize() + " " + i.age.capitalize() + ", Grade: " + i.origins.capitalize())
 		newbutton.connect("pressed",self,'selectpartymember',[i])
 	
-	var person = globals.player
-	newbutton = get_node("playergroupdetails/TabContainer/Party/HBoxContainer/Button").duplicate()
-	get_node("playergroupdetails/TabContainer/Party/HBoxContainer/").add_child(newbutton)
-	newbutton.visible = true
-	newbutton.set_meta("person", person)
-	newbutton.set_text(person.dictionary("$name, HP: ") + str(person.health) + '/' + str(person.stats.health_max)  + ", EN: " + str(person.energy) + '/' + str(person.stats.energy_max))
-	newbutton.connect("pressed",self,'selectpartymember',[person])
+	var person 
 	
-	for i in globals.state.playergroup:
+	for i in globals.state.playergroup + [globals.player.id]:
 		person = globals.state.findslave(i)
 		newbutton = get_node("playergroupdetails/TabContainer/Party/HBoxContainer/Button").duplicate()
 		get_node("playergroupdetails/TabContainer/Party/HBoxContainer/").add_child(newbutton)
 		newbutton.visible = true
 		newbutton.set_meta("person", person)
 		newbutton.set_text(person.dictionary("$name, HP: ") + str(person.health) + '/' + str(person.stats.health_max)  + ", EN: " + str(person.energy) + '/' + str(person.stats.energy_max))
+		newbutton.connect("mouse_entered", globals, 'slavetooltip', [person])
+		newbutton.connect("mouse_exited", globals, 'slavetooltiphide')
 		newbutton.connect("pressed",self,'selectpartymember',[person])
 	
 	for i in globals.state.backpack.stackables:

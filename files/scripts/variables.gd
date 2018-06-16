@@ -6,11 +6,17 @@ var pregduration = 31
 var enchantitemprice = 1.5
 var sellingitempricemod = 0.2
 var basefoodconsumption = 10
-var skillpointsperlevel = 3
+var skillpointsperlevel = 2
 var timeforinteraction = 20
 var consumerope = 1
 var learnpointsperstat = 3
 
+
+
+#slave stats & combat
+var damageperstr = 2.5
+var speedperagi = 3
+var speedbase = 10
 
 
 #slave prices constants

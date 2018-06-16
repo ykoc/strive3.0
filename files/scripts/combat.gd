@@ -1,7 +1,6 @@
 
 extends Node
 
-signal textshown
 
 var nocaptures = false
 var area
@@ -129,7 +128,7 @@ func start_battle(nosound = false):
 	enemygroup.clear()
 	selectedcombatant = null
 	show()
-	get_node("combatlog").set_bbcode('')
+	$TextureRect2/combatlog.set_bbcode('')
 	var array = globals.state.playergroup
 	slave = globals.player
 	combatant = fighter.new()
@@ -482,11 +481,11 @@ func updatepanels():
 	for combatant in enemygroup:
 		if combatant.state in ['normal']:
 			var slave = combatant.person
-			newbutton = get_node("enemypanel/ScrollContainer/enemyline/character").duplicate()
+			newbutton = get_node("enemypanel/enemyline/character").duplicate()
 			if combatant.icon != null:
-				newbutton.get_node("icon").set_texture(combatant.icon)
+				newbutton.get_node("portrait").set_texture(combatant.icon)
 			newbutton.show()
-			get_node("enemypanel/ScrollContainer/enemyline").add_child(newbutton)
+			get_node("enemypanel/enemyline").add_child(newbutton)
 			for i in combatant.effects.values():
 				var newnode = $grouppanel/groupline/character/buffscontainer/TextureRect.duplicate()
 				newbutton.get_node("buffscontainer").add_child(newnode)
@@ -496,15 +495,15 @@ func updatepanels():
 				newnode.connect("mouse_exited", self, 'bufftooltiphide')
 			newbutton.set_meta("char", combatant)
 			newbutton.get_node("name").set_text(combatant.name)
-			newbutton.get_node("hpbar").set_value((combatant.health/combatant.healthmax)*100)
-			newbutton.get_node("hpbar/hp").set_text(str(ceil(combatant.health)) +'/'+ str(ceil(combatant.healthmax)))
+			newbutton.get_node("hp").set_value((combatant.health/combatant.healthmax)*100)
+			newbutton.get_node("hp/Label").set_text(str(ceil(combatant.health)) +'/'+ str(ceil(combatant.healthmax)))
 			if playergroup[0].effects.has('mindreadeffect') == false:
-				newbutton.get_node("hpbar/hp").hide()
+				newbutton.get_node("hp/Label").hide()
 			newbutton.connect("pressed",self,'chooseenemy',[combatant])
 			newbutton.connect("mouse_entered", self, 'enemytooltip', [combatant])
 			newbutton.connect("mouse_exited", self, 'enemytooltiphide')
 			combatant.button = newbutton
-	$enemypanel/ScrollContainer/enemyline.move_child($enemypanel/ScrollContainer/enemyline/character, $enemypanel/ScrollContainer/enemyline.get_children().size())
+	$enemypanel/enemyline.move_child($enemypanel/enemyline/character, $enemypanel/enemyline.get_children().size())
 
 func bufftooltip(buff):
 	var text = '[center][color=yellow]' + buff.name + "[/color][/center]"
@@ -521,7 +520,7 @@ func bufftooltiphide():
 	globals.hidetooltip()
 
 func clearpanels():
-	for i in get_node("enemypanel/ScrollContainer/enemyline").get_children() + $grouppanel/groupline.get_children():
+	for i in get_node("enemypanel/enemyline").get_children() + $grouppanel/groupline.get_children():
 		if i.get_name() != 'character':
 			i.hide()
 			i.queue_free()
