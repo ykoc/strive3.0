@@ -39,51 +39,51 @@ var playerpaneltextures = {
 
 
 func _ready():
-	if debug == true:
-		var scene = load("res://files/scripts/exploration.gd")
-		globals.main = self
-		$TextureRect.set_script(scene)
-		globals.player = globals.newslave('randomany', 'random', 'random')
-		var x = 2
-		while x > 0:
-			var newslave = globals.newslave('randomany', 'random', 'random')
-			x -= 1
-			globals.slaves = newslave
-			globals.state.playergroup.append(newslave.id)
-		for i in globals.slaves + [globals.player]:
-			var newcombatant = combatant.new()
-			var newbutton = $grouppanel/groupline/character.duplicate()
-			$grouppanel/groupline.add_child(newbutton)
-			newcombatant.node = newbutton
-			newcombatant.scene = self
-			newcombatant.createfromslave(i)
-			newcombatant.energy = 0
-			newcombatant.person.lust = 100
-			newbutton.connect('pressed', newcombatant, 'selectcombatant')
-			newbutton.connect('mouse_entered', newcombatant, 'combatanttooltip')
-			newbutton.connect("mouse_exited", globals, 'hidetooltip')
-			playergroup.append(newcombatant)
-			newbutton.set_meta('combatant', newcombatant)
-			newcombatant.draw()
-		
-		$TextureRect.buildenemies("banditseasy")
-		currentenemies = $TextureRect.enemygroup
-		for i in currentenemies.units:
-			var newcombatant = combatant.new()
-			var newbutton = $enemypanel/enemyline/character.duplicate()
-			$enemypanel/enemyline.add_child(newbutton)
-			newcombatant.node = newbutton
-			newbutton.set_meta('combatant', newcombatant)
-			newcombatant.scene = self
-			newbutton.connect('pressed', newcombatant, 'selectcombatant')
-			if nocaptures == false && i.capture != null:
-				newcombatant.createfromslave(i.capture, i)
-			else:
-				newcombatant.createfromdata(i)
-			newcombatant.name = i.name
-			enemygroup.append(newcombatant)
-			newcombatant.draw()
 	$grouppanel/skilline/skill.set_meta('skill', {})
+#	if debug == true:
+#		var scene = load("res://files/scripts/exploration.gd")
+#		globals.main = self
+#		$TextureRect.set_script(scene)
+#		globals.player = globals.newslave('randomany', 'random', 'random')
+#		var x = 2
+#		while x > 0:
+#			var newslave = globals.newslave('randomany', 'random', 'random')
+#			x -= 1
+#			globals.slaves = newslave
+#			globals.state.playergroup.append(newslave.id)
+#		for i in globals.slaves + [globals.player]:
+#			var newcombatant = combatant.new()
+#			var newbutton = $grouppanel/groupline/character.duplicate()
+#			$grouppanel/groupline.add_child(newbutton)
+#			newcombatant.node = newbutton
+#			newcombatant.scene = self
+#			newcombatant.createfromslave(i)
+#			newcombatant.energy = 0
+#			newcombatant.person.lust = 100
+#			newbutton.connect('pressed', newcombatant, 'selectcombatant')
+#			newbutton.connect('mouse_entered', newcombatant, 'combatanttooltip')
+#			newbutton.connect("mouse_exited", globals, 'hidetooltip')
+#			playergroup.append(newcombatant)
+#			newbutton.set_meta('combatant', newcombatant)
+#			newcombatant.draw()
+#
+#		$TextureRect.buildenemies("banditseasy")
+#		currentenemies = $TextureRect.enemygroup
+#		for i in currentenemies.units:
+#			var newcombatant = combatant.new()
+#			var newbutton = $enemypanel/enemyline/character.duplicate()
+#			$enemypanel/enemyline.add_child(newbutton)
+#			newcombatant.node = newbutton
+#			newbutton.set_meta('combatant', newcombatant)
+#			newcombatant.scene = self
+#			newbutton.connect('pressed', newcombatant, 'selectcombatant')
+#			if nocaptures == false && i.capture != null:
+#				newcombatant.createfromslave(i.capture, i)
+#			else:
+#				newcombatant.createfromdata(i)
+#			newcombatant.name = i.name
+#			enemygroup.append(newcombatant)
+#			newcombatant.draw()
 
 func combatanttooltip():
 	pass
@@ -91,6 +91,7 @@ func combatanttooltip():
 
 func _process(delta):
 	$resources/mana/Label.text = str(globals.resources.mana)
+	$resources/turns/Label.text = str(turns)
 	#Reset panel textures
 	for i in $enemypanel/enemyline.get_children():
 		if i.visible:
@@ -129,10 +130,12 @@ func _input(event):
 		selectedcharacter.selectcombatant()
 	#Select ability by 1-8 nums
 	if str(event.as_text()) in str(range(1,9)):
-		if self.visible == true && get_node("escapewarn").visible == false && $grouppanel/skilline.get_children().size() > int(event.as_text()):
+		if self.visible == true && get_node("escapewarn").visible == false && $win.visible == false && $grouppanel/skilline.get_children().size() > int(event.as_text()):
 			get_node("grouppanel/skilline").get_child(int(event.as_text())).emit_signal('pressed')
-	if event.as_text() in ['F1','F2','F3','F4'] && get_node("grouppanel/groupline").get_children().size() > int(event.as_text().replace("F","")):
+	#select characters
+	if event.as_text() in ['F1','F2','F3','F4'] && $win.visible == false && get_node("grouppanel/groupline").get_children().size() > int(event.as_text().replace("F","")):
 		$grouppanel/groupline.get_child(int(event.as_text().replace("F",""))).emit_signal('pressed')
+	#End turn
 	if event.is_action_pressed("F") == true && period == 'base' && get_node("escapewarn").visible != true && $confirm.disabled == false:
 		_on_confirm_pressed()
 
@@ -148,8 +151,8 @@ class combatant:
 	var hpmax
 	var energy
 	var energymax
-	var stress
-	var stressmax
+	var stress = 0
+	var stressmax = 0
 	var lust
 	var lustmax
 	var passives = []
@@ -212,8 +215,6 @@ class combatant:
 			scene.getbuff(scene.makebuff('pregnancy', self, self), self)
 		#Gear
 		
-#		if group == 'player':
-#			node.connect('pressed',self,'selectcombatant')
 		
 		for i in person.gear.values():
 			var tempitem
@@ -325,7 +326,7 @@ class combatant:
 		if node.has_node("en"):
 			node.get_node("en").value = float(energy)/energymax*100
 			node.get_node("en/Label").text = str(ceil(energy)) + "/" + str(energymax)
-		if node.has_node('stress') && self != globals.player:
+		if node.has_node('stress') && person != globals.player:
 			node.get_node('stress').visible = true
 			node.get_node('stress/Label').text = str(stress)
 			node.get_node('stress').value = float(stress)/stressmax*100
@@ -340,15 +341,16 @@ class combatant:
 		elif energy <= 0:
 			scene.getbuff(scene.makebuff('exhaust', self, self), self)
 			scene.passive(self, 'exhaust')
-		if person.lust >= 80:
-			scene.getbuff(scene.makebuff('luststrong', self, self), self)
-			scene.removebuff('lustweak', self)
-		elif person.lust >= 50:
-			scene.getbuff(scene.makebuff('lustweak', self, self), self)
-			scene.removebuff('luststrong', self)
-		else:
-			scene.removebuff('luststrong',self)
-			scene.removebuff('lustweak',self)
+		if person != null:
+			if person.lust >= 80:
+				scene.getbuff(scene.makebuff('luststrong', self, self), self)
+				scene.removebuff('lustweak', self)
+			elif person.lust >= 50:
+				scene.getbuff(scene.makebuff('lustweak', self, self), self)
+				scene.removebuff('luststrong', self)
+			else:
+				scene.removebuff('luststrong',self)
+				scene.removebuff('lustweak',self)
 		
 		for i in effects.values():
 			var newnode = node.get_node("buffscontainer/TextureRect").duplicate()
@@ -379,6 +381,7 @@ class combatant:
 	func defeat():
 		state = 'defeated'
 		scene.combatlog += scene.combatantdictionary(self, self, "\n[color=aqua][name1] has been defeated.[/color]")
+		scene.endcombatcheck()
 	
 	func health_get(value):
 		return hp
@@ -423,22 +426,22 @@ func start_battle(nosound = false):
 	globals.main.get_node("ResourcePanel").hide()
 	turns = 1
 	
-	
-	for i in $enemypanel/ScrollContainer/enemyline.get_children() + $grouppanel/groupline.get_children():
+	playergroup.clear()
+	enemygroup.clear()
+	for i in $enemypanel/enemyline.get_children() + $grouppanel/groupline.get_children():
 		if i.get_name() != 'character':
 			i.hide()
-			i.queue_free()
+			i.free()
+			#i.queue_free()
 	
 	if nosound == false:
 		globals.main.music_set('combat')
-	playergroup.clear()
-	enemygroup.clear()
 	self.visible = true
 	combatlog = ''
 	var slavearray = []
 	for i in globals.state.playergroup:
 		slavearray.append(globals.state.findslave(i))
-	for i in slavearray + [globals.player]:
+	for i in [globals.player] + slavearray:
 		var newcombatant = self.combatant.new()
 		var newbutton = $grouppanel/groupline/character.duplicate()
 		$grouppanel/groupline.add_child(newbutton)
@@ -750,6 +753,8 @@ func deselectall():
 func enemyturn():
 	var target
 	for combatant in enemygroup:
+		if combatant.state != 'normal':
+			continue
 		for i in combatant.cooldowns:
 			combatant.cooldowns[i] -= 1
 			if combatant.cooldowns[i] <= 0:
@@ -785,17 +790,46 @@ func enemyturn():
 	
 	
 	for i in playergroup + enemygroup:
-		i.person.stress += 3
+		i.stress += 3
 		i.actionpoints = 1
 		for effect in i.effects.values():
 			if effect.duration == 0:
 				i.removebuff(effect.code)
 			elif effect.duration > 0:
 				effect.duration -= 1
+	
+	
+	
+	endcombatcheck()
+	
+	
 	turns += 1
 	self.combatlog += "\n[center]Turn " + str(turns) + "[/center]"
+
+func endcombatcheck():
+	var counter = 0
+	for i in enemygroup:
+		if i.state in ['escaped','defeated','captured']:
+			counter += 1
+	if counter >= enemygroup.size():
+		get_node("win").show()
+		globals.main.music_set('stop')
+		globals.main.sound('win')
+		return
 	
-	
+	if playergroup[0].state == 'stopfight':
+		clearpanels()
+		hide()
+		set_process(false)
+		for i in playergroup:
+			i.person.stats.energy_cur = i.energy
+			i.person.stats.health_cur = i.health
+		globals.main.get_node("explorationnode").enemyleave()
+		globals.main.popup('You hastly escape from the fight. ')
+		globals.main.get_node("outside").show()
+		globals.main.get_node("ResourcePanel").show()
+		return
+
 
 func endturn():
 	for i in playergroup:
@@ -870,3 +904,30 @@ func lust(combatant, value):
 #				text += "\n$name has defeated " + target.name + ". "
 #		text = combatantdictionary(actor, text)
 #		return text
+func victory():
+	var deads = []
+	
+	get_parent().animationfade(0.4)
+	yield(get_parent(),'animfinished')
+	get_node("win").hide()
+	for i in range(0, enemygroup.size()):
+		if enemygroup[i].state == 'escaped':
+			currentenemies[i].state = 'escaped'
+		else:
+			currentenemies[i].state = 'defeated'
+	globals.main.get_node("explorationnode").enemygroup.units = currentenemies
+	hide()
+	globals.main.get_node("outside").show()
+	globals.main.get_node("ResourcePanel").show()
+	globals.main.get_node("explorationnode").enemydefeated()
+
+
+func _on_winconfirm_pressed():
+	set_process(false)
+	get_node("win").hide()
+	for i in playergroup:
+		i.person.metrics.win += 1
+		i.person.stats.energy_cur = i.energy
+		i.person.stats.health_cur = i.hp
+		i.person.stress = i.stress
+	victory()
