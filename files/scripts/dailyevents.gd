@@ -93,20 +93,20 @@ func dictionary():
 func showevent():
 	var button
 	get_node("textpanel/dailyeventtext").set_bbcode(showntext)
-	for i in get_node("buttonpanel/ScrollContainer/VBoxContainer").get_children():
-		if i != get_node("buttonpanel/ScrollContainer/VBoxContainer/Button"):
+	for i in get_node("buttonpanel/buttonscroll/buttoncontainer").get_children():
+		if i.name != 'Button':
 			i.visible = false
 			i.queue_free()
 	if buttons == null:
-		button = get_node("buttonpanel/ScrollContainer/VBoxContainer/Button").duplicate()
-		get_node("buttonpanel/ScrollContainer/VBoxContainer").add_child(button)
+		button = $buttonpanel/buttonscroll/buttoncontainer/Button.duplicate()
+		get_node("buttonpanel/buttonscroll/buttoncontainer").add_child(button)
 		button.visible = true
 		button.set_text("Continue")
 		button.connect("pressed", self, 'finishevent')
 		return
 	for i in buttons:
-		button = get_node("buttonpanel/ScrollContainer/VBoxContainer/Button").duplicate()
-		get_node("buttonpanel/ScrollContainer/VBoxContainer").add_child(button)
+		button = get_node("buttonpanel/buttonscroll/buttoncontainer/Button").duplicate()
+		get_node("buttonpanel/buttonscroll/buttoncontainer").add_child(button)
 		button.visible = true
 		button.set_text(person.dictionary(i[0]))
 		button.connect("pressed", self, currentevent, [i[1]])

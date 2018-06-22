@@ -210,7 +210,7 @@ func getdescription(value):
 		text = "[color=red]Error at getting description for " + value + ": " + person[value] + '[/color]. '
 	return text
 
-func getbeauty():
+func getbeauty(justtext = false):
 	var calculate 
 	var text = ''
 	var appeal = person.beauty
@@ -230,13 +230,17 @@ func getbeauty():
 		calculate = 'beautiful'
 	
 	text = descriptions['beauty'][calculate]
-	text += "(" 
-	if tempappeal != 0:
-		text += '[color=aqua]'+str(floor(appeal))+'[/color]'
+	if justtext == false:
+		text += "(" 
+		if tempappeal != 0:
+			text += '[color=aqua]'+str(floor(appeal))+'[/color]'
+		else:
+			text += str(floor(appeal)) 
+		text += ")"
+	if justtext == false:
+		return text
 	else:
-		text += str(floor(appeal)) 
-	text += ")"
-	return text
+		return calculate
 
 func gettitsextra():
 	var text

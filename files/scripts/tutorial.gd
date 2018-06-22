@@ -326,23 +326,23 @@ func show(dict):
 		buildbody(get_node("tutsprite"), dict.sprite)
 		if is_visible() == false:
 			self.visible = true
-			get_parent().get_node("AnimationPlayer").play("aliseshow")
+			aliseshow()
 			get_node("response").hide()
 			if OS.get_name() != "HTML5":
 				set_process_input(false)
 				set_process(false)
-				yield(get_parent().get_node("AnimationPlayer"), 'animation_finished')
+				yield(get_parent().get_node("Tween"), 'tween_completed')
 				set_process_input(true)
 				set_process(true)
 	if dict.has('text'):
 		if is_visible() == false:
 			self.visible = true
-			get_parent().get_node("AnimationPlayer").play("aliseshow")
+			aliseshow()
 			get_node("response").hide()
 			if OS.get_name() != "HTML5":
 				set_process_input(false)
 				set_process(false)
-				yield(get_parent().get_node("AnimationPlayer"), 'animation_finished')
+				yield(get_parent().get_node("Tween"), 'tween_completed')
 				set_process_input(true)
 				set_process(true)
 		get_node("speech").show()
@@ -401,16 +401,16 @@ func nochoice():
 func hide():
 	if OS.get_name() != "HTML5":
 		yield(self, 'textshown')
-		get_parent().get_node("AnimationPlayer").play_backwards("aliseshow")
+		alisehide()
 	else:
-		get_parent().get_node("AnimationPlayer").play_backwards("aliseshow")
+		alisehide()
 
 func unhide():
 	if OS.get_name() != "HTML5":
 		yield(self, 'textshown')
-		get_parent().get_node("AnimationPlayer").play("aliseshow")
+		aliseshow()
 	else:
-		get_parent().get_node("AnimationPlayer").play("aliseshow")
+		aliseshow()
 
 func basics():
 	globals.state.tutorial.basics = true
@@ -548,11 +548,11 @@ func close():
 	help = false
 	set_process(false)
 	set_process_input(false)
-	get_parent().get_node("AnimationPlayer").play_backwards("aliseshow")
+	alisehide()
 	get_node("response").hide()
 	get_node("speech").hide()
 	if OS.get_name() != "HTML5":
-		yield(get_parent().get_node("AnimationPlayer"), 'animation_finished')
+		yield(get_parent().get_node("Tween"), 'tween_completed')
 	self.visible = false
 
 func _on_RichTextLabel_meta_clicked( meta ):
@@ -566,3 +566,13 @@ func _on_RichTextLabel_meta_clicked( meta ):
 func galleryshow():
 	get_parent().get_node("gallery").show()
 	close()
+
+func aliseshow():
+	var tween = get_parent().tween
+	tween.interpolate_property($tutsprite, 'modulate', Color(1,1,1,0), Color(1,1,1,1), 0.3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween.start()
+
+func alisehide():
+	var tween = get_parent().tween
+	tween.interpolate_property($tutsprite, 'modulate', Color(1,1,1,1), Color(1,1,1,0), 0.3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween.start()

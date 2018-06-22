@@ -654,7 +654,7 @@ underwearlacy = {
 	name = 'Lacy Underwear',
 	icon = "res://files/images/items/underwearlacy.png",
 	description = "Fancy and cute underwear available for people with moderate income.\n[color=green]Increases person's luxury[/color]",
-	effect = [],
+	effect = [{type = 'onequip', effect = 'luxury', effectvalue = 5, descript = "Slightly increases luxury (+5)"}],
 	recipe = '',
 	reqs = null,
 	cost = 100,
@@ -669,7 +669,7 @@ underwearboxers = {
 	name = 'Silk Boxers',
 	icon = "res://files/images/items/underwearboxers.png",
 	description = "Fancy and comfortable male underwear available for people with moderate income.\n[color=green]Increases person's luxury[/color]",
-	effect = [],
+	effect = [{type = 'onequip', effect = 'luxury', effectvalue = 5, descript = "Slightly increases luxury (+5)"}],
 	recipe = '',
 	reqs = null,
 	cost = 100,
@@ -835,7 +835,7 @@ accgoldring = {
 	name = 'Golden Ring',
 	icon = "res://files/images/items/goldring.png",
 	description = "This finely crafted gold ring comprises of two intertwined bands.\n[color=green]Increases person's luxury[/color]",
-	effect = [],
+	effect = [{type = 'onequip', effect = 'luxury', effectvalue = 10, descript = "Increases luxury (+10)"}],
 	recipe = '',
 	reqs = null,
 	cost = 250,
@@ -1055,6 +1055,10 @@ func beauty(value):
 
 func lust(value):
 	person.lust += value
+
+func luxury(value):
+	person.luxury += value
+
 
 func fear(value):
 	var text = ''

@@ -28,40 +28,29 @@ func _ready():
 	for i in ['sstr','sagi','smaf','send']:
 		$playergrouppanel/characterinfo/stats.get_node(i).connect("mouse_entered",self,'statinfo',[i])
 		$playergrouppanel/characterinfo/stats.get_node(i).connect("mouse_exited",self,'iteminfoclose')
-	for i in ['power','speed','armor','protection']:
+	for i in ['attack','speed','armor','protection']:
 		$playergrouppanel/characterinfo/combstats.get_node(i).connect("mouse_entered",self,'statinfo',[i])
 		$playergrouppanel/characterinfo/combstats.get_node(i).connect("mouse_exited",self,'iteminfoclose')
 	#get_node("playergroupdetails/TabContainer").connect("visibility_changed", self, "_on_TabContainer_tab_changed")
 
 
+
 func _input(event):
-	if !(event is InputEventKey) || (main.get_node("screenchange/AnimationPlayer").is_playing() == true && main.get_node("screenchange").visible):
+	if self.is_visible_in_tree() == false || !(event is InputEventKey) || event.is_echo() == true || event.is_pressed() == false  || main.get_node("screenchange/AnimationPlayer").is_playing() == true:
 		return
 	var anythingvisible = false
-	for i in get_tree().get_nodes_in_group("blockoutsideinput"):
+	for i in get_tree().get_nodes_in_group("blockmaininput"):
 		if i.is_visible_in_tree() == true:
 			anythingvisible = true
 			break
 	if anythingvisible == true:
 		return
-	var dict = {49 : 1, 50 : 2, 51 : 3, 52 : 4,53 : 5,54 : 6,55 : 7,56 : 8, 16777351 :1, 16777352 : 2, 16777353 : 3, 16777354 : 4, 16777355 : 5, 16777356: 6, 16777357: 7, 16777358: 8}
-	if event.scancode in dict:
-		var key = dict[event.scancode]
-		if event.is_action_pressed(str(key)) == true && buttoncontainer.get_children().size() >= key+1 && self.is_visible() == true && get_parent().get_node("scene").visible == false && get_parent().get_node("dialogue").visible == false && buttoncontainer.get_child(key).disabled == false:
-			get_parent().get_node("chooseslavepopup").visible = false
+	
+	if str(event.as_text().replace("Kp ",'')) in str(range(1,9)):
+		var key = int(event.as_text())
+		if buttoncontainer.get_children().size() >= key+1 && buttoncontainer.get_child(key).disabled == false && self.is_visible() == true:
 			buttoncontainer.get_child(key).emit_signal("pressed")
-		elif event.is_action_pressed(str(key)) == true && get_parent().get_node("scene").is_visible_in_tree():
-			if get_parent().get_node("scene/popupbuttoncenter/popupbuttons").get_children().size() >= key+1 && get_parent().get_node("scene/popupbuttoncenter/popupbuttons").get_child(key).is_disabled() == false:
-				get_parent().get_node("scene/popupbuttoncenter/popupbuttons").get_child(key).emit_signal("pressed")
-		elif event.is_action_pressed(str(key)) == true && get_parent().get_node("dialogue").visible == true && get_parent().get_node("dialogue/popupbuttoncenter/popupbuttons").get_children().size() >= key+1:
-			if get_parent().get_node("dialogue/popupbuttoncenter/popupbuttons").get_child(key).is_disabled() == false:
-				get_parent().get_node("dialogue/popupbuttoncenter/popupbuttons").get_child(key).emit_signal("pressed")
-		elif event.is_action_pressed(str(key)) == true && get_parent().get_node("tutorialnode/response").visible == true && get_parent().get_node("tutorialnode/response/ScrollContainer/VBoxContainer").get_children().size() >= key+1:
-			if get_parent().get_node("tutorialnode/response/ScrollContainer/VBoxContainer").get_child(key).is_disabled() == false:
-				get_parent().get_node("tutorialnode/response/ScrollContainer/VBoxContainer").get_child(key).emit_signal("pressed")
-		elif event.is_action_pressed(str(key)) == true && get_parent().get_node("dailyevents").visible == true && get_parent().get_node("dailyevents/buttonpanel/ScrollContainer/VBoxContainer").get_children().size() >= key+1:
-			if get_parent().get_node("dailyevents/buttonpanel/ScrollContainer/VBoxContainer").get_child(key).is_disabled() == false:
-				get_parent().get_node("dailyevents/buttonpanel/ScrollContainer/VBoxContainer").get_child(key).emit_signal("pressed")
+		
 	if event.is_action_pressed("B") && get_node("playergrouppanel/details").is_visible_in_tree():
 		_on_details_pressed()
 
@@ -165,7 +154,7 @@ func iteminfo(gear):
 	var text = ''
 	if partyselectedchar.gear[gear] != null:
 		item = globals.state.unstackables[partyselectedchar.gear[gear]]
-		globals.showtooltip(globals.itemdescription(item))
+		globals.itemtooltip(item)
 
 func iteminfoclose():
 	globals.hidetooltip()
@@ -218,7 +207,7 @@ func opencharacter(person, combat = false, combatant = null):
 	$playergrouppanel/characterinfo/combstats.visible = combat
 	$playergrouppanel/characterinfo/stats.visible = !combat
 	if combat == true:
-		for i in ['power','speed','armor','protection']:
+		for i in ['attack','speed','armor','protection']:
 			get_node("playergrouppanel/characterinfo/combstats/" + i + '/Label').text = str(combatant[i])
 			if i == 'protection':
 				get_node("playergrouppanel/characterinfo/combstats/" + i + '/Label').text += '%'
@@ -364,6 +353,8 @@ func newslaveinguild(number, town = 'wimborn'):
 
 
 func setcharacter(text):
+	get_parent().repeattweenanimate($charactersprite, 'stop')
+	$charactersprite.visible = true
 	if get_parent().spritedict.has(text):
 		get_node("charactersprite").modulate.a = 1
 		get_node("charactersprite").set_texture(get_parent().spritedict[text])
@@ -381,7 +372,8 @@ func slaveguild(guild = 'wimborn'):
 				yield(main, 'animfinished')
 			if globals.state.sidequests.maple < 7:
 				setcharacter('fairy')
-				get_node("AnimationPlayer").play("spritemovefairy")
+				#get_node("AnimationPlayer").play("spritemovefairy")
+				get_parent().repeattweenanimate($charactersprite, 'fairy')
 		clearselection()
 		if globals.state.slaveguildvisited == 0:
 			text += "The first time you enter through the doors of the town's central building, you are mildly surprised to find it it very clean and bright inside. Arriving at the reception, a small cheerful fairy girl emerges from nearby to assist you. Her friendly and somewhat whimsical looks make you realize she must be one of the main receptionists hired to drag in potential clients. \n\n[color=yellow]— Welcome $sir! I do not believe I have see you here before, is this your first time? I'm Maple. You seem to be a respectable person! If you will allow me, I shall help you get familiar with our establishment!\n\n— From our facilities here we can provide our clients with many affordable and obedient staff members. Yes, the possession of another person is allowed as long as you have the rights. Despite overall humanity progression, it is still very far from providing sufficient food and living conditions for everyone. By selling themselves into others custody, many find a way to survive, cover their debts or help their family. \n\n— Sometimes we deal with, so called, 'prisoners of war', to help them to adapt to life in our care. Don't you find this is way more humane giving them a new chance, instead of outright slaughtering them?\n\n— This is where we come in. place and ensure, that your deal is secured. Slaves give up a huge part of their freedom. We take care to teach them to act appropriately, so you may be sure their initial behaviour will be acceptable.  To strengthen your ownership we will gladly help brand your purchase.\n\n— After person becomes your property, you are free to employ them as you see fit, but keep in mind, that inhumane treatment may cause you quite a few problems. We strongly advise against unnecessary deaths and mutilations, nor we do support people harshly abusing their privileges over others. \n\n— Lastly, if you have possession of someone, you no longer have a need for and wish to part with, we can surely offer you something!\n\n— I hope, my explanation was helpful, $sir! Let me know if there's something else I can assist you with![/color]"
@@ -1631,281 +1623,6 @@ func shopbuy():
 		$shoppanel/inventory/merchant.texture = globals.spritedict[currentshop.sprite]
 	else:
 		$shoppanel/inventory/merchant.texture = null
-#	var item
-#	var newbutton
-#	var itemlist = get_node("shoppanel/itempanel/ScrollContainer/GridContainer")
-#	var itembutton = itemlist.get_node("Button")
-#	get_node("shoppanel/itempanel").visible = true
-#	get_node("shoppanel/Panel/buybutton").set_pressed(true)
-#	get_node("shoppanel/Panel/sellbutton").set_pressed(false)
-#	get_node("shoppanel/Panel/sellbuttonbp").set_pressed(false)
-#	get_node("shoppanel/itempanel/buysellbutton/SpinBox").editable = 1
-#	mode = 'buy'
-#	for i in itemlist.get_children():
-#		if i != itembutton:
-#			i.visible = false
-#			i.free()
-#
-#	get_node("shoppanel/itempanel/buysellbutton").set_text('Buy')
-#	get_node("shoppanel/itempanel/buysellbutton").visible = false
-#	get_node("shoppanel/itempanel/buysellbackpack").visible = false
-#	get_node("shoppanel/itempanel/itemdescript").set_bbcode('')
-#	get_node("shoppanel/itempanel/iconbig").visible = false
-#
-#	for i in currentshop.items:
-#		item = globals.itemdict[i]
-#		if item.code.find('teleport') >= 0 && item.code != 'teleportseal':
-#			var temp = item.code.replace('teleport', '')
-#			if temp == globals.state.location || globals.state.portals[temp].enabled == true:
-#				continue
-#		newbutton = itembutton.duplicate()
-#		newbutton.visible = true
-#		newbutton.get_node("price").set_text(str(getcost(item)))
-#		newbutton.get_node("amount").visible = false
-#		newbutton.set_tooltip(item.name)
-#		if typeof(item.icon) == TYPE_STRING:
-#			newbutton.get_node("icon").set_texture(load(item.icon))
-#		else:
-#			newbutton.get_node("icon").set_texture(item.icon)
-#		itemlist.add_child(newbutton)
-#		newbutton.set_meta('item', item)
-#		newbutton.connect('pressed',self,'selectshopitem', [newbutton])
-#	$shoppanel/itempanel/ScrollContainer/GridContainer.move_child($shoppanel/itempanel/ScrollContainer/GridContainer/Button, $shoppanel/itempanel/ScrollContainer/GridContainer.get_children().size())
-
-func shopsell(backpack = false):
-	var item
-	var newbutton
-	var itemlist = get_node("shoppanel/itempanel/ScrollContainer/GridContainer")
-	var itembutton = itemlist.get_node("Button")
-	var array = []
-	get_node("shoppanel/itempanel").visible = true
-	get_node("shoppanel/Panel/buybutton").set_pressed(false)
-	get_node("shoppanel/Panel/sellbutton").set_pressed(!backpack)
-	get_node("shoppanel/Panel/sellbuttonbp").set_pressed(backpack)
-	get_node("shoppanel/itempanel/itemdescript").set_bbcode('')
-	get_node("shoppanel/itempanel/buysellbutton/SpinBox").editable = 1
-	if backpack == true:
-		mode = 'sellbackpack'
-	else:
-		mode = 'sell'
-	for i in itemlist.get_children():
-		if i != itembutton:
-			i.visible = false
-			i.free()
-	
-	get_node("shoppanel/itempanel/buysellbutton").set_text('Sell')
-	get_node("shoppanel/itempanel/buysellbutton").visible = false
-	get_node("shoppanel/itempanel/buysellbackpack").visible = false
-	get_node("shoppanel/itempanel/iconbig").visible = false
-	if backpack == false:
-		for item in globals.itemdict:
-			array.append(item)
-	else:
-		for item in globals.state.backpack.stackables:
-			array.append(globals.itemdict[item].code)
-	
-	array.sort_custom(globals.items,'sortbytype')
-	
-	
-	for tempitem in array:
-		item = globals.itemdict[tempitem]
-		if item.amount < 1 || item.type in ['gear','dummy']:
-			continue
-		newbutton = itembutton.duplicate()
-		newbutton.visible = true
-		newbutton.set_tooltip(item.name)
-		newbutton.get_node("price").set_text(str(getcost(item)))
-		newbutton.get_node("amount").visible = true
-		if backpack == true:
-			newbutton.get_node("amount").set_text(str(globals.state.backpack.stackables[item.code]))
-		else:
-			newbutton.get_node("amount").set_text(str(item.amount))
-		if item.icon != null:
-			newbutton.get_node("icon").set_texture(item.icon)
-		else:
-			newbutton.get_node("icon").set_texture(globals.noimage)
-		itemlist.add_child(newbutton)
-		newbutton.set_meta('item', item)
-		newbutton.connect('pressed',self,'selectshopitem', [newbutton])
-	
-	array = globals.state.unstackables.values()
-	
-	var unstackarray = []
-	
-	for item in array:
-		if backpack == true:
-			if str(item.owner) != 'backpack':
-				continue
-		else:
-			if item.owner != null:
-				continue
-		var groupfound = false
-		var counter = -1
-		for i in unstackarray:
-			counter += 1
-			if i[0].type == item.type && i[0].effects == item.effects:
-				groupfound = true
-				unstackarray[counter].append(item)
-				continue
-		if groupfound == false:
-			unstackarray.append([item])
-	
-	for item in array:
-		if (item.owner == null && backpack == false) || (str(item.owner) == 'backpack' && backpack == true):
-			var tempitem = globals.itemdict[item.code]
-			newbutton = itembutton.duplicate()
-			newbutton.visible = true
-			newbutton.set_tooltip(item.name)
-			newbutton.get_node("price").set_text(str(getcost(item)))
-			if item.icon != null:
-				newbutton.get_node("icon").set_texture(load(item.icon))
-			else:
-				newbutton.get_node("icon").set_texture(null)
-				newbutton.get_node("name").set_text(item.name)
-				newbutton.get_node("name").visible = true
-			itemlist.add_child(newbutton)
-			newbutton.set_meta('item', item)
-			newbutton.set_meta('unstuck', item)
-			newbutton.connect('pressed',self,'selectshopitem', [newbutton, item])
-	$shoppanel/itempanel/ScrollContainer/GridContainer.move_child($shoppanel/itempanel/ScrollContainer/GridContainer/Button, $shoppanel/itempanel/ScrollContainer/GridContainer.get_children().size())
-
-func getcost(item):
-	var cost = 0
-	if mode == 'buy':
-		cost = item.cost
-	else:
-		if globals.itemdict[item.code].type != 'gear':
-			cost = item.cost*variables.sellingitempricemod
-		else:
-			var itemtype = globals.itemdict[item.code]
-			cost = itemtype.cost*variables.sellingitempricemod
-			if item.has('enchant') && item.enchant != '':
-				cost = cost*variables.enchantitemprice
-	return round(cost)
-
-
-func _on_sellbuttonbp_pressed():
-	shopsell(true)
-
-
-func selectshopitem(tempitem, unstuck = null):
-	var text = ''
-	var item = tempitem.get_meta("item")
-	for i in get_node("shoppanel/itempanel/ScrollContainer/GridContainer").get_children():
-		if i.is_pressed() == true && i != tempitem:
-			i.set_pressed(false)
-	tempitem.set_pressed(true)
-	get_node("shoppanel/itempanel/iconbig").visible = false
-	selecteditem = tempitem
-	var price = getcost(item)
-	if item.type != 'dummy' && !item.has('owner'):
-		text += "\nIn Possession: " + str(item.amount)
-	if unstuck == null:
-		text += globals.itemdescription(item) + "\n\n"
-	else:
-		text += globals.itemdescription(unstuck) + "\n\n"
-	if mode == 'buy':
-		text +=  "Price: [color=yellow]" + str(price) + "[/color]"
-		get_node("shoppanel/itempanel/buysellbackpack").visible = !(item.type == 'dummy')
-	else:
-		text +=  "Selling Price: [color=yellow]" + str(price) + "[/color]"
-	if item.code.find('teleport') >= 0 && item.code != 'teleportseal':
-		get_node("shoppanel/itempanel/buysellbutton/SpinBox").visible = false
-		get_node("shoppanel/itempanel/buysellbutton/SpinBox").editable = 1
-	else:
-		get_node("shoppanel/itempanel/buysellbutton/SpinBox").visible = true
-	#if item.type == 'gear':
-	if item.icon != null:
-		get_node("shoppanel/itempanel/iconbig").visible = true
-		if typeof(item.icon) == TYPE_STRING:
-			get_node("shoppanel/itempanel/iconbig").set_texture(load(globals.itemdict[item.code].icon))
-		else:
-			get_node("shoppanel/itempanel/iconbig").set_texture(item.icon)
-	else:
-		get_node("shoppanel/itempanel/iconbig").visible = false
-	if item.code in ["supply",'teleportwimborn','teleportgorn','teleportfrostford','teleportamberguard','teleportumbra']:
-		get_node("shoppanel/itempanel/iconbig").visible = true
-		get_node("shoppanel/itempanel/iconbig").set_texture(item.icon)
-	get_node("shoppanel/itempanel/itemdescript").set_bbcode(text)
-	get_node("shoppanel/itempanel/buysellbutton").visible = true
-	if mode == 'buy' && price > globals.resources.gold:
-		get_node("shoppanel/itempanel/buysellbutton").set_disabled(true)
-		get_node("shoppanel/itempanel/buysellbackpack").set_disabled(true)
-	else:
-		get_node("shoppanel/itempanel/buysellbutton").set_disabled(false)
-		get_node("shoppanel/itempanel/buysellbackpack").set_disabled(false)
-	if mode == 'sell' && unstuck == null && (item.has('owner') || item.amount <= 0):
-		shopsell()
-
-
-
-func _on_buysellbutton_pressed(backpack = false):
-	var item = selecteditem.get_meta("item")
-	var amount = get_node("shoppanel/itempanel/buysellbutton/SpinBox").value
-	var price = getcost(item)
-	if mode == 'buy':
-		if amount*price > globals.resources.gold:
-			get_parent().infotext("Not enough gold",'red')
-			return
-		if backpack == true && item.has('weight') && globals.state.calculateweight().currentweight + amount*item.weight > globals.state.calculateweight().maxweight:
-			get_parent().infotext("Not enough carry capacity",'red')
-			return
-		if item.type != 'gear':
-			if backpack == false:
-				item.amount += amount
-			else:
-				if globals.state.backpack.stackables.has(item.code):
-					globals.state.backpack.stackables[item.code] += amount
-				else:
-					globals.state.backpack.stackables[item.code] = amount
-		else:
-			var counter = amount
-			while counter >= 1:
-				var tmpitem = globals.items.createunstackable(item.code)
-				if backpack == false:
-					globals.state.unstackables[str(tmpitem.id)] = tmpitem
-				else:
-					globals.state.unstackables[str(tmpitem.id)] = tmpitem
-					tmpitem.owner = 'backpack'
-				counter -= 1
-				get_parent().infotext("Obtained: " + item.name, 'green')
-		if item.code in ['food']:
-			globals.items.call(item.effect)
-		elif item.code.find('teleport') >= 0 && item.code != 'teleportseal':
-			globals.items.call(item.effect, item)
-			selecteditem = null
-			shopbuy()
-			return
-		else:
-			globals.resources.gold -= price*amount
-		selectshopitem(selecteditem)
-	elif mode in ['sell','sellbackpack']:
-		if !item.has('owner') && ((mode == 'sell' && amount > item.amount) || mode == 'sellbackpack' && globals.state.backpack.stackables[item.code] < amount ):
-			get_parent().infotext("Not enough items in possession",'red')
-			return
-		if !item.has('owner'):
-			if mode == 'sell':
-				item.amount -= amount
-			else:
-				globals.state.backpack.stackables[item.code] -= amount
-				if globals.state.backpack.stackables[item.code] <= 0:
-					globals.state.backpack.stackables.erase(item.code)
-			globals.resources.gold += price*amount
-			selecteditem.get_node('amount').set_text(str(item.amount))
-		else:
-			var tempitem = selecteditem.get_meta("unstuck")
-			globals.resources.gold += price
-			globals.state.unstackables.erase(tempitem.id)
-		if mode == 'sell':
-			selectshopitem(selecteditem)
-		else:
-			_on_sellbuttonbp_pressed()
-
-
-
-func _on_buysellbackpack_pressed():
-	_on_buysellbutton_pressed(true)
-	
 
 
 func shopclose():
@@ -2193,9 +1910,13 @@ func emily(state = 1):
 func brothel(person = null):
 	clearbuttons()
 	var text = "Doorman greets you and shows you the way around brothel until you meet with the Madam.\n\n— Greetings, what would you like?  "
+	get_parent().slavearray.clear()
+	var counter = 0
 	for person in globals.slaves:
-		if person.work == 'prostitution' || person.work == 'escort' || person.work == 'fucktoy':
-			text = text + person.dictionary('\nYou can see $name waiting for clients here.')
+		if person.work == 'whorewimborn' || person.work == 'escortwimborn' || person.work == 'fucktoywimborn':
+			text = text + person.dictionary('\nYou can see [url=person' + str(counter) + '][color=yellow]$name[/color][/url]  waiting for clients here.')
+			get_parent().slavearray.append(person)
+			counter += 1
 	mansion.maintext = text
 	var array = [{name = 'Return', function = 'backstreets'}]
 	if globals.state.sidequests.brothel == 0:

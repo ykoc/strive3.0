@@ -82,6 +82,8 @@ stab = load("res://files/sounds/stab.wav"),
 win = load("res://files/sounds/win.wav"),
 teleport = load("res://files/sounds/teleport.wav"),
 fall = load("res://files/sounds/fall.wav"),
+page = load("res://files/sounds/page.wav"),
+attack = load("res://files/sounds/normalattack.wav"),
 }
 var backgrounds = {
 mansion = load("res://files/backgrounds/mansion.png"),
@@ -295,6 +297,8 @@ func slaves_set(person):
 
 func loadimage(path):
 	var file = File.new()
+	if typeof(path) == TYPE_OBJECT:
+		return path
 	if path == null:
 		return
 	if path.find('res:') >= 0:
@@ -707,6 +711,7 @@ class person:
 	var lastinteractionday = 0
 	var lastsexday = 0
 	var learningpoints = 0 setget learningpoints_set
+	var luxury = 0
 	
 	
 	var stats = {
@@ -1263,26 +1268,26 @@ class person:
 		return globals.description.getstatus(self)
 	
 	func countluxury():
-		var luxury = 0
+		var templuxury = luxury
 		var goldspent = 0
 		var foodspent = 0
 		var nosupply = false
 		var value = 0
 		if sleep == 'personal':
-			luxury += 10+(5*globals.state.mansionupgrades.mansionluxury)
+			templuxury += 10+(5*globals.state.mansionupgrades.mansionluxury)
 		elif sleep == 'your':
-			luxury += 5+(5*globals.state.mansionupgrades.mansionluxury)
+			templuxury += 5+(5*globals.state.mansionupgrades.mansionluxury)
 		if rules.betterfood == true && globals.resources.food >= 5:
 			globals.resources.food -= 5
 			foodspent += 5
-			luxury += 5
+			templuxury += 5
 		if rules.personalbath == true:
 			if spec != 'housekeeper':
 				value = 2
 			else:
 				value = 1
 			if globals.itemdict.supply.amount >= value:
-				luxury += 5
+				templuxury += 5
 				globals.itemdict.supply.amount -= value
 			else:
 				nosupply == true
@@ -1292,24 +1297,17 @@ class person:
 			else:
 				value = 5
 			if globals.resources.gold >= value:
-				luxury += value
+				templuxury += value
 				goldspent += value
 				globals.resources.gold -= value
 		if rules.cosmetics == true:
 			if globals.itemdict.supply.amount > 1:
-				luxury += 5
+				templuxury += 5
 				globals.itemdict.supply.amount -= 1
 			else:
 				nosupply = true
-		for i in gear.values(): 
-			if i != null && globals.state.unstackables.has(i):
-				var tempitem = globals.state.unstackables[i]
-				if tempitem.code in ['underwearlacy','underwearboxers']:
-					luxury += 5
-				elif tempitem.code in ["accgoldring"]:
-					luxury += 10
 		
-		var luxurydict = {luxury = luxury, goldspent = goldspent, foodspent = foodspent, nosupply = nosupply}
+		var luxurydict = {luxury = templuxury, goldspent = goldspent, foodspent = foodspent, nosupply = nosupply}
 		return luxurydict
 	
 	func calculateluxury():
@@ -1549,6 +1547,8 @@ func showtooltip(text):
 
 func hidetooltip():
 	main.get_node("tooltip").visible = false
+	slavetooltiphide()
+	itemtooltiphide()
 
 func slavetooltip(person):
 	var text = ''
@@ -1557,7 +1557,9 @@ func slavetooltip(person):
 		return
 	node.visible = true
 	text += "Level: " + str(person.level)
-	text += "\n[color=yellow]" + person.race.capitalize() + "[/color]\n" + person.age.capitalize()
+	text += "\n[color=yellow]" + person.race.capitalize() + "[/color]\n" 
+	description.person = person
+	text += description.getbeauty(true).capitalize() + '\n' + person.age.capitalize()
 	node.get_node("portrait").texture = loadimage(person.imageportait)
 	node.get_node("portrait").visible = !node.get_node('portrait').texture == null
 	node.get_node("name").text = person.name_long()
@@ -1583,13 +1585,37 @@ func slavetooltip(person):
 		node.rect_global_position.y -= node.get_rect().end.y - screen.size.y
 
 func slavetooltiphide(empty = null):
-	get_tree().get_current_scene().get_node('slavetooltip').visible = false
+	if get_tree().get_current_scene().has_node('slavetooltip'):
+		get_tree().get_current_scene().get_node('slavetooltip').visible = false
 
 func openslave(person):
 	if person == globals.player:
 		main._on_selfbutton_pressed()
 	elif globals.slaves.has(person) && person.away.duration == 0:
 		main.openslavetab(person)
+
+func itemtooltip(item):
+	var text = itemdescription(item, true)
+	var node = main.get_node('itemtooltip')
+	if node == null:
+		return
+	node.visible = true
+	node.get_node("image").texture = loadimage(item.icon)
+	node.get_node('text').bbcode_text = text
+	
+	var screen = get_viewport().get_visible_rect()
+	var pos = main.get_global_mouse_position()
+	pos = Vector2(pos.x+20, pos.y+20)
+	node.set_position(pos)
+	if node.get_rect().end.x >= screen.size.x:
+		node.rect_global_position.x -= node.get_rect().end.x - screen.size.x
+	if node.get_rect().end.y >= screen.size.y:
+		node.rect_global_position.y -= node.get_rect().end.y - screen.size.y
+	
+
+func itemtooltiphide(empty = null):
+	if get_tree().get_current_scene().has_node('itemtooltip'):
+		get_tree().get_current_scene().get_node('itemtooltip').visible = false
 
 func gradetooltip(person):
 	var text = ''
@@ -1704,13 +1730,16 @@ var statsdescript = dictionary.statdescription
 var sleepdict = {communal = {name = 'Communal Room'}, jail = {name = "Jail"}, personal = {name = 'Personal Room'}, your = {name = "Your bed"}}
 
 
-func itemdescription(item):
+func itemdescription(item, short = false):
 	var text = ''
 	var name = ''
 	name = item.name
-	text = item.description
+	if short == false:
+		text += item.description + '\n\n'
+	elif !item.has('owner'):
+		text += item.description
 	if item.has('owner'):
-		text += '\n\n'
+		#text += '\n\n'
 		if item.enchant == 'basic':
 			name = '[color=green]' + name + '[/color]'
 		elif item.enchant == 'unique':

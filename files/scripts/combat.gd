@@ -1109,10 +1109,6 @@ func victory():
 			currentenemies[i].state = 'escaped'
 		else:
 			currentenemies[i].state = 'defeated'
-			#deads.append(i)
-#	deads.invert()
-#	for i in deads:
-#		currentenemies.remove(i)
 	globals.main.get_node("explorationnode").enemygroup.units = currentenemies
 	clearpanels()
 	hide()
@@ -1235,10 +1231,7 @@ func _on_use_pressed():
 
 
 
-func _on_autowin_pressed():
-	selectmode = null
-	set_process(false)
-	victory()
+
 
 
 func _on_autoattack_pressed():

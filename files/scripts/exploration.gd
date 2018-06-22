@@ -654,6 +654,8 @@ func buildslave(i):
 	var age = ''
 	var origins = ''
 	var rand = 0
+	if currentzone != null && currentzone.has('races') == false:
+		currentzone.races = [['Human', 1]]
 	if i.capturerace.find('area') >= 0:
 		race = globals.weightedrandom(currentzone.races)
 	elif i.capturerace.find('any') >= 0:
@@ -684,7 +686,6 @@ func buildslave(i):
 	i.capture = slavetemp
 	
 	if i.has('gear'):
-		return
 		var gear = {}
 		for k in ['armor','weapon','costume','underwear','accessory']:
 			if !combatdata.enemyequips[i.gear].has(k):
@@ -1369,7 +1370,7 @@ func moveitemtoenemy(button):
 	builditemlists()
 
 func itemtooltip(item):
-	globals.showtooltip(globals.itemdescription(item))
+	globals.itemtooltip(item)
 
 func itemtooltiphide():
 	globals.hidetooltip()

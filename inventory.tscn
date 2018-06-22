@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=2]
+[gd_scene load_steps=62 format=2]
 
 [ext_resource path="res://files/theme.tres" type="Theme" id=1]
 [ext_resource path="res://files/buttons/inventory/11-litter.png" type="Texture" id=2]
@@ -43,20 +43,19 @@
 [ext_resource path="res://files/buttons/inventory/3.png" type="Texture" id=41]
 [ext_resource path="res://files/buttons/inventory/25.png" type="Texture" id=42]
 [ext_resource path="res://files/buttons/inventory/8-(equipped_item).png" type="Texture" id=43]
-[ext_resource path="res://files/buttons/inventory/enchant.png" type="Texture" id=44]
-[ext_resource path="res://files/buttons/inventory/30.png" type="Texture" id=45]
-[ext_resource path="res://files/buttons/inventory/26.png" type="Texture" id=46]
-[ext_resource path="res://files/buttons/inventory/29.png" type="Texture" id=47]
-[ext_resource path="res://files/buttons/inventory/28.png" type="Texture" id=48]
-[ext_resource path="res://files/buttons/inventory/27.png" type="Texture" id=49]
-[ext_resource path="res://files/buttons/inventory/9.png" type="Texture" id=50]
-[ext_resource path="res://files/buttons/inventory/4.png" type="Texture" id=51]
-[ext_resource path="res://files/buttons/inventory/5.png" type="Texture" id=52]
-[ext_resource path="res://files/buttons/inventory/33.png" type="Texture" id=53]
-[ext_resource path="res://files/buttons/menupanel.png" type="Texture" id=54]
-[ext_resource path="res://files/buttons/arrows/down.png" type="Texture" id=55]
-[ext_resource path="res://files/buttons/arrows/down-press.png" type="Texture" id=56]
-[ext_resource path="res://files/buttons/arrows/down-hl.png" type="Texture" id=57]
+[ext_resource path="res://files/buttons/inventory/30.png" type="Texture" id=44]
+[ext_resource path="res://files/buttons/inventory/26.png" type="Texture" id=45]
+[ext_resource path="res://files/buttons/inventory/29.png" type="Texture" id=46]
+[ext_resource path="res://files/buttons/inventory/28.png" type="Texture" id=47]
+[ext_resource path="res://files/buttons/inventory/27.png" type="Texture" id=48]
+[ext_resource path="res://files/buttons/inventory/9.png" type="Texture" id=49]
+[ext_resource path="res://files/buttons/inventory/4.png" type="Texture" id=50]
+[ext_resource path="res://files/buttons/inventory/5.png" type="Texture" id=51]
+[ext_resource path="res://files/buttons/inventory/33.png" type="Texture" id=52]
+[ext_resource path="res://files/buttons/menupanel.png" type="Texture" id=53]
+[ext_resource path="res://files/buttons/arrows/down.png" type="Texture" id=54]
+[ext_resource path="res://files/buttons/arrows/down-press.png" type="Texture" id=55]
+[ext_resource path="res://files/buttons/arrows/down-hl.png" type="Texture" id=56]
 
 [sub_resource type="StyleBoxTexture" id=1]
 
@@ -121,7 +120,7 @@ content_margin_left = -1.0
 content_margin_right = -1.0
 content_margin_top = -1.0
 content_margin_bottom = -1.0
-texture = ExtResource( 53 )
+texture = ExtResource( 52 )
 region_rect = Rect2( 0, 0, 1318, 493 )
 margin_left = 0.0
 margin_right = 0.0
@@ -140,7 +139,7 @@ content_margin_left = -1.0
 content_margin_right = -1.0
 content_margin_top = -1.0
 content_margin_bottom = -1.0
-texture = ExtResource( 54 )
+texture = ExtResource( 53 )
 region_rect = Rect2( 0, 0, 500, 500 )
 margin_left = 10.0
 margin_right = 10.0
@@ -357,10 +356,11 @@ group = null
 texture_normal = ExtResource( 15 )
 texture_pressed = ExtResource( 16 )
 expand = true
-_sections_unfolded = [ "Rect" ]
+_sections_unfolded = [ "Hint", "Mouse" ]
 
 [node name="ScrollContainer" type="ScrollContainer" parent="." index="7"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -1096,8 +1096,6 @@ _sections_unfolded = [ "Rect" ]
 
 [node name="gearpanel" type="TextureRect" parent="." index="13"]
 
-editor/display_folded = true
-visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -1108,13 +1106,14 @@ margin_right = 877.0
 margin_bottom = 460.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
-mouse_filter = 1
+mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 texture = ExtResource( 39 )
 expand = true
 stretch_mode = 5
+_sections_unfolded = [ "Focus", "Hint", "Mouse" ]
 
 [node name="charframe" type="TextureRect" parent="gearpanel" index="0"]
 
@@ -1124,12 +1123,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
-mouse_filter = 1
+mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 texture = ExtResource( 40 )
 stretch_mode = 0
+_sections_unfolded = [ "Hint", "Mouse", "Size Flags" ]
 
 [node name="TextureFrame" type="TextureRect" parent="gearpanel" index="1"]
 
@@ -1143,13 +1143,14 @@ margin_right = 382.0
 margin_bottom = 432.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
-mouse_filter = 1
+mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 texture = ExtResource( 41 )
 expand = true
 stretch_mode = 6
+_sections_unfolded = [ "Mouse", "Visibility" ]
 
 [node name="costume" type="TextureButton" parent="gearpanel" index="2"]
 
@@ -1175,8 +1176,9 @@ shortcut = null
 group = null
 texture_normal = ExtResource( 42 )
 expand = true
+_sections_unfolded = [ "Hint", "Mouse" ]
 
-[node name="TextureFrame 2" type="TextureRect" parent="gearpanel/costume" index="0"]
+[node name="TextureFrame2" type="TextureRect" parent="gearpanel/costume" index="0"]
 
 self_modulate = Color( 0.957031, 0.957031, 0.957031, 1 )
 show_behind_parent = true
@@ -1197,6 +1199,7 @@ size_flags_vertical = 2
 texture = ExtResource( 2 )
 expand = true
 stretch_mode = 0
+_sections_unfolded = [ "Mouse" ]
 
 [node name="TextureFrame" type="TextureRect" parent="gearpanel/costume" index="1"]
 
@@ -1210,6 +1213,7 @@ margin_right = 3.0
 margin_bottom = 4.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
+hint_tooltip = "test"
 mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
@@ -1217,27 +1221,9 @@ size_flags_vertical = 2
 texture = ExtResource( 43 )
 expand = true
 stretch_mode = 0
+_sections_unfolded = [ "Hint", "Mouse" ]
 
-[node name="enchant" type="TextureRect" parent="gearpanel/costume" index="2"]
-
-visible = false
-show_behind_parent = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-texture = ExtResource( 44 )
-expand = true
-stretch_mode = 0
-_sections_unfolded = [ "Visibility" ]
-
-[node name="unequip" type="TextureButton" parent="gearpanel/costume" index="3"]
+[node name="unequip" type="TextureButton" parent="gearpanel/costume" index="2"]
 
 visible = false
 anchor_left = 0.0
@@ -1259,7 +1245,7 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 45 )
+texture_normal = ExtResource( 44 )
 expand = true
 
 [node name="underwear" type="TextureButton" parent="gearpanel" index="3"]
@@ -1284,10 +1270,10 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 46 )
+texture_normal = ExtResource( 45 )
 expand = true
 
-[node name="TextureFrame3" type="TextureRect" parent="gearpanel/underwear" index="0"]
+[node name="TextureFrame2" type="TextureRect" parent="gearpanel/underwear" index="0"]
 
 self_modulate = Color( 0.957031, 0.957031, 0.957031, 1 )
 show_behind_parent = true
@@ -1328,25 +1314,7 @@ expand = true
 stretch_mode = 0
 _sections_unfolded = [ "Rect" ]
 
-[node name="enchant" type="TextureRect" parent="gearpanel/underwear" index="2"]
-
-visible = false
-show_behind_parent = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-texture = ExtResource( 44 )
-expand = true
-stretch_mode = 0
-
-[node name="unequip" type="TextureButton" parent="gearpanel/underwear" index="3"]
+[node name="unequip" type="TextureButton" parent="gearpanel/underwear" index="2"]
 
 visible = false
 anchor_left = 0.0
@@ -1368,7 +1336,7 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 45 )
+texture_normal = ExtResource( 44 )
 expand = true
 
 [node name="weapon" type="TextureButton" parent="gearpanel" index="4"]
@@ -1393,10 +1361,10 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 47 )
+texture_normal = ExtResource( 46 )
 expand = true
 
-[node name="TextureFrame4" type="TextureRect" parent="gearpanel/weapon" index="0"]
+[node name="TextureFrame2" type="TextureRect" parent="gearpanel/weapon" index="0"]
 
 self_modulate = Color( 0.957031, 0.957031, 0.957031, 1 )
 show_behind_parent = true
@@ -1436,26 +1404,7 @@ texture = ExtResource( 43 )
 expand = true
 stretch_mode = 0
 
-[node name="enchant" type="TextureRect" parent="gearpanel/weapon" index="2"]
-
-visible = false
-show_behind_parent = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-texture = ExtResource( 44 )
-expand = true
-stretch_mode = 0
-_sections_unfolded = [ "Visibility" ]
-
-[node name="unequip" type="TextureButton" parent="gearpanel/weapon" index="3"]
+[node name="unequip" type="TextureButton" parent="gearpanel/weapon" index="2"]
 
 visible = false
 anchor_left = 0.0
@@ -1477,7 +1426,7 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 45 )
+texture_normal = ExtResource( 44 )
 expand = true
 
 [node name="armor" type="TextureButton" parent="gearpanel" index="5"]
@@ -1502,10 +1451,10 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 48 )
+texture_normal = ExtResource( 47 )
 expand = true
 
-[node name="TextureFrame5" type="TextureRect" parent="gearpanel/armor" index="0"]
+[node name="TextureFrame2" type="TextureRect" parent="gearpanel/armor" index="0"]
 
 self_modulate = Color( 0.957031, 0.957031, 0.957031, 1 )
 show_behind_parent = true
@@ -1545,25 +1494,7 @@ texture = ExtResource( 43 )
 expand = true
 stretch_mode = 0
 
-[node name="enchant" type="TextureRect" parent="gearpanel/armor" index="2"]
-
-visible = false
-show_behind_parent = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-texture = ExtResource( 44 )
-expand = true
-stretch_mode = 0
-
-[node name="unequip" type="TextureButton" parent="gearpanel/armor" index="3"]
+[node name="unequip" type="TextureButton" parent="gearpanel/armor" index="2"]
 
 visible = false
 anchor_left = 0.0
@@ -1585,7 +1516,7 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 45 )
+texture_normal = ExtResource( 44 )
 expand = true
 
 [node name="accessory" type="TextureButton" parent="gearpanel" index="6"]
@@ -1610,10 +1541,10 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 49 )
+texture_normal = ExtResource( 48 )
 expand = true
 
-[node name="TextureFrame6" type="TextureRect" parent="gearpanel/accessory" index="0"]
+[node name="TextureFrame2" type="TextureRect" parent="gearpanel/accessory" index="0"]
 
 self_modulate = Color( 0.957031, 0.957031, 0.957031, 1 )
 show_behind_parent = true
@@ -1652,26 +1583,9 @@ size_flags_vertical = 2
 texture = ExtResource( 43 )
 expand = true
 stretch_mode = 0
+_sections_unfolded = [ "Hint" ]
 
-[node name="enchant" type="TextureRect" parent="gearpanel/accessory" index="2"]
-
-visible = false
-show_behind_parent = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-texture = ExtResource( 44 )
-expand = true
-stretch_mode = 0
-
-[node name="unequip" type="TextureButton" parent="gearpanel/accessory" index="3"]
+[node name="unequip" type="TextureButton" parent="gearpanel/accessory" index="2"]
 
 visible = false
 anchor_left = 0.0
@@ -1693,27 +1607,28 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 45 )
+texture_normal = ExtResource( 44 )
 expand = true
 
 [node name="Panel" type="TextureRect" parent="gearpanel" index="7"]
 
+editor/display_folded = true
 show_behind_parent = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -3.0
-margin_top = 445.0
+margin_top = 444.0
 margin_right = -6.0
-margin_bottom = -238.0
+margin_bottom = 233.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-texture = ExtResource( 50 )
+texture = ExtResource( 49 )
 expand = true
 stretch_mode = 0
 
@@ -1725,14 +1640,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -2.0
 margin_right = 9.0
-margin_bottom = 228.0
+margin_bottom = -1.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-texture = ExtResource( 51 )
+texture = ExtResource( 50 )
 expand = true
 stretch_mode = 0
 
@@ -1786,7 +1701,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-texture = ExtResource( 52 )
+texture = ExtResource( 51 )
 expand = true
 stretch_mode = 5
 _sections_unfolded = [ "Mouse" ]
@@ -2231,9 +2146,9 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 55 )
-texture_pressed = ExtResource( 56 )
-texture_hover = ExtResource( 57 )
+texture_normal = ExtResource( 54 )
+texture_pressed = ExtResource( 55 )
+texture_hover = ExtResource( 56 )
 expand = true
 _sections_unfolded = [ "Hint", "Textures" ]
 

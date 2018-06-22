@@ -9,12 +9,14 @@ var testslaveorigin = ['slave','poor','commoner','rich','noble']
 var currentslave = 0 setget currentslave_set
 var selectedslave = -1
 var texture = null
-var startcombatzone = "elvenforest"
+var startcombatzone = "undercityhall"
 var nameportallocation
 var enddayprocess = false
 onready var maintext = '' setget maintext_set, maintext_get
 onready var exploration = get_node("explorationnode")
 onready var slavepanel = get_node("MainScreen/slave_tab")
+
+onready var tween = $Tween
 
 signal animfinished
 
@@ -157,9 +159,9 @@ func _ready():
 	if globals.player.name == '':
 		globals.player = globals.newslave('Human', 'teen', 'male')
 		globals.player.ability.append('escape')
-		globals.player.ability.append('acidspit')
+		globals.player.ability.append('heal')
 		globals.player.abilityactive.append('escape')
-		globals.player.abilityactive.append('acidspit')
+		globals.player.abilityactive.append('mindread')
 		globals.state.supporter = true
 		for i in globals.gallery.charactergallery.values():
 			i.unlocked = true
@@ -211,6 +213,11 @@ func _ready():
 	$MainScreen/mansion/mansioninfo.connect("meta_hover_started",self,'slavehover')
 	$MainScreen/mansion/mansioninfo.connect("meta_hover_ended",globals, 'slavetooltiphide')
 	$MainScreen/mansion/mansioninfo.connect("meta_clicked",self, "slaveclicked")
+	
+	$outside/textpanel/outsidetextbox.connect("meta_hover_started",self,'slavehover')
+	$outside/textpanelexplore/outsidetextbox2.connect("meta_hover_started",self,'slavehover')
+	$outside/textpanel/outsidetextbox.connect("meta_hover_ended",globals, 'slavetooltiphide')
+	$outside/textpanelexplore/outsidetextbox2.connect("meta_hover_ended",globals, 'slavetooltiphide')
 	
 	_on_mansion_pressed()
 	#startending()
@@ -311,7 +318,7 @@ func _on_new_slave_button_pressed():
 	globals.state.sidequests.yris = 3
 	#globals.state.decisions.append('')
 	globals.state.rank = 3
-	globals.state.mainquest = 40
+	globals.state.mainquest = 0
 	#globals.state.plotsceneseen = ['garthorscene','hade1','hade2','frostfordscene']#,'slaverguild']
 	globals.resources.mana = 200
 	globals.state.farm = 3
@@ -326,18 +333,19 @@ func _on_new_slave_button_pressed():
 	globals.state.reputation.frostford = 50
 	globals.state.condition -= 100
 	globals.state.decisions = ['tishaemilytricked','chloebrothel','ivrantaken','goodroute']
-	for i in globals.characters.characters:
-		person = globals.characters.create(i)
-		person.loyal = 100
-		person.stress = 0
-		person.obed = 100
-		person.lust = 0
-		person.consent = true
-		person.asser = 100
-		person.lewdness = 100
-		person.attention = 100
-		person.learningpoints = 50
-		globals.slaves = person
+	if false:
+		for i in globals.characters.characters:
+			person = globals.characters.create(i)
+			person.loyal = 100
+			person.stress = 0
+			person.obed = 100
+			person.lust = 0
+			person.consent = true
+			person.asser = 100
+			person.lewdness = 100
+			person.attention = 100
+			person.learningpoints = 50
+			globals.slaves = person
 
 func mansion():
 	_on_mansion_pressed()
@@ -1220,9 +1228,7 @@ func startnewday():
 	get_node("FinishDayPanel").show()
 	if thread.is_active():
 		thread.wait_to_finish()
-	thread.start(globals,"save_game",'user://saves/autosave')
-	
-#	globals.save_game('autosave')
+	autosave()
 	if globals.rules.enddayalise == 0:
 		alisebuild(aliseresults)
 	elif globals.rules.enddayalise == 1:
@@ -1235,6 +1241,25 @@ func startnewday():
 #	if globals.state.supporter == false && int(globals.resources.day)%100 == 0:
 #		get_node("sellout").show()
 
+
+func autosave():
+	var counter = 3
+	var savegame = File.new()
+	var dir = Directory.new()
+	if dir.dir_exists("user://saves") == false:
+		dir.make_dir("user://saves")
+	var filearray = globals.dir_contents()
+	var path = 'user://saves/'
+#	if filearray.has(path+"autosave3"):
+#		dir.remove(path+"autosave3")
+	if filearray.has(path+"autosave2"):
+		dir.rename(path+'autosave2',path+'autosave3')
+		globals.savelist[path+'autosave3'] = globals.savelist[path + 'autosave2']
+	if filearray.has(path+"autosave1"):
+		dir.rename(path+'autosave1',path+'autosave2')
+		globals.savelist[path+'autosave2'] = globals.savelist[path + 'autosave1']
+	
+	thread.start(globals,"save_game",'user://saves/autosave1')
 
 
 
@@ -1290,7 +1315,7 @@ onready var nodedict = {pos1 = get_node("dialogue/charactersprite1"), pos2 = get
 
 func dialogue(showclose, destination, dialogtext, dialogbuttons = null, sprites = null, background = null): #for arrays: 0 - boolean to show close button or not. 1 - node to return connection back. 2 - text to show 3+ - arrays of buttons and functions in those
 	var text = get_node("dialogue/dialoguetext")
-	var buttons = get_node("dialogue/popupbuttoncenter/popupbuttons")
+	var buttons = $dialogue/buttonscroll/buttoncontainer
 	var closebutton
 	var newbutton
 	var counter = 1
@@ -1300,10 +1325,11 @@ func dialogue(showclose, destination, dialogtext, dialogbuttons = null, sprites 
 		get_node("dialogue/background").set_texture(globals.backgrounds[background])
 	if !get_node("dialogue").visible:
 		get_node("dialogue").visible = true
-		get_node("dialogue/AnimationPlayer").play("fading")
+		nodeunfade($dialogue, 0.4)
+		#get_node("dialogue/AnimationPlayer").play("fading")
 	text.set_bbcode('')
 	for i in buttons.get_children():
-		if i != get_node("dialogue/popupbuttoncenter/popupbuttons/Button"):
+		if i.name != "Button":
 			i.hide()
 			i.queue_free()
 	if dialogtext == "":
@@ -1319,7 +1345,7 @@ func dialogue(showclose, destination, dialogtext, dialogbuttons = null, sprites 
 			call("dialoguebuttons", dialogbuttons[counter-1], destination, counter)
 			counter += 1
 	if closebutton == true:
-		newbutton = get_node("dialogue/popupbuttoncenter/popupbuttons/Button").duplicate()
+		newbutton = $dialogue/buttonscroll/buttoncontainer/Button.duplicate()
 		newbutton.show()
 		newbutton.set_text('Close')
 		newbutton.connect('pressed',self,'close_dialogue')
@@ -1336,20 +1362,24 @@ func dialogue(showclose, destination, dialogtext, dialogbuttons = null, sprites 
 			else:
 				if spritedict.has(i[0]):
 					if i.size() > 2 && (i[2] != 'opac' || spritedict[i[0]] != nodedict[i[1]].get_texture()):
-						get_node("AnimationPlayer").play(i[2])
+						tweenopac(nodedict[i[1]])
 					nodedict[i[1]].set_texture(spritedict[i[0]])
 				else:
 					if i.size() > 2 && (i[2] != 'opac' || globals.loadimage(i[0]) != nodedict[i[1]].get_texture()):
-						get_node("AnimationPlayer").play(i[2])
+						tweenopac(nodedict[i[1]])
 					nodedict[i[1]].set_texture(globals.loadimage(i[0]))
 				if i[1] == 'pos1': sprite1 = true
 				if i[1] == 'pos2': sprite2 = true
 	if sprite1 == false: nodedict.pos1.set_texture(null)
 	if sprite2 == false: nodedict.pos2.set_texture(null)
 
+func tweenopac(node):
+	var tween = $Tween
+	tween.interpolate_property(node, 'modulate', Color(1,1,1,0), Color(1,1,1,1), 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween.start()
 
 func dialoguebuttons(array, destination, counter):
-	var newbutton = get_node("dialogue/popupbuttoncenter/popupbuttons/Button").duplicate()
+	var newbutton = $dialogue/buttonscroll/buttoncontainer/Button.duplicate()
 	newbutton.get_node("Label").set_text(str(counter))
 	newbutton.show()
 	if typeof(array) == TYPE_DICTIONARY:
@@ -1368,13 +1398,14 @@ func dialoguebuttons(array, destination, counter):
 			newbutton.connect('pressed',destination,array[1])
 		else:
 			newbutton.connect('pressed',destination,array[1],[array[2]])
-	get_node("dialogue/popupbuttoncenter/popupbuttons").add_child(newbutton)
+	$dialogue/buttonscroll/buttoncontainer.add_child(newbutton)
 
 func close_dialogue(mode = 'normal'):
-	get_node("dialogue/AnimationPlayer").play_backwards("fading")
+	#get_node("dialogue/AnimationPlayer").play_backwards("fading")
+	nodefade($dialogue, 0.4)
 	get_node("dialogue/blockinput").show()
 	if OS.get_name() != "HTML5" && globals.rules.fadinganimation == true && mode != 'instant':
-		yield(get_node("dialogue/AnimationPlayer"), 'animation_finished')
+		yield(tween, 'tween_completed')
 	get_node("dialogue").hide()
 	for i in nodedict.values():
 		i.set_texture(null)
@@ -1386,7 +1417,8 @@ var savedtrack
 func scene(target, image, scenetext, scenebuttons = null):
 	if !get_node("scene").visible:
 		get_node("scene").visible = true
-		get_node("scene/AnimationPlayer").play("fading")
+		nodeunfade($scene, 0.4)
+		#get_node("scene/AnimationPlayer").play("fading")
 	get_node("scene").show()
 	get_node("infotext").hide()
 	get_node("scene/Panel/sceneeffects").set_texture(null)
@@ -1399,7 +1431,7 @@ func scene(target, image, scenetext, scenebuttons = null):
 	if !(image in ['finale', 'finale2']):
 		savedtrack = $music.get_meta("currentsong")
 		music_set("intimate")
-	for i in get_node("scene/popupbuttoncenter/popupbuttons").get_children():
+	for i in $scene/buttonscroll/buttoncontainer.get_children():
 		if i.get_name() != 'Button':
 			i.hide()
 			i.queue_free()
@@ -1409,8 +1441,8 @@ func scene(target, image, scenetext, scenebuttons = null):
 		counter += 1
 
 func newbuttonscene(button, target, counter):
-	var newbutton = get_node("scene/popupbuttoncenter/popupbuttons/Button").duplicate()
-	get_node("scene/popupbuttoncenter/popupbuttons").add_child(newbutton)
+	var newbutton = $scene/buttonscroll/buttoncontainer/Button.duplicate()
+	$scene/buttonscroll/buttoncontainer.add_child(newbutton)
 	newbutton.show()
 	newbutton.set_text(button.text)
 	newbutton.get_node("Label").set_text(str(counter))
@@ -1430,12 +1462,13 @@ func _on_scenepicture_pressed():
 		get_node("scene/Panel/coverpanel").show()
 
 func closescene():
-	get_node("scene/AnimationPlayer").play_backwards("fading")
+	#get_node("scene/AnimationPlayer").play_backwards("fading")
+	nodefade($scene, 0.4)
 	get_node("infotext").show()
 	if $music.stream == globals.musicdict.intimate:
 		music_set(savedtrack)
 	if OS.get_name() != "HTML5" && globals.rules.fadinganimation == true:
-		yield(get_node("scene/AnimationPlayer"), 'animation_finished')
+		yield(tween, 'tween_completed')
 	get_node("scene").hide()
 
 func _on_menu_pressed():
@@ -1763,10 +1796,11 @@ func _on_mansion_pressed():
 		text += 'Mansion is [color=lime]passably clean[/color].\n\n'
 	else:
 		text += 'Mansion is [color=green]immaculate[/color].\n\n'
+	
+	var counter = 0
 	if globals.state.playergroup.size() <= 0:
 		text = text + 'Nobody is assigned to follow you.\n\n'
 	else:
-		var counter = 0
 		slavearray.clear()
 		for i in globals.state.playergroup:
 			var person = globals.state.findslave(i)
@@ -1776,12 +1810,14 @@ func _on_mansion_pressed():
 				counter += 1
 			else:
 				globals.state.playergroup.erase(i)
-	textnode.set_bbcode(text)
 	var headgirl = false
 	for i in globals.slaves:
 		if i.work == 'headgirl':
+			slavearray.append(i)
 			headgirl = true
-			text = text + i.dictionary('$name is your headgirl.')
+			text = text + i.dictionary('\n[url=person' + str(counter) + '][color=yellow]$name[/color][/url] is your headgirl.')
+			counter += 1
+	textnode.set_bbcode(text)
 	if (globals.slaves.size() >= 8 && headgirl == true) || globals.developmode == true:
 		get_node("charlistcontrol/slavelist").show()
 	else:
@@ -2080,6 +2116,7 @@ func lorebutton(lore):
 			i.set_pressed(false)
 		else:
 			i.set_pressed(true)
+	sound('page')
 	get_node("MainScreen/mansion/librarypanel/TextureFrame/librarytext").set_bbcode(lore.text)
 	get_node("MainScreen/mansion/librarypanel/TextureFrame/librarytext").get_v_scroll().set_value(0)
 
@@ -2266,6 +2303,7 @@ utility = load("res://files/buttons/book/utility.png"),
 
 func _on_spellbook_pressed():
 	get_node("spellbooknode").popup()
+	sound('page')
 	var spelllist = get_node("spellbooknode/spellbooklist/ScrollContainer/spellist")
 	var spellbutton = get_node("spellbooknode/spellbooklist/ScrollContainer/spellist/spellbutton")
 	get_node("spellbooknode/spellbooklist").set_texture(spellbookimages[spellscategory])
@@ -2289,6 +2327,7 @@ func _on_spellbook_pressed():
 
 func spellbookselected(spell):
 	var text = ''
+	sound('page')
 	for i in get_tree().get_nodes_in_group("spellbutton"):
 		if i.get_text() != spell.name: i.set_pressed(false)
 	text = '[center]'+ spell.name + '[/center]\n\n' + spell.description + '\n\nType: ' + spell.type.capitalize() + '\n\nMana: ' + str(globals.spells.spellcost(spell))
@@ -3204,7 +3243,7 @@ func openslave(person):
 	currentslave = globals.slaves.find(person)
 	if get_node("MainScreen/slave_tab").visible:
 		get_node("MainScreen/slave_tab").hide()
-	get_node("MainScreen/slave_tab").show()
+	get_node("MainScreen/slave_tab").slavetabopen()
 	get_node("slavelist").hide()
 
 func joblist():
@@ -3514,33 +3553,51 @@ func _on_supplykeep_value_changed( value ):
 func _on_supplybuy_pressed():
 	globals.state.supplybuy = get_node("mansionsettings/Panel/supplykeep/supplybuy").is_pressed()
 
-
 func _on_close_pressed():
 	get_node("mansionsettings").hide()
-
-
-
-
-
-
 
 func _on_hideui_pressed():
 	$outside.visible = !$outside.visible
 	$ResourcePanel.visible = !$ResourcePanel.visible
 
-
-
-
-
 func _on_selfpierce_pressed():
 	$MainScreen/slave_tab.person = globals.player
 	$MainScreen/slave_tab._on_piercing_pressed()
-
 
 func _on_selftattoo_pressed():
 	$MainScreen/slave_tab.person = globals.player
 	$MainScreen/slave_tab._on_tattoo_pressed()
 
 
+#Tweens
 
+func tweenanimate(node):
+	pass
+
+func repeattweenanimate(node, name):
+	var pos = node.rect_position
+	var tweennode
+	if node.has_node('reptween') == false:
+		tweennode = tween.duplicate()
+		tweennode.repeat = true
+		tweennode.name = 'reptween'
+		node.add_child(tweennode)
+	else:
+		tweennode = node.get_node("reptween")
+	if name == 'stop':
+		tweennode.seek(0)
+		tweennode.set_active(false)
+	if name == 'fairy':
+		var change = 30
+		tweennode.interpolate_property(node, "rect_position", pos, Vector2(pos.x, pos.y-change), 2.5, Tween.TRANS_SINE, Tween.EASE_OUT)
+		tweennode.interpolate_property(node, "rect_position", Vector2(pos.x, pos.y-change), pos, 2.5, Tween.TRANS_SINE, Tween.EASE_OUT, 2.5)
+		tweennode.start()
+
+func nodeunfade(node, duration = 0.4):
+	tween.interpolate_property(node, 'modulate', Color(1,1,1,0), Color(1,1,1,1), duration, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween.start()
+
+func nodefade(node, duration = 0.4):
+	tween.interpolate_property(node, 'modulate', Color(1,1,1,1), Color(1,1,1,0), duration, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween.start()
 

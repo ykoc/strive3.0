@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/42.png-5d88c151ce4b9b3482479a0453a8e8bc.stex"
+path="res://.import/35.png-64ebb9d5d731fd1e07822dbc7c77dc39.stex"
 
 [deps]
 
-source_file="res://files/images/hade/42.png"
-source_md5="7ecd79ef76a45e961a307349c1c9f081"
+source_file="res://files/buttons/outside/35.png"
+source_md5="e600fc080b8abbbe37454d2e85c2645e"
 
-dest_files=[ "res://.import/42.png-5d88c151ce4b9b3482479a0453a8e8bc.stex" ]
-dest_md5="dabee28c5773b5313ebba165d64d3d1e"
+dest_files=[ "res://.import/35.png-64ebb9d5d731fd1e07822dbc7c77dc39.stex" ]
+dest_md5="02047f44577e55d52be3e8aba6fb5822"
 
 [params]
 

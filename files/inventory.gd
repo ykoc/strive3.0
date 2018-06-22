@@ -43,6 +43,9 @@ func _ready():
 	
 	for i in ['costume','weapon','armor','accessory','underwear']:
 		get_node("gearpanel/" + i).connect("pressed", self, 'gearinfo', [i])
+		get_node("gearpanel/" + i).connect("mouse_entered", self, 'geartooltip', [i])
+		get_node("gearpanel/" + i + '/TextureFrame').connect("mouse_entered", self, 'geartooltip', [i])
+		get_node("gearpanel/" + i + '/TextureFrame').connect("mouse_exited", globals, 'itemtooltiphide')
 		get_node("gearpanel/" + i + "/unequip").connect("pressed", self, 'unequip', [i])
 	
 	for i in get_tree().get_nodes_in_group("invcategory"):
@@ -75,6 +78,11 @@ func gearinfo(gear):
 		get_node("iteminfo/RichTextLabel").set_bbcode(globals.itemdescription(item))
 		get_node("iteminfo/TextureFrame").set_texture(load(item.icon))
 		get_node("iteminfo").popup()
+
+func geartooltip(gear):
+	if selectedslave != null && selectedslave.gear[gear] != null:
+		var item = globals.state.unstackables[selectedslave.gear[gear]]
+		globals.itemtooltip(item)
 
 func unequip(gear):
 	var item = globals.state.unstackables[selectedslave.gear[gear]]
@@ -149,6 +157,8 @@ func itemsinventory():
 		button.get_node("info").connect("pressed",self,'info',[button])
 		button.get_node("discard").connect("pressed",self,'discard',[button])
 		button.get_node("move").connect("pressed",self,'movetobackpack',[button])
+		button.connect("mouse_entered", globals, 'itemtooltip', [i])
+		button.connect("mouse_exited", globals, 'itemtooltiphide')
 		if i.type != 'potion':
 			button.get_node("use").visible = false
 		else:
@@ -192,12 +202,14 @@ func itemsinventory():
 		button.set_meta("itemarray", i)
 		button.set_meta("number", i.size())
 		button.set_meta("category", 'gear')
+		button.connect("mouse_entered", globals, 'itemtooltip', [i[0]])
+		button.connect("mouse_exited", globals, 'itemtooltiphide')
 		button.get_node("rename").visible = true
 		button.get_node("rename").connect("pressed",self,"renameitem",[i[0]])
-		if i[0].enchant == 'basic':
-			button.get_node("Label").set('custom_colors/font_color', Color(0,0.5,0))
-		elif i[0].enchant == 'unique':
-			button.get_node("Label").set('custom_colors/font_color', Color(0.6,0.4,0))
+#		if i[0].enchant == 'basic':
+#			button.get_node("Label").set('custom_colors/font_color', Color(0,0.5,0))
+#		elif i[0].enchant == 'unique':
+#			button.get_node("Label").set('custom_colors/font_color', Color(0.6,0.4,0))
 		if i[0].icon != null:
 			button.get_node("icon").set_texture(load(i[0].icon))
 		itemgrid.add_child(button)
@@ -225,6 +237,8 @@ func itemsbackpack():
 		button.get_node("info").connect("pressed",self,'info',[button])
 		button.get_node("discard").connect("pressed",self,'discard',[button])
 		button.get_node("move").connect("pressed",self,'movefrombackpack',[button])
+		button.connect("mouse_entered", globals, 'itemtooltip', [tempitem])
+		button.connect("mouse_exited", globals, 'itemtooltiphide')
 		button.get_node("number").set_text(str(globals.state.backpack.stackables[i]))
 		if tempitem.type != 'potion':
 			button.get_node("use").visible = false
@@ -266,6 +280,8 @@ func itemsbackpack():
 		button.set_meta('item', i[0])
 		button.set_meta("itemarray", i)
 		button.set_meta("number", i.size())
+		button.connect("mouse_entered", globals, 'itemtooltip', [i[0]])
+		button.connect("mouse_exited", globals, 'itemtooltiphide')
 		button.set_meta("category", 'gear')
 		button.get_node("rename").visible = true
 		button.get_node("rename").connect("pressed",self,"renameitem",[i[0]])
@@ -352,12 +368,10 @@ func slavegear(person):
 	for i in ['weapon','costume','underwear','armor','accessory']:
 		if person.gear[i] == null:
 			get_node("gearpanel/"+i+"/unequip").visible = false
-			get_node("gearpanel/"+i+"/enchant").visible = false
 			get_node("gearpanel/"+i).set_normal_texture(sil[i])
 		else:
 			get_node("gearpanel/"+i+"/unequip").visible = true
 			get_node("gearpanel/"+i).set_normal_texture(load(globals.state.unstackables[person.gear[i]].icon))
-			get_node("gearpanel/"+i+"/enchant").visible = globals.state.unstackables[person.gear[i]].enchant != ''
 
 func use(button):
 	if selectedslave == null:
@@ -765,3 +779,5 @@ func _on_moveall_pressed():
 		if i.name != 'Button':
 			while int(i.get_node("number").text) >= 1:
 				movefrombackpack(i)
+
+

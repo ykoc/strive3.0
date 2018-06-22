@@ -3,24 +3,10 @@ extends HBoxContainer
 
 func slavetabopen():
 	var slavetab = get_tree().get_current_scene().get_node("MainScreen/slave_tab")
-	get_tree().get_current_scene().get_node("MainScreen/slave_tab/sexual").partner = null
 	get_tree().get_current_scene().hide_everything()
 	get_tree().get_current_scene().currentslave = int(get_meta('pos'))
 	slavetab.slavetabopen()
 
-func _on_inspect_pressed():
-	slavetabopen()
-
-
-func _on_actions_pressed():
-	slavetabopen()
-
-
-func _on_stats_pressed():
-	slavetabopen()
-
-func _on_regulations_pressed():
-	slavetabopen()
 
 
 func _on_cast_spell_pressed():

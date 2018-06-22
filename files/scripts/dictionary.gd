@@ -10,7 +10,7 @@ sstr = "[color=yellow]Strength[/color] - Represents character’s physical power
 sagi = "[color=yellow]Agility[/color] - Represents character’s quickness. It affects their chance to dodge in combat and some motoric tasks.",
 smaf = "[color=yellow]Magic Affinity[/color] - Represents a character’s magical energy capacity as well as their spell casting strength. It also affects other magic abilities and magic-related assignments.",
 send = "[color=yellow]Endurance[/color] - Represents a character’s health and stamina. It affects their total health pool, energy regeneration and influences their effectiveness while performing tiring tasks.",
-power = "[color=yellow]Power[/color] - Affects physical damage. Influenced by Strength and Weapon. ",
+attack = "[color=yellow]Power[/color] - Affects physical damage. Influenced by Strength and Weapon. ",
 speed = "[color=yellow]Speed[/color] - Affects hit and dodge chance. Influenced by Agility. ",
 armor = "[color=yellow]Armor[/color] - Reduces physical damage by this value. Influenced by Gear. ",
 protection = "[color=yellow]Protection[/color] - Mitigates a percent of incoming physical damage. Influenced by Gear. ",

@@ -14,7 +14,7 @@ var learnpointsperstat = 3
 
 
 #slave stats & combat
-var damageperstr = 2.5
+var damageperstr = 3
 var speedperagi = 3
 var speedbase = 10
 

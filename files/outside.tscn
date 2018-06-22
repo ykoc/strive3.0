@@ -675,6 +675,8 @@ func itemsinventory():
 		button.get_node(\"Label\").set_text(i.name)
 		button.get_node(\"info\").connect(\"pressed\",self,'info',[button])
 		button.get_node(\"sell\").connect(\"pressed\",self,'sellitem',[button])
+		button.connect(\"mouse_entered\", globals, 'itemtooltip', [i])
+		button.connect(\"mouse_exited\", globals, 'itemtooltiphide')
 		button.set_meta('item', i)
 		button.set_meta(\"price\",price)
 		button.set_meta(\"number\", i.amount)
@@ -710,6 +712,8 @@ func itemsinventory():
 		button.get_node(\"sell\").connect(\"pressed\",self,'sellitem',[button])
 		button.set_meta('item', i[0])
 		button.set_meta(\"itemarray\", i)
+		button.connect(\"mouse_entered\", globals, 'itemtooltip', [i[0]])
+		button.connect(\"mouse_exited\", globals, 'itemtooltiphide')
 		button.set_meta(\"number\", i.size())
 		button.set_meta(\"category\", 'gear')
 		button.set_meta(\"price\", price)
@@ -738,6 +742,8 @@ func itemsbackpack():
 		button.get_node(\"Label\").set_text(tempitem.name)
 		button.get_node(\"info\").connect(\"pressed\",self,'info',[button])
 		button.get_node(\"number\").set_text(str(globals.state.backpack.stackables[i]))
+		button.connect(\"mouse_entered\", globals, 'itemtooltip', [tempitem])
+		button.connect(\"mouse_exited\", globals, 'itemtooltiphide')
 		button.get_node(\"price\").text = str(price)
 		button.get_node(\"sell\").connect(\"pressed\",self,'sellitem',[button])
 		button.set_meta(\"price\", price)
@@ -771,6 +777,8 @@ func itemsbackpack():
 		button.get_node(\"price\").text = str(price)
 		button.set_meta(\"price\", price)
 		button.get_node(\"sell\").connect(\"pressed\",self,'sellitem',[button])
+		button.connect(\"mouse_entered\", globals, 'itemtooltip', [i[0]])
+		button.connect(\"mouse_exited\", globals, 'itemtooltiphide')
 		button.set_meta('item', i[0])
 		button.set_meta(\"itemarray\", i)
 		button.set_meta(\"number\", i.size())
@@ -803,6 +811,8 @@ func itemsshop():
 		newbutton.get_node('Label').set_text(item.name)
 		newbutton.get_node(\"buy\").connect(\"pressed\",self,'buyitem',[newbutton])
 		newbutton.set_meta(\"price\", price)
+		newbutton.connect(\"mouse_entered\", globals, 'itemtooltip', [item])
+		newbutton.connect(\"mouse_exited\", globals, 'itemtooltiphide')
 		newbutton.set_meta(\"category\", item.type)
 		if typeof(item.icon) == TYPE_STRING:
 			newbutton.get_node(\"icon\").set_texture(load(item.icon))
@@ -1327,7 +1337,6 @@ _sections_unfolded = [ "Anchor", "Rect", "Visibility" ]
 
 [node name="textpanelexplore" type="Panel" parent="." index="3"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -1427,7 +1436,6 @@ _sections_unfolded = [ "Rect" ]
 
 [node name="textpanel" type="Panel" parent="." index="4"]
 
-editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -1599,6 +1607,7 @@ _sections_unfolded = [ "Material", "Rect", "Visibility", "custom_styles" ]
 
 [node name="VBoxContainer" type="HBoxContainer" parent="playergrouppanel" index="0"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -1908,6 +1917,7 @@ max_lines_visible = -1
 
 [node name="characterinfo" type="PopupPanel" parent="playergrouppanel" index="2"]
 
+editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -2562,7 +2572,6 @@ max_lines_visible = -1
 
 [node name="combstats" type="TextureRect" parent="playergrouppanel/characterinfo" index="17"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -2580,7 +2589,7 @@ size_flags_vertical = 1
 texture = ExtResource( 34 )
 stretch_mode = 0
 
-[node name="power" type="TextureRect" parent="playergrouppanel/characterinfo/combstats" index="0"]
+[node name="attack" type="TextureRect" parent="playergrouppanel/characterinfo/combstats" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -2597,8 +2606,9 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 stretch_mode = 0
+_sections_unfolded = [ "Hint" ]
 
-[node name="Label" type="Label" parent="playergrouppanel/characterinfo/combstats/power" index="0"]
+[node name="Label" type="Label" parent="playergrouppanel/characterinfo/combstats/attack" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -4243,6 +4253,7 @@ visible = false
 
 [node name="slavesellpanel" type="Control" parent="." index="11"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -4486,6 +4497,7 @@ max_lines_visible = -1
 
 [node name="slaveguildquestpanel" type="Control" parent="." index="12"]
 
+editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -6380,6 +6392,7 @@ _sections_unfolded = [ "custom_fonts" ]
 [node name="amountselect" type="PopupPanel" parent="shoppanel/inventory" index="16"]
 
 editor/display_folded = true
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
