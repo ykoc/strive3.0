@@ -7,10 +7,7 @@ path="res://.import/chek.png-25d804791dff80bc07225f31121d8c34.stex"
 [deps]
 
 source_file="res://files/buttons/chek.png"
-source_md5="c5db50530c27572ede6912a530d9154f"
-
 dest_files=[ "res://.import/chek.png-25d804791dff80bc07225f31121d8c34.stex" ]
-dest_md5="e843028b4b63f5b0816dd3555e1d2e8c"
 
 [params]
 

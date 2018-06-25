@@ -30,8 +30,6 @@ aiselfcond = 'any',
 aitargetcond = 'any',
 aipriority = 0,
 castersfx = 'attackanimation',
-
-targetsfx = 'attacktake',
 },
 "pass" : {
 name = 'Pass',
@@ -464,6 +462,7 @@ aiselfcond = 'any',
 aitargetcond = 'any',
 aipriority = 5,
 castersfx = 'attackanimation',
+targetsfx = 'slamanimation'
 },
 alwayshitattack = {
 name = 'Precise Attack',

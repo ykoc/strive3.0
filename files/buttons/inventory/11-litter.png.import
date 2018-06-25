@@ -7,10 +7,7 @@ path="res://.import/11-litter.png-e46f205c290506840b208e0c48efde3f.stex"
 [deps]
 
 source_file="res://files/buttons/inventory/11-litter.png"
-source_md5="7cd41c28cb29739e24b1e5f5ea0a046a"
-
 dest_files=[ "res://.import/11-litter.png-e46f205c290506840b208e0c48efde3f.stex" ]
-dest_md5="a0c6b9f85f38febd965cf4c49b5582d0"
 
 [params]
 

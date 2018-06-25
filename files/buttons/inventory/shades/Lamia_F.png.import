@@ -7,10 +7,7 @@ path="res://.import/Lamia_F.png-5f2411f207a68d1d5bc0117019c8b620.stex"
 [deps]
 
 source_file="res://files/buttons/inventory/shades/Lamia_F.png"
-source_md5="2e634d690e3a405b74fccc6d79c964b3"
-
 dest_files=[ "res://.import/Lamia_F.png-5f2411f207a68d1d5bc0117019c8b620.stex" ]
-dest_md5="66a0e36c350f47ffb62f2d05e9d2605d"
 
 [params]
 

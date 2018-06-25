@@ -7,10 +7,7 @@ path="res://.import/textfieldinact.png-4ed0a396bc1828d3bc8f94d2ee6398f2.stex"
 [deps]
 
 source_file="res://files/buttons/textfieldinact.png"
-source_md5="a3d6e9d0e56832750bc6d91f65178323"
-
 dest_files=[ "res://.import/textfieldinact.png-4ed0a396bc1828d3bc8f94d2ee6398f2.stex" ]
-dest_md5="3bb425ab7ce48e7a7683b9c1026d7071"
 
 [params]
 

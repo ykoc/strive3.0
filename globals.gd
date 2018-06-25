@@ -339,8 +339,7 @@ permadeath = false,
 autoattack = true,
 enddayalise = 1,
 spritesindialogues = true,
-screenwidth = 1080,
-screenheight = 600,
+instantcombatanimation = false,
 }
 
 
@@ -715,20 +714,16 @@ class person:
 	
 	
 	var stats = {
-		str_cur = 0,
 		str_max = 0,
 		str_mod = 0,
 		str_base = 0,
-		agi_cur = 0, 
 		agi_max = 0, 
 		agi_mod = 0,
 		agi_base = 0,
-		maf_cur = 0,
 		maf_max = 0,
 		maf_mod = 0,
 		maf_base = 0,
 		end_base = 0,
-		end_cur = 0,
 		end_mod = 0,
 		end_max = 0,
 		cour_max = 100,
@@ -885,7 +880,7 @@ class person:
 		spec = null
 		for i in traits:
 			trait_remove(i)
-		for i in ['str_base','agi_base', 'maf_base', 'end_base','str_cur','agi_cur', 'maf_cur', 'end_cur']:
+		for i in ['str_base','agi_base', 'maf_base', 'end_base']:
 			stats[i] = 0
 		skillpoints = 2
 		level = 1
@@ -918,7 +913,7 @@ class person:
 	
 	
 	func health_set(value):
-		stats.health_max = ((variables.basehealth + stats.end_cur*variables.healthperend) + floor(level/2)*5) + stats.health_bonus
+		stats.health_max = max(10, ((variables.basehealth + (stats.end_base+stats.end_mod)*variables.healthperend) + floor(level/2)*5) + stats.health_bonus)
 		stats.health_cur = clamp(floor(value), 0, stats.health_max) 
 		if stats.health_cur <= 0:
 			death()
@@ -1073,23 +1068,25 @@ class person:
 			stats.lust_cur = clamp(value,stats.lust_min,stats.lust_max)
 	
 	func str_set(value):
-		stats.str_cur = min(value-stats.str_mod, stats.str_max)
+		stats.str_base = min(stats.str_base, stats.str_max)
 	
 	func agi_set(value):
-		stats.agi_cur = min(value-stats.agi_mod, stats.agi_max)
+		stats.agi_base = min(stats.agi_base, stats.agi_max)
 	
 	func maf_set(value):
-		stats.maf_cur = min(value-stats.maf_mod, stats.maf_max)
+		stats.maf_base = min(stats.maf_base, stats.maf_max)
 	
 	func end_set(value):
 		var plushealth = false
-		if stats.end_cur < value:
+		if stats.end_base < value:
 			plushealth = true
-		stats.end_cur = min(value-stats.end_mod, stats.end_max)
+		stats.end_base = min(stats.end_base, stats.end_max)
 		if plushealth:
 			self.health += variables.healthperend
 		else:
 			self.health = self.health
+	
+	
 	
 	func beautybase_set(value):
 		value = round(value)
@@ -1130,16 +1127,16 @@ class person:
 		return stats.energy_cur
 	
 	func str_get():
-		return stats.str_cur + stats.str_mod
+		return stats.str_base + stats.str_mod
 	
 	func agi_get():
-		return stats.agi_cur + stats.agi_mod
+		return stats.agi_base + stats.agi_mod
 	
 	func maf_get():
-		return stats.maf_cur + stats.maf_mod
+		return stats.maf_base + stats.maf_mod
 	
 	func end_get():
-		return stats.end_cur + stats.end_mod
+		return stats.end_base + stats.end_mod
 	
 	func awareness():
 		var number = 0
@@ -1452,7 +1449,7 @@ func impregnation(mother, father = null, anyfather = false):
 #		realfather = father.id
 	if mother.preg.has_womb == false || mother.preg.duration > 0 || mother == father || mother.effects.has("contraceptive"):
 		return
-	var rand = rand_range(1,100)
+	var rand = rand_range(0,00)
 	if mother.preg.fertility < rand:
 		mother.preg.fertility += rand_range(5,10)
 		return
@@ -1487,6 +1484,7 @@ func impregnation(mother, father = null, anyfather = false):
 		connectrelatives(father, baby, 'father')
 	mother.preg.baby = baby.id
 	mother.preg.duration = 1
+	
 	mother.metrics.preg += 1
 	globals.state.babylist.append(baby)
 
@@ -1726,6 +1724,7 @@ var allwings = ['feathered_black', 'feathered_white', 'feathered_brown', 'leathe
 var allears = ['human','feathery','pointy','short_furry','long_pointy_furry','fins','long_round_furry', 'long_droopy_furry']
 var statsdict = {sstr = 'Strength', sagi = 'Agility', smaf = "Magic Affinity", send = "Endurance", cour = 'Courage', conf = 'Confidence', wit = 'Wit', charm = 'Charm'}
 var maxstatdict = {sstr = 'str_max', sagi = 'agi_max', smaf = 'maf_max', send = 'end_max', cour = 'cour_max', conf = 'conf_max', wit = 'wit_max', charm = 'charm_max'}
+var basestatdict = {sstr = 'str_base', sagi = 'agi_base', smaf = 'maf_base', send = 'end_base', cour = 'cour_base', conf = 'conf_base', wit = 'wit_base', charm = 'charm_base'}
 var statsdescript = dictionary.statdescription
 var sleepdict = {communal = {name = 'Communal Room'}, jail = {name = "Jail"}, personal = {name = 'Personal Room'}, your = {name = "Your bed"}}
 

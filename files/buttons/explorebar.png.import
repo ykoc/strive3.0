@@ -7,10 +7,7 @@ path="res://.import/explorebar.png-32f93e468c50fb78681ef74d47e17bdb.stex"
 [deps]
 
 source_file="res://files/buttons/explorebar.png"
-source_md5="64af77949270a48ff7d098001268105b"
-
 dest_files=[ "res://.import/explorebar.png-32f93e468c50fb78681ef74d47e17bdb.stex" ]
-dest_md5="93196efa58d0894d56dfdba08ddebcdf"
 
 [params]
 

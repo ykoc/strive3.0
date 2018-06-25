@@ -7,10 +7,7 @@ path="res://.import/up-press.png-1f7ae69d00c986f67824665a04fa53e2.stex"
 [deps]
 
 source_file="res://files/buttons/arrows/up-press.png"
-source_md5="512c650ecff16c1fd23e1c02f6307931"
-
 dest_files=[ "res://.import/up-press.png-1f7ae69d00c986f67824665a04fa53e2.stex" ]
-dest_md5="7bbd87b5c00c8795107a41a81428b54a"
 
 [params]
 

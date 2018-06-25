@@ -7,10 +7,7 @@ path="res://.import/up-hl.png-fdf1b301b1caf60643dad68db37e08d0.stex"
 [deps]
 
 source_file="res://files/buttons/arrows/up-hl.png"
-source_md5="92e50784b2bad76cb8869a73c98be971"
-
 dest_files=[ "res://.import/up-hl.png-fdf1b301b1caf60643dad68db37e08d0.stex" ]
-dest_md5="9f537407dde3d73c39c96f3a18c5e479"
 
 [params]
 

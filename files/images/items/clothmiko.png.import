@@ -7,10 +7,7 @@ path="res://.import/clothmiko.png-f05c099d32c303db6a7dace4a5f70b40.stex"
 [deps]
 
 source_file="res://files/images/items/clothmiko.png"
-source_md5="3ed7f17ec8d51e0af8b22a9adf3a0283"
-
 dest_files=[ "res://.import/clothmiko.png-f05c099d32c303db6a7dace4a5f70b40.stex" ]
-dest_md5="813db2f0a34fd30ccc3bd5c2ac4f2b84"
 
 [params]
 

@@ -7,7 +7,7 @@
 [ext_resource path="res://files/buttons/img-kurs.png" type="Texture" id=5]
 [ext_resource path="res://files/buttons/img-kurs-act.png" type="Texture" id=6]
 [ext_resource path="res://files/buttons/img-scr.png" type="Texture" id=7]
-[ext_resource path="res://files/scripts/combatnew.gd" type="Script" id=8]
+[ext_resource path="res://files/scripts/combat.gd" type="Script" id=8]
 [ext_resource path="res://files/buttons/combat/4.png" type="Texture" id=9]
 [ext_resource path="res://files/buttons/combat/16.png" type="Texture" id=10]
 [ext_resource path="res://mainfont.font" type="BitmapFont" id=11]
@@ -965,6 +965,7 @@ max_lines_visible = -1
 
 [node name="enemypanel" type="Panel" parent="." index="3"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -1368,6 +1369,7 @@ scroll_horizontal_enabled = true
 scroll_horizontal = 0
 scroll_vertical_enabled = false
 scroll_vertical = 0
+scroll_deadzone = 0
 _sections_unfolded = [ "Scroll" ]
 
 [node name="warning" type="Label" parent="." index="4"]
@@ -1449,6 +1451,7 @@ group = null
 text = "autowin"
 flat = false
 align = 1
+_sections_unfolded = [ "Hint" ]
 
 [node name="abilitites" type="Button" parent="." index="7"]
 
@@ -1521,6 +1524,7 @@ scroll_horizontal_enabled = false
 scroll_horizontal = 0
 scroll_vertical_enabled = true
 scroll_vertical = 0
+scroll_deadzone = 0
 _sections_unfolded = [ "Scroll" ]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="abilitites/Panel/inactivecontainer" index="0"]
@@ -1882,7 +1886,6 @@ _sections_unfolded = [ "Rect", "Size Flags" ]
 
 [node name="autoattack" type="CheckBox" parent="." index="11"]
 
-visible = false
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -1893,7 +1896,7 @@ margin_right = -10.0
 margin_bottom = -138.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
-hint_tooltip = "When toggled, will make characters with no actions selected to attack last enemy.  "
+hint_tooltip = "When toggled, will make active characters to attack first enemy.  "
 focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
@@ -2118,7 +2121,5 @@ max_lines_visible = -1
 [connection signal="pressed" from="abilitites/Panel/close" to="." method="_on_close_pressed"]
 
 [connection signal="pressed" from="win/winconfirm" to="." method="_on_winconfirm_pressed"]
-
-[connection signal="pressed" from="autoattack" to="." method="_on_autoattack_pressed"]
 
 

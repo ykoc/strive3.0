@@ -7,10 +7,7 @@ path="res://.import/Seraph_M.png-d59eac40879f5b2c2826d2e28848aeaf.stex"
 [deps]
 
 source_file="res://files/buttons/inventory/shades/Seraph_M.png"
-source_md5="eda5686e31b8fc641885a6423c367c74"
-
 dest_files=[ "res://.import/Seraph_M.png-d59eac40879f5b2c2826d2e28848aeaf.stex" ]
-dest_md5="c36d10a1556993c9cf6ad75c70649f5d"
 
 [params]
 

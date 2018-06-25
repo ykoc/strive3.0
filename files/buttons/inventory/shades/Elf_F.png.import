@@ -7,10 +7,7 @@ path="res://.import/Elf_F.png-03e49193ea46a2b74143e3210556aad9.stex"
 [deps]
 
 source_file="res://files/buttons/inventory/shades/Elf_F.png"
-source_md5="59f5ccd2dcab1f60c55a2d110e0f2635"
-
 dest_files=[ "res://.import/Elf_F.png-03e49193ea46a2b74143e3210556aad9.stex" ]
-dest_md5="06c4026b39823c477a8dbe9d66b89635"
 
 [params]
 

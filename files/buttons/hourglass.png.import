@@ -7,10 +7,7 @@ path="res://.import/hourglass.png-119e21b05fc40601a603fcf7ae47f677.stex"
 [deps]
 
 source_file="res://files/buttons/hourglass.png"
-source_md5="01a4d90b8f9f4fcdc3a02027c55be410"
-
 dest_files=[ "res://.import/hourglass.png-119e21b05fc40601a603fcf7ae47f677.stex" ]
-dest_md5="90e890820598f5b53896796c29a9bcdd"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/btn-noact-oran.png-1e556bf467516d64bc7d2a941f0be1cd.stex"
 [deps]
 
 source_file="res://files/buttons/btn-noact-oran.png"
-source_md5="a719641c16f9172f4d9c09be29e6f7d9"
-
 dest_files=[ "res://.import/btn-noact-oran.png-1e556bf467516d64bc7d2a941f0be1cd.stex" ]
-dest_md5="0b1b14369a88d25838c6dccf9cbd2016"
 
 [params]
 

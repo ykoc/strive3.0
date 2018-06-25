@@ -7,10 +7,7 @@ path="res://.import/teleportamberguard.png-e463c1c9f39042950cb590874303d452.stex
 [deps]
 
 source_file="res://files/images/items/teleportamberguard.png"
-source_md5="4cf9a736973fd851962c3738aa76f7cf"
-
 dest_files=[ "res://.import/teleportamberguard.png-e463c1c9f39042950cb590874303d452.stex" ]
-dest_md5="63e734b9130a885472e71b5d49d1a5ff"
 
 [params]
 

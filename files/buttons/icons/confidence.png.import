@@ -7,10 +7,7 @@ path="res://.import/confidence.png-89401fc4020468ed550f8ae1cdb8ce1c.stex"
 [deps]
 
 source_file="res://files/buttons/icons/confidence.png"
-source_md5="5b5ae8c0b2e9e21e05efb9d61534c0f2"
-
 dest_files=[ "res://.import/confidence.png-89401fc4020468ed550f8ae1cdb8ce1c.stex" ]
-dest_md5="4d193c29f6e7c3a82e32ecd0a203c6c8"
 
 [params]
 

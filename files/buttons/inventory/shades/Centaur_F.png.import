@@ -7,10 +7,7 @@ path="res://.import/Centaur_F.png-be869da85654eda4d8ecb768ac33372d.stex"
 [deps]
 
 source_file="res://files/buttons/inventory/shades/Centaur_F.png"
-source_md5="14840b362ff4d52b99329239a994539a"
-
 dest_files=[ "res://.import/Centaur_F.png-be869da85654eda4d8ecb768ac33372d.stex" ]
-dest_md5="c7202900883860e3008c1bffabb0f860"
 
 [params]
 

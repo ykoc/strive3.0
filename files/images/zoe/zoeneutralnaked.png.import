@@ -7,10 +7,7 @@ path="res://.import/zoeneutralnaked.png-6f13de7485c477226819dcba6ded6548.stex"
 [deps]
 
 source_file="res://files/images/zoe/zoeneutralnaked.png"
-source_md5="a7218afce459055e775bc38b2621d490"
-
 dest_files=[ "res://.import/zoeneutralnaked.png-6f13de7485c477226819dcba6ded6548.stex" ]
-dest_md5="0cdcae62d1a28ce59917089695c8ad40"
 
 [params]
 

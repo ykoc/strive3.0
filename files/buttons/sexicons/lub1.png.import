@@ -7,10 +7,7 @@ path="res://.import/lub1.png-339c1f987340ec7a11d6e82489f93acc.stex"
 [deps]
 
 source_file="res://files/buttons/sexicons/lub1.png"
-source_md5="aa30a54b8588023e02cebc3631ec5666"
-
 dest_files=[ "res://.import/lub1.png-339c1f987340ec7a11d6e82489f93acc.stex" ]
-dest_md5="f41117acfa7d2ec77dbae2eba468f7ad"
 
 [params]
 

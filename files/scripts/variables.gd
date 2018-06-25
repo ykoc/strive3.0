@@ -17,7 +17,7 @@ var learnpointsperstat = 3
 var damageperstr = 3
 var speedperagi = 3
 var speedbase = 10
-
+var baseattack = 5
 
 #slave prices constants
 var priceperlevel = 40

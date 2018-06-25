@@ -7,10 +7,7 @@ path="res://.import/Dragonkin_F.png-0b077d281bb394b530bd8cf530f12aa6.stex"
 [deps]
 
 source_file="res://files/buttons/inventory/shades/Dragonkin_F.png"
-source_md5="a5c90722d85101193e78d6db87d23071"
-
 dest_files=[ "res://.import/Dragonkin_F.png-0b077d281bb394b530bd8cf530f12aa6.stex" ]
-dest_md5="ce9d48d2e88aa891ed3d99ff50314371"
 
 [params]
 

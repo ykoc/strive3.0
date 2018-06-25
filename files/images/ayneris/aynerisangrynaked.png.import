@@ -7,10 +7,7 @@ path="res://.import/aynerisangrynaked.png-bdf019ed9bb63cd28d96c8721428800d.stex"
 [deps]
 
 source_file="res://files/images/ayneris/aynerisangrynaked.png"
-source_md5="21a28ea05b6d2a084acadd26b3211e9c"
-
 dest_files=[ "res://.import/aynerisangrynaked.png-bdf019ed9bb63cd28d96c8721428800d.stex" ]
-dest_md5="60662866205b037ff25063f0d9e82e87"
 
 [params]
 

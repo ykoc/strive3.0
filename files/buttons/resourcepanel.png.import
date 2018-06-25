@@ -7,10 +7,7 @@ path="res://.import/resourcepanel.png-9756ed810122d6c54787ffea2156ebe4.stex"
 [deps]
 
 source_file="res://files/buttons/resourcepanel.png"
-source_md5="9c6546726722b6dabab117f0a1947fcc"
-
 dest_files=[ "res://.import/resourcepanel.png-9756ed810122d6c54787ffea2156ebe4.stex" ]
-dest_md5="10ee9804ee986a40b2a4b44a2fe5840a"
 
 [params]
 

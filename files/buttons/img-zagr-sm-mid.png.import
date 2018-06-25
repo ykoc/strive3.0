@@ -7,10 +7,7 @@ path="res://.import/img-zagr-sm-mid.png-e696dbf0dd2f35d1bc3af83c49652951.stex"
 [deps]
 
 source_file="res://files/buttons/img-zagr-sm-mid.png"
-source_md5="7850d2b847b04cf639225ec9908f1374"
-
 dest_files=[ "res://.import/img-zagr-sm-mid.png-e696dbf0dd2f35d1bc3af83c49652951.stex" ]
-dest_md5="b6bbd821e902e5351d0312d4751dbc6e"
 
 [params]
 

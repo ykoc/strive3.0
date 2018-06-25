@@ -7,10 +7,7 @@ path="res://.import/Debilitate.png-edeb946b837a83401bf064fd3f33c418.stex"
 [deps]
 
 source_file="res://files/buttons/abils/Debilitate.png"
-source_md5="71093861fbfe8bbd8702454e2120e88d"
-
 dest_files=[ "res://.import/Debilitate.png-edeb946b837a83401bf064fd3f33c418.stex" ]
-dest_md5="5580e1b9377e56e57d7770f76add4199"
 
 [params]
 

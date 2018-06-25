@@ -7,10 +7,7 @@ path="res://.import/zoesad.png-a848fa6f555671d4b90e0cf017814c29.stex"
 [deps]
 
 source_file="res://files/images/zoe/zoesad.png"
-source_md5="6660404bb3ef62c66b34ae3296227835"
-
 dest_files=[ "res://.import/zoesad.png-a848fa6f555671d4b90e0cf017814c29.stex" ]
-dest_md5="9f067b794c53d4607155dbfe41f9a7c5"
 
 [params]
 

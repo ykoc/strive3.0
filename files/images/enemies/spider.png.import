@@ -7,10 +7,7 @@ path="res://.import/spider.png-426056b120c6f7c723975fe14fc7d942.stex"
 [deps]
 
 source_file="res://files/images/enemies/spider.png"
-source_md5="ea111b2a5b22bdad2c43936d78a4f35e"
-
 dest_files=[ "res://.import/spider.png-426056b120c6f7c723975fe14fc7d942.stex" ]
-dest_md5="5821fd1c1ce8dc98ce4a653c5188e306"
 
 [params]
 

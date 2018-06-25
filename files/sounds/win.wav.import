@@ -7,10 +7,7 @@ path="res://.import/win.wav-324503b2e60d636685fd234169fa5864.sample"
 [deps]
 
 source_file="res://files/sounds/win.wav"
-source_md5="93b75865cbdce09e6281016e36f703e6"
-
 dest_files=[ "res://.import/win.wav-324503b2e60d636685fd234169fa5864.sample" ]
-dest_md5="0094e58dd6fba668688ab5969b75dc79"
 
 [params]
 

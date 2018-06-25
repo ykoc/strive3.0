@@ -7,10 +7,7 @@ path="res://.import/bigpanel.png-5fca03bfae71786783ff0e1cdcce0413.stex"
 [deps]
 
 source_file="res://files/buttons/bigpanel.png"
-source_md5="15a4baed85fb5dd59b014af92a4a831e"
-
 dest_files=[ "res://.import/bigpanel.png-5fca03bfae71786783ff0e1cdcce0413.stex" ]
-dest_md5="9b6bf6232ccd5ad0576a483e2be0c0a1"
 
 [params]
 

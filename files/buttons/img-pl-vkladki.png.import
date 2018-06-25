@@ -7,10 +7,7 @@ path="res://.import/img-pl-vkladki.png-7dbaaed367e713eacab81836bff29775.stex"
 [deps]
 
 source_file="res://files/buttons/img-pl-vkladki.png"
-source_md5="c901b208a85c0cd914e8f170a080f2bd"
-
 dest_files=[ "res://.import/img-pl-vkladki.png-7dbaaed367e713eacab81836bff29775.stex" ]
-dest_md5="4dc1a06bbf62ecc2fe320fdcac59a983"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/calisad.png-5c77339653e680c2886d047392c552b5.stex"
 [deps]
 
 source_file="res://files/images/cali/calisad.png"
-source_md5="9bddf86402307b8d1ee23c7db2ab3d9b"
-
 dest_files=[ "res://.import/calisad.png-5c77339653e680c2886d047392c552b5.stex" ]
-dest_md5="e4b3dd8a4d515843895b5eff88b11073"
 
 [params]
 

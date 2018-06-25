@@ -7,10 +7,7 @@ path="res://.import/yrisshockdressed.png-344620fd3a442a9124292315c6949668.stex"
 [deps]
 
 source_file="res://files/images/yris/yrisshockdressed.png"
-source_md5="e3b5435545b178163f2a356b74bc8882"
-
 dest_files=[ "res://.import/yrisshockdressed.png-344620fd3a442a9124292315c6949668.stex" ]
-dest_md5="bde1df9db5bb2cd57f6f60f4ab25745e"
 
 [params]
 

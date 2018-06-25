@@ -7,10 +7,7 @@ path="res://.import/tishaneutral.png-da2b0f71ef9805756f4fd65597501cd1.stex"
 [deps]
 
 source_file="res://files/images/tisha/tishaneutral.png"
-source_md5="07826dcb32085439f20eaee14e75d5b4"
-
 dest_files=[ "res://.import/tishaneutral.png-da2b0f71ef9805756f4fd65597501cd1.stex" ]
-dest_md5="a79316e4cbd67d4fb6b04c572fe0d050"
 
 [params]
 

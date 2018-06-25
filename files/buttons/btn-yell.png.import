@@ -7,10 +7,7 @@ path="res://.import/btn-yell.png-e41acd00945308203d706ccecc949800.stex"
 [deps]
 
 source_file="res://files/buttons/btn-yell.png"
-source_md5="3d66fb9b4265db1f8758a606e23be171"
-
 dest_files=[ "res://.import/btn-yell.png-e41acd00945308203d706ccecc949800.stex" ]
-dest_md5="7b5894bf1714d7161d198b8b64e3080e"
 
 [params]
 

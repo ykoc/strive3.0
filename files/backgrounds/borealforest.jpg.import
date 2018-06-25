@@ -7,10 +7,7 @@ path="res://.import/borealforest.jpg-7bf99298d3b83670bf4b12bf2ec2de83.stex"
 [deps]
 
 source_file="res://files/backgrounds/borealforest.jpg"
-source_md5="982921404c366952d58ceb3b06a0b3de"
-
 dest_files=[ "res://.import/borealforest.jpg-7bf99298d3b83670bf4b12bf2ec2de83.stex" ]
-dest_md5="43e8366fe4cf67a11f2832d08df08ff3"
 
 [params]
 

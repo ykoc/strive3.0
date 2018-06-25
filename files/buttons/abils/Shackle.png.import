@@ -7,10 +7,7 @@ path="res://.import/Shackle.png-9ac90fa08fc111168c682a9cfada2c2f.stex"
 [deps]
 
 source_file="res://files/buttons/abils/Shackle.png"
-source_md5="9bde95a8ec023fb3f8ec8b3706e181e7"
-
 dest_files=[ "res://.import/Shackle.png-9ac90fa08fc111168c682a9cfada2c2f.stex" ]
-dest_md5="95afd0923d3c7b89204635f81c2b59fb"
 
 [params]
 

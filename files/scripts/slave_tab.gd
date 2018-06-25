@@ -436,6 +436,7 @@ func _on_relativesbutton_pressed():
 	var entry2
 	counter = 0
 	slavearray.clear()
+	print(entry)
 	text += '[center]Parents[/center]\n'
 	for i in ['father','mother']:
 		if int(entry[i]) <= 0:
@@ -459,7 +460,7 @@ func _on_relativesbutton_pressed():
 	
 	if entry.children.size() > 0:
 		text += '\n[center]Children[/center]\n'
-		for i in entry.siblings:
+		for i in entry.children:
 			entry2 = relativesdata[i]
 			if entry2.sex == 'male':
 				text += "Son: " 
@@ -787,7 +788,8 @@ func stattooltip(value):
 	globals.showtooltip(text)
 
 func statup(stat):
-	person[stat] += 1
+	person.stats[globals.maxstatdict[stat].replace('_max','_base')] += 1
+	person[stat] += 0
 	person.skillpoints -= 1
 	updatestats()
 
@@ -837,7 +839,7 @@ func updatestats():
 	get_node("stats/statspanel/attribute").set_text("Free Attribute Points : "+str(person.skillpoints))
 	
 	for i in ['send','smaf','sstr','sagi']:
-		if person.skillpoints >= 1 && (globals.slaves.find(person) >= 0||globals.player == person) && person.stats[globals.maxstatdict[i].replace('_max','_cur')] < person.stats[globals.maxstatdict[i]]:
+		if person.skillpoints >= 1 && (globals.slaves.find(person) >= 0||globals.player == person) && person.stats[globals.maxstatdict[i].replace('_max','_base')] < person.stats[globals.maxstatdict[i]]:
 			get_node("stats/statspanel/" + i +'/Button').visible = true
 		else:
 			get_node("stats/statspanel/" + i+'/Button').visible = false

@@ -7,10 +7,7 @@ path="res://.import/hpbar.png-bed40aaa381b45cd3ffa5c745001e4b1.stex"
 [deps]
 
 source_file="res://files/buttons/hpbar.png"
-source_md5="43870081e42516a3a6da4a2029a35ede"
-
 dest_files=[ "res://.import/hpbar.png-bed40aaa381b45cd3ffa5c745001e4b1.stex" ]
-dest_md5="9eefad57eda97730daed9fe91d99acce"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/left-press.png-e3521e2af6380957f3018beb17e08c77.stex"
 [deps]
 
 source_file="res://files/buttons/arrows/left-press.png"
-source_md5="3d162a7909e1da0d5926348093c0a0a4"
-
 dest_files=[ "res://.import/left-press.png-e3521e2af6380957f3018beb17e08c77.stex" ]
-dest_md5="2788e62f06d695dfd236343832e49b5a"
 
 [params]
 

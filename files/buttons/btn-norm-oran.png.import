@@ -7,10 +7,7 @@ path="res://.import/btn-norm-oran.png-c20e9de1d7d4a9b105453d735551a981.stex"
 [deps]
 
 source_file="res://files/buttons/btn-norm-oran.png"
-source_md5="d8d8cebf9fd0567147115a25e997abf6"
-
 dest_files=[ "res://.import/btn-norm-oran.png-c20e9de1d7d4a9b105453d735551a981.stex" ]
-dest_md5="4f00a6e2e0452a1e29a76858ec7a4d19"
 
 [params]
 

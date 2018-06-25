@@ -7,10 +7,7 @@ path="res://.import/свидания.png-705093de8a29e82adc67743e29d4502e.stex"
 [deps]
 
 source_file="res://files/buttons/dating/свидания.png"
-source_md5="e913dc1caf7c7f4bfff912327c16a990"
-
 dest_files=[ "res://.import/свидания.png-705093de8a29e82adc67743e29d4502e.stex" ]
-dest_md5="bd4f3d580ac6f471204b8a71b5026306"
 
 [params]
 

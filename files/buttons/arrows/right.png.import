@@ -7,10 +7,7 @@ path="res://.import/right.png-970f0f61074b6bf7b5cca3feb76f3d2c.stex"
 [deps]
 
 source_file="res://files/buttons/arrows/right.png"
-source_md5="50cf81bb21c16db1b945db16228ff5ac"
-
 dest_files=[ "res://.import/right.png-970f0f61074b6bf7b5cca3feb76f3d2c.stex" ]
-dest_md5="4ae3dd21e150ed0278607ca4eb156e65"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/mana2.png-0311e328aa2e51b7ca9a442c5d12d741.stex"
 [deps]
 
 source_file="res://files/buttons/mana2.png"
-source_md5="006f87d44dc7f01e44a14482bf6e36c7"
-
 dest_files=[ "res://.import/mana2.png-0311e328aa2e51b7ca9a442c5d12d741.stex" ]
-dest_md5="8234cd219c4235768301d5af6007b1b5"
 
 [params]
 

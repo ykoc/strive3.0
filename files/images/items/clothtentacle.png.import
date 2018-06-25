@@ -7,10 +7,7 @@ path="res://.import/clothtentacle.png-90fb9a984f3c013a0f793a71a66829b5.stex"
 [deps]
 
 source_file="res://files/images/items/clothtentacle.png"
-source_md5="61ea1b5a2e0c37b50b7822cac3428bde"
-
 dest_files=[ "res://.import/clothtentacle.png-90fb9a984f3c013a0f793a71a66829b5.stex" ]
-dest_md5="09360cf90447cc082d834d4e7edcaaa9"
 
 [params]
 

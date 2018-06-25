@@ -7,10 +7,7 @@ path="res://.import/roguearmor.png-c705bc38d57040bd0e94ed1d4596dc3d.stex"
 [deps]
 
 source_file="res://files/images/items/roguearmor.png"
-source_md5="a6e008abbe014c5ec9a4feaeb0e141df"
-
 dest_files=[ "res://.import/roguearmor.png-c705bc38d57040bd0e94ed1d4596dc3d.stex" ]
-dest_md5="103143dc9f9988bd71a2a618ee4165d9"
 
 [params]
 

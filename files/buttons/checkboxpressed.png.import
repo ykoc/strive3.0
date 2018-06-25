@@ -7,10 +7,7 @@ path="res://.import/checkboxpressed.png-dcbcdc20ba203ec4975663cb0511d5a7.stex"
 [deps]
 
 source_file="res://files/buttons/checkboxpressed.png"
-source_md5="89d895ee96010bada360ca34d4eca23f"
-
 dest_files=[ "res://.import/checkboxpressed.png-dcbcdc20ba203ec4975663cb0511d5a7.stex" ]
-dest_md5="627b2315a324940136975bbd74a056c1"
 
 [params]
 

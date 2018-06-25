@@ -7,10 +7,7 @@ path="res://.import/fortest.png-201956a15b818b9291e6678916e06df8.stex"
 [deps]
 
 source_file="res://files/images/items/fortest.png"
-source_md5="c95b2d9638406f61bfe01dc876a3b76c"
-
 dest_files=[ "res://.import/fortest.png-201956a15b818b9291e6678916e06df8.stex" ]
-dest_md5="ecad857330a495f6cc61e0bc4a6b5c68"
 
 [params]
 

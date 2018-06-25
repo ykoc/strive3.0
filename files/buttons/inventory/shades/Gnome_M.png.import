@@ -7,10 +7,7 @@ path="res://.import/Gnome_M.png-ec7d8ba918cd528beff9b362779557bf.stex"
 [deps]
 
 source_file="res://files/buttons/inventory/shades/Gnome_M.png"
-source_md5="c8d742d2166502f524ccce37a5cdcc50"
-
 dest_files=[ "res://.import/Gnome_M.png-ec7d8ba918cd528beff9b362779557bf.stex" ]
-dest_md5="69810f31c5d10a40c324c7bc4f153349"
 
 [params]
 

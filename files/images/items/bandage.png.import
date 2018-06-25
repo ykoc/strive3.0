@@ -7,10 +7,7 @@ path="res://.import/bandage.png-ae207bb1e95345ef03a7e35f9a6d0816.stex"
 [deps]
 
 source_file="res://files/images/items/bandage.png"
-source_md5="4e64aed943db818abcf65d97a0b6da49"
-
 dest_files=[ "res://.import/bandage.png-ae207bb1e95345ef03a7e35f9a6d0816.stex" ]
-dest_md5="c1f9e5266d2194136379a9c931b04a95"
 
 [params]
 

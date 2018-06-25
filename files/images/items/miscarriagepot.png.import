@@ -7,10 +7,7 @@ path="res://.import/miscarriagepot.png-9c4ba115c53cd734fd97de152fcca818.stex"
 [deps]
 
 source_file="res://files/images/items/miscarriagepot.png"
-source_md5="d78a03fcd870050233927fd977460a54"
-
 dest_files=[ "res://.import/miscarriagepot.png-9c4ba115c53cd734fd97de152fcca818.stex" ]
-dest_md5="3d74a466a263bae8a7a8c39562e319f3"
 
 [params]
 

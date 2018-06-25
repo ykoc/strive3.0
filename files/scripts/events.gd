@@ -113,7 +113,8 @@ func garthorscene(stage = 0):
 	var sprite = null
 	if stage == 0:
 		globals.main.animationfade(1.5)
-		yield(globals.main, 'animfinished')
+		if OS.get_name() != 'HTML5':
+			yield(globals.main, 'animfinished')
 		globals.main.music_set('gorn')
 		globals.main.backgroundinstant('gorn')
 		globals.main.clearscreen()
@@ -126,7 +127,8 @@ func garthorscene(stage = 0):
 		buttons.append(['Continue','garthorscene',2])
 	elif stage == 2:
 		globals.main.animationfade(1.5)
-		yield(globals.main, 'animfinished')
+		if OS.get_name() != 'HTML5':
+			yield(globals.main, 'animfinished')
 		sprite = [['hadesillh','pos2']]
 		text = textnode.garthorscene3
 		buttons.append(['Close', 'garthorscene',3])
@@ -148,7 +150,8 @@ func hadescene1(stage = 0):
 	var sprite = null
 	if stage == 0:
 		globals.main.animationfade(1.5)
-		yield(globals.main, 'animfinished')
+		if OS.get_name() != 'HTML5':
+			yield(globals.main, 'animfinished')
 		globals.main.music_set('explore')
 		#globals.main.music_set('gorn')
 		globals.main.backgroundinstant('mainorder')
@@ -179,7 +182,8 @@ func hadescene2(stage = 0):
 	var sprite = null
 	if stage == 0:
 		globals.main.animationfade(1.5)
-		yield(globals.main, 'animfinished')
+		if OS.get_name() != 'HTML5':
+			yield(globals.main, 'animfinished')
 		globals.main.backgroundinstant('mainorder')
 		globals.main.music_set('explore')
 		globals.main.clearscreen()
@@ -208,7 +212,8 @@ func frostfordscene(stage = 0):
 	var sprite = null
 	if stage == 0:
 		globals.main.animationfade(1.5)
-		yield(globals.main, 'animfinished')
+		if OS.get_name() != 'HTML5':
+			yield(globals.main, 'animfinished')
 		globals.main.music_set('dungeon')
 		globals.main.backgroundinstant('tunnels')
 		globals.main.clearscreen()
@@ -238,7 +243,8 @@ func slaverguild(stage = 0):
 	var sprite = null
 	if stage == 0:
 		globals.main.animationfade(1.5)
-		yield(globals.main, 'animfinished')
+		if OS.get_name() != 'HTML5':
+			yield(globals.main, 'animfinished')
 		globals.main.music_set('dungeon')
 		globals.main.backgroundinstant('slaverguild')
 		globals.main.clearscreen()
@@ -266,7 +272,8 @@ func hademelissa(stage = 0):
 	if stage == 0:
 		globals.main.animationfade(1.5)
 		sprite = [['hadeneutral','pos1'],['melissaworried','pos2']]
-		yield(globals.main, 'animfinished')
+		if OS.get_name() != 'HTML5':
+			yield(globals.main, 'animfinished')
 		globals.main.music_set('stop')
 		globals.main.backgroundinstant('nightdesert')
 		globals.main.clearscreen()
@@ -874,7 +881,7 @@ func orderfinale(stage = 0):
 		elif stage == 1:
 			globals.main.background_set('mainorderfinale')
 			closedialogue()
-			if OS.get_name() != "HTML5" && globals.rules.fadinganimation == true:
+			if OS.get_name() != "HTML5":
 				yield(globals.main, 'animfinished')
 			outside.clearbuttons()
 			globals.main.maintext = ''
@@ -904,7 +911,7 @@ func orderfinale(stage = 0):
 		elif stage == 1:
 			globals.main.background_set('mainorderfinale')
 			closedialogue()
-			if OS.get_name() != "HTML5" && globals.rules.fadinganimation == true:
+			if OS.get_name() != "HTML5":
 				yield(globals.main, 'animfinished')
 			outside.clearbuttons()
 			globals.main.maintext = ''
@@ -2145,7 +2152,7 @@ func tishagornguild(stage = 0):
 	elif stage == 5:
 		sprite = [['tishaneutral', 'pos1']]
 		globals.main._on_mansion_pressed()
-		if OS.get_name() != "HTML5" && globals.rules.fadinganimation == true:
+		if OS.get_name() != "HTML5":
 			yield(globals.main, 'animfinished')
 		text = textnode.TishaAfterGorn
 		buttons.append(['Ask for money', 'tishagornguild', 6])
@@ -2674,7 +2681,8 @@ func aynerisrapieramberguard(stage = 0):
 		buttons.append(['Continue', 'aynerisrapieramberguard', 1])
 	elif stage == 1:
 		globals.main.animationfade()
-		yield(globals.main, 'animfinished')
+		if OS.get_name() != 'HTML5':
+			yield(globals.main, 'animfinished')
 		sprites = [['aynerispissed','pos1']]
 		text = textnode.AynerisRapierAmberguardCleaner
 		buttons.append(['Make Ayneris expose herself','aynerisrapieramberguard',2])
@@ -2699,7 +2707,8 @@ func aynerisrapieramberguard(stage = 0):
 		buttons.append(['Continue', 'aynerisrapieramberguard', 5])
 	elif stage == 5:
 		globals.main.animationfade()
-		yield(globals.main, 'animfinished')
+		if OS.get_name() != 'HTML5':
+			yield(globals.main, 'animfinished')
 		sprites = [['aynerispissed','pos1']]
 		text = textnode.AynerisRapierFall
 		buttons.append(['Try catch her', 'aynerisrapieramberguard', 6])
@@ -2718,7 +2727,8 @@ func aynerisrapieramberguard(stage = 0):
 		ayneris.away.duration = 1
 		globals.main._on_mansion_pressed()
 		ayneris.stress += 25
-		yield(globals.main, 'animfinished')
+		if OS.get_name() != 'HTML5':
+			yield(globals.main, 'animfinished')
 		state = true
 		text = textnode.AynerisRapierCatchContinue
 		ayneris.add_trait('Grateful')
@@ -2728,7 +2738,8 @@ func aynerisrapieramberguard(stage = 0):
 		ayneris.away.duration = 1
 		ayneris.stress += 40
 		globals.main._on_mansion_pressed()
-		yield(globals.main, 'animfinished')
+		if OS.get_name() != 'HTML5':
+			yield(globals.main, 'animfinished')
 		state = true
 		var item = globals.items.createunstackable('weaponaynerisrapier')
 		globals.state.unstackables[str(item.id)] = item

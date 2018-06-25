@@ -206,10 +206,10 @@ func itemsinventory():
 		button.connect("mouse_exited", globals, 'itemtooltiphide')
 		button.get_node("rename").visible = true
 		button.get_node("rename").connect("pressed",self,"renameitem",[i[0]])
-#		if i[0].enchant == 'basic':
-#			button.get_node("Label").set('custom_colors/font_color', Color(0,0.5,0))
-#		elif i[0].enchant == 'unique':
-#			button.get_node("Label").set('custom_colors/font_color', Color(0.6,0.4,0))
+		if i[0].enchant == 'basic':
+			button.get_node("Label").set('custom_colors/font_color', Color(0,0.5,0))
+		elif i[0].enchant == 'unique':
+			button.get_node("Label").set('custom_colors/font_color', Color(0.6,0.4,0))
 		if i[0].icon != null:
 			button.get_node("icon").set_texture(load(i[0].icon))
 		itemgrid.add_child(button)
@@ -486,8 +486,6 @@ func movetobackpack(button):
 		if itemarray.size() <= 0:
 			button.visible = false
 			button.queue_free()
-		#globals.state.backpack.unstackables.append(tempitem)
-		#globals.state.unstackables.erase(tempitem.id)
 	calculateweight()
 
 func movefrombackpack(button):
@@ -511,9 +509,6 @@ func movefrombackpack(button):
 			button.queue_free()
 		
 		
-#		globals.state.unstackables[str(item.id)].owner = null
-#		button.visible = false
-#		globals.state.backpack.unstackables.erase(item)
 	calculateweight()
 
 

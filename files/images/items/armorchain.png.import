@@ -7,10 +7,7 @@ path="res://.import/armorchain.png-85c5c3d2f46b7bb087901e8fe0e857d9.stex"
 [deps]
 
 source_file="res://files/images/items/armorchain.png"
-source_md5="c5bb99c77a8fda426163ce25bacf2c9c"
-
 dest_files=[ "res://.import/armorchain.png-85c5c3d2f46b7bb087901e8fe0e857d9.stex" ]
-dest_md5="fc9be702799e7de121d6706702e761d7"
 
 [params]
 

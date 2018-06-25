@@ -7,10 +7,7 @@ path="res://.import/gorn.png-a369b379acdd38d548296c42e646cb0a.stex"
 [deps]
 
 source_file="res://files/backgrounds/gorn.png"
-source_md5="d86f16a0513eb999ba064573a42bc233"
-
 dest_files=[ "res://.import/gorn.png-a369b379acdd38d548296c42e646cb0a.stex" ]
-dest_md5="f7d57fcd49616b2d7c9fcbe3905a3898"
 
 [params]
 

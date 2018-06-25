@@ -7,10 +7,7 @@ path="res://.import/weaponhammer.png-5de14f8bd4285626350fc1c8f56f1757.stex"
 [deps]
 
 source_file="res://files/images/items/weaponhammer.png"
-source_md5="d874b851d770c7fb23c53046200a6ec9"
-
 dest_files=[ "res://.import/weaponhammer.png-5de14f8bd4285626350fc1c8f56f1757.stex" ]
-dest_md5="e716582454e3c38ad9f7cb2a90c07b14"
 
 [params]
 

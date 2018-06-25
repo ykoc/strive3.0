@@ -7,10 +7,7 @@ path="res://.import/btn-yell-noact.png-5fab11348e557f88bdb6ee9083662916.stex"
 [deps]
 
 source_file="res://files/buttons/btn-yell-noact.png"
-source_md5="9993e31a9d93d5f18b710be636938ad2"
-
 dest_files=[ "res://.import/btn-yell-noact.png-5fab11348e557f88bdb6ee9083662916.stex" ]
-dest_md5="65a1469ac681d489d6c65ddc61747a02"
 
 [params]
 

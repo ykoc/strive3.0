@@ -7,10 +7,7 @@ path="res://.import/armorleather.png-4213c06cec73f11b96e12e7c484999e4.stex"
 [deps]
 
 source_file="res://files/images/items/armorleather.png"
-source_md5="480dcb49f5d4c3987c6cde24298c6048"
-
 dest_files=[ "res://.import/armorleather.png-4213c06cec73f11b96e12e7c484999e4.stex" ]
-dest_md5="3eae7365ac533b3d028572a97160eba7"
 
 [params]
 

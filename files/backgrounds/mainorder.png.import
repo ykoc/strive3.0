@@ -7,10 +7,7 @@ path="res://.import/mainorder.png-af8f8d4ed5f01845d0881f76ab891244.stex"
 [deps]
 
 source_file="res://files/backgrounds/mainorder.png"
-source_md5="6ede4c11539306cf88941c44f5fe6679"
-
 dest_files=[ "res://.import/mainorder.png-af8f8d4ed5f01845d0881f76ab891244.stex" ]
-dest_md5="cee49a1bed399e50b8343d3c4c30c0df"
 
 [params]
 

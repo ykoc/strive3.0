@@ -7,10 +7,7 @@ path="res://.import/btn-hover-oran.png-ebc16afa6e2c0ea54cb604d89ff3902a.stex"
 [deps]
 
 source_file="res://files/buttons/btn-hover-oran.png"
-source_md5="3f6955839ece3780ee76fd92761697d5"
-
 dest_files=[ "res://.import/btn-hover-oran.png-ebc16afa6e2c0ea54cb604d89ff3902a.stex" ]
-dest_md5="083fd1f4b1c2bd8e7243045242fce602"
 
 [params]
 

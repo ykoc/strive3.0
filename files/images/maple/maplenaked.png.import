@@ -7,10 +7,7 @@ path="res://.import/maplenaked.png-7ada0acd8ca4b27a9e19e61d48525710.stex"
 [deps]
 
 source_file="res://files/images/maple/maplenaked.png"
-source_md5="1b9e454de334fecd22a85bfca219a2b5"
-
 dest_files=[ "res://.import/maplenaked.png-7ada0acd8ca4b27a9e19e61d48525710.stex" ]
-dest_md5="91125a872b49d2ab15a4a03eaaf2eee5"
 
 [params]
 

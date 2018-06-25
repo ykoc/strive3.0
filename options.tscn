@@ -146,7 +146,34 @@ flat = false
 align = 0
 _sections_unfolded = [ "Hint" ]
 
-[node name="Label2" type="Label" parent="TabContainer/Settings" index="3"]
+[node name="skipcombatanimation" type="CheckBox" parent="TabContainer/Settings" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 17.0
+margin_top = 119.0
+margin_right = 261.0
+margin_bottom = 146.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Show custom character sprites during dialogues?"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Skip combat animation"
+flat = false
+align = 0
+_sections_unfolded = [ "Hint" ]
+
+[node name="Label2" type="Label" parent="TabContainer/Settings" index="4"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -167,7 +194,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="fullscreen" type="CheckBox" parent="TabContainer/Settings" index="4"]
+[node name="fullscreen" type="CheckBox" parent="TabContainer/Settings" index="5"]
 
 anchor_left = 0.0
 anchor_top = 1.0
@@ -194,7 +221,7 @@ flat = false
 align = 0
 _sections_unfolded = [ "Hint" ]
 
-[node name="custommouse" type="CheckBox" parent="TabContainer/Settings" index="5"]
+[node name="custommouse" type="CheckBox" parent="TabContainer/Settings" index="6"]
 
 visible = false
 anchor_left = 0.0
@@ -222,7 +249,7 @@ flat = false
 align = 0
 _sections_unfolded = [ "Hint" ]
 
-[node name="fontsize" type="SpinBox" parent="TabContainer/Settings" index="6"]
+[node name="fontsize" type="SpinBox" parent="TabContainer/Settings" index="7"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -249,7 +276,7 @@ editable = true
 prefix = ""
 suffix = ""
 
-[node name="soundslider" type="HSlider" parent="TabContainer/Settings" index="7"]
+[node name="soundslider" type="HSlider" parent="TabContainer/Settings" index="8"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -767,6 +794,7 @@ _sections_unfolded = [ "Hint" ]
 
 [node name="Supporter section" type="Tabs" parent="TabContainer" index="2"]
 
+editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -1601,6 +1629,8 @@ align = 1
 [connection signal="pressed" from="TabContainer/Settings/fading" to="." method="_on_fading_pressed"]
 
 [connection signal="pressed" from="TabContainer/Settings/spritesindialogues" to="." method="_on_spritesindialogues_pressed"]
+
+[connection signal="pressed" from="TabContainer/Settings/skipcombatanimation" to="." method="_on_skipcombatanimation_pressed"]
 
 [connection signal="pressed" from="TabContainer/Settings/fullscreen" to="." method="_on_fullscreen_pressed"]
 

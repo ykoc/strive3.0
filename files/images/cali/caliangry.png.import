@@ -7,10 +7,7 @@ path="res://.import/caliangry.png-44fa3a6bcdca0b7c36b3567014063b3d.stex"
 [deps]
 
 source_file="res://files/images/cali/caliangry.png"
-source_md5="d752dc0770be0fdcd10968e6fa9edcd4"
-
 dest_files=[ "res://.import/caliangry.png-44fa3a6bcdca0b7c36b3567014063b3d.stex" ]
-dest_md5="3237b933e8de61b68feaae168032ec39"
 
 [params]
 

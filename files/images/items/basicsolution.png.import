@@ -7,10 +7,7 @@ path="res://.import/basicsolution.png-6f19954c8db491f7e985bad877c11073.stex"
 [deps]
 
 source_file="res://files/images/items/basicsolution.png"
-source_md5="a290dc57949f4367bb6aca11eaec26f0"
-
 dest_files=[ "res://.import/basicsolution.png-6f19954c8db491f7e985bad877c11073.stex" ]
-dest_md5="206d31ce0342946b26edaa7ea3e0c11c"
 
 [params]
 

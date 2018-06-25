@@ -7,10 +7,7 @@ path="res://.import/Mindread3.png-6a4de54df34230a8001db9c93259b1a9.stex"
 [deps]
 
 source_file="res://files/buttons/abils/Mindread3.png"
-source_md5="e00d7d8598162ef328e6cc55c917245b"
-
 dest_files=[ "res://.import/Mindread3.png-6a4de54df34230a8001db9c93259b1a9.stex" ]
-dest_md5="9b813bac74b32f3b5b9caaec157d7231"
 
 [params]
 

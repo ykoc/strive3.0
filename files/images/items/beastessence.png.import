@@ -7,10 +7,7 @@ path="res://.import/beastessence.png-0ca5bb1e8b2393e4bb982760990f78ff.stex"
 [deps]
 
 source_file="res://files/images/items/beastessence.png"
-source_md5="d4698b40fe0b057115763f9006a6a6cc"
-
 dest_files=[ "res://.import/beastessence.png-0ca5bb1e8b2393e4bb982760990f78ff.stex" ]
-dest_md5="c0617e03791f954cbb51337920889893"
 
 [params]
 

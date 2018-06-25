@@ -7,10 +7,7 @@ path="res://.import/underwearboxers.png-5f627e22f4ba49258ea6e0001aac4de6.stex"
 [deps]
 
 source_file="res://files/images/items/underwearboxers.png"
-source_md5="3acbcb8fefb7daefd860927114935d87"
-
 dest_files=[ "res://.import/underwearboxers.png-5f627e22f4ba49258ea6e0001aac4de6.stex" ]
-dest_md5="3620fe8eabe70dfcc01437947429f0a9"
 
 [params]
 

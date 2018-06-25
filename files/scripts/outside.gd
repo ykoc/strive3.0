@@ -219,8 +219,9 @@ func abilitytoggle(ability):
 		partyselectedchar.abilityactive.erase(ability)
 	iteminfoclose()
 	if get_parent().get_node('combat').is_visible_in_tree():
-		get_parent().get_node('combat').selectedcombatant = partyselectedchar
-		get_parent().get_node("combat").updateabilities(get_parent().get_node('combat').findcombatantfromslave(partyselectedchar))
+		var combatant = get_parent().get_node('combat').findcombatantfromslave(partyselectedchar)
+		get_parent().get_node('combat').selectedcharacter = combatant
+		combatant.buildabilities()
 
 func _on_grade_mouse_entered():
 	var text = ''
@@ -368,7 +369,7 @@ func slaveguild(guild = 'wimborn'):
 		slavearray = globals.guildslaves.wimborn
 		if get_node("charactersprite").is_visible() == false || get_node("charactersprite").get_texture() != globals.spritedict.fairy:
 			main.background_set('slaverguild')
-			if OS.get_name() != "HTML5" && globals.rules.fadinganimation == true:
+			if OS.get_name() != "HTML5":
 				yield(main, 'animfinished')
 			if globals.state.sidequests.maple < 7:
 				setcharacter('fairy')
@@ -1213,7 +1214,7 @@ confirm = "You leave $name in the custody of guild trainers, who will teach $him
 
 func mageorder():
 	main.background_set('mageorder')
-	if OS.get_name() != "HTML5" && globals.rules.fadinganimation == true:
+	if OS.get_name() != "HTML5":
 		yield(main, 'animfinished')
 	var array = []
 	if globals.state.mainquest in [40,41]:
@@ -1565,7 +1566,7 @@ func market():
 	var array = [{name = 'Market stalls (shop)', function = 'shopinitiate', args = 'wimbornmarket'}, {name = 'Return', function = 'town'}]
 	get_node("charactersprite").visible = false
 	main.background_set('market')
-	if OS.get_name() != "HTML5" && globals.rules.fadinganimation == true:
+	if OS.get_name() != "HTML5":
 		yield(main, 'animfinished')
 	var text = "Densely populated area filled with stalls, small buildings and people allowing you to find anything for your daily life. "
 	if globals.state.rank >= 3 && globals.state.sidequests.cali == 0:

@@ -7,10 +7,7 @@ path="res://.import/beautypot.png-cb0a1b94b53ca0f43f9e3790f3000dad.stex"
 [deps]
 
 source_file="res://files/images/items/beautypot.png"
-source_md5="8abe35e28dcecf700ad81e290c1fcfda"
-
 dest_files=[ "res://.import/beautypot.png-cb0a1b94b53ca0f43f9e3790f3000dad.stex" ]
-dest_md5="90f2df4eab1bbedcb005721fe318d7a2"
 
 [params]
 

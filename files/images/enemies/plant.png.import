@@ -7,10 +7,7 @@ path="res://.import/plant.png-9c85990e926536bf2b00e19ed1f28f28.stex"
 [deps]
 
 source_file="res://files/images/enemies/plant.png"
-source_md5="e2f97063111f48339c14ad15e618cf7b"
-
 dest_files=[ "res://.import/plant.png-9c85990e926536bf2b00e19ed1f28f28.stex" ]
-dest_md5="5de973b58d3a82f0c868f7a19aaef2d9"
 
 [params]
 

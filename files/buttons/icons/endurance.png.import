@@ -7,10 +7,7 @@ path="res://.import/endurance.png-f9f4f704061543f67670c0d50b0b1e08.stex"
 [deps]
 
 source_file="res://files/buttons/icons/endurance.png"
-source_md5="1a519ffd4ff73490743063b16ee32107"
-
 dest_files=[ "res://.import/endurance.png-f9f4f704061543f67670c0d50b0b1e08.stex" ]
-dest_md5="ff7fb4cde7ec71a4a15a98a8a43e6a55"
 
 [params]
 

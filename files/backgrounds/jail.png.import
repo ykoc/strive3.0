@@ -7,10 +7,7 @@ path="res://.import/jail.png-487369b7d476b45f95557c379c05aa10.stex"
 [deps]
 
 source_file="res://files/backgrounds/jail.png"
-source_md5="3fdf988f833e4eacdee559892a661c53"
-
 dest_files=[ "res://.import/jail.png-487369b7d476b45f95557c379c05aa10.stex" ]
-dest_md5="bdf74e780e564223aebde9f46fb3ea5d"
 
 [params]
 

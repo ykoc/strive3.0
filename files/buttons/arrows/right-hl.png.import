@@ -7,10 +7,7 @@ path="res://.import/right-hl.png-ac54d25a91e03f3932796de510cf9407.stex"
 [deps]
 
 source_file="res://files/buttons/arrows/right-hl.png"
-source_md5="c1a0c934fa6be4677de024bfd5fa07c1"
-
 dest_files=[ "res://.import/right-hl.png-ac54d25a91e03f3932796de510cf9407.stex" ]
-dest_md5="43c32b0870dd1ba7d8ea4154ba15195c"
 
 [params]
 

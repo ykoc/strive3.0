@@ -7,10 +7,7 @@ path="res://.import/stimulantpot.png-ffd691912dc64caad4a0d19cb1cf762d.stex"
 [deps]
 
 source_file="res://files/images/items/stimulantpot.png"
-source_md5="b2fb06629eb7067ccf2bf2f7af8ced8e"
-
 dest_files=[ "res://.import/stimulantpot.png-ffd691912dc64caad4a0d19cb1cf762d.stex" ]
-dest_md5="39cbb8bf7daca72ab10a4601f63f9346"
 
 [params]
 

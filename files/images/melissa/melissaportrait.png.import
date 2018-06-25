@@ -7,10 +7,7 @@ path="res://.import/melissaportrait.png-2a7084840c3c4d5b2e9d89752011d3e2.stex"
 [deps]
 
 source_file="res://files/images/melissa/melissaportrait.png"
-source_md5="b39fc555de45d37abfdc9848112ce3d1"
-
 dest_files=[ "res://.import/melissaportrait.png-2a7084840c3c4d5b2e9d89752011d3e2.stex" ]
-dest_md5="ef8133fc1c0f34b5055cc8a88fc49d04"
 
 [params]
 

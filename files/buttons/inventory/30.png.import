@@ -7,10 +7,7 @@ path="res://.import/30.png-77ebd33b85516a95cc1362c72aab11e6.stex"
 [deps]
 
 source_file="res://files/buttons/inventory/30.png"
-source_md5="dd4a9b464103f012989900c032d69251"
-
 dest_files=[ "res://.import/30.png-77ebd33b85516a95cc1362c72aab11e6.stex" ]
-dest_md5="7c0c07445786acb07eed5f5a7aab70c2"
 
 [params]
 

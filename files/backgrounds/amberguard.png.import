@@ -7,10 +7,7 @@ path="res://.import/amberguard.png-f61416d52ad8ce36664529c82dda4c15.stex"
 [deps]
 
 source_file="res://files/backgrounds/amberguard.png"
-source_md5="d1206593d8f7e68f94f7a032aefff6ab"
-
 dest_files=[ "res://.import/amberguard.png-f61416d52ad8ce36664529c82dda4c15.stex" ]
-dest_md5="9f1b3630e09c8fa0e83c081d792a6090"
 
 [params]
 

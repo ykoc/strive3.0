@@ -7,10 +7,7 @@ path="res://.import/alchemy1.png-caba1539fe5e6a6ec2e4b64e7b79f997.stex"
 [deps]
 
 source_file="res://files/backgrounds/alchemy1.png"
-source_md5="251c0d3c2be22fc169816bb3c30227f8"
-
 dest_files=[ "res://.import/alchemy1.png-caba1539fe5e6a6ec2e4b64e7b79f997.stex" ]
-dest_md5="6981101a336dbd5b6ad625702e652e9f"
 
 [params]
 

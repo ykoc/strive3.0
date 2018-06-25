@@ -7,10 +7,7 @@ path="res://.import/intimate.ogg-ca0932b82cd7b2402cda513182d745f5.oggstr"
 [deps]
 
 source_file="res://files/music/intimate.ogg"
-source_md5="637dfa09ed24b75967d05339c3846236"
-
 dest_files=[ "res://.import/intimate.ogg-ca0932b82cd7b2402cda513182d745f5.oggstr" ]
-dest_md5="b63913036d132d0218db419361226811"
 
 [params]
 

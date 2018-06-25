@@ -7,10 +7,7 @@ path="res://.import/wolfguard.png-7f9a9002c0a8e590fa2570d026592a88.stex"
 [deps]
 
 source_file="res://files/images/enemies/wolfguard.png"
-source_md5="bf993f23b3ce4a20ff8a81846ef5c422"
-
 dest_files=[ "res://.import/wolfguard.png-7f9a9002c0a8e590fa2570d026592a88.stex" ]
-dest_md5="af7545489b663a8ae757826500c8eab6"
 
 [params]
 

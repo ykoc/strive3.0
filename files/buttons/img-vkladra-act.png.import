@@ -7,10 +7,7 @@ path="res://.import/img-vkladra-act.png-66bdb74f2e68b3f76da842f0a406c6aa.stex"
 [deps]
 
 source_file="res://files/buttons/img-vkladra-act.png"
-source_md5="892d1313eec57b5940fba4006f794587"
-
 dest_files=[ "res://.import/img-vkladra-act.png-66bdb74f2e68b3f76da842f0a406c6aa.stex" ]
-dest_md5="19dde4dc843048efa5e5702b0f9f8882"
 
 [params]
 

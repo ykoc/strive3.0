@@ -7,10 +7,7 @@ path="res://.import/Demon_F.png-e6e33452dfb2b855827173399c65d743.stex"
 [deps]
 
 source_file="res://files/buttons/inventory/shades/Demon_F.png"
-source_md5="495f03d760b6ce1a105de1a72830fff5"
-
 dest_files=[ "res://.import/Demon_F.png-e6e33452dfb2b855827173399c65d743.stex" ]
-dest_md5="cee04d18212e6649c8cc6ca2795efefa"
 
 [params]
 

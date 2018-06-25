@@ -7,10 +7,7 @@ path="res://.import/emilynakedneutral.png-8ff9c7cfd2497b7867e879b941241b31.stex"
 [deps]
 
 source_file="res://files/images/emily/emilynakedneutral.png"
-source_md5="0207c159277637fb36476ceabbd514e1"
-
 dest_files=[ "res://.import/emilynakedneutral.png-8ff9c7cfd2497b7867e879b941241b31.stex" ]
-dest_md5="a87047924344e5b2ab526ace5d3a582d"
 
 [params]
 

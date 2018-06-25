@@ -7,10 +7,7 @@ path="res://.import/3.png-d77dd0197062293c27dec8f95ab31863.stex"
 [deps]
 
 source_file="res://files/buttons/icons/health/3.png"
-source_md5="560983261ecdfa4e8cc6492b0a4c9c31"
-
 dest_files=[ "res://.import/3.png-d77dd0197062293c27dec8f95ab31863.stex" ]
-dest_md5="6e81984028ac5b69f9d3afbe7086c314"
 
 [params]
 

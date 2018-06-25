@@ -7,10 +7,7 @@ path="res://.import/img-scr-sm.png-9a6988e7c0a5e41b1ff917aec6ae7991.stex"
 [deps]
 
 source_file="res://files/buttons/img-scr-sm.png"
-source_md5="e7f37024a450f934fa889cb12d6ca2e9"
-
 dest_files=[ "res://.import/img-scr-sm.png-9a6988e7c0a5e41b1ff917aec6ae7991.stex" ]
-dest_md5="48ad50ce1f21d04fb8e02551ff9a6486"
 
 [params]
 

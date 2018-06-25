@@ -7,10 +7,7 @@ path="res://.import/armorelvenchain.png-e39a25115e474ff3ab8796d6e5d2e535.stex"
 [deps]
 
 source_file="res://files/images/items/armorelvenchain.png"
-source_md5="4691a5ba100288781881e5b9874f3f9f"
-
 dest_files=[ "res://.import/armorelvenchain.png-e39a25115e474ff3ab8796d6e5d2e535.stex" ]
-dest_md5="d7a660932258d9c95f935f76384e0eaa"
 
 [params]
 

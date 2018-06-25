@@ -1415,7 +1415,8 @@ func _on_finishbutton_pressed():
 	ai.clear()
 	selectmode = 'normal'
 	get_parent().animationfade()
-	yield(get_parent(), 'animfinished')
+	if OS.get_name() != 'HTML5':
+		yield(get_parent(), 'animfinished')
 	hide()
 	get_parent()._on_mansion_pressed()
 

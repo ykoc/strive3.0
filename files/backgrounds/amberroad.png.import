@@ -7,10 +7,7 @@ path="res://.import/amberroad.png-29e2bcf183acbbc6a8ab3ac70f8a6e83.stex"
 [deps]
 
 source_file="res://files/backgrounds/amberroad.png"
-source_md5="989a6376627084510f9c6716934e37a5"
-
 dest_files=[ "res://.import/amberroad.png-29e2bcf183acbbc6a8ab3ac70f8a6e83.stex" ]
-dest_md5="bf51e988019b571be6152a5de945409d"
 
 [params]
 

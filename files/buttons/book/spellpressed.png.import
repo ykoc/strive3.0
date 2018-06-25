@@ -7,10 +7,7 @@ path="res://.import/spellpressed.png-0af125a18ee811d93881b45835940424.stex"
 [deps]
 
 source_file="res://files/buttons/book/spellpressed.png"
-source_md5="0db2b1163874a588c74d6ed93ba3bbdf"
-
 dest_files=[ "res://.import/spellpressed.png-0af125a18ee811d93881b45835940424.stex" ]
-dest_md5="8696c05bb106f80aa7fb3dd4f8903627"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/oblivionpot.png-89b8c4bb87baeb1bbe3177a6b1e95c92.stex"
 [deps]
 
 source_file="res://files/images/items/oblivionpot.png"
-source_md5="14989242b09cbf7286b354ac7b86d770"
-
 dest_files=[ "res://.import/oblivionpot.png-89b8c4bb87baeb1bbe3177a6b1e95c92.stex" ]
-dest_md5="d2852931fee33011572a56731b8418ba"
 
 [params]
 

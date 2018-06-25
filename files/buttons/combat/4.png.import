@@ -7,10 +7,7 @@ path="res://.import/4.png-d50b741bfa65142928427812bdfd9130.stex"
 [deps]
 
 source_file="res://files/buttons/combat/4.png"
-source_md5="c5717f64734b2c6d2f49709065e0b7dd"
-
 dest_files=[ "res://.import/4.png-d50b741bfa65142928427812bdfd9130.stex" ]
-dest_md5="4a6439d369ee38bbc1c06288c602a128"
 
 [params]
 

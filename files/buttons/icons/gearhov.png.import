@@ -7,10 +7,7 @@ path="res://.import/gearhov.png-cc07f2c5f8d7a7ced486db73213ba83d.stex"
 [deps]
 
 source_file="res://files/buttons/icons/gearhov.png"
-source_md5="d0d514644b9a0defe6d52f1756afd26d"
-
 dest_files=[ "res://.import/gearhov.png-cc07f2c5f8d7a7ced486db73213ba83d.stex" ]
-dest_md5="f536e352554ab03f64f21f414822be31"
 
 [params]
 

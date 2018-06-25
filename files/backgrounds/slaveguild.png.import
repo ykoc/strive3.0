@@ -7,10 +7,7 @@ path="res://.import/slaveguild.png-c65accd00d9de50d09d433c89d27677b.stex"
 [deps]
 
 source_file="res://files/backgrounds/slaveguild.png"
-source_md5="703a5946a5bf9e9480473c6eca0b99be"
-
 dest_files=[ "res://.import/slaveguild.png-c65accd00d9de50d09d433c89d27677b.stex" ]
-dest_md5="014bd054303256982eb5ab2a10364428"
 
 [params]
 

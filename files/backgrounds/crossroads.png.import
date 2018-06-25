@@ -7,10 +7,7 @@ path="res://.import/crossroads.png-ec93c5b45c5b5c8c60265ad8df3848d6.stex"
 [deps]
 
 source_file="res://files/backgrounds/crossroads.png"
-source_md5="27876a25296ac9c155ff3e7088c66717"
-
 dest_files=[ "res://.import/crossroads.png-ec93c5b45c5b5c8c60265ad8df3848d6.stex" ]
-dest_md5="de631ee172606d85299b1363c2c254fe"
 
 [params]
 

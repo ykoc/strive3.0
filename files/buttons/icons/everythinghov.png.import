@@ -7,10 +7,7 @@ path="res://.import/everythinghov.png-103e6a75d51f9a9484906c13c0b99deb.stex"
 [deps]
 
 source_file="res://files/buttons/icons/everythinghov.png"
-source_md5="dd6e0a2103956d164394365776f2d2f9"
-
 dest_files=[ "res://.import/everythinghov.png-103e6a75d51f9a9484906c13c0b99deb.stex" ]
-dest_md5="a7f38f2d7596360ee28780da28107a78"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/Heavy Strike3.png-b327a9c1d4620d5b62b212c13949da26.stex"
 [deps]
 
 source_file="res://files/buttons/abils/Heavy Strike3.png"
-source_md5="448649dfe3f60ece369b7ca7c7f5349f"
-
 dest_files=[ "res://.import/Heavy Strike3.png-b327a9c1d4620d5b62b212c13949da26.stex" ]
-dest_md5="762d03b8099b1e6a56633c3133a2dacd"
 
 [params]
 

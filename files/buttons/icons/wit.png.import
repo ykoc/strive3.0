@@ -7,10 +7,7 @@ path="res://.import/wit.png-a71eb251821f92dbdfe954c3e27a09b3.stex"
 [deps]
 
 source_file="res://files/buttons/icons/wit.png"
-source_md5="e70e4be63f6df3a6baef395e34f905fb"
-
 dest_files=[ "res://.import/wit.png-a71eb251821f92dbdfe954c3e27a09b3.stex" ]
-dest_md5="04caabbb208908b7e9002ce72a406266"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/market.jpg-1382248534af89f77a3129d88db3ff2c.stex"
 [deps]
 
 source_file="res://files/backgrounds/market.jpg"
-source_md5="f48097a3efc41ab510c2c64eb1240ed0"
-
 dest_files=[ "res://.import/market.jpg-1382248534af89f77a3129d88db3ff2c.stex" ]
-dest_md5="ce321b389c67c2cf0a66a620bcce0d17"
 
 [params]
 

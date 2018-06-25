@@ -7,10 +7,7 @@ path="res://.import/banditleaderf.png-c45a7e3541949f671fdcc9b7684eb109.stex"
 [deps]
 
 source_file="res://files/images/enemies/banditleaderf.png"
-source_md5="acd024a8be1214f04b962e3b38286367"
-
 dest_files=[ "res://.import/banditleaderf.png-c45a7e3541949f671fdcc9b7684eb109.stex" ]
-dest_md5="fbb20d726e3b691e1895f533ac3ce410"
 
 [params]
 

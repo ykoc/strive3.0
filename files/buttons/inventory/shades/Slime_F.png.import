@@ -7,10 +7,7 @@ path="res://.import/Slime_F.png-5ed354c9351c2477c46146f72b1f9c88.stex"
 [deps]
 
 source_file="res://files/buttons/inventory/shades/Slime_F.png"
-source_md5="36b43ab0cb52e6f0def325202b2a26fb"
-
 dest_files=[ "res://.import/Slime_F.png-5ed354c9351c2477c46146f72b1f9c88.stex" ]
-dest_md5="bc1fbaa6be6b23eefcfc7365f55b52b3"
 
 [params]
 

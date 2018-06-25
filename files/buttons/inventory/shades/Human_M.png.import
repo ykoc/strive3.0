@@ -7,10 +7,7 @@ path="res://.import/Human_M.png-800a275e5b26fb67563f4e4f809466ac.stex"
 [deps]
 
 source_file="res://files/buttons/inventory/shades/Human_M.png"
-source_md5="3809698eaf0f58c573460bb5b8f25ba6"
-
 dest_files=[ "res://.import/Human_M.png-800a275e5b26fb67563f4e4f809466ac.stex" ]
-dest_md5="cfbfee13f0cd9dfe0584aa2c5b60e8cd"
 
 [params]
 

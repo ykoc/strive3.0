@@ -7,10 +7,7 @@ path="res://.import/gemstone.png-5743f0ba35e8ae6fdb2092728cb2dbcb.stex"
 [deps]
 
 source_file="res://files/images/items/gemstone.png"
-source_md5="1d1ee1800eb191375de0191dbf5224f0"
-
 dest_files=[ "res://.import/gemstone.png-5743f0ba35e8ae6fdb2092728cb2dbcb.stex" ]
-dest_md5="f6b4d1cd0ab41d9a4f6dbd7058e1923a"
 
 [params]
 

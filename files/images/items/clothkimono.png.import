@@ -7,10 +7,7 @@ path="res://.import/clothkimono.png-36bbebcc6541f65b8b2d51f4ef59cd99.stex"
 [deps]
 
 source_file="res://files/images/items/clothkimono.png"
-source_md5="4cfd85eb363c7187c1ee25e182fc423e"
-
 dest_files=[ "res://.import/clothkimono.png-36bbebcc6541f65b8b2d51f4ef59cd99.stex" ]
-dest_md5="653b0065c4a8b542cd5b34969f959fb7"
 
 [params]
 

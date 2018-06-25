@@ -7,10 +7,7 @@ path="res://.import/Mindblast3.png-d4875731378a69805cacaa441ba8b65d.stex"
 [deps]
 
 source_file="res://files/buttons/abils/Mindblast3.png"
-source_md5="df1990d57ce409d004d10a5e27de3515"
-
 dest_files=[ "res://.import/Mindblast3.png-d4875731378a69805cacaa441ba8b65d.stex" ]
-dest_md5="05fe59077dc919d0b8cb97b43f567e20"
 
 [params]
 

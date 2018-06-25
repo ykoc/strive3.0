@@ -7,10 +7,7 @@ path="res://.import/spell.png-ca24256281a07235f8e9386e731458e3.stex"
 [deps]
 
 source_file="res://files/buttons/book/spell.png"
-source_md5="41def6b804458f7423bfa5d9a822a55d"
-
 dest_files=[ "res://.import/spell.png-ca24256281a07235f8e9386e731458e3.stex" ]
-dest_md5="9c002358c18affbcb9c20675bb8defb3"
 
 [params]
 

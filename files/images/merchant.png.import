@@ -7,10 +7,7 @@ path="res://.import/merchant.png-7c572b056488239194cdfb622b78e58f.stex"
 [deps]
 
 source_file="res://files/images/merchant.png"
-source_md5="ca7b0b2accd1f7e6f3370767d6806e94"
-
 dest_files=[ "res://.import/merchant.png-7c572b056488239194cdfb622b78e58f.stex" ]
-dest_md5="5b9cf44a8f7e95c4420db5cfa10d373b"
 
 [params]
 

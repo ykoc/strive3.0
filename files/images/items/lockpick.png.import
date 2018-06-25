@@ -7,10 +7,7 @@ path="res://.import/lockpick.png-84ef6e6567c41a8dfccd5f58cc87c1c2.stex"
 [deps]
 
 source_file="res://files/images/items/lockpick.png"
-source_md5="b80ee0077e8f3b1e4b361dcc3061873c"
-
 dest_files=[ "res://.import/lockpick.png-84ef6e6567c41a8dfccd5f58cc87c1c2.stex" ]
-dest_md5="658ef9e55ce76237f2c06eabb8eb2be2"
 
 [params]
 

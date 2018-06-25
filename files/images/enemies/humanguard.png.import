@@ -7,10 +7,7 @@ path="res://.import/humanguard.png-dbb98ab94876c8c791170e0403bb71dc.stex"
 [deps]
 
 source_file="res://files/images/enemies/humanguard.png"
-source_md5="adb296e5901150de3bcfb08ea4c95a4d"
-
 dest_files=[ "res://.import/humanguard.png-dbb98ab94876c8c791170e0403bb71dc.stex" ]
-dest_md5="a5311fac56a9760048a947d8b22e5ff1"
 
 [params]
 

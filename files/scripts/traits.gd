@@ -173,7 +173,7 @@ var traits = {
     "description": "$name's voice is downright charming, making surrounding people just want to hear more of it.\n\n[color=aqua]Vocal occupations more effective, +Charm [/color]",
     "effect": {
       "code": "pretty_voice",
-      "charm_cur": 20
+      "charm_base": 20
     },
     "tags": [
       "mental"
@@ -215,8 +215,7 @@ var traits = {
     "description": "$name's body is much less durable than most. $His physical potential is severely impaired. \n\n[color=aqua]Max Strength -2, Max Agi -1. [/color]",
     "effect": {
       "code": "frail",
-      "agi_max": -1,
-      "str_max": -2
+      "end_mod": -2
     },
     "tags": [
       "physical",
@@ -228,10 +227,10 @@ var traits = {
   },
   "Scarred": {
     "name": "Scarred",
-    "description": "$name's body is covered in massive burn scars. Besides being terrifying to look at, this also makes $him suffer from low confidence.\n\n[color=aqua]--Beauty, -Confidence [/color]",
+    "description": "$name's body is covered in massive burn scars. Besides being terrifying to look at, this also makes $him suffer from low confidence.\n\n[color=aqua]--Beauty, -Charm [/color]",
     "effect": {
       "code": "scarred",
-      "conf_cur": -30,
+      "charm_base": -30,
       "beautybase": -30
     },
     "tags": [
@@ -330,7 +329,7 @@ var traits = {
     "effect": {
       "code": "dominant",
       "conf_max": 15,
-      "conf_cur": 25,
+      "conf_base": 25,
       "obed_mod": -30
     },
     "tags": [
@@ -346,7 +345,7 @@ var traits = {
     "effect": {
       "code": "submissive",
       "conf_max": -30,
-      "conf_cur": -10,
+      "conf_base": -10,
       "obed_mod": 40
     },
     "tags": [

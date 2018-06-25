@@ -7,10 +7,7 @@ path="res://.import/18.png-6fe66551f683581c052b9a6a99f25c50.stex"
 [deps]
 
 source_file="res://files/buttons/mainscreen/18.png"
-source_md5="656b69aa26ea068643538cb0bb3112a8"
-
 dest_files=[ "res://.import/18.png-6fe66551f683581c052b9a6a99f25c50.stex" ]
-dest_md5="d56c7a3738b693b8edfe349b4d32d2bf"
 
 [params]
 

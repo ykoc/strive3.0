@@ -7,10 +7,7 @@ path="res://.import/sundress.png-5ec03a906c2d808fa5424e98b7d34fc2.stex"
 [deps]
 
 source_file="res://files/images/items/sundress.png"
-source_md5="35bc02d7e89e343693f22cade3ec8750"
-
 dest_files=[ "res://.import/sundress.png-5ec03a906c2d808fa5424e98b7d34fc2.stex" ]
-dest_md5="5d78c6f560c67cf560a85f7e1485a6f6"
 
 [params]
 

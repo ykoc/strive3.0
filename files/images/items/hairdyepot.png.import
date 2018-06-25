@@ -7,10 +7,7 @@ path="res://.import/hairdyepot.png-3419a05cf79dbda14fefb9a1f807cfe9.stex"
 [deps]
 
 source_file="res://files/images/items/hairdyepot.png"
-source_md5="72083f8796bcc7adc7d5ca5e67a95765"
-
 dest_files=[ "res://.import/hairdyepot.png-3419a05cf79dbda14fefb9a1f807cfe9.stex" ]
-dest_md5="96e8294389f2ee38ba60e305217792f4"
 
 [params]
 

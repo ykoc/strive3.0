@@ -7,10 +7,7 @@ path="res://.import/potshov.png-c71e1fdbff6cc015907066b337dd5994.stex"
 [deps]
 
 source_file="res://files/buttons/icons/potshov.png"
-source_md5="d599bc803504d48d249abf2eabd6abca"
-
 dest_files=[ "res://.import/potshov.png-c71e1fdbff6cc015907066b337dd5994.stex" ]
-dest_md5="526a93bd6ed2672af2d698057f48665b"
 
 [params]
 

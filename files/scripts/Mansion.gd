@@ -9,7 +9,7 @@ var testslaveorigin = ['slave','poor','commoner','rich','noble']
 var currentslave = 0 setget currentslave_set
 var selectedslave = -1
 var texture = null
-var startcombatzone = "undercityhall"
+var startcombatzone = "forest"
 var nameportallocation
 var enddayprocess = false
 onready var maintext = '' setget maintext_set, maintext_get
@@ -63,6 +63,7 @@ var _timer = 0.0
 func shake(duration):
 	shaking = true
 	_timer = duration
+
 
 var musicfading = false
 var musicraising = false
@@ -147,7 +148,7 @@ func clearscreen():
 
 func _ready():
 	get_node("music").set_meta('currentsong', 'none')
-	if OS.get_executable_path() == 'C:\\Users\\1\\Desktop\\godot\\Godot_v3.0.2-stable_win64.exe':
+	if OS.get_executable_path() == 'C:\\Users\\1\\Desktop\\godot\\Godot_v3.0.4-stable_win64.exe':
 		globals.developmode = true
 		get_node("startcombat").show()
 		get_node("new slave button").show()
@@ -161,7 +162,7 @@ func _ready():
 		globals.player.ability.append('escape')
 		globals.player.ability.append('heal')
 		globals.player.abilityactive.append('escape')
-		globals.player.abilityactive.append('mindread')
+		globals.player.abilityactive.append('mindblast')
 		globals.state.supporter = true
 		for i in globals.gallery.charactergallery.values():
 			i.unlocked = true
@@ -223,13 +224,15 @@ func _ready():
 	#startending()
 
 func slavehover(meta):
-	var tempslave = slavearray[int(meta.replace('person',''))]
-	globals.slavetooltip(tempslave)
+	if meta != 'race':
+		var tempslave = slavearray[int(meta.replace('person',''))]
+		globals.slavetooltip(tempslave)
 
 func slaveclicked(meta):
-	var tempslave = slavearray[int(meta.replace('person',''))]
-	globals.slavetooltiphide()
-	globals.openslave(tempslave)
+	if meta != 'race':
+		var tempslave = slavearray[int(meta.replace('person',''))]
+		globals.slavetooltiphide()
+		globals.openslave(tempslave)
 
 func sound(value):
 	if globals.rules.musicvol > 0:
@@ -243,14 +246,13 @@ func startending():
 	close_dialogue()
 	animationfade(3)
 	
-	yield(self, 'animfinished')
-	#_on_mansion_pressed()
+	if OS.get_name() != 'HTML5':
+		yield(self, 'animfinished')
 	scene.add_to_group('blockmaininput')
 	scene.add_to_group('blockoutsideinput')
 	add_child_below_node($tooltip, scene)
 	scene.launch()
 	music_set('ending')
-	#scene.advance()
 	if globals.developmode == false:
 		globals.save_game('user://saves/'+name)
 	if globals.state.decisions.has('hadekeep'):
@@ -270,26 +272,29 @@ func _on_new_slave_button_pressed():
 	person.loyal += 100
 	person.xp += 9990
 	person.sexuals.affection = 200
-	person.consent = true
-	person.sexuals.unlocked = true
-	person.sexuals.unlocks.append('group')
-	person.sexuals.unlocks.append('swing')
+	person.consent = false
 	person.lust = 100
 	person.spec = 'bodyguard'
-	person.add_effect(globals.effectdict.contraceptive)
+	#person.add_effect(globals.effectdict.contraceptive)
 	globals.connectrelatives(globals.player, person, 'sibling')
-	globals.impregnation(person)
+	globals.impregnation(person, globals.player)
+	globals.impregnation(person, globals.player)
+	globals.impregnation(person, globals.player)
+	globals.impregnation(person, globals.player)
+	globals.impregnation(person, globals.player)
+	person.preg.duration = variables.pregduration
 	#slave.tattoo.face = 'nature'
 	person.attention = 70
 	person.skillpoints = 100
+	#person.add_trait('Frail')
 	for i in ['conf','cour','charm','wit']:
 		person[i] = 100
 	person.ability.append('debilitate')
 	#globals.state.location = 'gorn'
 	for i in globals.state.portals.values():
 		i.enabled = true
-	#for i in globals.spelldict.values():
-	#	i.learned = true
+	for i in globals.spelldict.values():
+		i.learned = true
 	for i in globals.itemdict.values():
 		i.unlocked = true
 		if !i.type in ['gear','dummy']:
@@ -303,7 +308,7 @@ func _on_new_slave_button_pressed():
 	globals.state.reputation.wimborn = 41
 	globals.state.sidequests.ivran = 'potionreceived'
 	globals.state.mansionupgrades.mansionnursery = 1
-	globals.player.ability.append("mindread")
+	globals.player.ability.append("leechingstrike")
 	globals.player.ability.append('heal')
 	#globals.player.stats.maf_cur = 3
 	globals.state.branding = 2
@@ -533,7 +538,8 @@ func _on_end_pressed():
 	var lacksupply = false
 	var results = 'normal'
 	_on_mansion_pressed()
-	yield(self, 'animfinished')
+	if OS.get_name() != 'HTML5':
+		yield(self, 'animfinished')
 	for i in range(globals.slaves.size()):
 		if globals.slaves[i].away.duration == 0:
 			if globals.slaves[i].work == 'cooking':
@@ -1250,8 +1256,6 @@ func autosave():
 		dir.make_dir("user://saves")
 	var filearray = globals.dir_contents()
 	var path = 'user://saves/'
-#	if filearray.has(path+"autosave3"):
-#		dir.remove(path+"autosave3")
 	if filearray.has(path+"autosave2"):
 		dir.rename(path+'autosave2',path+'autosave3')
 		globals.savelist[path+'autosave3'] = globals.savelist[path + 'autosave2']
@@ -1404,7 +1408,7 @@ func close_dialogue(mode = 'normal'):
 	#get_node("dialogue/AnimationPlayer").play_backwards("fading")
 	nodefade($dialogue, 0.4)
 	get_node("dialogue/blockinput").show()
-	if OS.get_name() != "HTML5" && globals.rules.fadinganimation == true && mode != 'instant':
+	if OS.get_name() != "HTML5" && mode != 'instant':
 		yield(tween, 'tween_completed')
 	get_node("dialogue").hide()
 	for i in nodedict.values():
@@ -1658,10 +1662,12 @@ func background_set(text):
 	if OS.get_name() != "HTML5" && globals.rules.fadinganimation == true:
 		if get_node("TextureFrame").get_texture() != globals.backgrounds[text]:
 			animationfade()
-			yield(player, "animation_finished")
+			if OS.get_name() != 'HTML5':
+				yield(player, "animation_finished")
 	texture = globals.backgrounds[text]
 	get_node("TextureFrame").set_texture(texture)
-	yield(get_tree(), "idle_frame")
+	if OS.get_name() != 'HTML5':
+		yield(get_tree(), "idle_frame")
 	emit_signal('animfinished')
 
 func background_get():
@@ -1677,16 +1683,18 @@ func animationfade(value = 0.4, duration = 0.05):
 	player.get_animation("fadetoblack").track_insert_key(0, value, Color(1,1,1,1)) 
 	if OS.get_name() != 'HTML5' && globals.rules.fadinganimation == true:
 		player.play('fadetoblack')
-		yield(player, "animation_finished")
+		if OS.get_name() != 'HTML5':
+			yield(player, "animation_finished")
 		emit_signal("animfinished")
 		player.play_backwards("fadetoblack")
 	else:
-		yield(get_tree(), 'idle_frame')
+		if OS.get_name() != 'HTML5':
+			yield(get_tree(), 'idle_frame')
 		emit_signal("animfinished")
 
 func screenanimation(text):
 	var player = get_node("screenchange/AnimationPlayer")
-	if OS.get_name() != 'HTML5' && globals.rules.fadinganimation == true:
+	if OS.get_name() != 'HTML5':
 		player.play(text)
 		yield(player, "animation_finished")
 		emit_signal("animfinished")
@@ -1753,7 +1761,8 @@ func _on_mansion_pressed():
 	var textnode = get_node("MainScreen/mansion/mansioninfo")
 	var text = ''
 	background_set('mansion')
-	yield(self, 'animfinished')
+	if OS.get_name() != 'HTML5':
+		yield(self, 'animfinished')
 	hide_everything()
 	for i in get_tree().get_nodes_in_group("mansioncontrols"):
 		i.show()
@@ -1855,7 +1864,8 @@ func _on_mansion_pressed():
 
 func _on_jailbutton_pressed():
 	background_set('jail')
-	yield(self, 'animfinished')
+	if OS.get_name() != 'HTML5':
+		yield(self, 'animfinished')
 	hide_everything()
 	get_node("MainScreen/mansion/jailpanel").show()
 	if globals.state.tutorial.jail == false:
@@ -1948,7 +1958,8 @@ var potselected
 
 func _on_alchemy_pressed():
 	background_set('alchemy' + str(globals.state.mansionupgrades.mansionalchemy))
-	yield(self, 'animfinished')
+	if OS.get_name() != 'HTML5':
+		yield(self, 'animfinished')
 	hide_everything()
 	get_node("MainScreen/mansion/alchemypanel").show()
 	if globals.state.tutorial.alchemy == false:
@@ -2070,7 +2081,8 @@ func _on_library_pressed():
 		background_set('library1')
 	else:
 		background_set('library2')
-	yield(self, 'animfinished')
+	if OS.get_name() != 'HTML5':
+		yield(self, 'animfinished')
 	hide_everything()
 	get_node("MainScreen/mansion/librarypanel").show()
 	var text = ''
@@ -2719,7 +2731,7 @@ func _on_selfrelatives_pressed():
 	
 	if entry.children.size() > 0:
 		text += '\n[center]Children[/center]\n'
-		for i in entry.siblings:
+		for i in entry.children:
 			entry2 = relativesdata[i]
 			if entry2.sex == 'male':
 				text += "Son: " 
@@ -3036,7 +3048,7 @@ func _on_startcombat_pressed():
 		array.append(globals.state.findslave(i))
 	for i in array:
 		for j in ['sstr','sagi','smaf','send','wit','cour','conf','charm','health']:
-			i[j] = 100
+			i[j] = 500
 	get_node("outside").gooutside()
 	globals.state.backpack.stackables.rope = 3
 	get_node("explorationnode").zoneenter(startcombatzone)
@@ -3064,7 +3076,8 @@ func checkplayergroup():
 
 func _on_cleanbutton_pressed():
 	animationfade()
-	yield(self, 'animfinished')
+	if OS.get_name() != 'HTML5':
+		yield(self, 'animfinished')
 	globals.state.condition = 100
 	globals.resources.gold -= min(ceil(globals.resources.day/7.0)*10,100)
 	_on_mansionsettings_pressed()
@@ -3478,7 +3491,8 @@ func _on_startbutton_pressed():
 	if sexslaves.size() >= 4 && sexmode == 'sex':
 		globals.itemdict.aphroditebrew.amount -= 1
 	animationfade()
-	yield(self, 'animfinished')
+	if OS.get_name() != 'HTML5':
+		yield(self, 'animfinished')
 	get_node("Navigation").hide()
 	get_node('MainScreen').hide()
 	get_node("charlistcontrol").hide()

@@ -7,10 +7,7 @@ path="res://.import/aphrodisiacpot.png-03b9fa2a916fc76381d332201b18b154.stex"
 [deps]
 
 source_file="res://files/images/items/aphrodisiacpot.png"
-source_md5="3dc2339a90f8fa10fc278412afb8dc40"
-
 dest_files=[ "res://.import/aphrodisiacpot.png-03b9fa2a916fc76381d332201b18b154.stex" ]
-dest_md5="ffb0e4b92ddf3a75edcd433ff82754b0"
 
 [params]
 

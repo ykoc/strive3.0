@@ -7,10 +7,7 @@ path="res://.import/laboratory.png-09ae9b6d5424fb6b6c499a70e81b3ca6.stex"
 [deps]
 
 source_file="res://files/backgrounds/laboratory.png"
-source_md5="678f10945fd5a30ea4928a20838c3634"
-
 dest_files=[ "res://.import/laboratory.png-09ae9b6d5424fb6b6c499a70e81b3ca6.stex" ]
-dest_md5="5a6bb47dd83dc431e4e9289dc10b0956"
 
 [params]
 

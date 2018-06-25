@@ -7,10 +7,7 @@ path="res://.import/ingspressed.png-2ea8117bd47e7ba449da227ba0fc2f1f.stex"
 [deps]
 
 source_file="res://files/buttons/icons/ingspressed.png"
-source_md5="c713a77b47c55c5f04a24084f0aaf227"
-
 dest_files=[ "res://.import/ingspressed.png-2ea8117bd47e7ba449da227ba0fc2f1f.stex" ]
-dest_md5="de85077483ad5adee9b8bb029ceea88c"
 
 [params]
 

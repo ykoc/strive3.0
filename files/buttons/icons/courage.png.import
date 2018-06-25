@@ -7,10 +7,7 @@ path="res://.import/courage.png-21b6334b900aca348933a438a1f824bc.stex"
 [deps]
 
 source_file="res://files/buttons/icons/courage.png"
-source_md5="323d4a84ad57c35a657495c0196f7a1d"
-
 dest_files=[ "res://.import/courage.png-21b6334b900aca348933a438a1f824bc.stex" ]
-dest_md5="08c7e41a189564b34daaa8a475c1c3e6"
 
 [params]
 

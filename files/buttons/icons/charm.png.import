@@ -7,10 +7,7 @@ path="res://.import/charm.png-a8c119cb142d7d459be5e9a3a5125813.stex"
 [deps]
 
 source_file="res://files/buttons/icons/charm.png"
-source_md5="80aedda443ff91da50b88ba6c9fa3eec"
-
 dest_files=[ "res://.import/charm.png-a8c119cb142d7d459be5e9a3a5125813.stex" ]
-dest_md5="135eae0b84abd7a546649dce8d0071eb"
 
 [params]
 

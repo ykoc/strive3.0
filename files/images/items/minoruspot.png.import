@@ -7,10 +7,7 @@ path="res://.import/minoruspot.png-12561df6d517683fb40e33bb5ec36046.stex"
 [deps]
 
 source_file="res://files/images/items/minoruspot.png"
-source_md5="f87801cdb3fb8bdc7a2f56034da336b2"
-
 dest_files=[ "res://.import/minoruspot.png-12561df6d517683fb40e33bb5ec36046.stex" ]
-dest_md5="3138e709a18335d45965957b6f0bdbbe"
 
 [params]
 

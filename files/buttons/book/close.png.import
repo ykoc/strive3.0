@@ -7,10 +7,7 @@ path="res://.import/close.png-3321797e2bceb3988f5711ffb9859e99.stex"
 [deps]
 
 source_file="res://files/buttons/book/close.png"
-source_md5="7104e97539b3505b616e685a2c3fa682"
-
 dest_files=[ "res://.import/close.png-3321797e2bceb3988f5711ffb9859e99.stex" ]
-dest_md5="c38efc0a9a3bf1bb5cd7382e6854c9bf"
 
 [params]
 

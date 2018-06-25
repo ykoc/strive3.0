@@ -7,10 +7,7 @@ path="res://.import/weaponaynerisrapier.png-61866f56649647df32c31544928131b7.ste
 [deps]
 
 source_file="res://files/images/items/weaponaynerisrapier.png"
-source_md5="42c3ed9d1270188869f83dc512a2876a"
-
 dest_files=[ "res://.import/weaponaynerisrapier.png-61866f56649647df32c31544928131b7.stex" ]
-dest_md5="7d4695afc6c69c17e3d6a92eed5976e4"
 
 [params]
 

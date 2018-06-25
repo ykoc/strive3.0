@@ -7,10 +7,7 @@ path="res://.import/kursor_act.png-6713e52c86f63c37ca3ea5c76a9b41fa.stex"
 [deps]
 
 source_file="res://files/buttons/kursor_act.png"
-source_md5="5a19731170fec869b9d1b761995d8b15"
-
 dest_files=[ "res://.import/kursor_act.png-6713e52c86f63c37ca3ea5c76a9b41fa.stex" ]
-dest_md5="ac893077194f2c9a9dcc5df2d679751d"
 
 [params]
 

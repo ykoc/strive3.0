@@ -7,10 +7,7 @@ path="res://.import/img-kurs-sm.png-feb51b60764b0581e337133b1441854b.stex"
 [deps]
 
 source_file="res://files/buttons/img-kurs-sm.png"
-source_md5="f3b4c16414112d10ab6b77987c9f95a9"
-
 dest_files=[ "res://.import/img-kurs-sm.png-feb51b60764b0581e337133b1441854b.stex" ]
-dest_md5="d6be528861c939bd447b17411eeda0ef"
 
 [params]
 

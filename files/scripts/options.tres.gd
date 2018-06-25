@@ -23,6 +23,7 @@ func _ready():
 	get_node("TabContainer/Game/permadeath").set_pressed(globals.rules.permadeath)
 	get_node("TabContainer/Game/aliseoption").select(globals.rules.enddayalise)
 	get_node("TabContainer/Settings/spritesindialogues").set_pressed(globals.rules.spritesindialogues)
+	$TabContainer/Settings/skipcombatanimation.pressed = globals.rules.instantcombatanimation
 	if globals.rules.children == true:
 		get_node("TabContainer/Game/noadults").show()
 		get_node("TabContainer/Game/noadults").set_pressed(globals.rules.noadults)
@@ -328,3 +329,7 @@ func _on_screenconf_pressed():
 	globals.rules.screenwidth = int(get_node("TabContainer/Settings/screenresize/width").get_text())
 	globals.rules.screenheight = int(get_node("TabContainer/Settings/screenresize/height").get_text())
 	get_tree().set_screen_stretch(1, 1, Vector2(globals.rules.screenwidth,globals.rules.screenheight))
+
+
+func _on_skipcombatanimation_pressed():
+	globals.rules.instantcombatanimation = $TabContainer/Settings/skipcombatanimation.pressed

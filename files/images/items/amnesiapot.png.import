@@ -7,10 +7,7 @@ path="res://.import/amnesiapot.png-4d5ca5cc04a7e2aba0e6f9e879a4ddb9.stex"
 [deps]
 
 source_file="res://files/images/items/amnesiapot.png"
-source_md5="83dbd4aa1390ba850db194bf59e96527"
-
 dest_files=[ "res://.import/amnesiapot.png-4d5ca5cc04a7e2aba0e6f9e879a4ddb9.stex" ]
-dest_md5="18c47d5227791f658e4096694379a1b4"
 
 [params]
 

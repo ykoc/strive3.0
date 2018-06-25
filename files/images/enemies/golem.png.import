@@ -7,10 +7,7 @@ path="res://.import/golem.png-5b22e2a90fa08eb0c4181034cbb72805.stex"
 [deps]
 
 source_file="res://files/images/enemies/golem.png"
-source_md5="d1d2ed3affa9ffd298833ca8609cefe2"
-
 dest_files=[ "res://.import/golem.png-5b22e2a90fa08eb0c4181034cbb72805.stex" ]
-dest_md5="0db613f710cff2d49cf6e96759970a86"
 
 [params]
 

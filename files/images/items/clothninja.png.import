@@ -7,10 +7,7 @@ path="res://.import/clothninja.png-ead5013f690d5f2068101348de762cb8.stex"
 [deps]
 
 source_file="res://files/images/items/clothninja.png"
-source_md5="d773f96dd0ff5832a7fff03d6edb13c8"
-
 dest_files=[ "res://.import/clothninja.png-ead5013f690d5f2068101348de762cb8.stex" ]
-dest_md5="27c06a2b339bb3a436be5e064667c81b"
 
 [params]
 

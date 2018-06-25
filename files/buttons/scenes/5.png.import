@@ -7,10 +7,7 @@ path="res://.import/5.png-5f441302755a786393fd79bbaa8f2f3f.stex"
 [deps]
 
 source_file="res://files/buttons/scenes/5.png"
-source_md5="a2b4fc5b90ee47aaea15b095ef4cc5dc"
-
 dest_files=[ "res://.import/5.png-5f441302755a786393fd79bbaa8f2f3f.stex" ]
-dest_md5="edbbccda91cd2e89d73aab90e230a5df"
 
 [params]
 

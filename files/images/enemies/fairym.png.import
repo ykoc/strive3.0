@@ -7,10 +7,7 @@ path="res://.import/fairym.png-fca8d7b0980b1c1516afc2f32e698df5.stex"
 [deps]
 
 source_file="res://files/images/enemies/fairym.png"
-source_md5="8e2fee51da4e59049e527763ab6ad739"
-
 dest_files=[ "res://.import/fairym.png-fca8d7b0980b1c1516afc2f32e698df5.stex" ]
-dest_md5="ca27240ea98ae06236f39e666027da2e"
 
 [params]
 

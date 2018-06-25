@@ -7,10 +7,7 @@ path="res://.import/finale.png-8b4e1c624ab6c8e483a6222372a20ea4.stex"
 [deps]
 
 source_file="res://files/images/scene/finale.png"
-source_md5="3a4a2db4b90974dd0e97f9ce55e7b92b"
-
 dest_files=[ "res://.import/finale.png-8b4e1c624ab6c8e483a6222372a20ea4.stex" ]
-dest_md5="eb2f17896149832f03f82412872529b7"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/Nereid_F.png-839667b771bc0a22bafae96f532a3706.stex"
 [deps]
 
 source_file="res://files/buttons/inventory/shades/Nereid_F.png"
-source_md5="f0046cc2b6db9311ec5a36b124f138bc"
-
 dest_files=[ "res://.import/Nereid_F.png-839667b771bc0a22bafae96f532a3706.stex" ]
-dest_md5="d0eefc6aeaf9729d0c257b94c018bc4d"
 
 [params]
 

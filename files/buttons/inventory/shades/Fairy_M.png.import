@@ -7,10 +7,7 @@ path="res://.import/Fairy_M.png-23ce5b23e5835ae1789bdbea619d33aa.stex"
 [deps]
 
 source_file="res://files/buttons/inventory/shades/Fairy_M.png"
-source_md5="cc3dfd0532da604adee35f8e954eb1b3"
-
 dest_files=[ "res://.import/Fairy_M.png-23ce5b23e5835ae1789bdbea619d33aa.stex" ]
-dest_md5="a22c6811d1f77269fe59c8204f98431f"
 
 [params]
 

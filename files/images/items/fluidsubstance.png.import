@@ -7,10 +7,7 @@ path="res://.import/fluidsubstance.png-7a0b8e609680ad72dc30b1de6f874e9e.stex"
 [deps]
 
 source_file="res://files/images/items/fluidsubstance.png"
-source_md5="3c162404ecffd620724b3380a8293b66"
-
 dest_files=[ "res://.import/fluidsubstance.png-7a0b8e609680ad72dc30b1de6f874e9e.stex" ]
-dest_md5="aafc3dd8e98f979875fc38c6cf2d50ab"
 
 [params]
 

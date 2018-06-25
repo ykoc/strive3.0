@@ -7,10 +7,7 @@ path="res://.import/ingshov.png-606477a174ee270f25bddfaace6acb4d.stex"
 [deps]
 
 source_file="res://files/buttons/icons/ingshov.png"
-source_md5="30a20a5517e28e16b2226ae9aa4a2324"
-
 dest_files=[ "res://.import/ingshov.png-606477a174ee270f25bddfaace6acb4d.stex" ]
-dest_md5="67278ea23902f80bb414ca374bc94f6d"
 
 [params]
 

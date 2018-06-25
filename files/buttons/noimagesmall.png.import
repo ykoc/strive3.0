@@ -7,10 +7,7 @@ path="res://.import/noimagesmall.png-9e721f9cf9cdff3c5653f7d0520a3d54.stex"
 [deps]
 
 source_file="res://files/buttons/noimagesmall.png"
-source_md5="8ca8acd0c84b575e1a8176ca4300f5e9"
-
 dest_files=[ "res://.import/noimagesmall.png-9e721f9cf9cdff3c5653f7d0520a3d54.stex" ]
-dest_md5="e4a7442abfa954625fd7a572f918d6b9"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/3.png-b5c6cece57f85375b475481cedd87f64.stex"
 [deps]
 
 source_file="res://files/buttons/icons/stress/3.png"
-source_md5="bbb748c3ed0bc61ef919e00afe590fb4"
-
 dest_files=[ "res://.import/3.png-b5c6cece57f85375b475481cedd87f64.stex" ]
-dest_md5="67f84e2a6078e9789de5cf5ce53fa20e"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/btn-yell-horver.png-1c0aa99c8ee1f2457fa59f56e13d4bea.stex"
 [deps]
 
 source_file="res://files/buttons/btn-yell-horver.png"
-source_md5="5e2d09a975d18d77307576953b057384"
-
 dest_files=[ "res://.import/btn-yell-horver.png-1c0aa99c8ee1f2457fa59f56e13d4bea.stex" ]
-dest_md5="0f3dc9c7e9d451569932e688c7799e8c"
 
 [params]
 

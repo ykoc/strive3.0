@@ -7,10 +7,7 @@ path="res://.import/exhaust.png-e6e9283ec20d6a7a512af57c9d067e13.stex"
 [deps]
 
 source_file="res://files/buttons/exhaust.png"
-source_md5="45e6f4fced6dc39d121d54ffa82d7ed0"
-
 dest_files=[ "res://.import/exhaust.png-e6e9283ec20d6a7a512af57c9d067e13.stex" ]
-dest_md5="3484de2be1d53136dfd8a6ae7a68aa10"
 
 [params]
 

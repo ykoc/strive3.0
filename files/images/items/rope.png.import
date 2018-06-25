@@ -7,10 +7,7 @@ path="res://.import/rope.png-645ce807056af1f0b4889749e2bad8d4.stex"
 [deps]
 
 source_file="res://files/images/items/rope.png"
-source_md5="3255f9c9765e274f7df8bc5a12b4dd38"
-
 dest_files=[ "res://.import/rope.png-645ce807056af1f0b4889749e2bad8d4.stex" ]
-dest_md5="5d9eaff134fc871a8acae11589184c12"
 
 [params]
 

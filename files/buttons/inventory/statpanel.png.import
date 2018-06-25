@@ -7,10 +7,7 @@ path="res://.import/statpanel.png-a5230e06970bbdadbd30f4ad934355e7.stex"
 [deps]
 
 source_file="res://files/buttons/inventory/statpanel.png"
-source_md5="4d6f0f52cc1f0c6bf71a290dd387ecc4"
-
 dest_files=[ "res://.import/statpanel.png-a5230e06970bbdadbd30f4ad934355e7.stex" ]
-dest_md5="1d7fbe52817c3e3d7a9c349bab3231b2"
 
 [params]
 

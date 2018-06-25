@@ -7,10 +7,7 @@ path="res://.import/meadows.png-5258d62569ce9227dce337cb8eb653bf.stex"
 [deps]
 
 source_file="res://files/backgrounds/meadows.png"
-source_md5="5e2e4b4d40d8c8a92d58d1ceb32b4a94"
-
 dest_files=[ "res://.import/meadows.png-5258d62569ce9227dce337cb8eb653bf.stex" ]
-dest_md5="82d4aff260d4ca0a65079610693f17d7"
 
 [params]
 

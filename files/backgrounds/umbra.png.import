@@ -7,10 +7,7 @@ path="res://.import/umbra.png-ecb6b677ba85fc9551db185610909f71.stex"
 [deps]
 
 source_file="res://files/backgrounds/umbra.png"
-source_md5="fb27a9d683b4f61791d7996946956dff"
-
 dest_files=[ "res://.import/umbra.png-ecb6b677ba85fc9551db185610909f71.stex" ]
-dest_md5="1ea96136ed8afcae51152d71a0493f3d"
 
 [params]
 

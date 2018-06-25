@@ -7,10 +7,7 @@ path="res://.import/mountains.jpg-90f33a09d9b3d9010e9fbd8dddd56c44.stex"
 [deps]
 
 source_file="res://files/backgrounds/mountains.jpg"
-source_md5="29d8ea81845498222ffede4d8a6bce3f"
-
 dest_files=[ "res://.import/mountains.jpg-90f33a09d9b3d9010e9fbd8dddd56c44.stex" ]
-dest_md5="266cbd8ea5d4e4a9206fa321e2f6dfcb"
 
 [params]
 

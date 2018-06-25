@@ -7,10 +7,7 @@ path="res://.import/sexdown.png-1a8eec55cfcfe95b2f52a6ffb98e5b30.stex"
 [deps]
 
 source_file="res://files/buttons/sexdown.png"
-source_md5="1496ae5cdd321ef9430eefabb58adffa"
-
 dest_files=[ "res://.import/sexdown.png-1a8eec55cfcfe95b2f52a6ffb98e5b30.stex" ]
-dest_md5="3488a69d76f9b2fee6b3e9bd64a3bb37"
 
 [params]
 

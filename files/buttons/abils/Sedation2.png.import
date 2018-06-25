@@ -7,10 +7,7 @@ path="res://.import/Sedation2.png-45c7b059576e15f69510a13ac30c7306.stex"
 [deps]
 
 source_file="res://files/buttons/abils/Sedation2.png"
-source_md5="cdf9efba665aa52ef51f95ebbbf7990a"
-
 dest_files=[ "res://.import/Sedation2.png-45c7b059576e15f69510a13ac30c7306.stex" ]
-dest_md5="1fc66cf322d605f63d2664faf5b24cda"
 
 [params]
 

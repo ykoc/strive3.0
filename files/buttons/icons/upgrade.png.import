@@ -7,10 +7,7 @@ path="res://.import/upgrade.png-2c0d90099bd4eef23cf6e2ad494cd441.stex"
 [deps]
 
 source_file="res://files/buttons/icons/upgrade.png"
-source_md5="757ea85db778e4c11f40256c6abe4e4c"
-
 dest_files=[ "res://.import/upgrade.png-2c0d90099bd4eef23cf6e2ad494cd441.stex" ]
-dest_md5="0eff8fd95fcd2c48cdf1186978edf12f"
 
 [params]
 

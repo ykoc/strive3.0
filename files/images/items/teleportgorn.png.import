@@ -7,10 +7,7 @@ path="res://.import/teleportgorn.png-1ce5c1c693fa0fcf54d71234cf5fddad.stex"
 [deps]
 
 source_file="res://files/images/items/teleportgorn.png"
-source_md5="e9858fc32b2db09dc61de82208c13864"
-
 dest_files=[ "res://.import/teleportgorn.png-1ce5c1c693fa0fcf54d71234cf5fddad.stex" ]
-dest_md5="b9b59b7aabd2e1746c7e7f0852aed9f3"
 
 [params]
 

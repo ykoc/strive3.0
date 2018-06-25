@@ -7,10 +7,7 @@ path="res://.import/taintedessence.png-f7a4d6da7845ad7fc3e21656fb5ddf79.stex"
 [deps]
 
 source_file="res://files/images/items/taintedessence.png"
-source_md5="82efd45fb5beb401b08d76fcbb4ba122"
-
 dest_files=[ "res://.import/taintedessence.png-f7a4d6da7845ad7fc3e21656fb5ddf79.stex" ]
-dest_md5="d2169344e92b514096fa07e8f18485de"
 
 [params]
 

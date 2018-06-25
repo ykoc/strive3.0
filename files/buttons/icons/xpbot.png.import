@@ -7,10 +7,7 @@ path="res://.import/xpbot.png-969c293bd8b7fc2c471837880660b90a.stex"
 [deps]
 
 source_file="res://files/buttons/icons/xpbot.png"
-source_md5="29e1fb5ad27fbc2df311021abc6498cc"
-
 dest_files=[ "res://.import/xpbot.png-969c293bd8b7fc2c471837880660b90a.stex" ]
-dest_md5="a80d32a194a691d684beff6ce53ceec7"
 
 [params]
 

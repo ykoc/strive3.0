@@ -7,10 +7,7 @@ path="res://.import/normalattack.wav-8b86075a482cb9787da1e349f7df10b0.sample"
 [deps]
 
 source_file="res://files/sounds/normalattack.wav"
-source_md5="62f74e4de862c2231ddbd607bf5a4c33"
-
 dest_files=[ "res://.import/normalattack.wav-8b86075a482cb9787da1e349f7df10b0.sample" ]
-dest_md5="bf942ad345b55bfe7e561a80e8e6a9c4"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/theron.png-776704fe63d98434cd29652362213cd1.stex"
 [deps]
 
 source_file="res://files/images/theron.png"
-source_md5="51262026a00e0a2e17f864fb198424f0"
-
 dest_files=[ "res://.import/theron.png-776704fe63d98434cd29652362213cd1.stex" ]
-dest_md5="e82ead54d71a83fef498f55d269b572e"
 
 [params]
 

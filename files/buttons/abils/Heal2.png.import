@@ -7,10 +7,7 @@ path="res://.import/Heal2.png-8bcf307bc3376828cbd648e2af9642cc.stex"
 [deps]
 
 source_file="res://files/buttons/abils/Heal2.png"
-source_md5="b208553b37b70f6cdd028dcfd865566d"
-
 dest_files=[ "res://.import/Heal2.png-8bcf307bc3376828cbd648e2af9642cc.stex" ]
-dest_md5="b172a46c3d4c6158c4448db60dade32f"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/offensive.png-df82d16173fb14ed0b0f4f0d36a1ae3c.stex"
 [deps]
 
 source_file="res://files/buttons/book/offensive.png"
-source_md5="7ccdae4687690696381ec1d7cc11e49f"
-
 dest_files=[ "res://.import/offensive.png-df82d16173fb14ed0b0f4f0d36a1ae3c.stex" ]
-dest_md5="eb48bc5ed50e02421e6ff64adf686361"
 
 [params]
 

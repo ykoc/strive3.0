@@ -7,10 +7,7 @@ path="res://.import/ings.png-9411dff97b43a52fc0faba49dee7f795.stex"
 [deps]
 
 source_file="res://files/buttons/icons/ings.png"
-source_md5="54c9b67e8954d2013b002428c8a46918"
-
 dest_files=[ "res://.import/ings.png-9411dff97b43a52fc0faba49dee7f795.stex" ]
-dest_md5="915264beb95a209c73d41924008a6aa1"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/clothpet.png-dc3f72fb9263cbec899320f177568325.stex"
 [deps]
 
 source_file="res://files/images/items/clothpet.png"
-source_md5="496aaab68cc69741e45fc87f46648d21"
-
 dest_files=[ "res://.import/clothpet.png-dc3f72fb9263cbec899320f177568325.stex" ]
-dest_md5="5609ddf058957e71e44cfbaa0d849324"
 
 [params]
 

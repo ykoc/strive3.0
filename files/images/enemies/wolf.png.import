@@ -7,10 +7,7 @@ path="res://.import/wolf.png-34ceb7c6141c731e1f9afbe41f731d8c.stex"
 [deps]
 
 source_file="res://files/images/enemies/wolf.png"
-source_md5="36dbf09deacfd12e6e546e2b7c3888b4"
-
 dest_files=[ "res://.import/wolf.png-34ceb7c6141c731e1f9afbe41f731d8c.stex" ]
-dest_md5="cb1d2fa8b8a83b1a064907e78a1fa0ff"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/slaverf.png-8b6d1051fc124758bc6e611bfdd295aa.stex"
 [deps]
 
 source_file="res://files/images/enemies/slaverf.png"
-source_md5="7f1a23725e73f35a0039fa99fb6259f1"
-
 dest_files=[ "res://.import/slaverf.png-8b6d1051fc124758bc6e611bfdd295aa.stex" ]
-dest_md5="7d5ad08c04afe8a22e6619e65b33518e"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/chancellor.png-17fc03f8ecfd457a8f8d634a526b6ab2.stex"
 [deps]
 
 source_file="res://files/images/chancellor.png"
-source_md5="0fe206465cdce84d2bcf72b73c6820ca"
-
 dest_files=[ "res://.import/chancellor.png-17fc03f8ecfd457a8f8d634a526b6ab2.stex" ]
-dest_md5="42de7d325fea618f2f32461b459c1974"
 
 [params]
 

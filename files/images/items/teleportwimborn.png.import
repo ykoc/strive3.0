@@ -7,10 +7,7 @@ path="res://.import/teleportwimborn.png-fae341d733e5415b7da2f02f07f12153.stex"
 [deps]
 
 source_file="res://files/images/items/teleportwimborn.png"
-source_md5="63de634bd85119a8f79d5e737dccdd6e"
-
 dest_files=[ "res://.import/teleportwimborn.png-fae341d733e5415b7da2f02f07f12153.stex" ]
-dest_md5="9c5539bffa524f8aa71912ddc20477ca"
 
 [params]
 

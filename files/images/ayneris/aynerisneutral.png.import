@@ -7,10 +7,7 @@ path="res://.import/aynerisneutral.png-e4884b35f8c6810178f2439f92e8b80e.stex"
 [deps]
 
 source_file="res://files/images/ayneris/aynerisneutral.png"
-source_md5="d0fef96a0d0f7d784f2a35392d815ae0"
-
 dest_files=[ "res://.import/aynerisneutral.png-e4884b35f8c6810178f2439f92e8b80e.stex" ]
-dest_md5="976ecae6f563b68655a5199949844aae"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/goblin.png-f65dcb0ea62c38d26440fb599c494c73.stex"
 [deps]
 
 source_file="res://files/images/goblin.png"
-source_md5="7a5ecd89feeec4ddc85a65a2c61dd000"
-
 dest_files=[ "res://.import/goblin.png-f65dcb0ea62c38d26440fb599c494c73.stex" ]
-dest_md5="2e056e7a78f866b42348ea9a582f7163"
 
 [params]
 

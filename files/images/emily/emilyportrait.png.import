@@ -7,10 +7,7 @@ path="res://.import/emilyportrait.png-437a8e7555e412e6d49413d4c6c34eef.stex"
 [deps]
 
 source_file="res://files/images/emily/emilyportrait.png"
-source_md5="97c06fc905c29b6e843be03702e3acc8"
-
 dest_files=[ "res://.import/emilyportrait.png-437a8e7555e412e6d49413d4c6c34eef.stex" ]
-dest_md5="9ccc4a017291dc55aa302a78061b19cf"
 
 [params]
 

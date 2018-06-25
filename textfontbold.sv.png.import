@@ -7,10 +7,7 @@ path="res://.import/textfontbold.sv.png-6117264cc1040279a3dd5b57a8f38769.stex"
 [deps]
 
 source_file="res://textfontbold.sv.png"
-source_md5="b51670bbd4322bb56c36b6f941b3b75e"
-
 dest_files=[ "res://.import/textfontbold.sv.png-6117264cc1040279a3dd5b57a8f38769.stex" ]
-dest_md5="4f88695b1f0cbde99807994142f931a1"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/magicessence.png-d1e576a016da3e49d5dbde6aff0c7e07.stex"
 [deps]
 
 source_file="res://files/images/items/magicessence.png"
-source_md5="5d67f5e6cb67d3b5d3ec33ee793bbd6e"
-
 dest_files=[ "res://.import/magicessence.png-d1e576a016da3e49d5dbde6aff0c7e07.stex" ]
-dest_md5="6886098c8d623d5d0dd56fea4e31bea7"
 
 [params]
 

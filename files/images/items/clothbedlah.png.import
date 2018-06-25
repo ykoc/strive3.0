@@ -7,10 +7,7 @@ path="res://.import/clothbedlah.png-6027f24a2b82bb565d0c6b1af06f48d5.stex"
 [deps]
 
 source_file="res://files/images/items/clothbedlah.png"
-source_md5="51b6d05946615f02fba226a0013ec740"
-
 dest_files=[ "res://.import/clothbedlah.png-6027f24a2b82bb565d0c6b1af06f48d5.stex" ]
-dest_md5="9eeed17e471b4807a75f3bd08260827f"
 
 [params]
 

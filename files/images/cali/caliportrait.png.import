@@ -7,10 +7,7 @@ path="res://.import/caliportrait.png-8b299828137023eb409b90e3d23e033a.stex"
 [deps]
 
 source_file="res://files/images/cali/caliportrait.png"
-source_md5="232aa0249575111799ca08508bc97d6b"
-
 dest_files=[ "res://.import/caliportrait.png-8b299828137023eb409b90e3d23e033a.stex" ]
-dest_md5="4d9643adb66b90d8a505472843c10484"
 
 [params]
 

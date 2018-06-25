@@ -7,10 +7,7 @@ path="res://.import/xpup.png-7953ebd3a50fe7092cbcfa1132640be5.stex"
 [deps]
 
 source_file="res://files/buttons/icons/xpup.png"
-source_md5="424a96c41936e759f27a68662d9ebcb6"
-
 dest_files=[ "res://.import/xpup.png-7953ebd3a50fe7092cbcfa1132640be5.stex" ]
-dest_md5="a1a0cedf1669da20edfc2f6e9e08f0c4"
 
 [params]
 

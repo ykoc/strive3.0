@@ -7,10 +7,7 @@ path="res://.import/Acid spit2.png-e94734114c01c569e2e94db1fc86e726.stex"
 [deps]
 
 source_file="res://files/buttons/abils/Acid spit2.png"
-source_md5="a3b51084939aa816391513c1f10575fb"
-
 dest_files=[ "res://.import/Acid spit2.png-e94734114c01c569e2e94db1fc86e726.stex" ]
-dest_md5="27828b2f7ec1fb10a6aea5445c7b0c87"
 
 [params]
 

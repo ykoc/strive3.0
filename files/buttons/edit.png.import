@@ -7,10 +7,7 @@ path="res://.import/edit.png-c86d97108cbaa117eed5f29cd96ccd32.stex"
 [deps]
 
 source_file="res://files/buttons/edit.png"
-source_md5="46a2dea92b114f2340991278e212b1b5"
-
 dest_files=[ "res://.import/edit.png-c86d97108cbaa117eed5f29cd96ccd32.stex" ]
-dest_md5="a51e9a0f4ac65691951cee470297f3d0"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/mutant.png-a8cf8222bc0b780453bc6b4d99cbe433.stex"
 [deps]
 
 source_file="res://files/images/enemies/mutant.png"
-source_md5="08dd4b8467593ecf64f946006ed7d876"
-
 dest_files=[ "res://.import/mutant.png-a8cf8222bc0b780453bc6b4d99cbe433.stex" ]
-dest_md5="164d63ad4a09096cc109d12ac8c4d994"
 
 [params]
 

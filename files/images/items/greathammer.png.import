@@ -7,10 +7,7 @@ path="res://.import/greathammer.png-56100c1caebeff6f26d5fe6fa4edb327.stex"
 [deps]
 
 source_file="res://files/images/items/greathammer.png"
-source_md5="ef5e668a74b139c3d5eaca5e2255feff"
-
 dest_files=[ "res://.import/greathammer.png-56100c1caebeff6f26d5fe6fa4edb327.stex" ]
-dest_md5="301a58602daef2f78628d333767fef7e"
 
 [params]
 

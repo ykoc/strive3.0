@@ -7,10 +7,7 @@ path="res://.import/patreonlogo.png-ebc69fb056cea33dad4318725adf9b8a.stex"
 [deps]
 
 source_file="res://files/buttons/patreonlogo.png"
-source_md5="2f2dc9df004ea60f64384eb5b911ad5f"
-
 dest_files=[ "res://.import/patreonlogo.png-ebc69fb056cea33dad4318725adf9b8a.stex" ]
-dest_md5="f446be30a11ddf0207f3f112bf8d7be2"
 
 [params]
 

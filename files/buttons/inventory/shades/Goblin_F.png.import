@@ -7,10 +7,7 @@ path="res://.import/Goblin_F.png-b34dc845a66255770eeefd1ea6266bef.stex"
 [deps]
 
 source_file="res://files/buttons/inventory/shades/Goblin_F.png"
-source_md5="5e15ef74574ed209558f8faea34f7ed1"
-
 dest_files=[ "res://.import/Goblin_F.png-b34dc845a66255770eeefd1ea6266bef.stex" ]
-dest_md5="274443a1abfbddf04a78842a4d68ab4f"
 
 [params]
 

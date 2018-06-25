@@ -7,10 +7,7 @@ path="res://.import/img-backG-popup.png-a7d03df7d87d42f64174675eb3ddaa4f.stex"
 [deps]
 
 source_file="res://files/buttons/img-backG-popup.png"
-source_md5="46b2376a6766467a477bc7530f16411b"
-
 dest_files=[ "res://.import/img-backG-popup.png-a7d03df7d87d42f64174675eb3ddaa4f.stex" ]
-dest_md5="da0ffd6837a09becee38e9494929dd06"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/Taurus_F.png-1505674406d9413afe4ad542d1353ddb.stex"
 [deps]
 
 source_file="res://files/buttons/inventory/shades/Taurus_F.png"
-source_md5="b01f43a87cb3f0f3c10ae27295148727"
-
 dest_files=[ "res://.import/Taurus_F.png-1505674406d9413afe4ad542d1353ddb.stex" ]
-dest_md5="9e798015a93b8c93b908fd4c40980a4d"
 
 [params]
 

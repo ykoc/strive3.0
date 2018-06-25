@@ -7,10 +7,7 @@ path="res://.import/012.png-8a77f3b50dce84138dd7a459ce6b8942.stex"
 [deps]
 
 source_file="res://files/images/alise/012.png"
-source_md5="fdf58084a5de43bc376f5eca0c5389b1"
-
 dest_files=[ "res://.import/012.png-8a77f3b50dce84138dd7a459ce6b8942.stex" ]
-dest_md5="666183297e46c513f8d25a3edd3c3119"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/grove.jpg-96955b503f2cbd0093f0ccc350688eb1.stex"
 [deps]
 
 source_file="res://files/backgrounds/grove.jpg"
-source_md5="a9fa4d741b495a714360f9e8d78fc138"
-
 dest_files=[ "res://.import/grove.jpg-96955b503f2cbd0093f0ccc350688eb1.stex" ]
-dest_md5="5d5fd54b9f0e4ead4aab1fdc7347ff5d"
 
 [params]
 

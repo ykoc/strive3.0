@@ -7,10 +7,7 @@ path="res://.import/mansion.png-512cd83eae4dfaab340aee1f30003c1d.stex"
 [deps]
 
 source_file="res://files/backgrounds/mansion.png"
-source_md5="ad4982b53db6b701b8ba0b5efb1d92e3"
-
 dest_files=[ "res://.import/mansion.png-512cd83eae4dfaab340aee1f30003c1d.stex" ]
-dest_md5="7bd08adc70789ce716bce74e8194e191"
 
 [params]
 

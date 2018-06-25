@@ -7,10 +7,7 @@ path="res://.import/btn-act.png-5a1b545100dbcac4c98022cffe009861.stex"
 [deps]
 
 source_file="res://files/buttons/btn-act.png"
-source_md5="1b4607af21be807e20b2d29510faf79d"
-
 dest_files=[ "res://.import/btn-act.png-5a1b545100dbcac4c98022cffe009861.stex" ]
-dest_md5="30fe5441beeb914b26c9688469a11ea9"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/agility.png-2e3ebd33eee021f7f392d54fd92547c7.stex"
 [deps]
 
 source_file="res://files/buttons/icons/agility.png"
-source_md5="49b30aa4bbe8a27e4eb12c736608f8b7"
-
 dest_files=[ "res://.import/agility.png-2e3ebd33eee021f7f392d54fd92547c7.stex" ]
-dest_md5="42b21b3374b9f18384d77b363291e75c"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/tishashocked.png-874f500af189c240547cc81494cba6a3.stex"
 [deps]
 
 source_file="res://files/images/tisha/tishashocked.png"
-source_md5="bace32911bfa8c0583ff7cff6da79cc2"
-
 dest_files=[ "res://.import/tishashocked.png-874f500af189c240547cc81494cba6a3.stex" ]
-dest_md5="058f45839e38eb16b7d69a54f8716c03"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/battle3.ogg-1999d63a6d69841d7f3ff579c50d058b.oggstr"
 [deps]
 
 source_file="res://files/music/battle3.ogg"
-source_md5="43651edf95498c97b5fc8879972bca3e"
-
 dest_files=[ "res://.import/battle3.ogg-1999d63a6d69841d7f3ff579c50d058b.oggstr" ]
-dest_md5="647695608a9158351ef90c34494967e7"
 
 [params]
 

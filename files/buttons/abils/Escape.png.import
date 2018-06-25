@@ -7,10 +7,7 @@ path="res://.import/Escape.png-eb1a53b1cee101c9af91b498b54aab62.stex"
 [deps]
 
 source_file="res://files/buttons/abils/Escape.png"
-source_md5="982e12a579514bf190e3055f605fedd6"
-
 dest_files=[ "res://.import/Escape.png-eb1a53b1cee101c9af91b498b54aab62.stex" ]
-dest_md5="0dd2681a9e4f5900eba573015331590c"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/weapondagger.png-9390459e4e990145ddc429751df88041.stex"
 [deps]
 
 source_file="res://files/images/items/weapondagger.png"
-source_md5="686a5fdc99ddd4d71ed2d81be5b22f2e"
-
 dest_files=[ "res://.import/weapondagger.png-9390459e4e990145ddc429751df88041.stex" ]
-dest_md5="6cd086a88a20d0b3bad123783473c28a"
 
 [params]
 

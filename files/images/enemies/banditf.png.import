@@ -7,10 +7,7 @@ path="res://.import/banditf.png-5556e804ce73ec8fb7e0f838a9b77bb2.stex"
 [deps]
 
 source_file="res://files/images/enemies/banditf.png"
-source_md5="d2d8f3b1c9d52aee89c682ea9cd9d5e0"
-
 dest_files=[ "res://.import/banditf.png-5556e804ce73ec8fb7e0f838a9b77bb2.stex" ]
-dest_md5="eeed26df7c66e76003e9b14ab53c7b5a"
 
 [params]
 

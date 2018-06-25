@@ -7,10 +7,7 @@ path="res://.import/inspectdown.png-c715d6ed5da35546f4f399b4c7b11314.stex"
 [deps]
 
 source_file="res://files/buttons/inspectdown.png"
-source_md5="d2d7d0cd592a205415806b16ec3ad6ea"
-
 dest_files=[ "res://.import/inspectdown.png-c715d6ed5da35546f4f399b4c7b11314.stex" ]
-dest_md5="ab8b9694cbc0542e03ab695f60e9d0bc"
 
 [params]
 

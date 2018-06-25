@@ -7,10 +7,7 @@ path="res://.import/tex-wind.png-28aab7ab16b04f493203d4f0dfdd897f.stex"
 [deps]
 
 source_file="res://files/buttons/tex-wind.png"
-source_md5="6cf36895800ec5f3da4a6db87ad0d589"
-
 dest_files=[ "res://.import/tex-wind.png-28aab7ab16b04f493203d4f0dfdd897f.stex" ]
-dest_md5="0edd6cd19e2911f194dc63688cd712f7"
 
 [params]
 

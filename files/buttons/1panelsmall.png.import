@@ -7,10 +7,7 @@ path="res://.import/1panelsmall.png-2e97fdf9cee2df9b2f61be24ac672b24.stex"
 [deps]
 
 source_file="res://files/buttons/1panelsmall.png"
-source_md5="36e6fd8538d117c0abc7197987bf1ddd"
-
 dest_files=[ "res://.import/1panelsmall.png-2e97fdf9cee2df9b2f61be24ac672b24.stex" ]
-dest_md5="4e69ad3c21f226c377b60d7afd34695e"
 
 [params]
 

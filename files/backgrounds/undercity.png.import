@@ -7,10 +7,7 @@ path="res://.import/undercity.png-80299155adaaba931043fc2a7d50ab87.stex"
 [deps]
 
 source_file="res://files/backgrounds/undercity.png"
-source_md5="a531761a145e48d85f89cfe06c2e6a3d"
-
 dest_files=[ "res://.import/undercity.png-80299155adaaba931043fc2a7d50ab87.stex" ]
-dest_md5="877fa603d7d6447cde70cf8e5c4654c8"
 
 [params]
 

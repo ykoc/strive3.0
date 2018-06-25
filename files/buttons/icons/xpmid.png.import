@@ -7,10 +7,7 @@ path="res://.import/xpmid.png-926e74771287636daf8b4052f1552deb.stex"
 [deps]
 
 source_file="res://files/buttons/icons/xpmid.png"
-source_md5="e9e03ade82f521b850b95f38d654ae27"
-
 dest_files=[ "res://.import/xpmid.png-926e74771287636daf8b4052f1552deb.stex" ]
-dest_md5="0b008e2be58ffbab900ecb4666989788"
 
 [params]
 

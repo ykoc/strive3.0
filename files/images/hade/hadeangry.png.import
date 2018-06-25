@@ -7,10 +7,7 @@ path="res://.import/hadeangry.png-8ba8e0924aad67fec777803e84b65262.stex"
 [deps]
 
 source_file="res://files/images/hade/hadeangry.png"
-source_md5="24f8278f1f02f7607cc4fcb3b88c38d6"
-
 dest_files=[ "res://.import/hadeangry.png-8ba8e0924aad67fec777803e84b65262.stex" ]
-dest_md5="9bc9cc4b12d8f38440e09c7729bd8f99"
 
 [params]
 

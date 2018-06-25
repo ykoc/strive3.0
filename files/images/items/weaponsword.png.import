@@ -7,10 +7,7 @@ path="res://.import/weaponsword.png-4f1efe1ed93af17a86e88de514e28d8b.stex"
 [deps]
 
 source_file="res://files/images/items/weaponsword.png"
-source_md5="281a7222eef340eb579fa663b837663e"
-
 dest_files=[ "res://.import/weaponsword.png-4f1efe1ed93af17a86e88de514e28d8b.stex" ]
-dest_md5="f6021bab7a3f32899732c53f40f672bd"
 
 [params]
 

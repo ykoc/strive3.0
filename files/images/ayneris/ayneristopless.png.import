@@ -7,10 +7,7 @@ path="res://.import/ayneristopless.png-e0d8aa2c761dcd2ac859551cd4575c93.stex"
 [deps]
 
 source_file="res://files/images/ayneris/ayneristopless.png"
-source_md5="729c5f178ae09109bf1137cc9da6701b"
-
 dest_files=[ "res://.import/ayneristopless.png-e0d8aa2c761dcd2ac859551cd4575c93.stex" ]
-dest_md5="442cc8750a20006dfa1e9c747c85163a"
 
 [params]
 

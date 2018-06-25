@@ -7,10 +7,7 @@ path="res://.import/maple.png-84ccc615c52d1997a2e4ea90e2fd38cc.stex"
 [deps]
 
 source_file="res://files/images/maple/maple.png"
-source_md5="b278b04562cb35e4443945c014061ef4"
-
 dest_files=[ "res://.import/maple.png-84ccc615c52d1997a2e4ea90e2fd38cc.stex" ]
-dest_md5="8718ad4b1f06b21356cb1eb28b6e2e18"
 
 [params]
 

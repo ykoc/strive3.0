@@ -7,10 +7,7 @@ path="res://.import/amuletemerald.png-ebf6f45a40b37f0bb8994d033d56ac18.stex"
 [deps]
 
 source_file="res://files/images/items/amuletemerald.png"
-source_md5="888d32cb8f9d1e9f0032c076caa51819"
-
 dest_files=[ "res://.import/amuletemerald.png-ebf6f45a40b37f0bb8994d033d56ac18.stex" ]
-dest_md5="cf98d8970dff661cc1dfcd97939a2468"
 
 [params]
 

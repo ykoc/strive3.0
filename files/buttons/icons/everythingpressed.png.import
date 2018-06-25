@@ -7,10 +7,7 @@ path="res://.import/everythingpressed.png-01e5cb789e0325a70ad70fd5a417ed81.stex"
 [deps]
 
 source_file="res://files/buttons/icons/everythingpressed.png"
-source_md5="187d54ad07c4ad1bc5abf01e65976698"
-
 dest_files=[ "res://.import/everythingpressed.png-01e5cb789e0325a70ad70fd5a417ed81.stex" ]
-dest_md5="f5de2b44bf0d86fc7651c4426ed5f108"
 
 [params]
 

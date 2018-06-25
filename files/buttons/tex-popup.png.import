@@ -7,10 +7,7 @@ path="res://.import/tex-popup.png-998411012769cbf8cf2e04ca7b59fc53.stex"
 [deps]
 
 source_file="res://files/buttons/tex-popup.png"
-source_md5="5e1b0139555310396f3a5fb607deff1e"
-
 dest_files=[ "res://.import/tex-popup.png-998411012769cbf8cf2e04ca7b59fc53.stex" ]
-dest_md5="aee814740224088f890bbfe5585a09d7"
 
 [params]
 

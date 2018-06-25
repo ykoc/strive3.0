@@ -7,10 +7,7 @@ path="res://.import/tishaportrait.png-a52ff6734ed81b57fc894d877710edf5.stex"
 [deps]
 
 source_file="res://files/images/tisha/tishaportrait.png"
-source_md5="071eddfb52b636f097e3a3b043869fcb"
-
 dest_files=[ "res://.import/tishaportrait.png-a52ff6734ed81b57fc894d877710edf5.stex" ]
-dest_md5="f135c9d7e2685e436d61330e5dff223b"
 
 [params]
 

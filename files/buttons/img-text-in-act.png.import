@@ -7,10 +7,7 @@ path="res://.import/img-text-in-act.png-fab01033d262698cad3fe09f7058e946.stex"
 [deps]
 
 source_file="res://files/buttons/img-text-in-act.png"
-source_md5="c5ebd5d91155533ff32652e37bc92617"
-
 dest_files=[ "res://.import/img-text-in-act.png-fab01033d262698cad3fe09f7058e946.stex" ]
-dest_md5="5ae97e99700f21c27db4359c49d0fb58"
 
 [params]
 

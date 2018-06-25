@@ -7,10 +7,7 @@ path="res://.import/Beastkin-Tanuki_F.png-572c21eb021d94fbb9213605fae6aefc.stex"
 [deps]
 
 source_file="res://files/buttons/inventory/shades/Beastkin-Tanuki_F.png"
-source_md5="bf1e235285f0eb20a3be9671580c74ba"
-
 dest_files=[ "res://.import/Beastkin-Tanuki_F.png-572c21eb021d94fbb9213605fae6aefc.stex" ]
-dest_md5="ebe7de44497029d2eddffb699e8869e9"
 
 [params]
 

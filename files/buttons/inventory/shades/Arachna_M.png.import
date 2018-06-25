@@ -7,10 +7,7 @@ path="res://.import/Arachna_M.png-d00a0e442af6c81ddff3af709ad687c0.stex"
 [deps]
 
 source_file="res://files/buttons/inventory/shades/Arachna_M.png"
-source_md5="a188fe19355c8f1ed69c51b0bced2267"
-
 dest_files=[ "res://.import/Arachna_M.png-d00a0e442af6c81ddff3af709ad687c0.stex" ]
-dest_md5="3726a5533f240a2bea4b1005ca2712e2"
 
 [params]
 

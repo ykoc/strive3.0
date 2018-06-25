@@ -7,10 +7,7 @@ path="res://.import/elfguard.png-23a7616446e1f629f5b35185aea2a16f.stex"
 [deps]
 
 source_file="res://files/images/enemies/elfguard.png"
-source_md5="501fdd36dd88532e8764dff9ffdd08b1"
-
 dest_files=[ "res://.import/elfguard.png-23a7616446e1f629f5b35185aea2a16f.stex" ]
-dest_md5="f151ea7a82541dda6e69aa4a30b56171"
 
 [params]
 

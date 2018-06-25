@@ -7,10 +7,7 @@ path="res://.import/btn-norm.png-eee972cbf454e1cf1ab1abf6bc20b396.stex"
 [deps]
 
 source_file="res://files/buttons/btn-norm.png"
-source_md5="ab07f020a9159f17f331350c842fe2f5"
-
 dest_files=[ "res://.import/btn-norm.png-eee972cbf454e1cf1ab1abf6bc20b396.stex" ]
-dest_md5="03a1f816071985741b3fa02f79c40d3b"
 
 [params]
 

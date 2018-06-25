@@ -7,10 +7,7 @@ path="res://.import/frostford.png-9ff56a85b173d0a32ea068a4a2faf321.stex"
 [deps]
 
 source_file="res://files/backgrounds/frostford.png"
-source_md5="986bc2e43cc0ca30727cde4f11ffa6ce"
-
 dest_files=[ "res://.import/frostford.png-9ff56a85b173d0a32ea068a4a2faf321.stex" ]
-dest_md5="72f42361807cf8403323fb75182a8f04"
 
 [params]
 

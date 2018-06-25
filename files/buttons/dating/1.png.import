@@ -7,10 +7,7 @@ path="res://.import/1.png-b6eb9f92b343896faa9e4d5025d9fd18.stex"
 [deps]
 
 source_file="res://files/buttons/dating/1.png"
-source_md5="4b3c0f751bbd37f7c454ba7b373cc7eb"
-
 dest_files=[ "res://.import/1.png-b6eb9f92b343896faa9e4d5025d9fd18.stex" ]
-dest_md5="f7b6f7d1577834a7589fe2063c2b5ee5"
 
 [params]
 

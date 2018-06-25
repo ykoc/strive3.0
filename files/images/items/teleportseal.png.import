@@ -7,10 +7,7 @@ path="res://.import/teleportseal.png-b225a2e76f10f528158c4a1f9bb0efd3.stex"
 [deps]
 
 source_file="res://files/images/items/teleportseal.png"
-source_md5="8d5c5ebffd13d08d035c93b378459cd3"
-
 dest_files=[ "res://.import/teleportseal.png-b225a2e76f10f528158c4a1f9bb0efd3.stex" ]
-dest_md5="ef43cb56c7bda5089af59a16f0f43aa3"
 
 [params]
 

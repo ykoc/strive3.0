@@ -7,10 +7,7 @@ path="res://.import/librarybook.png-65c34b096a34dab39f0e7fae5f15a9f1.stex"
 [deps]
 
 source_file="res://files/buttons/book/librarybook.png"
-source_md5="1d2b4bfe800662a1193b0ea3ec6c8aa9"
-
 dest_files=[ "res://.import/librarybook.png-65c34b096a34dab39f0e7fae5f15a9f1.stex" ]
-dest_md5="0cd870e0f35af4080aa288acf58dcf35"
 
 [params]
 

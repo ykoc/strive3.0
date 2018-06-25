@@ -7,10 +7,7 @@ path="res://.import/cougar.png-fb7d3bbcc70c0232c8478a3e35a0cdb2.stex"
 [deps]
 
 source_file="res://files/images/enemies/cougar.png"
-source_md5="929216e9148f53f3f45c33b305056cd6"
-
 dest_files=[ "res://.import/cougar.png-fb7d3bbcc70c0232c8478a3e35a0cdb2.stex" ]
-dest_md5="796647f77bcab3909f001ff6ec11103f"
 
 [params]
 

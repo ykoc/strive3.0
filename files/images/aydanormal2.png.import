@@ -7,10 +7,7 @@ path="res://.import/aydanormal2.png-aa2bf078cb7fac57e57ce86dc9cf4b5d.stex"
 [deps]
 
 source_file="res://files/images/aydanormal2.png"
-source_md5="91c660d7c26ba16a9e5dd3a7a4837d8f"
-
 dest_files=[ "res://.import/aydanormal2.png-aa2bf078cb7fac57e57ce86dc9cf4b5d.stex" ]
-dest_md5="841c441965b7fc3b502cb7eeb3e1dfbb"
 
 [params]
 

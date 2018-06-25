@@ -71,7 +71,8 @@ func show():
 	get_node("levelprogress/Label").set_text("Experience: " + str(person.xp) + '%')
 	get_node("levelprogress").set_value(person.xp)
 	for i in ['send','smaf','sstr','sagi']:
-		if person.skillpoints >= 1 && (globals.slaves.find(person) >= 0||globals.player == person) && person.stats[globals.maxstatdict[i].replace('_max','_cur')] < person.stats[globals.maxstatdict[i]]:
+		#print( person.stats[globals.maxstatdict[i].replace('_max','_base')], "  ", person.stats[globals.maxstatdict[i]])
+		if person.skillpoints >= 1 && (globals.slaves.find(person) >= 0||globals.player == person) && person.stats[globals.maxstatdict[i].replace('_max','_base')] < person.stats[globals.maxstatdict[i]]:
 			get_node(i+'/Button').visible = true
 		else:
 			get_node(i+'/Button').visible = false

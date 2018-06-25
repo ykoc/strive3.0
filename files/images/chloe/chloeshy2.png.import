@@ -7,10 +7,7 @@ path="res://.import/chloeshy2.png-c522d6dd174d4e332b60408df014cc9c.stex"
 [deps]
 
 source_file="res://files/images/chloe/chloeshy2.png"
-source_md5="26587f8e06f4ab16c81b90b5d098f469"
-
 dest_files=[ "res://.import/chloeshy2.png-c522d6dd174d4e332b60408df014cc9c.stex" ]
-dest_md5="84a0748beb3f31b9fa3eb35888d23357"
 
 [params]
 

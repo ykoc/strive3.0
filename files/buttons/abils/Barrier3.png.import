@@ -7,10 +7,7 @@ path="res://.import/Barrier3.png-29b658ed586540e1c8e55d948732150f.stex"
 [deps]
 
 source_file="res://files/buttons/abils/Barrier3.png"
-source_md5="0b2046e0dc8e6dc6c898d33b80edeb34"
-
 dest_files=[ "res://.import/Barrier3.png-29b658ed586540e1c8e55d948732150f.stex" ]
-dest_md5="678ebc5b19badb6467cb79466645687f"
 
 [params]
 

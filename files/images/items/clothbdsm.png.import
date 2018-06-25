@@ -7,10 +7,7 @@ path="res://.import/clothbdsm.png-44895a0e8160ed8631067663dbac047d.stex"
 [deps]
 
 source_file="res://files/images/items/clothbdsm.png"
-source_md5="6fe6d5894078a878523b4b3a7b836495"
-
 dest_files=[ "res://.import/clothbdsm.png-44895a0e8160ed8631067663dbac047d.stex" ]
-dest_md5="4bd7dab36e0b2963e895c9d2694731c4"
 
 [params]
 

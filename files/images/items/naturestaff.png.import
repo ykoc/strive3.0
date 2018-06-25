@@ -7,10 +7,7 @@ path="res://.import/naturestaff.png-1cf57d1465d33edeb5c5d4825a67fa05.stex"
 [deps]
 
 source_file="res://files/images/items/naturestaff.png"
-source_md5="116cde24cbd929bd96a9da09954a90d1"
-
 dest_files=[ "res://.import/naturestaff.png-1cf57d1465d33edeb5c5d4825a67fa05.stex" ]
-dest_md5="2f1d3568f5482d35f80c93cdc8fb44c4"
 
 [params]
 

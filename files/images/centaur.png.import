@@ -7,10 +7,7 @@ path="res://.import/centaur.png-1874b815808ec7abaae954dfa977d677.stex"
 [deps]
 
 source_file="res://files/images/centaur.png"
-source_md5="287c0a9b58dbb29c3b21174d16caef8d"
-
 dest_files=[ "res://.import/centaur.png-1874b815808ec7abaae954dfa977d677.stex" ]
-dest_md5="3312bb5516f3add47d88a9a5096acd0c"
 
 [params]
 

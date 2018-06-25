@@ -7,10 +7,7 @@ path="res://.import/amuletruby.png-f8f6b4fecf4902c026cda42b5272b15f.stex"
 [deps]
 
 source_file="res://files/images/items/amuletruby.png"
-source_md5="17a247ab11216198692b715dff9b2f6c"
-
 dest_files=[ "res://.import/amuletruby.png-f8f6b4fecf4902c026cda42b5272b15f.stex" ]
-dest_md5="a984e7c276c3fbbbda197f4b6b0e5ba0"
 
 [params]
 

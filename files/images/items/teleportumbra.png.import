@@ -7,10 +7,7 @@ path="res://.import/teleportumbra.png-2b3076138fb39188144a4fda85c9f3b4.stex"
 [deps]
 
 source_file="res://files/images/items/teleportumbra.png"
-source_md5="0bd5eca520e9fdf071e7fbf3102ddb78"
-
 dest_files=[ "res://.import/teleportumbra.png-2b3076138fb39188144a4fda85c9f3b4.stex" ]
-dest_md5="1fc279dd54c483280d12c2d25da93aa9"
 
 [params]
 

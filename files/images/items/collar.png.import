@@ -7,10 +7,7 @@ path="res://.import/collar.png-e800794d39d5f984ae084d842da755f1.stex"
 [deps]
 
 source_file="res://files/images/items/collar.png"
-source_md5="47d8ce47f95d522a5348ef39b96b5fec"
-
 dest_files=[ "res://.import/collar.png-e800794d39d5f984ae084d842da755f1.stex" ]
-dest_md5="6fb2a4ea050c167e717eb16868ad6952"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/paneltransperent.png-6759a2dc3bfe0e4045bf15162529ffd1.stex"
 [deps]
 
 source_file="res://files/buttons/paneltransperent.png"
-source_md5="1a82348634b53721f4a93738bfcd4bc9"
-
 dest_files=[ "res://.import/paneltransperent.png-6759a2dc3bfe0e4045bf15162529ffd1.stex" ]
-dest_md5="2358502dce70da99389cff602285ed46"
 
 [params]
 

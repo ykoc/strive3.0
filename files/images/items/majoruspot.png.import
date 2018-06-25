@@ -7,10 +7,7 @@ path="res://.import/majoruspot.png-56027ff3c5124d995b3a92002ebf7ffb.stex"
 [deps]
 
 source_file="res://files/images/items/majoruspot.png"
-source_md5="c2a1bae394519defe42734e2142ec07e"
-
 dest_files=[ "res://.import/majoruspot.png-56027ff3c5124d995b3a92002ebf7ffb.stex" ]
-dest_md5="48fc25ab25cc798082a3501a5e7d340d"
 
 [params]
 

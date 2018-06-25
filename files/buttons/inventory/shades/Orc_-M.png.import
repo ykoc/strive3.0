@@ -7,10 +7,7 @@ path="res://.import/Orc_-M.png-806ae41040a20bc39af99920d0831cc3.stex"
 [deps]
 
 source_file="res://files/buttons/inventory/shades/Orc_-M.png"
-source_md5="2276ebbd9b0eddb85e08c3a8b56180db"
-
 dest_files=[ "res://.import/Orc_-M.png-806ae41040a20bc39af99920d0831cc3.stex" ]
-dest_md5="b5160036d87a88245653d1a08d909acf"
 
 [params]
 

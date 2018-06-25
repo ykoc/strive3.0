@@ -7,10 +7,7 @@ path="res://.import/time.png-2beca37654238764bf699ff77f09abbd.stex"
 [deps]
 
 source_file="res://files/buttons/sexicons/time.png"
-source_md5="01a4d90b8f9f4fcdc3a02027c55be410"
-
 dest_files=[ "res://.import/time.png-2beca37654238764bf699ff77f09abbd.stex" ]
-dest_md5="90e890820598f5b53896796c29a9bcdd"
 
 [params]
 

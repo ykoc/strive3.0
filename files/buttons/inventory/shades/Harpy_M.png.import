@@ -7,10 +7,7 @@ path="res://.import/Harpy_M.png-fdb0c2ce3dfbda98d380edf4447cec13.stex"
 [deps]
 
 source_file="res://files/buttons/inventory/shades/Harpy_M.png"
-source_md5="78d78ef896630114807641f234a1d083"
-
 dest_files=[ "res://.import/Harpy_M.png-fdb0c2ce3dfbda98d380edf4447cec13.stex" ]
-dest_md5="f68486f916a9e00fd0a462ca2160352b"
 
 [params]
 

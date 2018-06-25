@@ -7,10 +7,7 @@ path="res://.import/armorrobe.png-e65ba68443844f78017c693cfceec246.stex"
 [deps]
 
 source_file="res://files/images/items/armorrobe.png"
-source_md5="2aa7ad6b73a75d3fd08c57b1a49d4f74"
-
 dest_files=[ "res://.import/armorrobe.png-e65ba68443844f78017c693cfceec246.stex" ]
-dest_md5="2d4d7b20ca2e81d95d426cb8f15ef9a3"
 
 [params]
 

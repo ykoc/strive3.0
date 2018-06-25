@@ -7,10 +7,7 @@ path="res://.import/aphroditespot.png-6cca7bcdba1c083c45724289d110ab68.stex"
 [deps]
 
 source_file="res://files/images/items/aphroditespot.png"
-source_md5="1ba0cfad412ab14cf24ae4a122791b23"
-
 dest_files=[ "res://.import/aphroditespot.png-6cca7bcdba1c083c45724289d110ab68.stex" ]
-dest_md5="49eae69f62ec920841e4a9f9469caefa"
 
 [params]
 

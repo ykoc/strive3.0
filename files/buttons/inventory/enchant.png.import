@@ -7,10 +7,7 @@ path="res://.import/enchant.png-c96e0ea00161d06e3c2130a915e82216.stex"
 [deps]
 
 source_file="res://files/buttons/inventory/enchant.png"
-source_md5="411b45a9a93d6a1a7de978ee69952133"
-
 dest_files=[ "res://.import/enchant.png-c96e0ea00161d06e3c2130a915e82216.stex" ]
-dest_md5="78bbcf0465803db38e586972f256fc25"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/elvensword.png-96ef8916d0674e72193e7502e2140be9.stex"
 [deps]
 
 source_file="res://files/images/items/elvensword.png"
-source_md5="34a30585e5dc45e9d81a08f676f6167d"
-
 dest_files=[ "res://.import/elvensword.png-96ef8916d0674e72193e7502e2140be9.stex" ]
-dest_md5="27792d1ce4c707bc2725a3ee7b34d1c2"
 
 [params]
 

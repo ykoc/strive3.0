@@ -7,10 +7,7 @@ path="res://.import/weaponclaymore.png-a57f2f9d31d89af674024cb7a1da3f1f.stex"
 [deps]
 
 source_file="res://files/images/items/weaponclaymore.png"
-source_md5="6cd301c2bc2acb5b44a8472f0426f462"
-
 dest_files=[ "res://.import/weaponclaymore.png-a57f2f9d31d89af674024cb7a1da3f1f.stex" ]
-dest_md5="1baf23e69e8a4f3acfe275f4e9fc137e"
 
 [params]
 

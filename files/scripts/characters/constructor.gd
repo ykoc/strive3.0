@@ -142,13 +142,13 @@ func get_caste(person, caste):
 		if rand_range(0,10) >= 4:
 			person.level += round(rand_range(0,3))
 	
-	person.skillpoints += (person.level-1)*3
+	person.skillpoints += (person.level-1)*variables.skillpointsperlevel
 	spin = person.skillpoints
 	array = ['sstr','sagi','smaf','send']
 	while spin > 0:
 		var temp = array[rand_range(0, array.size())]
-		if rand_range(0,100) < 50 && person[temp] < person.stats[globals.maxstatdict[temp]]:
-			person[temp] += 1
+		if rand_range(0,100) < 50 && person.stats[globals.basestatdict[temp]] < person.stats[globals.maxstatdict[temp]]:
+			person.stats[globals.basestatdict[temp]] += 1
 			person.skillpoints -= 1
 		spin -= 1
 	

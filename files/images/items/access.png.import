@@ -7,10 +7,7 @@ path="res://.import/access.png-f44bbae5675481ca11d422b8a271c7d4.stex"
 [deps]
 
 source_file="res://files/images/items/access.png"
-source_md5="f8f310617f50bd58f77f7add78a1bc8f"
-
 dest_files=[ "res://.import/access.png-f44bbae5675481ca11d422b8a271c7d4.stex" ]
-dest_md5="3008675c586ae73db40153eb01acd45e"
 
 [params]
 

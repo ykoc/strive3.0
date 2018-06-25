@@ -7,10 +7,7 @@ path="res://.import/zoeneutral.png-22752885c9c478ec9552b8482fe7e07c.stex"
 [deps]
 
 source_file="res://files/images/zoe/zoeneutral.png"
-source_md5="f79bf95329f9f64f7cabb291f7ced509"
-
 dest_files=[ "res://.import/zoeneutral.png-22752885c9c478ec9552b8482fe7e07c.stex" ]
-dest_md5="5965e6b6aa5be44edaff0ce12ccee49a"
 
 [params]
 

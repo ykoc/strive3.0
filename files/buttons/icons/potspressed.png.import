@@ -7,10 +7,7 @@ path="res://.import/potspressed.png-041b09a84ca646861abf2b7d1895d9fe.stex"
 [deps]
 
 source_file="res://files/buttons/icons/potspressed.png"
-source_md5="9827f64d7c63ac254f47f757ccee39f5"
-
 dest_files=[ "res://.import/potspressed.png-041b09a84ca646861abf2b7d1895d9fe.stex" ]
-dest_md5="78f3ca914351fa47912739ac713b4658"
 
 [params]
 

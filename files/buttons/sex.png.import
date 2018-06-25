@@ -7,10 +7,7 @@ path="res://.import/sex.png-991e4ae0b03f40c6faaa2c02ef122c25.stex"
 [deps]
 
 source_file="res://files/buttons/sex.png"
-source_md5="d28b9b694c69b5f07cd44f7f4d750a3b"
-
 dest_files=[ "res://.import/sex.png-991e4ae0b03f40c6faaa2c02ef122c25.stex" ]
-dest_md5="104db0b7fc051a3bf8a62c5f9ba6dc93"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/Beastkin-Bunny_M.png-3b855ec3c778c54a3526926ddfef5d43.stex"
 [deps]
 
 source_file="res://files/buttons/inventory/shades/Beastkin-Bunny_M.png"
-source_md5="8f9d1ddc8da05c1082b39cf061ef2b79"
-
 dest_files=[ "res://.import/Beastkin-Bunny_M.png-3b855ec3c778c54a3526926ddfef5d43.stex" ]
-dest_md5="0a6548a1f7d8d9e1a1268bbbd045b5e9"
 
 [params]
 

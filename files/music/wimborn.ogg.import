@@ -7,10 +7,7 @@ path="res://.import/wimborn.ogg-2b25ecc3cab245e8bbc7b594c4102f6f.oggstr"
 [deps]
 
 source_file="res://files/music/wimborn.ogg"
-source_md5="7a5f1c2ec46dbdaf55a1c54d732e61be"
-
 dest_files=[ "res://.import/wimborn.ogg-2b25ecc3cab245e8bbc7b594c4102f6f.oggstr" ]
-dest_md5="6e2d0836fb0e2b75a37d71a8a5b1ee19"
 
 [params]
 

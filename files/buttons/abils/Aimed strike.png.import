@@ -7,10 +7,7 @@ path="res://.import/Aimed strike.png-e4a35beb5bed0cbb94d7b57c9677a604.stex"
 [deps]
 
 source_file="res://files/buttons/abils/Aimed strike.png"
-source_md5="6cc0e77bb4dc38fae62ac5bc37916b13"
-
 dest_files=[ "res://.import/Aimed strike.png-e4a35beb5bed0cbb94d7b57c9677a604.stex" ]
-dest_md5="764b2fcb24bce01117698a9fd7c896a1"
 
 [params]
 

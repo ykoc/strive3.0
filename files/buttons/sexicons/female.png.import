@@ -7,10 +7,7 @@ path="res://.import/female.png-712f8f83c2e2881b964f6f6b7e0c7383.stex"
 [deps]
 
 source_file="res://files/buttons/sexicons/female.png"
-source_md5="e5a0dad416488c4254ced3b98b400fca"
-
 dest_files=[ "res://.import/female.png-712f8f83c2e2881b964f6f6b7e0c7383.stex" ]
-dest_md5="c1634a9aeffc2d582a09ee3ca2a0090d"
 
 [params]
 

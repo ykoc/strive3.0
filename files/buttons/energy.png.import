@@ -7,10 +7,7 @@ path="res://.import/energy.png-40f661efd46c7827b03bbe74d49a678c.stex"
 [deps]
 
 source_file="res://files/buttons/energy.png"
-source_md5="29264043aede4dffba0025bcdaff136f"
-
 dest_files=[ "res://.import/energy.png-40f661efd46c7827b03bbe74d49a678c.stex" ]
-dest_md5="3ed495267806ca64777ad764273adbf7"
 
 [params]
 

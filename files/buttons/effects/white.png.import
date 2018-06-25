@@ -7,10 +7,7 @@ path="res://.import/white.png-e0a2c2065829df6f72ec95295df27b18.stex"
 [deps]
 
 source_file="res://files/buttons/effects/white.png"
-source_md5="b68844373120b3795a9b80a7922d0c76"
-
 dest_files=[ "res://.import/white.png-e0a2c2065829df6f72ec95295df27b18.stex" ]
-dest_md5="f17f3e225bc88873851ebd43ba696987"
 
 [params]
 

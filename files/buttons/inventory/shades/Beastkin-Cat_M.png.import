@@ -7,10 +7,7 @@ path="res://.import/Beastkin-Cat_M.png-3a956cd9e4ef05f5123acb3848b63efc.stex"
 [deps]
 
 source_file="res://files/buttons/inventory/shades/Beastkin-Cat_M.png"
-source_md5="c065c52969a32c99af5e42d606e14420"
-
 dest_files=[ "res://.import/Beastkin-Cat_M.png-3a956cd9e4ef05f5123acb3848b63efc.stex" ]
-dest_md5="64104656126b5b5098e543ca324ec957"
 
 [params]
 

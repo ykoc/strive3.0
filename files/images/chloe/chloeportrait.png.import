@@ -7,10 +7,7 @@ path="res://.import/chloeportrait.png-a73d68fc6d61b4e408d2d1ab4bb574b5.stex"
 [deps]
 
 source_file="res://files/images/chloe/chloeportrait.png"
-source_md5="ac690bbd840581acea436ff03d2ef486"
-
 dest_files=[ "res://.import/chloeportrait.png-a73d68fc6d61b4e408d2d1ab4bb574b5.stex" ]
-dest_md5="859f91f6adc3c08cf773a4f2cbe4ad20"
 
 [params]
 

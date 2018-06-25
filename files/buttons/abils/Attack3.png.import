@@ -7,10 +7,7 @@ path="res://.import/Attack3.png-92c416e3f36c6fbdb2dca8ad691b24dd.stex"
 [deps]
 
 source_file="res://files/buttons/abils/Attack3.png"
-source_md5="3256f5d3aebe862a63a8392ad86cc880"
-
 dest_files=[ "res://.import/Attack3.png-92c416e3f36c6fbdb2dca8ad691b24dd.stex" ]
-dest_md5="6b18585542b1bf0424038d7d8ec5577b"
 
 [params]
 

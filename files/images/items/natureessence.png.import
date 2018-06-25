@@ -7,10 +7,7 @@ path="res://.import/natureessence.png-6d71703d54be8fa42501076df5f8be49.stex"
 [deps]
 
 source_file="res://files/images/items/natureessence.png"
-source_md5="9f30fa0d07be06c558ec735a2cc29ba1"
-
 dest_files=[ "res://.import/natureessence.png-6d71703d54be8fa42501076df5f8be49.stex" ]
-dest_md5="b21aecb7544b23d4a73496653673fcf7"
 
 [params]
 

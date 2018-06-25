@@ -7,10 +7,7 @@ path="res://.import/goldring.png-f2e89c28c97999552cd3ee2caeda2b39.stex"
 [deps]
 
 source_file="res://files/images/items/goldring.png"
-source_md5="68ff772ddec6d95dac77ce295287d7de"
-
 dest_files=[ "res://.import/goldring.png-f2e89c28c97999552cd3ee2caeda2b39.stex" ]
-dest_md5="aba4448999d6540e7c16ccee859382d5"
 
 [params]
 

@@ -34,8 +34,6 @@ func _ready():
 	get_node("TextureFrame/creditpanel/RichTextLabel").set_bbcode(text)
 	if globals.rules.fullscreen == true:
 		OS.set_window_fullscreen(true)
-#	if globals.rules.oldresize == true:
-#		get_tree().set_screen_stretch(1, 1, Vector2(globals.rules.screenwidth,globals.rules.screenheight))
 	charcreateinitiate()
 	globals.modsfile._ready()
 
@@ -59,6 +57,8 @@ func music():
 func _on_warningconfirm_pressed():
 	get_node("TextureFrame").visible = true
 	$warning.visible = false
+	if OS.get_name() == 'HTML5':
+		$htmlwarn.popup()
 	music()
 
 func _on_warningcancel_pressed():
@@ -874,9 +874,9 @@ func _on_slaveconfirm_pressed():
 	globals.guildslaves.gorn = []
 	globals.guildslaves.frostford = []
 	if globals.player.race == 'Elf':
-		globals.player.stats.maf_cur += 1
+		globals.player.stats.maf_base += 1
 	elif globals.player.race == "Dark Elf":
-		globals.player.stats.agi_cur += 1
+		globals.player.stats.agi_base += 1
 	elif globals.player.race == 'Orc':
 		globals.state.reputation.gorn += 30
 	elif globals.player.race == 'Demon':
@@ -884,7 +884,7 @@ func _on_slaveconfirm_pressed():
 			i -= 10
 		globals.player.skillpoints += 1
 	elif globals.player.race == 'Taurus':
-		globals.player.stats.end_cur += 1
+		globals.player.stats.end_base += 1
 	elif globals.player.race.find("Beastkin") >= 0:
 		globals.state.reputation.frostford += 30
 	elif globals.player.race.find("Halfkin"):
@@ -937,15 +937,15 @@ func _on_slaveconfirm_pressed():
 	
 	if startslavehobby == 'Physical':
 		startslave.cour += 25
-		startslave.sstr += 1
+		startslave.stats.str_max += 1
 	elif startslavehobby == 'Etiquete':
 		startslave.conf += 20
 		startslave.charm += 15
 	elif startslavehobby == 'Magic':
 		startslave.wit += 25
-		startslave.smaf += 2
+		startslave.stats.maf_max += 2
 	elif startslavehobby == 'Servitude':
-		startslave.send += 1
+		startslave.stats.end_max += 1
 		startslave.loyal += 20
 		startslave.stats.obed_min += 35
 	
@@ -1109,3 +1109,7 @@ func traittoggle(trait):
 func _on_traitclose_pressed():
 	$TextureFrame/newgame/stage8/traitpanel.visible = false
 	stage8()
+
+
+func _on_htmlwarnclose_pressed():
+	$htmlwarn.hide()

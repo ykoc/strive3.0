@@ -7,10 +7,7 @@ path="res://.import/garthor.png-2e2325cf36aa049e0ed69e4a60588673.stex"
 [deps]
 
 source_file="res://files/images/garthor.png"
-source_md5="f654a67d83c90bd97579f09e422ed67c"
-
 dest_files=[ "res://.import/garthor.png-2e2325cf36aa049e0ed69e4a60588673.stex" ]
-dest_md5="37a89fe476af746c58e147f51a6e9e56"
 
 [params]
 

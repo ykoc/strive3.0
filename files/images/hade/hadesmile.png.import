@@ -7,10 +7,7 @@ path="res://.import/hadesmile.png-b14886be65c6be8c8e77becb4ceae0a7.stex"
 [deps]
 
 source_file="res://files/images/hade/hadesmile.png"
-source_md5="edecd7c4ab17be890bc887c4209ed8fe"
-
 dest_files=[ "res://.import/hadesmile.png-b14886be65c6be8c8e77becb4ceae0a7.stex" ]
-dest_md5="433dd48b8f1194d3fcac6ef4d2ffcb31"
 
 [params]
 

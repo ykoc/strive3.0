@@ -7,10 +7,7 @@ path="res://.import/highlands.jpg-4b13eb7b5ebca9a4245e080131b360e9.stex"
 [deps]
 
 source_file="res://files/backgrounds/highlands.jpg"
-source_md5="1b69f427a9bf26acbcadacb09cc55769"
-
 dest_files=[ "res://.import/highlands.jpg-4b13eb7b5ebca9a4245e080131b360e9.stex" ]
-dest_md5="d3327ac339c352bc956933f42592ea76"
 
 [params]
 

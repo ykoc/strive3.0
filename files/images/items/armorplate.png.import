@@ -7,10 +7,7 @@ path="res://.import/armorplate.png-f3eee9d95d27c9501b907446e7c9e97c.stex"
 [deps]
 
 source_file="res://files/images/items/armorplate.png"
-source_md5="d6644c676e611c468c61064bfbe2c65c"
-
 dest_files=[ "res://.import/armorplate.png-f3eee9d95d27c9501b907446e7c9e97c.stex" ]
-dest_md5="7e23b9df9faedf91b1919cec328d06d1"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/frostford.ogg-d8e7e5a7826fe5fffdec2b6029510121.oggstr"
 [deps]
 
 source_file="res://files/music/frostford.ogg"
-source_md5="62288d0e44d87d6240265ae7e42b836b"
-
 dest_files=[ "res://.import/frostford.ogg-d8e7e5a7826fe5fffdec2b6029510121.oggstr" ]
-dest_md5="2ce374db0827089eac50d19f5a93ff23"
 
 [params]
 

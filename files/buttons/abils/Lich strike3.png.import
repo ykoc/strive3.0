@@ -7,10 +7,7 @@ path="res://.import/Lich strike3.png-0e78df54fa197ef742e65e8ae9dcc6a9.stex"
 [deps]
 
 source_file="res://files/buttons/abils/Lich strike3.png"
-source_md5="e7d49d6cae8680b273ea2332fffa6257"
-
 dest_files=[ "res://.import/Lich strike3.png-0e78df54fa197ef742e65e8ae9dcc6a9.stex" ]
-dest_md5="55cb3d566fccb825d2390d4951ae4170"
 
 [params]
 

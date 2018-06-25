@@ -7,10 +7,7 @@ path="res://.import/regressionpot.png-6fce7362b53774f546c92b4b996e2d94.stex"
 [deps]
 
 source_file="res://files/images/items/regressionpot.png"
-source_md5="4cc2a79ecc698046a45eb4c0f3fdb832"
-
 dest_files=[ "res://.import/regressionpot.png-6fce7362b53774f546c92b4b996e2d94.stex" ]
-dest_md5="3b40eb9f3af4d2e7cd587825b9456132"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/deterrentpot.png-5bfbb66ed2910ab5a0856c76c77c2aca.stex"
 [deps]
 
 source_file="res://files/images/items/deterrentpot.png"
-source_md5="41b73fcd0effdcf76413d7043d15997f"
-
 dest_files=[ "res://.import/deterrentpot.png-5bfbb66ed2910ab5a0856c76c77c2aca.stex" ]
-dest_md5="2f88dac797321999b81e755561847cfc"
 
 [params]
 

@@ -7,10 +7,7 @@ path="res://.import/Scylla_M.png-0dea0d44c63e8346b3b90570a918d6a3.stex"
 [deps]
 
 source_file="res://files/buttons/inventory/shades/Scylla_M.png"
-source_md5="cd6f1745abe59fe8a2020f3ae4e8c0a9"
-
 dest_files=[ "res://.import/Scylla_M.png-0dea0d44c63e8346b3b90570a918d6a3.stex" ]
-dest_md5="73199749295b83f1944c5b975c3fb8c2"
 
 [params]
 

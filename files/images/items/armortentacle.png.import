@@ -7,10 +7,7 @@ path="res://.import/armortentacle.png-43086f7f9bf140fb79e4a79fbc382115.stex"
 [deps]
 
 source_file="res://files/images/items/armortentacle.png"
-source_md5="ddac964c99a31bd8a7dde2c45a9325b1"
-
 dest_files=[ "res://.import/armortentacle.png-43086f7f9bf140fb79e4a79fbc382115.stex" ]
-dest_md5="1ddefdb846a7473ccf4d077529b808c4"
 
 [params]
 

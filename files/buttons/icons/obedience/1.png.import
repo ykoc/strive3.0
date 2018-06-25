@@ -7,10 +7,7 @@ path="res://.import/1.png-a6b8cd65792e7eab02a1d06e6c639aca.stex"
 [deps]
 
 source_file="res://files/buttons/icons/obedience/1.png"
-source_md5="a92e05ba9ce0f19865cf3a0741358580"
-
 dest_files=[ "res://.import/1.png-a6b8cd65792e7eab02a1d06e6c639aca.stex" ]
-dest_md5="0581f87fa1dade40135bed3a7508065a"
 
 [params]
 

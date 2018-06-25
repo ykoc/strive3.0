@@ -7,10 +7,7 @@ path="res://.import/yrisshocknaked.png-06f0ea3910d502f17a4b876880922b98.stex"
 [deps]
 
 source_file="res://files/images/yris/yrisshocknaked.png"
-source_md5="900eba3a1096e303bf60ff969ef166c6"
-
 dest_files=[ "res://.import/yrisshocknaked.png-06f0ea3910d502f17a4b876880922b98.stex" ]
-dest_md5="c5874fc1b332c50087750202e5e7a951"
 
 [params]
 

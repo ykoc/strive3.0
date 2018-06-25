@@ -7,10 +7,7 @@ path="res://.import/Protect2.png-e70c2dfc73aa64f932988b3969c4868f.stex"
 [deps]
 
 source_file="res://files/buttons/abils/Protect2.png"
-source_md5="caa98b9c509f788ab03a9c6ce98c53f0"
-
 dest_files=[ "res://.import/Protect2.png-e70c2dfc73aa64f932988b3969c4868f.stex" ]
-dest_md5="d26a0f226c2b5e5d88a87b67dfbb190a"
 
 [params]
 

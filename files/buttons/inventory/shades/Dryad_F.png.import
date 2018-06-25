@@ -7,10 +7,7 @@ path="res://.import/Dryad_F.png-a84b7bfc92d664f9c7b1fe6039c93501.stex"
 [deps]
 
 source_file="res://files/buttons/inventory/shades/Dryad_F.png"
-source_md5="91ba50a1f58aaadc39d3d3f4135702c5"
-
 dest_files=[ "res://.import/Dryad_F.png-a84b7bfc92d664f9c7b1fe6039c93501.stex" ]
-dest_md5="444c518585189249da1af74bf0648c4b"
 
 [params]
 

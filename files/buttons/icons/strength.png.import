@@ -7,10 +7,7 @@ path="res://.import/strength.png-d567e2c42bad7a7e7fe4f4eea5ba4ee7.stex"
 [deps]
 
 source_file="res://files/buttons/icons/strength.png"
-source_md5="4a4c328bcc9276e18521ee34522e4ff3"
-
 dest_files=[ "res://.import/strength.png-d567e2c42bad7a7e7fe4f4eea5ba4ee7.stex" ]
-dest_md5="fb78e766acb3b77ab16cafd6ddd9e33f"
 
 [params]
 

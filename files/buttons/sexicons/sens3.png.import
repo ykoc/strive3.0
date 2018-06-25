@@ -7,10 +7,7 @@ path="res://.import/sens3.png-4235b791459feb515202daa02021beb3.stex"
 [deps]
 
 source_file="res://files/buttons/sexicons/sens3.png"
-source_md5="b6f813fefcd152eb1bb0ddcddba13d2f"
-
 dest_files=[ "res://.import/sens3.png-4235b791459feb515202daa02021beb3.stex" ]
-dest_md5="990bbcb5d433cac72b91dcfebf703328"
 
 [params]
 

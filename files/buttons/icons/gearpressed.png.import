@@ -7,10 +7,7 @@ path="res://.import/gearpressed.png-f7cd7043a86a733bdd9a82aeb1222bb4.stex"
 [deps]
 
 source_file="res://files/buttons/icons/gearpressed.png"
-source_md5="ce63f65c3d0ed77b782087f218e78d42"
-
 dest_files=[ "res://.import/gearpressed.png-f7cd7043a86a733bdd9a82aeb1222bb4.stex" ]
-dest_md5="a89579f3199bcb0b02898a5af067a0ce"
 
 [params]
 

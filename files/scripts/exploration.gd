@@ -429,7 +429,7 @@ func zoneenter(zone):
 	outside.location = zone.code
 	enemyinfoclear()
 	main.background_set(zone.background)
-	if OS.get_name() != "HTML5" && globals.rules.fadinganimation == true:
+	if OS.get_name() != "HTML5":
 		yield(main, "animfinished")
 	if globals.state.playergroup.size() > 0:
 		for i in globals.state.playergroup:
@@ -680,7 +680,7 @@ func buildslave(i):
 	if deeperregion == true && globals.originsarray.find(origins) < 4 && randf() > 0.3:
 		origins = globals.originsarray[globals.originsarray.find(origins)+1]
 	var slavetemp = globals.newslave(race, age, sex, origins)
-	enemylevelup(slavetemp, [1,3]) #currentzone.levelrange)
+	enemylevelup(slavetemp, currentzone.levelrange)
 	
 	slavetemp.health = slavetemp.stats.health_max
 	i.capture = slavetemp
@@ -730,18 +730,19 @@ func enemylevelup(person, levelarray):
 	var level = levelarray[randi()%levelarray.size()]
 	var statdict = ['sstr','sagi','smaf','send']
 	person.skillpoints = 0
-	person.level = 1
+	person.level = level
 	var skillpoints = 2+(level-1)*variables.skillpointsperlevel
-	while person.level < level:
-		person.level += 1
-		var points = variables.skillpointsperlevel
-		while points > 0 && statdict.size() > 0:
-			var tempstat = statdict[randi()%statdict.size()]
-			if person[tempstat] >= person.stats[globals.maxstatdict[tempstat]]:
-				statdict.erase(tempstat)
-				continue
-			person[tempstat] += 1
-			points -= 1
+	while skillpoints > 0 && statdict.size() > 0:
+		if randf() <= 0.2:
+			person.skillpoints += 1
+			skillpoints -= 1
+			continue
+		var tempstat = statdict[randi()%statdict.size()]
+		if person.stats[globals.maxstatdict[tempstat].replace('_max',"_base")] >= person.stats[globals.maxstatdict[tempstat]]:
+			statdict.erase(tempstat)
+			continue
+		person.stats[globals.maxstatdict[tempstat].replace('_max',"_base")] += 1
+		skillpoints -= 1
 	person.health = person.stats.health_max
 
 func buildenemies(enemyname = null):

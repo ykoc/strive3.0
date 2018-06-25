@@ -7,10 +7,7 @@ path="res://.import/down.png-a9e4464c2a16fe6b9b614e9e72178fc4.stex"
 [deps]
 
 source_file="res://files/buttons/arrows/down.png"
-source_md5="ae501e57c78531bd310f9b6a692fc78a"
-
 dest_files=[ "res://.import/down.png-a9e4464c2a16fe6b9b614e9e72178fc4.stex" ]
-dest_md5="b48b408b7dd9c7ca814982cddaf3eefe"
 
 [params]
 

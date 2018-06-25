@@ -7,10 +7,7 @@ path="res://.import/torture.jpg-06a8faa2cccc466e88fc4cf6aae44bdb.stex"
 [deps]
 
 source_file="res://files/backgrounds/torture.jpg"
-source_md5="b630b4512997ac232a74a9eed277a3be"
-
 dest_files=[ "res://.import/torture.jpg-06a8faa2cccc466e88fc4cf6aae44bdb.stex" ]
-dest_md5="e7d62a50dcc29aaf53b7c147f1bcf886"
 
 [params]
 

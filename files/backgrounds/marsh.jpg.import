@@ -7,10 +7,7 @@ path="res://.import/marsh.jpg-8eaa6dac9288a6a587ee171f3c78ce68.stex"
 [deps]
 
 source_file="res://files/backgrounds/marsh.jpg"
-source_md5="6a34052ede3d505d6a2d9509d4a22ddb"
-
 dest_files=[ "res://.import/marsh.jpg-8eaa6dac9288a6a587ee171f3c78ce68.stex" ]
-dest_md5="ccbe512113a824f721a6e36ccdbe51a4"
 
 [params]
 

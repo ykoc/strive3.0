@@ -7,10 +7,7 @@ path="res://.import/weapondaggerrust.png-9a6ebd2eef0836a648054bf3b37f56a9.stex"
 [deps]
 
 source_file="res://files/images/items/weapondaggerrust.png"
-source_md5="0e43768cbb2ba84ad1ba90020af79bcd"
-
 dest_files=[ "res://.import/weapondaggerrust.png-9a6ebd2eef0836a648054bf3b37f56a9.stex" ]
-dest_md5="6235f657f1928aaed4adf7931dbe7f38"
 
 [params]
 

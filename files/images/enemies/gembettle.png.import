@@ -7,10 +7,7 @@ path="res://.import/gembettle.png-5d3b98ceab5707fdc4cd33e984f7629a.stex"
 [deps]
 
 source_file="res://files/images/enemies/gembettle.png"
-source_md5="fb396a2a595e12158ffd0a76900d3359"
-
 dest_files=[ "res://.import/gembettle.png-5d3b98ceab5707fdc4cd33e984f7629a.stex" ]
-dest_md5="5d34fb471aed8911d2ec583ec9f48590"
 
 [params]
 

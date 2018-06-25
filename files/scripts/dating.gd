@@ -485,7 +485,8 @@ func moveto(newloc):
 		get_parent().background = locationdicts[location].background
 	else:
 		get_parent().background = globals.state.location
-	yield(get_parent(),'animfinished')
+	if OS.get_name() != 'HTML5':
+		yield(get_parent(),'animfinished')
 	self.showntext = 'You lead [name2] to the [color=yellow]' + locationdicts[location].name + '[/color]. '
 	if date == false && !newloc in ['bedroom','dungeon']:
 		date = true
@@ -704,7 +705,7 @@ func propose(person, counter):
 		var difficulty =  self.mood*5 + person.loyal*2 + person.lust + drunkness*3
 		if person.sex == globals.player.sex && !person.traits.has('Homosexual') && !person.traits.has("Bisexual"):
 			difficulty -= 10
-		if str(person.relatives.father) == '0' || str(person.relatives.mother) == '0':
+		if globals.state.relativesdata.has(person.id) && (globals.state.relativesdata[person.id].father == int(globals.player.id) || globals.state.relativesdata[person.id].mother == int(globals.player.id)):
 			difficulty -= 10
 		if person.traits.has('Prude'):
 			difficulty -= 5
@@ -1046,7 +1047,8 @@ func calculateresults():
 
 func _on_finishbutton_pressed():
 	get_parent()._on_mansion_pressed()
-	yield(get_parent(),'animfinished')
+	if OS.get_name() != 'HTML5':
+		yield(get_parent(),'animfinished')
 	self.visible = false
 
 func _on_cancelsex_pressed():

@@ -44,7 +44,7 @@ func genitals():
 	if globals.state.descriptsettings.genitals == true || showmode != 'default':
 		text = "\n" + text + getdescription("titssize") + gettitsextra() + getdescription("asssize") + lowergenitals()
 		if person.preg.duration > variables.pregduration/1.5:
-			text += "\n\n$his unborn child forces $his belly to protrude massively; $he will give birth soon."
+			text += "\n\n$His unborn child forces $his belly to protrude massively; $he will give birth soon."
 		elif person.preg.duration > variables.pregduration/2:
 			text += "\n\n$His advanced pregnancy is clearly evident by the prominent bulge in $his belly."
 		elif person.preg.duration > variables.pregduration/4:

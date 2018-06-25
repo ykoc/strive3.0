@@ -7,10 +7,7 @@ path="res://.import/mansion2.ogg-66999c8c67489b1970493a898d9e6827.oggstr"
 [deps]
 
 source_file="res://files/music/mansion2.ogg"
-source_md5="a465c4bd0588c4eb6c01253e4eca7ce5"
-
 dest_files=[ "res://.import/mansion2.ogg-66999c8c67489b1970493a898d9e6827.oggstr" ]
-dest_md5="c6bab94f36c0e436fab26d63b94ad749"
 
 [params]
 

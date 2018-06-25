@@ -7,10 +7,7 @@ path="res://.import/dryadm.png-cc92ad3a943a9a81c39a1a54153cd955.stex"
 [deps]
 
 source_file="res://files/images/enemies/dryadm.png"
-source_md5="880391893f09dc16186f51ec30282c7e"
-
 dest_files=[ "res://.import/dryadm.png-cc92ad3a943a9a81c39a1a54153cd955.stex" ]
-dest_md5="faecaafbf52269ae74add615afd2d93b"
 
 [params]
 

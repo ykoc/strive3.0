@@ -7,10 +7,7 @@ path="res://.import/sebastian.png-365bd19d3fdae2a9a7e9b62d85a81ac8.stex"
 [deps]
 
 source_file="res://files/images/sebastian.png"
-source_md5="490212995c7be78bc60d3c8964ac108f"
-
 dest_files=[ "res://.import/sebastian.png-365bd19d3fdae2a9a7e9b62d85a81ac8.stex" ]
-dest_md5="e64df113da6b2d8b1674d5564c7e9cb8"
 
 [params]
 

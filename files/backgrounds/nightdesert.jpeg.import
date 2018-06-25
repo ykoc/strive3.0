@@ -7,10 +7,7 @@ path="res://.import/nightdesert.jpeg-9de6246c2a02d1bd949ee15f889457ad.stex"
 [deps]
 
 source_file="res://files/backgrounds/nightdesert.jpeg"
-source_md5="9743464ca62f13ae3572e626bd8b7a14"
-
 dest_files=[ "res://.import/nightdesert.jpeg-9de6246c2a02d1bd949ee15f889457ad.stex" ]
-dest_md5="6706a99dca7749b3c52e13f51347352d"
 
 [params]
 
