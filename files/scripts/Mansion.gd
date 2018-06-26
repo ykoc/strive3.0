@@ -162,7 +162,7 @@ func _ready():
 		globals.player.ability.append('escape')
 		globals.player.ability.append('heal')
 		globals.player.abilityactive.append('escape')
-		globals.player.abilityactive.append('mindblast')
+		globals.player.abilityactive.append('barrier')
 		globals.state.supporter = true
 		for i in globals.gallery.charactergallery.values():
 			i.unlocked = true
@@ -813,19 +813,19 @@ func _on_end_pressed():
 			elif person.sleep == 'communal':
 				person.stress -= rand_range(5,10)
 				person.health += rand_range(1,3)
-				person.energy += rand_range(20,30)+ person.stats.end_cur*6
+				person.energy += rand_range(20,30)+ person.send*6
 			elif person.sleep == 'personal':
 				person.stress -= rand_range(10,15)
 				person.health += rand_range(2,6)
-				person.energy += rand_range(40,50)+ person.stats.end_cur*6
+				person.energy += rand_range(40,50)+ person.send*6
 				text2.set_bbcode(text2.get_bbcode() + person.dictionary('$name sleeps in a private room, which helps $him heal faster and provides some stress relief.\n'))
 				if person.lust >= 50 && person.rules.masturbation == false && person.tags.find('nosex') < 0:
-					person.lust -= rand_range(15,25)
+					person.lust -= rand_range(30,40)
 					person.lastsexday = globals.resources.day
 					text2.set_bbcode(text2.get_bbcode() + person.dictionary('In an attempt to calm $his lust, $he spent some time busying $himself in feverish masturbation, making use of $his private room.\n'))
 			elif person.sleep == 'your':
 				person.loyal += rand_range(1,4)
-				person.energy += rand_range(25,45)+ person.stats.end_cur*6
+				person.energy += rand_range(25,45)+ person.send*6
 				person.sexuals.affection += round(rand_range(1,2))
 				if person.loyal > 30:
 					person.stress -= person.loyal/7
@@ -841,7 +841,7 @@ func _on_end_pressed():
 			elif person.sleep == 'jail':
 				person.metrics.jail += 1
 				person.obed += 25 - person.conf/6
-				person.energy += rand_range(20,30) + person.stats.end_cur*6
+				person.energy += rand_range(20,30) + person.send*6
 				if person.stress > 66:
 					person.stress -= rand_range(5,10)
 				else:
@@ -1258,10 +1258,16 @@ func autosave():
 	var path = 'user://saves/'
 	if filearray.has(path+"autosave2"):
 		dir.rename(path+'autosave2',path+'autosave3')
-		globals.savelist[path+'autosave3'] = globals.savelist[path + 'autosave2']
+		if globals.savelist.has(path + 'autosave2'):
+			globals.savelist[path+'autosave3'] = globals.savelist[path + 'autosave2']
+		else:
+			globals.savelist[path+'autosave3'] = globals.savelistentry(path+'autosave3')
 	if filearray.has(path+"autosave1"):
 		dir.rename(path+'autosave1',path+'autosave2')
-		globals.savelist[path+'autosave2'] = globals.savelist[path + 'autosave1']
+		if globals.savelist.has(path + 'autosave1'):
+			globals.savelist[path+'autosave2'] = globals.savelist[path + 'autosave1']
+		else:
+			globals.savelist[path+'autosave2'] = globals.savelistentry(path+'autosave2')
 	
 	thread.start(globals,"save_game",'user://saves/autosave1')
 
@@ -2503,8 +2509,9 @@ func stattooltip(value):
 	globals.showtooltip(text)
 
 func statup(stat):
-	globals.player[stat] += 1
+	globals.player.stats[globals.basestatdict[stat]] += 1
 	globals.player.skillpoints -= 1
+	globals.player[stat] += 0
 	updatestats(globals.player)
 
 onready var sstr = get_node("MainScreen/mansion/selfinspect/statspanel/sstr")
@@ -2530,7 +2537,7 @@ func updatestats(person):
 	get_node("MainScreen/mansion/selfinspect/statspanel/attribute").set_text("Free Attribute Points : "+str(person.skillpoints))
 	
 	for i in ['send','smaf','sstr','sagi']:
-		if person.skillpoints >= 1 && (globals.slaves.find(person) >= 0||globals.player == person) && person.stats[globals.maxstatdict[i].replace('_max','_cur')] < person.stats[globals.maxstatdict[i]]:
+		if person.skillpoints >= 1 && (globals.slaves.find(person) >= 0||globals.player == person) && person.stats[globals.maxstatdict[i].replace('_max','_base')] < person.stats[globals.maxstatdict[i]]:
 			get_node("MainScreen/mansion/selfinspect/statspanel/" + i +'/Button').visible = true
 		else:
 			get_node("MainScreen/mansion/selfinspect/statspanel/" + i+'/Button').visible = false

@@ -227,6 +227,7 @@ aitargets = '1ally',
 aiselfcond = 'any',
 aitargetcond = 'any',
 aipriority = 3,
+targetsfx = 'barrieranimation'
 },
 shackle = {
 name = 'Shackle',
@@ -630,7 +631,7 @@ duration = 3,
 name = 'Barrier',
 code = 'barriereffect',
 type = 'buff',
-stats = [['armor', '3+,caster.magic,*2']],
+stats = [['armor', '3+,caster.magic,*3']],
 },
 debilitateeffect = {
 icon = load('res://files/buttons/abils/Debilitate.png'),

@@ -1463,7 +1463,7 @@ func _on_confirmwinning_pressed(secondary = false): #0 leave, 1 capture, 2 rape,
 					text += person.dictionary('\n$name watches at your deeds with interest, occassionally rustling around $his waist. ')
 					person.lust = 20
 			elif person.sexuals.unlocked == true:
-				if person.lust >= 50 && person.asser >= 40:
+				if person.lust >= 50 && person.lewd >= 40:
 					person.sexuals.affection += round(rand_range(2,4))
 					person.asser += rand_range(6,12)
 					person.lastsexday = globals.resources.day

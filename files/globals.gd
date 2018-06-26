@@ -1786,6 +1786,13 @@ func save_game(var savename):
 		dir.make_dir("user://saves")
 	savegame.open(savename, File.WRITE)
 	var nodedata = save()
+	savelistentry(savename)
+	overwritesettings()
+	savegame.store_line(to_json(nodedata))
+	savegame.close()
+	get_tree().get_current_scene().infotext("Game Saved.",'green')
+
+func savelistentry(savename):
 	var date = OS.get_datetime()
 	for i in date:
 		if int(date[i]) < 10:
@@ -1794,10 +1801,6 @@ func save_game(var savename):
 			date[i] = str(date[i])
 	var entry = {name = "Master " + player.name + "\nDay: " + str(resources.day) + '\nGold: [color=yellow] ' + str(resources.gold) + '[/color]\nSlaves: ' + str(slavecount()), path = savename, date = date.hour + ":" + date.minute + " " + date.day + '.' + date.month + '.' + date.year, portrait = player.imageportait}
 	savelist[savename] = entry
-	overwritesettings()
-	savegame.store_line(to_json(nodedata))
-	savegame.close()
-	get_tree().get_current_scene().infotext("Game Saved.",'green')
 
 func load_game(text):
 	var savegame = File.new()
@@ -1818,6 +1821,29 @@ func load_game(text):
 		currentline.resources['@subpath'] = "resource"
 		currentline.player['@subpath'] = 'person'
 		currentline.state['@subpath'] = 'progress'
+	if currentline.resources['@path'] == "res://globals.gd":
+		currentline.resources['@path'] = "res://files/globals.gd"
+		currentline.player['@path'] = 'res://files/globals.gd'
+		currentline.state['@path'] = 'res://files/globals.gd'
+		for i in currentline.values():
+			if typeof(i) == TYPE_DICTIONARY:
+				if i['@path'].find("res://globals.gd") >= 0:
+					i['@path'] = i['@path'].replace("res://globals.gd", "res://files/globals.gd")
+			
+			if i.has('stats') && i.stats.has("str_cur"):
+				i.stats.str_base = i.stats.str_cur
+				i.stats.agi_base = i.stats.agi_cur
+				i.stats.maf_base = i.stats.maf_cur
+				i.stats.end_base = i.stats.end_cur
+			elif typeof(i) == TYPE_ARRAY:
+				for k in i:
+					if k['@path'].find("res://globals.gd") >= 0:
+						k['@path'] = k['@path'].replace("res://globals.gd", "res://files/globals.gd")
+					if k.has('stats') && k.stats.has("str_cur"):
+						k.stats.str_base = k.stats.str_cur
+						k.stats.agi_base = k.stats.agi_cur
+						k.stats.maf_base = k.stats.maf_cur
+						k.stats.end_base = k.stats.end_cur
 	if currentline.has('sebastianslave'):
 		currentline.sebastianslave['@subpath'] = 'person'
 	resources = dict2inst(currentline.resources)

@@ -1286,6 +1286,13 @@ func healdamage(combatant):
 	tween.interpolate_property(node, "modulate", Color(0.25,1,0.25,1), Color(1,1,1,1), 0.6, Tween.TRANS_SINE, Tween.EASE_IN)
 	tween.start()
 
+func barrieranimation(combatant):
+	var node = combatant.node
+	var tween = $Tween
+	
+	tween.interpolate_property(node, "modulate", Color(0.25,0.25,1,1), Color(1,1,1,1), 1.3, Tween.TRANS_SINE, Tween.EASE_IN)
+	tween.start()
+
 func findcombatantfromslave(person):
 	for i in playergroup:
 		if i.person == person:

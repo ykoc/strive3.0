@@ -705,7 +705,7 @@ func propose(person, counter):
 		var difficulty =  self.mood*5 + person.loyal*2 + person.lust + drunkness*3
 		if person.sex == globals.player.sex && !person.traits.has('Homosexual') && !person.traits.has("Bisexual"):
 			difficulty -= 10
-		if globals.state.relativesdata.has(person.id) && (globals.state.relativesdata[person.id].father == int(globals.player.id) || globals.state.relativesdata[person.id].mother == int(globals.player.id)):
+		if globals.state.relativesdata.has(person.id) && (int(globals.state.relativesdata[person.id].father) == int(globals.player.id) || int(globals.state.relativesdata[person.id].mother) == int(globals.player.id)):
 			difficulty -= 10
 		if person.traits.has('Prude'):
 			difficulty -= 5

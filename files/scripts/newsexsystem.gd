@@ -896,7 +896,7 @@ func output(scenescript, valid_lines, givers, takers):
 
 func orgasm(member):
 	member.sens = member.sens/4
-	member.lust -= 300
+	member.lust -= max(300, member.lust/2)
 	var scene
 	var text
 	var temptext = ''
@@ -1129,7 +1129,7 @@ func endencounter():
 			i.person.add_trait("Fickle")
 		
 		if i.orgasms >= 1:
-			if i.person.stats.maf_cur*20 > rand_range(0,100) && i.person.getessence() != null:
+			if i.person.smaf*20 > rand_range(0,100) && i.person.getessence() != null:
 				text += ", Ingredient gained: [color=yellow]" + globals.itemdict[i.person.getessence()].name + "[/color]"
 				globals.itemdict[i.person.getessence()].amount += 1
 			mana += round(i.orgasms*3 + rand_range(1,2))

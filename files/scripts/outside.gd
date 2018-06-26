@@ -928,8 +928,13 @@ func slavequesttext(quest):
 	for i in quest.reqs:
 		if i[0].find('skills') >= 0:
 			text2 = text2 + repeatablesdict[i[0]] + ' — '+ globals.player.skill_level(i[2]) + operators[i[1]]
-		elif i[0] in ['sex','age','bodyshape','haircolor','race']:
+		elif i[0] in ['sex','bodyshape','haircolor','race']:
 			text2 = text2 + repeatablesdict[i[0]] + ' — '+ str(i[2]) + ';\n'
+		elif i[0] == 'age':
+			text2 += repeatablesdict[i[0]] + ' — ' 
+			if i[1] == 'neq':
+				text2 += 'Not '
+			text2 += str(i[2]) + ';\n'
 		elif i[0] == 'hairlength':
 			text2 = text2 + 'Hair length — ' + str(globals.hairlengtharray[i[2]]) + ';\n'
 		elif i[0] == 'titssize':

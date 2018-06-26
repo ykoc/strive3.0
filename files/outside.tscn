@@ -53,7 +53,7 @@
 [ext_resource path="res://files/buttongrouptheme.tres" type="Theme" id=51]
 [ext_resource path="res://files/buttons/sexicons/male.png" type="Texture" id=52]
 [ext_resource path="res://files/buttons/mainscreen/41.png" type="Texture" id=53]
-[ext_resource path="res://statspanel.tscn" type="PackedScene" id=54]
+[ext_resource path="res://files/statspanel.tscn" type="PackedScene" id=54]
 [ext_resource path="res://files/theme slavetab.tres" type="Theme" id=55]
 [ext_resource path="res://files/buttons/inventory/11-litter.png" type="Texture" id=56]
 [ext_resource path="res://files/buttons/inventory/12_chest.png" type="Texture" id=57]
@@ -80,6 +80,7 @@
 [ext_resource path="res://files/buttons/bigpanel.png" type="Texture" id=78]
 [ext_resource path="res://files/buttons/inventory/1.png" type="Texture" id=79]
 [ext_resource path="res://files/map.scn" type="PackedScene" id=80]
+
 
 [sub_resource type="StyleBoxTexture" id=1]
 

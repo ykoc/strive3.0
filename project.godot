@@ -28,7 +28,7 @@ use_shared_user_dir=true
 [autoload]
 
 variables="*res://files/scripts/variables.gd"
-globals="*res://globals.gd"
+globals="*res://files/globals.gd"
 
 [debug]
 
