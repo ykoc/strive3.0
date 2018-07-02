@@ -2,7 +2,6 @@ extends Control
 
 var scenearray = []
 var currentscene
-onready var player = get_parent().get_node("screenchange/AnimationPlayer")
 var timer = Timer.new()
 var timer2 = Timer.new()
 var stage
@@ -50,7 +49,7 @@ func patronlist():
 		patrons.erase(i)
 
 func _input(event):
-	if player.is_playing():
+	if globals.main.get_node("screenchange").visible:
 		return
 	if event.is_pressed() && event.is_action("escape") && stage in ['credits','patrons']:
 		stage = 'alise'
@@ -154,12 +153,10 @@ func _on_continue_pressed():
 	timer2.stop()
 	get_parent()._on_mansion_pressed()
 	get_node("TextureFrame/alise/continue").disconnect("pressed",self,'_on_continue_pressed')
-	player.play('blackout')
+	globals.main.animationfade(1.5, 2)
 	yield(get_parent(), "animfinished")
 	get_parent().close_dialogue('instant')
 	visible = false
-	player.play_backwards("slowfade")
-	#yield(get_parent().get_node("screenchange/AnimationPlayer"), 'animation_finished')
 
 
 

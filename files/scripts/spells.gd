@@ -371,7 +371,7 @@ func mutateeffect():
 	return text
 
 func mutate(power=2, silent = false):
-	var array = ['height','tits','ass','penis','balls','penistype','skin','skincov','eyecolor','eyeshape','haircolor','hairlength','ears','tail','wings','horns','beauty','lactation','nipples','lust','amnesia','pregnancy']
+	var array = ['traitadd','height','tits','ass','penis','balls','penistype','skin','skincov','eyecolor','eyeshape','haircolor','hairlength','ears','tail','wings','horns','beauty','lactation','nipples','lust','amnesia','pregnancy']
 	var line
 	var text = "Raw magic in $name's body causes $him to uncontrollably mutate. \n\n"
 	var temp
@@ -384,6 +384,9 @@ func mutate(power=2, silent = false):
 		elif line == 'tits':
 			text += "$name's chest size has changed. "
 			person.titssize = globals.sizearray[rand_range(0,globals.sizearray.size())]
+		elif line == 'traitadd':
+			text += "$name has received a new trait. "
+			person.add_trait(globals.origins.traits('any').name)
 		elif line == 'ass':
 			text += "$name's butt size has changed. "
 			person.asssize = globals.sizearray[rand_range(0,globals.sizearray.size())]
@@ -417,9 +420,6 @@ func mutate(power=2, silent = false):
 			text += "$name's skin color has changed. "
 			person.skin = globals.assets.getrandomskincolor()
 		elif line == 'skincov':
-#			if globals.rules.furry == false:
-#				power += 1
-#				continue
 			text += "$name's skin coverage has changed. "
 			person.skincov = globals.skincovarray[rand_range(0,globals.skincovarray.size())]
 			person.furcolor = globals.assets.getrandomfurcolor()
@@ -488,7 +488,7 @@ func mutate(power=2, silent = false):
 			text += "$name's lust has greatly increased. "
 			person.lust += rand_range(40,80)
 		power -= 1
-	person.toxicity = -rand_range(15,30)
+	person.toxicity -= rand_range(20,30)
 	text = person.dictionary(text)
 	return text
 

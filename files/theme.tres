@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=51 format=2]
+[gd_resource type="Theme" load_steps=52 format=2]
 
 [ext_resource path="res://Roundo-Medium.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://files/buttons/buttondisabled.png" type="Texture" id=2]
@@ -390,6 +390,25 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
+[sub_resource type="StyleBoxTexture" id=30]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 12 )
+region_rect = Rect2( 0, 0, 500, 500 )
+margin_left = 0.0
+margin_right = 0.0
+margin_top = 0.0
+margin_bottom = 0.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
 [sub_resource type="StyleBoxTexture" id=22]
 
 content_margin_left = -1.0
@@ -616,6 +635,7 @@ PopupMenu/styles/hover = SubResource( 20 )
 PopupMenu/styles/panel = SubResource( 21 )
 PopupMenu/styles/panel_disabled = null
 PopupMenu/styles/separator = null
+PopupPanel/styles/panel = SubResource( 30 )
 TabContainer/colors/font_color_bg = Color( 0.690196, 0.690196, 0.690196, 1 )
 TabContainer/colors/font_color_fg = Color( 0.941176, 0.941176, 0.941176, 1 )
 TabContainer/constants/hseparation = 4
@@ -655,5 +675,5 @@ WindowDialog/fonts/title_font = null
 WindowDialog/icons/close = null
 WindowDialog/icons/close_hilite = null
 WindowDialog/styles/panel = SubResource( 29 )
-_sections_unfolded = [ "Panel", "Panel/styles", "PopupMenu/icons", "PopupMenu/styles", "TooltipLabel", "TooltipLabel/colors", "TooltipPanel", "TooltipPanel/styles", "VScrollBar", "VScrollBar/icons", "VScrollBar/styles", "WindowDialog/colors" ]
+_sections_unfolded = [ "Panel", "PopupMenu/icons", "PopupMenu/styles", "PopupPanel", "PopupPanel/styles", "TabContainer", "TooltipLabel", "TooltipLabel/colors", "TooltipPanel", "TooltipPanel/styles", "VScrollBar", "VScrollBar/icons", "VScrollBar/styles", "WindowDialog/colors" ]
 

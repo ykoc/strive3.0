@@ -2,7 +2,6 @@ extends Node
 var basehealth = 50
 var healthperend = 25
 var geardropchance = 15
-var pregduration = 31
 var enchantitemprice = 1.5
 var sellingitempricemod = 0.2
 var basefoodconsumption = 10
@@ -12,6 +11,11 @@ var consumerope = 1
 var learnpointsperstat = 3
 
 
+#Pregnancies
+var pregduration = 31
+var growuptimechild = 15
+var growuptimeteen = 20
+var growuptimeadult = 25
 
 #slave stats & combat
 var damageperstr = 3
@@ -58,7 +62,7 @@ pregduration = {descript = "Basic pregnancy duration in days", default = 31, min
 enchantitemprice = {descript = "Selling price modifier for enchanted gear", default = 1.5, min = 0, max = 10},
 sellingitempricemod = {descript = "Selling price modifier for all items", default = 0.2, min = 0, max = 1},
 basefoodconsumption = {descript = "Basic food consumption for characters per day", default = 10, min = 1, max = 100},
-skillpointsperlevel = {descript = "Attribute points gained on levelup", default = 3, min = 1, max = 10},
+skillpointsperlevel = {descript = "Attribute points gained on levelup", default = 2, min = 1, max = 10},
 timeforinteraction = {descript = "Number of actions you can perform during interaction sequence", default = 20, min = 1, max = 50},
 consumerope  = {descript = "Number of ropes to be consumed when capturing a slave in the wild", default = 1, min = 0, max = 5,},
 learnpointsperstat = {descript = "Number of skill points required to increase mental stat by 1", default = 3, min = 1, max = 100},

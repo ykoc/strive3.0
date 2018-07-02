@@ -28,13 +28,11 @@ func requirements():
 		valid = false
 	else:
 		for i in givers:
-#			if i.tail != null || !globals.longtails.has(i.person.tail):
-#				valid = false
+			if i.limbs == false:
+				valid = false
 			if !globals.longtails.has(i.person.tail):
 				valid = false
 		for i in takers:
-#			if i.vagina != null || i.person.vagina == 'none':
-#				valid = false
 			if i.person.vagina == 'none':
 				valid = false
 	return valid

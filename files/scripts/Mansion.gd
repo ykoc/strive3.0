@@ -22,6 +22,89 @@ signal animfinished
 
 
 var checkforevents = false
+var debug = false
+
+func _ready():
+	get_node("music").set_meta('currentsong', 'none')
+	if OS.get_executable_path() == 'C:\\Users\\1\\Desktop\\godot\\Godot_v3.0.4-stable_win64.exe':
+		globals.developmode = true
+		get_node("startcombat").show()
+		get_node("new slave button").show()
+		get_node("debug").show()
+		globals.player.name = ''
+	rebuildrepeatablequests()
+	globals.main = self
+	globals.resources.panel = get_node("ResourcePanel")
+	if globals.player.name == '':
+		debug = true
+		globals.player = globals.newslave('Human', 'teen', 'male')
+		globals.player.ability.append('escape')
+		globals.player.ability.append('heal')
+		globals.player.abilityactive.append('escape')
+		globals.player.abilityactive.append('barrier')
+		globals.state.supporter = true
+		for i in globals.gallery.charactergallery.values():
+			i.unlocked = true
+			i.nakedunlocked = true
+			for k in i.scenes:
+				k.unlocked = true
+		_on_new_slave_button_pressed()
+	rebuild_slave_list()
+	globals.player.consent = true
+	globals.spells.main = get_tree().get_current_scene()
+	get_node("birthpanel/raise/childpanel/child").connect('pressed', self, 'babyage', ['child'])
+	get_node("birthpanel/raise/childpanel/teen").connect('pressed', self, 'babyage', ['teen'])
+	get_node("birthpanel/raise/childpanel/adult").connect('pressed', self, 'babyage', ['adult'])
+	#exploration
+	get_node("explorationnode").buttoncontainer = get_node("outside/buttonpanel/outsidebuttoncontainer")
+	get_node("explorationnode").button = get_node("outside/buttonpanel/outsidebuttoncontainer/buttontemplate")
+	get_node("explorationnode").main = self
+	get_node("explorationnode").outside = get_node('outside')
+	globals.events.outside = get_node("outside")
+	globals.resources.update()
+	
+	for i in get_tree().get_nodes_in_group("invcategories"):
+		i.connect("pressed",self,"selectcategory",[i])
+	
+	for i in get_tree().get_nodes_in_group("mansionbuttons"):
+		i.connect("pressed",self,i.get_name())
+	
+	for i in get_tree().get_nodes_in_group("spellbookcategory"):
+		i.connect("pressed",self,'spellbookcategory',[i])
+	
+	if globals.state.tutorialcomplete == false && globals.resources.day == 1:
+		get_node("tutorialnode").starttutorial()
+	
+	if globals.showalisegreet == true:
+		alisegreet()
+	elif globals.gameloaded == true:
+		infotext("Game Loaded.",'green')
+	
+	for i in ['sstr','sagi','smaf','send']:
+		self[i].get_node('Control').connect('mouse_entered', self, 'stattooltip',[i])
+		self[i].get_node('Control').connect('mouse_exited', globals, 'hidetooltip')
+		self[i].get_node('Button').connect("pressed",self,'statup', [i])
+	
+	
+	$MainScreen/mansion/selfinspect/relativespanel/relativestext.connect("meta_hover_started",self,'relativeshover')
+	$MainScreen/mansion/selfinspect/relativespanel/relativestext.connect("meta_hover_ended",globals, 'slavetooltiphide')
+	$MainScreen/mansion/selfinspect/relativespanel/relativestext.connect("meta_clicked",self, "relativesselected")
+	
+	$MainScreen/mansion/mansioninfo.connect("meta_hover_started",self,'slavehover')
+	$MainScreen/mansion/mansioninfo.connect("meta_hover_ended",globals, 'slavetooltiphide')
+	$MainScreen/mansion/mansioninfo.connect("meta_clicked",self, "slaveclicked")
+	
+	$outside/textpanel/outsidetextbox.connect("meta_hover_started",self,'slavehover')
+	$outside/textpanelexplore/outsidetextbox2.connect("meta_hover_started",self,'slavehover')
+	$outside/textpanel/outsidetextbox.connect("meta_hover_ended",globals, 'slavetooltiphide')
+	$outside/textpanelexplore/outsidetextbox2.connect("meta_hover_ended",globals, 'slavetooltiphide')
+	for i in [$sexselect/managerypanel/dogplus, $sexselect/managerypanel/dogminus, $sexselect/managerypanel/horseplus, $sexselect/managerypanel/horseminus]:
+		i.connect("pressed", self, 'animalforsex', [i])
+	_on_mansion_pressed()
+	#startending()
+
+var sexanimals = {dog = 0, horse = 0}
+
 
 func _process(delta):
 	$screenchange.visible = (float($screenchange.modulate.a) > 0)
@@ -98,7 +181,7 @@ func _input(event):
 		if i.is_visible_in_tree() == true:
 			anythingvisible = true
 			break
-	if event.is_echo() == true || event.is_pressed() == false || anythingvisible || get_node("screenchange/AnimationPlayer").is_playing():
+	if event.is_echo() == true || event.is_pressed() == false || anythingvisible:
 		if event.is_action_pressed("escape") == true && get_node("tutorialnode").visible == true:
 			get_node("tutorialnode").close()
 		return
@@ -146,82 +229,7 @@ func clearscreen():
 	$charlistcontrol.visible = false
 	#$FinishDayPanel.visible = false
 
-func _ready():
-	get_node("music").set_meta('currentsong', 'none')
-	if OS.get_executable_path() == 'C:\\Users\\1\\Desktop\\godot\\Godot_v3.0.4-stable_win64.exe':
-		globals.developmode = true
-		get_node("startcombat").show()
-		get_node("new slave button").show()
-		get_node("debug").show()
-		globals.player.name = ''
-	rebuildrepeatablequests()
-	globals.main = self
-	globals.resources.panel = get_node("ResourcePanel")
-	if globals.player.name == '':
-		globals.player = globals.newslave('Human', 'teen', 'male')
-		globals.player.ability.append('escape')
-		globals.player.ability.append('heal')
-		globals.player.abilityactive.append('escape')
-		globals.player.abilityactive.append('barrier')
-		globals.state.supporter = true
-		for i in globals.gallery.charactergallery.values():
-			i.unlocked = true
-			i.nakedunlocked = true
-			for k in i.scenes:
-				k.unlocked = true
-		_on_new_slave_button_pressed()
-	rebuild_slave_list()
-	globals.player.consent = true
-	globals.spells.main = get_tree().get_current_scene()
-	get_node("birthpanel/raise/childpanel/child").connect('pressed', self, 'babyage', ['child'])
-	get_node("birthpanel/raise/childpanel/teen").connect('pressed', self, 'babyage', ['teen'])
-	get_node("birthpanel/raise/childpanel/adult").connect('pressed', self, 'babyage', ['adult'])
-	#exploration
-	get_node("explorationnode").buttoncontainer = get_node("outside/buttonpanel/outsidebuttoncontainer")
-	get_node("explorationnode").button = get_node("outside/buttonpanel/outsidebuttoncontainer/buttontemplate")
-	get_node("explorationnode").main = self
-	get_node("explorationnode").outside = get_node('outside')
-	globals.events.outside = get_node("outside")
-	globals.resources.update()
-	
-	for i in get_tree().get_nodes_in_group("invcategories"):
-		i.connect("pressed",self,"selectcategory",[i])
-	
-	for i in get_tree().get_nodes_in_group("mansionbuttons"):
-		i.connect("pressed",self,i.get_name())
-	
-	for i in get_tree().get_nodes_in_group("spellbookcategory"):
-		i.connect("pressed",self,'spellbookcategory',[i])
-	
-	if globals.state.tutorialcomplete == false && globals.resources.day == 1:
-		get_node("tutorialnode").starttutorial()
-	
-	if globals.showalisegreet == true:
-		alisegreet()
-	elif globals.gameloaded == true:
-		infotext("Game Loaded.",'green')
-	
-	for i in ['sstr','sagi','smaf','send']:
-		self[i].get_node('Control').connect('mouse_entered', self, 'stattooltip',[i])
-		self[i].get_node('Control').connect('mouse_exited', globals, 'hidetooltip')
-		self[i].get_node('Button').connect("pressed",self,'statup', [i])
-	
-	
-	$MainScreen/mansion/selfinspect/relativespanel/relativestext.connect("meta_hover_started",self,'relativeshover')
-	$MainScreen/mansion/selfinspect/relativespanel/relativestext.connect("meta_hover_ended",globals, 'slavetooltiphide')
-	$MainScreen/mansion/selfinspect/relativespanel/relativestext.connect("meta_clicked",self, "relativesselected")
-	
-	$MainScreen/mansion/mansioninfo.connect("meta_hover_started",self,'slavehover')
-	$MainScreen/mansion/mansioninfo.connect("meta_hover_ended",globals, 'slavetooltiphide')
-	$MainScreen/mansion/mansioninfo.connect("meta_clicked",self, "slaveclicked")
-	
-	$outside/textpanel/outsidetextbox.connect("meta_hover_started",self,'slavehover')
-	$outside/textpanelexplore/outsidetextbox2.connect("meta_hover_started",self,'slavehover')
-	$outside/textpanel/outsidetextbox.connect("meta_hover_ended",globals, 'slavetooltiphide')
-	$outside/textpanelexplore/outsidetextbox2.connect("meta_hover_ended",globals, 'slavetooltiphide')
-	
-	_on_mansion_pressed()
-	#startending()
+
 
 func slavehover(meta):
 	if meta != 'race':
@@ -235,7 +243,8 @@ func slaveclicked(meta):
 		globals.openslave(tempslave)
 
 func sound(value):
-	if globals.rules.musicvol > 0:
+	$soundeffect.set_volume_db(globals.rules.soundvol)
+	if globals.rules.soundvol > 0:
 		$soundeffect.stream = globals.sounddict[value]
 		$soundeffect.playing = true
 		$soundeffect.autoplay = false
@@ -271,26 +280,18 @@ func _on_new_slave_button_pressed():
 	person.obed += 100
 	person.loyal += 100
 	person.xp += 9990
-	person.sexuals.affection = 200
-	person.consent = false
+	person.consent = true
 	person.lust = 100
-	person.spec = 'bodyguard'
 	#person.add_effect(globals.effectdict.contraceptive)
-	globals.connectrelatives(globals.player, person, 'sibling')
-	globals.impregnation(person, globals.player)
-	globals.impregnation(person, globals.player)
-	globals.impregnation(person, globals.player)
-	globals.impregnation(person, globals.player)
-	globals.impregnation(person, globals.player)
+	#globals.connectrelatives(globals.player, person, 'sibling')
+	#globals.impregnation(person, globals.player)
 	person.preg.duration = variables.pregduration
-	#slave.tattoo.face = 'nature'
 	person.attention = 70
 	person.skillpoints = 100
-	#person.add_trait('Frail')
+	person.add_trait('Scarred')
 	for i in ['conf','cour','charm','wit']:
 		person[i] = 100
-	person.ability.append('debilitate')
-	#globals.state.location = 'gorn'
+	person.ability.append('heavystike')
 	for i in globals.state.portals.values():
 		i.enabled = true
 	for i in globals.spelldict.values():
@@ -308,6 +309,7 @@ func _on_new_slave_button_pressed():
 	globals.state.reputation.wimborn = 41
 	globals.state.sidequests.ivran = 'potionreceived'
 	globals.state.mansionupgrades.mansionnursery = 1
+	globals.state.mansionupgrades.mansionkennels = 1
 	globals.player.ability.append("leechingstrike")
 	globals.player.ability.append('heal')
 	#globals.player.stats.maf_cur = 3
@@ -323,7 +325,7 @@ func _on_new_slave_button_pressed():
 	globals.state.sidequests.yris = 3
 	#globals.state.decisions.append('')
 	globals.state.rank = 3
-	globals.state.mainquest = 0
+	globals.state.mainquest = 40
 	#globals.state.plotsceneseen = ['garthorscene','hade1','hade2','frostfordscene']#,'slaverguild']
 	globals.resources.mana = 200
 	globals.state.farm = 3
@@ -584,7 +586,9 @@ func _on_end_pressed():
 				if tempitem.code in ['acchandcuffs']:
 					handcuffs = true
 		text = ''
+		
 		if person.away.duration == 0:
+			
 			if person.sleep != 'jail' && person.sleep != 'farm':
 				if person.work in ['rest','forage','hunt','cooking','library','nurse','maid','storewimborn','artistwimborn','assistwimborn','whorewimborn','escortwimborn','fucktoywimborn', 'lumberer', 'ffprostitution','guardian', 'research', 'slavecatcher','fucktoy']:
 					if person.work != 'rest' && person.energy < 30:
@@ -625,6 +629,24 @@ func _on_end_pressed():
 							person.metrics.foodearn += workdict.food
 			text1.set_bbcode(text1.get_bbcode()+person.dictionary(text))
 			######## Counting food
+			for i in person.effects.values():
+				if i.has('duration') && i.code != 'captured':
+					if person.fear >= 50 && randf() >= 0.4:
+						i.duration -= 1
+					if person.race != 'Dark Elf' || rand_range(0,1) > 0.5:
+						i.duration -= 1
+					if i.duration <= 0:
+						person.add_effect(i, true)
+				elif i.has('duration'):
+					i.duration -= 1
+					if person.sleep == 'jail' && globals.state.mansionupgrades.jailincenses == 1 && rand_range(0,100) >= 50:
+						i.duration -= 1
+					if person.brand != 'none':
+						i.duration -= 1
+					if i.duration <= 0:
+						if i.code == 'captured':
+							text0.set_bbcode(text0.get_bbcode() + person.dictionary('$name grew accustomed to your ownership.\n'))
+						person.add_effect(i, true)
 			if globals.resources.food >= 5:
 				person.loyal += rand_range(0,1)
 				person.health += rand_range(2,5)
@@ -719,8 +741,7 @@ func _on_end_pressed():
 				if !person.effects.has("contraceptive"):
 					if globals.resources.gold >= 5:
 						globals.resources.gold -= 5
-						var effect = globals.effectdict.contraceptive
-						person.add_effect(effect)
+						person.add_effect(globals.effectdict.contraceptive)
 						gold_consumption += 5
 					else:
 						text0.set_bbcode(text0.get_bbcode()+person.dictionary("[color=#ff4949]You could't afford to provide $name with contraceptives.[/color]\n"))
@@ -905,24 +926,6 @@ func _on_end_pressed():
 			elif person.away.duration == 0:
 				person.away.at = ''
 				text0.set_bbcode(text0.get_bbcode() + person.dictionary("$name returned to the mansion and went back to $his duty. \n"))
-		for i in person.effects.values():
-			if i.has('duration') && i.code != 'captured':
-				if person.fear >= 50 && randf() >= 0.4:
-					i.duration -= 1
-				if person.race != 'Dark Elf' || rand_range(0,1) > 0.5:
-					i.duration -= 1
-				if i.duration <= 0:
-					person.add_effect(i, true)
-			elif i.has('duration'):
-				i.duration -= 1
-				if person.sleep == 'jail' && globals.state.mansionupgrades.jailincenses == 1 && rand_range(0,100) >= 50:
-					i.duration -= 1
-				if person.brand != 'none':
-					i.duration -= 1
-				if i.duration <= 0:
-					if i.code == 'captured':
-						text0.set_bbcode(text0.get_bbcode() + person.dictionary('$name grew accustomed to your ownership.\n'))
-					person.add_effect(i, true)
 		count+=1
 	if headgirl != null && globals.state.headgirlbehavior != 'none':
 		var headgirlconf = headgirl.conf
@@ -1662,18 +1665,13 @@ func hide_everything():
 var background setget background_set, background_get
 
 func background_set(text):
-	var player = get_node("screenchange/AnimationPlayer")
-	if player.is_playing() == true:
-		return
-	if OS.get_name() != "HTML5" && globals.rules.fadinganimation == true:
+	if globals.rules.fadinganimation == true:
 		if get_node("TextureFrame").get_texture() != globals.backgrounds[text]:
 			animationfade()
-			if OS.get_name() != 'HTML5':
-				yield(player, "animation_finished")
+			yield(self, "animfinished")
 	texture = globals.backgrounds[text]
 	get_node("TextureFrame").set_texture(texture)
-	if OS.get_name() != 'HTML5':
-		yield(get_tree(), "idle_frame")
+	yield(get_tree(), "idle_frame")
 	emit_signal('animfinished')
 
 func background_get():
@@ -1682,29 +1680,15 @@ func background_get():
 func backgroundinstant(text):
 	get_node("TextureFrame").set_texture(globals.backgrounds[text])
 
-func animationfade(value = 0.4, duration = 0.05):
-	var player = $screenchange/AnimationPlayer
-	player.get_animation("fadetoblack").length = value + duration
-	player.get_animation("fadetoblack").track_remove_key(0, 1)
-	player.get_animation("fadetoblack").track_insert_key(0, value, Color(1,1,1,1)) 
-	if OS.get_name() != 'HTML5' && globals.rules.fadinganimation == true:
-		player.play('fadetoblack')
-		if OS.get_name() != 'HTML5':
-			yield(player, "animation_finished")
-		emit_signal("animfinished")
-		player.play_backwards("fadetoblack")
-	else:
-		if OS.get_name() != 'HTML5':
-			yield(get_tree(), 'idle_frame')
-		emit_signal("animfinished")
+func fadefinished():
+	emit_signal("animfinished")
 
-func screenanimation(text):
-	var player = get_node("screenchange/AnimationPlayer")
-	if OS.get_name() != 'HTML5':
-		player.play(text)
-		yield(player, "animation_finished")
-		emit_signal("animfinished")
-	
+func animationfade(value = 0.4, duration = 0.05):
+	nodeunfade($screenchange, value)
+	tween.interpolate_callback(self,value,'fadefinished')
+	nodefade($screenchange, value, value+duration)
+
+
 
 var musicdict = globals.musicdict
 var musicvolume = 0
@@ -1743,7 +1727,6 @@ func music_set(text):
 	music.set_stream(path)
 	music.play(0)
 	music.set_volume_db(globals.rules.musicvol)
-	$soundeffect.set_volume_db(globals.rules.musicvol)
 
 
 func _on_music_finished():
@@ -1767,8 +1750,7 @@ func _on_mansion_pressed():
 	var textnode = get_node("MainScreen/mansion/mansioninfo")
 	var text = ''
 	background_set('mansion')
-	if OS.get_name() != 'HTML5':
-		yield(self, 'animfinished')
+	yield(self, 'animfinished')
 	hide_everything()
 	for i in get_tree().get_nodes_in_group("mansioncontrols"):
 		i.show()
@@ -2420,21 +2402,21 @@ func babyage(age):
 		if baby.sex != 'male':
 			baby.titssize = sizes[rand_range(0,sizes.size())]
 			baby.asssize = sizes[rand_range(0,sizes.size())]
-		baby.away.duration = 15
+		baby.away.duration = variables.growuptimechild
 	elif age == 'teen':
 		baby.age = 'teen'
 		var sizes = ['flat','small','average','big']
 		if baby.sex != 'male':
 			baby.titssize = sizes[rand_range(0,sizes.size())]
 			baby.asssize = sizes[rand_range(0,sizes.size())]
-		baby.away.duration = 20
+		baby.away.duration = variables.growuptimeteen
 	elif age == 'adult':
 		baby.age = 'adult'
 		var sizes = ['flat','small','average','big','huge']
 		if baby.sex != 'male':
 			baby.titssize = sizes[rand_range(0,sizes.size())]
 			baby.asssize = sizes[rand_range(0,sizes.size())]
-		baby.away.duration = 25
+		baby.away.duration = variables.growuptimeadult
 	baby.away.at = 'growing'
 	baby.obed += 75
 	baby.loyal += 20
@@ -3054,10 +3036,11 @@ func _on_startcombat_pressed():
 	for i in globals.state.playergroup:
 		array.append(globals.state.findslave(i))
 	for i in array:
-		for j in ['sstr','sagi','smaf','send','wit','cour','conf','charm','health']:
-			i[j] = 500
+		for j in ['health_max','health_cur','agi_base','agi_max']:
+			i.stats[j] += 500
 	get_node("outside").gooutside()
 	globals.state.backpack.stackables.rope = 3
+	
 	get_node("explorationnode").zoneenter(startcombatzone)
 	#get_node("combat").start_battle()
 
@@ -3160,6 +3143,19 @@ func setname(person):
 	get_node("entertext").set_meta("action", "rename")
 	get_node("entertext").set_meta("slave", person)
 	get_node("entertext/dialoguetext").set_bbcode(text)
+	$entertext/confirmentertext.disabled = false
+
+func seteyecolor(person):
+	var text = person.dictionary("Choose new eye color for $name. \n[color=yellow]Requires 40 Mana, 100 Gold, 1 Nature Essence and 2 days.[/color]")
+	$entertext.show()
+	$entertext.set_meta('action', 'eyecolor')
+	$entertext.set_meta("slave", person)
+	$entertext/LineEdit.text = person.eyecolor
+	$entertext/dialoguetext.bbcode_text = text
+	if globals.resources.mana < 40 || globals.resources.gold < 100 || globals.itemdict.natureessenceing.amount < 1:
+		$entertext/confirmentertext.disabled = true
+	else:
+		$entertext/confirmentertext.disabled = false
 
 func _on_confirmentertext_pressed():
 	var text = get_node("entertext/LineEdit").get_text()
@@ -3171,7 +3167,21 @@ func _on_confirmentertext_pressed():
 		person = get_node("entertext").get_meta("slave")
 		person.name = text
 		rebuild_slave_list()
+	elif meta == 'eyecolor':
+		person = get_node("entertext").get_meta("slave")
+		person.eyecolor = text
+		person.away.duration = 2
+		person.away.at = 'lab'
+		globals.resources.gold -= 100
+		globals.resources.mana -= 40
+		globals.itemdict.natureessenceing.amount -= 1
+		rebuild_slave_list()
+		$MainScreen/mansion/labpanel._on_labstart_pressed()
 	get_node("entertext").hide()
+
+
+func _on_cancelentertext_pressed():
+	$entertext.hide()
 
 func _on_infotextpanel_mouse_exit():
 	for i in get_node("infotext").get_children():
@@ -3347,6 +3357,9 @@ func sexselect():
 	var newbutton
 	get_node("sexselect").show()
 	get_node("sexselect/selectbutton").set_text('Mode: ' + sexmode.capitalize())
+	for i in sexanimals:
+		sexanimals[i] = 0
+	$sexselect/managerypanel.visible = sexmode != 'meet' && globals.state.mansionupgrades.mansionkennels > 0
 	for i in get_node("sexselect/ScrollContainer1/VBoxContainer").get_children() + get_node("sexselect/ScrollContainer/VBoxContainer").get_children():
 		if i.get_name() != 'Button':
 			i.hide()
@@ -3408,6 +3421,24 @@ func sexselect():
 				newbutton.set_tooltip(i.dictionary('You have already interacted with $name today.'))
 	updatedescription()
 
+func animalforsex(node):
+	var name = node.name
+	match name:
+		'dogplus':
+			if sexanimals.dog < 3:
+				sexanimals.dog += 1
+		'dogminus':
+			if sexanimals.dog > 0:
+				sexanimals.dog -= 1
+		'horseplus':
+			if sexanimals.horse < 3:
+				sexanimals.horse += 1
+		'horseminus':
+			if sexanimals.horse > 0:
+				sexanimals.horse -= 1
+	
+	updatedescription()
+
 func _on_selectbutton_pressed():
 	sexmode = sexarray[sexarray.find(sexmode)+1] if sexarray.size() > sexarray.find(sexmode)+1 else sexarray[0]
 	_on_sexbutton_pressed()
@@ -3449,7 +3480,11 @@ func updatedescription():
 		text += "\nConsent is required from participants. \nCurrent participants: "
 		for i in sexslaves:
 			text += i.dictionary('[color=aqua]$name[/color]') + ", "
-		text = text.substr(0, text.length() - 2) + '.\nClick Start to initiate.'
+		text = text.substr(0, text.length() - 2) + '.'
+		for i in sexanimals:
+			if sexanimals[i] != 0:
+				text += "\n" + i.capitalize() + '(s): ' + str(sexanimals[i])
+		text += '\nClick Start to initiate.'
 	elif sexmode == 'abuse':
 		text += "[center][color=yellow]Rape[/color][/center]"
 		text += "\nRequires a target and an optional assistant. Can be initiated with prisoners. \nCurrent target: "
@@ -3458,6 +3493,9 @@ func updatedescription():
 		text += "\nCurrent assistant: "
 		for i in sexassist:
 			text += i.dictionary('[color=aqua]$name[/color]') + ". "
+		for i in sexanimals:
+			if sexanimals[i] != 0:
+				text += "\n" + i.capitalize() + '(s): ' + str(sexanimals[i])
 		text += '\nClick Start to initiate.'
 		get_node("sexselect/startbutton").set_disabled(sexslaves.size() == 1 && sexassist.size() <= 1)
 	text += "\n\nNon-sex Interactions left for today: " + str(globals.state.nonsexactions)
@@ -3509,9 +3547,9 @@ func _on_startbutton_pressed():
 		return
 	elif sexmode == 'abuse':
 		mode = 'abuse'
-		get_node("interactions").startsequence([globals.player] + sexassist, mode, sexslaves)
+		get_node("interactions").startsequence([globals.player] + sexassist, mode, sexslaves, sexanimals)
 	else:
-		get_node("interactions").startsequence([globals.player] + sexslaves + sexassist, mode)
+		get_node("interactions").startsequence([globals.player] + sexslaves + sexassist, mode, [], sexanimals)
 	get_node("interactions").show()
 
 func _on_cancelbutton_pressed():
@@ -3592,8 +3630,19 @@ func _on_selftattoo_pressed():
 
 #Tweens
 
-func tweenanimate(node):
-	pass
+func tweenanimate(node, name):
+	var pos = node.rect_position
+	var tweennode
+	if node.has_node('tween') == false:
+		tweennode = tween.duplicate()
+		tweennode.repeat = true
+		tweennode.name = 'tween'
+		node.add_child(tweennode)
+	else:
+		tweennode = node.get_node("tween")
+	
+	
+	
 
 func repeattweenanimate(node, name):
 	var pos = node.rect_position
@@ -3614,11 +3663,67 @@ func repeattweenanimate(node, name):
 		tweennode.interpolate_property(node, "rect_position", Vector2(pos.x, pos.y-change), pos, 2.5, Tween.TRANS_SINE, Tween.EASE_OUT, 2.5)
 		tweennode.start()
 
-func nodeunfade(node, duration = 0.4):
-	tween.interpolate_property(node, 'modulate', Color(1,1,1,0), Color(1,1,1,1), duration, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+func nodeunfade(node, duration = 0.4, delay = 0):
+	tween.interpolate_property(node, 'modulate', Color(1,1,1,0), Color(1,1,1,1), duration, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, delay)
 	tween.start()
 
-func nodefade(node, duration = 0.4):
-	tween.interpolate_property(node, 'modulate', Color(1,1,1,1), Color(1,1,1,0), duration, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+func nodefade(node, duration = 0.4, delay = 0):
+	tween.interpolate_property(node, 'modulate', Color(1,1,1,1), Color(1,1,1,0), duration, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, delay)
 	tween.start()
+
+var traitaction = '' 
+
+func traitpanelshow(person, effect):
+	$traitselect.visible = true
+	traitaction = effect
+	var text = ''
+	var array = []
+	for i in $traitselect/Container/VBoxContainer.get_children():
+		if i.name != 'Button':
+			i.hide()
+			i.queue_free()
+	if effect == 'clearmental':
+		text += person.dictionary("Select mental trait to remove from $name.")
+	elif effect == 'clearphys':
+		text += person.dictionary("Select physical trait  to remove from $name. Requires 1 [color=yellow]Clarity Potion[/color], 100 gold and 3 days.")
+	for i in person.traits:
+		var trait = globals.origins.trait(i)
+		if effect == 'clearmental':
+			if trait.tags.has('mental'):
+				array.append(trait)
+		elif effect == 'clearphys':
+			if globals.itemdict.claritypot.amount < 1 || globals.resources.gold < 100 || globals.resources.mana < 50 || trait.tags.has('physical') == false:
+				continue
+			else:
+				array.append(trait)
+	for i in array:
+		var newnode = $traitselect/Container/VBoxContainer/Button.duplicate()
+		$traitselect/Container/VBoxContainer.add_child(newnode)
+		newnode.show()
+		newnode.text = i.name
+		newnode.connect("mouse_entered", globals, 'showtooltip', [person.dictionary(i.description)])
+		newnode.connect("mouse_exited", globals, 'hidetooltip')
+		newnode.connect("pressed", self, 'traitselect', [person, i])
+	$traitselect/RichTextLabel.bbcode_text = text
+
+func traitselect(person, i):
+	globals.itemdict.claritypot.amount -= 1
+	person.trait_remove(i.name)
+	$traitselect.hide()
+	globals.hidetooltip()
+	if traitaction == 'clearmental':
+		$inventory.updateitems()
+	elif traitaction == 'clearphys':
+		$MainScreen/mansion/labpanel.labperson.away.duration = 3
+		$MainScreen/mansion/labpanel.labperson.away.at = 'lab'
+		globals.resources.gold -= 100
+		globals.resources.mana -= 50
+		rebuild_slave_list()
+		$MainScreen/mansion/labpanel._on_labstart_pressed()
+
+
+
+func _on_traitselectclose_pressed():
+	$traitselect.hide()
+
 

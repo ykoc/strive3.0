@@ -54,6 +54,8 @@ func newslave(race, age, sex, origins = 'slave'):
 		person.legs = 'normal'
 		if rand_range(0,1) > 0.4:
 			person.eyeshape = 'normal'
+	if globals.rules.randomcustomportraits == true:
+		randomportrait(person)
 	get_caste(person, origins)
 	for i in person.sexuals.unlocks:
 		var category = globals.sexscenes.categories[i]
@@ -168,3 +170,15 @@ func tohalfkin(person):
 	person.arms = 'normal'
 	person.skincov = 'none'
 	person.bodyshape = 'humanoid'
+
+func randomportrait(person):
+	var array = []
+	var racenames = person.race.split(" ")
+	for i in globals.dir_contents(globals.setfolders.portraits):
+		for k in racenames:
+			if i.findn(k) >= 0:
+				array.append(i)
+				continue
+	if array.size() > 0:
+		person.imageportait = array[randi()%array.size()]
+	

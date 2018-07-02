@@ -29,7 +29,7 @@ func _ready():
 		get_node("stats/trainingabilspanel/" +i + '/Button2').connect("pressed", self, 'mentalup5',[i])
 
 func _input(event):
-	if get_tree().get_current_scene().get_node("screenchange/AnimationPlayer").is_playing() == true && get_tree().get_current_scene().get_node("screenchange/AnimationPlayer").get_current_animation() == "fadetoblack" || $stats/customization/nicknamepanel.is_visible() :
+	if globals.main.get_node("screenchange").visible || $stats/customization/nicknamepanel.is_visible() :
 		return
 	if event == InputEventKey:
 		var dict = {49 : 1, 50 : 2, 51 : 3, 52 : 4,53 : 5,54 : 6,55 : 7,56 : 8,}

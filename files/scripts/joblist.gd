@@ -19,7 +19,7 @@ func joblist():
 			i.visible = false
 			i.queue_free()
 	get_node("tooltiptext").set_bbcode("")
-	popup()
+	show()
 	for i in jobdict.values():
 		array.append(i)
 	array.sort_custom(self, 'sortjobs')

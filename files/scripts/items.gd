@@ -248,6 +248,20 @@ regressionpot = {
 	weight = 1,
 	amount = 0
 	},
+claritypot = {
+	code = 'claritypot',
+	name = 'Elixir of Clarity',
+	icon = load("res://files/images/items/regressionpot.png"),
+	description = "A strong mixture allowing the removal of persistent mental qualities.",
+	effect = 'claritypoteffect',
+	recipe = 'recipeclaritypot',
+	cost = 750,
+	type = 'potion',
+	toxicity = 50,
+	unlocked = false,
+	weight = 1,
+	amount = 0
+	},
 amnesiapot = {
 	code = 'amnesiapot',
 	name = 'Amnesia Potion',
@@ -819,7 +833,7 @@ weaponaynerisrapier = {
 	name = "Ayneris's Rapier",
 	icon = "res://files/images/items/weaponaynerisrapier.png",
 	description = "\n[color=yellow]Requirements: 4 Agility[/color] ",
-	effect = [{type = 'incombat', effect = 'damage', effectvalue = 8, descript = "+8 Damage"}, {type = 'incombat', effect = 'passive', effectvalue = 'doubleattack', descript = '50% chance to attack twice'}],
+	effect = [{type = 'incombat', effect = 'damage', effectvalue = 8, descript = "+8 Damage"}, {type = 'passive', effect = 'doubleattack', effectvalue = 50, descript = '50% chance to attack twice'}],
 	recipe = '',
 	enchant = 'unique',
 	reqs = [{reqstat = 'sagi', oper = 'gte', reqvalue = 4}],
@@ -1070,6 +1084,10 @@ func stress(value):
 	person.stress -= value
 	return text
 
+func obedmod(value):
+	var text = ''
+	person.stats.obed_mod += value
+	return text
 
 func checkreqs(item):
 	if item.reqs == null:
@@ -1191,6 +1209,9 @@ func regressionpoteffect():
 	person.loyal += rand_range(15,25)
 	var text = person.dictionary("As $name drinks the potion, the look on $his face becomes less and less focused, until eventually $his mind is reformed back into a very young and learning state. With this you can leave much greater impact on $his consciousness. ")
 	return text
+
+func claritypoteffect():
+	globals.main.traitpanelshow(person, 'clearmental')
 
 func hairdyeeffect():
 	globals.main.get_node("itemnode/hairdyepanel/TextEdit").set_text('')
@@ -1472,6 +1493,10 @@ var recipeaphroditebrew = {
 aphrodisiac = 2,
 stimulantpot = 1,
 taintedessenceing = 2
+}
+var recipeclaritypot = {
+oblivionpot = 1,
+regressionpot = 1,
 }
 #unstackable item management
 

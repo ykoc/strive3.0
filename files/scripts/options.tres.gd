@@ -24,6 +24,7 @@ func _ready():
 	get_node("TabContainer/Game/aliseoption").select(globals.rules.enddayalise)
 	get_node("TabContainer/Settings/spritesindialogues").set_pressed(globals.rules.spritesindialogues)
 	$TabContainer/Settings/skipcombatanimation.pressed = globals.rules.instantcombatanimation
+	$TabContainer/Settings/randomportraits.pressed = globals.rules.randomcustomportraits
 	if globals.rules.children == true:
 		get_node("TabContainer/Game/noadults").show()
 		get_node("TabContainer/Game/noadults").set_pressed(globals.rules.noadults)
@@ -37,7 +38,8 @@ func _ready():
 		get_node("TabContainer/Supporter section/cheatpasswordenter").set_disabled(false)
 	selectedslave = ''
 	get_node("TabContainer/Settings/fontsize").set_editable(globals.rules.fontsize)
-	_on_soundslider_value_changed(round(globals.rules.musicvol*3))
+	_on_soundslider_value_changed(round(globals.rules.soundvol*3))
+	_on_musicslider_value_changed(round(globals.rules.musicvol*3))
 	if globals.state.nopoplimit == true:
 		get_node("TabContainer/Supporter section/cheatpanel/removepopcap").set_disabled(true)
 
@@ -244,22 +246,23 @@ func _on_removepopcap_pressed():
 	if globals.state.nopoplimit == true:
 		get_node("TabContainer/Supporter section/cheatpanel/removepopcap").set_disabled(true)
 
-
-func _on_soundslider_value_changed( value ):
+func _on_musicslider_value_changed(value):
 	globals.rules.musicvol = round(value/3)
-	get_node("TabContainer/Settings/soundslider/Label3").set_text("Music volume: " +str(value))
-	get_node("TabContainer/Settings/soundslider").set_value(value)
-	
+	get_node("TabContainer/Settings/musicslider/Label3").set_text("Music Volume: " +str(value))
+	get_node("TabContainer/Settings/musicslider").set_value(value)
 	if get_tree().get_current_scene().find_node("music"):
-		#get_tree().get_current_scene().get_node("music").play()
 		get_tree().get_current_scene().get_node("music").set_volume_db(round(value/3))
 		if globals.rules.musicvol <= 0:
 			get_tree().get_current_scene().get_node('music').stop()
 		else:
 			if get_tree().get_current_scene().get_node('music').playing == false:
 				get_tree().get_current_scene().get_node('music').play()
-#	if get_tree().get_current_scene().find_node("soundeffect"):
-#		get_tree().get_current_scene().get_node("soundeffect").set_volume_db(round(value/3))
+
+func _on_soundslider_value_changed( value ):
+	globals.rules.soundvol = round(value/3)
+	get_node("TabContainer/Settings/soundslider/Label3").set_text("Sound Volume: " +str(value))
+	get_node("TabContainer/Settings/soundslider").set_value(value)
+	
 
 
 func _on_receive_pressed():
@@ -333,3 +336,7 @@ func _on_screenconf_pressed():
 
 func _on_skipcombatanimation_pressed():
 	globals.rules.instantcombatanimation = $TabContainer/Settings/skipcombatanimation.pressed
+
+
+func _on_randomportraits_pressed():
+	globals.rules.randomcustomportraits = $TabContainer/Settings/randomportraits.pressed

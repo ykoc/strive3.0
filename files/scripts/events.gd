@@ -880,7 +880,6 @@ func orderfinale(stage = 0):
 			buttons.append({text = "Continue", function = 'orderfinale', args = 1})
 		elif stage == 1:
 			globals.main.background_set('mainorderfinale')
-			closedialogue()
 			if OS.get_name() != "HTML5":
 				yield(globals.main, 'animfinished')
 			outside.clearbuttons()

@@ -379,6 +379,7 @@ scroll_horizontal_enabled = false
 scroll_horizontal = 0
 scroll_vertical_enabled = true
 scroll_vertical = 0
+scroll_deadzone = 0
 _sections_unfolded = [ "Mouse", "Scroll" ]
 
 [node name="GridContainer" type="VBoxContainer" parent="ScrollContainer" index="0"]
@@ -670,6 +671,7 @@ scroll_horizontal_enabled = false
 scroll_horizontal = 0
 scroll_vertical_enabled = true
 scroll_vertical = 0
+scroll_deadzone = 0
 _sections_unfolded = [ "Rect", "Scroll" ]
 
 [node name="GridContainer" type="VBoxContainer" parent="slavelist" index="0"]
@@ -1096,6 +1098,8 @@ _sections_unfolded = [ "Rect" ]
 
 [node name="gearpanel" type="TextureRect" parent="." index="13"]
 
+editor/display_folded = true
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -1973,7 +1977,6 @@ align = 1
 
 [node name="amnesia" type="PopupPanel" parent="." index="18"]
 
-editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -1999,9 +2002,9 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 53.0
-margin_top = 188.0
+margin_top = 208.0
 margin_right = 392.0
-margin_bottom = 222.0
+margin_bottom = 242.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -2025,9 +2028,9 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 53.0
-margin_top = 229.0
+margin_top = 249.0
 margin_right = 392.0
-margin_bottom = 263.0
+margin_bottom = 283.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -2078,7 +2081,7 @@ anchor_bottom = 0.0
 margin_left = 21.0
 margin_top = 18.0
 margin_right = 425.0
-margin_bottom = 162.0
+margin_bottom = 201.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = true
 mouse_filter = 0

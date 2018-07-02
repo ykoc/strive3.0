@@ -75,8 +75,7 @@ func _ready():
 				yield(get_tree(), 'idle_frame')
 			combatantnodes.append(newbutton)
 			newcombatant.hp = 10
-		if OS.get_name() != 'HTML5' || true:
-			yield(get_tree(), 'idle_frame')
+		yield(get_tree(), 'idle_frame')
 		
 		$TextureRect.buildenemies("banditseasy")
 		currentenemies = $TextureRect.enemygroup
@@ -113,8 +112,7 @@ func start_battle(nosound = false):
 	get_parent().animationfade(0.4)
 	instantanimation = globals.rules.instantcombatanimation
 	resetpanels()
-	if OS.get_name() != 'HTML5':
-		yield(get_parent(),'animfinished')
+	yield(get_parent(),'animfinished')
 	get_node("autowin").visible = get_parent().get_node("new slave button").visible
 	var slave
 	var combatant
@@ -245,7 +243,7 @@ func _process(delta):
 			combatant.passives.erase("exhaust")
 		elif combatant.energy <= 0:
 			getbuff(makebuff('exhaust', combatant, combatant), combatant)
-			passive(combatant, 'exhaust')
+			combatant.passives.exhaust = {code = 'exhaust'}
 		if combatant.person != null && combatant.person != globals.player:
 			if combatant.person.lust >= 80:
 				getbuff(makebuff('luststrong', combatant, combatant), combatant)
@@ -335,7 +333,7 @@ class combatant:
 	var stressmax = 0
 	var lust
 	var lustmax
-	var passives = []
+	var passives = {}
 	var attack = 0
 	var magic = 0
 	var armor = 0
@@ -376,6 +374,11 @@ class combatant:
 		armor = data.stats.armor
 		speed = data.stats.speed
 		magic = data.stats.magic
+		
+		if data.stats.has("passives"):
+			for i in data.stats.passives:
+				var passive = globals.abilities.passivesdict[i]
+				self.passives[passive.effect] = passive
 		
 		ai = 'attack'
 		if scene.get_parent().get_node("explorationnode").deeperregion:
@@ -418,6 +421,10 @@ class combatant:
 		speed = variables.speedbase + (person.sagi * variables.speedperagi)
 		ai = 'attack'
 		
+		if data != null && data.stats.has("passives"):
+			for i in data.stats.passives:
+				var passive = globals.abilities.passivesdict[i]
+				self.passives[passive.effect] = passive
 		
 		if person.race == 'Seraph':
 			speed += 4
@@ -442,8 +449,10 @@ class combatant:
 				for k in tempitem.effects:
 					if k.type == 'incombat' && globals.abilities.has_method(k.effect):
 						globals.abilities.call(k.effect, self, k.effectvalue)
-					if k.type in ['incombatphyattack', 'incombatturn']:
+					if k.type in ['incombatphyattack', 'incombatturn', 'incombatspecial']:
 						self.geareffects.append(k)
+					if k.type == 'passive':
+						self.passives[k.effect] = k
 		scene.rebuildbuffs(self)
 	
 	func selectcombatant():
@@ -553,8 +562,7 @@ class combatant:
 	func defeat():
 		state = 'defeated'
 		scene.defeatanimation(self)
-		if OS.get_name() != 'HTML5':
-			yield(scene, 'defeatfinished')
+		yield(scene, 'defeatfinished')
 		animationplaying = false
 		scene.combatlog += scene.combatantdictionary(self, self, "\n[color=aqua][name1] has been defeated.[/color]")
 		if group == 'player':
@@ -617,7 +625,7 @@ func win():
 
 
 func showinfochar(combatant):
-	get_parent().get_node('outside').opencharacter(combatant.person, true, combatant)
+		get_parent().get_node('outside').opencharacter(combatant.person, true, combatant)
 
 
 
@@ -786,17 +794,15 @@ func useskills(skill, caster = null, target = null, retarget = false):
 		caster.energy -= skill.costenergy
 	else:
 		group = 'enemy'
-		#text = skill.usetext 
 	var skillcounter = 1
-	if caster.passives.has('doubleattack') && randf() >= 0.5 && skill.type == 'physical':
+	if caster.passives.has('doubleattack') && rand_range(0,100) < caster.passives.doubleattack.effectvalue && skill.type == 'physical':
 		skillcounter += 1
 		text += "[color=yellow]Double attack![/color] "
 	while skillcounter > 0:
 		skillcounter -= 1
 		if skill.has('castersfx'):
 			call(skill.castersfx, caster)
-			if OS.get_name() != 'HTML5':
-				yield(self, "damagetrigger")
+			yield(self, "damagetrigger")
 		else:
 			animationskip = true
 		
@@ -861,6 +867,8 @@ func useskills(skill, caster = null, target = null, retarget = false):
 				globals.main.popup("You can't escape from this fight")
 				caster.energy += skill.costenergy
 				caster.actionpoints += 1
+				period = 'base'
+				caster.cooldowns.erase('escape')
 				return
 		#buffs and effects
 		if skill.attributes.has('noescape') && target.effects.has('escapeeffect'):
@@ -869,12 +877,13 @@ func useskills(skill, caster = null, target = null, retarget = false):
 		
 		if skill.effect != null && hit == 'hit':
 			sendbuff(caster, target, skill.effect)
+		if skill.has('script') && hit == 'hit':
+			scripteffect(caster,target,skill.script)
 		if skill.has('effectself') && skill.effectself != null:
 			sendbuff(caster, caster, skill.effectself)
 		
 		
-		if OS.get_name() != 'HTML5':
-			yield(self, 'tweenfinished')
+		yield(self, 'tweenfinished')
 	
 	if skill.code == 'heal':
 		globals.abilities.restorehealth(caster,target)
@@ -891,7 +900,7 @@ func useskills(skill, caster = null, target = null, retarget = false):
 		target = targetarray
 	
 	self.combatlog += '\n' + combatantdictionary(caster, target, text)
-	
+	emit_signal("skillplayed")
 	endcombatcheck()
 	if period == 'win':
 		playerwin() 
@@ -899,12 +908,15 @@ func useskills(skill, caster = null, target = null, retarget = false):
 		period = 'base'
 		
 
+func scripteffect(caster,target,script):
+	globals.abilities.call(script, caster, target)
+	
 
 func sendbuff(caster, target, effect):
 	getbuff(makebuff(effect, target, caster), target)
 
 func makebuff(code, target, caster):
-	var effect = str2var(var2str(globals.abilities.effects[code]))
+	var effect = globals.abilities.effects[code].duplicate()
 	var buff = {duration = effect.duration, name = effect.name, code = effect.code, type = effect.type, stats = {}, icon = effect.icon, description = null, caster = caster}
 	if effect.has('description'):
 		buff.description = effect.description
@@ -940,8 +952,6 @@ func getbuff(buff, target):
 
 func removebuff(buffcode, target):
 	if target.effects.has(buffcode):
-		if buffcode == 'stun':
-			target.state = 'normal'
 		for i in target.effects[buffcode].stats:
 			target[i] = target[i] - target.effects[buffcode].stats[i]
 		target.effects.erase(buffcode)
@@ -976,11 +986,10 @@ func enemyturn():
 					if j.node != null && j.state == 'normal':
 						useskills(globals.abilities.abilitydict.attack, i, j)
 						break
-				if OS.get_name() != 'HTML5' || true:
-					yield(self, 'tweenfinished')
+				yield(self, 'skillplayed')
 	
 	for i in enemygroup + playergroup:
-		if i.state != 'normal':
+		if i.state != 'normal' || i.effects.has('stun'):
 			continue
 		for effect in i.effects.values():
 			if effect.caster.group == 'enemy':
@@ -998,7 +1007,7 @@ func enemyturn():
 	enemyturn = true
 	var target
 	for combatant in enemygroup:
-		if combatant.state != 'normal':
+		if combatant.state != 'normal' || combatant.effects.has('stun'):
 			continue
 		for effect in combatant.effects.values():
 			if effect.code == 'escapeeffect':
@@ -1053,13 +1062,14 @@ func enemyturn():
 		target = targetarray[randi()%targetarray.size()]
 		if combatant.state in ['normal']:
 			useskills(skill, combatant, target)
-			if OS.get_name() != 'HTML5' || true:
-				yield(self, 'tweenfinished')
+			yield(self, 'skillplayed')
 	
 	
 	for i in enemygroup:
 		i.stress += 3
 		i.actionpoints = 1
+		if i.effects.has('stun'):
+			i.actionpoints = 0
 		for k in i.cooldowns:
 			i.cooldowns[k] -= 1
 			if i.cooldowns[k] <= 0:
@@ -1075,6 +1085,8 @@ func enemyturn():
 		if i.person.traits.has("Coward"):
 			i.stress += 3
 		i.actionpoints = 1
+		if i.effects.has("stun"):
+			i.actionpoints = 0
 		for k in i.cooldowns:
 			i.cooldowns[k] -= 1
 			if i.cooldowns[k] <= 0:
@@ -1117,8 +1129,7 @@ func playerescape():
 	for i in playergroup:
 		if i.state in ['normal', 'escaped']:
 			escapeanimation(i)
-	if OS.get_name() != 'HTML5' || true:
-		yield(self, 'tweenfinished')
+	yield(self, 'tweenfinished')
 	get_parent().animationfade(0.4)
 	if OS.get_name() != 'HTML5':
 		yield(get_parent(),'animfinished')
@@ -1153,8 +1164,8 @@ func armor(combatant, value):
 func speed(combatant, value):
 	combatant.speed += value
 
-func passive(combatant, value):
-	combatant.passives.append(value)
+#func passive(combatant, value):
+#	combatant.passives.append(value)
 
 func protection(combatant, value):
 	combatant.protection += value
@@ -1196,19 +1207,20 @@ func _on_autowin_pressed():
 
 signal damagetrigger
 signal tweenfinished
+signal skillplayed
 signal defeatfinished
 var ongoinganimation = false
 
 func damagein():
 	emit_signal("damagetrigger")
+	ongoinganimation = false
+	yield(get_tree(), 'idle_frame')
 
 func tweenfinished():
-	if OS.get_name() != 'HTML5' || true:
-		yield(get_tree(), 'idle_frame')
-	ongoinganimation = false
-	if OS.get_name() != 'HTML5' || true:
-		yield(get_tree(), 'idle_frame')
+	yield(get_tree(), 'idle_frame')
 	emit_signal("tweenfinished")
+	ongoinganimation = false
+
 
 func defeatfinished():
 	emit_signal("defeatfinished")

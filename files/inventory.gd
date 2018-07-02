@@ -386,7 +386,7 @@ func use(button):
 		return
 	if item.type == 'potion':
 		person.metrics.item += 1
-		if !item.code in ['minoruspot', 'majoruspot', 'hairdye', 'amnesiapot']:
+		if !item.code in ['minoruspot', 'majoruspot', 'hairdye', 'amnesiapot','claritypot']:
 			get_tree().get_current_scene().popup(person.dictionary(globals.items.call(item.effect)))
 			person.toxicity += item.toxicity
 			if state == 'backpack':
@@ -749,6 +749,8 @@ func _on_amnesiaconf_pressed():
 	selectedslave.surname = $amnesia/surname.text
 	slavelist()
 
+func claritypoteffect():
+	globals.items.claritypoteffect()
 
 func _on_LineEdit_text_changed(new_text):
 	filter = new_text

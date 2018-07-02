@@ -28,13 +28,10 @@ func requirements():
 		valid = false
 	else:
 		for i in givers:
-#			if i.tail != null || !globals.longtails.has(i.person.tail):
-#				valid = false
+			if i.limbs == false:
+				valid = false
 			if !globals.longtails.has(i.person.tail):
 				valid = false
-#		for i in takers:
-#			if i.anus != null:
-#				valid = false
 	return valid
 
 func givereffect(member):

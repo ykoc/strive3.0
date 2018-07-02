@@ -36,7 +36,7 @@ func _ready():
 
 
 func _input(event):
-	if self.is_visible_in_tree() == false || !(event is InputEventKey) || event.is_echo() == true || event.is_pressed() == false  || main.get_node("screenchange/AnimationPlayer").is_playing() == true:
+	if self.is_visible_in_tree() == false || !(event is InputEventKey) || event.is_echo() == true || event.is_pressed() == false  || main.get_node("screenchange").visible:
 		return
 	var anythingvisible = false
 	for i in get_tree().get_nodes_in_group("blockmaininput"):
@@ -220,8 +220,9 @@ func abilitytoggle(ability):
 	iteminfoclose()
 	if get_parent().get_node('combat').is_visible_in_tree():
 		var combatant = get_parent().get_node('combat').findcombatantfromslave(partyselectedchar)
-		get_parent().get_node('combat').selectedcharacter = combatant
-		combatant.buildabilities()
+		if combatant.actionpoints > 0:
+			get_parent().get_node('combat').selectedcharacter = combatant
+			combatant.buildabilities()
 
 func _on_grade_mouse_entered():
 	var text = ''
@@ -290,8 +291,7 @@ func mansion():
 	main._on_mansion_pressed()
 
 func gooutside():
-	if OS.get_name() != "HTML5":
-		yield(main, 'animfinished')
+	yield(main, 'animfinished')
 	globals.hidetooltip()
 	get_node("playergrouppanel/VBoxContainer").visible = true
 	main.checkplayergroup()
@@ -359,6 +359,7 @@ func setcharacter(text):
 	if get_parent().spritedict.has(text):
 		get_node("charactersprite").modulate.a = 1
 		get_node("charactersprite").set_texture(get_parent().spritedict[text])
+	
 
 func slaveguild(guild = 'wimborn'):
 	mindread = false
@@ -369,8 +370,7 @@ func slaveguild(guild = 'wimborn'):
 		slavearray = globals.guildslaves.wimborn
 		if get_node("charactersprite").is_visible() == false || get_node("charactersprite").get_texture() != globals.spritedict.fairy:
 			main.background_set('slaverguild')
-			if OS.get_name() != "HTML5":
-				yield(main, 'animfinished')
+			yield(main, 'animfinished')
 			if globals.state.sidequests.maple < 7:
 				setcharacter('fairy')
 				#get_node("AnimationPlayer").play("spritemovefairy")
@@ -398,7 +398,7 @@ func slaveguild(guild = 'wimborn'):
 	elif guild == 'gorn':
 		clearselection()
 		get_node("charactersprite").visible = true
-		get_node("AnimationPlayer").play("show")
+		get_parent().nodeunfade($charactersprite, 0.3)
 		setcharacter('goblin')
 		slavearray = globals.guildslaves.gorn
 		mansion.maintext = globals.player.dictionaryplayer("Huge part of supposed guild takes a makeshift platform and tents on the outside with few half-empty cages. In the middle, you can see a presentation podium which is easily observable from main street. Despite Gorn being very different from common, primarily human-populated towns, it still directly follows Mage's Order directives — race diversity and casual slavery are very omnipresent. \n\nAs you walk in, one of the goblin receptionists quickly recognizes you as an Order member and hastily grabs your attention, sensing a profitable customer.\n\n— $sir interested in some heat-tolerant 'orkers? *chuckles* Or you are in preference of short girls? We quite often get those as well, for every taste and color!")
@@ -486,6 +486,7 @@ func slaveguildfairy(stage = 0):
 		main.dialogue(state, self, globals.player.dictionary(text), buttons, sprites)
 
 func togorn():
+	get_parent().nodefade($charactersprite, 0.3)
 	get_node("playergrouppanel/VBoxContainer").visible = true
 	main.get_node("explorationnode").zoneenter('gorn')
 
@@ -566,6 +567,8 @@ func selectslavebuy(person):
 		get_node("slavebuypanel/mindreadbutton").set_disabled(true)
 	get_node("slavebuypanel/statspanel").person = person
 	get_node("slavebuypanel/statspanel").visible = true
+	$slavebuypanel/statspanel/portrait.texture = globals.loadimage(person.imageportait)
+	$slavebuypanel/statspanel/portrait.visible = $slavebuypanel/statspanel/portrait.texture != null
 	selectedslaveprice = price
 	if mindread == true:
 		get_node("slavebuypanel/statspanel").mode = 'slaveadv'
@@ -1619,7 +1622,7 @@ func shopinitiate(shopname):
 		#get_node("shoppanel/itempanel").visible = false
 	if currentshop.has('sprite'):
 		setcharacter(currentshop.sprite)
-		get_node("AnimationPlayer").play("show")
+		get_parent().nodeunfade($charactersprite, 0.3)
 
 
 func shopbuy():
@@ -1634,8 +1637,7 @@ func shopbuy():
 func shopclose():
 	get_node("shoppanel").visible = false
 	if currentshop.has('sprite'):
-		get_node("AnimationPlayer").play_backwards("show")
-		#get_node("charactersprite").visible = false
+		get_parent().nodefade($charactersprite, 0.3)
 
 ####QUESTS
 var cali
@@ -1721,7 +1723,7 @@ func caliqueststart(value = ''):
 func sebastian():
 	var text = ''
 	if get_node("charactersprite").get_texture() != get_parent().spritedict['sebastian'] || get_node("charactersprite").visible == false:
-		get_node("AnimationPlayer").play("show")
+		get_parent().nodeunfade($charactersprite, 0.3)
 		get_node("charactersprite").visible = true
 		setcharacter('sebastian')
 	var array = [{name = 'Return',function = 'market'}]

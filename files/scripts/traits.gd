@@ -3,7 +3,7 @@ extends Node
 var traits = {
   "Foul Mouth": {
     "name": "Foul Mouth",
-    "description": "All too often, $name uses words more suited for construction workers and sailors. \n\n[color=aqua]Vocal occupations less effective, -Max Charm. [/color]",
+    "description": "All too often, $name uses words more suited for construction workers and sailors. \n\n[color=aqua]Vocal occupations less effective. Max Charm -25. [/color]",
     "effect": {
       "code": "foul_mouth",
       "charm_max": -25
@@ -18,10 +18,10 @@ var traits = {
   },
   "Mute": {
     "name": "Mute",
-    "description": "$name can't speak in a normal way and only uses signs and moans to communicate. \n\n[color=aqua]Obedience growth increased. Can't work at occupations requiring speech. [/color]",
+    "description": "$name can't speak in a normal way and only uses signs and moans to communicate. \n\n[color=aqua]Obedience +25%. Can't work at occupations requiring speech. [/color]",
     "effect": {
       "code": "mute",
-      "obed_mod": 25
+      "obed_mod": 0.25
     },
     "tags": [
       "mental",
@@ -33,7 +33,7 @@ var traits = {
   },
   "Devoted": {
     "name": "Devoted",
-    "description": "$name trusts you to a great degree. $His willingness to follow you caused $him to find new strengths in $his character. \n\n[color=aqua]Courage and Wit increased, Loyalty can't drop below high. [/color]",
+    "description": "$name trusts you to a great degree. $His willingness to follow you caused $him to find new strengths in $his character. \n\n[color=aqua]Courage +25. Wit +25. Min Loyalty: 80.[/color]",
     "effect": {
       "code": "devoted",
       "cour_base": 25,
@@ -50,10 +50,10 @@ var traits = {
   },
   "Passive": {
     "name": "Passive",
-    "description": "$name prefers to go with the flow and barely tries to proactively affect $his surroundings. \n\n[color=aqua]Can't take management related jobs, daily obedience growth increased. [/color]",
+    "description": "$name prefers to go with the flow and barely tries to proactively affect $his surroundings. \n\n[color=aqua]Can't take management related jobs. Obedience +25%. [/color]",
     "effect": {
       "code": "passive",
-      "obed_mod": 25
+      "obed_mod": 0.25
     },
     "tags": [
       "mental"
@@ -93,23 +93,9 @@ var traits = {
       "Prude"
     ]
   },
-  "Clumsy": {
-    "name": "Clumsy",
-    "description": "$name is not very flexible and rarely aware of $his surroundings, often leading to unfortunate incidents. \n\n[color=aqua]Physical tasks suffer penalty. [/color]",
-    "effect": {
-      
-    },
-    "tags": [
-      "mental",
-      "detrimental"
-    ],
-    "conflict": [
-      ""
-    ]
-  },
   "Slutty": {
     "name": "Slutty",
-    "description": "Your influence over $name caused $him to accept sex in many forms and enjoy $his body to the fullest. \n\n[color=aqua]Confidence and charm increased, removes penalty from many sexual actions. [/color]",
+    "description": "Your influence over $name caused $him to accept sex in many forms and enjoy $his body to the fullest. \n\n[color=aqua]Confidence +25. Charm +25. Min Loyalty: 80. [/color]",
     "effect": {
       "code": "slutty",
       "charm_base": 25,
@@ -170,13 +156,13 @@ var traits = {
   },
   "Pretty voice": {
     "name": "Pretty voice",
-    "description": "$name's voice is downright charming, making surrounding people just want to hear more of it.\n\n[color=aqua]Vocal occupations more effective, +Charm [/color]",
+    "description": "$name's voice is downright charming, making surrounding people just want to hear more of it.\n\n[color=aqua]Vocal occupations more effective. Charm +20. [/color]",
     "effect": {
       "code": "pretty_voice",
       "charm_base": 20
     },
     "tags": [
-      "mental"
+      "physical"
     ],
     "conflict": [
       "Mute"
@@ -184,7 +170,7 @@ var traits = {
   },
   "Clingy": {
     "name": "Clingy",
-    "description": "$name gets easily attached to people. However this behavior is rarely met with acceptance, which in turn annoys $him. \n\n[color=aqua]Loyalty grows faster from actions, Obedience drops quickly if constantly ignored. [/color]",
+    "description": "$name gets easily attached to people. However this behavior is rarely met with acceptance, which in turn annoys $him. \n\n[color=aqua]Loyalty +35%. Obedience drops quickly if constantly ignored. [/color]",
     "effect": {
       "code": "clingy",
       "loyalty_mod": 35
@@ -210,9 +196,99 @@ var traits = {
       "Monogamous"
     ]
   },
+  "Weak": {
+    "name": "Weak",
+    "description": "$name is rather weak compared to others. \n\n[color=aqua]Strength -2[/color]",
+    "effect": {
+      "code": "weak",
+      "str_mod": -2
+    },
+    "tags": [
+      "physical",
+      "detrimental"
+    ],
+    "conflict": [
+      "Strong"
+    ]
+  },
+  "Strong": {
+    "name": "Strong",
+    "description": "$name has been blessed with greater strength than most. $He also appears to be harder to tame. \n\n[color=aqua]Strength +2, Obedience -20%[/color]",
+    "effect": {
+      "code": "strong",
+      "str_mod": 2,
+	  "obed_mod": -0.2
+    },
+    "tags": [
+      "physical"
+    ],
+    "conflict": [
+      "weak"
+    ]
+  },
+  "Clumsy": {
+    "name": "Clumsy",
+    "description": "$name's reflexes are somewhat slower, than the others. \n\n[color=aqua]Agility -2[/color]",
+    "effect": {
+      "code": "clumsy",
+      "agi_mod": -2
+    },
+    "tags": [
+      "physical",
+      "detrimental"
+    ],
+    "conflict": [
+      "Quick"
+    ]
+  },
+  "Quick": {
+    "name": "Quick",
+    "description": "$name is very active whenever $he does something. However, it also makes $his nervous system less stable. \n\n[color=aqua]Agility +2, Stress +20%[/color]",
+    "effect": {
+      "code": "quick",
+      "agi_mod": 2,
+	  "stress_mod": 0.2
+    },
+    "tags": [
+      "physical"
+    ],
+    "conflict": [
+      "Clumsy"
+    ]
+  },
+  "Magic Deaf": {
+    "name": "Magic Deaf",
+    "description": "$name's senses are very dull when it comes to magic. \n\n[color=aqua]Magic Affinity -2[/color]",
+    "effect": {
+      "code": "magicdeaf",
+      "maf_mod": -2
+    },
+    "tags": [
+      "physical",
+      "detrimental"
+    ],
+    "conflict": [
+      "Responsive"
+    ]
+  },
+  "Responsive": {
+    "name": "Responsive",
+    "description": "$name is in touch with raw energy, making $him potentially useful in magic area. \n\n[color=aqua]Magic Affinity +2, Toxicity +20%[/color]",
+    "effect": {
+      "code": "responsive",
+      "maf_mod": 2,
+	  "tox_mod": 0.2
+    },
+    "tags": [
+      "physical"
+    ],
+    "conflict": [
+      "Magic Deaf"
+    ]
+  },
   "Frail": {
     "name": "Frail",
-    "description": "$name's body is much less durable than most. $His physical potential is severely impaired. \n\n[color=aqua]Max Strength -2, Max Agi -1. [/color]",
+    "description": "$name's body is much less durable than most. $His physical potential is severely impaired. \n\n[color=aqua]Endurance -2[/color]",
     "effect": {
       "code": "frail",
       "end_mod": -2
@@ -222,12 +298,27 @@ var traits = {
       "detrimental"
     ],
     "conflict": [
-      ""
+      "Robust"
+    ]
+  },
+  "Robust": {
+    "name": "Robust",
+    "description": "$name's physiques is way better than most. \n\n[color=aqua]Endurance +2, Fear -20%[/color]",
+    "effect": {
+      "code": "robust",
+      "end_mod": 2,
+	  "fear_mod": -0.2
+    },
+    "tags": [
+      "physical"
+    ],
+    "conflict": [
+      "Frail"
     ]
   },
   "Scarred": {
     "name": "Scarred",
-    "description": "$name's body is covered in massive burn scars. Besides being terrifying to look at, this also makes $him suffer from low confidence.\n\n[color=aqua]--Beauty, -Charm [/color]",
+    "description": "$name's body is covered in massive burn scars. Besides being terrifying to look at, this also makes $him suffer from low confidence.\n\n[color=aqua]Charm -30. Beauty -30. [/color]",
     "effect": {
       "code": "scarred",
       "charm_base": -30,
@@ -325,12 +416,12 @@ var traits = {
   },
   "Dominant": {
     "name": "Dominant",
-    "description": "$name really prefers to be in control, instead of being controlled. \n\n[color=aqua]Obedience growth decreased. +Confidence.  [/color]",
+    "description": "$name really prefers to be in control, instead of being controlled. \n\n[color=aqua]Obedience -20%. Confidence +25. Max Confidence +15.  [/color]",
     "effect": {
       "code": "dominant",
       "conf_max": 15,
       "conf_base": 25,
-      "obed_mod": -30
+      "obed_mod": -0.2
     },
     "tags": [
       "mental"
@@ -341,12 +432,12 @@ var traits = {
   },
   "Submissive": {
     "name": "Submissive",
-    "description": "$name is very comfortable when having someone $he can rely on. \n\n[color=aqua]Obedience growth increased. No penalty for rape actions as long as loyalty is above average. -Max Confidence. [/color]",
+    "description": "$name is very comfortable when having someone $he can rely on. \n\n[color=aqua]Obedience +40%. No penalty for rape actions as long as loyalty is above average. Confidence -10. Max Confidence -30. [/color]",
     "effect": {
       "code": "submissive",
       "conf_max": -30,
       "conf_base": -10,
-      "obed_mod": 40
+      "obed_mod": 0.4
     },
     "tags": [
       "mental"
@@ -357,7 +448,7 @@ var traits = {
   },
   "Uncivilized": {
     "name": "Uncivilized",
-    "description": "$name has spent most of $his lifetime in the wilds barely interacting with modern society and acting more like an animal. As a result, $he can't realistically fit into common groups and be accepted there. \n\n[color=aqua]Social jobs disabled; Max Loyalty ---; Max Obedience -; Max Wit --. [/color]",
+    "description": "$name has spent most of $his lifetime in the wilds barely interacting with modern society and acting more like an animal. As a result, $he can't realistically fit into common groups and be accepted there. \n\n[color=aqua]Social jobs disabled. Max Wit -50. Max Obedience -30. Max Loyalty -65. [/color]",
     "effect": {
       "code": "uncivilized",
       "wit_max": -50,
@@ -388,7 +479,7 @@ var traits = {
   },
   "Sex-crazed": {
     "name": "Sex-crazed",
-    "description": "$name barely can keep $his mind off dirty stuff. $His perpetual excitement makes $him look and enjoy nearly everything at the cost of $his sanity. \n\n[color=aqua]Min lust++; Max Wit --; Max Confidence --; no penalty from any sexual activity and brothel assignement. [/color]",
+    "description": "$name barely can keep $his mind off dirty stuff. $His perpetual excitement makes $him look and enjoy nearly everything at the cost of $his sanity. \n\n[color=aqua]Max Wit -80. Max Confidence -60. Min Lust +50. No penalty from any sexual activity and brothel assignement. [/color]",
     "effect": {
       "code": "sexcrazed",
       "wit_max": -80,

@@ -36,7 +36,6 @@ var jobs = load("res://files/scripts/jobs&specs.gd").new()
 var mansionupgrades = load("res://files/scripts/mansionupgrades.gd").new()
 var gallery = load("res://files/scripts/gallery.gd").new()
 var slavedialogues = load("res://files/scripts/slavedialogues.gd").new()
-var explorationscrips = load("res://files/scripts/explorationmechanics.gd").new()
 var characters = gallery
 var patronlist = load("res://files/scripts/patronlists.gd").new()
 
@@ -331,6 +330,7 @@ noadults = false,
 slaverguildallraces = false,
 fontsize = 14,
 musicvol = 24,
+soundvol = 24,
 receiving = true,
 fullscreen = false,
 oldresize = true,
@@ -340,6 +340,7 @@ autoattack = true,
 enddayalise = 1,
 spritesindialogues = true,
 instantcombatanimation = false,
+randomcustomportraits = true,
 }
 
 
@@ -403,11 +404,7 @@ class resource:
 		var color
 		var difference = round(food - value)
 		var text = ""
-		food = value
-		if food < 0:
-			food = 0
-		elif food >= foodcaparray[globals.state.mansionupgrades.foodcapacity]:
-			food = foodcaparray[globals.state.mansionupgrades.foodcapacity]
+		food = clamp(value, 0, foodcaparray[globals.state.mansionupgrades.foodcapacity])
 		if panel != null:
 			panel.get_node('food').set_text(str(food))
 		if difference != 0:
@@ -648,6 +645,7 @@ class person:
 	var pubichair = 'clean'
 	
 	var fear = 0 setget fear_set,fear_get
+	var fear_mod = 1
 	
 	var lewdness = 0 setget lewdness_set
 	var lactation = false
@@ -737,14 +735,15 @@ class person:
 		obed_cur = 0.0,
 		obed_max = 100,
 		obed_min = 0,
-		obed_mod = 0,
+		obed_mod = 1,
 		stress_cur = 0.0,
 		stress_max = 120,
 		stress_min = 0,
-		stress_mod = 0,
+		stress_mod = 1,
 		tox_cur = 0.0,
 		tox_max = 100,
 		tox_min = 0,
+		tox_mod = 1,
 		lust_cur = 0,
 		lust_max = 100,
 		lust_min = 0,
@@ -760,7 +759,7 @@ class person:
 		armor_max = 0,
 		armor_base = 0,
 		loyal_cur = 0.0,
-		loyal_mod = 0,
+		loyal_mod = 1,
 		loyal_max = 100,
 		loyal_min = 0,
 	}
@@ -833,7 +832,7 @@ class person:
 		if difference > 0:
 			difference = difference - difference*self.cour/200
 		
-		fear += round(difference)
+		fear += round(difference*fear_mod)
 		fear = clamp(fear, 0, 100+self.wit/2)
 	
 	func fear_get():
@@ -887,25 +886,22 @@ class person:
 		xp = 0
 	
 	func add_effect(effect, remove = false):
+		effect = effect.duplicate()
 		if effects.has(effect.code):
 			if remove == true:
 				effects.erase(effect.code)
 				for i in effect:
 					if stats.has(i):
 						stats[i] = stats[i] + -effect[i]
-					elif i == 'beautybase':
-						beautybase = beautybase + -effect[i]
-					elif i == 'beautytemp':
-						beautytemp = beautytemp + -effect[i]
+					elif self.get(i):
+						self[i] -= effect[i]
 		elif remove != true:
 			effects[effect.code] = effect
 			for i in effect:
 				if stats.has(i):
 					stats[i] = stats[i] + effect[i]
-				elif i == 'beautybase':
-					beautybase = beautybase + effect[i]
-				elif i == 'beautytemp':
-					beautytemp = beautytemp + effect[i]
+				elif self.get(i):
+					self[i] += effect[i]
 	
 	
 	func beauty_get():
@@ -944,13 +940,11 @@ class person:
 				string = "(+++)"
 			text = self.dictionary("$name's obedience has grown " + string)
 			color = 'green'
-			stats.obed_cur += difference*(1 + stats.obed_mod/100)
+			stats.obed_cur += difference*stats.obed_mod
 		
-		stats.obed_cur = max(min(stats.obed_cur, stats.obed_max),stats.obed_min)
+		stats.obed_cur = clamp(stats.obed_cur, stats.obed_min, stats.obed_max)
 		if stats.obed_cur < 50 && spec == 'executor':
 			stats.obed_cur = 50
-#		if globals.get_tree().get_current_scene().has_node("infotext") && globals.slaves.find(self) >= 0 && away.at != 'hidden':
-#			globals.get_tree().get_current_scene().infotext(text,color)
 	
 	func loyal_set(value):
 		var difference = stats.loyal_cur - value
@@ -978,7 +972,7 @@ class person:
 				string = "(+++)"
 			text = self.dictionary("$name's loyalty grown " + string)
 			color = 'green'
-			stats.loyal_cur += difference*(1 + stats.loyal_mod/100) 
+			stats.loyal_cur += difference*stats.loyal_mod
 		
 		
 		stats.loyal_cur = max(min(stats.loyal_cur, stats.loyal_max),stats.loyal_min)
@@ -988,7 +982,7 @@ class person:
 	func stress_set(value):
 		
 		var difference = value - stats.stress_cur 
-		difference = difference*(1+stats.stress_mod/100)
+		difference = difference*stats.stress_mod
 		var endvalue = stats.stress_cur + difference
 		var text = ""
 		var color
@@ -1039,7 +1033,7 @@ class person:
 		learningpoints = value
 	
 	func tox_set(value):
-		stats.tox_cur = clamp(value, stats.tox_min,stats.tox_max)
+		stats.tox_cur = clamp(value*stats.tox_mod, stats.tox_min, stats.tox_max)
 	
 	func energy_set(value):
 		value = round(value)
@@ -1449,7 +1443,9 @@ func impregnation(mother, father = null, anyfather = false):
 #		realfather = father.id
 	if mother.preg.has_womb == false || mother.preg.duration > 0 || mother == father || mother.effects.has("contraceptive"):
 		return
-	var rand = rand_range(0,00)
+	var rand = rand_range(0,100)
+	if main.debug == true:
+		rand = 0
 	if mother.preg.fertility < rand:
 		mother.preg.fertility += rand_range(5,10)
 		return
@@ -1572,6 +1568,17 @@ func slavetooltip(person):
 	node.get_node("grade").visible = !globals.player == person
 	node.get_node("text").bbcode_text = text
 	node.get_node("sex").texture = globals.sexicon[person.sex]
+	
+	text = 'Traits: '
+	if person.traits.size() > 0:
+		text += "[color=aqua]"
+		for i in person.traits:
+			text += i + ', '
+		text = text.substr(0, text.length() - 2) + '.[/color]'
+	else:
+		text += "None"
+	
+	node.get_node('traittext').bbcode_text = text
 	
 	var screen = get_viewport().get_visible_rect()
 	var pos = main.get_global_mouse_position()

@@ -35,6 +35,8 @@ func requirements():
 		for i in givers:
 			if i.person.legs in ['horse','spider', 'snake']:
 				valid = false
+			if i.limbs == false:
+				valid = false
 	return valid
 
 func givereffect(member):

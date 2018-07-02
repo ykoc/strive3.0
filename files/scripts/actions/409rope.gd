@@ -29,6 +29,9 @@ func requirements():
 		valid = false
 	elif givers.size() > 2:
 		valid = false
+	for i in givers + takers:
+		if i.limbs == false:
+			valid = false
 	return valid
 
 func givereffect(member):

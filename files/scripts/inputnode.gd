@@ -1,7 +1,7 @@
 extends Control
 
 func _input(event):
-	if self.is_visible_in_tree() == false || !(event is InputEventKey) || event.is_echo() == true || event.is_pressed() == false  || globals.main.get_node("screenchange/AnimationPlayer").is_playing() == true:
+	if self.is_visible_in_tree() == false || !(event is InputEventKey) || event.is_echo() == true || event.is_pressed() == false  || globals.main.get_node("screenchange").visible:
 		return
 	var anythingvisible = false
 	for i in get_tree().get_nodes_in_group("blockmaininput"):

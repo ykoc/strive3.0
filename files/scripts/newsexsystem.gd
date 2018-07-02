@@ -10,11 +10,14 @@ var actions = []
 var ongoingactions = []
 var location
 var selectmode = 'normal'
+var npcs = []
+var aiobserve = false #True - player will not be picked by AI
 
 var takercategories = ['cunnilingus','rimjob','handjob','titjob','tailjob','blowjob']
 var analcategories = ['assfingering','rimjob','missionaryanal','doggyanal','lotusanal','revlotusanal','doubledildoass','inerttaila','analvibrator','enemaplug','insertinturnsass']
 var punishcategories = globals.punishcategories
 var penetratecategories = ['missionary','missionaryanal','doggy','doggyanal','lotus','lotusanal','revlotus','revlotusanal','doubledildo','doubledildoass','inserttailv','inserttaila','tribadism','frottage']
+
 
 var filter = ['nosehook','relaxinginsense','facesit','afacesit','grovel','enemaplug']
 
@@ -44,6 +47,7 @@ stress3 = load("res://files/buttons/icons/stress/3.png")
 var selectedcategory = 'caress'
 var categories = {caress = [], fucking = [], tools = [], SM = [], humiliation = [], other = []}
 
+var secondactorcounter = {}
 
 class member:
 	var name
@@ -93,7 +97,9 @@ class member:
 	var nipples
 	var posh1
 	var mode = 'normal'
+	var limbs = true
 	var consent = true
+	var npc = false
 	
 	var actionshad = {addtraits = [], removetraits = [], samesex = 0, samesexorgasms = 0, oppositesex = 0, oppositesexorgasms = 0, punishments = 0, group = 0}
 	
@@ -182,7 +188,50 @@ class member:
 			self.lewd += lewdinput
 			self.lust += lustinput
 			self.sens += sensinput
-	
+
+func dog():
+	var person = globals.newslave(globals.allracesarray[rand_range(0,globals.allracesarray.size())], 'adult', 'male')
+	var newmember = member.new()
+	person.obed = 90
+	person.lewdness = 70
+	person.penistype = 'canine'
+	person.name = "Dog " + str(secondactorcounter.dog)
+	person.penis = globals.weightedrandom([['average',1],['big',1]])
+	person.asser = rand_range(65, 100)
+	person.unique = 'dog'
+	for i in categories.fucking:
+		person.sexexp.actions[i.code] = 15
+	newmember.loyalty = person.loyal
+	newmember.submission = person.obed
+	newmember.person = person
+	newmember.sex = person.sex
+	newmember.name = person.name_short()
+	newmember.lewd = person.lewdness
+	newmember.limbs = false
+	participants.append(newmember)
+
+func horse():
+	var person = globals.newslave(globals.allracesarray[rand_range(0,globals.allracesarray.size())], 'adult', 'male')
+	var newmember = member.new()
+	person.obed = 90
+	person.lewdness = 70
+	person.penistype = 'equine'
+	person.asser = rand_range(65, 100)
+	person.name = "Horse " + str(secondactorcounter.horse)
+	person.height = 'tall'
+	person.penis = 'big'
+	person.unique = 'horse'
+	for i in categories.fucking:
+		person.sexexp.actions[i.code] = 15
+	newmember.loyalty = person.loyal
+	newmember.submission = person.obed
+	newmember.person = person
+	newmember.sex = person.sex
+	newmember.name = person.name_short()
+	newmember.lewd = person.lewdness
+	newmember.limbs = false
+	participants.append(newmember)
+
 
 func _ready():
 	for i in globals.dir_contents('res://files/scripts/actions'):
@@ -236,8 +285,9 @@ func _input(event):
 		_on_passbutton_pressed()
 
 
-func startsequence(actors, mode = null, secondactors = []):
+func startsequence(actors, mode = null, secondactors = [], otheractors = []):
 	participants.clear()
+	secondactorcounter.clear()
 	get_node("Control").hide()
 	for person in actors:
 		var newmember = member.new()
@@ -261,7 +311,7 @@ func startsequence(actors, mode = null, secondactors = []):
 		newmember.sanus = person.sensanal
 		newmember.lewd = person.lewdness
 		participants.append(newmember)
-	
+	$Panel/aiallow.pressed = aiobserve
 	if mode == 'abuse':
 		for person in secondactors:
 			var newmember = member.new()
@@ -288,13 +338,24 @@ func startsequence(actors, mode = null, secondactors = []):
 			newmember.consent = false
 			participants.append(newmember)
 	get_node("Panel/sceneeffects").set_bbcode("You bring selected participants into your bedroom. ")
+	for i in otheractors:
+		while otheractors[i] > 0:
+			if self.has_method(i):
+				if secondactorcounter.has(i) == false:
+					secondactorcounter[i] = 1
+				else:
+					secondactorcounter[i] += 1
+				call(i)
+				participants[participants.size()-1].npc = true
+			otheractors[i] -= 1
+	
 	for i in participants:
 		i.person.attention = 0
 	turns = variables.timeforinteraction
 	changecategory('caress')
 	clearstate()
 	rebuildparticipantslist()
-	
+
 
 func clearstate():
 	givers.clear()
@@ -485,6 +546,14 @@ func checkaction(action, doubledildo):
 		return ['false']
 	elif doubledildo == true && action.category in ['caress','fucking'] && !action.code in ['doubledildo','doubledildoass','tribadism','frottage']:
 		return ['false']
+	if action.category in ['SM','tools','humiliation']:
+		var valid = true
+		for k in givers+takers:
+			if k.limbs == false:
+				valid = false
+				break
+		if valid == false:
+			return ['false']
 	for k in givers:
 		if k.person == globals.player:
 			continue
@@ -514,7 +583,8 @@ func checkaction(action, doubledildo):
 
 
 func slavedescription(member):
-	get_parent().popup(member.person.descriptionsmall())
+	if !member.unique in ['dog','horse']:
+		get_parent().popup(member.person.descriptionsmall())
 
 var nakedspritesdict = {
 	Cali = {cons = 'calinakedhappy', rape = 'calinakedsad', clothcons = 'calineutral', clothrape = 'calisad'},
@@ -983,7 +1053,8 @@ func orgasm(member):
 						temptext = scene.scene.takerpart.replace('anus', '[anus2]').replace('vagina','[pussy2]')
 						if scene.scene.takerpart == 'vagina':
 							for i in scene.takers:
-								globals.impregnation(i.person, member.person)
+								if impregnationcheck(i.person, member.person) == true:
+									globals.impregnation(i.person, member.person)
 					penistext += " {^semen:seed:cum} {^pours:shoots:pumps:sprays} into [names2] " + temptext + " as [he1] ejaculate[s/1]."
 				elif scene.scene.takerpart == 'nipples':
 					penistext += " {^semen:seed:cum} fills [names2] hollow nipples. "
@@ -1006,7 +1077,8 @@ func orgasm(member):
 					penistext += " {^semen:seed:cum} {^pours:shoots:pumps:sprays} into [names1] " + temptext + " as [he2] ejaculate[s/2]."
 					if scene.scene.giverpart == 'vagina':
 						for i in scene.givers:
-							globals.impregnation(i.person, member.person)
+							if impregnationcheck(i.person, member.person) == true:
+								globals.impregnation(i.person, member.person)
 				penistext = decoder(penistext, scene.givers, [member])
 		#orgasm without penis, secondary ejaculation
 		else:
@@ -1044,6 +1116,13 @@ func orgasm(member):
 	
 	
 	return "[color=#ff5df8]" + text + "[/color]"
+
+func impregnationcheck(person1, person2):
+	var valid = true
+	if person1.unique in ['dog','horse'] || person2.unique in ['dog','horse']:
+		valid = false
+	return valid
+	
 
 func isencountersamesex(givers, takers, actor = null):
 	var actorpos = ''
@@ -1158,62 +1237,6 @@ func mformula(gain, mana):
 
 
 
-#var actioncategories = {
-#caress = {dom = 'giver'},
-#kiss = {dom = 'any'},
-#fondletits = {dom = 'giver'},
-#sucknipples = {dom = 'giver'},
-#fingering = {dom = 'giver'},
-#assfingering = {dom = 'giver'},
-#cunnilingus = {dom = 'taker'},
-#rimjob = {dom = 'taker'},
-#handjob = {dom = 'taker'},
-#blowjob = {dom = 'taker'},
-#titjob = {dom = 'taker'},
-#tailjob = {dom = 'taker'},
-#footjob = {dom = 'giver'},
-#
-#missionary = {dom = 'giver'},
-#missionaryanal = {dom = 'giver'},
-#doggy = {dom = 'giver'},
-#doggyanal = {dom = 'giver'},
-#lotus = {dom = 'giver'},
-#lotusanal = {dom = 'giver'},
-#revlotus = {dom = 'giver'},
-#revlotusanal = {dom = 'giver'},
-#doubledildo = {dom = 'any'},
-#doubledildoass = {dom = 'any'},
-#inserttailv = {dom = 'giver'},
-#inserttaila = {dom = 'giver'},
-#tribadism = {dom = 'any'},
-#frottage = {dom = 'any'},
-#
-#strapon = {dom = 'any'},
-#
-#spanking = {dom = 'giver'},
-#whipping = {dom = 'giver'},
-#deepthroat = {dom = 'giver'},
-#nippleclap = {dom = 'giver'},
-#clitclap = {dom = 'giver'},
-#ringgag = {dom = 'giver'},
-#blindfold = {dom = 'giver'},
-#nosehook = {dom = 'giver'},
-#vibrator = {dom = 'giver'},
-#analvibrator = {dom = 'giver'},
-#rope = {dom = 'giver'},
-#milker = {dom = 'giver'},
-#relaxinginsense = {dom = 'giver'},
-#mastshow = {dom = 'giver'},
-#grovel = {dom = 'giver'},
-#facesit = {dom = 'giver'},
-#afacesit = {dom = 'giver'},
-#massagefoot = {dom = 'giver'},
-#lickfeet = {dom = 'giver'},
-#enemaplug = {dom = 'giver'}
-#
-#
-#}
-
 func askslaveforaction(chosen):
 	#choosing target
 	var targets = []
@@ -1232,6 +1255,8 @@ func askslaveforaction(chosen):
 	
 	for i in participants:
 		if i != chosen:
+			if i.person == globals.player && aiobserve == true:
+				continue
 			debug += i.name
 			var value = 10
 			if chosen.person.traits.has("Monogamous") && i.person != globals.player:
@@ -1240,6 +1265,9 @@ func askslaveforaction(chosen):
 				value = 25
 			if chosen.person.traits.has('Devoted') && i.person == globals.player:
 				value += 50
+			
+			if i.npc == true && chosen.npc == true:
+				value -= 50
 			
 			if chosen.person.sexexp.orgasms.has(i.person.id):
 				value += chosen.person.sexexp.orgasms[i.person.id]*4
@@ -1288,6 +1316,8 @@ func askslaveforaction(chosen):
 	if group == true:
 		debug += "Group action attempt:\n"
 		for i in participants:
+			if i.person == globals.player && aiobserve == true:
+				continue
 			if i != chosen && i != target && randf() >= 0.5:
 				freeparticipants.append(i)
 		
@@ -1413,6 +1443,13 @@ func askslaveforaction(chosen):
 
 func _on_finishbutton_pressed():
 	ai.clear()
+	for i in participants:
+		if i.npc == false:
+			for k in participants:
+				if k.npc == true:
+					i.person.sexexp.watchers.erase(k.person.id)
+					i.person.sexexp.partners.erase(k.person.id)
+					i.person.sexexp.orgasms.erase(k.person.id)
 	selectmode = 'normal'
 	get_parent().animationfade()
 	if OS.get_name() != 'HTML5':
@@ -1459,6 +1496,8 @@ func _on_debug_pressed():
 	$PopupPanel.popup()
 
 
+func _on_aiallow_pressed():
+	aiobserve = $Panel/aiallow.pressed
 
 
 

@@ -1,23 +1,25 @@
 extends Node
 
 var enchantmentdict = {
-enchdmg = {name = "+% Damage", id = 'weapondamage', effect = "damage", mineffect = 2, maxeffect = 3, itemtypes = ['weapon'], type = 'incombat'},
-enchspeed = {name = "+% Speed", id = 'weaponspeed', effect = "speed", mineffect = 3, maxeffect = 5, itemtypes = ['weapon'], type = 'incombat'},
-encharmor = {name = "+% Armor", id = 'armorbonus', effect = "armor", mineffect = 2, maxeffect = 4, itemtypes = ['armor'], type = 'incombat'},
-enchstr = {name = "+% Strength", id = 'armorstr', effect = "stren", mineffect = 1, maxeffect = 1, itemtypes = ['armor','accessory'], type = 'onequip'},
-enchagi = {name = "+% Agility", id = 'armoragi', effect = "agi", mineffect = 1, maxeffect = 1, itemtypes = ['armor','accessory'], type = 'onequip'},
-enchend = {name = "+% Endurance", id = 'armorend', effect = "end", mineffect = 1, maxeffect = 1, itemtypes = ['armor','accessory'], type = 'onequip'},
-enchmaf = {name = "+% Magic affinity", id = 'armormaf', effect = "maf", mineffect = 1, maxeffect = 1, itemtypes = ['armor','accessory'], type = 'onequip'},
-enchhealth = {name = "+% Health", id = 'armorhealth', effect = "health", mineffect = 15, maxeffect = 25, itemtypes = ['armor'], type = 'onequip'},
-enchenergy = {name = "+% Energy", id = 'armorenergy', effect = "energy", mineffect = 10, maxeffect = 20, itemtypes = ['armor'], type = 'onequip'},
-enchcour = {name = "+% Courage", id = 'costumecour', effect = "cour", mineffect = 10, maxeffect = 20, itemtypes = ['costume'], type = 'onequip'},
-enchconf = {name = "+% Confidence", id = 'costumeconf', effect = "conf", mineffect = 10, maxeffect = 20, itemtypes = ['costume'], type = 'onequip'},
-enchwit = {name = "+% Wit", id = 'costumewit', effect = "wit", mineffect = 10, maxeffect = 20, itemtypes = ['costume'], type = 'onequip'},
-enchcharm = {name = "+% Charm", id = 'costumecharm', effect = "charm", mineffect = 10, maxeffect = 20, itemtypes = ['costume'], type = 'onequip'},
-enchbeauty = {name = "+% Beauty", id = 'costumebeauty', effect = "beauty", mineffect = 5, maxeffect = 15, itemtypes = ['costume'], type = 'onequip'},
-enchfear = {name = "+% Fear per day", id = 'costumefear', effect = "fear", mineffect = 5, maxeffect = 8, itemtypes = ['costume'], type = 'onendday'},
-enchfearaccess = {name = "+% Fear per day", id = 'costumefear', effect = "fear", mineffect = 3, maxeffect = 6, itemtypes = ['accessory'], type = 'onendday'},
-enchstress = {name = "-% Stress per day", id = 'costumefear', effect = "stress", mineffect = 5, maxeffect = 8, itemtypes = ['costume'], type = 'onendday'},
+enchdmg = {name = "+%v Damage", id = 'weapondamage', effect = "damage", mineffect = 2, maxeffect = 3, itemtypes = ['weapon'], type = 'incombat'},
+enchspeed = {name = "+%v Speed", id = 'weaponspeed', effect = "speed", mineffect = 3, maxeffect = 5, itemtypes = ['weapon'], type = 'incombat'},
+encharmor = {name = "+%v Armor", id = 'armorbonus', effect = "armor", mineffect = 2, maxeffect = 4, itemtypes = ['armor'], type = 'incombat'},
+enchstr = {name = "+%v Strength", id = 'armorstr', effect = "stren", mineffect = 1, maxeffect = 1, itemtypes = ['armor','accessory'], type = 'onequip'},
+enchagi = {name = "+%v Agility", id = 'armoragi', effect = "agi", mineffect = 1, maxeffect = 1, itemtypes = ['armor','accessory'], type = 'onequip'},
+enchend = {name = "+%v Endurance", id = 'armorend', effect = "end", mineffect = 1, maxeffect = 1, itemtypes = ['armor','accessory'], type = 'onequip'},
+enchmaf = {name = "+%v Magic affinity", id = 'armormaf', effect = "maf", mineffect = 1, maxeffect = 1, itemtypes = ['armor','accessory'], type = 'onequip'},
+enchhealth = {name = "+%v Health", id = 'armorhealth', effect = "health", mineffect = 15, maxeffect = 25, itemtypes = ['armor'], type = 'onequip'},
+enchenergy = {name = "+%v Energy", id = 'armorenergy', effect = "energy", mineffect = 10, maxeffect = 20, itemtypes = ['armor'], type = 'onequip'},
+enchcour = {name = "+%v Courage", id = 'costumecour', effect = "cour", mineffect = 10, maxeffect = 20, itemtypes = ['costume'], type = 'onequip'},
+enchconf = {name = "+%v Confidence", id = 'costumeconf', effect = "conf", mineffect = 10, maxeffect = 20, itemtypes = ['costume'], type = 'onequip'},
+enchwit = {name = "+%v Wit", id = 'costumewit', effect = "wit", mineffect = 10, maxeffect = 20, itemtypes = ['costume'], type = 'onequip'},
+enchcharm = {name = "+%v Charm", id = 'costumecharm', effect = "charm", mineffect = 10, maxeffect = 20, itemtypes = ['costume'], type = 'onequip'},
+enchbeauty = {name = "+%v Beauty", id = 'costumebeauty', effect = "beauty", mineffect = 5, maxeffect = 15, itemtypes = ['costume'], type = 'onequip'},
+enchfear = {name = "+%v Fear per day", id = 'costumefear', effect = "fear", mineffect = 5, maxeffect = 8, itemtypes = ['costume'], type = 'onendday'},
+enchfearaccess = {name = "+%v Fear per day", id = 'accessfear', effect = "fear", mineffect = 3, maxeffect = 6, itemtypes = ['accessory'], type = 'onendday'},
+enchstress = {name = "-%v Stress per day", id = 'costumestress', effect = "stress", mineffect = 5, maxeffect = 8, itemtypes = ['costume'], type = 'onendday'},
+enchobedmod = {name = "+%v Obedience", id = 'costumeobed', effect = "obedmod", mineffect = 15, maxeffect = 30, itemtypes = ['costume'], type = 'onequip'},
+enchaccobedmod = {name = "+%v Obedience", id = 'accessobed', effect = "obedmod", mineffect = 5, maxeffect = 15, itemtypes = ['accessory'], type = 'onequip'},
 
 }
 
@@ -44,7 +46,7 @@ func addrandomenchant(item, number = 1):
 			enchant.effectvalue = round(rand_range(tempenchant.mineffect, tempenchant.maxeffect))
 		elif tempenchant.has('effectvalue'):
 			enchant.effectvalue = tempenchant.effectvalue
-		enchant.descript = "[color=green]" + tempenchant.name.replace("%", str(enchant.effectvalue)) + "[/color]"
+		enchant.descript = "[color=green]" + tempenchant.name.replace("%v", str(enchant.effectvalue)) + "[/color]"
 		
 		item.effects += [enchant]
 

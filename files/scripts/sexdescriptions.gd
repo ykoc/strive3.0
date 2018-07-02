@@ -1069,8 +1069,8 @@ func penis(group):
 			for i in tarray:
 				if not array2.has(i):
 					marray2.erase(i)
-	#50% of time do not use descriptors
-	if  randf() < 0.5 || marray1 == []:
+	#30% of time do not use descriptors
+	if  randf() < 0.3 || marray1 == []:
 		return getrandomfromarray(marray2)
 	else:
 		return getrandomfromarray(marray1) + " " + getrandomfromarray(marray2)

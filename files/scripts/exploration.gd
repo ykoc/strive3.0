@@ -306,6 +306,7 @@ encounters = [],
 length = 0,
 exits = ['shaliq'],
 tags = [],
+levelrange = [15,25],
 },
 
 umbra = {
@@ -335,6 +336,7 @@ encounters = [],
 length = 0,
 exits = ['wimborn'],
 tags = [],
+levelrange = [10,15],
 },
 gorn = {
 background = 'gorn',
@@ -747,10 +749,10 @@ func enemylevelup(person, levelarray):
 
 func buildenemies(enemyname = null):
 	if enemyname == null:
-		enemygroup = str2var(var2str(enemygrouppools[globals.weightedrandom(currentzone.enemies)]))
+		enemygroup = enemygrouppools[globals.weightedrandom(currentzone.enemies)].duplicate()
 	else:
-		enemygroup = str2var(var2str(enemygrouppools[enemyname]))
-	var tempunits = str2var(var2str(enemygroup.units))
+		enemygroup = enemygrouppools[enemyname].duplicate()
+	var tempunits = enemygroup.units.duplicate()
 	var unitcounter = {}
 	enemygroup.units = []
 	var addnumbers
@@ -762,7 +764,7 @@ func buildenemies(enemyname = null):
 		if count >= 2:
 			addnumbers = true
 		while count >= 1:
-			var newunit = str2var(var2str(enemypool[i[0]]))
+			var newunit = enemypool[i[0]].duplicate()
 			if unitcounter.has(newunit.name) == false:
 				unitcounter[newunit.name] = 1
 			else:
@@ -810,7 +812,7 @@ var treasurepool = [['armorninja',5],['armorplate',1],['armorleather',20],['armo
 ['clothsundress',10], ['clothmaid',10], ['clothkimono',7], ['clothmiko',5], ['clothpet',3], ['clothbutler',10], ['clothbedlah',4],
 ['accgoldring',3],['accslavecollar',4],['acchandcuffs',3],['acctravelbag',5],['accamuletemerald', 1], ['accamuletruby', 1], 
 ]
-var treasuremisc = [['magicessenceing',7],['taintedessenceing',7],['natureessenceing',7],['bestialessenceing',7],['fluidsubstanceing',7],['gem',1]]
+var treasuremisc = [['magicessenceing',7],['taintedessenceing',7],['natureessenceing',7],['bestialessenceing',7],['fluidsubstanceing',7],['gem',1],['claritypot',0.5],['regressionpot',1],['youthingpot',2],['maturingpot',2]]
 
 
 func treasurechest():
@@ -1463,7 +1465,7 @@ func _on_confirmwinning_pressed(secondary = false): #0 leave, 1 capture, 2 rape,
 					text += person.dictionary('\n$name watches at your deeds with interest, occassionally rustling around $his waist. ')
 					person.lust = 20
 			elif person.sexuals.unlocked == true:
-				if person.lust >= 50 && person.lewd >= 40:
+				if person.lust >= 50 && person.lewdness >= 40:
 					person.sexuals.affection += round(rand_range(2,4))
 					person.asser += rand_range(6,12)
 					person.lastsexday = globals.resources.day
@@ -1555,7 +1557,6 @@ func wimborn():
 
 func gorn():
 	outside.location = 'gorn'
-	outside.get_node("charactersprite").visible = false
 	main.music_set('gorn')
 	var array = []
 	array.append({name = "Visit local Slaver Guild", function = 'gornslaveguild'})

@@ -167,51 +167,6 @@ func _on_Version_pressed():
 	get_node("TextureFrame/changelog").popup()
 
 
-#func _on_startrandom_pressed():
-#	var newslave = globals.newslave(globals.starting_pc_races[rand_range(0,globals.starting_pc_races.size())],'random','female','commoner')
-#	newslave.obed = 100
-#	newslave.loyal = 20
-#	newslave.beautybase = 40
-#	newslave.cleartraits()
-#	newslave.work = 'forage'
-#	globals.slaves = newslave
-#	globals.player = globals.newslave(globals.starting_pc_races[rand_range(0,globals.starting_pc_races.size())],'random','male','commoner')
-#	globals.player.relatives.father = 0
-#	globals.player.relatives.mother = 0
-#	globals.player.ability.append('escape')
-#	globals.player.abilityactive.append('escape')
-#	globals.player.ability.append("protect")
-#	globals.player.abilityactive.append("protect")
-#	globals.player.cleartraits()
-#	globals.resources.energy = 3
-#	globals.resources.day = 1
-#	get_tree().change_scene("res://files/Mansion.scn")
-#	selectedportrait = portraitarray[randi()%portraitarray.size()]
-#	if globals.state.sandbox == false:
-#		globals.resources.upgradepoints = 20
-#		globals.resources.gold = 500
-#		globals.resources.food = 200
-#		globals.resources.mana = 10
-#	else:
-#		globals.resources.upgradepoints = 5
-#		for i in globals.state.portals.values():
-#			if i.code != currentloc:
-#				i.enabled = true
-#		globals.resources.gold = 2500
-#		globals.resources.food = 500
-#		globals.resources.mana = 100
-#		globals.state.mainquest = 26
-#		globals.state.rank = 4
-#		globals.state.sidequests.brothel = 2
-#		globals.state.farm = 3
-#		globals.state.branding = 2
-#		globals.state.portals.amberguard.enabled = true
-#		globals.itemdict.youthingpot.unlocked = true
-#		globals.itemdict.maturingpot.unlocked = true
-#		globals.state.sidequests.sebastianumbra = 2
-#		globals.state.portals.umbra.enabled = true
-
-
 func _on_cancelsaveload_pressed():
 	get_node("TextureFrame/SavePanel").visible = false
 
@@ -861,6 +816,7 @@ func _on_slaveconfirm_pressed():
 	if firecheck == true:
 		return
 	firecheck = true
+	startslave.cleartraits()
 	get_tree().change_scene("res://files/Mansion.scn")
 	globals.player.ability.append('escape')
 	globals.player.abilityactive.append('escape')
@@ -905,26 +861,6 @@ func _on_slaveconfirm_pressed():
 	else:
 		tempitem = globals.items.createunstackable("weapondaggerrust")
 		globals.state.unstackables[str(tempitem.id)] = tempitem
-#	if background == 'mercenary':
-#		for i in ['armorleather','armorleather','weaponsword','weaponsword']:
-#			var tempitem = globals.items.createunstackable(i)
-#			globals.state.unstackables[str(tempitem.id)] = tempitem
-#	elif background == 'farmer':
-#		globals.resources.gold += 250
-#		globals.resources.food += 250
-#	elif background == 'noble':
-#		globals.resources.gold += 300
-#		for i in ['clothmaid','clothmaid']:
-#			var tempitem = globals.items.createunstackable(i)
-#			globals.state.unstackables[str(tempitem.id)] = tempitem
-#	elif background == 'mage':
-#		globals.spelldict.heal.learned = true
-#		globals.player.ability.append('heal')
-#		globals.player.abilityactive.append('heal')
-#		globals.state.mansionupgrades.mansionalchemy += 1
-#		var array = ['aphrodisiac','hairgrowthpot','amnesiapot','lactationpot','miscariagepot','stimulantpot','deterrentpot']
-#		for i in array:
-#			globals.itemdict[i].unlocked = true
 	
 	
 	for i in ['conf','cour','wit','charm']:

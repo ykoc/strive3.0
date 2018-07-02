@@ -32,6 +32,7 @@ func _on_lab_pressed(person = null):
 		text = text + labassist.dictionary("\n[color=aqua]$name[/color] taking care of the lab and it's residents. ")
 	self.visible = true
 	get_node("labinfo").set_bbcode(text)
+	
 	if globals.state.tutorial.lab == false:
 		get_tree().get_current_scene().get_node("tutorialnode").lab()
 
@@ -95,6 +96,12 @@ func _on_labstart_pressed(selected = null):
 			get_node("labmodpanel/ScrollContainer/primalmodlist/skin").visible = false
 		else:
 			get_node("labmodpanel/ScrollContainer/primalmodlist/skin").visible = true
+	if globals.state.mansionupgrades.mansionlab < 2:
+		$labmodpanel/ScrollContainer/primalmodlist/traitremove.disabled = true
+		$labmodpanel/ScrollContainer/primalmodlist/traitremove.hint_tooltip = 'Requires Laboratory Upgrade 2'
+	else:
+		$labmodpanel/ScrollContainer/primalmodlist/traitremove.disabled = false
+		$labmodpanel/ScrollContainer/primalmodlist/traitremove.hint_tooltip = ''
 	get_node("labmodpanel/modificationtext").set_bbcode(text)
 
 
@@ -155,6 +162,15 @@ price = {mana = 50, gold = 250},
 items = {magicessenceing = 2},
 time = 5
 }
+var traitremove = {
+code = 'traitremove',
+type = 'custom',
+description = '',
+options =[''],
+target = 'skin',
+data = {
+price = {mana = 50, gold = 100}, items = {claritypot = 1}, time = 3},
+}
 var penis = {
 code = 'penis',
 type = 'custom',
@@ -213,19 +229,20 @@ hearing = {price = {mana = 50, gold = 150}, items = {bestialessenceing = 1, magi
 "beauty" : {price = {mana = 50, gold = 300}, items = {magicessenceing = 2, natureessenceing = 2, beautypot = 1}, time = 5},
 },}
 var eyecolor = {
-type = 'cosmetics',
+code = 'eyecolor',
+type = 'custom',
 description = '',
-options = ['input'],
-target = 'eyecolor',
+options = [''],
+data = {target = 'eyecolor',
 price = {mana = 40, gold = 100},
 items = {natureessenceing = 1},
-time = 3
+time = 2}
 }
 
 func labbuttonselected(string):
 	var person = labperson
 	get_node("labmodpanel/modificationtext").set_bbcode('')
-	var dict = {'horns' : horns, 'ears':ears, 'tail':tail,'wings' : wings, 'skin':skin, 'eyecolor': eyecolor, 'penis':penis, 'tits':tits, 'balls':balls, 'mods':mods}
+	var dict = {'horns' : horns, 'ears':ears, 'tail':tail,'wings' : wings, 'skin':skin, 'eyecolor': eyecolor, 'penis':penis, 'tits':tits, 'balls':balls, 'mods':mods, 'traitremove':traitremove}
 	for i in get_node("labmodpanel/ScrollContainer/primalmodlist").get_children():
 		if i.get_name() != string && i.is_pressed() == true:
 			i.set_pressed(false)
@@ -241,49 +258,49 @@ func labbuttonselected(string):
 				newbutton.visible = true
 				newbutton.set_text('Remove')
 				get_node("labmodpanel/ScrollContainer1/secondarymodlist").add_child(newbutton)
-				newbutton.connect("pressed",self,'genetalia', [dict[string],'remove'])
+				newbutton.connect("pressed",self,'customenh', [dict[string],'remove'])
 				newbutton.set_meta('effect', 'remove')
 			if person.penis != 'none' && person.penistype != 'human':
 				newbutton = get_node("labmodpanel/ScrollContainer1/secondarymodlist/buttontemp").duplicate()
 				newbutton.visible = true
 				newbutton.set_text('Shape: Normal')
 				get_node("labmodpanel/ScrollContainer1/secondarymodlist").add_child(newbutton)
-				newbutton.connect("pressed",self,'genetalia', [dict[string],'humanshape'])
+				newbutton.connect("pressed",self,'customenh', [dict[string],'humanshape'])
 				newbutton.set_meta('effect', 'humanshape')
 			if person.penis != 'none' && person.penistype != 'feline':
 				newbutton = get_node("labmodpanel/ScrollContainer1/secondarymodlist/buttontemp").duplicate()
 				newbutton.visible = true
 				newbutton.set_text('Shape: Feline')
 				get_node("labmodpanel/ScrollContainer1/secondarymodlist").add_child(newbutton)
-				newbutton.connect("pressed",self,'genetalia', [dict[string],'felineshape'])
+				newbutton.connect("pressed",self,'customenh', [dict[string],'felineshape'])
 				newbutton.set_meta('effect', 'felineshape')
 			if person.penis != 'none' && person.penistype != 'canine':
 				newbutton = get_node("labmodpanel/ScrollContainer1/secondarymodlist/buttontemp").duplicate()
 				newbutton.visible = true
 				newbutton.set_text('Shape: Canine')
 				get_node("labmodpanel/ScrollContainer1/secondarymodlist").add_child(newbutton)
-				newbutton.connect("pressed",self,'genetalia', [dict[string],'canineshape'])
+				newbutton.connect("pressed",self,'customenh', [dict[string],'canineshape'])
 				newbutton.set_meta('effect', 'canineshape')
 			if person.penis != 'none' && person.penistype != 'equine':
 				newbutton = get_node("labmodpanel/ScrollContainer1/secondarymodlist/buttontemp").duplicate()
 				newbutton.visible = true
 				newbutton.set_text('Shape: Equine')
 				get_node("labmodpanel/ScrollContainer1/secondarymodlist").add_child(newbutton)
-				newbutton.connect("pressed",self,'genetalia', [dict[string],'equineshape'])
+				newbutton.connect("pressed",self,'customenh', [dict[string],'equineshape'])
 				newbutton.set_meta('effect', 'equineshape')
 			if person.penis == 'none':
 				newbutton = get_node("labmodpanel/ScrollContainer1/secondarymodlist/buttontemp").duplicate()
 				newbutton.visible = true
 				newbutton.set_text('Grow')
 				get_node("labmodpanel/ScrollContainer1/secondarymodlist").add_child(newbutton)
-				newbutton.connect("pressed",self,'genetalia', [dict[string],'grow'])
+				newbutton.connect("pressed",self,'customenh', [dict[string],'grow'])
 				newbutton.set_meta('effect', 'grow')
 			if person.vagina == 'none' || person.preg.has_womb == false:
 				newbutton = get_node("labmodpanel/ScrollContainer1/secondarymodlist/buttontemp").duplicate()
 				newbutton.visible = true
 				newbutton.set_text('Female genitals')
 				get_node("labmodpanel/ScrollContainer1/secondarymodlist").add_child(newbutton)
-				newbutton.connect("pressed",self,'genetalia', [dict[string],'pussy'])
+				newbutton.connect("pressed",self,'customenh', [dict[string],'pussy'])
 				newbutton.set_meta('effect', 'pussy')
 		elif dict[string].code == 'tits':
 			if person.titsextra >= 1 && person.titsextra <= 4&& person.titsextradeveloped == false:
@@ -291,47 +308,47 @@ func labbuttonselected(string):
 				newbutton.visible = true
 				newbutton.set_text('Develop nipples')
 				get_node("labmodpanel/ScrollContainer1/secondarymodlist").add_child(newbutton)
-				newbutton.connect("pressed",self,'genetalia', [dict[string],'developtits'])
+				newbutton.connect("pressed",self,'customenh', [dict[string],'developtits'])
 				newbutton.set_meta('effect', 'developtits')
 			elif person.titsextra >= 1:
 				newbutton = get_node("labmodpanel/ScrollContainer1/secondarymodlist/buttontemp").duplicate()
 				newbutton.visible = true
 				newbutton.set_text('Remove nipples')
 				get_node("labmodpanel/ScrollContainer1/secondarymodlist").add_child(newbutton)
-				newbutton.connect("pressed",self,'genetalia', [dict[string],'reversetits'])
+				newbutton.connect("pressed",self,'customenh', [dict[string],'reversetits'])
 				newbutton.set_meta('effect', 'reversetits')
 			if person.titsextra < 4:
 				newbutton = get_node("labmodpanel/ScrollContainer1/secondarymodlist/buttontemp").duplicate()
 				newbutton.visible = true
 				newbutton.set_text('Add nipples')
 				get_node("labmodpanel/ScrollContainer1/secondarymodlist").add_child(newbutton)
-				newbutton.connect("pressed",self,'genetalia', [dict[string],'addnipples'])
+				newbutton.connect("pressed",self,'customenh', [dict[string],'addnipples'])
 				newbutton.set_meta('effect', 'addnipples')
 				newbutton = get_node("labmodpanel/ScrollContainer1/secondarymodlist/buttontemp").duplicate()
 				newbutton.visible = true
 				newbutton.set_text('Maximize nipples')
 				get_node("labmodpanel/ScrollContainer1/secondarymodlist").add_child(newbutton)
-				newbutton.connect("pressed",self,'genetalia', [dict[string],'maximizenipples'])
+				newbutton.connect("pressed",self,'customenh', [dict[string],'maximizenipples'])
 				newbutton.set_meta('effect', 'maximizenipples')
 			if person.titsextra > 0:
 				newbutton = get_node("labmodpanel/ScrollContainer1/secondarymodlist/buttontemp").duplicate()
 				newbutton.visible = true
 				newbutton.set_text('Remove nipples')
 				get_node("labmodpanel/ScrollContainer1/secondarymodlist").add_child(newbutton)
-				newbutton.connect("pressed",self,'genetalia', [dict[string],'removenipples'])
+				newbutton.connect("pressed",self,'customenh', [dict[string],'removenipples'])
 				newbutton.set_meta('effect', 'removenipples')
 				newbutton = get_node("labmodpanel/ScrollContainer1/secondarymodlist/buttontemp").duplicate()
 				newbutton.visible = true
 				newbutton.set_text('Minimize nipples')
 				get_node("labmodpanel/ScrollContainer1/secondarymodlist").add_child(newbutton)
-				newbutton.connect("pressed",self,'genetalia', [dict[string],'minimizenipples'])
+				newbutton.connect("pressed",self,'customenh', [dict[string],'minimizenipples'])
 				newbutton.set_meta('effect', 'minimizenipples')
 			if globals.sizearray.find(person.titssize) >= 3 && person.mods.has('hollownipples') == false:
 				newbutton = get_node("labmodpanel/ScrollContainer1/secondarymodlist/buttontemp").duplicate()
 				newbutton.visible = true
 				newbutton.set_text('Hollow nipples')
 				get_node("labmodpanel/ScrollContainer1/secondarymodlist").add_child(newbutton)
-				newbutton.connect("pressed",self,'genetalia', [dict[string],'hollownipples'])
+				newbutton.connect("pressed",self,'customenh', [dict[string],'hollownipples'])
 				newbutton.set_meta('effect', 'hollownipples')
 		elif dict[string].code == 'balls':
 			if person.balls == 'none':
@@ -339,14 +356,14 @@ func labbuttonselected(string):
 				newbutton.visible = true
 				newbutton.set_text('Grow')
 				get_node("labmodpanel/ScrollContainer1/secondarymodlist").add_child(newbutton)
-				newbutton.connect("pressed",self,'genetalia', [dict[string],'grow'])
+				newbutton.connect("pressed",self,'customenh', [dict[string],'grow'])
 				newbutton.set_meta('effect', 'grow')
 			if person.balls != 'none':
 				newbutton = get_node("labmodpanel/ScrollContainer1/secondarymodlist/buttontemp").duplicate()
 				newbutton.visible = true
 				newbutton.set_text('Remove')
 				get_node("labmodpanel/ScrollContainer1/secondarymodlist").add_child(newbutton)
-				newbutton.connect("pressed",self,'genetalia', [dict[string],'remove'])
+				newbutton.connect("pressed",self,'customenh', [dict[string],'remove'])
 				newbutton.set_meta('effect', 'remove')
 		elif dict[string].code == 'mod':
 			if person.skincov == 'full_body_fur' && person.mods.has('augmentfur') == false:
@@ -354,65 +371,62 @@ func labbuttonselected(string):
 				newbutton.visible = true
 				newbutton.set_text('Enhanced fur')
 				get_node("labmodpanel/ScrollContainer1/secondarymodlist").add_child(newbutton)
-				newbutton.connect("pressed",self,'genetalia', [dict[string],'fur'])
+				newbutton.connect("pressed",self,'customenh', [dict[string],'fur'])
 				newbutton.set_meta('effect', 'fur')
 			if person.mods.has('augmenttongue') == false:
 				newbutton = get_node("labmodpanel/ScrollContainer1/secondarymodlist/buttontemp").duplicate()
 				newbutton.visible = true
 				newbutton.set_text('Elongated tongue')
 				get_node("labmodpanel/ScrollContainer1/secondarymodlist").add_child(newbutton)
-				newbutton.connect("pressed",self,'genetalia', [dict[string],'tongue'])
+				newbutton.connect("pressed",self,'customenh', [dict[string],'tongue'])
 				newbutton.set_meta('effect', 'tongue')
 			if person.skincov == 'scales' && person.mods.has('augmentscales') == false:
 				newbutton = get_node("labmodpanel/ScrollContainer1/secondarymodlist/buttontemp").duplicate()
 				newbutton.visible = true
 				newbutton.set_text('Enhanced scales')
 				get_node("labmodpanel/ScrollContainer1/secondarymodlist").add_child(newbutton)
-				newbutton.connect("pressed",self,'genetalia', [dict[string],'scales'])
+				newbutton.connect("pressed",self,'customenh', [dict[string],'scales'])
 				newbutton.set_meta('effect', 'scales')
 			if person.mods.has('augmenthearing') == false:
 				newbutton = get_node("labmodpanel/ScrollContainer1/secondarymodlist/buttontemp").duplicate()
 				newbutton.visible = true
 				newbutton.set_text('Enhanced hearing')
 				get_node("labmodpanel/ScrollContainer1/secondarymodlist").add_child(newbutton)
-				newbutton.connect("pressed",self,'genetalia', [dict[string],'hearing'])
+				newbutton.connect("pressed",self,'customenh', [dict[string],'hearing'])
 				newbutton.set_meta('effect', 'hearing')
 			if person.mods.has('augmentstr') == false:
 				newbutton = get_node("labmodpanel/ScrollContainer1/secondarymodlist/buttontemp").duplicate()
 				newbutton.visible = true
 				newbutton.set_text('Enhanced muscles')
 				get_node("labmodpanel/ScrollContainer1/secondarymodlist").add_child(newbutton)
-				newbutton.connect("pressed",self,'genetalia', [dict[string],'str'])
+				newbutton.connect("pressed",self,'customenh', [dict[string],'str'])
 				newbutton.set_meta('effect', 'str')
 			if person.mods.has('augmentagi') == false:
 				newbutton = get_node("labmodpanel/ScrollContainer1/secondarymodlist/buttontemp").duplicate()
 				newbutton.visible = true
 				newbutton.set_text('Enhanced reflexes')
 				get_node("labmodpanel/ScrollContainer1/secondarymodlist").add_child(newbutton)
-				newbutton.connect("pressed",self,'genetalia', [dict[string],'agi'])
+				newbutton.connect("pressed",self,'customenh', [dict[string],'agi'])
 				newbutton.set_meta('effect', 'agi')
 			if person.mods.has('augmentbeauty') == false:
 				newbutton = get_node("labmodpanel/ScrollContainer1/secondarymodlist/buttontemp").duplicate()
 				newbutton.visible = true
 				newbutton.set_text('Improve appearance')
 				get_node("labmodpanel/ScrollContainer1/secondarymodlist").add_child(newbutton)
-				newbutton.connect("pressed",self,'genetalia', [dict[string],'beauty'])
+				newbutton.connect("pressed",self,'customenh', [dict[string],'beauty'])
 				newbutton.set_meta('effect', 'beauty')
+		elif dict[string].code == 'traitremove':
+			globals.main.traitpanelshow(labperson,'clearphys')
+		elif dict[string].code == 'eyecolor':
+			globals.main.seteyecolor(labperson)
 		return
 
 	for i in dict[string].options:
-		if i == 'input':
-			var newinput = LineEdit.new()
-			newinput.set_custom_minimum_size(Vector2(200,30))
-			newinput.set_name('labinput')
-			get_node("labmodpanel/ScrollContainer1/secondarymodlist").add_child(newinput)
-			newinput.connect("text_changed", self, 'modchosen', [dict[string], string, i])
-		else:
-			var newbutton = get_node("labmodpanel/ScrollContainer1/secondarymodlist/buttontemp").duplicate()
-			newbutton.visible = true
-			newbutton.set_text(i.capitalize())
-			get_node("labmodpanel/ScrollContainer1/secondarymodlist").add_child(newbutton)
-			newbutton.connect("pressed",self,'modchosen', [dict[string], string, i])
+		var newbutton = get_node("labmodpanel/ScrollContainer1/secondarymodlist/buttontemp").duplicate()
+		newbutton.visible = true
+		newbutton.set_text(i.capitalize())
+		get_node("labmodpanel/ScrollContainer1/secondarymodlist").add_child(newbutton)
+		newbutton.connect("pressed",self,'modchosen', [dict[string], string, i])
 
 func text_changed(changedtext = '', dict = {}, string = '', selected = ''):
 	get_node("labmodpanel/modificationtext").set_bbcode()
@@ -480,7 +494,7 @@ func modchosen(dict= {}, string = '', selected=''):
 	else:
 		get_node("labmodpanel/modificationtext").set_bbcode(person.dictionary(text))
 
-func genetalia(dict, action):
+func customenh(dict, action):
 	var person = labperson
 	var text = ''
 	var allow = true
@@ -685,6 +699,4 @@ func _on_labconfirm_pressed():
 
 
 
-func _on_eyecolor_pressed():
-	pass # replace with function body
 
