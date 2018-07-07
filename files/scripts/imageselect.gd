@@ -133,21 +133,21 @@ func _on_removeportrait_pressed():
 func _on_reverseportrait_pressed():
 	if person.unique != null:
 		if person.unique == 'Cali':
-			person.imageportait = 'res://files/images/cali/caliportrait.png'
+			person.imageportait = globals.characters.characters.Cali.portrait
 		elif person.unique == 'Emily':
-			person.imageportait = "res://files/images/emily/emilyportrait.png"
+			person.imageportait = globals.characters.characters.Emily.portrait
 		elif person.unique == 'Tisha':
-			person.imageportait = "res://files/images/tisha/tishaportrait.png"
+			person.imageportait = globals.characters.characters.Tisha.portrait
 		elif person.unique == 'Chloe':
-			person.imageportait = "res://files/images/chloe/chloeportrait.png"
+			person.imageportait = globals.characters.characters.Chloe.portrait
 		elif person.unique == 'Yris':
-			person.imageportait = "res://files/images/yris/yrisportrait.png"
+			person.imageportait = globals.characters.characters.Yris.portrait
 		elif person.unique == 'Maple':
-			person.imageportait = "res://files/images/maple/mapleportrait.png"
+			person.imageportait = globals.characters.characters.Maple.portrait
 		elif person.unique == 'Ayneris':
-			person.imageportait = "res://files/images/ayneris/aynerisportrait.png"
+			person.imageportait = globals.characters.characters.Ayneris.portrait
 		elif person.unique == 'Melissa':
-			person.imageportait = "res://files/images/melissa/melissaportrait.png"
+			person.imageportait = globals.characters.characters.Melissa.portrait
 		self.visible = false
 		updatepage()
 

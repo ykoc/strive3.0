@@ -8,6 +8,7 @@ onready var questtext = globals.questtext
 onready var mansion = get_parent()
 var location = ''
 var questgiveawayslave
+var currentzone
 
 func _ready():
 	if globals.guildslaves.wimborn.size() < 2:
@@ -31,7 +32,7 @@ func _ready():
 	for i in ['attack','speed','armor','protection']:
 		$playergrouppanel/characterinfo/combstats.get_node(i).connect("mouse_entered",self,'statinfo',[i])
 		$playergrouppanel/characterinfo/combstats.get_node(i).connect("mouse_exited",self,'iteminfoclose')
-	#get_node("playergroupdetails/TabContainer").connect("visibility_changed", self, "_on_TabContainer_tab_changed")
+	$map/Control.set_process_input(false)
 
 
 
@@ -357,8 +358,9 @@ func setcharacter(text):
 	get_parent().repeattweenanimate($charactersprite, 'stop')
 	$charactersprite.visible = true
 	if get_parent().spritedict.has(text):
-		get_node("charactersprite").modulate.a = 1
 		get_node("charactersprite").set_texture(get_parent().spritedict[text])
+		if $charactersprite.modulate.a != 1:
+			get_parent().nodeunfade($charactersprite, 0.3)
 	
 
 func slaveguild(guild = 'wimborn'):
@@ -397,8 +399,6 @@ func slaveguild(guild = 'wimborn'):
 		buildbuttons(array)
 	elif guild == 'gorn':
 		clearselection()
-		get_node("charactersprite").visible = true
-		get_parent().nodeunfade($charactersprite, 0.3)
 		setcharacter('goblin')
 		slavearray = globals.guildslaves.gorn
 		mansion.maintext = globals.player.dictionaryplayer("Huge part of supposed guild takes a makeshift platform and tents on the outside with few half-empty cages. In the middle, you can see a presentation podium which is easily observable from main street. Despite Gorn being very different from common, primarily human-populated towns, it still directly follows Mage's Order directives — race diversity and casual slavery are very omnipresent. \n\nAs you walk in, one of the goblin receptionists quickly recognizes you as an Order member and hastily grabs your attention, sensing a profitable customer.\n\n— $sir interested in some heat-tolerant 'orkers? *chuckles* Or you are in preference of short girls? We quite often get those as well, for every taste and color!")
@@ -966,7 +966,7 @@ func slavequesttext(quest):
 		get_node("slaveguildquestpanel/questcancel").visible = false
 		get_node("slaveguildquestpanel/questaccept").set_text('Accept')
 	text = quest.description
-	text = text + '\n\nRequired person Specifics:\n' + text2 + '\n[color=yellow]Reward: ' + str(quest.reward) + ' gold.[/color] [color=aqua]Time Limit: ' + str(quest.time) + ' days.[/color]'
+	text = text + '\n\nRequired Slave Specifics:\n' + text2 + '\n[color=yellow]Reward: ' + str(quest.reward) + ' gold.[/color] [color=aqua]Time Limit: ' + str(quest.time) + ' days.[/color]'
 	
 	
 	
@@ -1090,8 +1090,7 @@ func _on_serviceconfirm_pressed():
 	var operation = operationdict[serviceoperation]
 	var text = person.dictionary(operation.confirm)
 	if operation.code == 'abortion':
-		person.preg.baby = null
-		person.preg.duration = 0
+		person.abortion()
 		person.stress += rand_range(35,70)
 		person.health -= 20
 		globals.resources.gold -= operation.price
@@ -1572,7 +1571,7 @@ blackmarket = {code = 'blackmarket', name = 'Black Market', items = ['lockpick',
 
 func market():
 	var array = [{name = 'Market stalls (shop)', function = 'shopinitiate', args = 'wimbornmarket'}, {name = 'Return', function = 'town'}]
-	get_node("charactersprite").visible = false
+	get_parent().nodefade($charactersprite, 0.3)
 	main.background_set('market')
 	if OS.get_name() != "HTML5":
 		yield(main, 'animfinished')
@@ -1622,7 +1621,6 @@ func shopinitiate(shopname):
 		#get_node("shoppanel/itempanel").visible = false
 	if currentshop.has('sprite'):
 		setcharacter(currentshop.sprite)
-		get_parent().nodeunfade($charactersprite, 0.3)
 
 
 func shopbuy():
@@ -1722,10 +1720,7 @@ func caliqueststart(value = ''):
 
 func sebastian():
 	var text = ''
-	if get_node("charactersprite").get_texture() != get_parent().spritedict['sebastian'] || get_node("charactersprite").visible == false:
-		get_parent().nodeunfade($charactersprite, 0.3)
-		get_node("charactersprite").visible = true
-		setcharacter('sebastian')
+	setcharacter('sebastian')
 	var array = [{name = 'Return',function = 'market'}]
 	if globals.state.mainquest == 5:
 		globals.state.mainquest = 6
@@ -2238,3 +2233,12 @@ func _on_outsidetextbox_meta_clicked(meta):
 func _on_switch_pressed():
 	$playergrouppanel/characterinfo/combstats.visible = !$playergrouppanel/characterinfo/combstats.visible
 	$playergrouppanel/characterinfo/stats.visible = !$playergrouppanel/characterinfo/stats.visible
+
+
+func _on_mapbutton_pressed():
+	$bigmappanel.visible = true
+	$bigmappanel/ScrollContainer/Control.centermap(currentzone.code)
+
+
+func _on_mapclose_pressed():
+	$bigmappanel.visible = false

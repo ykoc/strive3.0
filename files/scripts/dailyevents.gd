@@ -275,24 +275,22 @@ func abortion(stage = 0):
 		tempbuttons.append(['Reassure (-25 energy)',3])
 		tempbuttons.append(['Ignore', 4])
 	if stage == 1:
-		person.preg.baby = null
-		person.preg.duration = 0
+		person.abortion()
 		globals.itemdict.miscariagepot.amount = -1
 		person.obed += rand_range(10,20)
 	elif stage == 2:
-		person.preg.baby = null
-		person.preg.duration = 0
+		person.abortion()
 		globals.resources.gold -= 50
 		person.obed += rand_range(15,25)
 		person.steres = rand_range(15,25)
 	elif stage == 3:
 		person.loyal += rand_range(10,15)
-		person.stress += -rand_range(10,20)
+		person.stress -= rand_range(10,20)
 		globals.player.energy -= 25
 	elif stage == 4:
-		person.loyal += -rand_range(10,15)
+		person.loyal -= rand_range(10,15)
 		person.stress += rand_range(20,40)
-		person.obed += -rand_range(20,40)
+		person.obed -= rand_range(20,40)
 	buttons = tempbuttons
 	showevent()
 

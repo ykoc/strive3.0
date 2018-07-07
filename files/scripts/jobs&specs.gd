@@ -303,7 +303,7 @@ executor = {
 name = "Executor",
 code = 'executor',
 descript = "Executors are trained to work with people in a most efficient way. Their commands are always straight and on-point and their attitude is met with respect. ",
-descriptbonus = "Management-related tasks ignore confidence (will always count as 100). Obedience can't drop above 50.",
+descriptbonus = "Management-related tasks ignore confidence (will always count as 100). Obedience can't drop below 50.",
 descriptreqs = "Conf 75+, Wit 50+, grade Rich or above",
 reqs = "person.conf >= 75 && person.wit >= 50 && person.origins in ['rich', 'noble']"
 },
@@ -623,7 +623,7 @@ func cooking(person):
 			food = globals.state.foodbuy
 		else:
 			text = '$name complained about the lack of food and no money to supply kitchen on $his own.\n'
-	text += '$name spent $his time prepearing meals for everyone.\n'
+	text += '$name spent $his time preparing meals for everyone.\n'
 	text = person.dictionary(text)
 	var dict = {text = text, gold = gold, food = food}
 	return dict

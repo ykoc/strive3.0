@@ -243,7 +243,7 @@ func questarray():
 	difficulty = 'easy'
 	},
 	quest019 = {
-	code = '010',
+	code = '019',
 	questreq = globals.rules.male_chance >= 15,
 	shortdescription = "An anonymous woman desires a real man to satisfy her.",
 	description = "A sexually frustrated wife is looking for a male slave to give her the attention she desperately craves. Looks should not be very high, to avoid husband's suspicion. Must be well endowed with good stamina! ",
@@ -252,6 +252,18 @@ func questarray():
 	time = round(rand_range(7,12)),
 	reward = round(rand_range(30,50))*10,
 	location = ['wimborn','frostford'],
+	difficulty = 'easy'
+	},
+	quest020 = {
+	code = '020',
+	questreq = globals.rules.furry == true,
+	shortdescription = "Wanted: dogs for breeding purposes.",
+	description = 'A rather plain and slightly crinkled notice explains how a certain quirky land owner is buying pure beastkin wolves for a "breeding project." Appearances should be decent but looks are a secondary concern at the moment.  ',
+	reqs = [['race','eq','Beastkin Wolf'],['obed','gte', 80],['beauty','gte',20]],
+	reqstemp = [['sex', 'eq', randsex()]],
+	time = round(rand_range(7,12)),
+	reward = round(rand_range(30,40))*10,
+	location = ['wimborn','gorn'],
 	difficulty = 'easy'
 	},
 	}

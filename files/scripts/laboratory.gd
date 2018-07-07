@@ -29,7 +29,7 @@ func _on_lab_pressed(person = null):
 		labassist.work = 'labassist'
 		get_node("chooseassist").set_text("Unassign Assistant")
 		get_node("labstart").set_disabled(false)
-		text = text + labassist.dictionary("\n[color=aqua]$name[/color] taking care of the lab and it's residents. ")
+		text = text + labassist.dictionary("\n[color=aqua]$name[/color] is taking care of the lab and its residents. ")
 	self.visible = true
 	get_node("labinfo").set_bbcode(text)
 	

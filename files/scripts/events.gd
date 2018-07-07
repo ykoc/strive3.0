@@ -368,6 +368,7 @@ func gornayda():
 	
 
 func leaveayda():
+	outside.togorn()
 	globals.main.exploration.zoneenter('gorn')
 
 func aydashop():
@@ -554,13 +555,14 @@ func frostforddryad():
 	elif globals.state.mainquest == 30:
 		if globals.state.sidequests.zoe < 1 || globals.state.sidequests.zoe == 100:
 			text = textnode.MainQuestFrostfordForestReturn
+			sprite = [['forestspirit','pos1','opac']]
 			if globals.state.sidequests.zoe == 0:
 				text += "\n\n[color=yellow]You might discover new way to solve this if your Frostford reputation will get better.[/color]"
 			state = true
 			buttons.append({text = "Fight", function = 'dryadfight', args = 0})
 		else:
 			text = textnode.MainQuestFrostfordForestReturnWithZoe
-			sprite = [['zoeneutral','pos1','opac']]
+			sprite = [['zoeneutral','pos2','opac'],['forestspirit','pos1','opac']]
 			state = false
 			globals.state.mainquest = 31
 			buttons.append({text = 'Continue', function = "frostforddryadzoe", args = 0})
@@ -570,7 +572,7 @@ func frostforddryad():
 			globals.itemdict.fluidsubstanceing.amount -= 5
 			globals.resources.food -= 500
 			text = textnode.MainQuestFrostfordForestReturnZoe
-			sprite = [['zoeneutral','pos1','opac']]
+			sprite = [['zoeneutral','pos2','opac'], ['forestspirit','pos1','opac']]
 			buttons.append({text = "Fight", function = 'dryadfight', args = 2})
 			state = false
 		else:
@@ -594,6 +596,7 @@ func dryadfight(stage = 0):
 	var buttons = []
 	if stage == 0:
 		text = textnode.MainQuestFrostfordForestFight
+		sprite = [['forestspirit','pos1','opac']]
 		buttons.append({text = "Continue", function = 'dryadfight', args = 1})
 		globals.main.dialogue(false, self, text, buttons, sprite)
 	elif stage == 1:
@@ -622,7 +625,7 @@ func dryadfightwin():
 func zoefightwin(stage = 0):
 	var state = false
 	var text  = ''
-	var sprite
+	var sprite = [['forestspirit', 'pos1', 'opac']]
 	var buttons = []
 	text = textnode.MainQuestFrostfordForestReturnZoeWin
 	globals.main.exploration.zoneenter('frostfordoutskirts')

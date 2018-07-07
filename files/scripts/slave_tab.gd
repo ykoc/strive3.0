@@ -436,7 +436,6 @@ func _on_relativesbutton_pressed():
 	var entry2
 	counter = 0
 	slavearray.clear()
-	print(entry)
 	text += '[center]Parents[/center]\n'
 	for i in ['father','mother']:
 		if int(entry[i]) <= 0:
@@ -452,6 +451,8 @@ func _on_relativesbutton_pressed():
 		text += '\n[center]Siblings[/center]\n'
 		for i in entry.siblings:
 			entry2 = relativesdata[i]
+			if entry2.state == 'fetus':
+				continue
 			if entry2.sex == 'male':
 				text += "Brother: " 
 			else:
@@ -462,6 +463,8 @@ func _on_relativesbutton_pressed():
 		text += '\n[center]Children[/center]\n'
 		for i in entry.children:
 			entry2 = relativesdata[i]
+			if entry2.state == 'fetus':
+				continue
 			if entry2.sex == 'male':
 				text += "Son: " 
 			else:
@@ -478,6 +481,10 @@ func getentrytext(entry):
 		counter += 1
 	else:
 		text += entry.name
+	if entry.state == 'dead':
+		text += " - Deceased"
+	elif entry.state == 'left':
+		text += " - Status Unknown"
 	text += ", " + entry.race
 	return text
 
@@ -522,9 +529,19 @@ func _on_confirmdescript_pressed():
 
 func _on_gear_pressed():
 	globals.main._on_inventory_pressed()
+	globals.main.get_node('inventory').selectcategory(globals.main.get_node('inventory/everything'))
 	globals.main.get_node('inventory/gear').pressed = true
 	globals.main.get_node('inventory').selectcategory(globals.main.get_node('inventory/gear'))
 	globals.main.get_node('inventory').selectbuttonslave(person)
+
+
+func _on_items_pressed():
+	globals.main._on_inventory_pressed()
+	globals.main.get_node('inventory').selectcategory(globals.main.get_node('inventory/everything'))
+	globals.main.get_node('inventory/potion').pressed = true
+	globals.main.get_node('inventory').selectcategory(globals.main.get_node('inventory/potion'))
+	globals.main.get_node('inventory').selectbuttonslave(person)
+
 
 
 
@@ -913,3 +930,4 @@ func _on_customize_pressed():
 func _on_fullbodycheck_pressed():
 	showfullbody = $stats/basics/fullbodycheck.pressed
 	slavetabopen()
+

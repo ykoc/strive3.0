@@ -199,6 +199,7 @@ func dog():
 	person.penis = globals.weightedrandom([['average',1],['big',1]])
 	person.asser = rand_range(65, 100)
 	person.unique = 'dog'
+	person.imageportait = null
 	for i in categories.fucking:
 		person.sexexp.actions[i.code] = 15
 	newmember.loyalty = person.loyal
@@ -221,6 +222,7 @@ func horse():
 	person.height = 'tall'
 	person.penis = 'big'
 	person.unique = 'horse'
+	person.imageportait = null
 	for i in categories.fucking:
 		person.sexexp.actions[i.code] = 15
 	newmember.loyalty = person.loyal
@@ -583,7 +585,7 @@ func checkaction(action, doubledildo):
 
 
 func slavedescription(member):
-	if !member.unique in ['dog','horse']:
+	if !member.person.unique in ['dog','horse']:
 		get_parent().popup(member.person.descriptionsmall())
 
 var nakedspritesdict = {
@@ -1083,7 +1085,7 @@ func orgasm(member):
 		#orgasm without penis, secondary ejaculation
 		else:
 			if randf() < 0.4:
-				penistext = "[name2] {^twist:quiver:writhe}[s/2] in {^pleasure:euphoria:extacy} as"
+				penistext = "[name2] {^twist:quiver:writhe}[s/2] in {^pleasure:euphoria:ecstacy} as"
 			else:
 				penistext = "[name2] {^can't hold back any longer:reach[es/2] [his2] limit} and"
 			penistext += " {^a jet of :a rope of :}{^semen:cum} {^fires:squirts:shoots} from {^the tip of :}[his2] {^neglected :throbbing ::}[penis2]."
@@ -1093,10 +1095,10 @@ func orgasm(member):
 	#final default condition
 	else:
 		if randf() < 0.4:
-			temptext = "[name2] feel[s/2] a {^sudden :intense ::}{^jolt of electricity:heat:wave of pleasure} and [his2]"
+			temptext = "[name2] feel[s/2] {^a sudden :an intense ::}{^jolt of electricity:heat:wave of pleasure} and [his2]"
 		else:
 			temptext = "[names2]"
-		temptext += " {^entire :whole :}body {^twists:quivers:writhes} in {^pleasure:euphoria:extacy} as [he2] reach[es/2] {^climax:orgasm}."
+		temptext += " {^entire :whole :}body {^twists:quivers:writhes} in {^pleasure:euphoria:ecstacy} as [he2] reach[es/2] {^climax:orgasm}."
 		text = decoder(temptext, null, [member])
 	
 	

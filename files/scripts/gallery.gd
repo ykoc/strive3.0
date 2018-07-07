@@ -362,6 +362,7 @@ emily2happy = load("res://files/images/emily/emily2happy.png"),
 emily2worried = load("res://files/images/emily/emily2worried.png"),
 emilynakedhappy = load("res://files/images/emily/emilynakedhappy.png"),
 emilynakedneutral = load("res://files/images/emily/emilynakedneutral.png"),
+emilyportrait = load("res://files/images/emily/emilyportrait.png"),
 calineutral = load("res://files/images/cali/calineutral.png"),
 calihappy = load("res://files/images/cali/calihappy.png"),
 calinakedhappy = load("res://files/images/cali/calinakedneutral.png"),
@@ -409,6 +410,17 @@ zoesadnaked = load("res://files/images/zoe/zoesadnaked.png"),
 theron = load("res://files/images/theron.png"),
 garthor = load("res://files/images/garthor.png"),
 
+
+
+oldemilyhappy = load("res://files/images/emily/oldemilyhappy.png"),
+oldemilynormal = load("res://files/images/emily/oldemilyneutral.png"),
+oldemily2normal = load("res://files/images/emily/oldemily2neutral.png"),
+oldemily2happy = load("res://files/images/emily/oldemily2happy.png"),
+oldemily2worried = load("res://files/images/emily/oldemily2worried.png"),
+oldemilynakedhappy = load("res://files/images/emily/oldemilynakedhappy.png"),
+oldemilynakedneutral = load("res://files/images/emily/oldemilynakedneutral.png"),
+oldemilyportrait = load("res://files/images/emily/oldemilyportrait.png"),
+
 hadesillh = load("res://files/images/hade/hadesillhoute.png"),
 hadeneutral = load("res://files/images/hade/hadeneutral.png"),
 hadesmile = load("res://files/images/hade/hadesmile.png"),
@@ -418,5 +430,6 @@ hade2smile = load("res://files/images/hade/hade2smile.png"),
 hade2angry = load("res://files/images/hade/hade2angry.png"),
 goblin = load("res://files/images/goblin.png"),
 centaur = load("res://files/images/centaur.png"),
+forestspirit = load("res://files/images/forestspirit.png"),
 }
 

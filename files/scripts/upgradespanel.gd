@@ -65,7 +65,7 @@ func categoryselect(button):
 		newbutton.connect("pressed",self,'upgradeselected',[upgrade])
 
 var alchemy1 = ['aphrodisiac','hairgrowthpot','amnesiapot','lactationpot','miscariagepot','stimulantpot','deterrentpot']
-var alchemy2 = ['oblivionpot','oblivionpot','minoruspot','majoruspot','aphroditebrew']
+var alchemy2 = ['oblivionpot','oblivionpot','minoruspot','majoruspot','aphroditebrew','claritypot']
 
 func upgradeselected(upgrade):
 	var text = ''

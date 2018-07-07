@@ -16,6 +16,8 @@ var pregduration = 31
 var growuptimechild = 15
 var growuptimeteen = 20
 var growuptimeadult = 25
+var traitinheritchance = 80
+var babynewtraitchance = 20
 
 #slave stats & combat
 var damageperstr = 3
@@ -34,6 +36,10 @@ var pricebonustoxicity = -0.33
 var priceuncivilized = -0.5
 var priceminimum = 5
 var priceminimumsell = 10
+
+#sidecharacters
+var oldemily = false
+
 
 var racepricemods = { #race mod will apply to _base_ price as baseprice*mod
 	Elf = 1.5, "Dark Elf" : 1.5, Orc = 1.5, Goblin = 1.5, Gnome = 1.5,

@@ -189,7 +189,14 @@ func _init():
 		if tempnode.get(i) != null:
 			variables[i] = tempnode[i]
 	tempnode.queue_free()
+	
+	if variables.oldemily == true:
+		for i in ["emilyhappy", "emilynormal","emily2normal","emily2happy","emily2worried","emilynakedhappy","emilynakedneutral"]:
+			spritedict[i] = spritedict['old'+ i]
+		characters.characters.Emily.imageportait = "res://files/images/emily/oldemilyportrait.png"
+	
 	loadmods()
+	
 
 func loadmods():
 	pass
@@ -667,6 +674,8 @@ class person:
 	var sensanal = 0
 	var knowntechniques = []
 	
+	
+	var state = 'normal'
 	var preg = {fertility = 0, has_womb = true, duration = 0, baby = null}
 	var rules = {'silence':false, 'pet':false, 'contraception':false, 'aphrodisiac':false, 'masturbation':false, 'nudity':false, 'betterfood':false, 'personalbath':false,'cosmetics':false,'pocketmoney':false}
 	var traits = []
@@ -893,14 +902,14 @@ class person:
 				for i in effect:
 					if stats.has(i):
 						stats[i] = stats[i] + -effect[i]
-					elif self.get(i):
+					elif self.get(i) != null:
 						self[i] -= effect[i]
 		elif remove != true:
 			effects[effect.code] = effect
 			for i in effect:
 				if stats.has(i):
 					stats[i] = stats[i] + effect[i]
-				elif self.get(i):
+				elif self.get(i) != null:
 					self[i] += effect[i]
 	
 	
@@ -919,6 +928,7 @@ class person:
 		var string = ""
 		var color
 		var text = ""
+		stats.obed_mod = clamp(stats.obed_mod, 0.2, 2)
 		if difference > 0:
 			difference = abs(difference)
 			if abs(difference) < 20:
@@ -990,10 +1000,10 @@ class person:
 			text += "$name is about to suffer from mental breakdown... "
 			color = 'red'
 		if stats.stress_cur < 66 && endvalue >= 66:
-			text += "$name has became considerably stressful"
+			text += "$name has became considerably stressed. "
 			color = 'red'
 		elif (stats.stress_cur < 33 || stats.stress_cur >= 66) && (endvalue >= 33 && endvalue < 66):
-			text += "$name has became mildly stressful. "
+			text += "$name has became mildly stressed. "
 			color = 'yellow'
 		elif stats.stress_cur >= 33 && endvalue < 33:
 			text += "$name is no longer stressed. "
@@ -1362,12 +1372,25 @@ class person:
 	func death():
 		if globals.slaves.has(self):
 			globals.main.infotext(self.dictionary("$name has deceased. "),'red')
-			removefrommansion()
+			globals.items.unequipall(self)
+			globals.slaves.erase(self)
+			globals.state.relativesdata[id].state = 'dead'
+		elif globals.state.babylist.has(self):
+			globals.state.babylist.erase(self)
+			globals.clearrelativesdata(self.id)
 	
 	func removefrommansion():
 		globals.slaves.erase(self)
 		globals.main.infotext(self.dictionary("$name $surname is no longer in your posession. "),'red')
 		globals.items.unequipall(self)
+		globals.state.relativesdata[id].state = 'left'
+	
+	func abortion():
+		if preg.duration > 0:
+			preg.duration = 0
+			var baby = globals.state.findbaby(preg.baby)
+			preg.baby = null
+			baby.death()
 	
 	func fetch(dict):
 		for key in dict:
@@ -1447,7 +1470,10 @@ func impregnation(mother, father = null, anyfather = false):
 	if main.debug == true:
 		rand = 0
 	if mother.preg.fertility < rand:
-		mother.preg.fertility += rand_range(5,10)
+		if mother.traits.has("Infertile") || father.traits.has("Infertile"):
+			mother.preg.fertility += rand_range(2,5)
+		else:
+			mother.preg.fertility += rand_range(5,10)
 		return
 	var age = ''
 	var babyrace = mother.race
@@ -1462,6 +1488,7 @@ func impregnation(mother, father = null, anyfather = false):
 			babyrace = mother.race.replace('Beastkin', 'Halfkin')
 		
 	var baby = globals.newslave(babyrace, age, 'random', mother.origins)
+	baby.state = 'fetus'
 	baby.surname = mother.surname
 	var array = ['skin','tail','ears','wings','horns','arms','legs','bodyshape','haircolor','eyecolor','eyeshape','eyesclera']
 	for i in array:
@@ -1471,10 +1498,20 @@ func impregnation(mother, father = null, anyfather = false):
 			baby[i] = mother[i]
 	if baby.race.find('Halfkin')>=0 && mother.race.find('Beastkin') >= 0 && father.race.find('Beastkin') < 0:
 		baby.bodyshape = 'humanoid'
-	if rand_range(0,10) > 5:
-		baby.beautybase = father.beautybase
+	if father.beautybase > mother.beautybase:
+		baby.beautybase = father.beautybase + rand_range(-2,5)
 	else:
-		baby.beautybase = mother.beautybase
+		baby.beautybase = mother.beautybase + rand_range(-2,5)
+	baby.cleartraits()
+	
+	var traitpool = father.traits + mother.traits
+	for i in traitpool:
+		if rand_range(0,100) <= variables.traitinheritchance:
+			baby.add_trait(i)
+	
+	if rand_range(0,100) <= variables.babynewtraitchance:
+		baby.add_trait(globals.origins.traits('any').name)
+	
 	connectrelatives(mother, baby, 'mother')
 	if realfather != -1:
 		connectrelatives(father, baby, 'father')
@@ -1520,8 +1557,25 @@ func connectrelatives(person1, person2, way):
 
 
 func createrelativesdata(person):
-	var newdata = {name = person.name_long(), id = person.id, race = person.race, sex = person.sex, mother = -1, father = -1, siblings = [], halfsiblings = [], children = []}
+	var newdata = {name = person.name_long(), state = person.state, id = person.id, race = person.race, sex = person.sex, mother = -1, father = -1, siblings = [], halfsiblings = [], children = []}
 	globals.state.relativesdata[person.id] = newdata
+
+func clearrelativesdata(id):
+	var entry
+	if globals.state.relativesdata.has(id):
+		entry = globals.state.relativesdata[id]
+		
+		for i in ['mother','father']:
+			if globals.state.relativesdata.has(entry[i]):
+				var entry2 = globals.state.relativesdata[entry[i]]
+				entry2.children.erase(id)
+		for i in entry.siblings:
+			if globals.state.relativesdata.has(i):
+				var entry2 = globals.state.relativesdata[i]
+				entry2.siblings.erase(id)
+		
+	
+	globals.state.relativesdata.erase(id)
 
 func showtooltip(text):
 	var screen = get_viewport().get_visible_rect()
@@ -1851,6 +1905,8 @@ func load_game(text):
 						k.stats.agi_base = k.stats.agi_cur
 						k.stats.maf_base = k.stats.maf_cur
 						k.stats.end_base = k.stats.end_cur
+					if k.has('stats') && k.stats.obed_mod <= 0:
+						k.stats.obed_mod = 1
 	if currentline.has('sebastianslave'):
 		currentline.sebastianslave['@subpath'] = 'person'
 	resources = dict2inst(currentline.resources)

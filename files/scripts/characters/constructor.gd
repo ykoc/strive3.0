@@ -106,7 +106,7 @@ func get_caste(person, caste):
 		person.wit -= rand_range(10,30)
 		person.charm -= rand_range(10,30)
 		person.beautybase = rand_range(5,40)
-		person.stats.obed_mod = 25
+		person.stats.obed_mod += 0.25
 		if rand_range(0,10) >= 9:
 			person.level += 1
 	elif caste == 'poor':
@@ -131,7 +131,7 @@ func get_caste(person, caste):
 		person.wit += rand_range(5,20)
 		person.charm += rand_range(-5,15)
 		person.beautybase = rand_range(35,75)
-		person.stats.obed_mod = -20
+		person.stats.obed_mod -= 0.2
 		if rand_range(0,10) >= 5:
 			person.level += round(rand_range(0,3))
 	elif caste == 'noble':
@@ -140,7 +140,7 @@ func get_caste(person, caste):
 		person.wit += rand_range(10,30)
 		person.charm += rand_range(10,30)
 		person.beautybase = rand_range(45,95)
-		person.stats.obed_mod = -40
+		person.stats.obed_mod -= 0.4
 		if rand_range(0,10) >= 4:
 			person.level += round(rand_range(0,3))
 	

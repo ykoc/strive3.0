@@ -458,7 +458,7 @@ start_2_sexv = {
 	},
 	lines = [
 		", {^pulling:removing} [his1] [penis1] from [names2] [anus2] and {^aligning it:lining it up} with [his2] [pussy2] instead. ",
-		", {^slipping:sliding} [himself1] out from [names2] [anus2] and {^probing:pushing} into the {^enterance:mouth} of [his2] [pussy2]. ",
+		", {^slipping:sliding} [himself1] out from [names2] [anus2] and {^probing:pushing} into the {^entrance:mouth} of [his2] [pussy2]. ",
 	]},
 	
 	insert = {
@@ -466,8 +466,8 @@ start_2_sexv = {
 		orifice = ["insert"],
 	},
 	lines = [
-		", {^aligning:lining up} [his1] [penis1] with the {^enterance:mouth} of [his2] [pussy2]. ",
-		", {^probing:pressing} {^the tip of :}[his1] [penis1] into the {^enterance:mouth} of [his2] [pussy2]. ",
+		", {^aligning:lining up} [his1] [penis1] with the {^entrance:mouth} of [his2] [pussy2]. ",
+		", {^probing:pressing} {^the tip of :}[his1] [penis1] into the {^entrance:mouth} of [his2] [pussy2]. ",
 	]},
 	
 },
@@ -490,7 +490,7 @@ start_2_sexa = {
 	},
 	lines = [
 		", {^pulling:removing} [his1] [penis1] from [names2] [pussy2] and {^aligning it:lining it up} with [his2] [anus2] instead. ",
-		", {^slipping:sliding} [himself1] out from [names2] [pussy2] and {^probing:pushing} into the {^enterance:mouth} of [his2] [anus2]. ",
+		", {^slipping:sliding} [himself1] out from [names2] [pussy2] and {^probing:pushing} into the {^entrance:mouth} of [his2] [anus2]. ",
 	]},
 	
 	insert = {
@@ -498,8 +498,8 @@ start_2_sexa = {
 		orifice = ["insert"],
 	},
 	lines = [
-		", {^aligning:lining up} [his1] [penis1] with the {^enterance:mouth} of [his2] [anus2]. ",
-		", {^probing:pressing} {^the tip of :}[his1] [penis1] into the {^enterance:mouth} of [his2] [anus2]. ",
+		", {^aligning:lining up} [his1] [penis1] with the {^entrance:mouth} of [his2] [anus2]. ",
+		", {^probing:pressing} {^the tip of :}[his1] [penis1] into the {^entrance:mouth} of [his2] [anus2]. ",
 	]},
 	
 },

@@ -766,7 +766,7 @@ func pressskill(skill):
 		useskills(skill, selectedcharacter, selectedcharacter)
 	
 func useskills(skill, caster = null, target = null, retarget = false):
-	if ongoinganimation == true || caster == null || target == null:
+	if caster == null || target == null:
 		return
 	else:
 		deselectall()
@@ -989,11 +989,13 @@ func enemyturn():
 				yield(self, 'skillplayed')
 	
 	for i in enemygroup + playergroup:
-		if i.state != 'normal' || i.effects.has('stun'):
+		if i.state != 'normal':
 			continue
 		for effect in i.effects.values():
 			if effect.caster.group == 'enemy':
 				if effect.code == 'escapeeffect':
+					if i.effects.has('stun'):
+						continue
 					if trapper == true && randf() > 0.5:
 						i.state = 'defeated'
 						self.combatlog += combatantdictionary(i, i,'[name1] has tried to escape but was caught in one of the traps... ')
@@ -1013,7 +1015,6 @@ func enemyturn():
 			if effect.code == 'escapeeffect':
 				escapeanimation(combatant)
 				combatant.state = 'escaped'
-				continue
 		var skill = []
 		for k in combatant.abilities:
 			var i = globals.abilities.abilitydict[k]

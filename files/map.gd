@@ -6,6 +6,9 @@ var dragging = false
 onready var size = $TextureRect.get_size()
 var offset = Vector2()
 var status = 'none'
+var timer = 0
+var currentloc = null
+
 
 func _ready():
 	for i in get_node("TextureRect/roads").get_children():
@@ -31,6 +34,11 @@ func _input(event):
 
 func _process(delta):
 	var rect = $TextureRect.get_global_rect()
+	if is_processing_input() == false:
+		if timer > 0:
+			timer -= delta
+		elif timer < 0 && self.modulate.a > 0:
+			self.modulate.a -= delta
 	var parentrect = get_parent().get_global_rect()
 	if rect.position.x > parentrect.position.x:
 		$TextureRect.rect_global_position.x = parentrect.position.x 
@@ -44,15 +52,30 @@ func _process(delta):
 #		$TextureRect.rect_global_position = 
 
 func showtooltip(node):
+	if is_processing_input() == false:
+		return
 	var name = node.get_name()
 	var text = globals.main.get_node('explorationnode').zones[name].name
 	globals.showtooltip(text)
 
+func mapshowup(name):
+	var node = find_node(name)
+	if node == null || currentloc == name:
+		return
+	get_parent().visible = true
+	self.modulate.a = 1
+	centermap(name)
+	timer = 2
+	#globals.main.nodefade(self, 1, 2)
+
 func centermap(name):
 	var node = find_node(name)
+	if node == null:
+		return
 	var centerscreen = Vector2(get_parent().rect_global_position.x, get_parent().rect_global_position.y) + Vector2(get_parent().rect_size.x/2, get_parent().rect_size.y/2)
 	var center = node.rect_global_position
 	var nodepos = $TextureRect.rect_global_position
+	currentloc = name
 	#print(centerscreen-center)
 	$TextureRect.set_global_position(nodepos-center+centerscreen)
-	$TextureRect/player.set_global_position(node.rect_global_position)
+	$TextureRect/player.set_global_position(Vector2(node.rect_global_position.x+2, node.rect_global_position.y-25))

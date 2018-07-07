@@ -9,14 +9,17 @@ var testslaveorigin = ['slave','poor','commoner','rich','noble']
 var currentslave = 0 setget currentslave_set
 var selectedslave = -1
 var texture = null
-var startcombatzone = "forest"
+var startcombatzone = "frostfordclearing"
 var nameportallocation
 var enddayprocess = false
 onready var maintext = '' setget maintext_set, maintext_get
 onready var exploration = get_node("explorationnode")
 onready var slavepanel = get_node("MainScreen/slave_tab")
+onready var outside = $outside
 
 onready var tween = $Tween
+
+onready var minimap = $outside/map/Control
 
 signal animfinished
 
@@ -28,6 +31,7 @@ func _ready():
 	get_node("music").set_meta('currentsong', 'none')
 	if OS.get_executable_path() == 'C:\\Users\\1\\Desktop\\godot\\Godot_v3.0.4-stable_win64.exe':
 		globals.developmode = true
+		debug = true
 		get_node("startcombat").show()
 		get_node("new slave button").show()
 		get_node("debug").show()
@@ -35,8 +39,7 @@ func _ready():
 	rebuildrepeatablequests()
 	globals.main = self
 	globals.resources.panel = get_node("ResourcePanel")
-	if globals.player.name == '':
-		debug = true
+	if debug == true:
 		globals.player = globals.newslave('Human', 'teen', 'male')
 		globals.player.ability.append('escape')
 		globals.player.ability.append('heal')
@@ -108,7 +111,7 @@ var sexanimals = {dog = 0, horse = 0}
 
 func _process(delta):
 	$screenchange.visible = (float($screenchange.modulate.a) > 0)
-	if self.checkforevents == true && !$screenchange/AnimationPlayer.is_playing():
+	if self.checkforevents == true && !$screenchange.visible:
 		for i in get_tree().get_nodes_in_group("blocknextdayevents"):
 			if i.is_visible_in_tree():
 				return
@@ -283,12 +286,12 @@ func _on_new_slave_button_pressed():
 	person.consent = true
 	person.lust = 100
 	#person.add_effect(globals.effectdict.contraceptive)
-	#globals.connectrelatives(globals.player, person, 'sibling')
-	#globals.impregnation(person, globals.player)
-	person.preg.duration = variables.pregduration
+	globals.connectrelatives(globals.player, person, 'sibling')
+	globals.impregnation(person, globals.player)
+	#person.preg.duration = variables.pregduration
 	person.attention = 70
 	person.skillpoints = 100
-	person.add_trait('Scarred')
+	#person.add_trait('Scarred')
 	for i in ['conf','cour','charm','wit']:
 		person[i] = 100
 	person.ability.append('heavystike')
@@ -325,7 +328,7 @@ func _on_new_slave_button_pressed():
 	globals.state.sidequests.yris = 3
 	#globals.state.decisions.append('')
 	globals.state.rank = 3
-	globals.state.mainquest = 40
+	globals.state.mainquest = 32
 	#globals.state.plotsceneseen = ['garthorscene','hade1','hade2','frostfordscene']#,'slaverguild']
 	globals.resources.mana = 200
 	globals.state.farm = 3
@@ -587,13 +590,13 @@ func _on_end_pressed():
 					handcuffs = true
 		text = ''
 		
+		var slavehealing = person.send * 0.03 + 0.02
 		if person.away.duration == 0:
-			
 			if person.sleep != 'jail' && person.sleep != 'farm':
 				if person.work in ['rest','forage','hunt','cooking','library','nurse','maid','storewimborn','artistwimborn','assistwimborn','whorewimborn','escortwimborn','fucktoywimborn', 'lumberer', 'ffprostitution','guardian', 'research', 'slavecatcher','fucktoy']:
 					if person.work != 'rest' && person.energy < 30:
 						text = "$name had no energy to fulfill $his duty and had to take a rest. \n"
-						person.health += 10
+						slavehealing += 0.15
 						person.stress -= 20
 					else:
 						workdict = globals.jobs.call(person.work, person)
@@ -649,7 +652,6 @@ func _on_end_pressed():
 						person.add_effect(i, true)
 			if globals.resources.food >= 5:
 				person.loyal += rand_range(0,1)
-				person.health += rand_range(2,5)
 				person.obed += person.loyal/5 - (person.cour+person.conf)/10
 				var consumption = variables.basefoodconsumption
 				if chef != null:
@@ -700,11 +702,11 @@ func _on_end_pressed():
 			if person.race == 'Elf':
 				person.asser = person.conf
 			elif person.race == 'Orc':
-				person.health += 15
+				slavehealing += 0.15
 			elif person.race == 'Slime':
 				person.toxicity -= 200
 			#Traits
-			if person.traits.find("Uncivilized") >= 0:
+			if person.traits.has("Uncivilized"):
 				for i in globals.slaves:
 					if i.spec == 'tamer' && (i.work == person.work || i.work in ['rest','headgirl','jailer']) && i.away.duration == 0:
 						person.obed += 30
@@ -712,11 +714,13 @@ func _on_end_pressed():
 						if rand_range(0,100) < 10:
 							person.trait_remove("Uncivilized")
 							text0.set_bbcode(text0.get_bbcode() + i.dictionary("[color=green]$name managed to lift ") + person.dictionary("$name out of $his wild behavior and turn into a socially functioning person.[/color]\n "))
-			if person.traits.find("Clingy") >= 0 && person.loyal >= 15 && person.attention > 75 && randf() > 0.5:
+			if person.traits.has("Infirm"):
+				slavehealing = slavehealing/3
+			if person.traits.has("Clingy") && person.loyal >= 15 && person.attention > 75 && randf() > 0.5:
 				person.obed -= rand_range(10,30)
 				person.loyal -= rand_range(1,5)
 				text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=yellow]$name is annoyed by you paying no attention to $him. [/color]\n"))
-			if person.traits.find('Pliable') >= 0:
+			if person.traits.has('Pliable'):
 				if person.loyal >= 60:
 					person.trait_remove('Pliable')
 					person.add_trait('Devoted')
@@ -829,15 +833,14 @@ func _on_end_pressed():
 				person.lust += round(rand_range(3,6))
 			if person.sleep == 'communal' && globals.count_sleepers()['communal'] > globals.state.mansionupgrades.mansioncommunal:
 				person.stress += rand_range(5,15)
-				person.health -= rand_range(1,5)
+				slavehealing -= 0.1
 				text2.set_bbcode(text2.get_bbcode() + person.dictionary('$name suffers from communal room being overcrowded.\n'))
 			elif person.sleep == 'communal':
 				person.stress -= rand_range(5,10)
-				person.health += rand_range(1,3)
 				person.energy += rand_range(20,30)+ person.send*6
 			elif person.sleep == 'personal':
 				person.stress -= rand_range(10,15)
-				person.health += rand_range(2,6)
+				slavehealing += 0.1
 				person.energy += rand_range(40,50)+ person.send*6
 				text2.set_bbcode(text2.get_bbcode() + person.dictionary('$name sleeps in a private room, which helps $him heal faster and provides some stress relief.\n'))
 				if person.lust >= 50 && person.rules.masturbation == false && person.tags.find('nosex') < 0:
@@ -876,7 +879,7 @@ func _on_end_pressed():
 				person.obed -= rand_range(10,20)
 				text0.bbcode_text += person.dictionary("[color=red]$name is suffering from unquenched lust.[/color]\n")
 			
-			
+			person.health += slavehealing * person.stats.health_max
 			
 			if person.skillpoints < 0:
 				person.skillpoints = 0
@@ -1781,7 +1784,7 @@ func _on_mansion_pressed():
 		text += '[color=yellow]'
 	else:
 		text += '[color=green]'
-	text += str(globals.state.mansionupgrades.mansioncommunal) + '[/color] beds in communal room\n'
+	text += str(globals.state.mansionupgrades.mansioncommunal) + '[/color] beds in the communal room\n'
 	text += 'You have ' + globals.fastif(sleepers.personal >= globals.state.mansionupgrades.mansionpersonal, '[color=#ff4949]', '[color=green]') + str(globals.state.mansionupgrades.mansionpersonal) + '[/color] ' + globals.fastif(globals.state.mansionupgrades.mansionpersonal > 1, 'personal rooms', 'personal room')+ ' available for living\nYour bed can fit ' +globals.fastif(sleepers['your_bed'] >= globals.state.mansionupgrades.mansionbed, '[color=#ff4949]', '[color=green]') + str(globals.state.mansionupgrades.mansionbed) + '[/color] ' +  globals.fastif(globals.state.mansionupgrades.mansionpersonal > 1, 'persons', 'person')+' besides you.\n\nYour jail can hold up to ' +globals.fastif(sleepers.jail >= globals.state.mansionupgrades.jailcapacity, '[color=#ff4949]', '[color=green]') + str(globals.state.mansionupgrades.jailcapacity) +'[/color] prisoners. \n\n'
 	if globals.state.condition <= 20:
 		text += 'Mansion is [color=#ff4949]in a complete mess[/color].\n\n'
@@ -1844,7 +1847,7 @@ func _on_mansion_pressed():
 			else:
 				nojailcells = true
 			globals.state.capturedgroup.erase(i)
-		text = "You have assigned your captives to the mansion. " + globals.fastif(nojailcells, '[color=yellow]You are out of free jail cells and some captives were assigned to living room.[/color]', '')
+		text = "You have assigned your captives to the mansion. " + globals.fastif(nojailcells, '[color=yellow]You are out of free jail cells and some captives were assigned to the living room.[/color]', '')
 		popup(text)
 	rebuild_slave_list()
 
@@ -2422,8 +2425,10 @@ func babyage(age):
 	baby.loyal += 20
 	if baby.sex != 'male':
 		baby.vagvirgin = true
-		#baby.pussy.first = 'none'
 	globals.slaves = baby
+	globals.state.relativesdata[baby.id].name = baby.name_long()
+	globals.state.relativesdata[baby.id].state = 'normal'
+	
 	globals.state.babylist.erase(baby)
 	baby = null
 	get_node("birthpanel").hide()
@@ -2712,6 +2717,8 @@ func _on_selfrelatives_pressed():
 		text += '\n[center]Siblings[/center]\n'
 		for i in entry.siblings:
 			entry2 = relativesdata[i]
+			if entry2.state == 'fetus':
+				continue
 			if entry2.sex == 'male':
 				text += "Brother: " 
 			else:
@@ -2722,6 +2729,8 @@ func _on_selfrelatives_pressed():
 		text += '\n[center]Children[/center]\n'
 		for i in entry.children:
 			entry2 = relativesdata[i]
+			if entry2.state == 'fetus':
+				continue
 			if entry2.sex == 'male':
 				text += "Son: " 
 			else:
@@ -2739,6 +2748,10 @@ func getentrytext(entry):
 		counter += 1
 	else:
 		text += entry.name
+	if entry.state == 'dead':
+		text += " - Deceased"
+	elif entry.state == 'left':
+		text += " - Status Unknown"
 	text += ", " + entry.race
 	return text
 
@@ -3036,7 +3049,8 @@ func _on_startcombat_pressed():
 	for i in globals.state.playergroup:
 		array.append(globals.state.findslave(i))
 	for i in array:
-		for j in ['health_max','health_cur','agi_base','agi_max']:
+		i.stats.str_base = 2
+		for j in ['health_max','health_cur']:
 			i.stats[j] += 500
 	get_node("outside").gooutside()
 	globals.state.backpack.stackables.rope = 3
@@ -3725,5 +3739,7 @@ func traitselect(person, i):
 
 func _on_traitselectclose_pressed():
 	$traitselect.hide()
+
+
 
 

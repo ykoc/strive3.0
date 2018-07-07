@@ -259,7 +259,8 @@ Game design, code and writing: Maverik
 Music: The Sixth Gate Music
 
 
-Leading Artist: Warm Tail
+Artist: Warm Tail
+Artist: Demona
 
 
 Sex engine writing and coding: NK
@@ -278,7 +279,8 @@ Game design, code and writing: Maverik
 Music: The Sixth Gate Music
 
 
-Leading Artist: Warm Tail
+Artist: Warm Tail
+Artist: Demona
 
 
 Sex engine writing and coding: NK
@@ -289,7 +291,7 @@ scroll_active = true
 scroll_following = false
 selection_enabled = false
 override_selected_font_color = false
-_sections_unfolded = [ "Focus", "Rect" ]
+_sections_unfolded = [ "BBCode", "Focus", "Rect" ]
 
 [node name="RichTextLabel1" type="RichTextLabel" parent="TextureFrame" index="1"]
 

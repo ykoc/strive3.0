@@ -315,7 +315,7 @@ reqs = "true",
 combat = false,
 code = 'umbra',
 name = 'Umbra',
-description = "You are in the middle of vast enclosed cave. Below the ceiling resides a magical dim light source, providing slightly more illumination than at full moon night. Shabby buildings around the cave's walls have multiple people moving in and out. Most people resemble bandits and criminals, but occassinally you can spot riches with bodyguards. Despite slightly worring atmosphere, there seems to be no open danger or fight-seeking individuals.  ",
+description = "You are in the middle of a vast enclosed cave. Below the ceiling resides a magical dim light source, providing slightly more illumination than at full moon night. Shabby buildings around the cave's walls have multiple people moving in and out. Most people resemble bandits and criminals, but occassinally you can spot riches with the bodyguards. Despite a slightly worring atmosphere, there seems to be no open danger or fight-seeking individuals.  ",
 enemies = [],
 encounters = [],
 length = 0,
@@ -330,7 +330,7 @@ reqs = "true",
 combat = false,
 code = 'wimborn',
 name = 'Wimborn',
-description = "The Wimborn is a lively place at nearly all hours, as the cries of hawkers and shopkeepers vie with the songs of work crews for attention. Along the major roads, most of the buildings have been painted in a riot of colors to break up the monotony of grey-blue brick and plaster covered stone, with many of the storefronts sporting colorful awnings and signs to attract potential customers. Away from the bright colors and raucous noise of the market streets things tend to be restrained, the buildings more grey, and cries more a cause for worry.\n\nThe city is divided into a number of districts, but only a few areas are of interest to you at the moment. To the north are the Market District, and past that Auld Erellon which is the home of the Mage’s Guild and other government bodies. To the west is Red-Lantern and Riverside, where most of the city’s brothels and whorehouses might be found. To the south is the Guild District, where there is always some foreman looking for cheap but reliable labor.",
+description = "Wimborn is a lively place at nearly all hours, as the cries of hawkers and shopkeepers vie with the songs of work crews for attention. Along the major roads, most of the buildings have been painted in a riot of colors to break up the monotony of grey-blue brick and plaster covered stone, with many of the storefronts sporting colorful awnings and signs to attract potential customers. Away from the bright colors and raucous noise of the market streets things tend to be restrained, the buildings more grey, and cries more a cause for worry.\n\nThe city is divided into a number of districts, but only a few areas are of interest to you at the moment. To the north are the Market District, and past that Auld Erellon which is the home of the Mage’s Guild and other government bodies. To the west is Red-Lantern and Riverside, where most of the city’s brothels and whorehouses might be found. To the south is the Guild District, where there is always some foreman looking for cheap but reliable labor.",
 enemies = [],
 encounters = [],
 length = 0,
@@ -414,6 +414,7 @@ var button
 var newbutton
 var main
 var outside
+var minimap
 
 func mansionreturn():
 	main._on_mansion_pressed()
@@ -454,7 +455,9 @@ func zoneenter(zone):
 	text = ''
 	globals.get_tree().get_current_scene().get_node("outside/exploreprogress").set_value((progress/max(zone.length,1))*100)
 	currentzone = zone
+	outside.currentzone = zone
 	outside.clearbuttons()
+	showmap(currentzone)
 	text += zone.description
 	if zone.code in ['wimborn','gorn','amberguard','frostford']:
 		text += "\n\n[color=yellow]You can use public teleport to return to mansion from this location.[/color]"
@@ -524,6 +527,10 @@ func zoneenter(zone):
 	if progress == 0 && lastzone != zone.code && globals.evaluate(zones[lastzone].reqs) == true:
 		array.append({name = "Return to " + zones[lastzone].name, function = "zoneenter", args = lastzone})
 	outside.buildbuttons(array, self)
+
+func showmap(currentzone):
+	var map = currentzone.code
+	main.minimap.mapshowup(map)
 
 func teleportmansion():
 	globals.resources.gold -= 25

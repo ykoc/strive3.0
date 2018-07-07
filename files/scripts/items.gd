@@ -251,7 +251,7 @@ regressionpot = {
 claritypot = {
 	code = 'claritypot',
 	name = 'Elixir of Clarity',
-	icon = load("res://files/images/items/regressionpot.png"),
+	icon = load("res://files/images/items/claritypot.png"),
 	description = "A strong mixture allowing the removal of persistent mental qualities.",
 	effect = 'claritypoteffect',
 	recipe = 'recipeclaritypot',
@@ -1338,8 +1338,9 @@ func oblivionpoteffect():
 	return text
 
 func misscariageeffect():
-	person.preg.baby = null
-	person.preg.duration = 0
+	person.abortion()
+#	person.preg.baby = null
+#	person.preg.duration = 0
 	return person.dictionary("Drinking the miscarriage potion ends $name's pregnancy as $his body magically absorbs what had been growing inside it.")
 
 func stimulanteffect():
@@ -1352,8 +1353,6 @@ func stimulanteffect():
 		return("Apparently, $name isn't greatly affected by drinking the potion as the previous effect hasn't worn off yet.")
 
 func deterrenteffect():
-	if person.traits.has("Sex-crazed"):
-		person.trait_remove('Sex-crazed')
 	if person == globals.player:
 		return('You decide this potion is not going to benefit you at all.')
 	if person.effects.has('numbed') == false:
@@ -1369,8 +1368,7 @@ func beautyeffect():
 		text = person.dictionary('You apply the Beauty Mixture to your face, which makes your skin smoother and hides visible flaws.')
 	else:
 		text = person.dictionary('You order $name to apply Beauty Mixture to $his face, which will make $his skin smoother and hides visible flaws.')
-	if person.traits.has("Scarred"):
-		person.trait_remove('Scarred')
+	
 	person.add_effect(globals.effectdict.beautypot)
 	return text
 
@@ -1585,7 +1583,7 @@ func teleportunlock(item):
 	globals.resources.gold -= item.cost
 	globals.state.portals[item.code.replace('teleport','')].enabled = true
 	if item.code != 'teleportumbra':
-		globals.get_tree().get_current_scene().popup("Unlocked portal to the " + item.code.replace('teleport','').capitalize() + '.')
+		globals.get_tree().get_current_scene().popup("Unlocked portal to " + item.code.replace('teleport','').capitalize() + '.')
 	else:
 		globals.get_tree().get_current_scene().get_node("outside").sebastianquest(4)
 		globals.get_tree().get_current_scene().get_node("outside").shopclose()
