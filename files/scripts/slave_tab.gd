@@ -85,10 +85,10 @@ func slavetabopen():
 	if showfullbody == true:
 		$stats/basics/bodypanel/fullbody.set_texture(null)
 		if nakedspritesdict.has(person.unique):
-			if person.obed >= 50 || person.stress < 10:
-				$stats/basics/bodypanel/fullbody.set_texture(globals.spritedict[nakedspritesdict[person.unique].clothcons])
-			else:
+			if person.obed <= 50 || person.stress > 50:
 				$stats/basics/bodypanel/fullbody.set_texture(globals.spritedict[nakedspritesdict[person.unique].clothrape])
+			else:
+				$stats/basics/bodypanel/fullbody.set_texture(globals.spritedict[nakedspritesdict[person.unique].clothcons])
 		elif person.imagefull != null && globals.loadimage(person.imagefull) != null:
 			$stats/basics/bodypanel/fullbody.set_texture(globals.loadimage(person.imagefull))
 		$stats/basics/bodypanel.visible = ($stats/basics/bodypanel/fullbody.get_texture() != null)

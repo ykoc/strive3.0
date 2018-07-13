@@ -390,7 +390,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=30]
+[sub_resource type="StyleBoxTexture" id=22]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -409,7 +409,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=22]
+[sub_resource type="StyleBoxTexture" id=23]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -428,7 +428,7 @@ expand_margin_bottom = 5.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=23]
+[sub_resource type="StyleBoxTexture" id=24]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -447,7 +447,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=24]
+[sub_resource type="StyleBoxTexture" id=25]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -466,7 +466,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=25]
+[sub_resource type="StyleBoxTexture" id=26]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -486,7 +486,7 @@ modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 _sections_unfolded = [ "Margin" ]
 
-[sub_resource type="StyleBoxTexture" id=26]
+[sub_resource type="StyleBoxTexture" id=27]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -508,7 +508,7 @@ modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 _sections_unfolded = [ "Axis Stretch", "Expand Margin", "Margin" ]
 
-[sub_resource type="StyleBoxTexture" id=27]
+[sub_resource type="StyleBoxTexture" id=28]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -527,7 +527,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=28]
+[sub_resource type="StyleBoxTexture" id=29]
 
 content_margin_left = 0.0
 content_margin_right = 0.0
@@ -546,7 +546,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=29]
+[sub_resource type="StyleBoxTexture" id=30]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -635,7 +635,7 @@ PopupMenu/styles/hover = SubResource( 20 )
 PopupMenu/styles/panel = SubResource( 21 )
 PopupMenu/styles/panel_disabled = null
 PopupMenu/styles/separator = null
-PopupPanel/styles/panel = SubResource( 30 )
+PopupPanel/styles/panel = SubResource( 22 )
 TabContainer/colors/font_color_bg = Color( 0.690196, 0.690196, 0.690196, 1 )
 TabContainer/colors/font_color_fg = Color( 0.941176, 0.941176, 0.941176, 1 )
 TabContainer/constants/hseparation = 4
@@ -650,9 +650,9 @@ TabContainer/icons/increment = null
 TabContainer/icons/increment_hilite = null
 TabContainer/icons/menu = null
 TabContainer/icons/menu_hilite = null
-TabContainer/styles/panel = SubResource( 22 )
-TabContainer/styles/tab_bg = SubResource( 23 )
-TabContainer/styles/tab_fg = SubResource( 24 )
+TabContainer/styles/panel = SubResource( 23 )
+TabContainer/styles/tab_bg = SubResource( 24 )
+TabContainer/styles/tab_fg = SubResource( 25 )
 TooltipLabel/colors/font_color = Color( 1, 1, 1, 1 )
 TooltipLabel/colors/font_color_shadow = Color( 0, 0, 0, 0.1 )
 TooltipLabel/constants/shadow_offset_x = 1
@@ -662,10 +662,10 @@ VScrollBar/icons/decrement = null
 VScrollBar/icons/decrement_hilite = null
 VScrollBar/icons/increment = null
 VScrollBar/icons/increment_hilite = null
-VScrollBar/styles/grabber = SubResource( 25 )
-VScrollBar/styles/grabber_hilite = SubResource( 26 )
-VScrollBar/styles/scroll = SubResource( 27 )
-VScrollBar/styles/scroll_focus = SubResource( 28 )
+VScrollBar/styles/grabber = SubResource( 26 )
+VScrollBar/styles/grabber_hilite = SubResource( 27 )
+VScrollBar/styles/scroll = SubResource( 28 )
+VScrollBar/styles/scroll_focus = SubResource( 29 )
 WindowDialog/colors/title_color = Color( 1, 1, 1, 1 )
 WindowDialog/constants/close_h_ofs = 22
 WindowDialog/constants/close_v_ofs = 20
@@ -674,6 +674,6 @@ WindowDialog/constants/titlebar_height = 18
 WindowDialog/fonts/title_font = null
 WindowDialog/icons/close = null
 WindowDialog/icons/close_hilite = null
-WindowDialog/styles/panel = SubResource( 29 )
+WindowDialog/styles/panel = SubResource( 30 )
 _sections_unfolded = [ "Panel", "PopupMenu/icons", "PopupMenu/styles", "PopupPanel", "PopupPanel/styles", "TabContainer", "TooltipLabel", "TooltipLabel/colors", "TooltipPanel", "TooltipPanel/styles", "VScrollBar", "VScrollBar/icons", "VScrollBar/styles", "WindowDialog/colors" ]
 

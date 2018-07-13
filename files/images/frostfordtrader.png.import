@@ -2,15 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/скетчи-итемов.png-c770704e5ae7ee7837ebf5d2983fff82.stex"
+path="res://.import/frostfordtrader.png-7e79a1d0821382214d89d1bd94d25cfc.stex"
 
 [deps]
 
-source_file="res://files/images/items/скетчи-итемов.png"
-source_md5="d874b851d770c7fb23c53046200a6ec9"
-
-dest_files=[ "res://.import/скетчи-итемов.png-c770704e5ae7ee7837ebf5d2983fff82.stex" ]
-dest_md5="e716582454e3c38ad9f7cb2a90c07b14"
+source_file="res://files/images/frostfordtrader.png"
+dest_files=[ "res://.import/frostfordtrader.png-7e79a1d0821382214d89d1bd94d25cfc.stex" ]
 
 [params]
 

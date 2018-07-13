@@ -346,8 +346,6 @@ traits = ['Grateful', 'Mentor']
 }
 
 var sprites = {
-chancellor = load("res://files/images/chancellor.png"),
-merchant = load("res://files/images/merchant.png"),
 fairy = load("res://files/images/maple/maple.png"),
 fairynaked = load("res://files/images/maple/maplenaked.png"),
 melissafriendly = load("res://files/images/melissa/melissafriendly.png"),
@@ -421,6 +419,8 @@ oldemilynakedhappy = load("res://files/images/emily/oldemilynakedhappy.png"),
 oldemilynakedneutral = load("res://files/images/emily/oldemilynakedneutral.png"),
 oldemilyportrait = load("res://files/images/emily/oldemilyportrait.png"),
 
+chancellor = load("res://files/images/chancellor.png"),
+merchant = load("res://files/images/merchant.png"),
 hadesillh = load("res://files/images/hade/hadesillhoute.png"),
 hadeneutral = load("res://files/images/hade/hadeneutral.png"),
 hadesmile = load("res://files/images/hade/hadesmile.png"),
@@ -431,5 +431,6 @@ hade2angry = load("res://files/images/hade/hade2angry.png"),
 goblin = load("res://files/images/goblin.png"),
 centaur = load("res://files/images/centaur.png"),
 forestspirit = load("res://files/images/forestspirit.png"),
+frostfordtrader = load("res://files/images/frostfordtrader.png"),
 }
 

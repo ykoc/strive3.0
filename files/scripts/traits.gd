@@ -332,6 +332,36 @@ var traits = {
       ""
     ]
   },
+ "Blemished": {
+    "name": "Blemished",
+    "description": "$name's skin is covered in a lot of imperfections. Besides being unappealing to look at, this also makes $him suffer from low self esteem.\n\n[color=aqua]Charm -10. Beauty -10. [/color]",
+    "effect": {
+      "code": "Blemished",
+      "charm_base": -10,
+      "beautybase": -10
+    },
+    "tags": [
+      "physical",
+      "detrimental"
+    ],
+    "conflict": [
+      "Natural Beauty"
+    ]
+  },
+  "Natural Beauty": {
+    "name": "Natural Beauty",
+    "description": "$name is unusually pretty since $his birth and often was an object of envy. \n\n[color=aqua]Beauty +35. [/color]",
+    "effect": {
+      "code": "beauty",
+      "beautybase": 35
+    },
+    "tags": [
+      "physical",
+    ],
+    "conflict": [
+      "Blemished"
+    ]
+  },
   "Coward": {
     "name": "Coward",
     "description": "$name is of a meek character and has a difficult time handling $himself in physical confrontations. \n\n[color=aqua]Physical punishments build obedience quicker, stress in combat grows twice as fast. [/color]",
@@ -446,6 +476,32 @@ var traits = {
       "Dominant"
     ]
   },
+  "Infertile": {
+    "name": "Infertile",
+    "description": "$name appear to have a rare condition making $him much less likely to have children. \n\n[color=aqua]Imregnation chance greatly reduced. [/color]",
+    "effect": {
+    },
+    "tags": [
+      "physical",
+	  "detrimental"
+    ],
+    "conflict": [
+	  ""
+    ]
+  },
+  "Infirm": {
+    "name": "Infirm",
+    "description": "$name's wounds require additional care. \n\n[color=aqua]Natural regeneration is greatly reduced. [/color]",
+    "effect": {
+    },
+    "tags": [
+      "physical",
+	  "detrimental"
+    ],
+    "conflict": [
+	  ""
+    ]
+  },
   "Uncivilized": {
     "name": "Uncivilized",
     "description": "$name has spent most of $his lifetime in the wilds barely interacting with modern society and acting more like an animal. As a result, $he can't realistically fit into common groups and be accepted there. \n\n[color=aqua]Social jobs disabled. Max Wit -50. Max Obedience -30. Max Loyalty -65. [/color]",
@@ -538,6 +594,18 @@ var traits = {
     ],
     "conflict": [
       ""
+    ]    
+  },
+  "Spoiled": {
+    "name": "Spoiled",
+    "description": "$name cares a great deal about the environment around $him and expects to be treated well. \n\n[color=aqua]Luxury demands are increased. [/color]",
+    "effect": {
+    },
+    "tags": [
+      "mental",
+    ],
+    "conflict": [
+      "Ascetic"
     ]    
   },
   "Small Eater": {

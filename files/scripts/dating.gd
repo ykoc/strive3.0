@@ -1022,7 +1022,7 @@ func stop(person, counter):
 	return text
 
 func drunkness():
-	if drunkness > person.send*2 + 1:
+	if drunkness > max(0, person.send*2) + 1:
 		person.away.duration = 1
 		endencounter()
 		$end/RichTextLabel.bbcode_text += decoder('\n\n[color=yellow][name2] has passed out from alcohol overdose. [/color]')

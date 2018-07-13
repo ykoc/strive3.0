@@ -9,7 +9,7 @@ var testslaveorigin = ['slave','poor','commoner','rich','noble']
 var currentslave = 0 setget currentslave_set
 var selectedslave = -1
 var texture = null
-var startcombatzone = "frostfordclearing"
+var startcombatzone = "undercityruins"
 var nameportallocation
 var enddayprocess = false
 onready var maintext = '' setget maintext_set, maintext_get
@@ -19,7 +19,7 @@ onready var outside = $outside
 
 onready var tween = $Tween
 
-onready var minimap = $outside/map/Control
+onready var minimap = $outside/minimappanel/map/Control
 
 signal animfinished
 
@@ -300,9 +300,9 @@ func _on_new_slave_button_pressed():
 	for i in globals.spelldict.values():
 		i.learned = true
 	for i in globals.itemdict.values():
-		i.unlocked = true
 		if !i.type in ['gear','dummy']:
 			i.amount += 10
+	globals.itemdict.zoebook.amount = 0
 	for i in ['armorchain','weaponclaymore','clothpet','clothkimono','underwearlacy','armortentacle','accamuletemerald','accamuletemerald','clothtentacle']:
 		var tmpitem = globals.items.createunstackable(i)
 		globals.state.unstackables[str(tmpitem.id)] = tmpitem
@@ -325,10 +325,10 @@ func _on_new_slave_button_pressed():
 	globals.resources.upgradepoints += 100
 	
 	globals.state.sidequests.brothel = 1
-	globals.state.sidequests.yris = 3
+	globals.state.sidequests.zoe = 3
 	#globals.state.decisions.append('')
 	globals.state.rank = 3
-	globals.state.mainquest = 32
+	globals.state.mainquest = 0
 	#globals.state.plotsceneseen = ['garthorscene','hade1','hade2','frostfordscene']#,'slaverguild']
 	globals.resources.mana = 200
 	globals.state.farm = 3
@@ -343,7 +343,7 @@ func _on_new_slave_button_pressed():
 	globals.state.reputation.frostford = 50
 	globals.state.condition -= 100
 	globals.state.decisions = ['tishaemilytricked','chloebrothel','ivrantaken','goodroute']
-	if false:
+	if true:
 		for i in globals.characters.characters:
 			person = globals.characters.create(i)
 			person.loyal = 100
@@ -356,6 +356,7 @@ func _on_new_slave_button_pressed():
 			person.attention = 100
 			person.learningpoints = 50
 			globals.slaves = person
+	#globals.events.zoepassitems()
 
 func mansion():
 	_on_mansion_pressed()
@@ -787,6 +788,8 @@ func _on_end_pressed():
 								text2.set_bbcode(text2.get_bbcode() + person.dictionary(globals.items.call(k.effect, person)))
 			if person.fear > 0:
 				var fearreduction = 10 + person.conf/20
+				if person.brand != 'none':
+					fearreduction /= 2
 				if person.sleep == 'jail':
 					fearreduction -= fearreduction*0.3
 				if person.fear - fearreduction > 0:
@@ -794,7 +797,7 @@ func _on_end_pressed():
 					person.fear -= fearreduction
 				else:
 					person.obed += 20 - abs(person.fear - fearreduction)*1.5
-					text2.bbcode_text += person.dictionary("[color=yellow]$name seems to be no longer afraid of you.[/color]\n")
+					text2.bbcode_text += person.dictionary("[color=yellow]$name seems no longer to be afraid of you.[/color]\n")
 					person.fear = 0
 			if person.toxicity > 0:
 				if person.toxicity > 35 && rand_range(0,10) > 6.5:
@@ -1178,6 +1181,10 @@ func nextdayevents():
 			globals.state.plotsceneseen.append('hademelissa')
 			checkforevents = true
 			return
+	if globals.itemdict.zoebook.amount >= 1 && globals.state.sidequests.zoe == 3 && randf() >= 0.5:
+		globals.events.zoebookevent()
+		checkforevents = true
+		return
 	startnewday()
 
 
@@ -1667,9 +1674,9 @@ func hide_everything():
 
 var background setget background_set, background_get
 
-func background_set(text):
+func background_set(text, forcefade = false):
 	if globals.rules.fadinganimation == true:
-		if get_node("TextureFrame").get_texture() != globals.backgrounds[text]:
+		if get_node("TextureFrame").get_texture() != globals.backgrounds[text] || forcefade == true:
 			animationfade()
 			yield(self, "animfinished")
 	texture = globals.backgrounds[text]
@@ -1978,7 +1985,7 @@ func _on_alchemy_pressed():
 			i.queue_free()
 	var array = []
 	for i in globals.itemdict.values():
-		if i.recipe != '' && i.unlocked == true:
+		if i.recipe != '' && globals.evaluate(i.reqs):
 			array.append(i)
 	array.sort_custom(globals.items,'sortitems')
 	for i in array:
@@ -2147,7 +2154,7 @@ var mainquestdict = {
 '5' : "Melissa told you to find Sebastian at the market and get her 'delivery'.",
 '6' : "Acquire alchemical station, brew Elixir of Youth and return it to Melissa.",
 '7' : "Visit Melissa for your next task.",
-'8' : "Set up a laboratory. You can buy tools at Mage's Order. Then return to Melissa.",
+'8' : "Set up a Laboratory through Mansion Upgrades tab. Then return to Melissa.",
 '9' : "Return to Melissa.",
 '10': "Bring Melissa a Taurus girl with huge lactating tits. Size can be altered with certain potions. ",
 '11': "Visit Melissa for your next mission. ",
@@ -2221,6 +2228,10 @@ var yrisquestdict = {
 "3":"Talk to Yris at Gorn's Bar",
 "4":"Find a way to secure your bet with Yris. Perhaps, some alchemist might shine some light upon your findings. You'll also need 1000 gold and 1 Deterrent potion.",
 "5":"Beat Yris at her challenge at Gorn's Bar. You'll also need to bring 1000 gold and Deterrent potion. ",
+}
+var zoequestdict = {
+"4":"Deliver to Zoe 10 Teleport Seals, 5 Magic Essences, 5 Tainted Essences.",
+	
 }
 var questtype = {slaverequest = 'Slave Request'}
 var selectedrepeatable

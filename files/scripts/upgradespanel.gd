@@ -64,8 +64,6 @@ func categoryselect(button):
 		newbutton.set_meta("upgrade", upgrade)
 		newbutton.connect("pressed",self,'upgradeselected',[upgrade])
 
-var alchemy1 = ['aphrodisiac','hairgrowthpot','amnesiapot','lactationpot','miscariagepot','stimulantpot','deterrentpot']
-var alchemy2 = ['oblivionpot','oblivionpot','minoruspot','majoruspot','aphroditebrew','claritypot']
 
 func upgradeselected(upgrade):
 	var text = ''
@@ -135,13 +133,6 @@ func purchasconfirm():
 	var upgrade = purchaseupgrade.get_meta("upgrade")
 	var currentupgradelevel = globals.state.mansionupgrades[upgrade.code]
 	var cost = purchaseupgrade.get_meta("cost")
-	if upgrade.code == 'mansionalchemy':
-		if currentupgradelevel == 0:
-			for i in alchemy1:
-				globals.itemdict[i].unlocked = true
-		elif currentupgradelevel == 1:
-			for i in alchemy2:
-				globals.itemdict[i].unlocked = true
 	globals.resources.gold -= cost
 	globals.resources.upgradepoints -= upgrade.pointscost
 	globals.state.mansionupgrades[upgrade.code] += 1

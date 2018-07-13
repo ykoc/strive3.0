@@ -686,6 +686,9 @@ func physdamage(caster, target, skill):
 			if i.effect == 'fullpenetration':
 				armor = 0
 				protection = 1
+	if target.passives.has('defenseless'):
+		armor = 0
+		protection = 1
 	if caster.passives.has('exhaust'):
 		power = power * 0.66
 	

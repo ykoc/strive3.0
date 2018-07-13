@@ -18,396 +18,14 @@ var deeperregion = false
 var capturedtojail = 0
 var enemyloot = {stackables = {}, unstackables = []}
 var enemygear = {}
-
+var areas = load('res://files/scripts/explorationregions.gd').new()
 
 var enemygrouppools = combatdata.enemygrouppools
 var capturespool = combatdata.capturespool
 var enemypool = combatdata.enemypool
 
 
-var zones = {
-wimbornoutskirts = {
-background = 'meadows',
-reqs = "true",
-combat = true,
-code = 'wimbornoutskirts',
-name = 'Wimborn Outskirts',
-description = "The rural road leads across green plains and various settlements. Bright scenery puts you at peace. ",
-enemies = [{value = 'peasant', weight = 2},{value = 'banditseasy', weight = 1},{value = 'thugseasy',weight = 3}],
-encounters = [],
-length = 5,
-exits = ['wimborn','forest', 'prairie'],
-tags = ['wimborn'],
-races = [{value = 'Taurus', weight = 2}, {value = 'Cat', weight = 1},{value = 'Human', weight = 12}],
-levelrange = [1,2],
-},
-prairie = {
-background = 'highlands',
-reqs = "true",
-combat = true,
-code = 'prairie',
-name = 'Prairies',
-description = "Long trading route goes through the wide prairies. Rarely you can spot mixed settlements and lone estates. ",
-enemies = [{value = 'banditsmedium', weight = 2},{value = 'slaverseasy', weight = 1},{value = 'peasant', weight = 2},{value = 'banditseasy', weight = 3}],
-encounters = [],
-length = 5,
-exits = ['wimbornoutskirts','gornoutskirts','sea'],
-tags = ['wimborn'],
-races = [{value = 'Orc', weight = 6},{value = 'Human', weight = 4}, {value = 'Cat', weight = 1}, {value = 'Bunny', weight = 1}],
-levelrange = [2,4],
-},
-
-forest = {
-background = 'crossroads',
-reqs = "true",
-combat = true,
-code = 'forest',
-name = 'Ancient Forest',
-description = "You stand deep within this ancient forest. Giant trees tower above you, reaching into the skies and casting deep shadows on the ground below. As the wind whispers past, you can hear the movement of small creature in the undergrowth and birds singing from their perches above.",
-enemies = [{value = 'wolveswithperson', weight = 0.4},{value = 'banditseasy', weight = 3}, {value = 'peasant', weight = 3}, {value ='solobear', weight = 4}, {value = 'wolveseasy', weight = 9},{value = 'treasurechest', weight = 1}],
-encounters = [['chloeforest','globals.state.sidequests.chloe in [0,1]',10]],
-length = 5,
-exits = ['shaliq', 'wimbornoutskirts', 'elvenforest'],
-tags = ['wimborn'],
-races = [{value = 'Elf', weight = 2}, {value = 'Wolf', weight = 1}, {value = 'Bunny', weight = 1}, {value = 'Human', weight = 10}],
-levelrange = [2,4],
-},
-
-elvenforest = {
-background = 'forest',
-reqs = "true",
-combat = true,
-code = 'elvenforest',
-name = 'Elven Grove',
-description = "This portion of the forest is located dangerously close to elven lands. They take poorly to intruders in their part of the woods so you should remain on your guard.",
-enemies = [{value = 'wolveswithperson', weight = 4},{value = 'fairy', weight = 2},{value = 'solobear', weight = 6},{value = 'elfguards',weight = 6},{value = 'plantseasy', weight = 6},{value = 'wolveseasy', weight = 6},{value = 'blockedsection', weight = 1}],
-encounters = [],
-length = 5,
-exits = ['amberguard','forest'],
-tags = ['amberguard'],
-races = [{value = 'Drow', weight = 1},{value = 'Elf', weight = 12},{value = 'Bunny', weight = 2},{value = 'Tanuki', weight = 2}],
-levelrange = [3,6],
-},
-
-
-amberguardforest = {
-background = 'amberroad',
-reqs = "true",
-combat = true,
-code = 'amberguardforest',
-name = 'Amber Road',
-description = "Amber Road is a long way through seeming glade and various small settlements and hills. ",
-enemies = [{value = 'solobear',weight = 1}, {value = 'wolveshard', weight = 3}, {value ='direwolveseasy', weight = 5}, {value = 'elfguards',weight = 3},],
-encounters = [['aynerisencounter','globals.state.sidequests.ayneris in [0,1,2]',7]],
-length = 4,
-exits = ['amberguard','witchhut','undercityentrance'],
-tags = ['amberguard'],
-races = [{value = "Elf", weight = 100}],
-levelrange = [5,8],
-},
-
-grove = {
-background = 'grove',
-reqs = "true",
-combat = true,
-code = 'grove',
-name = 'Far Eerie Woods',
-description = "This portion of the forest is deeply shadowed, and strange sounds drift in and out of hearing. Something about the atmosphere keeps the normal forest creatures silent, lending an eerie, mystic feeling to the grove you stand within.",
-enemies = [{value = 'plantswithperson',weight = 1},{value = 'dryad',weight = 2},  {value = 'fairy', weight = 2},{value = 'wolveshard', weight = 4},{value = 'plantseasy',weight = 5}],
-encounters = [['chloegrove','globals.state.sidequests.chloe == 6',25],['snailevent','globals.state.mansionupgrades.farmhatchery >= 1 && globals.state.snails < 10',10]],
-length = 7,
-exits = ['shaliq','marsh'],
-tags = ['wimborn'],
-races = [{value = 'Fairy', weight = 3},{value = "Dryad", weight = 2}],
-levelrange = [3,6],
-},
-
-marsh = {
-background = 'marsh',
-reqs = "true",
-combat = true,
-code = 'marsh',
-name = 'Marsh',
-description = "Dank bog lies at the border of the forest and swamps beyond. Noxious smells and a sinister aura prevail throughout. The landscape itself is hostile, with pitch-black pools of water mixed among the solid ground and you doubt that the creatures that live here are any more pleasant than the land they live in.",
-enemies = [{value = 'banditcamp',weight = 1},{value = 'monstergirl', weight = 1}, {value = 'oozesgroup', weight = 2}, {value = 'solospider', weight = 5},{value = 'treasurechest', weight = 1}],
-encounters = [],
-length = 6,
-exits = ['frostfordoutskirts','grove'],
-tags = ['frostford'],
-races = [{value = 'Arachna', weight = 1},{value = 'Lamia', weight = 2},{value = 'Slime', weight = 2}, {value = 'Demon', weight = 5}],
-levelrange = [6,11],
-},
-
-mountains = {
-background = 'mountains',
-reqs = "true",
-combat = true,
-code = 'mountains',
-name = 'Mountains',
-description = "You climb over small hills in search for any activity in these elevated grounds.",
-enemies = [{value = 'slaversmedium', weight = 1},{value = 'harpy', weight = 2},{value = 'banditsmedium', weight = 3}, {value = 'fewcougars', weight = 4}],
-encounters = [],
-length = 6,
-exits = ['gornoutskirts','mountaincave'],
-tags = ['gorn'],
-races = [{value = 'Dragonkin', weight = 1},{value = 'Seraph', weight = 2.5},{value = 'Gnome', weight = 3},{value = 'Centaur', weight = 2},{value = 'Goblin', weight = 4},{value = 'Orc', weight = 8}],
-levelrange = [4,7],
-},
-
-mountaincave = {
-background = 'tunnels',
-reqs = "true",
-combat = true,
-code = 'mountaincave',
-name = 'Mountain Caves',
-description = "You step onto the damp cave floor. These underground systems server home to many various beasts and semisentient creatures.",
-enemies = [{value = 'oozesgroup', weight = 2}, {value = 'solospider', weight = 2}, {value = 'goblingroup', weight = 4},{value = 'treasurechest', weight = 1}],
-encounters = [],
-length = 8,
-exits = ['mountains'],
-tags = ['gorn'],
-races = [],
-levelrange = [6,12],
-},
-
-sea = {
-background = 'sea',
-reqs = "true",
-combat = true,
-code = 'sea',
-name = 'Sea',
-description = "You are at the beach of a Big Sea. Air smells of salt and you can spot some sea caves formed by plateau and incoming waves.",
-enemies = [{value = 'banditcamp', weight = 1},{value = 'monstergirl', weight = 3},{value = 'travelersgroup', weight = 5},{value = 'oozesgroup', weight = 5},{value = 'treasurechest', weight = 1}],
-encounters = [],
-length = 5,
-exits = ['prairie'],
-tags = ['gorn'],
-races = [{value = 'Scylla', weight = 1},{value = 'Lamia', weight = 1},{value = 'Nereid', weight = 3}],
-levelrange = [5,9],
-},
-
-gornoutskirts = {
-background = 'highlands',
-reqs = "true",
-combat = true,
-code = 'gornoutskirts',
-name = 'Gorn Outskirts',
-description = "The town's outskirts look bright and green. ",
-enemies = [{value = 'slaverseasy', weight = 1},{value = 'peasant', weight = 1},{value = 'banditseasy', weight = 3},{value = 'thugseasy', weight = 3},{value = 'wolveseasy', weight = 5}],
-encounters = [],
-length = 5,
-exits = ['gorn','prairie','mountains'],
-tags = ['gorn'],
-races = [{value = 'Centaur', weight = 1},{value = 'Goblin', weight = 4},{value = 'Orc', weight = 12}],
-levelrange = [2,5],
-},
-
-
-frostfordoutskirts = {
-background = 'borealforest',
-reqs = "true",
-combat = true,
-code = 'frostfordoutskirts',
-name = 'Frostford Outskirts',
-description = "Main road quickly branches off at thick boreal forest. Even though Frostford is considerably dense in population, its periphery is far less inhabitable due to harsh climat. You make your way through semi-utilized forest paths paying attention to the surroundings. ",
-enemies = [{value = 'banditsmedium', weight = 2},{value = 'travelersgroup', weight = 1.5},{value = 'peasant', weight = 2},{value = 'thugseasy', weight = 2},{value = 'solobear', weight = 4}],
-encounters = [],
-length = 5,
-exits = ['frostford','marsh','frostfordclearing'],
-tags = ['frostford'],
-races = [{value = 'Halfkin Fox', weight = 1},{value = 'Beastkin Fox', weight = 1},{value = 'Halfkin Cat', weight = 2},{value = 'Beastkin Cat', weight = 2},{value = 'Halfkin Wolf', weight = 6},{value = 'Beastkin Wolf', weight = 6},{value = 'Human', weight = 5}],
-levelrange = [3,6],
-},
-
-
-undercityentrance = {
-background = 'mountains',
-reqs = 'globals.state.mainquest >= 18',
-combat = false,
-code = 'undercityentrance',
-name = "Cliff Entrance",
-description = "The entrance to the old tunnels is tucked away in a maze of cliff walls. If not for numerous marks and signs, you would have had a hard time figuring out where the correct passage is. A large boulder blocks the entrance way and has been sealed in place with magic. The ritual used to seal the tunnel is beyond your ability to break and without a large team of miners to try break a way in around through the extremely hard rock, you’ll need to search for another way in.",
-enemies = [],
-encounters = [],
-length = 1,
-exits = ['undercityentrance'],
-tags = [],
-races = []
-},
-
-undercitytunnels = {
-background = 'tunnels',
-reqs = 'globals.state.mainquest >= 18',
-combat = true,
-code = 'undercitytunnels',
-name = "Underground Tunnels",
-description = "The dark tunnels twist back and forth as they wind their way into the mountainside. Your light from your torches cast shadows around every corner. You cautiously move forward brushing spiderwebs and other hanging obstructions side. Passages repeatedly intersect some ending in short dead ends others going deeper.",
-enemies = [{value = 'solospider', weight = 3}, {value = 'oozesgroup', weight = 2}, {value = 'troglodytesmall', weight = 2}, {value = 'mutant', weight = 3},{value = 'treasurechest', weight = 1},{value = 'blockedsection', weight = 0.2}],
-encounters = [],
-length = 8,
-exits = ['undercityentrance', 'undercityruins'],
-tags = [],
-races = [],
-levelrange = [7,14],
-},
-undercityruins = {
-background = 'undercity',
-reqs = 'true',
-combat = true,
-code = 'undercityruins',
-name = "Underground Ruins",
-description = "Dilapidated ruined buildings line long winding pathways that were once streets. Their age is hard to estimate, they could be 50 years they could be 500 years old. The air is damp and oppressive, there is little to no sound except for each of your steps which seem to echo on forever. ",
-enemies = [{value = 'spidergroup',weight = 5},{value = 'gembeetle', weight = 1}, {value = 'troglodytelarge', weight = 5}, {value = 'troglodytesmall', weight = 4}, {value = 'mutant', weight = 4},{value = 'treasurechest', weight = 1},{value = 'blockedsection', weight = 1}],
-encounters = [],
-length = 8,
-exits = ['undercitytunnels','undercityhall'],
-tags = [],
-races = [],
-levelrange = [10,15],
-},
-undercityhall = {
-background = 'undercity',
-reqs = 'true',
-combat = false,
-code = 'undercityhall',
-name = "Underground Hall",
-description = "You approach a huge, mostly intact building. Its' state seems to be the result of magically enhanced walls, traces of which you can still feel. Searching this building may offer the most potential of all the buildings in the area due to it being mostly intact. Of course it also may provide shelter to the inhabitants of the ruins.",
-enemies = [],
-encounters = [],
-length = 1,
-exits = ['undercityhall'],
-tags = [],
-races = []
-},
-
-witchhut = {
-background = 'amberroad',
-reqs = 'globals.state.mainquest >= 21',
-combat = false,
-code = 'witchhut',
-name = 'Lone Hut',
-description = "You come across a lone wooden hut hidden in the thicket. ",
-enemies = [],
-encounters = [],
-length = 1,
-exits = ['witchhut'],
-tags = [],
-races = []
-},
-shaliq = {
-background = 'shaliq',
-reqs = "true",
-combat = false,
-code = 'shaliq',
-name = 'Shaliq Village',
-description = "This small, rural village looks calm and peaceful. It seems many personal portals lead here and travelers are not rare sight for locals, as you barely get any attention.",
-enemies = [],
-encounters = [],
-length = 0,
-exits = ['shaliq'],
-tags = [],
-levelrange = [15,25],
-},
-
-umbra = {
-background = 'umbra',
-reqs = "true",
-combat = false,
-code = 'umbra',
-name = 'Umbra',
-description = "You are in the middle of a vast enclosed cave. Below the ceiling resides a magical dim light source, providing slightly more illumination than at full moon night. Shabby buildings around the cave's walls have multiple people moving in and out. Most people resemble bandits and criminals, but occassinally you can spot riches with the bodyguards. Despite a slightly worring atmosphere, there seems to be no open danger or fight-seeking individuals.  ",
-enemies = [],
-encounters = [],
-length = 0,
-exits = ['umbra'],
-tags = [],
-},
-
-
-wimborn = {
-background = 'wimborn',
-reqs = "true",
-combat = false,
-code = 'wimborn',
-name = 'Wimborn',
-description = "Wimborn is a lively place at nearly all hours, as the cries of hawkers and shopkeepers vie with the songs of work crews for attention. Along the major roads, most of the buildings have been painted in a riot of colors to break up the monotony of grey-blue brick and plaster covered stone, with many of the storefronts sporting colorful awnings and signs to attract potential customers. Away from the bright colors and raucous noise of the market streets things tend to be restrained, the buildings more grey, and cries more a cause for worry.\n\nThe city is divided into a number of districts, but only a few areas are of interest to you at the moment. To the north are the Market District, and past that Auld Erellon which is the home of the Mage’s Guild and other government bodies. To the west is Red-Lantern and Riverside, where most of the city’s brothels and whorehouses might be found. To the south is the Guild District, where there is always some foreman looking for cheap but reliable labor.",
-enemies = [],
-encounters = [],
-length = 0,
-exits = ['wimborn'],
-tags = [],
-levelrange = [10,15],
-},
-gorn = {
-background = 'gorn',
-reqs = "true",
-combat = false,
-code = 'gorn',
-name = 'Gorn',
-description = "Though the weather is commonly hot, the streets are rich with many kinds of races. Orcs and goblins are the most prevalent citizens, and small traders can be seen virtually everywhere, however, you can still frequently notice some humans, gnomes and even centaurs among the bystanders. Rare Orc Guard Patrols keep their eyes out for any potential troublemakers. ",
-enemies = [],
-encounters = [],
-length = 0,
-exits = ['gorn'],
-tags = [],
-},
-
-gornalchemist = {
-background = 'gorn',
-reqs = "true",
-combat = false,
-code = 'gornalchemist',
-name = 'Alchemical Shop',
-description = "",
-enemies = [],
-encounters = [],
-length = 0,
-exits = ['gornalchemist'],
-tags = [],
-},
-
-frostfordclearing = {
-background = 'borealforest',
-reqs = "str(globals.state.mainquest) in ['28.1','30','32']",
-combat = false,
-code = 'frostfordclearing',
-name = 'Clearing',
-description =  "",
-enemies = [],
-encounters = [],
-length = 0,
-exits = ['frostfordclearing'],
-tags = [],
-},
-
-frostford = {
-background = 'frostford',
-reqs = "true",
-combat = false,
-code = 'frostford',
-name = 'Frostford',
-description =  "Despite this region being frequently covered in snow, it's not terribly cold here; it’s even warmer on the streets, perhaps thankfully to the density of the population.\n\n The roads are lively, with many beastkins and halfkins of different kinds strolling and talking to one another - despite the activity, the whole town has a very relaxed and calm atmosphere. ",
-enemies = [],
-encounters = [],
-length = 0,
-exits = ['frostford'],
-tags = [],
-},
-amberguard = {
-background = 'amberguard',
-reqs = "globals.state.mainquest >= 17",
-combat = false,
-code = 'amberguard',
-name = 'Amberguard',
-description = "The journey to Amberguard is rather uneventful. A large wall surrounds the town with a fortified gate controlling entrance into the inner city. Passing through the gates you are coldly greeted with hostile stares, reminding you while you may be permitted to enter the city you are not welcome here, and help may be difficult to find. \n\nYou make your way through the town. Large marble buildings of elvish design line the streets and provide shelter to the local residents. Despite their lavish architecture they look dilapidated and unkempt. Sections of the city seem almost deserted. While the streets are far from crowded by  the elves that live here, you are often rudely jostled and bumped. Other elves simply glare at you or cautiously give you lots of space.\n\nThe unwelcoming attitude explains why so few outsiders especially those of other races are to be found within the city.",
-enemies = [],
-encounters = [],
-length = 1,
-exits = ['amberguard'],
-tags = [],
-races = [],
-},
-}
+var zones = areas.database
 
 var buttoncontainer
 var button
@@ -430,10 +48,10 @@ func zoneenter(zone):
 		lastzone = currentzone.code
 	zone = self.zones[zone]
 	outside.location = zone.code
-	enemyinfoclear()
-	main.background_set(zone.background)
-	if OS.get_name() != "HTML5":
+	if progress == 0:
+		main.background_set(zone.background, true)
 		yield(main, "animfinished")
+	enemyinfoclear()
 	if globals.state.playergroup.size() > 0:
 		for i in globals.state.playergroup:
 			var scouttemp = globals.state.findslave(i)
@@ -452,6 +70,7 @@ func zoneenter(zone):
 	if deeperregion:
 		text = "+" + text + "+"
 	outside.get_node('locationname').set_text(text)
+	main.nodeunfade(outside.get_node("locationname"), 0.5)
 	text = ''
 	globals.get_tree().get_current_scene().get_node("outside/exploreprogress").set_value((progress/max(zone.length,1))*100)
 	currentzone = zone
@@ -463,7 +82,7 @@ func zoneenter(zone):
 		text += "\n\n[color=yellow]You can use public teleport to return to mansion from this location.[/color]"
 	mansion.maintext = text
 	if zone.combat == false:
-		call(zone.exits[0])
+		call(zone.locationscript)
 		return
 	else:
 		if zone.code in ['mountaincave','undercitytunnels','undercityruins','undercityhall']:
@@ -856,6 +475,8 @@ func treasurechestopen(state = 'normal'):
 		globals.player.energy -= 20
 	if gear.number == 0 && misc == 0:
 		gear.number = 1
+	
+	winscreenclear()
 	generaterandomloot(gear, misc, miscnumber, text)
 
 func blockedsection():
@@ -881,10 +502,36 @@ func blockedsectionopen():
 	text = "After roots burn down you discover a hidden stash."
 	if gear.number == 0:
 		gear.number = 1
+	winscreenclear()
 	generaterandomloot(gear, misc, miscnumber, text)
 
-
-
+func generateloot(loot = [], text = ''):
+	var winpanel = get_node("winningpanel")
+	var tempitem
+	var enchant
+	for i in winpanel.get_node("ScrollContainer/VBoxContainer").get_children():
+		if i != winpanel.get_node("ScrollContainer/VBoxContainer/Button"):
+			i.visible = false
+			i.free()
+	enchant = false
+	var item = loot[0]
+	if item.findn('+') >= 0:
+		enchant = true
+		item = item.replace("+","")
+	if globals.itemdict[item].type == 'gear':
+		var counter = loot[1]
+		while counter > 0:
+			tempitem = globals.items.createunstackable(item)
+			if enchant:
+				globals.items.enchantrand(tempitem)
+			enemyloot.unstackables.append(tempitem)
+			counter -= 1
+	else:
+		enemyloot.stackables[loot[0]] = loot[1]
+	
+	winpanel.visible = true
+	winpanel.get_node("wintext").set_bbcode(text)
+	builditemlists()
 
 func generaterandomloot(gear = {number = 0, enchantchance = 0}, misc = 0, miscnumber = 0, text = ''):
 	var winpanel = get_node("winningpanel")
@@ -893,8 +540,6 @@ func generaterandomloot(gear = {number = 0, enchantchance = 0}, misc = 0, miscnu
 		if i != winpanel.get_node("ScrollContainer/VBoxContainer/Button"):
 			i.visible = false
 			i.free()
-	winscreenclear()
-	var lootarray = []
 	while gear.number > 0:
 		gear.number -= 1
 		tempitem = globals.items.createunstackable(globals.weightedrandom(treasurepool))
@@ -905,12 +550,15 @@ func generaterandomloot(gear = {number = 0, enchantchance = 0}, misc = 0, miscnu
 		misc -= 1
 		tempitem = globals.weightedrandom(treasuremisc)
 		if enemyloot.stackables.has(tempitem):
-			enemyloot.stackables[tempitem] += miscnumber
+			enemyloot.stackables[tempitem] += round(miscnumber)
 		else:
-			enemyloot.stackables[tempitem] = miscnumber
+			enemyloot.stackables[tempitem] = round(miscnumber)
 	winpanel.visible = true
 	winpanel.get_node("wintext").set_bbcode(text)
 	builditemlists()
+
+
+
 
 
 func banditcamp():
@@ -1528,6 +1176,7 @@ func capturedecide(stage): #1 - no reward, 2 - material, 3 - sex, 4 - join
 		else:
 			text = "After getting through $his belongings, $name passes you a piece of gear. "
 			var gear = {number = 1, enchantchance = 75 }
+			winscreenclear()
 			generaterandomloot(gear)
 	elif stage == 3:
 		if rand_range(0,100) >= 35 + globals.state.reputation[location]/2:
@@ -1900,7 +1549,21 @@ func undercityboss():
 		launchonwin = 'undercitybosswin'
 		enemyfight()
 
+func undercitylibrary():
+	globals.main.maintext = globals.questtext.undercitybookenc
+	var array = []
+	array.append({name = "Fight", function = 'undercitylibraryfight'})
+	outside.buildbuttons(array,self)
 
+func undercitylibraryfight():
+	buildenemies("bookmutants")
+	globals.main.get_node("combat").nocaptures = true
+	launchonwin = 'undercitylibrarywin'
+	enemyfight()
+
+func undercitylibrarywin():
+	generateloot(['zoebook', 1], globals.questtext.undercitybookafterabttle)
+	zoneenter("undercityruins")
 
 func gornmarket():
 	outside.shopinitiate('gornmarket')

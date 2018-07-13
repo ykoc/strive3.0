@@ -854,9 +854,6 @@ func _on_slaveconfirm_pressed():
 	globals.state.spec = background
 	if background == 'Alchemist':
 		globals.state.mansionupgrades.mansionalchemy += 1
-		var array = ['aphrodisiac','hairgrowthpot','amnesiapot','lactationpot','miscariagepot','stimulantpot','deterrentpot']
-		for i in array:
-			globals.itemdict[i].unlocked = true
 	var tempitem
 	if background == 'Hunter':
 		tempitem = globals.items.createunstackable("weapondagger")

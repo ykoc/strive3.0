@@ -194,7 +194,7 @@ func entry():
 			text += person.name + ' "'+person.nickname+'" ' + person.surname + '. '
 	else:
 		
-		text = 'Tied and bound [color=yellow]$sex[/color] looking at you with fear and hatred. '
+		text = 'A tied and bound [color=yellow]$sex[/color] looks at you with fear and hatred. '
 	text = text.replace(" .", ".")
 	return text
 

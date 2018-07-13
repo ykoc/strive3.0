@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/8.png-49d40902fb3f9ca6529b9f6575cbe692.stex"
+path="res://.import/weaponcursedsword.png-413cf3076b687f2467803a6c30e98b17.stex"
 
 [deps]
 
-source_file="res://files/images/items/8.png"
-dest_files=[ "res://.import/8.png-49d40902fb3f9ca6529b9f6575cbe692.stex" ]
+source_file="res://files/images/items/weaponcursedsword.png"
+dest_files=[ "res://.import/weaponcursedsword.png-413cf3076b687f2467803a6c30e98b17.stex" ]
 
 [params]
 

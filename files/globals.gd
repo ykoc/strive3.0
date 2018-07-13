@@ -117,6 +117,7 @@ mainorder = load("res://files/backgrounds/mainorder.png"),
 mainorderfinale = load("res://files/backgrounds/mainorderfinale.png"),
 umbra = load("res://files/backgrounds/umbra.png"),
 nightdesert = load("res://files/backgrounds/nightdesert.jpeg"),
+brothel = load("res://files/backgrounds/brothel.png"),
 }
 var scenes = {
 finale = load("res://files/images/scene/finale.png"),
@@ -212,6 +213,10 @@ func savevars():
 
 func loadsettings():
 	var settings = File.new()
+	var dir = Directory.new()
+	for i in setfolders.values():
+		if dir.dir_exists(i) == false:
+			dir.make_dir(i)
 	if settings.file_exists("user://settings.ini") == false:
 		settings.open("user://settings.ini", File.WRITE)
 		settings.store_line(var2str(rules))
@@ -553,12 +558,12 @@ class progress:
 		var slave
 		var tempitem
 		var currentweight = 0
-		var maxweight = 10 + globals.player.sstr*4
+		var maxweight = 10 + max(globals.player.sstr*4, 0)
 		var array = [globals.player]
 		for i in globals.state.playergroup:
 			slave = globals.state.findslave(i)
 			array.append(slave)
-			maxweight += slave.sstr*5 + 3
+			maxweight += max(slave.sstr*5,0) + 3
 		for i in globals.state.backpack.stackables:
 			if globals.itemdict[i].has('weight'):
 				currentweight += globals.itemdict[i].weight * globals.state.backpack.stackables[i]
@@ -1224,6 +1229,7 @@ class person:
 		string = string.replace('$sibling', globals.fastif(sex == 'male', 'brother', 'sister'))
 		string = string.replace('$sir', globals.fastif(sex == 'male', 'Sir', "Ma'am"))
 		string = string.replace('$race', globals.decapitalize(race).replace('_', ' '))
+		string = string.replace('$playername', globals.player.name_short())
 		string = string.replace('$master', masternoun)
 		string = string.replace('[haircolor]', haircolor)
 		string = string.replace('[eyecolor]', eyecolor)
@@ -1315,6 +1321,8 @@ class person:
 		var luxury = variables.luxuryreqs[origins]
 		if traits.has("Ascetic"):
 			luxury = luxury/2
+		elif traits.has("Spoiled"):
+			luxury *= 2
 		return luxury
 	
 	
@@ -1374,7 +1382,8 @@ class person:
 			globals.main.infotext(self.dictionary("$name has deceased. "),'red')
 			globals.items.unequipall(self)
 			globals.slaves.erase(self)
-			globals.state.relativesdata[id].state = 'dead'
+			if globals.state.relativesdata.has(id):
+				globals.state.relativesdata[id].state = 'dead'
 		elif globals.state.babylist.has(self):
 			globals.state.babylist.erase(self)
 			globals.clearrelativesdata(self.id)
@@ -1822,10 +1831,9 @@ func save():
 		if spelldict[i].learned == true:
 			state.spelllist[i] = true
 	for i in itemdict:
-		if itemdict[i].amount > 0 || itemdict[i].unlocked == true:
+		if itemdict[i].amount > 0:
 			state.itemlist[i] = {}
 			state.itemlist[i].amount = itemdict[i].amount
-			state.itemlist[i].unlocked = itemdict[i].unlocked
 	dict.resources = inst2dict(resources)
 	dict.state = inst2dict(state)
 	dict.state.currentversion = gameversion
@@ -1921,7 +1929,6 @@ func load_game(text):
 	for i in state.itemlist:
 		if itemdict.has(i):
 			itemdict[i].amount = state.itemlist[i].amount
-			itemdict[i].unlocked = state.itemlist[i].unlocked
 	for i in statetemp.sidequests:
 		if state.sidequests.has(i) == false:
 			state.sidequests[i] = statetemp.sidequests[i]

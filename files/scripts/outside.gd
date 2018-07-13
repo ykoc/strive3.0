@@ -32,7 +32,7 @@ func _ready():
 	for i in ['attack','speed','armor','protection']:
 		$playergrouppanel/characterinfo/combstats.get_node(i).connect("mouse_entered",self,'statinfo',[i])
 		$playergrouppanel/characterinfo/combstats.get_node(i).connect("mouse_exited",self,'iteminfoclose')
-	$map/Control.set_process_input(false)
+	$minimappanel/map/Control.set_process_input(false)
 
 
 
@@ -106,10 +106,10 @@ func _on_leave_pressed():
 		get_parent().infotext("Your backpack is too heavy to leave",'red')
 		return
 	get_parent().sound("door")
-	gooutside()
 	get_parent().get_node("explorationnode").currentzone = get_parent().get_node("explorationnode").zones[globals.state.location]
 	get_parent().get_node("explorationnode").zoneenter(globals.state.location)
-	#gooutside()
+	yield(main, 'animfinished')
+	gooutside()
 
 func playergrouppanel():
 	var charpanel
@@ -292,7 +292,6 @@ func mansion():
 	main._on_mansion_pressed()
 
 func gooutside():
-	yield(main, 'animfinished')
 	globals.hidetooltip()
 	get_node("playergrouppanel/VBoxContainer").visible = true
 	main.checkplayergroup()
@@ -1111,10 +1110,18 @@ func _on_serviceconfirm_pressed():
 		person.hairlength = hairlength
 		globals.resources.gold -= operation.price
 	elif operation.code == 'subjugate':
+		if person.origins == 'poor':
+			person.stats.obed_mod += 0.25
+		elif person.origins in ['rich','noble']:
+			person.stats.obed_mod += 0.2
 		person.origins = globals.originsarray[globals.originsarray.find(person.origins)-1]
 		person.away.duration = 1
 		globals.resources.gold -= operation.price
 	elif operation.code == 'uprise':
+		if person.origins == 'slave':
+			person.stats.obed_mod -= 0.25
+		elif person.origins in ['commoner','rich']:
+			person.stats.obed_mod -= 0.2
 		globals.resources.gold -= operation.price * (globals.originsarray.find(person.origins)+1)
 		person.origins = globals.originsarray[globals.originsarray.find(person.origins)+1]
 		if person.levelupreqs.has('code') && person.levelupreqs.code == 'improvegrade':
@@ -1558,7 +1565,7 @@ var shops = {
 wimbornmarket = {code = 'wimbornmarket', sprite = 'merchant', name = "Wimborn's Market", items =  ['teleportwimborn','food','supply','bandage','rope','torch','teleportseal', 'basicsolutioning','hairdye', 'aphrodisiac' ,'beautypot', 'magicessenceing', 'natureessenceing','armorleather','armorchain','weapondagger','weaponsword','clothsundress','clothmaid','clothbutler','underwearlacy','underwearboxers', 'acctravelbag'], selling = true},
 shaliqshop = {code = 'shaliqshop', name = "Village's Trader", items = ['teleportseal','lockpick','torch','hairdye','beautypot','armorleather','clothmiko','clothkimono','armorninja', 'acctravelbag'], selling = true},
 gornmarket = {code = 'gornmarket',  sprite = 'centaur', name = "Gorn's Market", items = ['teleportgorn','food', 'supply','bandage','rope','teleportseal','magicessenceing',"armorleather",'armorchain','weaponclaymore','weaponhammer','clothbedlah','accslavecollar','acchandcuffs'], selling = true},
-frostfordmarket = {code = 'frostfordmarket', name = "Frostford's Market", items = ['teleportfrostford', 'supply','bandage','rope','torch','teleportseal', 'basicsolutioning','bestialessenceing','clothpet', 'weaponsword','accgoldring', 'acctravelbag'], selling = true},
+frostfordmarket = {code = 'frostfordmarket', sprite = 'frostfordtrader', name = "Frostford's Market", items = ['teleportfrostford', 'supply','bandage','rope','torch','teleportseal', 'basicsolutioning','bestialessenceing','clothpet', 'weaponsword','accgoldring', 'acctravelbag'], selling = true},
 aydashop = {code = 'aydashop', sprite = 'aydanormal', name = "Ayda's Assortments", items = ['regressionpot', 'beautypot', 'hairdye', 'basicsolutioning','bestialessenceing','taintedessenceing','fluidsubstanceing'], selling = false},
 amberguardmarket = {code = 'amberguardmarket', name = "Amberguard's Market", items = ['teleportamberguard','beautypot','bestialessenceing','magicessenceing','fluidsubstanceing','armorelvenchain','armorrobe'], selling = true},
 sebastian = {code = 'sebastian', name = "Sebastian", items = ['teleportumbra'], selling = false},
@@ -1860,6 +1867,8 @@ func sebastianfarmpurchase():
 func backstreets():
 	var text = "This part of town is populated by criminals and the poor. Brothel is located here. "
 	main.background_set('wimborn')
+	yield(main, 'animfinished')
+	
 	var array = [{name = 'Enter Brothel',function = 'brothel'}, {name = 'Return', function = 'town'}]
 	if globals.state.sidequests.cali in [14,15,16]:
 		array.insert(1,{name = "Visit local bar", function = "calibarquest"})
@@ -1911,7 +1920,10 @@ func emily(state = 1):
 
 
 func brothel(person = null):
+	mansion.background_set("brothel")
+	yield(main, 'animfinished')
 	clearbuttons()
+	
 	var text = "Doorman greets you and shows you the way around brothel until you meet with the Madam.\n\n— Greetings, what would you like?  "
 	get_parent().slavearray.clear()
 	var counter = 0
@@ -2236,7 +2248,7 @@ func _on_switch_pressed():
 
 
 func _on_mapbutton_pressed():
-	$bigmappanel.visible = true
+	$bigmappanel.visible = !$bigmappanel.visible
 	$bigmappanel/ScrollContainer/Control.centermap(currentzone.code)
 
 

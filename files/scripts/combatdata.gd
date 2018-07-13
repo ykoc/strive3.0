@@ -145,6 +145,9 @@ bosswyvern = {
 units = [['bosswyvern',1,1]], awareness = 0, captured = null, special = null,
 description = "Wyvern Boss",
 },
+bookmutants = {units = [['mutant',3,3]], awareness = 25, captured = null, special = null,
+description = 'Group of mutants',
+},
 tishaquestenemy = {units = [['banditleader',1,1],['bandit',3,3]], awareness = 0, captured = null, special = null,
 description = "",
 },
@@ -920,7 +923,6 @@ rewardexp = 10,
 stats = {health = 450, power = 45, speed = 30, energy = 50, armor = 10, magic = 2, abilities = ['attack','aoeattack']},
 skills = [],
 },
-
 }
 
 var enemyequips = {

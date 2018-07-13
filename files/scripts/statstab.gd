@@ -267,6 +267,7 @@ func _on_talk_pressed(mode = 'talk'):
 			text = "After giving $him a permission to talk, you begin a conversation. "
 		
 		text += '\n\n'
+		
 		if person.traits.has("Mute"):
 			text += "Despite your best attempts, you can't get more out of $name, than uncomfortable look. "
 		else:
@@ -297,6 +298,13 @@ func _on_talk_pressed(mode = 'talk'):
 			text += "\n\n[color=yellow]Your investigation shown, that " + person.dictionary(person.levelupreqs.speech) + '[/color]'
 			if person.levelupreqs.activate == 'fromtalk':
 				buttons.append({text = person.levelupreqs.button, function = 'levelup', args = person.levelupreqs.effect})
+		if person.unique == 'Zoe' && globals.state.sidequests.zoe == 5:
+			if globals.itemdict.teleportseal.amount >= 10 && globals.itemdict.taintedessenceing.amount >= 5 && globals.itemdict.magicessenceing.amount >= 5:
+				buttons.append({text = "Give Zoe requested items", function = 'zoequest'})
+			else:
+				buttons.append({text = "Give Zoe requested items", function = 'zoequest', disabled = true, tooltip = "You don't have everything requested."})
+		
+		
 #		if person.sleep != 'jail':
 #			buttons.append({text = person.dictionary("Praise $name"), function = '_on_talk_pressed', args = 'praise'})
 #		buttons.append({text = person.dictionary("Punish $name"), function = '_on_talk_pressed', args = 'punish'})
@@ -349,6 +357,12 @@ func callorder():
 	get_node("callorder").popup()
 	get_node("callorder/Label").set_text(person.dictionary("How $name should call you?"))
 	get_node("callorder/LineEdit").set_text(person.masternoun)
+
+func zoequest():
+	globals.itemdict.teleportseal.amount -= 10
+	globals.itemdict.taintedessenceing.amount -= 5
+	globals.itemdict.magicessenceing.amount -= 5
+	globals.events.zoepassitems()
 
 func _on_callconfirm_pressed():
 	get_node("callorder").visible = false

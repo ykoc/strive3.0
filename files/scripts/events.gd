@@ -437,21 +437,18 @@ func gornaydaivran(stage = 0):
 func undercitybosswin():
 	var reward
 	var text = ''
-	var rewarddict = ['armorplate']
-	reward = rewarddict[rand_range(0,rewarddict.size())]
-	reward = globals.items.createunstackable(reward)
-	globals.state.unstackables[str(reward.id)] = reward
 	if globals.state.mainquest == 24:
-		text += "After defeating the awoken golem, you spend some time searching around, until one of the piles reveals an ancient looking documents. Being unable to read them due to magical protection and unknown language, you decide to bring it back to Melissa.\n\n[color=yellow]There might be some additional treasures, but you'd have to come for them next time. [/color] "
+		text += "After defeating the awoken golem, you spend some time searching around, until one of the piles reveals an ancient looking documents. Being unable to read them due to magical protection and unknown language, you decide to bring it back to Melissa.\n\n[color=yellow]There might be some additional treasures, but you'd have to come for them next time. [/color]\n\n"
 		globals.state.mainquest = 25
 	else:
 		pass
 	if globals.state.lorefound.find('amberguardlog3') < 0:
 		globals.state.lorefound.append('amberguardlog3')
-		text += "[color=yellow]\n\nYou've found some old writings in the ruins. Does not look like what you came for, but you can read them later.[/color]"
+		text += "[color=yellow]You've found some old writings in the ruins. Does not look like what you came for, but you can read them later.[/color]"
 	globals.main.exploration.zoneenter('undercityruins')
-	text += "\n[color=green]After searching through the building ruins you managed to find 1 [color=aqua]" + reward.name + "[/color]. [/color]"
-	globals.main.popup(text)
+	globals.main.exploration.winscreenclear()
+	globals.main.exploration.generaterandomloot({number = 0},rand_range(1,3), rand_range(1,3))
+	globals.main.exploration.generateloot([globals.weightedrandom([['armorplate',1],["armorplate+",1],['weaponcursedsword', 1]]), 1], text)
 
 func frostfordcityhall(stage = 0):
 	var text 
@@ -536,6 +533,7 @@ func frostfordcityhall(stage = 0):
 		text = textnode.MainQuestFrostfordZoeJoin
 		sprite = [['zoehappy','pos1']]
 		var person = globals.characters.create("Zoe")
+		globals.state.sidequests.zoe = 3
 		globals.slaves = person
 	elif stage == 8:
 		sprite = [['zoeneutral','pos1']]
@@ -2748,4 +2746,101 @@ func aynerisrapieramberguard(stage = 0):
 		text = textnode.AynerisRapierIgnoreContinue
 	
 	globals.main.dialogue(state, self, text, buttons, sprites)
+
+func undercitylibrarywin():
+	globals.main.exploration.undercitylibrarywin()
+
+func zoebookevent(stage = 0):
+	var zoe = null
+	var text = ''
+	var buttons = []
+	var state = false
+	var sprite = []
+	for i in globals.slaves:
+		if i.unique == 'Zoe':
+			zoe = i
+	if zoe != null:
+		if stage == 0:
+			text = textnode.zoebookdiscover
+			sprite = [['zoehappy','pos1','opac']]
+			buttons = [['Let Zoe borrow the book', 'zoebookevent',1], ['Refuse to let Zoe translate it','zoebookevent',2]]
+		elif stage == 1:
+			state = true
+			text = textnode.zoebookallow
+			sprite = [['zoehappy','pos1']]
+			globals.itemdict.zoebook.amount = 0
+			globals.state.sidequests.zoe = 4
+			globals.state.upcomingevents.append({code = 'zoebookproceed', duration = 4})
+			zoe.away.duration = 3
+		elif stage == 2:
+			state = true
+			text = textnode.zoebookrefuse
+			sprite = [['zoesad','pos1']]
+			globals.state.sidequests.zoe = 100
+		
+		globals.main.dialogue(state, self, text, buttons, sprite)
+
+func zoebookproceed():
+	var text = ''
+	var buttons = []
+	var state = true
+	var sprite = []
+	text = textnode.zoebooktimepass + "\n\n" + textnode.zoeitemlist
+	sprite = [['zoehappy','pos1','opac']]
+	globals.state.sidequests.zoe = 5
+	globals.main.dialogue(state, self, text, buttons, sprite)
+
+func zoepassitems(stage = 0):
+	var text = ''
+	var buttons = []
+	var state = false
+	var zoe = null
+	var sprite = []
+	
+	for i in globals.slaves:
+		if i.unique == 'Zoe':
+			zoe = i
+	globals.state.sidequests.zoe = 6
+	globals.spelldict.summontentacle.learned = true
+	if stage == 0:
+		text = textnode.zoebookdeliveritems
+		sprite = [['zoehappy','pos1','opac']]
+		buttons.append(['Continue', 'zoepassitems', 1])
+	elif stage == 1:
+		globals.main.animationfade(1,0.5)
+		yield(globals.main, "animfinished")
+		globals.main.savedtrack = globals.main.get_node("music").get_meta("currentsong")
+		globals.main.music_set("intimate")
+		text = textnode.zoebookdelivercontinue
+		sprite = [['zoesadnaked','pos1','opac']]
+		buttons = [['Save Zoe', 'zoepassitems', 2],['Hold back and wait', 'zoepassitems', 3]]
+	elif stage == 2:
+		text = textnode.zoebooksave
+		text += "\n\n[color=green]Learned new spell: Summon Tentacles[/color]"
+		zoe.loyal += 10
+		sprite = [['zoeneutralnaked','pos1','opac']]
+		state = true
+	elif stage == 3:
+		sprite = [['zoesadnaked','pos1','opac']]
+		text = textnode.zoebookwatch
+		globals.state.decisions.append("zoeraped")
+		zoe.stress += 70
+		zoe.loyal -= 25
+		zoe.obed -= 60
+		if zoe.vagvirgin == true:
+			zoe.vagvirgin = false
+			text += textnode.zoebookwatch2virgin
+		else:
+			text += textnode.zoebookwatch2nonvirgin
+		buttons = [['Continue', 'zoepassitems', 4]]
+	elif stage == 4:
+		state = true
+		sprite = [['zoesadnaked','pos1','opac']]
+		text = textnode.zoebookwatch3
+		text += "\n\n[color=green]Learned new spell: Summon Tentacles[/color]"
+		
+	
+	
+	
+	globals.main.dialogue(state, self, text, buttons, sprite)
 

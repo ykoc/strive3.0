@@ -11,9 +11,9 @@ var currentloc = null
 
 
 func _ready():
-	for i in get_node("TextureRect/roads").get_children():
+	for i in get_node("TextureRect/roads").get_children() + get_node("TextureRect/towns").get_children():
 		i.connect("mouse_entered",self,'showtooltip',[i])
-		i.connect("mouse_exited",globals,'hidetooltip')
+		i.connect("mouse_exited",self,'hidetooltip')
 
 func _input(event):
 	if event.is_action_pressed("LMB"):
@@ -37,8 +37,8 @@ func _process(delta):
 	if is_processing_input() == false:
 		if timer > 0:
 			timer -= delta
-		elif timer < 0 && self.modulate.a > 0:
-			self.modulate.a -= delta
+		elif timer < 0 && get_parent().get_parent().modulate.a > 0:
+			get_parent().get_parent().modulate.a -= delta
 	var parentrect = get_parent().get_global_rect()
 	if rect.position.x > parentrect.position.x:
 		$TextureRect.rect_global_position.x = parentrect.position.x 
@@ -55,15 +55,37 @@ func showtooltip(node):
 	if is_processing_input() == false:
 		return
 	var name = node.get_name()
-	var text = globals.main.get_node('explorationnode').zones[name].name
+	var zone = globals.main.get_node('explorationnode').zones[name]
+	var text = zone.name
 	globals.showtooltip(text)
+	for i in zone.exits:
+		var sidenode = find_node(i)
+		var linesnode = Control.new()
+		linesnode.name = 'linesnode'
+		get_tree().get_current_scene().add_child(linesnode)
+		if sidenode:
+			var newnode = Line2D.new()
+			get_tree().get_current_scene().get_node('linesnode').add_child(newnode)
+			#newnode.width = 3
+			#newnode.default_color = Color(1,0.5,0.5,1)
+			newnode.texture = load("res://files/buttons/line.png")
+			newnode.texture_mode = Line2D.LINE_TEXTURE_TILE
+			newnode.add_point(Vector2(node.rect_global_position.x + 8,node.rect_global_position.y + 8))
+			newnode.add_point(Vector2(sidenode.rect_global_position.x + 8, sidenode.rect_global_position.y + 8))
+
+func hidetooltip():
+	if is_processing_input() == false:
+		return
+	globals.hidetooltip()
+	get_tree().get_current_scene().get_node("linesnode").queue_free()
+	
 
 func mapshowup(name):
 	var node = find_node(name)
 	if node == null || currentloc == name:
 		return
-	get_parent().visible = true
-	self.modulate.a = 1
+	get_parent().get_parent().visible = true
+	get_parent().get_parent().modulate.a = 1
 	centermap(name)
 	timer = 2
 	#globals.main.nodefade(self, 1, 2)

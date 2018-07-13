@@ -1,4 +1,4 @@
-[gd_scene load_steps=117 format=2]
+[gd_scene load_steps=119 format=2]
 
 [ext_resource path="res://files/theme.tres" type="Theme" id=1]
 [ext_resource path="res://files/scripts/outside.gd" type="Script" id=2]
@@ -48,39 +48,40 @@
 [ext_resource path="res://files/buttons/explorebar.png" type="Texture" id=46]
 [ext_resource path="res://files/buttons/noimage.png" type="Texture" id=47]
 [ext_resource path="res://files/buttons/inspect.png" type="Texture" id=48]
-[ext_resource path="res://testfont.tres" type="DynamicFontData" id=49]
-[ext_resource path="res://files/buttons/outside/bar.png" type="Texture" id=50]
-[ext_resource path="res://files/map.scn" type="PackedScene" id=51]
-[ext_resource path="res://files/buttongrouptheme.tres" type="Theme" id=52]
-[ext_resource path="res://files/buttons/sexicons/male.png" type="Texture" id=53]
-[ext_resource path="res://files/buttons/mainscreen/41.png" type="Texture" id=54]
-[ext_resource path="res://files/statspanel.tscn" type="PackedScene" id=55]
-[ext_resource path="res://files/buttons/mainscreen/7.png" type="Texture" id=56]
-[ext_resource path="res://files/theme slavetab.tres" type="Theme" id=57]
-[ext_resource path="res://files/buttons/inventory/11-litter.png" type="Texture" id=58]
-[ext_resource path="res://files/buttons/inventory/12_chest.png" type="Texture" id=59]
-[ext_resource path="res://files/buttons/inventory/14(1).png" type="Texture" id=60]
-[ext_resource path="res://files/buttons/inventory/14(2).png" type="Texture" id=61]
-[ext_resource path="res://files/buttons/inventory/15(1).png" type="Texture" id=62]
-[ext_resource path="res://files/buttons/inventory/15(2).png" type="Texture" id=63]
-[ext_resource path="res://files/buttons/inventory/31.png" type="Texture" id=64]
-[ext_resource path="res://files/buttons/inventory/32.png" type="Texture" id=65]
-[ext_resource path="res://files/buttons/inventory/16(1).png" type="Texture" id=66]
-[ext_resource path="res://files/buttons/inventory/16(2).png" type="Texture" id=67]
-[ext_resource path="res://files/buttons/inventory/17(1).png" type="Texture" id=68]
-[ext_resource path="res://files/buttons/inventory/17(2).png" type="Texture" id=69]
-[ext_resource path="res://files/buttons/inventory/6-(item).png" type="Texture" id=70]
-[ext_resource path="res://files/images/items/armorleather.png" type="Texture" id=71]
-[ext_resource path="res://files/buttons/inventory/18(1).png" type="Texture" id=72]
-[ext_resource path="res://files/buttons/inventory/18(2).png" type="Texture" id=73]
-[ext_resource path="res://files/buttons/inventory/21(1).png" type="Texture" id=74]
-[ext_resource path="res://files/buttons/inventory/21(2).png" type="Texture" id=75]
-[ext_resource path="res://files/buttons/mainscreen/gold.png" type="Texture" id=76]
-[ext_resource path="res://files/buttons/inventory/5.png" type="Texture" id=77]
-[ext_resource path="res://files/buttons/inventorypanel.png" type="Texture" id=78]
-[ext_resource path="res://files/buttons/inventory/33.png" type="Texture" id=79]
-[ext_resource path="res://files/buttons/bigpanel.png" type="Texture" id=80]
-[ext_resource path="res://files/buttons/inventory/1.png" type="Texture" id=81]
+[ext_resource path="res://files/buttons/mappanel.png" type="Texture" id=49]
+[ext_resource path="res://files/map.scn" type="PackedScene" id=50]
+[ext_resource path="res://testfont.tres" type="DynamicFontData" id=51]
+[ext_resource path="res://files/buttons/outside/bar.png" type="Texture" id=52]
+[ext_resource path="res://files/buttongrouptheme.tres" type="Theme" id=53]
+[ext_resource path="res://files/buttons/sexicons/male.png" type="Texture" id=54]
+[ext_resource path="res://files/buttons/mainscreen/41.png" type="Texture" id=55]
+[ext_resource path="res://files/statspanel.tscn" type="PackedScene" id=56]
+[ext_resource path="res://files/buttons/mainscreen/7.png" type="Texture" id=57]
+[ext_resource path="res://files/theme slavetab.tres" type="Theme" id=58]
+[ext_resource path="res://files/buttons/inventory/11-litter.png" type="Texture" id=59]
+[ext_resource path="res://files/buttons/inventory/12_chest.png" type="Texture" id=60]
+[ext_resource path="res://files/buttons/inventory/14(1).png" type="Texture" id=61]
+[ext_resource path="res://files/buttons/inventory/14(2).png" type="Texture" id=62]
+[ext_resource path="res://files/buttons/inventory/15(1).png" type="Texture" id=63]
+[ext_resource path="res://files/buttons/inventory/15(2).png" type="Texture" id=64]
+[ext_resource path="res://files/buttons/inventory/31.png" type="Texture" id=65]
+[ext_resource path="res://files/buttons/inventory/32.png" type="Texture" id=66]
+[ext_resource path="res://files/buttons/inventory/16(1).png" type="Texture" id=67]
+[ext_resource path="res://files/buttons/inventory/16(2).png" type="Texture" id=68]
+[ext_resource path="res://files/buttons/inventory/17(1).png" type="Texture" id=69]
+[ext_resource path="res://files/buttons/inventory/17(2).png" type="Texture" id=70]
+[ext_resource path="res://files/buttons/inventory/6-(item).png" type="Texture" id=71]
+[ext_resource path="res://files/images/items/armorleather.png" type="Texture" id=72]
+[ext_resource path="res://files/buttons/inventory/18(1).png" type="Texture" id=73]
+[ext_resource path="res://files/buttons/inventory/18(2).png" type="Texture" id=74]
+[ext_resource path="res://files/buttons/inventory/21(1).png" type="Texture" id=75]
+[ext_resource path="res://files/buttons/inventory/21(2).png" type="Texture" id=76]
+[ext_resource path="res://files/buttons/mainscreen/gold.png" type="Texture" id=77]
+[ext_resource path="res://files/buttons/inventory/5.png" type="Texture" id=78]
+[ext_resource path="res://files/buttons/inventorypanel.png" type="Texture" id=79]
+[ext_resource path="res://files/buttons/inventory/33.png" type="Texture" id=80]
+[ext_resource path="res://files/buttons/bigpanel.png" type="Texture" id=81]
+[ext_resource path="res://files/buttons/inventory/1.png" type="Texture" id=82]
 
 [sub_resource type="StyleBoxTexture" id=1]
 
@@ -393,7 +394,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=19]
+[sub_resource type="StyleBoxTexture" id=18]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -412,7 +413,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=20]
+[sub_resource type="StyleBoxTexture" id=19]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -424,6 +425,25 @@ margin_left = 0.0
 margin_right = 0.0
 margin_top = 0.0
 margin_bottom = 0.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="StyleBoxTexture" id=20]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 42 )
+region_rect = Rect2( 0, 0, 50, 50 )
+margin_left = 10.0
+margin_right = 10.0
+margin_top = 10.0
+margin_bottom = 10.0
 expand_margin_left = 0.0
 expand_margin_right = 0.0
 expand_margin_top = 0.0
@@ -456,12 +476,10 @@ content_margin_left = -1.0
 content_margin_right = -1.0
 content_margin_top = -1.0
 content_margin_bottom = -1.0
-texture = ExtResource( 42 )
-region_rect = Rect2( 0, 0, 50, 50 )
-margin_left = 10.0
-margin_right = 10.0
-margin_top = 10.0
-margin_bottom = 10.0
+margin_left = 0.0
+margin_right = 0.0
+margin_top = 0.0
+margin_bottom = 0.0
 expand_margin_left = 0.0
 expand_margin_right = 0.0
 expand_margin_top = 0.0
@@ -492,23 +510,6 @@ content_margin_left = -1.0
 content_margin_right = -1.0
 content_margin_top = -1.0
 content_margin_bottom = -1.0
-margin_left = 0.0
-margin_right = 0.0
-margin_top = 0.0
-margin_bottom = 0.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
-
-[sub_resource type="StyleBoxTexture" id=25]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
 texture = ExtResource( 43 )
 region_rect = Rect2( 0, 0, 50, 50 )
 margin_left = 10.0
@@ -522,7 +523,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=26]
+[sub_resource type="StyleBoxTexture" id=25]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -541,7 +542,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=27]
+[sub_resource type="StyleBoxTexture" id=26]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -560,16 +561,35 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="DynamicFont" id=18]
+[sub_resource type="StyleBoxTexture" id=27]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 49 )
+region_rect = Rect2( 0, 0, 529, 529 )
+margin_left = 0.0
+margin_right = 0.0
+margin_top = 0.0
+margin_bottom = 0.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+
+[sub_resource type="DynamicFont" id=28]
 
 size = 63
 use_mipmaps = false
 use_filter = true
 extra_spacing_char = 2
-font_data = ExtResource( 49 )
+font_data = ExtResource( 51 )
 _sections_unfolded = [ "Extra Spacing", "Font", "Font/fallback", "Resource", "Settings" ]
 
-[sub_resource type="DynamicFont" id=28]
+[sub_resource type="DynamicFont" id=29]
 
 size = 20
 use_mipmaps = false
@@ -577,7 +597,7 @@ use_filter = true
 extra_spacing_top = 3
 font_data = ExtResource( 17 )
 
-[sub_resource type="GDScript" id=29]
+[sub_resource type="GDScript" id=30]
 
 script/source = "extends Node
 
@@ -664,6 +684,9 @@ func itemsinventory():
 	for i in globals.itemdict.values():
 		if i.amount < 1 || i.type in ['gear','dummy'] || (filter != '' && (i.name.findn(filter) < 0 && i.description.findn(filter) < 0)):
 			continue
+		elif i.type == 'quest':
+			print(true)
+			continue
 		array.append(i)
 	array.sort_custom(globals.items,'sortitems')
 	
@@ -734,7 +757,7 @@ func itemsbackpack():
 	var tempitem
 	for i in globals.state.backpack.stackables:
 		tempitem = globals.itemdict[i]
-		if (filter != '' && (tempitem.name.findn(filter) < 0 && tempitem.description.findn(filter) < 0)):
+		if tempitem.type == 'quest' || (filter != '' && (tempitem.name.findn(filter) < 0 && tempitem.description.findn(filter) < 0)):
 			continue
 		var price = getcost(i, 'sell')
 		button = get_node(\"ScrollContainer/GridContainer/Button\").duplicate()
@@ -986,7 +1009,7 @@ func _on_addmax_pressed():
 	$amountselect/SpinBox.value = 99
 "
 
-[sub_resource type="DynamicFont" id=30]
+[sub_resource type="DynamicFont" id=31]
 
 size = 24
 use_mipmaps = false
@@ -995,13 +1018,13 @@ extra_spacing_top = 1
 font_data = ExtResource( 17 )
 _sections_unfolded = [ "Settings" ]
 
-[sub_resource type="StyleBoxTexture" id=31]
+[sub_resource type="StyleBoxTexture" id=32]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
 content_margin_top = -1.0
 content_margin_bottom = -1.0
-texture = ExtResource( 78 )
+texture = ExtResource( 79 )
 region_rect = Rect2( 0, 0, 613, 833 )
 margin_left = 0.0
 margin_right = 0.0
@@ -1014,7 +1037,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=32]
+[sub_resource type="StyleBoxTexture" id=33]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -1033,7 +1056,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=33]
+[sub_resource type="StyleBoxTexture" id=34]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -1052,13 +1075,13 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=34]
+[sub_resource type="StyleBoxTexture" id=35]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
 content_margin_top = -1.0
 content_margin_bottom = -1.0
-texture = ExtResource( 79 )
+texture = ExtResource( 80 )
 region_rect = Rect2( 0, 0, 1318, 493 )
 margin_left = 0.0
 margin_right = 0.0
@@ -1071,13 +1094,13 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=35]
+[sub_resource type="StyleBoxTexture" id=36]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
 content_margin_top = -1.0
 content_margin_bottom = -1.0
-texture = ExtResource( 80 )
+texture = ExtResource( 81 )
 region_rect = Rect2( 0, 0, 500, 460 )
 margin_left = 0.0
 margin_right = 0.0
@@ -1305,6 +1328,7 @@ _sections_unfolded = [ "Anchor", "Rect", "Visibility" ]
 
 [node name="textpanelexplore" type="Panel" parent="." index="4"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -1404,6 +1428,7 @@ _sections_unfolded = [ "Rect" ]
 
 [node name="textpanel" type="Panel" parent="." index="5"]
 
+editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -2836,7 +2861,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 19 )
+custom_styles/panel = SubResource( 18 )
 popup_exclusive = false
 _sections_unfolded = [ "Hint", "Rect" ]
 
@@ -2873,7 +2898,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 20 )
+custom_styles/panel = SubResource( 19 )
 _sections_unfolded = [ "Rect" ]
 
 [node name="itemdescript" type="RichTextLabel" parent="playergroupdetails/Panel" index="0"]
@@ -3031,11 +3056,11 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/hover = SubResource( 21 )
-custom_styles/pressed = SubResource( 22 )
-custom_styles/focus = SubResource( 23 )
-custom_styles/disabled = SubResource( 24 )
-custom_styles/normal = SubResource( 25 )
+custom_styles/hover = SubResource( 20 )
+custom_styles/pressed = SubResource( 21 )
+custom_styles/focus = SubResource( 22 )
+custom_styles/disabled = SubResource( 23 )
+custom_styles/normal = SubResource( 24 )
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
@@ -3158,11 +3183,11 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/hover = SubResource( 21 )
-custom_styles/pressed = SubResource( 22 )
-custom_styles/focus = SubResource( 23 )
-custom_styles/disabled = SubResource( 24 )
-custom_styles/normal = SubResource( 25 )
+custom_styles/hover = SubResource( 20 )
+custom_styles/pressed = SubResource( 21 )
+custom_styles/focus = SubResource( 22 )
+custom_styles/disabled = SubResource( 23 )
+custom_styles/normal = SubResource( 24 )
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
@@ -3410,8 +3435,8 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/fg = SubResource( 26 )
-custom_styles/bg = SubResource( 27 )
+custom_styles/fg = SubResource( 25 )
+custom_styles/bg = SubResource( 26 )
 min_value = 0.0
 max_value = 100.0
 step = 1.0
@@ -3685,7 +3710,58 @@ group = null
 texture_normal = ExtResource( 48 )
 expand = true
 
-[node name="locationname" type="Label" parent="." index="10"]
+[node name="minimappanel" type="Panel" parent="." index="10"]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 900.0
+margin_top = 60.0
+margin_right = 1270.0
+margin_bottom = 420.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_styles/panel = SubResource( 27 )
+_sections_unfolded = [ "custom_styles" ]
+
+[node name="map" type="ScrollContainer" parent="minimappanel" index="0"]
+
+show_behind_parent = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 19.0
+margin_top = 20.0
+margin_right = 350.0
+margin_bottom = 340.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+scroll_horizontal_enabled = true
+scroll_horizontal = 0
+scroll_vertical_enabled = true
+scroll_vertical = 0
+scroll_deadzone = 0
+_sections_unfolded = [ "Material", "Mouse", "Rect", "Visibility" ]
+
+[node name="Control" parent="minimappanel/map" index="0" instance=ExtResource( 50 )]
+
+margin_right = 0.0
+margin_bottom = 0.0
+mouse_filter = 2
+_sections_unfolded = [ "Mouse", "Size Flags" ]
+
+[node name="locationname" type="Label" parent="." index="11"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -3701,7 +3777,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 18 )
+custom_fonts/font = SubResource( 28 )
 custom_colors/font_color = Color( 0.886275, 0.960938, 0.457947, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Test"
@@ -3729,45 +3805,15 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 50 )
+texture = ExtResource( 52 )
 expand = true
 stretch_mode = 0
 _sections_unfolded = [ "Visibility" ]
 
-[node name="map" type="ScrollContainer" parent="." index="11"]
-
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 909.0
-margin_top = 53.0
-margin_right = 1259.0
-margin_bottom = 403.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-scroll_horizontal_enabled = true
-scroll_horizontal = 0
-scroll_vertical_enabled = true
-scroll_vertical = 0
-scroll_deadzone = 0
-_sections_unfolded = [ "Mouse", "Rect" ]
-
-[node name="Control" parent="map" index="0" instance=ExtResource( 51 )]
-
-margin_right = 0.0
-margin_bottom = 0.0
-mouse_filter = 2
-_sections_unfolded = [ "Mouse", "Size Flags" ]
-
 [node name="slavebuypanel" type="Control" parent="." index="12"]
 
 editor/display_folded = true
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -3856,7 +3902,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-theme = ExtResource( 52 )
+theme = ExtResource( 53 )
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
@@ -3948,7 +3994,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 53 )
+texture = ExtResource( 54 )
 expand = true
 stretch_mode = 6
 
@@ -3968,7 +4014,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 54 )
+texture = ExtResource( 55 )
 expand = true
 stretch_mode = 6
 _sections_unfolded = [ "Mouse" ]
@@ -4079,7 +4125,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="statspanel" parent="slavebuypanel" index="5" instance=ExtResource( 55 )]
+[node name="statspanel" parent="slavebuypanel" index="5" instance=ExtResource( 56 )]
 
 editor/display_folded = true
 margin_left = 623.0
@@ -4306,7 +4352,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 56 )
+texture = ExtResource( 57 )
 expand = true
 stretch_mode = 7
 _sections_unfolded = [ "Hint", "Rect" ]
@@ -4314,6 +4360,7 @@ _sections_unfolded = [ "Hint", "Rect" ]
 [node name="slavesellpanel" type="Control" parent="." index="13"]
 
 editor/display_folded = true
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -4384,7 +4431,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-theme = ExtResource( 52 )
+theme = ExtResource( 53 )
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
@@ -4456,7 +4503,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 54 )
+texture = ExtResource( 55 )
 expand = true
 stretch_mode = 6
 
@@ -4476,7 +4523,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 53 )
+texture = ExtResource( 54 )
 expand = true
 stretch_mode = 6
 
@@ -4631,7 +4678,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-theme = ExtResource( 52 )
+theme = ExtResource( 53 )
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
@@ -4911,7 +4958,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-theme = ExtResource( 52 )
+theme = ExtResource( 53 )
 custom_fonts/font = ExtResource( 6 )
 toggle_mode = true
 enabled_focus_mode = 2
@@ -5002,7 +5049,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-theme = ExtResource( 52 )
+theme = ExtResource( 53 )
 custom_fonts/font = ExtResource( 6 )
 toggle_mode = true
 enabled_focus_mode = 2
@@ -5219,7 +5266,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 28 )
+custom_fonts/font = SubResource( 29 )
 text = "Available spells"
 percent_visible = 1.0
 lines_skipped = 0
@@ -5282,7 +5329,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-theme = ExtResource( 52 )
+theme = ExtResource( 53 )
 custom_fonts/font = ExtResource( 6 )
 toggle_mode = true
 enabled_focus_mode = 2
@@ -5378,10 +5425,9 @@ align = 1
 _sections_unfolded = [ "Rect" ]
 
 [node name="shoppanel" type="Control" parent="." index="17" groups=[
-"blockoutsideinput",
+"blockmaininput",
 ]]
 
-editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -5414,7 +5460,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-theme = ExtResource( 57 )
+theme = ExtResource( 58 )
 
 [node name="buybutton" type="Button" parent="shoppanel/Panel" index="0"]
 
@@ -5554,10 +5600,10 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 theme = ExtResource( 1 )
-texture = ExtResource( 58 )
+texture = ExtResource( 59 )
 expand = true
 stretch_mode = 0
-script = SubResource( 29 )
+script = SubResource( 30 )
 _sections_unfolded = [ "Mouse", "Visibility" ]
 
 [node name="mode" type="TextureButton" parent="shoppanel/inventory" index="0"]
@@ -5581,7 +5627,7 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 59 )
+texture_normal = ExtResource( 60 )
 expand = true
 _sections_unfolded = [ "Rect" ]
 
@@ -5604,13 +5650,13 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-theme = ExtResource( 57 )
+theme = ExtResource( 58 )
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 60 )
-texture_pressed = ExtResource( 61 )
+texture_normal = ExtResource( 61 )
+texture_pressed = ExtResource( 62 )
 expand = true
 _sections_unfolded = [ "Rect" ]
 
@@ -5633,13 +5679,13 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-theme = ExtResource( 57 )
+theme = ExtResource( 58 )
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 62 )
-texture_pressed = ExtResource( 63 )
+texture_normal = ExtResource( 63 )
+texture_pressed = ExtResource( 64 )
 expand = true
 _sections_unfolded = [ "Rect" ]
 
@@ -5662,13 +5708,13 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-theme = ExtResource( 57 )
+theme = ExtResource( 58 )
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 64 )
-texture_pressed = ExtResource( 65 )
+texture_normal = ExtResource( 65 )
+texture_pressed = ExtResource( 66 )
 expand = true
 _sections_unfolded = [ "Rect" ]
 
@@ -5691,13 +5737,13 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-theme = ExtResource( 57 )
+theme = ExtResource( 58 )
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 66 )
-texture_pressed = ExtResource( 67 )
+texture_normal = ExtResource( 67 )
+texture_pressed = ExtResource( 68 )
 expand = true
 _sections_unfolded = [ "Rect" ]
 
@@ -5720,13 +5766,13 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-theme = ExtResource( 57 )
+theme = ExtResource( 58 )
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 68 )
-texture_pressed = ExtResource( 69 )
+texture_normal = ExtResource( 69 )
+texture_pressed = ExtResource( 70 )
 expand = true
 _sections_unfolded = [ "Rect" ]
 
@@ -5814,7 +5860,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 0
-texture = ExtResource( 70 )
+texture = ExtResource( 71 )
 expand = true
 stretch_mode = 0
 _sections_unfolded = [ "Mouse", "Size Flags" ]
@@ -5835,7 +5881,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-texture = ExtResource( 71 )
+texture = ExtResource( 72 )
 expand = true
 stretch_mode = 6
 _sections_unfolded = [ "Mouse" ]
@@ -5909,8 +5955,8 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 72 )
-texture_pressed = ExtResource( 73 )
+texture_normal = ExtResource( 73 )
+texture_pressed = ExtResource( 74 )
 expand = true
 _sections_unfolded = [ "Hint", "Mouse", "Rect" ]
 
@@ -5936,9 +5982,9 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 74 )
-texture_pressed = ExtResource( 75 )
-texture_hover = ExtResource( 75 )
+texture_normal = ExtResource( 75 )
+texture_pressed = ExtResource( 76 )
+texture_hover = ExtResource( 76 )
 expand = true
 _sections_unfolded = [ "Hint", "Rect", "Textures" ]
 
@@ -5958,7 +6004,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 30 )
+custom_fonts/font = SubResource( 31 )
 text = "100"
 percent_visible = 1.0
 lines_skipped = 0
@@ -5982,7 +6028,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 76 )
+texture = ExtResource( 77 )
 expand = true
 stretch_mode = 0
 _sections_unfolded = [ "Hint", "Rect" ]
@@ -6049,7 +6095,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 0
-texture = ExtResource( 70 )
+texture = ExtResource( 71 )
 expand = true
 stretch_mode = 0
 _sections_unfolded = [ "Mouse", "Size Flags" ]
@@ -6070,7 +6116,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-texture = ExtResource( 71 )
+texture = ExtResource( 72 )
 expand = true
 stretch_mode = 6
 _sections_unfolded = [ "Mouse" ]
@@ -6145,8 +6191,8 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 72 )
-texture_pressed = ExtResource( 73 )
+texture_normal = ExtResource( 73 )
+texture_pressed = ExtResource( 74 )
 expand = true
 _sections_unfolded = [ "Hint", "Mouse" ]
 
@@ -6166,7 +6212,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 30 )
+custom_fonts/font = SubResource( 31 )
 text = "100"
 percent_visible = 1.0
 lines_skipped = 0
@@ -6190,7 +6236,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 76 )
+texture = ExtResource( 77 )
 expand = true
 stretch_mode = 0
 _sections_unfolded = [ "Hint", "Rect" ]
@@ -6217,9 +6263,9 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 74 )
-texture_pressed = ExtResource( 75 )
-texture_hover = ExtResource( 75 )
+texture_normal = ExtResource( 75 )
+texture_pressed = ExtResource( 76 )
+texture_hover = ExtResource( 76 )
 expand = true
 _sections_unfolded = [ "Hint", "Rect", "Textures" ]
 
@@ -6239,7 +6285,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-texture = ExtResource( 77 )
+texture = ExtResource( 78 )
 expand = true
 stretch_mode = 0
 _sections_unfolded = [ "Mouse" ]
@@ -6263,7 +6309,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 31 )
+custom_styles/panel = SubResource( 32 )
 _sections_unfolded = [ "Mouse" ]
 
 [node name="noitems" type="Label" parent="shoppanel/inventory" index="11"]
@@ -6306,8 +6352,8 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_styles/fg = SubResource( 32 )
-custom_styles/bg = SubResource( 33 )
+custom_styles/fg = SubResource( 33 )
+custom_styles/bg = SubResource( 34 )
 min_value = 0.0
 max_value = 100.0
 step = 1.0
@@ -6385,7 +6431,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 34 )
+custom_styles/panel = SubResource( 35 )
 popup_exclusive = false
 
 [node name="RichTextLabel" type="RichTextLabel" parent="shoppanel/inventory/iteminfo" index="0"]
@@ -6475,7 +6521,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-custom_styles/panel = SubResource( 35 )
+custom_styles/panel = SubResource( 36 )
 popup_exclusive = false
 _sections_unfolded = [ "custom_styles" ]
 
@@ -6681,7 +6727,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 76 )
+texture = ExtResource( 77 )
 expand = true
 stretch_mode = 0
 
@@ -6697,7 +6743,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-texture = ExtResource( 81 )
+texture = ExtResource( 82 )
 expand = true
 stretch_mode = 0
 _sections_unfolded = [ "Mouse" ]
@@ -6833,6 +6879,7 @@ align = 1
 
 [node name="bigmappanel" type="Panel" parent="." index="19"]
 
+editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -6873,7 +6920,7 @@ scroll_vertical = 0
 scroll_deadzone = 0
 _sections_unfolded = [ "Rect" ]
 
-[node name="Control" parent="bigmappanel/ScrollContainer" index="0" instance=ExtResource( 51 )]
+[node name="Control" parent="bigmappanel/ScrollContainer" index="0" instance=ExtResource( 50 )]
 
 margin_right = 0.0
 margin_bottom = 0.0

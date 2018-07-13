@@ -187,7 +187,7 @@ invigorate = {
 summontentacle = {
 	code = 'summontentacle',
 	name = 'Summon Tentacle',
-	description = 'Summons naughty tentacles from the otherworld for a short time.',
+	description = 'Summons naughty tentacles from the otherworld for a short time. Can make up for a very effective punishment.',
 	effect = 'tentacleeffect',
 	manacost = 35,
 	req = 10,
@@ -356,7 +356,25 @@ func guidanceeffect():
 	return text
 
 func tentacleeffect():
-	main.popup('This spell is WIP, Sorry.')
+	var spell = globals.spelldict.summontentacle
+	var text = "As you finish chanting the spell, a stream of tentacles emerge from small breach in air. "
+	if person.unique == 'Zoe':
+		text += "\n\n[color=yellow]—No... Please NO![/color]\n\n"
+	
+	text += "They quickly seize $name by the limbs and free $him from the clothes. You observe how $name is being toyed and raped by tentacles. After a couple of orgasms the tentacles disappear from reality and you make sure that $name learned this lesson well before leaving."
+	person.obed += 75
+	person.fear += 90
+	person.lust -= rand_range(20,30)
+	if person.vagvirgin == true:
+		person.vagvirgin = false
+	if !person.traits.has("Deviant"):
+		person.loyal -= 20
+		person.stress += rand_range(30,50)
+	if person.unique == 'Zoe':
+		person.loyal = 0
+		text += "\n\n[color=yellow]—How could you...?[/color]"
+	
+	return person.dictionary(text)
 
 func sortspells(first, second):
 	if first.name >= second.name:
