@@ -678,8 +678,11 @@ func pushdown(person, counter):
 	var text = ''
 	var mode
 	text += "You forcefully push [name2] down giving [him2] a sultry look. "
-	
-	if self.mood*4 + person.loyal + person.lust >= 100 || (person.traits.has("Likes it rough") && self.mood*5 + person.loyal + person.lust >= 75):
+	if person.effects.has("captured"):
+		self.mood -= 10
+		text += "[he2] resists and pushes you back. "
+		mode = 'abuse'
+	elif self.mood*4 + person.loyal + person.lust >= 100 || (person.traits.has("Likes it rough") && self.mood*3 + person.loyal + person.lust >= 75):
 		text += "[he2] closes eyes and silently accepts you. "
 		self.mood += 3
 		person.lust += 3
@@ -702,7 +705,8 @@ func propose(person, counter):
 		return text
 	else:
 		text += "You ask [name2] if [he2] would like to take your relationship to the next level. "
-		var difficulty =  self.mood*5 + person.loyal*2 + person.lust + drunkness*3
+		var difficulty =  self.mood*3 + person.loyal*2 + person.lust + drunkness*3
+		if person.effects.has('captured'): difficulty -= 80
 		if person.sex == globals.player.sex && !person.traits.has('Homosexual') && !person.traits.has("Bisexual"):
 			difficulty -= 10
 		if globals.state.relativesdata.has(person.id) && (int(globals.state.relativesdata[person.id].father) == int(globals.player.id) || int(globals.state.relativesdata[person.id].mother) == int(globals.player.id)):
@@ -1057,7 +1061,9 @@ func _on_cancelsex_pressed():
 func _on_confirmsex_pressed():
 	calculateresults()
 	self.visible = false
-	get_parent().sexmode = 'sexmode'
+	get_parent().sexmode = 'sex'
 	get_parent().sexslaves = [person]
 	get_parent()._on_startbutton_pressed()
+	yield(get_parent(),'animfinished')
+	get_parent().sexmode = 'meet'
 

@@ -48,17 +48,7 @@ func mentalup5(mental):
 	person.learningpoints -= variables.learnpointsperstat*5
 	$stats._on_trainingabils_pressed()
 
-onready var nakedspritesdict = {
-	Cali = {cons = 'calinakedhappy', rape = 'calinakedsad', clothcons = 'calineutral', clothrape = 'calisad'},
-	Tisha = {cons = 'tishanakedhappy', rape = 'tishanakedneutral', clothcons = 'tishahappy', clothrape = 'tishaneutral'},
-	Emily = {cons = 'emilynakedhappy', rape = 'emilynakedneutral', clothcons = 'emily2happy', clothrape = 'emily2worried'},
-	Chloe = {cons = 'chloenakedhappy', rape = 'chloenakedneutral', clothcons = 'chloehappy2', clothrape = 'chloeneutral2'},
-	Maple = {cons = 'fairynaked', rape = 'fairynaked', clothcons = 'fairy', clothrape = 'fairy'},
-	Yris = {cons = 'yrisnormalnaked', rape = 'yrisshocknaked', clothcons = 'yrisnormal', clothrape = 'yrisshock'},
-	Ayneris = {cons = 'aynerisneutralnaked', rape = 'aynerisangrynaked', clothcons = 'aynerisneutral', clothrape = 'aynerisangry'},
-	Zoe = {cons = "zoehappynaked", rape = 'zoesadnaked', clothcons = 'zoehappy', clothrape = 'zoesad'},
-	Melissa = {cons = "melissanakedfriendly", rape = 'melissanakedneutral', clothcons = 'melissafriendly', clothrape = 'melissaneutral'},
-	}
+var nakedspritesdict = globals.gallery.nakedsprites
 
 func slavetabopen():
 	var label
@@ -84,13 +74,13 @@ func slavetabopen():
 	$stats/statustext.set_bbcode(text)
 	if showfullbody == true:
 		$stats/basics/bodypanel/fullbody.set_texture(null)
-		if nakedspritesdict.has(person.unique):
+		if person.imagefull != null && globals.loadimage(person.imagefull) != null:
+			$stats/basics/bodypanel/fullbody.set_texture(globals.loadimage(person.imagefull))
+		elif nakedspritesdict.has(person.unique):
 			if person.obed <= 50 || person.stress > 50:
 				$stats/basics/bodypanel/fullbody.set_texture(globals.spritedict[nakedspritesdict[person.unique].clothrape])
 			else:
 				$stats/basics/bodypanel/fullbody.set_texture(globals.spritedict[nakedspritesdict[person.unique].clothcons])
-		elif person.imagefull != null && globals.loadimage(person.imagefull) != null:
-			$stats/basics/bodypanel/fullbody.set_texture(globals.loadimage(person.imagefull))
 		$stats/basics/bodypanel.visible = ($stats/basics/bodypanel/fullbody.get_texture() != null)
 	else:
 		$stats/basics/bodypanel.visible = false
@@ -167,11 +157,11 @@ func _on_statistics_pressed():
 	buildmetrics()
 
 func _on_statsclose_pressed():
-	get_node("stats/statistics/Popup").visible = false
+	$stats/statisticpanel.visible = false
 
 func buildmetrics():
 	var text = ""
-	get_node("stats/statistics/Popup").popup()
+	$stats/statisticpanel.visible = true
 	text += "[center]Personal achievments[/center]\n"
 	text += "In your possession: " + str(person.metrics.ownership) + " day"+globals.fastif(person.metrics.ownership == 1, '','s')+";\n"
 	text += "Spent in jail: " + str(person.metrics.jail) + " day"+globals.fastif(person.metrics.jail == 1, '','s')+";\n"
@@ -184,24 +174,48 @@ func buildmetrics():
 	text += "Used items: " + str(person.metrics.item) + " time"+globals.fastif(person.metrics.item == 1, '','s')+";\n"
 	text += "Affected by spells: " + str(person.metrics.spell) + " time"+globals.fastif(person.metrics.spell == 1, '','s')+";\n"
 	text += "Modified in lab: " + str(person.metrics.mods) + " time"+globals.fastif(person.metrics.mods == 1, '','s')+";\n"
-	get_node("stats/statistics/Popup/statstext").set_bbcode(text)
+	$stats/statisticpanel/statstext.set_bbcode(text)
 	text = "[center]Sexual achievments[/center]\n"
 	text += "Had intimacy: " + str(person.metrics.sex) + " time"+globals.fastif(person.metrics.sex == 1, '','s')+";\n"
-	text += "Which ended in orgasm: " + str(person.metrics.orgasm) + " time"+globals.fastif(person.metrics.orgasm == 1, '','s')+";\n"
+	text += "Orgasms: " + str(person.metrics.orgasm) + " time"+globals.fastif(person.metrics.orgasm == 1, '','s')+";\n"
 	if person.vagina != 'none':
 		text += "Vaginal penetrations: " + str(person.metrics.vag)+";\n"
 	text += "Anal penetrations: " + str(person.metrics.anal)+";\n"
 	text += "Gave oral: " + str(person.metrics.oral) + " time"+globals.fastif(person.metrics.oral == 1, '','s')+";\n"
 	text += "Was forced: " + str(person.metrics.roughsex) + " time"+globals.fastif(person.metrics.roughsex == 1, '','s')+";\n"
-	text += person.dictionary("Of those $he liked: ") + str(person.metrics.roughsexlike) + " time"+globals.fastif(person.metrics.roughsexlike == 1, '','s')+";\n"
-	text += "Had partners: " + str(person.metrics.partners.size() + person.metrics.randompartners) + " partner"+globals.fastif(person.metrics.partners.size() == 1, '','s')+";\n"
+	#text += person.dictionary("Of those $he liked: ") + str(person.metrics.roughsexlike) + " time"+globals.fastif(person.metrics.roughsexlike == 1, '','s')+";\n"
+	text += "Had partners: " + str(person.sexexp.partners.size()) + " partner"+globals.fastif(person.sexexp.partners.size() == 1, '','s')+";\n"
 	if person.preg.has_womb == true:
 		text += "Was pregnant: " + str(person.metrics.preg) + " time"+globals.fastif(person.metrics.preg == 1, '','s')+";\n"
 		text += "Gave birth: " + str(person.metrics.birth) + " time"+globals.fastif(person.metrics.birth == 1, '','s')+";\n"
-	text += "Participated in threesomes: " + str(person.metrics.threesome) + " time"+globals.fastif(person.metrics.threesome == 1, '','s')+";\n"
-	text += "Participated in orgies: " + str(person.metrics.orgy) + " time"+globals.fastif(person.metrics.orgy == 1, '','s')+";\n"
-	get_node("stats/statistics/Popup/statssextext").set_bbcode(text)
+	#text += "Participated in threesomes: " + str(person.metrics.threesome) + " time"+globals.fastif(person.metrics.threesome == 1, '','s')+";\n"
+	#text += "Participated in orgies: " + str(person.metrics.orgy) + " time"+globals.fastif(person.metrics.orgy == 1, '','s')+";\n"
+	$stats/statisticpanel/statssextext.set_bbcode(text)
+	text = ''
+	for i in person.relations:
+		var tempslave = globals.state.findslave(i)
+		if tempslave == null:
+			continue
+		text += tempslave.name_short() + ": " + relationword(person.relations[i]) + '\n'
+		
+	$stats/statisticpanel/relations/RichTextLabel.bbcode_text = text
+		
 
+func relationword(value):
+	var text = 'neutral'
+	if value >= 900:
+		text = '[color=green]love[/color]'
+	elif value >= 500:
+		text = '[color=green]affectionate[/color]'
+	elif value >= 200:
+		text = 'friendly'
+	elif value <= -900:
+		text = '[color=red]hostile[/color]'
+	elif value <= -500:
+		text = '[color=red]bitter[/color]'
+	elif value <= -200:
+		text = 'aloof'
+	return text
 
 
 func rulecheck(button):

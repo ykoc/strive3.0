@@ -206,6 +206,7 @@ description = "The entrance to the old tunnels is tucked away in a maze of cliff
 enemies = [],
 encounters = [],
 length = 1,
+locationscript = 'undercityentrance',
 exits = ['undercityentrance'],
 tags = [],
 races = []

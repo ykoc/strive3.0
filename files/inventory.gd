@@ -341,6 +341,7 @@ func selectslave(button):
 	slavegear(person)
 
 var sil = {costume = load("res://files/buttons/inventory/25.png"), underwear = load("res://files/buttons/inventory/26.png"), accessory = load("res://files/buttons/inventory/27.png"), weapon = load("res://files/buttons/inventory/29.png"), armor = load("res://files/buttons/inventory/28.png")}
+var nakedspritesdict = globals.gallery.nakedsprites
 
 func slavegear(person):
 	var text = ''
@@ -362,7 +363,12 @@ func slavegear(person):
 	race = person.race.replace("Beastkin ",'').replace("Halfkin ", '').to_lower()
 	if race in ['dark elf', 'drow']:
 		race = 'elf'
-	get_node("gearpanel/charframe").set_texture(shades[race][sex])
+	if globals.loadimage(person.imagefull) != null:
+		$gearpanel/charframe.texture = globals.loadimage(person.imagefull)
+	elif nakedspritesdict.has(person.unique):
+		$gearpanel/charframe.texture = globals.spritedict[nakedspritesdict[person.unique].clothcons]
+	else:
+		get_node("gearpanel/charframe").set_texture(shades[race][sex])
 	
 	
 	for i in ['weapon','costume','underwear','armor','accessory']:
@@ -491,11 +497,13 @@ func movetobackpack(button):
 func movefrombackpack(button):
 	var item = button.get_meta('item')
 	if item.has('owner') == false:
+		if !globals.state.backpack.stackables.has(item.code):
+			return
 		item.amount += 1
 		globals.state.backpack.stackables[item.code] -= 1
-		button.get_node('number').set_text(str(globals.state.backpack.stackables[item.code]))
-		if globals.state.backpack.stackables[item.code] <= 0:
-			globals.state.backpack.stackables.erase(item.code)
+		if globals.state.backpack.stackables.has(item.code):
+			button.get_node('number').set_text(str(globals.state.backpack.stackables[item.code]))
+		else:
 			button.visible = false
 			button.queue_free()
 	else:
@@ -774,7 +782,8 @@ func _on_renamecancel_pressed():
 func _on_moveall_pressed():
 	for i in $ScrollContainer/GridContainer.get_children():
 		if i.name != 'Button':
-			while int(i.get_node("number").text) >= 1:
-				movefrombackpack(i)
+			while int(i.get_node("number").text) >= 1 && i.visible == true:
+				i.get_node("move").emit_signal('pressed')
+				#movefrombackpack(i)
 
 

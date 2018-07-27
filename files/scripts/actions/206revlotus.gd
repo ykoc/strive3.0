@@ -53,6 +53,7 @@ func givereffect(member):
 func takereffect(member):
 	var result
 	var effects = {lust = 100, sens = 100, lewd = 1}
+	member.person.metrics.vag += 1
 	if (member.consent == true || member.person.traits.find("Likes it rough") >= 0) && member.lust >= 300 && member.lube >= 3:
 		result = 'good'
 	elif (member.consent == true || member.person.traits.find("Likes it rough") >= 0):

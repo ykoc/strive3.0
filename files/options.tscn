@@ -4,12 +4,12 @@
 [ext_resource path="res://files/scripts/options.tres.gd" type="Script" id=2]
 [ext_resource path="res://files/theme slavetab.tres" type="Theme" id=3]
 
-[sub_resource type="StreamTexture" id=1]
+[sub_resource type="StreamTexture" id=118]
 
 flags = 4
 load_path = "res://.import/2.png-4cf966d13a2c7ebfca9f08501bafd5bd.stex"
 
-[node name="options" type="WindowDialog"]
+[node name="options" type="Panel"]
 
 anchor_left = 0.5
 anchor_top = 0.5
@@ -26,9 +26,6 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 theme = ExtResource( 1 )
-popup_exclusive = false
-window_title = "Options"
-resizable = false
 script = ExtResource( 2 )
 _sections_unfolded = [ "Theme", "custom_styles" ]
 
@@ -53,6 +50,7 @@ tabs_visible = true
 
 [node name="Settings" type="Tabs" parent="TabContainer" index="0"]
 
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -87,12 +85,12 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = SubResource( 1 )
+texture = SubResource( 118 )
 expand = true
 stretch_mode = 0
 _sections_unfolded = [ "Rect" ]
 
-[node name="fading" type="CheckBox" parent="TabContainer/Settings" index="1"]
+[node name="fadinganimation" type="CheckBox" parent="TabContainer/Settings" index="1"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -146,34 +144,7 @@ flat = false
 align = 0
 _sections_unfolded = [ "Hint" ]
 
-[node name="skipcombatanimation" type="CheckBox" parent="TabContainer/Settings" index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 17.0
-margin_top = 119.0
-margin_right = 261.0
-margin_bottom = 146.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-hint_tooltip = "Show custom character sprites during dialogues?"
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-toggle_mode = true
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Skip combat animation"
-flat = false
-align = 0
-_sections_unfolded = [ "Hint" ]
-
-[node name="randomportraits" type="CheckBox" parent="TabContainer/Settings" index="4"]
+[node name="randomcustomportraits" type="CheckBox" parent="TabContainer/Settings" index="3"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -204,7 +175,7 @@ flat = false
 align = 0
 _sections_unfolded = [ "Hint" ]
 
-[node name="Label2" type="Label" parent="TabContainer/Settings" index="5"]
+[node name="Label2" type="Label" parent="TabContainer/Settings" index="4"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -225,7 +196,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="fullscreen" type="CheckBox" parent="TabContainer/Settings" index="6"]
+[node name="fullscreen" type="CheckBox" parent="TabContainer/Settings" index="5"]
 
 anchor_left = 0.0
 anchor_top = 1.0
@@ -252,35 +223,7 @@ flat = false
 align = 0
 _sections_unfolded = [ "Hint" ]
 
-[node name="custommouse" type="CheckBox" parent="TabContainer/Settings" index="7"]
-
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 17.0
-margin_top = 15.0
-margin_right = 204.0
-margin_bottom = 42.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-hint_tooltip = "Disable/enable hardware mouse cursor"
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-toggle_mode = true
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Use custom cursor"
-flat = false
-align = 0
-_sections_unfolded = [ "Hint" ]
-
-[node name="fontsize" type="SpinBox" parent="TabContainer/Settings" index="8"]
+[node name="fontsize" type="SpinBox" parent="TabContainer/Settings" index="6"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -307,7 +250,7 @@ editable = true
 prefix = ""
 suffix = ""
 
-[node name="musicslider" type="HSlider" parent="TabContainer/Settings" index="9"]
+[node name="musicslider" type="HSlider" parent="TabContainer/Settings" index="7"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -357,7 +300,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="soundslider" type="HSlider" parent="TabContainer/Settings" index="10"]
+[node name="soundslider" type="HSlider" parent="TabContainer/Settings" index="8"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -409,8 +352,6 @@ max_lines_visible = -1
 
 [node name="Game" type="Tabs" parent="TabContainer" index="1"]
 
-editor/display_folded = true
-visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -445,65 +386,11 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = SubResource( 1 )
+texture = SubResource( 118 )
 expand = true
 stretch_mode = 0
 
-[node name="futa" type="CheckBox" parent="TabContainer/Game" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 20.0
-margin_top = 39.0
-margin_right = 84.0
-margin_bottom = 66.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-hint_tooltip = "Allow random generation of futanari characters"
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-toggle_mode = true
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Futa"
-flat = false
-align = 0
-_sections_unfolded = [ "Hint" ]
-
-[node name="futaballs" type="CheckBox" parent="TabContainer/Game" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 135.0
-margin_top = 39.0
-margin_right = 317.0
-margin_bottom = 66.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-hint_tooltip = "Random futanari characters will be generated with testicles"
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-toggle_mode = true
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Futa with testicles"
-flat = false
-align = 0
-_sections_unfolded = [ "Focus", "Hint" ]
-
-[node name="furry" type="CheckBox" parent="TabContainer/Game" index="3"]
+[node name="furry" type="CheckBox" parent="TabContainer/Game" index="1"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -530,7 +417,7 @@ flat = false
 align = 0
 _sections_unfolded = [ "Hint" ]
 
-[node name="furrynipples" type="CheckBox" parent="TabContainer/Game" index="4"]
+[node name="furrynipples" type="CheckBox" parent="TabContainer/Game" index="2"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -557,7 +444,61 @@ flat = false
 align = 0
 _sections_unfolded = [ "Hint" ]
 
-[node name="slaverguildraces" type="CheckBox" parent="TabContainer/Game" index="5"]
+[node name="futa" type="CheckBox" parent="TabContainer/Game" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 20.0
+margin_top = 39.0
+margin_right = 84.0
+margin_bottom = 66.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Allow random generation of futanari characters"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Futa"
+flat = false
+align = 0
+_sections_unfolded = [ "Hint" ]
+
+[node name="futaballs" type="CheckBox" parent="TabContainer/Game" index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 135.0
+margin_top = 39.0
+margin_right = 317.0
+margin_bottom = 66.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Random futanari characters will be generated with testicles"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Futa with testicles"
+flat = false
+align = 0
+_sections_unfolded = [ "Focus", "Hint" ]
+
+[node name="slaverguildallraces" type="CheckBox" parent="TabContainer/Game" index="5"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -585,7 +526,7 @@ flat = false
 align = 0
 _sections_unfolded = [ "Hint" ]
 
-[node name="receive" type="CheckBox" parent="TabContainer/Game" index="6"]
+[node name="receiving" type="CheckBox" parent="TabContainer/Game" index="6"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -613,7 +554,7 @@ flat = false
 align = 0
 _sections_unfolded = [ "Hint" ]
 
-[node name="childlike" type="CheckBox" parent="TabContainer/Game" index="7"]
+[node name="children" type="CheckBox" parent="TabContainer/Game" index="7"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -849,10 +790,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 19.0
-margin_top = 391.0
-margin_right = 198.0
-margin_bottom = 430.0
+margin_left = 20.0
+margin_top = 392.0
+margin_right = 199.0
+margin_bottom = 431.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 hint_tooltip = "When to show Alise on Day End Popup"
@@ -873,9 +814,35 @@ items = [ "Always", null, false, -1, null, "After Daily Event", null, false, -1,
 selected = 0
 _sections_unfolded = [ "Hint" ]
 
+[node name="instantcombatanimation" type="CheckBox" parent="TabContainer/Game" index="17"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 20.0
+margin_top = 177.0
+margin_right = 264.0
+margin_bottom = 204.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Show custom character sprites during dialogues?"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Skip combat animation"
+flat = false
+align = 0
+_sections_unfolded = [ "Hint" ]
+
 [node name="Supporter section" type="Tabs" parent="TabContainer" index="2"]
 
-editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -911,7 +878,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = SubResource( 1 )
+texture = SubResource( 118 )
 expand = true
 stretch_mode = 0
 
@@ -1014,7 +981,7 @@ focus_mode = 2
 context_menu_enabled = true
 placeholder_text = "Enter password"
 placeholder_alpha = 0.6
-caret_blink = false
+caret_blink = true
 caret_blink_speed = 0.65
 caret_position = 0
 
@@ -1043,506 +1010,7 @@ text = "Confirm"
 flat = false
 align = 1
 
-[node name="cheatpanel" type="PopupPanel" parent="TabContainer/Supporter section" index="6"]
-
-editor/display_folded = true
-visible = false
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -977.0
-margin_top = -650.0
-margin_right = -289.0
-margin_bottom = -202.0
-rect_min_size = Vector2( 688, 448 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-theme = ExtResource( 3 )
-popup_exclusive = false
-_sections_unfolded = [ "Hint", "Rect" ]
-
-[node name="close" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 300.0
-margin_top = 404.0
-margin_right = 410.0
-margin_bottom = 441.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Close"
-flat = false
-align = 1
-
-[node name="cheatgold" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 16.0
-margin_top = 50.0
-margin_right = 166.0
-margin_bottom = 90.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Set Gold"
-flat = false
-align = 1
-
-[node name="cheatfood" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 16.0
-margin_top = 93.0
-margin_right = 166.0
-margin_bottom = 133.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Set Food"
-flat = false
-align = 1
-
-[node name="cheatmana" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 16.0
-margin_top = 137.0
-margin_right = 166.0
-margin_bottom = 177.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Set Mana"
-flat = false
-align = 1
-
-[node name="removepopcap" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="4"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 16.0
-margin_top = 185.0
-margin_right = 266.0
-margin_bottom = 225.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-hint_tooltip = "Huge population may impact performance greatly"
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Remove population limits"
-flat = false
-align = 1
-_sections_unfolded = [ "Hint" ]
-
-[node name="addupgradepoint" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="5"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 16.0
-margin_top = 227.0
-margin_right = 266.0
-margin_bottom = 267.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Add 5 Upgrade Points"
-flat = false
-align = 1
-_sections_unfolded = [ "Hint" ]
-
-[node name="unlockspells" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="6"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 139.0
-margin_top = 11.0
-margin_right = 256.0
-margin_bottom = 43.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Unlock all spells"
-flat = false
-align = 1
-
-[node name="selectslave" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="7"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 504.0
-margin_top = 30.0
-margin_right = 621.0
-margin_bottom = 62.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Select Slave"
-flat = false
-align = 1
-
-[node name="maxloyalty" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="8"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 346.0
-margin_top = 64.0
-margin_right = 496.0
-margin_bottom = 104.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Max Loyalty"
-flat = false
-align = 1
-
-[node name="maxobed" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="9"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 347.0
-margin_top = 109.0
-margin_right = 499.0
-margin_bottom = 149.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Max Obedience"
-flat = false
-align = 1
-
-[node name="maxlewd" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="10"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 348.0
-margin_top = 155.0
-margin_right = 498.0
-margin_bottom = 195.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Max Affection"
-flat = false
-align = 1
-
-[node name="maxlust" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="11"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 348.0
-margin_top = 200.0
-margin_right = 498.0
-margin_bottom = 240.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Max Lust"
-flat = false
-align = 1
-
-[node name="nostress" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="12"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 348.0
-margin_top = 249.0
-margin_right = 498.0
-margin_bottom = 289.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Remove Stress"
-flat = false
-align = 1
-
-[node name="addskillpoints" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="13"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 348.0
-margin_top = 299.0
-margin_right = 498.0
-margin_bottom = 339.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Add Skillpoint"
-flat = false
-align = 1
-
-[node name="addlevel" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="14"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 348.0
-margin_top = 349.0
-margin_right = 498.0
-margin_bottom = 389.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Add Level"
-flat = false
-align = 1
-
-[node name="levelup" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="15"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 17.0
-margin_top = 269.0
-margin_right = 267.0
-margin_bottom = 309.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Add Skillpoint"
-flat = false
-align = 1
-
-[node name="unlockgallery" type="Button" parent="TabContainer/Supporter section/cheatpanel" index="16"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 17.0
-margin_top = 314.0
-margin_right = 267.0
-margin_bottom = 354.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Fully Unlock Gallery"
-flat = false
-align = 1
-
-[node name="selectedslavelabel" type="Label" parent="TabContainer/Supporter section/cheatpanel" index="17"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 518.0
-margin_top = 93.0
-margin_right = 623.0
-margin_bottom = 107.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 0
-text = "Selected slave - "
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="SpinBox" type="SpinBox" parent="TabContainer/Supporter section/cheatpanel" index="18"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 14.0
-margin_top = 13.0
-margin_right = 125.0
-margin_bottom = 37.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-min_value = 0.0
-max_value = 500000.0
-step = 100.0
-page = 0.0
-value = 100.0
-exp_edit = false
-rounded = true
-editable = true
-prefix = ""
-suffix = ""
-
-[node name="supporterpanel" type="AcceptDialog" parent="TabContainer/Supporter section" index="7"]
+[node name="supporterpanel" type="AcceptDialog" parent="TabContainer/Supporter section" index="6"]
 
 visible = false
 anchor_left = 0.0
@@ -1592,7 +1060,6 @@ align = 1
 
 [node name="screenpopup" type="Popup" parent="." index="3"]
 
-editor/display_folded = true
 visible = false
 anchor_left = 1.0
 anchor_top = 1.0
@@ -1705,43 +1172,506 @@ text = "Cancel"
 flat = false
 align = 1
 
-[connection signal="visibility_changed" from="." to="." method="_on_options_visibility_changed"]
+[node name="cheatpanel" type="Panel" parent="." index="4"]
 
-[connection signal="pressed" from="TabContainer/Settings/fading" to="." method="_on_fading_pressed"]
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -747.0
+margin_top = -492.0
+margin_right = 2.0
+margin_bottom = 44.0
+rect_min_size = Vector2( 688, 448 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = ExtResource( 3 )
+_sections_unfolded = [ "Hint", "Rect" ]
 
-[connection signal="pressed" from="TabContainer/Settings/spritesindialogues" to="." method="_on_spritesindialogues_pressed"]
+[node name="close" type="Button" parent="cheatpanel" index="0"]
 
-[connection signal="pressed" from="TabContainer/Settings/skipcombatanimation" to="." method="_on_skipcombatanimation_pressed"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 311.0
+margin_top = 473.0
+margin_right = 421.0
+margin_bottom = 513.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Close"
+flat = false
+align = 1
 
-[connection signal="pressed" from="TabContainer/Settings/randomportraits" to="." method="_on_randomportraits_pressed"]
+[node name="cheatgold" type="Button" parent="cheatpanel" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 16.0
+margin_top = 50.0
+margin_right = 166.0
+margin_bottom = 90.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Set Gold"
+flat = false
+align = 1
+
+[node name="cheatfood" type="Button" parent="cheatpanel" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 16.0
+margin_top = 93.0
+margin_right = 166.0
+margin_bottom = 133.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Set Food"
+flat = false
+align = 1
+
+[node name="cheatmana" type="Button" parent="cheatpanel" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 16.0
+margin_top = 137.0
+margin_right = 166.0
+margin_bottom = 177.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Set Mana"
+flat = false
+align = 1
+
+[node name="removepopcap" type="Button" parent="cheatpanel" index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 16.0
+margin_top = 185.0
+margin_right = 266.0
+margin_bottom = 225.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Huge population may impact performance greatly"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Remove population limits"
+flat = false
+align = 1
+_sections_unfolded = [ "Hint" ]
+
+[node name="addupgradepoint" type="Button" parent="cheatpanel" index="5"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 16.0
+margin_top = 227.0
+margin_right = 266.0
+margin_bottom = 267.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Add 5 Upgrade Points"
+flat = false
+align = 1
+_sections_unfolded = [ "Hint" ]
+
+[node name="unlockspells" type="Button" parent="cheatpanel" index="6"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 139.0
+margin_top = 11.0
+margin_right = 256.0
+margin_bottom = 43.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Unlock all spells"
+flat = false
+align = 1
+
+[node name="selectslave" type="Button" parent="cheatpanel" index="7"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 504.0
+margin_top = 30.0
+margin_right = 621.0
+margin_bottom = 62.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Select Slave"
+flat = false
+align = 1
+
+[node name="maxloyalty" type="Button" parent="cheatpanel" index="8"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 346.0
+margin_top = 64.0
+margin_right = 496.0
+margin_bottom = 104.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Max Loyalty"
+flat = false
+align = 1
+
+[node name="maxobed" type="Button" parent="cheatpanel" index="9"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 347.0
+margin_top = 109.0
+margin_right = 499.0
+margin_bottom = 149.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Max Obedience"
+flat = false
+align = 1
+
+[node name="maxlewd" type="Button" parent="cheatpanel" index="10"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 348.0
+margin_top = 155.0
+margin_right = 498.0
+margin_bottom = 195.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Max Lewdness"
+flat = false
+align = 1
+
+[node name="maxlust" type="Button" parent="cheatpanel" index="11"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 348.0
+margin_top = 200.0
+margin_right = 498.0
+margin_bottom = 240.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Max Lust"
+flat = false
+align = 1
+
+[node name="nostress" type="Button" parent="cheatpanel" index="12"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 348.0
+margin_top = 249.0
+margin_right = 498.0
+margin_bottom = 289.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Remove Stress"
+flat = false
+align = 1
+
+[node name="addskillpoints" type="Button" parent="cheatpanel" index="13"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 348.0
+margin_top = 299.0
+margin_right = 498.0
+margin_bottom = 339.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Add Skillpoint"
+flat = false
+align = 1
+
+[node name="addlevel" type="Button" parent="cheatpanel" index="14"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 348.0
+margin_top = 349.0
+margin_right = 498.0
+margin_bottom = 389.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Add Level"
+flat = false
+align = 1
+
+[node name="levelup" type="Button" parent="cheatpanel" index="15"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 17.0
+margin_top = 269.0
+margin_right = 267.0
+margin_bottom = 309.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Add Skillpoint"
+flat = false
+align = 1
+
+[node name="unlockgallery" type="Button" parent="cheatpanel" index="16"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 17.0
+margin_top = 314.0
+margin_right = 267.0
+margin_bottom = 354.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Fully Unlock Gallery"
+flat = false
+align = 1
+
+[node name="selectedslavelabel" type="Label" parent="cheatpanel" index="17"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 518.0
+margin_top = 93.0
+margin_right = 653.0
+margin_bottom = 113.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "Selected slave - "
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="SpinBox" type="SpinBox" parent="cheatpanel" index="18"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 14.0
+margin_top = 13.0
+margin_right = 125.0
+margin_bottom = 37.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+min_value = 0.0
+max_value = 500000.0
+step = 100.0
+page = 0.0
+value = 100.0
+exp_edit = false
+rounded = true
+editable = true
+prefix = ""
+suffix = ""
 
 [connection signal="pressed" from="TabContainer/Settings/fullscreen" to="." method="_on_fullscreen_pressed"]
 
-[connection signal="pressed" from="TabContainer/Settings/custommouse" to="." method="_on_custommouse_pressed"]
-
 [connection signal="value_changed" from="TabContainer/Settings/fontsize" to="." method="_on_fontsize_value_changed"]
-
-[connection signal="value_changed" from="TabContainer/Settings/musicslider" to="." method="_on_musicslider_value_changed"]
-
-[connection signal="value_changed" from="TabContainer/Settings/soundslider" to="." method="_on_soundslider_value_changed"]
-
-[connection signal="pressed" from="TabContainer/Game/futa" to="." method="_on_futa_pressed"]
-
-[connection signal="pressed" from="TabContainer/Game/futaballs" to="." method="_on_futaballs_pressed"]
-
-[connection signal="pressed" from="TabContainer/Game/furry" to="." method="_on_furry_pressed"]
-
-[connection signal="pressed" from="TabContainer/Game/furrynipples" to="." method="_on_furrynipples_pressed"]
-
-[connection signal="pressed" from="TabContainer/Game/slaverguildraces" to="." method="_on_slaverguildraces_pressed"]
-
-[connection signal="pressed" from="TabContainer/Game/receive" to="." method="_on_receive_pressed"]
-
-[connection signal="pressed" from="TabContainer/Game/childlike" to="." method="_on_childlike_pressed"]
-
-[connection signal="pressed" from="TabContainer/Game/permadeath" to="." method="_on_permadeath_pressed"]
-
-[connection signal="pressed" from="TabContainer/Game/noadults" to="." method="_on_noadults_pressed"]
 
 [connection signal="value_changed" from="TabContainer/Game/malesslider" to="." method="_on_malesslider_value_changed"]
 
@@ -1755,46 +1685,44 @@ align = 1
 
 [connection signal="pressed" from="TabContainer/Supporter section/cheatpasswordenter" to="." method="_on_cheatpasswordenter_pressed"]
 
-[connection signal="visibility_changed" from="TabContainer/Supporter section/cheatpanel" to="." method="_on_cheatpanel_visibility_changed"]
-
-[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/close" to="." method="_on_close_pressed"]
-
-[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/cheatgold" to="." method="_on_gold_pressed"]
-
-[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/cheatfood" to="." method="_on_food_pressed"]
-
-[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/cheatmana" to="." method="_on_mana_pressed"]
-
-[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/removepopcap" to="." method="_on_removepopcap_pressed"]
-
-[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/addupgradepoint" to="." method="_on_addupgradepoint_pressed"]
-
-[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/unlockspells" to="." method="_on_unlockspells_pressed"]
-
-[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/selectslave" to="." method="_on_selectslave_pressed"]
-
-[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/maxloyalty" to="." method="_on_maxloyalty_pressed"]
-
-[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/maxobed" to="." method="_on_maxobed_pressed"]
-
-[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/maxlewd" to="." method="_on_maxlewd_pressed"]
-
-[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/maxlust" to="." method="_on_maxlust_pressed"]
-
-[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/nostress" to="." method="_on_nostress_pressed"]
-
-[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/addskillpoints" to="." method="_on_addskillpoints_pressed"]
-
-[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/addlevel" to="." method="_on_addlevel_pressed"]
-
-[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/levelup" to="." method="_on_levelup_pressed"]
-
-[connection signal="pressed" from="TabContainer/Supporter section/cheatpanel/unlockgallery" to="." method="_on_unlockgallery_pressed"]
-
 [connection signal="pressed" from="Done" to="." method="_on_Done_pressed"]
 
 [connection signal="pressed" from="screenpopup/Panel/confirm" to="." method="_on_confirm_pressed"]
 
 [connection signal="pressed" from="screenpopup/Panel/cancel" to="." method="_on_cancel_pressed"]
+
+[connection signal="pressed" from="cheatpanel/close" to="." method="_on_close_pressed"]
+
+[connection signal="pressed" from="cheatpanel/cheatgold" to="." method="_on_cheatgold_pressed"]
+
+[connection signal="pressed" from="cheatpanel/cheatfood" to="." method="_on_cheatfood_pressed"]
+
+[connection signal="pressed" from="cheatpanel/cheatmana" to="." method="_on_cheatmana_pressed"]
+
+[connection signal="pressed" from="cheatpanel/removepopcap" to="." method="_on_removepopcap_pressed"]
+
+[connection signal="pressed" from="cheatpanel/addupgradepoint" to="." method="_on_addupgradepoint_pressed"]
+
+[connection signal="pressed" from="cheatpanel/unlockspells" to="." method="_on_unlockspells_pressed"]
+
+[connection signal="pressed" from="cheatpanel/selectslave" to="." method="_on_selectslave_pressed"]
+
+[connection signal="pressed" from="cheatpanel/maxloyalty" to="." method="_on_maxloyalty_pressed"]
+
+[connection signal="pressed" from="cheatpanel/maxobed" to="." method="_on_maxobed_pressed"]
+
+[connection signal="pressed" from="cheatpanel/maxlewd" to="." method="_on_maxlewd_pressed"]
+
+[connection signal="pressed" from="cheatpanel/maxlust" to="." method="_on_maxlust_pressed"]
+
+[connection signal="pressed" from="cheatpanel/nostress" to="." method="_on_nostress_pressed"]
+
+[connection signal="pressed" from="cheatpanel/addskillpoints" to="." method="_on_addskillpoints_pressed"]
+
+[connection signal="pressed" from="cheatpanel/addlevel" to="." method="_on_addlevel_pressed"]
+
+[connection signal="pressed" from="cheatpanel/levelup" to="." method="_on_levelup_pressed"]
+
+[connection signal="pressed" from="cheatpanel/unlockgallery" to="." method="_on_unlockgallery_pressed"]
 
 

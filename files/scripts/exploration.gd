@@ -48,6 +48,8 @@ func zoneenter(zone):
 		lastzone = currentzone.code
 	zone = self.zones[zone]
 	outside.location = zone.code
+	if zone.combat == false:
+		progress = 0
 	if progress == 0:
 		main.background_set(zone.background, true)
 		yield(main, "animfinished")
@@ -72,7 +74,12 @@ func zoneenter(zone):
 	outside.get_node('locationname').set_text(text)
 	main.nodeunfade(outside.get_node("locationname"), 0.5)
 	text = ''
-	globals.get_tree().get_current_scene().get_node("outside/exploreprogress").set_value((progress/max(zone.length,1))*100)
+	var progressvalue = (progress/max(zone.length,1))*100
+	var progressbar = globals.get_tree().get_current_scene().get_node("outside/exploreprogress")
+	if progress != 0:
+		get_parent().tween.interpolate_property(progressbar, "value", progressbar.value, progressvalue, 0.7, Tween.TRANS_LINEAR, Tween.EASE_OUT)
+	else:
+		progressbar.set_value(progressvalue)
 	currentzone = zone
 	outside.currentzone = zone
 	outside.clearbuttons()
@@ -116,6 +123,7 @@ func zoneenter(zone):
 		array.append({name = "Proceed through area", function = 'enemyencounter'})
 		if globals.developmode == true:
 			array.append({name = "Skip", function = 'areaskip'})
+	
 	if globals.state.sidequests.cali == 19 && zone.code == 'forest':
 		array.append({name = "Look for bandits' camp", function = 'event',args = 'calibanditcamp'})
 	elif (globals.state.sidequests.cali == 23 || globals.state.sidequests.cali == 24) && zone.code == 'wimbornoutskirts':
@@ -163,8 +171,6 @@ func deepzone(currentzonecode):
 
 func rest():
 	globals.state.backpack.stackables.supply -= 3
-	if globals.state.backpack.stackables.supply <= 0:
-		globals.state.backpack.stackables.erase("supply")
 	globals.player.health += globals.player.stats.health_max/4
 	globals.player.energy += globals.player.stats.energy_max
 	globals.resources.food -= 5
@@ -433,6 +439,9 @@ func patrolbribe(sum):
 	mansion.maintext = "You bribe Patrol's leader and hastily escape from the scene. "
 	outside.buildbuttons(array, self)
 
+
+##############
+
 var treasurepool = [['armorninja',5],['armorplate',1],['armorleather',20],['armorchain',11],['armorelvenchain',3],['armorrobe',4],
 ['weapondagger',20], ['weaponsword',9], ['weaponclaymore',3], ['weaponhammer', 4],
 ['clothsundress',10], ['clothmaid',10], ['clothkimono',7], ['clothmiko',5], ['clothpet',3], ['clothbutler',10], ['clothbedlah',4],
@@ -440,44 +449,139 @@ var treasurepool = [['armorninja',5],['armorplate',1],['armorleather',20],['armo
 ]
 var treasuremisc = [['magicessenceing',7],['taintedessenceing',7],['natureessenceing',7],['bestialessenceing',7],['fluidsubstanceing',7],['gem',1],['claritypot',0.5],['regressionpot',1],['youthingpot',2],['maturingpot',2]]
 
+var chestloot = {
+	easy = ['armorleather','armorchain','weapondagger','weaponsword','clothsundress','clothmaid','clothbutler'],
+	medium = ['armorchain','weaponsword','clothsundress','clothmaid','clothbutler', 'armorelvenchain','armorrobe', 'weaponhammer','weaponclaymore','clothkimono','clothpet','clothmiko','clothbedlah','accgoldring','accslavecollar','acchandcuffs','acctravelbag'],
+	hard = ['armorplate','accamuletemerald','accamuletruby'],
+}
+
+
+
+var chest = {strength = 0, agility = 0, treasure = {}, trap = ''}
+var selectedpartymember = null
+var chestaction = ''
 
 func treasurechest():
-	var array = []
-	
-	if randf() >= 0.33:
-		#chest locked
-		mansion.maintext = "You found a hidden [color=yellow]chest[/color]. However, it seems to be locked and too heavy to carry with you. "
-		if globals.state.backpack.stackables.has("lockpick"):
-			array.append({name = "Use a lockpick", function = 'treasurechestopen', args = 'lockpick'})
-		else:
-			array.append({name = "Use a lockpick", function = 'treasurechestopen', tooltip = 'You have no lockpicks with you',disabled = true})
+	var level = rand_range(currentzone.levelrange[0], currentzone.levelrange[1])
+	if level < 5:
+		level = 'easy'
+		chest.strength = round(rand_range(1,3))
+		chest.agility = round(rand_range(1,3))
+	elif level < 10:
+		level = 'medium'
+		chest.strength = round(rand_range(3,5))
+		chest.agility = round(rand_range(3,5))
 	else:
-		mansion.maintext = "You found a hidden chest. It seems to be tightly shut, but with some force you might crack it open. "
-		if globals.player.energy >= 20:
-			array.append({name = "Open (20 energy)", function = 'treasurechestopen'})
-		else:
-			array.append({name = "Open (20 energy)", function = 'treasurechestopen', disabled = true})
+		level = 'hard'
+		chest.strength = round(rand_range(5,8))
+		chest.agility = round(rand_range(5,8))
+	treasurechestgenerate(level)
+	var text = "You found a hidden [color=yellow]chest[/color]. However, it seems to be locked and is too heavy to carry with you. "
+	treasurechestoptions(text)
+	text = "Chest\nDifficulty level: [color=aqua]" + level.capitalize() + '[/color]\n\nStrength : ' + str(chest.strength) + '\nComplexity: ' + str(chest.agility)
+	outside.get_node("textpanelexplore/enemyportrait").set_texture(load("res://files/buttons/chest.png"))
+	outside.get_node("textpanelexplore/enemyinfo").set_bbcode(text)
+
+
+func chestselectslave(action):
+	chestaction = action
+	var reqs = ''
+	var text = ''
+	if chestaction == 'chestlockpick':
+		reqs = 'person.energy >= 5'
+		text = 'Lock difficulty: ' + str(chest.agility)
+	else:
+		reqs = 'person.energy >= 20'
+		text = 'Lock strength: ' + str(chest.strength)
+	outside.chosepartymember(true, [self,chestaction], reqs, text)#func chosepartymember(includeplayer = true, targetfunc = [null,null], reqs = 'true'):
+
+
+func treasurechestoptions(text = ''):
+	var array = []
+	mansion.maintext = text
+	array.append({name = 'Use a lockpick (5 energy)', function = 'chestselectslave', args = 'chestlockpick'})
+	if !globals.state.backpack.stackables.has("lockpick"):
+		array.back().disabled = true
+	array.append({name = 'Crack it open (20 energy)', function = 'chestselectslave', args = 'chestbash'})
 	array.append({name = "Leave", function = 'enemyleave'})
 	outside.buildbuttons(array, self)
 
-func treasurechestopen(state = 'normal'):
-	var gear = {number = round(randf()*2), enchantchance = 65 }
-	var misc = 1 if randf() > 0.7 else 0
+
+
+func treasurechestgenerate(level = 'easy'):
+	var gear = {number = 0, enchantchance = 0 }
+	var misc = 0
 	var text
 	var miscnumber = 1
-	if state == 'lockpick':
-		globals.state.backpack.stackables.lockpick -= 1
-		if globals.state.backpack.stackables.lockpick < 1:
-			globals.state.backpack.stackables.erase('lockpick')
-		text = "You lockpick the treasure chest and discover few items in it."
-	else:
-		text = 'You slam the old chest open and find some loot inside. '
-		globals.player.energy -= 20
-	if gear.number == 0 && misc == 0:
-		gear.number = 1
-	
+	if level == 'easy':
+		gear.number = round(rand_range(1,2))
+		gear.enchantchance = 45
+		misc = round(rand_range(0,1))
+		miscnumber = [1,2]
+	elif level == 'medium':
+		gear.number = round(rand_range(1,4))
+		gear.enchantchance = 55
+		misc = round(rand_range(0,2))
+		miscnumber = [1,3]
+	elif level == 'hard':
+		gear.number = round(rand_range(2,4))
+		gear.enchantchance = 65
+		misc = round(rand_range(1,3))
+		miscnumber = [1,4]
+	var gearpool = chestloot[level]
+	if level == 'hard':
+		gearpool = chestloot.medium+chestloot.hard
 	winscreenclear()
-	generaterandomloot(gear, misc, miscnumber, text)
+	generaterandomloot(gearpool, gear, misc, miscnumber)
+
+func chestlockpick(person):
+	var unlock = false
+	var text = ''
+	person.energy -= 5
+	globals.state.backpack.stackables.lockpick -= 1
+	if person.sagi >= chest.agility:
+		unlock = true
+		text = "$name skillfully picks the lock on the chest."
+	else:
+		if 60 - (chest.agility - person.sagi) * 10 >= rand_range(0,100):
+			text = "With some luck, $name manages to pick the lock on the chest. "
+			unlock = true
+		else:
+			text = "$name fails to pick the lock and breaks the lockpick. "
+			unlock = false
+	
+	text = person.dictionary(text)
+	if unlock == false:
+		treasurechestoptions(text)
+	else:
+		showlootscreen(text)
+
+func chestbash(person):
+	var unlock = false
+	var text = ''
+	person.energy -= 20
+	if person.sstr >= chest.strength:
+		unlock = true
+		text = "$name easily smashes the chest's lock mechanism."
+	else:
+		if 60 - (chest.agility - person.sagi) * 10 >= rand_range(0,100):
+			text = "With some luck, $name manages to crack the chest open "
+			unlock = true
+		else:
+			text = "[color=yellow]$name seems to be too weak to break the chest open. [/color]"
+			unlock = false
+	
+	text = person.dictionary(text)
+	if unlock == false:
+		treasurechestoptions(text)
+	else:
+		showlootscreen(text)
+
+
+
+
+
+###################
 
 func blockedsection():
 	var array = []
@@ -493,17 +597,17 @@ func blockedsection():
 
 func blockedsectionopen():
 	var gear = {number = round(randf()*3), enchantchance = 75 }
-	var misc = 0
+	var misc = rand_range(1,4)
 	var text
-	var miscnumber = 1
+	var miscnumber = [1,3]
+	var loottable = chestloot.medium
 	globals.state.backpack.stackables.torch -= 1
-	if globals.state.backpack.stackables.torch < 1:
-		globals.state.backpack.stackables.erase('torch')
 	text = "After roots burn down you discover a hidden stash."
 	if gear.number == 0:
 		gear.number = 1
 	winscreenclear()
-	generaterandomloot(gear, misc, miscnumber, text)
+	generaterandomloot(loottable, gear, misc, miscnumber)
+	showlootscreen(text)
 
 func generateloot(loot = [], text = ''):
 	var winpanel = get_node("winningpanel")
@@ -529,20 +633,13 @@ func generateloot(loot = [], text = ''):
 	else:
 		enemyloot.stackables[loot[0]] = loot[1]
 	
-	winpanel.visible = true
-	winpanel.get_node("wintext").set_bbcode(text)
-	builditemlists()
+	showlootscreen()
 
-func generaterandomloot(gear = {number = 0, enchantchance = 0}, misc = 0, miscnumber = 0, text = ''):
-	var winpanel = get_node("winningpanel")
+func generaterandomloot(loottable = [], gear = {number = 0, enchantchance = 0}, misc = 0, miscnumber = [0,0]):
 	var tempitem
-	for i in winpanel.get_node("ScrollContainer/VBoxContainer").get_children():
-		if i != winpanel.get_node("ScrollContainer/VBoxContainer/Button"):
-			i.visible = false
-			i.free()
 	while gear.number > 0:
 		gear.number -= 1
-		tempitem = globals.items.createunstackable(globals.weightedrandom(treasurepool))
+		tempitem = globals.items.createunstackable(loottable[randi()%loottable.size()])
 		if randf() <= float(gear.enchantchance)/100:
 			globals.items.enchantrand(tempitem)
 		enemyloot.unstackables.append(tempitem)
@@ -550,9 +647,18 @@ func generaterandomloot(gear = {number = 0, enchantchance = 0}, misc = 0, miscnu
 		misc -= 1
 		tempitem = globals.weightedrandom(treasuremisc)
 		if enemyloot.stackables.has(tempitem):
-			enemyloot.stackables[tempitem] += round(miscnumber)
+			enemyloot.stackables[tempitem] += round(rand_range(miscnumber[0], miscnumber[1]))
 		else:
-			enemyloot.stackables[tempitem] = round(miscnumber)
+			enemyloot.stackables[tempitem] = round(rand_range(miscnumber[0], miscnumber[1]))
+	
+	#showlootscreen()
+
+func showlootscreen(text = ''):
+	var winpanel = get_node("winningpanel")
+	for i in winpanel.get_node("ScrollContainer/VBoxContainer").get_children():
+		if i.name != "Button":
+			i.visible = false
+			i.free()
 	winpanel.visible = true
 	winpanel.get_node("wintext").set_bbcode(text)
 	builditemlists()
@@ -586,7 +692,7 @@ func slaversenc(stage = 0):
 			mansion.maintext = "You come across a considerable group of slavers escorting a few capturees. "
 		buttons.append({name = 'Attack Slavers', function = 'slaversenc', args = 1})
 		buttons.append({name = 'Greet Slavers',function = 'slaversenc',args = 2})
-		buttons.append({name = 'Leave',function = 'slaversenc',args = 3})
+		buttons.append({name = 'Leave',function = 'enemyleave'})
 	elif stage == 1:
 		enemyfight()
 		return
@@ -594,7 +700,7 @@ func slaversenc(stage = 0):
 		mansion.maintext = "You greet the group of slavers and they offer you to check their freshly acquired merchandise. "
 		buttons.append({name = 'Fight Slavers', function = 'slaversenc', args = 1})
 		buttons.append({name = 'Check Victims',function = 'slaversenc',args = 4})
-		buttons.append({name = 'Leave',function = 'slaversenc',args = 3})
+		buttons.append({name = 'Leave',function = 'enemyleave'})
 	elif stage == 3:
 		progress += 1
 		zoneenter(currentzone.code)
@@ -877,8 +983,6 @@ func captureslave(person):
 	var location
 	if variables.consumerope != 0:
 		globals.state.backpack.stackables.rope -= variables.consumerope
-	if globals.state.backpack.stackables.rope <= 0:
-		globals.state.backpack.stackables.erase('rope')
 	for i in person.gear:
 		i = null
 	if person.race in ['Lamia','Arachna','Harpy','Nereid','Slime','Scylla','Dryad','Fairy']:
@@ -1008,8 +1112,18 @@ func moveitemtobackpack(button):
 
 
 func _on_takeallbutton_pressed():
-	for i in $winningpanel/lootpanel/enemyloot/VBoxContainer.get_children():
-		i.emit_signal('pressed')
+	for i in enemyloot.stackables:
+		if globals.state.backpack.stackables.has(i):
+			globals.state.backpack.stackables[i] += enemyloot.stackables[i]
+		else:
+			globals.state.backpack.stackables[i] = enemyloot.stackables[i]
+		enemyloot.stackables.erase(i)
+	for i in enemyloot.unstackables:
+		globals.state.unstackables[i.id] = i
+		i.owner = 'backpack'
+		enemyloot.unstackables.erase(i)
+	
+	builditemlists()
 
 func moveitemtoenemy(button):
 	var item = button.get_meta('item')
@@ -1019,8 +1133,6 @@ func moveitemtoenemy(button):
 		else:
 			enemyloot.stackables[item.code] = 1
 		globals.state.backpack.stackables[item.code] -= 1
-		if globals.state.backpack.stackables[item.code] <= 0:
-			globals.state.backpack.stackables.erase(item.code)
 	else:
 		enemyloot.unstackables.append(item)
 		globals.state.unstackables.erase(item.id)
@@ -1048,7 +1160,7 @@ func defeatedchoice(ID, person, node):
 
 
 
-func _on_confirmwinning_pressed(secondary = false): #0 leave, 1 capture, 2 rape, 3 kill
+func _on_confirmwinning_pressed(): #0 leave, 1 capture, 2 rape, 3 kill
 	var text = ''
 	var selling = false
 	var sellyourself = false
@@ -1178,6 +1290,7 @@ func capturedecide(stage): #1 - no reward, 2 - material, 3 - sex, 4 - join
 			var gear = {number = 1, enchantchance = 75 }
 			winscreenclear()
 			generaterandomloot(gear)
+			showlootscreen()
 	elif stage == 3:
 		if rand_range(0,100) >= 35 + globals.state.reputation[location]/2:
 			text = "$name hastily refuses and retreats excusing $himself. "
@@ -1239,6 +1352,8 @@ func mansion():
 func gornbar():
 	var array = []
 	var text = globals.questtext.GornBar
+	main.animationfade()
+	yield(main, 'animfinished')
 	
 	if globals.state.sidequests.yris == 0:
 		text += "As you move towards the bar your presence is noticed by a girl of beastkin origins. Drawing your attention she gives you an  undoubtedly interested look. "
@@ -1563,22 +1678,32 @@ func undercitylibraryfight():
 
 func undercitylibrarywin():
 	generateloot(['zoebook', 1], globals.questtext.undercitybookafterabttle)
+	showlootscreen()
 	zoneenter("undercityruins")
 
 func gornmarket():
+	main.animationfade()
+	yield(main, 'animfinished')
 	outside.shopinitiate('gornmarket')
 
 func amberguardmarket():
+	
+	main.animationfade()
+	yield(main, 'animfinished')
 	if globals.state.sidequests.ayneris == 4:
 		globals.events.aynerismarket()
 		return
 	outside.shopinitiate('amberguardmarket')
 
 func gornpalace():
+	main.animationfade()
+	yield(main, 'animfinished')
 	globals.events.gornpalace()
 	zoneenter('gorn')
 
 func gornayda():
+	main.animationfade()
+	yield(main, 'animfinished')
 	globals.events.gornayda()
 
 func frostford():
@@ -1621,12 +1746,18 @@ func frostfordzoe(stage):
 	main.dialogue(true, self, text, buttons, sprite)
 
 func frostfordcityhall():
+	main.animationfade()
+	yield(main, 'animfinished')
 	globals.events.frostfordcityhall()
 
 func frostfordmarket():
+	main.animationfade()
+	yield(main, 'animfinished')
 	outside.shopinitiate('frostfordmarket')
 
 func gornslaveguild():
+	main.animationfade()
+	yield(main, 'animfinished')
 	outside.slaveguild('gorn')
 
 func frostfordslaveguild():
@@ -1634,6 +1765,8 @@ func frostfordslaveguild():
 
 
 func shaliq():
+	main.animationfade()
+	yield(main, 'animfinished')
 	var array = []
 	if globals.state.sidequests.cali == 17:
 		globals.events.calivillage()

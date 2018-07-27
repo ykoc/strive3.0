@@ -1580,14 +1580,14 @@ func calibadend(choice):
 	var sprite = [['calineutral','pos1']]
 	if choice == 1:
 		cali.loyal += 100
-		cali.conf = -20
+		cali.conf -= 20
 		text = textnode.CaliStay
 		globals.state.decisions.append('calibadstayed')
 		
 	elif choice == 2:
 		text = textnode.CaliSlave
 		cali.obed += 100
-		cali.conf = -20
+		cali.conf -= 20
 		globals.state.decisions.append('calibadstayed')
 	elif choice == 3:
 		if cali.loyal >= 50:
@@ -1595,7 +1595,7 @@ func calibadend(choice):
 			cali.sexuals.affection = 1000
 			globals.state.decisions.append('calibadstayed')
 			for i in ['cour','conf','wit','charm']:
-				cali[i] = -100
+				cali[i] = 0
 				cali[i] = rand_range(5,15)
 			text = textnode.CaliPlaythingSuccess
 		else:
@@ -1612,7 +1612,7 @@ func calibadend(choice):
 		globals.state.decisions.append('calibadleft')
 	globals.resources.upgradepoints += 10
 	cali.add_trait("Grateful")
-	globals.main.exploration.zoneenter('wimbornoutskirts')
+	globals.main.exploration.zoneenter('grove')
 	globals.main.dialogue(true,self,globals.player.dictionaryplayer(text),null,sprite)
 	globals.state.sidequests.cali = 102
 
@@ -1645,7 +1645,7 @@ func caligoodend(choice):
 		globals.main._on_mansion_pressed()
 		globals.state.decisions.append('calistayedwithyou')
 	if choice != 3:
-		globals.main.exploration.zoneenter('wimbornoutskirts')
+		globals.main.exploration.zoneenter('grove')
 	globals.resources.upgradepoints += 15
 	cali.add_trait("Grateful")
 	globals.main.dialogue(true,self,globals.player.dictionaryplayer(text),null,sprite)
@@ -1674,54 +1674,41 @@ func sexscene(value):
 	if value == 'emilyshowersex':
 		image = 'emilyshower'
 		text = textnode.EmilyShowerSex
-		sprite = [['emilynakedhappy','pos1']]
 	elif value == 'showerrape':
 		image = 'emilyshowerrape'
 		text = textnode.EmilyShowerRape
-		sprite = [['emilynakedneutral','pos1']]
 	elif value == 'tishaemilysex':
 		text = globals.questtext.TishaEmilySex
-		sprite = [['tishanakedhappy', 'pos1'], ['emilynakedhappy','pos2']]
 		image = 'tishaemily'
 	elif value == 'tishablackmail':
 		image = 'tishatable'
 		text = textnode.TishaEmilyBrandCompensation
-		sprite = [['tishanakedneutral','pos1']]
 	elif value == 'tishareward':
 		image = 'tishafinale'
-		sprite = [['tishanakedhappy', 'pos1']]
 		text = textnode.TishaSexSceneStart + '\n\n' + textnode.TishaSexSceneEnd
 	elif value == "calivirgin":
 		image = 'calisex'
-		sprite = [['calinakedhappy','pos1']]
 		text = textnode.CaliAcceptProposal + '\n' + textnode.CaliProposalSexMale
 	elif value == 'yrisblowjob':
 		image = 'yrisbj'
-		sprite = [['yrisnormal', 'pos1']]
 		text = textnode.GornYrisAccept1
 	elif value == 'yrissex':
 		image = 'yrissex'
-		sprite = [['yrisnormalnaked', 'pos1']]
 		text = textnode.GornYrisAccept2
 	elif value == 'yrissex2':
 		image = 'yrissex'
-		sprite = [['yrisshocknaked', 'pos1']]
 		text = textnode.GornYrisAccept3
 	elif value == "chloemana":
 		image = 'chloebj'
-		sprite = [['chloeshy2','pos1']]
 		text = textnode.ChloeShaliqTakeMana
 	elif value == 'chloeforest':
 		image = 'chloewoods'
-		sprite = [['chloenakedshy', 'pos1']]
 		text = textnode.ChloeGroveFound + '\n\n' + textnode.ChloeGroveSex
 	elif value == "aynerispunish":
 		image = 'aynerispunish'
-		sprite = [['aynerisangry','pos1']]
 		text = textnode.AynerisPunish1
 	elif value == "aynerissex":
 		image = 'aynerissex'
-		sprite = [['aynerisangry','pos1']]
 		text = textnode.AynerisPunish2
 	elif value == "mapleflirt":
 		image = 'maplebj'
@@ -1729,9 +1716,17 @@ func sexscene(value):
 		text = textnode.MapleFlirt
 	elif value == "mapleflirt2":
 		image = 'maplesex'
-		sprite = [['fairynaked', 'pos1']]
 		text = textnode.MapleFlirt2
-	if image != null:
+	elif value == 'zoetentacle':
+		image = 'zoetentacle1'
+		text = textnode.zoebookdelivercontinue
+		buttons.append({text = 'Continue', function = 'sexscene', args = 'zoetentacle2'})
+		globals.main.scene(self, image, text, buttons)
+		return
+	elif value == 'zoetentacle2':
+		image = 'zoetentacle2'
+		text = textnode.zoebookwatch + '\n' + textnode.zoebookwatch2virgin + textnode.zoebookwatch3
+	if buttons.empty():
 		buttons.append({text = "Close", function = 'closescene'})
 		globals.main.scene(self, image, text, buttons)
 		return
@@ -2141,6 +2136,8 @@ func tishagornguild(stage = 0):
 		globals.state.sidequests.emily = 101
 		var person = globals.characters.create("Tisha")
 		globals.connectrelatives(person, emily, 'sibling')
+		emily.relations[person.id] = 250
+		person.relations[emily.id] = 500
 		person.brand = 'basic'
 		globals.slaves = person
 		state = true
@@ -2195,6 +2192,8 @@ func tishagornguild(stage = 0):
 		sprite = [['tishanakedhappy', 'pos1']]
 		var person = globals.characters.create("Tisha")
 		globals.connectrelatives(person, emily, 'sibling')
+		emily.relations[person.id] = 250
+		person.relations[emily.id] = 500
 		person.consent = true
 		person.sexuals.unlocks.append('petting')
 		person.sexuals.unlocks.append('oral')
@@ -2332,7 +2331,9 @@ func chloeforest(stage = 0):
 	elif stage == 7:
 		text = textnode.ChloeShaliq
 		globals.state.sidequests.chloe = 2
+		globals.main.exploration.progress = 0
 		globals.main.exploration.zoneenter('shaliq')
+		yield(globals.main, 'animfinished')
 		buttons.append({text = 'Leave',function = 'chloevillage',args = 0})
 	globals.main.dialogue(state,self,text,buttons,sprite)
 
@@ -2365,6 +2366,8 @@ func chloevillage(stage = 0):
 			buttons.append({text = 'Agree',function = 'chloevillage',args = 3, disabled = true})
 		buttons.append({text = 'Leave',function = 'chloevillage',args = 0})
 	elif stage == 3:
+		globals.main.exploration.zoneenter('shaliq')
+		yield(globals.main, "animfinished")
 		sprite = [['chloeshy2', 'pos1']]
 		globals.charactergallery.chloe.scenes[0].unlocked = true
 		globals.resources.mana -= 25
@@ -2377,7 +2380,6 @@ func chloevillage(stage = 0):
 			text = textnode.ChloeShaliqTakeMana
 		else:
 			text = "Chloe gleams with joy, happily smiling as she runs off to put her new possession away.\n\n[color=aqua]You have learned the Entrancement Spell.[/color]"
-		globals.main.exploration.zoneenter('shaliq')
 		var image = 'chloebj'
 		buttons.append({text = 'Continue',function = 'chloevillage',args = 0})
 		globals.main.scene(self, image, text, buttons)
@@ -2796,6 +2798,7 @@ func zoepassitems(stage = 0):
 	var state = false
 	var zoe = null
 	var sprite = []
+	var image
 	
 	for i in globals.slaves:
 		if i.unique == 'Zoe':
@@ -2807,40 +2810,47 @@ func zoepassitems(stage = 0):
 		sprite = [['zoehappy','pos1','opac']]
 		buttons.append(['Continue', 'zoepassitems', 1])
 	elif stage == 1:
+		image = 'zoetentacle1'
 		globals.main.animationfade(1,0.5)
 		yield(globals.main, "animfinished")
 		globals.main.savedtrack = globals.main.get_node("music").get_meta("currentsong")
 		globals.main.music_set("intimate")
 		text = textnode.zoebookdelivercontinue
 		sprite = [['zoesadnaked','pos1','opac']]
-		buttons = [['Save Zoe', 'zoepassitems', 2],['Hold back and wait', 'zoepassitems', 3]]
+		buttons = [{text = 'Save Zoe', function = 'zoepassitems', args = 2},{text = 'Hold back and wait', function =  'zoepassitems', args = 3}]
 	elif stage == 2:
 		text = textnode.zoebooksave
+		globals.main.closescene()
 		text += "\n\n[color=green]Learned new spell: Summon Tentacles[/color]"
 		zoe.loyal += 10
 		sprite = [['zoeneutralnaked','pos1','opac']]
 		state = true
 	elif stage == 3:
+		image = 'zoetentacle2'
 		sprite = [['zoesadnaked','pos1','opac']]
 		text = textnode.zoebookwatch
 		globals.state.decisions.append("zoeraped")
 		zoe.stress += 70
 		zoe.loyal -= 25
 		zoe.obed -= 60
+		globals.charactergallery.zoe.scenes[0].unlocked = true
 		if zoe.vagvirgin == true:
 			zoe.vagvirgin = false
 			text += textnode.zoebookwatch2virgin
 		else:
 			text += textnode.zoebookwatch2nonvirgin
-		buttons = [['Continue', 'zoepassitems', 4]]
+		buttons = [{text = 'Continue', function  = 'zoepassitems', args = 4}]
 	elif stage == 4:
 		state = true
+		globals.main.closescene()
 		sprite = [['zoesadnaked','pos1','opac']]
 		text = textnode.zoebookwatch3
 		text += "\n\n[color=green]Learned new spell: Summon Tentacles[/color]"
 		
 	
 	
-	
-	globals.main.dialogue(state, self, text, buttons, sprite)
+	if stage in [0,2,4]:
+		globals.main.dialogue(state, self, text, buttons, sprite)
+	else:
+		globals.main.scene(self, image, text, buttons)
 

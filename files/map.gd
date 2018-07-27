@@ -16,6 +16,8 @@ func _ready():
 		i.connect("mouse_exited",self,'hidetooltip')
 
 func _input(event):
+	if self.is_visible_in_tree() == false:
+		return
 	if event.is_action_pressed("LMB"):
 		var eventpos = event.global_position
 		var barpos = $TextureRect.get_global_position()

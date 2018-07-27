@@ -44,6 +44,7 @@ func requirements():
 func givereffect(member):
 	var result
 	var effects = {lust = 75, lewd = 2}
+	member.person.metrics.oral += 1
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lust >= 200):
 		result = 'good'
 	elif member.person.traits.find("Likes it rough") >= 0:

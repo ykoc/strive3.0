@@ -43,7 +43,10 @@ func addrandomenchant(item, number = 1):
 		var enchant = {type = tempenchant.type, effect = tempenchant.effect, effectvalue = 0, descript = ""}
 		encharray.erase(tempenchant)
 		if tempenchant.has("mineffect") and tempenchant.has("maxeffect"):
-			enchant.effectvalue = round(rand_range(tempenchant.mineffect, tempenchant.maxeffect))
+			if tempenchant.maxeffect < 1:
+				enchant.effectvalue = round(rand_range(tempenchant.mineffect, tempenchant.maxeffect)*100)/100
+			else:
+				enchant.effectvalue = round(rand_range(tempenchant.mineffect, tempenchant.maxeffect))
 		elif tempenchant.has('effectvalue'):
 			enchant.effectvalue = tempenchant.effectvalue
 		enchant.descript = "[color=green]" + tempenchant.name.replace('&100v', str(enchant.effectvalue*100)).replace("&v", str(enchant.effectvalue)) + "[/color]"

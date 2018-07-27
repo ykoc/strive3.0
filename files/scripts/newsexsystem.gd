@@ -137,18 +137,30 @@ class member:
 		if acceptance == 'good':
 			sensinput *= rand_range(1.1,1.4)
 			lustinput *= 2
+			for i in scenedict.givers + scenedict.takers:
+				if i != self:
+					globals.addrelations(person, i.person, rand_range(4,8))
 		elif acceptance == 'average':
 			sensinput *= 1.1
 			lustinput *= 1
+			for i in scenedict.givers + scenedict.takers:
+				if i != self:
+					globals.addrelations(person, i.person, rand_range(2,4))
 		else:
 			sensinput *= 0.6
 			lustinput *= 0.3
+			for i in scenedict.givers + scenedict.takers:
+				if i != self:
+					globals.addrelations(person, i.person, -rand_range(3,5))
 			if values.has('pain') == false:
 				person.stress += rand_range(5,10)
+				
 		
 		if values.has('tags'):
 			if values.tags.has('punish'):
 				if (person.obed < 90 || mode == 'forced') && (!person.traits.has('Masochist') && !person.traits.has('Likes it rough')):
+					for i in scenedict.givers:
+						globals.addrelations(person, i.person, -rand_range(5,10))
 					if values.has('obed') == false:
 						values.obed = 0
 					if values.has("stress") == false:
@@ -312,6 +324,7 @@ func startsequence(actors, mode = null, secondactors = [], otheractors = []):
 		newmember.spenis = person.senspenis
 		newmember.sanus = person.sensanal
 		newmember.lewd = person.lewdness
+		newmember.person.metrics.sex += 1
 		participants.append(newmember)
 	$Panel/aiallow.pressed = aiobserve
 	if mode == 'abuse':
@@ -338,6 +351,8 @@ func startsequence(actors, mode = null, secondactors = [], otheractors = []):
 			newmember.lewd = person.lewdness
 			newmember.mode = 'forced'
 			newmember.consent = false
+			newmember.person.metrics.sex += 1
+			newmember.person.metrics.roughsex += 1
 			participants.append(newmember)
 	get_node("Panel/sceneeffects").set_bbcode("You bring selected participants into your bedroom. ")
 	for i in otheractors:
@@ -588,17 +603,7 @@ func slavedescription(member):
 	if !member.person.unique in ['dog','horse']:
 		get_parent().popup(member.person.descriptionsmall())
 
-var nakedspritesdict = {
-	Cali = {cons = 'calinakedhappy', rape = 'calinakedsad', clothcons = 'calineutral', clothrape = 'calisad'},
-	Tisha = {cons = 'tishanakedhappy', rape = 'tishanakedneutral', clothcons = 'tishahappy', clothrape = 'tishaneutral'},
-	Emily = {cons = 'emilynakedhappy', rape = 'emilynakedneutral', clothcons = 'emily2happy', clothrape = 'emily2worried'},
-	Chloe = {cons = 'chloenakedhappy', rape = 'chloenakedneutral', clothcons = 'chloehappy2', clothrape = 'chloeneutral2'},
-	Maple = {cons = 'fairynaked', rape = 'fairynaked', clothcons = 'fairy', clothrape = 'fairy'},
-	Yris = {cons = 'yrisnormalnaked', rape = 'yrisshocknaked', clothcons = 'yrisnormal', clothrape = 'yrisshock'},
-	Ayneris = {cons = 'aynerisneutralnaked', rape = 'aynerisangrynaked', clothcons = 'aynerisneutral', clothrape = 'aynerisangry'},
-	Zoe = {cons = "zoehappynaked", rape = 'zoesadnaked', clothcons = 'zoehappy', clothrape = 'zoesad'},
-	Melissa = {cons = "melissanakedfriendly", rape = 'melissanakedneutral', clothcons = 'melissafriendly', clothrape = 'melissaneutral'},
-	}
+var nakedspritesdict = globals.gallery.nakedsprites
 
 func showbody(i):
 	if globals.loadimage(i.person.imagefull) != null:
@@ -976,6 +981,7 @@ func orgasm(member):
 	var vaginatext = ''
 	var anustext = ''
 	member.orgasms += 1
+	member.person.metrics.orgasm += 1
 	if participants.size() == 2 && member.person != globals.player:
 		member.person.loyal += rand_range(1,4)
 	elif member.person != globals.player:
@@ -983,6 +989,8 @@ func orgasm(member):
 	#anus in use, find scene
 	if member.anus != null:
 		scene = member.anus
+		for i in scene.givers:
+			globals.addrelations(member.person, i.person, rand_range(30,50))
 		#anus in giver slot
 		if scene.givers.find(member) >= 0:
 			if randf() < 0.4:
@@ -1012,6 +1020,8 @@ func orgasm(member):
 		#vagina in use, find scene
 		if member.vagina != null:
 			scene = member.vagina
+			for i in scene.givers:
+				globals.addrelations(member.person, i.person, rand_range(30,50))
 			#vagina in giver slot
 			if scene.givers.find(member) >= 0:
 				if randf() < 0.4:
@@ -1040,6 +1050,8 @@ func orgasm(member):
 		#penis in use, find scene
 		if member.penis != null:
 			scene = member.penis
+			for i in scene.takers:
+				globals.addrelations(member.person, i.person, rand_range(30,50))
 			#penis in giver slot
 			if scene.givers.find(member) >= 0:
 				if randf() < 0.4:

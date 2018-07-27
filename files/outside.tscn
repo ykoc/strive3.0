@@ -1,4 +1,4 @@
-[gd_scene load_steps=119 format=2]
+[gd_scene load_steps=125 format=2]
 
 [ext_resource path="res://files/theme.tres" type="Theme" id=1]
 [ext_resource path="res://files/scripts/outside.gd" type="Script" id=2]
@@ -82,6 +82,12 @@
 [ext_resource path="res://files/buttons/inventory/33.png" type="Texture" id=80]
 [ext_resource path="res://files/buttons/bigpanel.png" type="Texture" id=81]
 [ext_resource path="res://files/buttons/inventory/1.png" type="Texture" id=82]
+[ext_resource path="res://files/buttons/combat/8.png" type="Texture" id=83]
+[ext_resource path="res://files/buttons/combat/9.png" type="Texture" id=84]
+[ext_resource path="res://files/buttons/combat/8.1.png" type="Texture" id=85]
+[ext_resource path="res://files/buttons/combat/12.png" type="Texture" id=86]
+[ext_resource path="res://files/buttons/combat/13.png" type="Texture" id=87]
+[ext_resource path="res://files/buttons/combat/14.png" type="Texture" id=88]
 
 [sub_resource type="StyleBoxTexture" id=1]
 
@@ -913,10 +919,11 @@ func sellitem(button):
 				button.queue_free()
 	elif state == 'backpack':
 		globals.state.backpack.stackables[item.code] -= 1
-		button.get_node('number').set_text(str(globals.state.backpack.stackables[item.code]))
-		if globals.state.backpack.stackables[item.code] <= 0:
-			globals.state.backpack.stackables.erase(item.code)
+		if globals.state.backpack.stackables.has(item.code):
+			button.get_node('number').set_text(str(globals.state.backpack.stackables[item.code]))
+		else:
 			button.visible = false
+			button.queue_free()
 		calculateweight()
 	$gold.text = str(globals.resources.gold)
 
@@ -1318,13 +1325,13 @@ margin_right = 137.0
 margin_bottom = -10.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
-mouse_filter = 1
+mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 expand = true
 stretch_mode = 6
-_sections_unfolded = [ "Anchor", "Rect", "Visibility" ]
+_sections_unfolded = [ "Anchor", "Mouse", "Rect", "Visibility" ]
 
 [node name="textpanelexplore" type="Panel" parent="." index="4"]
 
@@ -3717,9 +3724,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 900.0
+margin_left = 952.0
 margin_top = 60.0
-margin_right = 1270.0
+margin_right = 1322.0
 margin_bottom = 420.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -3763,6 +3770,7 @@ _sections_unfolded = [ "Mouse", "Size Flags" ]
 
 [node name="locationname" type="Label" parent="." index="11"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -4605,7 +4613,6 @@ max_lines_visible = -1
 
 [node name="slaveguildquestpanel" type="Control" parent="." index="14"]
 
-editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -5428,6 +5435,7 @@ _sections_unfolded = [ "Rect" ]
 "blockmaininput",
 ]]
 
+editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -6877,7 +6885,354 @@ text = "Cancel"
 flat = false
 align = 1
 
-[node name="bigmappanel" type="Panel" parent="." index="19"]
+[node name="choseparty" type="Panel" parent="." index="19"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 156.0
+margin_top = 93.0
+margin_right = 1173.0
+margin_bottom = 641.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="choseparty" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 49.0
+margin_top = 178.0
+margin_right = 761.0
+margin_bottom = 495.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+alignment = 0
+
+[node name="Button" type="TextureButton" parent="choseparty/HBoxContainer" index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 224.0
+margin_bottom = 317.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 83 )
+texture_pressed = ExtResource( 84 )
+texture_hover = ExtResource( 84 )
+texture_disabled = ExtResource( 85 )
+_sections_unfolded = [ "Textures" ]
+
+[node name="stats" type="TextureRect" parent="choseparty/HBoxContainer/Button" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 30.0
+margin_top = 62.0
+margin_right = 194.0
+margin_bottom = 146.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 33 )
+expand = true
+stretch_mode = 6
+_sections_unfolded = [ "Mouse" ]
+
+[node name="sstr" type="Label" parent="choseparty/HBoxContainer/Button/stats" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 36.0
+margin_top = 16.0
+margin_right = 76.0
+margin_bottom = 36.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "1"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="smaf" type="Label" parent="choseparty/HBoxContainer/Button/stats" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 36.0
+margin_top = 47.0
+margin_right = 76.0
+margin_bottom = 67.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "1"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="send" type="Label" parent="choseparty/HBoxContainer/Button/stats" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 117.0
+margin_top = 47.0
+margin_right = 157.0
+margin_bottom = 67.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "1"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="sagi" type="Label" parent="choseparty/HBoxContainer/Button/stats" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 117.0
+margin_top = 17.0
+margin_right = 157.0
+margin_bottom = 37.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "1"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="hp" type="TextureProgress" parent="choseparty/HBoxContainer/Button/stats" index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 22.0
+margin_top = 173.0
+margin_right = 144.0
+margin_bottom = 191.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+min_value = 0.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 50.0
+exp_edit = true
+rounded = false
+texture_under = ExtResource( 86 )
+texture_over = null
+texture_progress = ExtResource( 87 )
+radial_fill_degrees = 360.0
+radial_center_offset = Vector2( 0, 0 )
+nine_patch_stretch = false
+_sections_unfolded = [ "Mouse", "Textures" ]
+
+[node name="en" type="TextureProgress" parent="choseparty/HBoxContainer/Button/stats" index="5"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 22.0
+margin_top = 193.0
+margin_right = 144.0
+margin_bottom = 211.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+min_value = 0.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 50.0
+exp_edit = true
+rounded = false
+texture_under = ExtResource( 86 )
+texture_over = null
+texture_progress = ExtResource( 88 )
+radial_fill_degrees = 360.0
+radial_center_offset = Vector2( 0, 0 )
+nine_patch_stretch = false
+_sections_unfolded = [ "Mouse", "Size Flags", "Textures" ]
+
+[node name="portrait" type="TextureRect" parent="choseparty/HBoxContainer/Button" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 30.0
+margin_top = 37.0
+margin_right = 195.0
+margin_bottom = 202.0
+rect_min_size = Vector2( 165, 165 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+expand = true
+stretch_mode = 7
+_sections_unfolded = [ "Mouse", "Rect" ]
+
+[node name="Label" type="Label" parent="choseparty/HBoxContainer/Button" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 27.0
+margin_top = 207.0
+margin_right = 197.0
+margin_bottom = 227.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "Slave name"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="RTL" type="RichTextLabel" parent="choseparty" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 44.0
+margin_top = 57.0
+margin_right = 950.0
+margin_bottom = 193.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+bbcode_enabled = true
+bbcode_text = ""
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = ""
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+_sections_unfolded = [ "BBCode" ]
+
+[node name="Label" type="Label" parent="choseparty" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 452.0
+margin_top = 17.0
+margin_right = 594.0
+margin_bottom = 57.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "Select Character"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="chosepartyclose" type="Button" parent="choseparty" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 436.0
+margin_top = 497.0
+margin_right = 566.0
+margin_bottom = 536.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Cancel"
+flat = false
+align = 1
+
+[node name="bigmappanel" type="Panel" parent="." index="20"]
 
 editor/display_folded = true
 visible = false
@@ -7039,6 +7394,8 @@ _sections_unfolded = [ "Textures" ]
 [connection signal="pressed" from="sebastiannode/sebastianconfirm" to="." method="_on_sebastianconfirm_pressed"]
 
 [connection signal="pressed" from="sebastiannode/sebastiancancel" to="." method="_on_sebastiancancel_pressed"]
+
+[connection signal="pressed" from="choseparty/chosepartyclose" to="." method="_on_chosepartyclose_pressed"]
 
 [connection signal="pressed" from="bigmappanel/mapclose" to="." method="_on_mapclose_pressed"]
 

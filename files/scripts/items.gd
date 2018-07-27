@@ -216,7 +216,7 @@ maturingpot = {
 	cost = 200,
 	type = 'potion',
 	toxicity = 40,
-	reqs = 'globals.state.mansionupgrades.mansionalchemy >= 2',
+	reqs = 'globals.state.mainquest >= 6',
 	weight = 1,
 	amount = 0
 	},
@@ -230,7 +230,7 @@ youthingpot = {
 	cost = 200,
 	type = 'potion',
 	toxicity = 40,
-	reqs = 'globals.state.mansionupgrades.mansionalchemy >= 2',
+	reqs = 'globals.state.mainquest >= 6',
 	weight = 1,
 	amount = 0
 	},
@@ -1302,6 +1302,10 @@ func amnesiapoteffect():
 	if person.loyal < 50 && person.memory != 'clear':
 		text = text + person.dictionary("$He grows closer to you, having no one else $he can rely on. ")
 		person.loyal += rand_range(15,25) - person.conf/10
+	for i in person.relations:
+		person.relations[i] = 0
+		if i == globals.player.id:
+			person.relations[i] = 300
 	person.memory = 'clear'
 	return text
 

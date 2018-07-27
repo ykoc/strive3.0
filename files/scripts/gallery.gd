@@ -40,7 +40,7 @@ scenes = [{code = 'yrisblowjob', name = 'First Bet', unlocked = false, text = 'H
 },
 zoe = {
 unlocked = false, name = 'Zoe', descript = chardescript.zoe, sprite = 'zoeneutral', naked = 'zoeneutralnaked', nakedunlocked = false,
-scenes = []
+scenes = [{code = 'zoetentacle', name = 'Dangerous Knowledge', unlocked = false, text = 'What old texts might reveal'}]
 },
 ayneris = {
 unlocked = false, name = 'Ayneris', descript = chardescript.ayneris, sprite = 'aynerisneutral', naked = 'aynerisneutralnaked', nakedunlocked = false,
@@ -433,4 +433,14 @@ centaur = load("res://files/images/centaur.png"),
 forestspirit = load("res://files/images/forestspirit.png"),
 frostfordtrader = load("res://files/images/frostfordtrader.png"),
 }
-
+var nakedsprites = {
+	Cali = {cons = 'calinakedhappy', rape = 'calinakedsad', clothcons = 'calineutral', clothrape = 'calisad'},
+	Tisha = {cons = 'tishanakedhappy', rape = 'tishanakedneutral', clothcons = 'tishahappy', clothrape = 'tishaneutral'},
+	Emily = {cons = 'emilynakedhappy', rape = 'emilynakedneutral', clothcons = 'emily2happy', clothrape = 'emily2worried'},
+	Chloe = {cons = 'chloenakedhappy', rape = 'chloenakedneutral', clothcons = 'chloehappy2', clothrape = 'chloeneutral2'},
+	Maple = {cons = 'fairynaked', rape = 'fairynaked', clothcons = 'fairy', clothrape = 'fairy'},
+	Yris = {cons = 'yrisnormalnaked', rape = 'yrisshocknaked', clothcons = 'yrisnormal', clothrape = 'yrisshock'},
+	Ayneris = {cons = 'aynerisneutralnaked', rape = 'aynerisangrynaked', clothcons = 'aynerisneutral', clothrape = 'aynerisangry'},
+	Zoe = {cons = "zoehappynaked", rape = 'zoesadnaked', clothcons = 'zoehappy', clothrape = 'zoesad'},
+	Melissa = {cons = "melissanakedfriendly", rape = 'melissanakedneutral', clothcons = 'melissafriendly', clothrape = 'melissaneutral'},
+	}

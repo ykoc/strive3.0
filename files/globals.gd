@@ -137,6 +137,8 @@ maplebj = load("res://files/images/sexscenes/maplebj.png"),
 maplesex = load("res://files/images/sexscenes/maplesex.png"),
 yrisbj = load("res://files/images/sexscenes/yrisbj.png"),
 yrissex = load("res://files/images/sexscenes/yrissex.png"),
+zoetentacle1 = load("res://files/images/sexscenes/zoetentacle.png"),
+zoetentacle2 = load("res://files/images/sexscenes/zoetentacle2.png"),
 }
 var mansionupgradesdict = mansionupgrades.dict
 var gradeimages = {
@@ -493,12 +495,12 @@ class progress:
 	var mainquestcomplete = false
 	var rank = 0
 	var password = ''
-	var sidequests = {emily = 0, brothel = 0, cali = 0, chloe = 0, ayda = 0, ivran = '', yris = 0, zoe = 0, ayneris = 0, sebastianumbra = 0, maple = 0}
+	var sidequests = {emily = 0, brothel = 0, cali = 0, caliparentsdead = false, chloe = 0, ayda = 0, ivran = '', yris = 0, zoe = 0, ayneris = 0, sebastianumbra = 0, maple = 0}
 	var repeatables = {wimbornslaveguild = [], frostfordslaveguild = [], gornslaveguild = []}
 	var babylist = []
 	var companion = -1
 	var headgirlbehavior = 'none'
-	var portals = {wimborn = {'enabled' : false, 'code' : 'wimborn'}, gorn = {'enabled':false, 'code' : 'gorn'}, frostford = {'enabled':false, 'code' : 'frostford'}, shaliq = {'enabled':false, 'code':'shaliq'}, amberguard = {'enabled':false, 'code':'amberguard'}, umbra = {'enabled':false, 'code':'umbra'}}
+	var portals = {wimborn = {'enabled' : false, 'code' : 'wimborn'}, gorn = {'enabled':false, 'code' : 'gorn'}, frostford = {'enabled':false, 'code' : 'frostford'}, amberguard = {'enabled':false, 'code':'amberguard'}, umbra = {'enabled':false, 'code':'umbra'}}
 	var sebastianorder = {race = 'none', taken = false, duration = 0}
 	var sebastianslave
 	var sandbox = false
@@ -547,7 +549,7 @@ class progress:
 	var plotsceneseen = []
 	var capturedgroup = []
 	var ghostrep = {wimborn = 0, frostford = 0, gorn = 0, amberguard = 0}
-	var backpack = {stackables = {}, unstackables = []}
+	var backpack = {stackables = {}, unstackables = []} setget backpack_set
 	var restday = 0
 	var defaultmasternoun = "Master"
 	var sexactions = 1
@@ -616,6 +618,15 @@ class progress:
 			if str(globals.slaves[i].id) == str(id):
 				rval = globals.slaves[i]
 		return rval
+	
+	func backpack_set(value):
+		backpack = value
+		checkbackpack()
+	
+	func checkbackpack():
+		for i in backpack.stackables:
+			if backpack.stackables[i] <= 0:
+				backpack.stackables.erase(i)
 
 class person:
 	var name = ''
@@ -724,6 +735,7 @@ class person:
 	var learningpoints = 0 setget learningpoints_set
 	var luxury = 0
 	
+	var relations = {}
 	
 	var stats = {
 		str_max = 0,
@@ -795,6 +807,7 @@ class person:
 	
 	func fear_raw(value):
 		fear += value
+	
 	
 	func get_traits():
 		var array = []
@@ -1048,7 +1061,8 @@ class person:
 		learningpoints = value
 	
 	func tox_set(value):
-		stats.tox_cur = clamp(value*stats.tox_mod, stats.tox_min, stats.tox_max)
+		var difference = stats.tox_cur - value
+		stats.tox_cur = clamp(stats.tox_cur + difference*stats.tox_mod, stats.tox_min, stats.tox_max)
 	
 	func energy_set(value):
 		value = round(value)
@@ -1154,6 +1168,12 @@ class person:
 			number += 3
 		if globals.state.spec == 'Hunter':
 			number += 10
+		if effects.has("tribal1"):
+			number += 3
+		elif effects.has('tribal2'):
+			number += 6
+		elif effects.has('tribal3'):
+			number += 9
 		return number
 	
 	
@@ -1387,12 +1407,14 @@ class person:
 		elif globals.state.babylist.has(self):
 			globals.state.babylist.erase(self)
 			globals.clearrelativesdata(self.id)
+		globals.state.playergroup.erase(self.id)
 	
 	func removefrommansion():
 		globals.slaves.erase(self)
 		globals.main.infotext(self.dictionary("$name $surname is no longer in your posession. "),'red')
 		globals.items.unequipall(self)
-		globals.state.relativesdata[id].state = 'left'
+		if globals.state.relativesdata.has(id):
+			globals.state.relativesdata[id].state = 'left'
 	
 	func abortion():
 		if preg.duration > 0:
@@ -1417,6 +1439,22 @@ class person:
 			for ii in unlock.actions:
 				if sexuals.actions.has(ii) == false:
 					sexuals.actions[ii] = 0
+
+func addrelations(person, person2, value):
+	if person == player || person2 == player:
+		return
+	if person.relations.has(person2.id) == false:
+		person.relations[person2.id] = 0
+	if person2.relations.has(person.id) == false:
+		person2.relations[person.id] = 0
+	if person.relations[person2.id] > 500 && value > 0 && checkifrelatives(person, person2):
+		value = value/1.5
+	elif person.relations[person2.id] < -500 && value < 0 && checkifrelatives(person,person2):
+		value = value/1.5
+	person.relations[person2.id] += value
+	person.relations[person2.id] = clamp(person.relations[person2.id], -1000, 1000)
+	if person.relations[person2.id] < -200 && value < 0:
+		person.stress += rand_range(3,6)
 
 func randomportrait(person):
 	var portraitbase
@@ -1549,6 +1587,8 @@ func connectrelatives(person1, person2, way):
 				connectrelatives(person2, entry2, 'sibling')
 		entry = globals.state.relativesdata[person2.id]
 		entry[way] = person1.id
+		addrelations(person1, person2, 200)
+		addrelations(person2, person1, 200)
 	elif way == 'sibling':
 		var entry = globals.state.relativesdata[person1.id]
 		var entry2 = globals.state.relativesdata[person2.id]
@@ -1563,6 +1603,9 @@ func connectrelatives(person1, person2, way):
 				entry.siblings.append(i)
 			if !entry2.siblings.has(i) && i != entry2.id:
 				entry2.siblings.append(i)
+		
+		addrelations(person1, person2, 0)
+		addrelations(person2, person1, 0)
 
 
 func createrelativesdata(person):
@@ -1585,6 +1628,30 @@ func clearrelativesdata(id):
 		
 	
 	globals.state.relativesdata.erase(id)
+
+func checkifrelatives(person, person2):
+	var result = false
+	var data1 
+	var data2
+	if globals.state.relatives.has(person.id):
+		data1 = globals.state.relativesdata[person.id]
+	else:
+		createrelativesdata(person)
+		data1 = globals.state.relativesdata[person.id]
+	if globals.state.relatives.has(person2.id):
+		data2 = globals.state.relativesdata[person2.id]
+	else:
+		createrelativesdata(person2)
+		data2 = globals.state.relativesdata[person2.id]
+	for i in ['mother','father']:
+		if data1[i] == data2.id || data2[i] == data1.id:
+			result = true
+	for i in [data1, data2]:
+		if i.siblings.has(data1.id) || i.siblings.has(data2.id):
+			result = true
+	
+	
+	return result
 
 func showtooltip(text):
 	var screen = get_viewport().get_visible_rect()

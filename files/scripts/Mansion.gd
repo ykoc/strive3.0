@@ -9,7 +9,7 @@ var testslaveorigin = ['slave','poor','commoner','rich','noble']
 var currentslave = 0 setget currentslave_set
 var selectedslave = -1
 var texture = null
-var startcombatzone = "undercityruins"
+var startcombatzone = "elvenforest"
 var nameportallocation
 var enddayprocess = false
 onready var maintext = '' setget maintext_set, maintext_get
@@ -44,7 +44,7 @@ func _ready():
 		globals.player.ability.append('escape')
 		globals.player.ability.append('heal')
 		globals.player.abilityactive.append('escape')
-		globals.player.abilityactive.append('barrier')
+		globals.player.abilityactive.append('mindread')
 		globals.state.supporter = true
 		for i in globals.gallery.charactergallery.values():
 			i.unlocked = true
@@ -303,11 +303,12 @@ func _on_new_slave_button_pressed():
 		if !i.type in ['gear','dummy']:
 			i.amount += 10
 	globals.itemdict.zoebook.amount = 0
-	for i in ['armorchain','weaponclaymore','clothpet','clothkimono','underwearlacy','armortentacle','accamuletemerald','accamuletemerald','clothtentacle']:
+	for i in ['armorchain','weaponaynerisrapier','clothpet','clothkimono','underwearlacy','armortentacle','accamuletemerald','accamuletemerald','clothtentacle']:
 		var tmpitem = globals.items.createunstackable(i)
 		globals.state.unstackables[str(tmpitem.id)] = tmpitem
 		globals.items.enchantrand(tmpitem)
 	globals.slaves = person
+	globals.player.stats.agi_mod = 5
 	person.stats.health_cur = 5
 	globals.state.reputation.wimborn = 41
 	globals.state.sidequests.ivran = 'potionreceived'
@@ -325,17 +326,17 @@ func _on_new_slave_button_pressed():
 	globals.resources.upgradepoints += 100
 	
 	globals.state.sidequests.brothel = 1
-	globals.state.sidequests.zoe = 3
+	globals.state.sidequests.zoe = 5
 	#globals.state.decisions.append('')
 	globals.state.rank = 3
-	globals.state.mainquest = 0
+	globals.state.mainquest = 3
 	#globals.state.plotsceneseen = ['garthorscene','hade1','hade2','frostfordscene']#,'slaverguild']
 	globals.resources.mana = 200
 	globals.state.farm = 3
 	globals.state.mansionupgrades.mansionlab = 1
 	globals.state.mansionupgrades.mansionalchemy = 1
 	globals.state.mansionupgrades.mansionparlor = 1
-	globals.state.backpack.stackables.torch = 1
+	globals.state.backpack.stackables.torch = 2
 	globals.player.sstr = 1
 	globals.player.send = 5
 	globals.player.stats.agi_max = 5
@@ -343,6 +344,8 @@ func _on_new_slave_button_pressed():
 	globals.state.reputation.frostford = 50
 	globals.state.condition -= 100
 	globals.state.decisions = ['tishaemilytricked','chloebrothel','ivrantaken','goodroute']
+	#globals.player.relations.a = 1
+	#globals.player.relations.b = globals.player.relations.get('b', 0) + 2
 	if true:
 		for i in globals.characters.characters:
 			person = globals.characters.create(i)
@@ -592,9 +595,30 @@ func _on_end_pressed():
 		text = ''
 		
 		var slavehealing = person.send * 0.03 + 0.02
-		if person.away.duration == 0:
+		if person.away.duration == 0: ## Sequence for all present slaves
+			
+			for i in person.relations:
+				if person.relations[i] > 500:
+					person.relations[i] -= 15
+				elif person.relations[i] < -500:
+					person.relations[i] += 15
+			
 			if person.sleep != 'jail' && person.sleep != 'farm':
 				if person.work in ['rest','forage','hunt','cooking','library','nurse','maid','storewimborn','artistwimborn','assistwimborn','whorewimborn','escortwimborn','fucktoywimborn', 'lumberer', 'ffprostitution','guardian', 'research', 'slavecatcher','fucktoy']:
+					
+					for i in globals.slaves:
+						if i.away.duration == 0 && i.work == person.work && i != person:
+							globals.addrelations(person, i, 0)
+							globals.addrelations(i, person, 0)
+							if person.relations[i.id] < 0 || i.relations[person.id] < -200:
+								globals.addrelations(person, i, (rand_range(-10,-20)))
+							else:
+								globals.addrelations(person, i, (rand_range(10,20)))
+							if i.relations[person.id] < 0 || person.relations[i.id] < -200:
+								globals.addrelations(i, person, (rand_range(-10,-20)))
+							else:
+								globals.addrelations(i, person, (rand_range(10,20)))
+					
 					if person.work != 'rest' && person.energy < 30:
 						text = "$name had no energy to fulfill $his duty and had to take a rest. \n"
 						slavehealing += 0.15
@@ -613,11 +637,11 @@ func _on_end_pressed():
 							if workdict.has('gold'):
 								workdict.gold *= 1.15
 						for i in globals.state.reputation:
-							if globals.state.reputation[i] < -10 && rand_range(0,100) < 33 && get_node("MainScreen/slave_tab").jobdict[person.work].tags.find(i) >= 0:
+							if globals.state.reputation[i] < -10 && randf() < 0.33 && get_node("MainScreen/slave_tab").jobdict[person.work].tags.find(i) >= 0:
 								person.obed -= max(abs(globals.state.reputation[i])*2 - person.loyal/6,0)
 								person.loyal -= rand_range(1,3)
 								text += "[color=#ff4949]$name has been influenced by local townfolk, which is hostile towards you. [/color]\n"
-							elif globals.state.reputation[i] > 10 && rand_range(0,100) < 20:
+							elif globals.state.reputation[i] > 10 && randf() < 0.2:
 								person.obed += abs(globals.state.reputation[i])
 								person.loyal += rand_range(1,3)
 								text += "[color=green]$name has been influenced by local townfolk, which is loyal towards you. [/color]\n"
@@ -637,13 +661,13 @@ func _on_end_pressed():
 				if i.has('duration') && i.code != 'captured':
 					if person.fear >= 50 && randf() >= 0.4:
 						i.duration -= 1
-					if person.race != 'Dark Elf' || rand_range(0,1) > 0.5:
+					if person.race != 'Dark Elf' || randf() > 0.5:
 						i.duration -= 1
 					if i.duration <= 0:
 						person.add_effect(i, true)
 				elif i.has('duration'):
 					i.duration -= 1
-					if person.sleep == 'jail' && globals.state.mansionupgrades.jailincenses == 1 && rand_range(0,100) >= 50:
+					if person.sleep == 'jail' && globals.state.mansionupgrades.jailincenses == 1 && randf() >= 0.5:
 						i.duration -= 1
 					if person.brand != 'none':
 						i.duration -= 1
@@ -675,10 +699,10 @@ func _on_end_pressed():
 					if ii != person && ii.loyal < 30 && ii.traits.find('Loner') < 0:
 						ii.obed += -(person.charm/3)
 			if person.obed < 50 && person.loyal < 25 && person.sleep != 'jail'&& person.sleep != 'farm'&& person.brand != 'advanced':
-				if rand_range(0,3) < 1 && globals.resources.gold > 34:
+				if randf() < 0.3 && globals.resources.gold > 34:
 					text0.set_bbcode(text0.get_bbcode()+person.dictionary('You notice that some of your food is gone.\n'))
 					globals.resources.food -= rand_range(35,70)
-				elif rand_range(0,3) < 1 && globals.resources.gold > 19:
+				elif randf() < 0.3 && globals.resources.gold > 19:
 					text0.set_bbcode(text0.get_bbcode()+person.dictionary('You notice that some of your gold is missing.\n'))
 					globals.resources.gold -= rand_range(20,40)
 			if person.obed < 25 && person.sleep != 'jail' && person.sleep != 'farm' && person.tags.has('noescape') == false:
@@ -712,7 +736,7 @@ func _on_end_pressed():
 					if i.spec == 'tamer' && (i.work == person.work || i.work in ['rest','headgirl','jailer']) && i.away.duration == 0:
 						person.obed += 30
 						person.loyal += 5
-						if rand_range(0,100) < 10:
+						if randf() < 0.1:
 							person.trait_remove("Uncivilized")
 							text0.set_bbcode(text0.get_bbcode() + i.dictionary("[color=green]$name managed to lift ") + person.dictionary("$name out of $his wild behavior and turn into a socially functioning person.[/color]\n "))
 			if person.traits.has("Infirm"):
@@ -800,11 +824,11 @@ func _on_end_pressed():
 					text2.bbcode_text += person.dictionary("[color=yellow]$name seems no longer to be afraid of you.[/color]\n")
 					person.fear = 0
 			if person.toxicity > 0:
-				if person.toxicity > 35 && rand_range(0,10) > 6.5:
+				if person.toxicity > 35 && randf() > 0.65:
 					person.stress += rand_range(10,15)
 					person.health -= rand_range(10,15)
 					text2.set_bbcode(text2.get_bbcode() + person.dictionary("$name suffers from magical toxicity.\n"))
-				if person.toxicity > 60 && rand_range(0,10) > 7.5:
+				if person.toxicity > 60 && randf() > 0.75:
 					globals.spells.person = person
 					text0.set_bbcode(text0.get_bbcode()+globals.spells.mutate(person.toxicity/30, true) + "\n\n")
 				person.toxicity -= rand_range(1,5)
@@ -854,6 +878,13 @@ func _on_end_pressed():
 				person.loyal += rand_range(1,4)
 				person.energy += rand_range(25,45)+ person.send*6
 				person.sexuals.affection += round(rand_range(1,2))
+				for i in globals.slaves:
+					if i.sleep == 'your' && i != person:
+						globals.addrelations(person, i, 0)
+						if (person.relations[i.id] <= 200 && !person.traits.has("Fickle")) || person.traits.has("Monogamous"):
+							globals.addrelations(person, i, -rand_range(15,30))
+						else:
+							globals.addrelations(person, i, rand_range(15,30))
 				if person.loyal > 30:
 					person.stress -= person.loyal/7
 				if person.lust > 40 && person.consent && person.vagvirgin == false && person.tags.find('nosex') < 0:
@@ -940,11 +971,15 @@ func _on_end_pressed():
 		for i in globals.slaves:
 			if i != headgirl && i.traits.find('Loner') < 0 && i.away.duration < 1 && i.sleep != 'jail' && i.sleep != 'farm':
 				headgirl.xp += 3
+				globals.addrelations(i, headgirl, 10)
+				globals.addrelations(headgirl, i, 10)
 				if i.obed < 65 && globals.state.headgirlbehavior == 'strict':
 					var obedbase = i.obed
 					i.fear += (-(i.cour/15) + headgirlconf/7)
 					i.stress += rand_range(5,10)
 					if i.obed <= obedbase:
+						globals.addrelations(i, headgirl, -30)
+						globals.addrelations(headgirl, i, -30)
 						text0.set_bbcode(text0.get_bbcode() + i.dictionary('$name was acting frivolously. ') + headgirl.dictionary('$name tried to put ') + i.dictionary("$him in place, but failed to make any impact.\n\n"))
 					else:
 						text0.set_bbcode(text0.get_bbcode() + i.dictionary('$name was acting frivolously, but ') + headgirl.dictionary('$name managed to make ') + i.dictionary("$him submit to your authority and slightly improve $his behavior.\n\n"))
@@ -959,6 +994,8 @@ func _on_end_pressed():
 		for person in globals.slaves:
 			if person.sleep == 'jail':
 				jailer.xp += 5
+				if person.obed < 80:
+					globals.addrelations(person, jailer, 25)
 				person.health += round(jailer.wit/10)
 				person.obed += round(jailer.charm/8)
 				if person.effects.has('captured') == true && jailerconf-30 >= rand_range(0,100):
@@ -970,6 +1007,10 @@ func _on_end_pressed():
 		for person in globals.slaves:
 			if person.sleep == 'farm':
 				var production = 0
+				if person.obed < 75:
+					globals.addrelations(person, farmmanager, rand_range(-25,-40))
+				else:
+					globals.addrelations(person, farmmanager, rand_range(25,40))
 				if person.work == 'cow' && person.titssize != 'masculine':
 					production = rand_range(0,15) + 18*globals.sizearray.find(person.titssize)
 					if person.titsextradeveloped == true:
@@ -998,15 +1039,15 @@ func _on_end_pressed():
 		for person in globals.slaves:
 			if person.away.duration != 0:
 				continue
-			if globals.state.condition >= 30 && rand_range(0,10) >= 7:
+			if globals.state.condition >= 30 && randf() >= 0.7:
 				person.stress += rand_range(5,15)
 				person.obed += -rand_range(15,20)
 				text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=yellow]$name was distressed by mansion's poor condition. [/color]\n"))
-			elif globals.state.condition >= 15 && rand_range(0,10) >= 5:
+			elif globals.state.condition >= 15 && randf() >= 0.5:
 				person.stress += rand_range(10,20)
 				person.obed += -rand_range(15,35)
 				text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=yellow]$name was distressed by mansion's poor condition. [/color]\n"))
-			elif rand_range(0,10) >= 4:
+			elif randf() >= 0.4:
 				person.stress += rand_range(15,25)
 				person.health -= rand_range(5,10)
 				text0.set_bbcode(text0.get_bbcode() + person.dictionary("[color=#ff4949]Mansion's terrible condition causes $name a lot of stress and impacted $his health. [/color]\n"))
@@ -1016,12 +1057,12 @@ func _on_end_pressed():
 	for i in globals.guildslaves:
 		for person in globals.guildslaves[i]:
 			count = 0
-			if rand_range(0,100) < 20:
+			if randf() < 0.2:
 				globals.guildslaves[i].remove(count)
 			count += 1
 		if globals.guildslaves[i].size() < 4:
 			get_node("outside").newslaveinguild(1, i)
-		if globals.guildslaves[i].size() < 6 && rand_range(0,100) > 25:
+		if globals.guildslaves[i].size() < 6 && randf() > 0.25:
 			get_node("outside").newslaveinguild(1, i)
 	
 	
@@ -1050,11 +1091,10 @@ func _on_end_pressed():
 	
 	for i in globals.state.repeatables:
 		for ii in globals.state.repeatables[i]:
-			temp = ii.difficulty
 			var removed = false
 			if ii.time >= 0 && ii.taken == true:
 				ii.time -= 1
-			elif rand_range(0,10) < 0 && ii.taken == false:
+			elif randf() < 0.1 && ii.taken == false:
 				removed = true
 				globals.state.repeatables[i].remove(globals.state.repeatables[i].find(ii))
 			if ii.time < 0:
@@ -1315,6 +1355,10 @@ func rebuildrepeatablequests():
 		rand = rand_range(0,2)
 		while rand > 0:
 			globals.repeatables.generatequest(town, 'medium')
+			rand -= 1
+		rand = rand_range(0,2)
+		while rand > 0:
+			globals.repeatables.generatequest(town, 'hard')
 			rand -= 1
 
 
@@ -2855,9 +2899,9 @@ func _on_traveltoportal_pressed():
 	if nameportallocation != null:
 		sound("teleport")
 		get_node("MainScreen/mansion/portalspanel").hide()
-		get_node("outside").gooutside()
 		get_node("explorationnode").call('zoneenter', nameportallocation)
-
+		yield(self, 'animfinished')
+		get_node("outside").gooutside()
 func _on_portalsclose_pressed():
 	get_node("MainScreen/mansion/portalspanel").hide()
 
@@ -3001,52 +3045,58 @@ func _on_endlog_pressed():
 var nodetocall
 var functiontocall
 
+
 func selectslavelist(prisoners = false, calledfunction = 'popup', targetnode = self, reqs = 'true', player = false, onlyparty = false):
+	var array = []
 	nodetocall = targetnode
 	functiontocall = calledfunction
-	for i in find_node("chooseslavelist").get_children():
-		i.hide()
-		i.free()
+	for i in $chooseslavepanel/ScrollContainer/chooseslavelist.get_children():
+		if i.name != 'Button':
+			i.hide()
+			i.free()
 	if player == true:
-		var person = globals.player
-		var button = load("res://files/ChoseSlaveButton.tscn").instance()
-		button.get_node("slaveinfo").set_bbcode(person.name_long()+', '+person.race+ ' - You.')
-		button.connect("pressed", self, "slaveselected", [button])
-		button.set_meta("slave", person)
-		if person.imageportait != null:
-			button.get_node("portrait").set_texture(globals.loadimage(person.imageportait))
-		get_node("chooseslavepopup/Panel/ScrollContainer/chooseslavelist").add_child(button)
+		array.append(globals.player)
 	for person in globals.slaves:
-		if person.away.duration == 0:
-			if onlyparty == true && globals.state.playergroup.find(person.id) < 0:
-				continue
-			globals.currentslave = person
-			if prisoners == false || person.sleep != 'jail' :
-				var button = load("res://files/ChoseSlaveButton.tscn").instance()
-				button.get_node("slaveinfo").set_bbcode(person.name_long()+', '+person.race+ ', occupation - ' + person.work + ", grade - " + person.origins.capitalize())
-				button.connect("pressed", self, "slaveselected", [button])
-				button.set_meta("slave", person)
-				if person.imageportait != null:
-					button.get_node("portrait").set_texture(globals.loadimage(person.imageportait))
-				get_node("chooseslavepopup/Panel/ScrollContainer/chooseslavelist").add_child(button)
-				if globals.evaluate(reqs) == false:
-					button.set_disabled(true)
-					button.set_tooltip(person.dictionary("$name does not pass the requirements."))
-	get_node("chooseslavepopup").popup()
-	_on_hideinvalidslaves_pressed()
+		globals.currentslave = person
+		if person.away.duration != 0:
+			continue
+		if onlyparty == true && !globals.state.playergroup.has(person.id):
+			continue
+		if globals.evaluate(reqs) == false:
+			continue
+		if prisoners == false || person.sleep == 'jail' :
+			continue
+		array.append(person)
+	for person in array:
+		var button = $chooseslavepanel/ScrollContainer/chooseslavelist/Button.duplicate()
+		button.show()
+		button.get_node('Label').text = person.name_long()
+		button.connect('mouse_entered', globals, "slavetooltip", [person])
+		button.connect('mouse_exited', globals, "slavetooltiphide")
+		#button.get_node("slaveinfo").set_bbcode(person.name_long()+', '+person.race+ ', occupation - ' + person.work + ", grade - " + person.origins.capitalize())
+		button.connect("pressed", self, "slaveselected", [button])
+		button.connect("pressed", self, 'hideslaveselection')
+		button.set_meta("slave", person)
+		button.get_node("portrait").set_texture(globals.loadimage(person.imageportait))
+		$chooseslavepanel/ScrollContainer/chooseslavelist/.add_child(button)
+	if array.size() == 0:
+		$chooseslavepanel/Label.text = "No characters fit the condition"
+	else:
+		$chooseslavepanel/Label.text = "Select Character"
+	get_node("chooseslavepanel").show()
 
 func slaveselected(button):
 	var person = button.get_meta('slave')
 	nodetocall.call(functiontocall, person)
-	get_node("chooseslavepopup").hide()
+	get_node("chooseslavepanel").hide()
+
+func hideslaveselection():
+	$chooseslavepanel.hide()
+	globals.slavetooltiphide()
 
 
-func _on_hideinvalidslaves_pressed():
-	for i in get_node("chooseslavepopup/Panel/ScrollContainer/chooseslavelist").get_children():
-		if i.is_disabled() == true && get_node("chooseslavepopup/Panel/hideinvalidslaves").is_pressed() == true:
-			i.hide()
-		else:
-			i.show()
+func _on_choseslavecancel_pressed():
+	$chooseslavepanel.hide()
 
 
 
@@ -3091,8 +3141,7 @@ func checkplayergroup():
 
 func _on_cleanbutton_pressed():
 	animationfade()
-	if OS.get_name() != 'HTML5':
-		yield(self, 'animfinished')
+	yield(self, 'animfinished')
 	globals.state.condition = 100
 	globals.resources.gold -= min(ceil(globals.resources.day/7.0)*10,100)
 	_on_mansionsettings_pressed()
@@ -3561,8 +3610,7 @@ func _on_startbutton_pressed():
 	if sexslaves.size() >= 4 && sexmode == 'sex':
 		globals.itemdict.aphroditebrew.amount -= 1
 	animationfade()
-	if OS.get_name() != 'HTML5':
-		yield(self, 'animfinished')
+	yield(self, 'animfinished')
 	get_node("Navigation").hide()
 	get_node('MainScreen').hide()
 	get_node("charlistcontrol").hide()
@@ -3660,7 +3708,7 @@ func tweenanimate(node, name):
 	var tweennode
 	if node.has_node('tween') == false:
 		tweennode = tween.duplicate()
-		tweennode.repeat = true
+		tweennode.repeat = false
 		tweennode.name = 'tween'
 		node.add_child(tweennode)
 	else:
@@ -3750,6 +3798,8 @@ func traitselect(person, i):
 
 func _on_traitselectclose_pressed():
 	$traitselect.hide()
+
+
 
 
 

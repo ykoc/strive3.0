@@ -225,7 +225,9 @@ func _process(delta):
 		
 		i.get_node("portrait").texture = globals.loadimage(combatant.portrait)
 		i.get_node("name").text = combatant.name
-		i.get_node("hp").value = (combatant.hp/combatant.hpmax)*100
+		if i.get_node("hp").value != (combatant.hp/combatant.hpmax)*100:
+			$Tween.interpolate_property(i.get_node("hp"), "value", i.get_node('hp').value, (combatant.hp/combatant.hpmax)*100, 0.6, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+			#i.get_node("hp").value = (combatant.hp/combatant.hpmax)*100
 		i.get_node("hp/Label").text = str(ceil(combatant.hp)) + "/" + str(combatant.hpmax)
 		if combatant.group == 'enemy' && playergroup[0].effects.has('mindreadeffect'):
 			i.get_node("hp/Label").visible = true
@@ -493,6 +495,7 @@ class combatant:
 		elif group == 'enemy':
 			if scene.playergroup[0].effects.has('mindreadeffect'):
 				node.get_node('Panel').visible = true
+				node.get_parent().move_child(node, node.get_parent().get_children().size())
 				for i in ['attack','speed','protection','armor']:
 					node.get_node('Panel/' + i + '/Label').text = str(self[i])
 	
@@ -578,7 +581,7 @@ class combatant:
 			else:
 				var slave = person
 				if globals.rules.permadeath == false:
-					slave.stats.health_cur = 10
+					slave.stats.health_cur = 15
 					slave.away.duration = 3
 					slave.away.at = 'rest'
 					slave.work = 'rest'
@@ -587,7 +590,7 @@ class combatant:
 					globals.state.playergroup.erase(person.id)
 					for i in globals.state.playergroup:
 						globals.state.findslave(i).stress += rand_range(25,40)
-					globals.slaves.erase(slave)
+					slave.death()
 		scene.endcombatcheck()
 	
 
@@ -1240,6 +1243,7 @@ func attackanimation(combatant):
 	if instantanimation == true:
 		for i in timings:
 			timings[i] = 0.05
+		timings.delay2 = 0
 	
 	globals.main.sound('attack')
 	

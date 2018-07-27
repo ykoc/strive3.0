@@ -15,7 +15,7 @@ static func randage():
 		text.append('child')
 	if globals.rules.noadults == false:
 		text.append('adult')
-	text = text[rand_range(0,text.size())]
+	text = text[randi()%text.size()]
 	return text
 
 static func commonrace():
@@ -25,20 +25,25 @@ static func commonrace():
 		text.append('Beastkin Cat')
 		text.append('Beastkin Fox')
 		text.append('Beastkin Bunny')
-	text = text[rand_range(0,text.size())]
+	text = text[randi()%text.size()]
 	return text
 
 static func randhaircolor():
 	var text
 	text = ['blond','black','brown','red']
-	text = text[rand_range(0,text.size())]
+	text = text[randi()%text.size()]
 	return text
 
 static func rarerace():
 	var text
 	text = ['Dragonkin','Harpy','Arachna','Lamia','Nereid','Scylla','Demon','Seraph','Drow','Slime','Fairy']
-	text = text[rand_range(0,text.size())]
+	text = text[randi()%text.size()]
 	return text
+
+func randcombspec():
+	var text
+	text = ['bodyguard', 'assassin', 'ranger']
+	return text[randi()%text.size()]
 
 func questarray():
 	var questsarray = {
@@ -266,8 +271,33 @@ func questarray():
 	location = ['wimborn','gorn'],
 	difficulty = 'easy'
 	},
+	####Hard Quests
+	quest021 = {
+	code = '021',
+	questreq = true,
+	shortdescription = "Skilled Fighter",
+	description = 'A rich local noble seeks for a specific slave suitable for a combat. ',
+	reqs = [['obed','gte', 100]],
+	reqstemp = [['sex', 'eq', randsex()], ['spec', 'eq', randcombspec()], ['level', 'gte', round(rand_range(3,5))]],
+	reqsfunc = ['nobadtraits'],
+	time = round(rand_range(22,30)),
+	reward = round(rand_range(220, 315))*10,
+	location = ['any'],
+	difficulty = 'hard'
+	},
 	}
 	return questsarray
+
+var reqsfuncdescript = {nobadtraits = 'No Negative Traits.'}
+
+func nobadtraits(person):
+	var result = true
+	
+	for i in person.get_traits():
+		if i.tags.has('detrimental'):
+			result = false
+	
+	return result
 
 func generatequest(town, difficulty = 'easy'):
 	var questarray = questarray()
@@ -287,6 +317,8 @@ func generatequest(town, difficulty = 'easy'):
 			quest.reqs = questarray[i].reqs
 			quest.taken = false
 			quest.type = 'slaverequest'
+			if questarray[i].has('reqsfunc'):
+				quest.reqsfunc = questarray[i].reqsfunc
 			for ii in questarray[i].reqstemp:
 				quest.reqs.insert(0, ii)
 			if questarray[i].has('questreq'):

@@ -795,6 +795,7 @@ func slaveguildquests():
 		list.add_child(newbutton)
 		newbutton.visible = true
 		newbutton.get_node("name").set_bbcode(i.shortdescription)
+		newbutton.set_meta('quest', i)
 		newbutton.get_node("reward").set_text(str(i.reward) + ' gold')
 		newbutton.get_node("difficulty").set_text(i.difficulty.capitalize())
 		newbutton.get_node("difficulty").set('custom_colors/font_color', fontcolor)
@@ -847,7 +848,7 @@ func _on_questaccept_pressed():
 						globals.state.repeatables[i].remove(globals.state.repeatables[i].find(ii))
 			slaveguildquests()
 		else:
-			main.selectslavelist(false, 'slaveforquestselected', self)
+			main.selectslavelist(true, 'slaveforquestselected', self)
 
 func slaveforquestselected(person):
 	var quest = selectedquest
@@ -897,6 +898,14 @@ func slaveforquestselected(person):
 				text = text + '[color=#ff4949]' + repeatablesdict[i[0]] + '[/color]\n'
 			else:
 				text = text + '[color=green]' + repeatablesdict[i[0]] + '[/color]\n'
+	if quest.has("reqsfunc"):
+		for i in quest.reqsfunc:
+			var checkfunc = globals.repeatables.call(i, person)
+			if checkfunc == true:
+				text += '[color=green]' + globals.repeatables.reqsfuncdescript[i] + '[/color]\n'
+			else:
+				slavefits = false
+				text += '[color=#ff4949]' + globals.repeatables.reqsfuncdescript[i] + '[/color]\n'
 	if slavefits == true:
 		mansion.maintext = "There seems to be no problems with neeeded requirements.\n" + text
 		get_node("slaveguildquestpanel/questaccept").set_text("Turn in")
@@ -912,8 +921,8 @@ sex = 'Sex',obed = 'Obedience', cour = 'Courage',conf = 'Confidence',wit = 'Wit'
 'beauty':'Beauty',lewdness = 'Lewdness', asser = 'Role Preference', 
 'sexuals.unlocks' : "Unlocked Sex Categories",
 'sstr' : 'Strength', 'sagi' : 'Agility', 'smaf' : 'Magic Affinity', 'send' : 'Endurance',
-loyal = 'Loyalty', race = 'Race', age = 'Age', hairlength = 'Hair Length', origins = 'Origins',
-bodyshape = 'Type', haircolor = 'Hair Color', 'titssize' : 'Breasts Size', 'penis' : "Penis Size",
+loyal = 'Loyalty', race = 'Race', age = 'Age', hairlength = 'Hair Length', origins = 'Grade',
+bodyshape = 'Type', haircolor = 'Hair Color', 'titssize' : 'Breasts Size', 'penis' : "Penis Size", spec = 'Specialization', level = 'Level',
 }
 
 func slavequesttext(quest):
@@ -925,7 +934,7 @@ func slavequesttext(quest):
 	get_node("slaveguildquestpanel/questaccept").set_disabled(false)
 	selectedquest = quest
 	for i in get_node("slaveguildquestpanel/ScrollContainer/VBoxContainer").get_children():
-		if i.get_node('name').get_bbcode() != quest.shortdescription:
+		if i.has_meta("quest") && i.get_meta('quest') != quest:
 			i.set_pressed(false) 
 	for i in quest.reqs:
 		if i[0].find('skills') >= 0:
@@ -945,12 +954,17 @@ func slavequesttext(quest):
 			text2 = text2 + 'Penis size — ' + str(globals.genitaliaarray[i[2]]) + operators[i[1]]
 		elif i[0] == 'origins':
 			text2 = text2 + 'Origins — ' + str(i[2]) + operators[i[1]]
+		elif i[0] == 'spec':
+			text2 += 'Specialization — ' + globals.jobs.specs[i[2]].name + '\n'
 		else:
 			text2 = text2 + repeatablesdict[i[0]] + ' — '+ str(i[2]) + operators[i[1]]
 		if i[0] == 'sex':
 			sex = i[2]
 		elif i[0] == 'race':
 			race = i[2]
+	if quest.has('reqsfunc'):
+		for i in quest.reqsfunc:
+			text2 += globals.repeatables.reqsfuncdescript[i]
 	
 	if quest.description.find('$sex')>= 0:
 		quest.description = quest.description.replace("$sex",sex)
@@ -1280,18 +1294,13 @@ func mageorderquest1(person = null):
 		if questgiveawayslave == null:
 			sprites = [['chancellor','pos1','opac']]
 			text = "— Ah, you’ve returned, how very ‘wonderful’ of you. The arrangement has not been forgotten, provide me with what I want, and I’ll provide you with what you want."
-			buttons.append(['Select person', 'selectslaveforquest', 'mageorderquest1'])
+			buttons.append(['Select slave', 'mageorderselect', 1])
 		else:
 			person = questgiveawayslave
-			if person.obed >= 90 && person.race == 'Human' && person.beauty >= 40 && person.sex == 'female':
-				sprites = [['chancellor','pos1']]
-				text = "— Looks about right. Ready to part with her?"
-				buttons.append(['Give away ' + person.name, 'givecompanion'])
-				buttons.append(['Select person', 'selectslaveforquest', 'mageorderquest1'])
-			else:
-				sprites = [['chancellor','pos1']]
-				text = questgiveawayslave.dictionary("— Who do you take me for? $He does not meet the requirements.")
-				buttons.append(['Select person', 'selectslaveforquest', 'mageorderquest1'])
+			sprites = [['chancellor','pos1']]
+			text = "— Looks about right. Ready to part with her?"
+			buttons.append(['Give away ' + person.name, 'givecompanion'])
+			buttons.append(['Select slave', 'mageorderselect', 1])
 	elif globals.state.mainquest == 2:
 		sprites = [['melissafriendly','pos1','opac']]
 		globals.charactergallery.melissa.unlocked = true
@@ -1301,18 +1310,13 @@ func mageorderquest1(person = null):
 		sprites = [['melissafriendly','pos1','opac']]
 		if questgiveawayslave == null:
 			text = '— You are back. Did you find the fairy?'
-			buttons.append(['Select person', 'selectslaveforquest', 'mageorderquest1'])
+			buttons.append(['Select person', 'mageorderselect', 2])
 		else:
 			person = questgiveawayslave
-			if person.race == 'Fairy':
-				sprites = [['melissafriendly','pos1']]
-				text = "— Looks about right. Ready to part with her?"
-				buttons.append(['Give away ' + person.name, 'givecompanion'])
-				buttons.append(['Select person', 'selectslaveforquest', 'mageorderquest1'])
-			else:
-				sprites = [['melissafriendly','pos1']]
-				text = globals.player.dictionary("— Oh, this is not a Fairy, $name. Come back when you find a fairy.")
-				buttons.append(['Select person', 'selectslaveforquest', 'mageorderquest1'])
+			sprites = [['melissafriendly','pos1']]
+			text = "— Looks about right. Ready to part with her?"
+			buttons.append(['Give away ' + person.name, 'givecompanion'])
+			buttons.append(['Select slave', 'mageorderselect', 2])
 	elif globals.state.mainquest == 4:
 		sprites = [['melissaworried','pos1','opac']]
 		globals.state.mainquest = 5
@@ -1348,18 +1352,13 @@ func mageorderquest1(person = null):
 		if questgiveawayslave == null:
 			sprites = [['melissafriendly','pos1','opac']]
 			text = "— You are back. Did you finish preparing the girl?"
-			buttons.append(['Select person', 'selectslaveforquest', 'mageorderquest1'])
+			buttons.append(['Select slave', 'mageorderselect', 3])
 		else:
 			person = questgiveawayslave
-			if person.race == 'Taurus' && person.titssize == 'huge' && person.lactation == true:
-				text = "— Great work! Can I have her?"
-				sprites = [['melissafriendly','pos1']]
-				buttons.append(['Give away ' + person.name, 'givecompanion'])
-				buttons.append(['Select person', 'selectslaveforquest', 'mageorderquest1'])
-			else:
-				sprites = [['melissafriendly','pos1']]
-				text = questgiveawayslave.dictionary("— I'm afraid this is not what I asked for.")
-				buttons.append(['Select person', 'selectslaveforquest', 'mageorderquest1'])
+			text = "— Great work! Can I have her?"
+			sprites = [['melissafriendly','pos1']]
+			buttons.append(['Give away ' + person.name, 'givecompanion'])
+			buttons.append(['Select slave', 'mageorderselect', 3])
 	elif globals.state.mainquest == 11:
 		sprites = [['melissafriendly','pos1']]
 		text = questtext.MainQuestGornStart
@@ -1393,6 +1392,17 @@ func mageorderquest1(person = null):
 		text = "You decide there's nothing you can gain from visiting Melissa right now. "
 	main.dialogue(state, self, text, buttons, sprites)
 	mageorder()
+
+func mageorderselect(stage):
+	var reqs
+	
+	if stage == 1:
+		reqs = "person.obed >= 90 && person.race == 'Human' && person.beauty >= 40 && person.sex == 'female'"
+	elif stage == 2:
+		reqs = 'person.race == "Fairy"'
+	elif stage == 3:
+		reqs = "person.race == 'Taurus' && person.titssize == 'huge' && person.lactation == true"
+	main.selectslavelist(true, 'mageorderquest1', self, reqs)
 
 func orderhade():
 	var text = globals.questtext.MainQuestGornMelissaAfter
@@ -1951,7 +1961,7 @@ func brothel(person = null):
 	buildbuttons(array)
 
 func selectslavebrothelquest():
-	main.selectslavelist(true, 'brothel', self)
+	main.selectslavelist(true, 'brothel', self, 'person.race in ["Elf","Dark Elf","Drow"]')
 
 func brothelquest():
 	var array = []
@@ -2110,8 +2120,6 @@ func spellbackpackselect(spell):
 
 func useitem(item, person):
 	globals.state.backpack.stackables[item.code] -= 1
-	if globals.state.backpack.stackables[item.code] < 1:
-		globals.state.backpack.stackables.erase(item.code)
 	if item.code == 'bandage':
 		if person.effects.has('bandaged') == false:
 			get_parent().infotext(person.dictionary("Bandage used on $name."),'green')
@@ -2165,8 +2173,6 @@ func _on_discardbutton_pressed():
 	var item = backpackselecteditem
 	globals.state.backpack.stackables[item.code] -= 1
 	get_parent().infotext('Discarded '+item.name,'red')
-	if globals.state.backpack.stackables[item.code] <= 0:
-		globals.state.backpack.stackables.erase(item.code)
 	_on_details_pressed()
 
 var captureeselected
@@ -2254,3 +2260,56 @@ func _on_mapbutton_pressed():
 
 func _on_mapclose_pressed():
 	$bigmappanel.visible = false
+
+var partymemberchosen = null
+var execfunc = ''
+
+func chosepartymember(includeplayer = true, targetfunc = [null,null], reqs = 'true', text = ''):
+	$choseparty.visible = true
+	partymemberchosen = null
+	execfunc = targetfunc
+	var array = []
+	if includeplayer:
+		array.append(globals.player)
+	for i in globals.state.playergroup:
+		array.append(globals.state.findslave(i))
+	for i in $choseparty/HBoxContainer.get_children():
+		if i.name != 'Button':
+			i.hide()
+			i.queue_free()
+	$choseparty/RTL.bbcode_text = text
+	
+	for i in array:
+		var newbutton = $choseparty/HBoxContainer/Button.duplicate()
+		$choseparty/HBoxContainer.add_child(newbutton)
+		newbutton.show()
+		newbutton.get_node("portrait").texture = globals.loadimage(i.imageportait)
+		for k in ['sstr','sagi','smaf','send']:
+			newbutton.get_node("stats/" + k).text = str(i[k])
+		newbutton.get_node("stats/hp").value = (i.health/i.stats.health_max)*100
+		newbutton.get_node("stats/hp").hint_tooltip = "Health: " + str(i.health) + "/" + str(i.stats.health_max)
+		newbutton.get_node("stats/en").value = (float(i.energy)/i.stats.energy_max)*100
+		newbutton.get_node("stats/en").hint_tooltip = "Energy: " + str(i.energy) + "/" + str(i.stats.energy_max)
+		newbutton.get_node("Label").text = i.name_short()
+		newbutton.connect("mouse_entered", self, "partychoicebuttonenter", [newbutton])
+		newbutton.connect("mouse_exited", self, "partychoicebuttonexit", [newbutton])
+		newbutton.connect("pressed",self,'partymemberchosen', [i])
+		globals.currentslave = i
+		if globals.evaluate(reqs) == false:
+			newbutton.disabled = true
+
+func partychoicebuttonenter(button):
+	if button.get_node("portrait").texture != null:
+		get_parent().tween.interpolate_property(button.get_node("portrait"), 'modulate', Color(1,1,1,1), Color(1,1,1,0), 0.3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+
+func partychoicebuttonexit(button):
+	if button.get_node("portrait").texture != null:
+		get_parent().tween.interpolate_property(button.get_node("portrait"), 'modulate', Color(1,1,1,0), Color(1,1,1,1), 0.3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+
+func partymemberchosen(person):
+	partymemberchosen = person
+	$choseparty.hide()
+	execfunc[0].call(execfunc[1], person)
+
+func _on_chosepartyclose_pressed():
+	$choseparty.hide()

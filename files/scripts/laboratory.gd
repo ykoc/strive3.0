@@ -477,7 +477,7 @@ func modchosen(dict= {}, string = '', selected=''):
 				else:
 					allow = false
 					text = text + item.name + ' - [color=red]' + str(modification.items[i]) + '[/color], \n'
-			modification.time = max(round(modification.time/(1+assist.smaf/200.0)),1)
+			modification.time = max(round(modification.time/(1+assist.smaf/20.0)),1)
 			if person == globals.player:
 				modification.time = 0
 			text = text + 'Required time - ' + str(modification.time) + globals.fastif(modification.time == 1, ' day',' days')+'. ' 

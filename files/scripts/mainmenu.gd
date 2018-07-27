@@ -888,6 +888,7 @@ func _on_slaveconfirm_pressed():
 	if slavetrait != '':
 		startslave.add_trait(slavetrait)
 	startslave.add_trait('Grateful')
+	startslave.relations[globals.player.id] = 200
 	
 	globals.slaves = startslave
 	
