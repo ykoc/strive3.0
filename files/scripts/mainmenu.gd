@@ -907,10 +907,13 @@ func _on_slaveconfirm_pressed():
 		globals.resources.food += 500
 		globals.resources.mana += 100
 		globals.state.mainquest = 42
+		globals.state.sidequests.maple = 1
 		globals.state.rank = 4
 		globals.state.sidequests.brothel = 2
 		globals.state.branding = 2
 		globals.state.farm = 4
+		globals.state.decisions.append("mainquestelves")
+		globals.state.mainquestcomplete = true
 		globals.state.portals.amberguard.enabled = true
 		globals.itemdict.youthingpot.unlocked = true
 		globals.itemdict.maturingpot.unlocked = true

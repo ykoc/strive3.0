@@ -103,8 +103,12 @@ func resort():
 func setslaveimage(path):
 	if mode == 'portrait':
 		person.imageportait = path
+		if $assignboth.pressed && globals.loadimage(path.replace("portraits", 'bodies')):
+			person.imagefull = path.replace("portraits",'bodies')
 	elif mode == 'body':
 		person.imagefull = path
+		if $assignboth.pressed && globals.loadimage(path.replace("bodies","portraits")):
+			person.imageportait = path.replace('bodies',"portraits")
 	self.visible = false
 	updatepage()
 
@@ -149,6 +153,7 @@ func _on_reverseportrait_pressed():
 		elif person.unique == 'Melissa':
 			person.imageportait = globals.characters.characters.Melissa.imageportait
 		self.visible = false
+		person.imagefull = null
 		updatepage()
 
 

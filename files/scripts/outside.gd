@@ -840,8 +840,8 @@ func _on_questaccept_pressed():
 				globals.state.reputation[location] += 5
 				globals.resources.upgradepoints += 6
 			elif selectedquest.difficulty == 'hard':
-				globals.state.reputation[location] += 8
-				globals.resources.upgradepoints += 9
+				globals.state.reputation[location] += 10
+				globals.resources.upgradepoints += 10
 			for i in globals.state.repeatables:
 				for ii in globals.state.repeatables[i]:
 					if ii == selectedquest:
@@ -922,7 +922,7 @@ sex = 'Sex',obed = 'Obedience', cour = 'Courage',conf = 'Confidence',wit = 'Wit'
 'sexuals.unlocks' : "Unlocked Sex Categories",
 'sstr' : 'Strength', 'sagi' : 'Agility', 'smaf' : 'Magic Affinity', 'send' : 'Endurance',
 loyal = 'Loyalty', race = 'Race', age = 'Age', hairlength = 'Hair Length', origins = 'Grade',
-bodyshape = 'Type', haircolor = 'Hair Color', 'titssize' : 'Breasts Size', 'penis' : "Penis Size", spec = 'Specialization', level = 'Level',
+bodyshape = 'Type', haircolor = 'Hair Color', 'titssize' : 'Breasts Size', 'penis' : "Penis Size", spec = 'Specialization', level = 'Level', eyecolor = 'Eye Color',
 }
 
 func slavequesttext(quest):
@@ -956,6 +956,8 @@ func slavequesttext(quest):
 			text2 = text2 + 'Origins — ' + str(i[2]) + operators[i[1]]
 		elif i[0] == 'spec':
 			text2 += 'Specialization — ' + globals.jobs.specs[i[2]].name + '\n'
+		elif i[0] == 'eyecolor':
+			text2 += "Eye Color — " + i[2] + '\n'
 		else:
 			text2 = text2 + repeatablesdict[i[0]] + ' — '+ str(i[2]) + operators[i[1]]
 		if i[0] == 'sex':

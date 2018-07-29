@@ -3,7 +3,10 @@ extends Node
 var selectedslave
 
 func ruletoggle(rule):
-	globals.rules[rule] = get_node("TabContainer/Game/"+rule).pressed
+	if rule in ['fadinganimation','spritesindialogues','randomcustomportraits','instantcombatanimation']:
+		globals.rules[rule] = get_node("TabContainer/Settings/"+rule).pressed
+	else:
+		globals.rules[rule] = get_node("TabContainer/Game/"+rule).pressed
 	
 	if rule == 'furry':
 		if (globals.rules['furry'] == false):
@@ -43,10 +46,10 @@ func futaslider(value):
 func _ready():
 	futaslider(globals.rules.futa_chance)
 	maleslider(globals.rules.male_chance)
-	for i in ['furry','furrynipples','futa','futaballs','slaverguildallraces','children','receiving','permadeath','noadults','instantcombatanimation']:
+	for i in ['furry','furrynipples','futa','futaballs','slaverguildallraces','children','receiving','permadeath','noadults']:
 		get_node("TabContainer/Game/" + i).pressed = globals.rules[i]
 		get_node("TabContainer/Game/" + i).connect("pressed", self, 'ruletoggle', [i])
-	for i in ['fadinganimation','spritesindialogues','randomcustomportraits']:
+	for i in ['fadinganimation','spritesindialogues','randomcustomportraits','instantcombatanimation']:
 		get_node("TabContainer/Settings/" + i).pressed = globals.rules[i]
 		get_node("TabContainer/Settings/" + i).connect("pressed", self, 'ruletoggle', [i])
 	get_node("TabContainer/Settings/fullscreen").set_pressed(OS.is_window_fullscreen())
@@ -282,3 +285,7 @@ func _on_screenconf_pressed():
 
 
 
+
+
+func _on_addlearnpoints_pressed():
+	selectedslave.learningpoints += 10

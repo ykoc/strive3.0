@@ -81,6 +81,7 @@ func create(code):
 	if characters.has(code):
 		var slave = globals.newslave(characters[code].basics[0], characters[code].basics[1],characters[code].basics[2],characters[code].basics[3])
 		slave.cleartraits()
+		slave.imagefull = null
 		if slave.age == 'child' && globals.rules.children == false:
 			slave.age = 'teen'
 		for i in characters[code]:

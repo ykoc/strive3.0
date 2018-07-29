@@ -1633,7 +1633,7 @@ func checkifrelatives(person, person2):
 	var result = false
 	var data1 
 	var data2
-	if globals.state.relatives.has(person.id):
+	if globals.state.relativesdata.has(person.id):
 		data1 = globals.state.relativesdata[person.id]
 	else:
 		createrelativesdata(person)

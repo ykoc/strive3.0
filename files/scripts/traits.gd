@@ -512,8 +512,7 @@ var traits = {
       "loyal_max": -65
     },
     "tags": [
-      "secondary",
-      "mental"
+      "secondary"
     ],
     "conflict": [
       ""

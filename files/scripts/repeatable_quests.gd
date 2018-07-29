@@ -34,6 +34,20 @@ static func randhaircolor():
 	text = text[randi()%text.size()]
 	return text
 
+static func randanyhaircolor():
+	var text
+	text = ['red', 'auburn', 'brown', 'black', 'white', 'green', 'purple', 'blue', 'blond', 'red']
+	text = text[randi()%text.size()]
+	return text
+
+static func randanyeyecolor():
+	var text = ['blue', 'green', 'brown', 'hazel', 'black', 'gray', 'purple', 'blue', 'blond', 'red', 'auburn']
+	return text[randi()%text.size()]
+
+static func randskincolor():
+	var text = ['pale', 'fair', 'olive', 'tan', 'brown', 'dark', 'blue', 'purple', 'pale blue', 'green','teal']
+	return text[randi()%text.size()]
+
 static func rarerace():
 	var text
 	text = ['Dragonkin','Harpy','Arachna','Lamia','Nereid','Scylla','Demon','Seraph','Drow','Slime','Fairy']
@@ -44,6 +58,12 @@ func randcombspec():
 	var text
 	text = ['bodyguard', 'assassin', 'ranger']
 	return text[randi()%text.size()]
+
+func randsexspec():
+	var text
+	text = ['nympho', 'geisha','housekeeper']
+	return text[randi()%text.size()]
+
 
 func questarray():
 	var questsarray = {
@@ -276,8 +296,8 @@ func questarray():
 	code = '021',
 	questreq = true,
 	shortdescription = "Skilled Fighter",
-	description = 'A rich local noble seeks for a specific slave suitable for a combat. ',
-	reqs = [['obed','gte', 100]],
+	description = 'A rich local noble seeks for a very capable fighter for unspecified task. ',
+	reqs = [['obed','gte', 100],['origins','gte','commoner']],
 	reqstemp = [['sex', 'eq', randsex()], ['spec', 'eq', randcombspec()], ['level', 'gte', round(rand_range(3,5))]],
 	reqsfunc = ['nobadtraits'],
 	time = round(rand_range(22,30)),
@@ -285,16 +305,42 @@ func questarray():
 	location = ['any'],
 	difficulty = 'hard'
 	},
+	quest022 = {
+	code = '022',
+	questreq = true,
+	shortdescription = "A high grade sex slave",
+	description = 'A detailed note with a list of characteristics for future sex servant and a hefty price. ',
+	reqs = [['obed','gte', 100],['beauty','gte',80], ['charm','gte',80], ['origins','gte','rich'], ['lewdness', 'gte', 65]],
+	reqstemp = [['sex', 'eq', randsex()], ['spec', 'eq', randsexspec()],['age','eq',randage()]],
+	reqsfunc = [],
+	time = round(rand_range(20,35)),
+	reward = round(rand_range(250, 350))*10,
+	location = ['any'],
+	difficulty = 'hard'
+	},
+	quest023 = {
+	code = '023',
+	questreq = true,
+	shortdescription = "An exquisite doll",
+	description = '',
+	reqs = [['obed','gte', 100],['beauty','gte',90], ['cour','lte',20], ['conf','lte',20]],
+	reqstemp = [['sex', 'eq', randsex()],['age','eq',randage()], ['haircolor','eq',randanyhaircolor()], ['eyecolor','eq', randanyeyecolor()]],
+	reqsfunc = [],
+	time = round(rand_range(20,35)),
+	reward = round(rand_range(250, 350))*10,
+	location = ['any'],
+	difficulty = 'hard'
+	},
 	}
 	return questsarray
 
-var reqsfuncdescript = {nobadtraits = 'No Negative Traits.'}
+var reqsfuncdescript = {nobadtraits = 'No Negative Physical Traits.'}
 
 func nobadtraits(person):
 	var result = true
 	
 	for i in person.get_traits():
-		if i.tags.has('detrimental'):
+		if i.tags.has('detrimental') && i.tags.has('physical'):
 			result = false
 	
 	return result

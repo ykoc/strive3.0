@@ -1356,7 +1356,7 @@ func rebuildrepeatablequests():
 		while rand > 0:
 			globals.repeatables.generatequest(town, 'medium')
 			rand -= 1
-		rand = rand_range(0,2)
+		rand = rand_range(0,1)
 		while rand > 0:
 			globals.repeatables.generatequest(town, 'hard')
 			rand -= 1
@@ -3064,7 +3064,7 @@ func selectslavelist(prisoners = false, calledfunction = 'popup', targetnode = s
 			continue
 		if globals.evaluate(reqs) == false:
 			continue
-		if prisoners == false || person.sleep == 'jail' :
+		if prisoners == false && person.sleep == 'jail' :
 			continue
 		array.append(person)
 	for person in array:

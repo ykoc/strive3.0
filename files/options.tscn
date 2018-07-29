@@ -29,7 +29,7 @@ theme = ExtResource( 1 )
 script = ExtResource( 2 )
 _sections_unfolded = [ "Theme", "custom_styles" ]
 
-[node name="TabContainer" type="TabContainer" parent="." index="1"]
+[node name="TabContainer" type="TabContainer" parent="." index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -50,7 +50,6 @@ tabs_visible = true
 
 [node name="Settings" type="Tabs" parent="TabContainer" index="0"]
 
-visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -350,8 +349,36 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
+[node name="instantcombatanimation" type="CheckBox" parent="TabContainer/Settings" index="9"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 17.0
+margin_top = 119.0
+margin_right = 261.0
+margin_bottom = 146.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Show custom character sprites during dialogues?"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Skip combat animation"
+flat = false
+align = 0
+_sections_unfolded = [ "Hint" ]
+
 [node name="Game" type="Tabs" parent="TabContainer" index="1"]
 
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -814,33 +841,6 @@ items = [ "Always", null, false, -1, null, "After Daily Event", null, false, -1,
 selected = 0
 _sections_unfolded = [ "Hint" ]
 
-[node name="instantcombatanimation" type="CheckBox" parent="TabContainer/Game" index="17"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 20.0
-margin_top = 177.0
-margin_right = 264.0
-margin_bottom = 204.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-hint_tooltip = "Show custom character sprites during dialogues?"
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-toggle_mode = true
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Skip combat animation"
-flat = false
-align = 0
-_sections_unfolded = [ "Hint" ]
-
 [node name="Supporter section" type="Tabs" parent="TabContainer" index="2"]
 
 visible = false
@@ -1033,7 +1033,7 @@ resizable = false
 dialog_text = "You are now registered as a supporter! Thank you for helping to make this game greater!"
 dialog_hide_on_ok = true
 
-[node name="Done" type="Button" parent="." index="2"]
+[node name="Done" type="Button" parent="." index="1"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -1058,7 +1058,7 @@ text = "Confirm"
 flat = false
 align = 1
 
-[node name="screenpopup" type="Popup" parent="." index="3"]
+[node name="screenpopup" type="Popup" parent="." index="2"]
 
 visible = false
 anchor_left = 1.0
@@ -1172,9 +1172,8 @@ text = "Cancel"
 flat = false
 align = 1
 
-[node name="cheatpanel" type="Panel" parent="." index="4"]
+[node name="cheatpanel" type="Panel" parent="." index="3"]
 
-visible = false
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -1546,7 +1545,7 @@ text = "Add Skillpoint"
 flat = false
 align = 1
 
-[node name="addlevel" type="Button" parent="cheatpanel" index="14"]
+[node name="addlearnpoints" type="Button" parent="cheatpanel" index="14"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -1556,6 +1555,33 @@ margin_left = 348.0
 margin_top = 349.0
 margin_right = 498.0
 margin_bottom = 389.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Adds 10 learning points"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Add L.Point"
+flat = false
+align = 1
+_sections_unfolded = [ "Hint" ]
+
+[node name="addlevel" type="Button" parent="cheatpanel" index="15"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 348.0
+margin_top = 399.0
+margin_right = 498.0
+margin_bottom = 439.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -1571,7 +1597,7 @@ text = "Add Level"
 flat = false
 align = 1
 
-[node name="levelup" type="Button" parent="cheatpanel" index="15"]
+[node name="levelup" type="Button" parent="cheatpanel" index="16"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -1596,7 +1622,7 @@ text = "Add Skillpoint"
 flat = false
 align = 1
 
-[node name="unlockgallery" type="Button" parent="cheatpanel" index="16"]
+[node name="unlockgallery" type="Button" parent="cheatpanel" index="17"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -1621,7 +1647,7 @@ text = "Fully Unlock Gallery"
 flat = false
 align = 1
 
-[node name="selectedslavelabel" type="Label" parent="cheatpanel" index="17"]
+[node name="selectedslavelabel" type="Label" parent="cheatpanel" index="18"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -1642,7 +1668,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="SpinBox" type="SpinBox" parent="cheatpanel" index="18"]
+[node name="SpinBox" type="SpinBox" parent="cheatpanel" index="19"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -1718,6 +1744,8 @@ suffix = ""
 [connection signal="pressed" from="cheatpanel/nostress" to="." method="_on_nostress_pressed"]
 
 [connection signal="pressed" from="cheatpanel/addskillpoints" to="." method="_on_addskillpoints_pressed"]
+
+[connection signal="pressed" from="cheatpanel/addlearnpoints" to="." method="_on_addlearnpoints_pressed"]
 
 [connection signal="pressed" from="cheatpanel/addlevel" to="." method="_on_addlevel_pressed"]
 
