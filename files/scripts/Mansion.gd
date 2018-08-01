@@ -2,14 +2,14 @@
 extends Node
 
 var test = File.new()
-var testslaverace = ["Human"] #globals.allracesarray
+var testslaverace = ["Slime"] #globals.allracesarray
 var testslaveage = 'random'
 var testslavegender = 'random'
 var testslaveorigin = ['slave','poor','commoner','rich','noble']
 var currentslave = 0 setget currentslave_set
 var selectedslave = -1
 var texture = null
-var startcombatzone = "elvenforest"
+var startcombatzone = "grove"
 var nameportallocation
 var enddayprocess = false
 onready var maintext = '' setget maintext_set, maintext_get
@@ -326,7 +326,8 @@ func _on_new_slave_button_pressed():
 	globals.resources.upgradepoints += 100
 	
 	globals.state.sidequests.brothel = 1
-	globals.state.sidequests.zoe = 5
+	globals.state.sidequests.cali = 27
+	globals.state.upcomingevents.append({code = 'caliproposal', duration = 1})
 	#globals.state.decisions.append('')
 	globals.state.rank = 3
 	globals.state.mainquest = 3
@@ -336,7 +337,7 @@ func _on_new_slave_button_pressed():
 	globals.state.mansionupgrades.mansionlab = 1
 	globals.state.mansionupgrades.mansionalchemy = 1
 	globals.state.mansionupgrades.mansionparlor = 1
-	globals.state.backpack.stackables.torch = 2
+	globals.state.backpack.stackables.teleportseal = 2
 	globals.player.sstr = 1
 	globals.player.send = 5
 	globals.player.stats.agi_max = 5
@@ -348,6 +349,8 @@ func _on_new_slave_button_pressed():
 	#globals.player.relations.b = globals.player.relations.get('b', 0) + 2
 	if true:
 		for i in globals.characters.characters:
+			if globals.characters.characters[i].name != 'Cali':
+				continue
 			person = globals.characters.create(i)
 			person.loyal = 100
 			person.stress = 0
@@ -729,7 +732,7 @@ func _on_end_pressed():
 			elif person.race == 'Orc':
 				slavehealing += 0.15
 			elif person.race == 'Slime':
-				person.toxicity -= 200
+				person.toxicity = 0
 			#Traits
 			if person.traits.has("Uncivilized"):
 				for i in globals.slaves:
@@ -877,7 +880,6 @@ func _on_end_pressed():
 			elif person.sleep == 'your':
 				person.loyal += rand_range(1,4)
 				person.energy += rand_range(25,45)+ person.send*6
-				person.sexuals.affection += round(rand_range(1,2))
 				for i in globals.slaves:
 					if i.sleep == 'your' && i != person:
 						globals.addrelations(person, i, 0)

@@ -869,8 +869,6 @@ func slaveforquestselected(person):
 			ref = globals.sizearray.find(person.titssize)
 		if i[0] == 'penis':
 			ref = globals.genitaliaarray.find(person.penis)
-		if i[0] == 'sexuals.unlocks':
-			ref = person.sexuals.unlocks.size()
 		if i[0] == 'origins':
 			ref = globals.originsarray.find(person.origins)
 			ref2 = globals.originsarray.find(ref2)

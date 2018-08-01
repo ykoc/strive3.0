@@ -173,7 +173,12 @@ func _on_maxlewd_pressed():
 
 
 func _on_maxlust_pressed():
-	selectedslave.lust = 100
+	if $cheatpanel/maxlust.text == "Max Lust":
+		selectedslave.lust = 100
+		$cheatpanel/maxlust.text = "Min Lust"
+	else:
+		selectedslave.lust = 0
+		$cheatpanel/maxlust.text = "Max Lust"
 	_on_cheatpanel_visibility_changed(selectedslave)
 
 

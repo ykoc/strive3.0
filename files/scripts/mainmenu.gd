@@ -21,7 +21,7 @@ func _ready():
 	globals.clearstate()
 	five.sort()
 	ten.sort()
-	text = 'Game design, code and writing: Maverik\nArtist: Warm Tail\nArtist: Demona\n\nSex scenes: NK, Lamoli\n\nWriting and proofreading helpers: Kalderza, Shvan, Xero, Dr. Nobody, Anti-No\n\nPlease contact me if you helped me somewhere and I forgot to mention you.\n\nSpecial notion to all patreons:'
+	text = 'Game design, code and writing: Maverik\nArtist: Warm Tail\nArtist: Demona\n\nSex scenes: NK, Lamoli\n\nWriting and proofreading helpers: Kalderza, Shvan, Xero, Dr. Nobody, Anti-No, Eigniu\n\nPlease contact me if you helped me somewhere and I forgot to mention you.\n\nSpecial notion to all patreons:'
 	text += '\n\n$10+ Supporters: [color=green]'
 	for i in ten:
 		text += i + ', '

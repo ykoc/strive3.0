@@ -1061,12 +1061,13 @@ class person:
 		learningpoints = value
 	
 	func tox_set(value):
-		var difference = stats.tox_cur - value
+		var difference = value - stats.tox_cur
 		stats.tox_cur = clamp(stats.tox_cur + difference*stats.tox_mod, stats.tox_min, stats.tox_max)
 	
 	func energy_set(value):
 		value = round(value)
-		stats.energy_cur = max(min(value*(1 + stats.energy_mod/100), stats.energy_max),0)
+		var difference = value - stats.energy_cur
+		stats.energy_cur = clamp(stats.energy_cur + difference*(1 + stats.energy_mod/100), 0, stats.energy_max)
 		if self == globals.player:
 			globals.resources.energy = 0
 	
@@ -1085,10 +1086,11 @@ class person:
 		stats.charm_base = clamp(value, 0, min(stats.charm_max, originvalue[origins]))
 	
 	func lust_set(value):
-		if value > stats.lust_cur:
-			stats.lust_cur = clamp(value*(1 + stats.lust_mod/100),stats.lust_min,stats.lust_max)
+		var difference = value - stats.lust_cur
+		if difference > 0:
+			stats.lust_cur = clamp(stats.lust_cur + difference*(1 + stats.lust_mod/100),stats.lust_min,stats.lust_max)
 		else:
-			stats.lust_cur = clamp(value,stats.lust_min,stats.lust_max)
+			stats.lust_cur = clamp(stats.lust_cur + difference,stats.lust_min,stats.lust_max)
 	
 	func str_set(value):
 		stats.str_base = min(stats.str_base, stats.str_max)
@@ -1433,12 +1435,6 @@ class person:
 			else:
 				self[key] = dict[key]
 	
-	func unlocksexuals():
-		for i in sexuals.unlocks:
-			var unlock = globals.sexscenes.categories[i]
-			for ii in unlock.actions:
-				if sexuals.actions.has(ii) == false:
-					sexuals.actions[ii] = 0
 
 func addrelations(person, person2, value):
 	if person == player || person2 == player:
@@ -1587,8 +1583,9 @@ func connectrelatives(person1, person2, way):
 				connectrelatives(person2, entry2, 'sibling')
 		entry = globals.state.relativesdata[person2.id]
 		entry[way] = person1.id
-		addrelations(person1, person2, 200)
-		addrelations(person2, person1, 200)
+		if typeof(person1) != TYPE_DICTIONARY && typeof(person2) != TYPE_DICTIONARY:
+			addrelations(person1, person2, 200)
+			addrelations(person2, person1, 200)
 	elif way == 'sibling':
 		var entry = globals.state.relativesdata[person1.id]
 		var entry2 = globals.state.relativesdata[person2.id]
@@ -1604,8 +1601,9 @@ func connectrelatives(person1, person2, way):
 			if !entry2.siblings.has(i) && i != entry2.id:
 				entry2.siblings.append(i)
 		
-		addrelations(person1, person2, 0)
-		addrelations(person2, person1, 0)
+		if typeof(person1) != TYPE_DICTIONARY && typeof(person2) != TYPE_DICTIONARY:
+			addrelations(person1, person2, 0)
+			addrelations(person2, person1, 0)
 
 
 func createrelativesdata(person):
@@ -1638,13 +1636,13 @@ func checkifrelatives(person, person2):
 	else:
 		createrelativesdata(person)
 		data1 = globals.state.relativesdata[person.id]
-	if globals.state.relatives.has(person2.id):
+	if globals.state.relativesdata.has(person2.id):
 		data2 = globals.state.relativesdata[person2.id]
 	else:
 		createrelativesdata(person2)
 		data2 = globals.state.relativesdata[person2.id]
 	for i in ['mother','father']:
-		if data1[i] == data2.id || data2[i] == data1.id:
+		if str(data1[i]) == str(data2.id) || str(data2[i]) == str(data1.id):
 			result = true
 	for i in [data1, data2]:
 		if i.siblings.has(data1.id) || i.siblings.has(data2.id):

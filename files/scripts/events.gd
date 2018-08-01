@@ -1104,13 +1104,18 @@ func caliproposal(stage = 0):
 			cali = i
 	if cali == null:
 		globals.state.sidequests.cali = 100
+		globals.main.close_dialogue()
 		return
-	if cali.vagvirgin == false || cali.loyal <= 50:
+	if cali.vagvirgin == false || cali.loyal <= 50 || (stage == 0 && globals.state.decisions.has('caliproposalseen')):
+		globals.main.close_dialogue()
 		return
 	if cali.away.duration != 0:
+		globals.main.close_dialogue()
 		globals.state.upcomingevents.append({code = 'caliproposal', duration = cali.away.duration})
+		return
 	
 	if stage == 0:
+		globals.state.decisions.append("caliproposalseen")
 		text = textnode.CaliProposal
 		buttons = [["Accept Cali's feelings",'caliproposal',1],['Stay friends','caliproposal',2]]
 		state = false
@@ -1123,17 +1128,13 @@ func caliproposal(stage = 0):
 		globals.charactergallery.cali.nakedunlocked = true
 		if globals.player.penis != 'none':
 			cali.vagvirgin = false
-			#cali.pussy.first = 'you'
-			cali.sexuals.unlocks.append("vaginal")
 			cali.metrics.vag += 1
 			text += textnode.CaliProposalSexMale
 		cali.loyal += 25
 		cali.obed += 50
-		cali.sexuals.unlocked = true
 		cali.metrics.sex += 1
 		cali.metrics.orgasm += 1
 		cali.metrics.partners.append(globals.player.id)
-		cali.unlocksexuals()
 		globals.state.decisions.append("calilove")
 	elif stage == 2:
 		sprite = [['calineutral','pos1']]
@@ -1224,7 +1225,6 @@ func calibar1(value):
 		if globals.state.sidequests.calibarsex == 'agreed':
 			text = textnode.CaliBarFuckWilling
 			globals.state.sidequests.calibarsex = 'liked'
-			cali.sexuals.affection += round(rand_range(3,5))
 			cali.metrics.sex += 1
 			cali.metrics.vag += 1
 			cali.metrics.randompartners += 1
@@ -1592,7 +1592,7 @@ func calibadend(choice):
 	elif choice == 3:
 		if cali.loyal >= 50:
 			cali.obed += 100
-			cali.sexuals.affection = 1000
+			cali.lewdness = 50
 			globals.state.decisions.append('calibadstayed')
 			for i in ['cour','conf','wit','charm']:
 				cali[i] = 0
@@ -1759,8 +1759,6 @@ func emilymansion(stage = 0):
 		text = textnode.EmilyShowerSex
 		sprite = [['emilynakedhappy','pos1']]
 		emily.consent = true
-		emily.sexuals.unlocks.append('vaginal')
-		emily.sexuals.unlocks.append('petting')
 		emily.tags.erase('nosex')
 		emily.vagvirgin = false
 		emily.metrics.orgasm += 1
@@ -2195,10 +2193,6 @@ func tishagornguild(stage = 0):
 		emily.relations[person.id] = 250
 		person.relations[emily.id] = 500
 		person.consent = true
-		person.sexuals.unlocks.append('petting')
-		person.sexuals.unlocks.append('oral')
-		person.sexuals.unlocks.append('vaginal')
-		person.unlocksexuals()
 		person.add_trait("Grateful")
 		person.obed += 90
 		person.loyal += 15
@@ -2430,7 +2424,7 @@ func chloevillage(stage = 0):
 		text = textnode.ChloeTakeSelf
 		var chloe = globals.characters.create("Chloe")
 		chloe.loyal += 25
-		chloe.sexuals.affection += 250
+		chloe.lewdness = 100
 		chloe.add_trait('Sex-crazed')
 		sprite = [['chloehappy2', 'pos1']]
 		globals.slaves = chloe

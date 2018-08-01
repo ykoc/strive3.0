@@ -4,7 +4,7 @@
 [ext_resource path="res://files/scripts/options.tres.gd" type="Script" id=2]
 [ext_resource path="res://files/theme slavetab.tres" type="Theme" id=3]
 
-[sub_resource type="StreamTexture" id=118]
+[sub_resource type="StreamTexture" id=1]
 
 flags = 4
 load_path = "res://.import/2.png-4cf966d13a2c7ebfca9f08501bafd5bd.stex"
@@ -84,7 +84,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = SubResource( 118 )
+texture = SubResource( 1 )
 expand = true
 stretch_mode = 0
 _sections_unfolded = [ "Rect" ]
@@ -413,7 +413,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = SubResource( 118 )
+texture = SubResource( 1 )
 expand = true
 stretch_mode = 0
 
@@ -878,7 +878,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = SubResource( 118 )
+texture = SubResource( 1 )
 expand = true
 stretch_mode = 0
 
@@ -1174,6 +1174,7 @@ align = 1
 
 [node name="cheatpanel" type="Panel" parent="." index="3"]
 
+visible = false
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
