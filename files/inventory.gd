@@ -67,7 +67,7 @@ func selectcategory(button):
 
 func categoryitems():
 	for i in get_node("ScrollContainer/GridContainer/").get_children():
-		if (categories.everything == true && i.get_name() != 'Button' )|| (i.has_meta('category') && categories[i.get_meta('category')] == true):
+		if (categories.everything == true && i.get_name() != 'Button' )|| (i.has_meta('category') && i.get_meta('category') != 'quest' && categories[i.get_meta('category')] == true):
 			i.visible = true
 		else:
 			i.visible = false

@@ -725,6 +725,19 @@ var traits = {
       ""
     ]    
   },
+  "Experimenter": {
+    "name": "Experimenter",
+    "description": "[color=aqua]Produces a random potion once in a while[/color]",
+    "effect": {
+      
+    },
+    "tags": [
+      "secondary",
+    ],
+    "conflict": [
+      ""
+    ]    
+  },
   "Grateful": {
     "name": "Grateful",
     "description": "Due to your actions, $name will overlook certain hardships willing to stick close to you.\n\n [color=aqua]No luxury requirements. [/color]",

@@ -12,6 +12,20 @@ func spellsynchronize():
 			print('spellsynchroned')
 
 var spelllist = {
+#mindread = { Spell entry
+#	code = 'mindread', # spell entry reference
+#	name = 'Mind Reading', # Displayed name
+#	description = 'Enhances your mind to be more cunning towards others. Allows to get accurate information about other characters. ', #description
+#	effect = 'mindreadeffect', #effect called on activation
+#	manacost = 3, #mana cost
+#	req = 0, #requirements (mansion alchemy upgrade)
+#	price = 100, #gold cost to learn
+#	personal = true, #can be used on another slave
+#	combat = true, #has a corresponding combat ability
+#	learned = false, #when learned, will be saved and loaded
+#	type = 'control', #category
+#	flavor = "Bonus description",
+#	},
 mindread = {
 	code = 'mindread',
 	name = 'Mind Reading',

@@ -5435,7 +5435,6 @@ _sections_unfolded = [ "Rect" ]
 "blockmaininput",
 ]]
 
-editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -5808,7 +5807,6 @@ __meta__ = {
 
 [node name="ScrollContainer" type="ScrollContainer" parent="shoppanel/inventory" index="7"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -5885,7 +5883,7 @@ margin_right = 80.0
 margin_bottom = 79.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
-mouse_filter = 0
+mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
@@ -6043,7 +6041,6 @@ _sections_unfolded = [ "Hint", "Rect" ]
 
 [node name="ScrollContainer2" type="ScrollContainer" parent="shoppanel/inventory" index="8"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -6120,7 +6117,7 @@ margin_right = 80.0
 margin_bottom = 79.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
-mouse_filter = 0
+mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2

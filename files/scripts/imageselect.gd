@@ -152,6 +152,8 @@ func _on_reverseportrait_pressed():
 			person.imageportait = globals.characters.characters.Ayneris.imageportait
 		elif person.unique == 'Melissa':
 			person.imageportait = globals.characters.characters.Melissa.imageportait
+		elif person.unique == 'Ayda':
+			person.imageportait = globals.characters.characters.Ayda.imageportait
 		self.visible = false
 		person.imagefull = null
 		updatepage()

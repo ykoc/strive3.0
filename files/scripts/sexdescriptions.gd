@@ -773,7 +773,7 @@ func partner(group):
 		if mp.height in ['petite','shortstack']:
 			array1 += ["tiny","small","little","pint-sized","diminutive"]
 		elif mp.height in ['tall', 'towering']:
-			array1 += ["giant","huge","large","big","tall"]
+			array1 += ["giant","large","big","tall"]
 		#personality
 		if mp.charm > 60:
 			if mp.age in ['child','teen']:

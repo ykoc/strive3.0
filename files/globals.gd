@@ -11,6 +11,7 @@ var gameloaded = false
 
 
 var resources = resource.new()
+var questtext = load("res://files/scripts/questtext.gd").new()
 var slavegen = load("res://files/scripts/slavegen.gd").new()
 var assets = load("res://files/scripts/assets.gd").new()
 var constructor = load("res://files/scripts/characters/constructor.gd").new()
@@ -27,7 +28,6 @@ var items = load("res://files/scripts/items.gd").new()
 var spells = load("res://files/scripts/spells.gd").new()
 var spelldict = spells.spelllist
 var itemdict = items.itemlist
-var questtext = events.textnode
 var racefile = load("res://files/scripts/characters/races.gd").new()
 var races = racefile.races
 var names = racefile.names
@@ -40,7 +40,6 @@ var characters = gallery
 var patronlist = load("res://files/scripts/patronlists.gd").new()
 
 
-var modsfile = load("res://mods/init.gd").new()
 var main
 
 var slaves = [] setget slaves_set
@@ -84,62 +83,8 @@ fall = load("res://files/sounds/fall.wav"),
 page = load("res://files/sounds/page.wav"),
 attack = load("res://files/sounds/normalattack.wav"),
 }
-var backgrounds = {
-mansion = load("res://files/backgrounds/mansion.png"),
-jail = load("res://files/backgrounds/jail.png"),
-alchemy0 = load("res://files/backgrounds/alchemy0.png"),
-alchemy1 = load("res://files/backgrounds/alchemy1.png"),
-alchemy2 = load("res://files/backgrounds/alchemy2.png"),
-wimborn = load("res://files/backgrounds/town.png"),
-mageorder = load("res://files/backgrounds/mageorder.png"),
-slaverguild = load("res://files/backgrounds/slaveguild.png"),
-market = load("res://files/backgrounds/market.jpg"),
-library1 = load("res://files/backgrounds/library1.png"),
-library2 = load("res://files/backgrounds/library2.png"),
-forest = load("res://files/backgrounds/forest.jpg"),
-shaliq = load("res://files/backgrounds/shaliq.png"),
-crossroads = load("res://files/backgrounds/crossroads.png"),
-grove = load("res://files/backgrounds/grove.jpg"),
-highlands = load("res://files/backgrounds/highlands.jpg"),
-marsh = load("res://files/backgrounds/marsh.jpg"),
-meadows = load("res://files/backgrounds/meadows.png"),
-sea = load("res://files/backgrounds/sea.jpg"),
-lab = load("res://files/backgrounds/laboratory.png"),
-gorn = load("res://files/backgrounds/gorn.png"),
-frostford = load("res://files/backgrounds/frostford.png"),
-mountains = load("res://files/backgrounds/mountains.jpg"),
-borealforest = load("res://files/backgrounds/borealforest.jpg"),
-amberguard = load("res://files/backgrounds/amberguard.png"),
-amberroad = load("res://files/backgrounds/amberroad.png"),
-undercity = load("res://files/backgrounds/undercity.png"),
-tunnels = load("res://files/backgrounds/tunnels.png"),
-mainorder = load("res://files/backgrounds/mainorder.png"),
-mainorderfinale = load("res://files/backgrounds/mainorderfinale.png"),
-umbra = load("res://files/backgrounds/umbra.png"),
-nightdesert = load("res://files/backgrounds/nightdesert.jpeg"),
-brothel = load("res://files/backgrounds/brothel.png"),
-}
-var scenes = {
-finale = load("res://files/images/scene/finale.png"),
-finale2 = load("res://files/images/scene/finale2.png"),
-emilyshower = load("res://files/images/sexscenes/emilyshower.png"),
-emilyshowerrape = load("res://files/images/sexscenes/emilyshowerrape.png"),
-tishabj = load("res://files/images/sexscenes/tishabj.png"),
-tishafinale = load("res://files/images/sexscenes/tishafinale.png"),
-tishatable = load("res://files/images/sexscenes/tishatable.png"),
-tishaemily = load("res://files/images/sexscenes/tishaemily.png"),
-calisex = load("res://files/images/sexscenes/calisex.png"),
-aynerispunish = load("res://files/images/sexscenes/aynerispunish.png"),
-aynerissex = load("res://files/images/sexscenes/aynerissex.png"),
-chloebj = load("res://files/images/sexscenes/chloebj.png"),
-chloewoods = load("res://files/images/sexscenes/chloewoods.png"),
-maplebj = load("res://files/images/sexscenes/maplebj.png"),
-maplesex = load("res://files/images/sexscenes/maplesex.png"),
-yrisbj = load("res://files/images/sexscenes/yrisbj.png"),
-yrissex = load("res://files/images/sexscenes/yrissex.png"),
-zoetentacle1 = load("res://files/images/sexscenes/zoetentacle.png"),
-zoetentacle2 = load("res://files/images/sexscenes/zoetentacle2.png"),
-}
+var backgrounds = gallery.backgrounds
+var scenes = gallery.scenes
 var mansionupgradesdict = mansionupgrades.dict
 var gradeimages = {
 slave = load("res://files/buttons/mainscreen/40.png"),
@@ -185,13 +130,13 @@ func _init():
 	randomize()
 	loadsettings()
 	effectdict = effects.effectlist 
-	var tempvars = load("res://mods/variables.gd").duplicate()
-	var tempnode = Node.new()
-	tempnode.set_script(tempvars)
-	for i in variables.list:
-		if tempnode.get(i) != null:
-			variables[i] = tempnode[i]
-	tempnode.queue_free()
+#	var tempvars = load("res://mods/variables.gd").duplicate()
+#	var tempnode = Node.new()
+#	tempnode.set_script(tempvars)
+#	for i in variables.list:
+#		if tempnode.get(i) != null:
+#			variables[i] = tempnode[i]
+#	tempnode.queue_free()
 	
 	if variables.oldemily == true:
 		for i in ["emilyhappy", "emilynormal","emily2normal","emily2happy","emily2worried","emilynakedhappy","emilynakedneutral"]:
@@ -904,8 +849,8 @@ class person:
 	
 	func cleartraits():
 		spec = null
-		for i in traits:
-			trait_remove(i)
+		while !traits.empty():
+			trait_remove(traits.back())
 		for i in ['str_base','agi_base', 'maf_base', 'end_base']:
 			stats[i] = 0
 		skillpoints = 2
@@ -1424,6 +1369,22 @@ class person:
 			var baby = globals.state.findbaby(preg.baby)
 			preg.baby = null
 			baby.death()
+	
+	func checksex():
+		var male = false
+		var female = false
+		
+		if penis != 'none':
+			male = true
+		if vagina != 'none':
+			female = true
+		
+		if male && female:
+			return 'futanari'
+		elif male:
+			return 'male'
+		else:
+			return 'female'
 	
 	func fetch(dict):
 		for key in dict:

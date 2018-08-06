@@ -39,6 +39,7 @@ func _ready():
 	rebuildrepeatablequests()
 	globals.main = self
 	globals.resources.panel = get_node("ResourcePanel")
+	globals.events.textnode = globals.questtext
 	if debug == true:
 		globals.player = globals.newslave('Human', 'teen', 'male')
 		globals.player.ability.append('escape')
@@ -324,13 +325,12 @@ func _on_new_slave_button_pressed():
 	globals.player.energy += 100
 	globals.player.xp += 50
 	globals.resources.upgradepoints += 100
-	
+	globals.state.mainquest = 42
 	globals.state.sidequests.brothel = 1
-	globals.state.sidequests.cali = 27
+	globals.state.sidequests.ayda = 15
 	globals.state.upcomingevents.append({code = 'caliproposal', duration = 1})
 	#globals.state.decisions.append('')
 	globals.state.rank = 3
-	globals.state.mainquest = 3
 	#globals.state.plotsceneseen = ['garthorscene','hade1','hade2','frostfordscene']#,'slaverguild']
 	globals.resources.mana = 200
 	globals.state.farm = 3
@@ -344,13 +344,11 @@ func _on_new_slave_button_pressed():
 	globals.player.sagi = 1
 	globals.state.reputation.frostford = 50
 	globals.state.condition -= 100
-	globals.state.decisions = ['tishaemilytricked','chloebrothel','ivrantaken','goodroute']
+	globals.state.decisions = ['tishaemilytricked','chloebrothel','ivrantaken','goodroute','mainquestelves']
 	#globals.player.relations.a = 1
 	#globals.player.relations.b = globals.player.relations.get('b', 0) + 2
 	if true:
 		for i in globals.characters.characters:
-			if globals.characters.characters[i].name != 'Cali':
-				continue
 			person = globals.characters.create(i)
 			person.loyal = 100
 			person.stress = 0
@@ -768,6 +766,14 @@ func _on_end_pressed():
 				for i in globals.slaves:
 					if i.away.duration == 0 && i != person && i.level < 3:
 						i.xp += 5
+			if person.traits.has("Experimenter") && randf() >= 0.8:
+				var array = []
+				for i in globals.itemdict.values():
+					if i.type == 'potion':
+						array.append(i.code)
+				array = globals.itemdict[array[randi()%array.size()]]
+				array.amount += 1
+				text0.bbcode_text += person.dictionary("$name has produced [color=aqua]1 " + array.name + '[/color]\n')
 			#Rules and clothes effect
 			if person.rules.contraception == true:
 				if !person.effects.has("contraceptive"):
@@ -1491,7 +1497,11 @@ func scene(target, image, scenetext, scenebuttons = null):
 	get_node("scene").show()
 	get_node("infotext").hide()
 	get_node("scene/Panel/sceneeffects").set_texture(null)
-	get_node("scene/Panel/scenepicture").set_normal_texture(globals.scenes[image])
+	
+	if globals.scenes.has(image):
+		get_node("scene/Panel/scenepicture").set_normal_texture(globals.scenes[image])
+	else:
+		$scene/Panel/scenepicture.set_normal_texture(null)
 	get_node("scene/textpanel/scenetext").set_bbcode(globals.player.dictionary(scenetext))
 	get_node("scene/resources/gold").set_text(str(globals.resources.gold))
 	get_node("scene/resources/food").set_text(str(globals.resources.food))
@@ -2279,6 +2289,18 @@ var zoequestdict = {
 "4":"Deliver to Zoe 10 Teleport Seals, 5 Magic Essences, 5 Tainted Essences.",
 	
 }
+var aydaquestdict = {
+	"5": "Visit Ayda at her shop in Gorn",
+	"7": "Visit Ayda's shop to find out more about her",
+	"8": "Find an Ice Brandy for Ayda",
+	"9": "Talk to Ayda",
+	"10": "Visit Ayda's shop to find out what else you can do for her",
+	"11": "Find book ‘Fairies and Their Many Uses’",
+	"12": "Talk to Ayda",
+	"13": "Visit Ayda's shop",
+	"14": "Find the Ayda's necklace around Gorn.",
+	"15": "Talk to Ayda",
+}
 var questtype = {slaverequest = 'Slave Request'}
 var selectedrepeatable
 
@@ -2304,6 +2326,8 @@ func _on_questnode_visibility_changed():
 		sidetext.set_bbcode(sidetext.get_bbcode() + "—"+ emilyquestdict[str(globals.state.sidequests.emily)]+"\n\n")
 	if yrisquestdict.has(str(globals.state.sidequests.yris)):
 		sidetext.set_bbcode(sidetext.get_bbcode() + "—"+ yrisquestdict[str(globals.state.sidequests.yris)]+"\n\n")
+	if aydaquestdict.has(str(globals.state.sidequests.ayda)):
+		sidetext.set_bbcode(sidetext.get_bbcode() + "—"+ aydaquestdict[str(globals.state.sidequests.ayda)]+"\n\n")
 	#repeatables
 	for i in get_node("questnode/TabContainer/Repeatable Quests/ScrollContainer/VBoxContainer").get_children():
 		if i != get_node("questnode/TabContainer/Repeatable Quests/ScrollContainer/VBoxContainer/Button"):

@@ -1643,7 +1643,7 @@ func shopinitiate(shopname):
 func shopbuy():
 	$shoppanel/inventory.merchantitems = currentshop.items
 	$shoppanel/inventory.open()
-	if currentshop.has('sprite'):
+	if currentshop.has('sprite') && currentshop.sprite != null:
 		$shoppanel/inventory/merchant.texture = globals.spritedict[currentshop.sprite]
 	else:
 		$shoppanel/inventory/merchant.texture = null
@@ -1651,7 +1651,7 @@ func shopbuy():
 
 func shopclose():
 	get_node("shoppanel").visible = false
-	if currentshop.has('sprite'):
+	if currentshop.has('sprite') && currentshop.code != 'aydashop':
 		get_parent().nodefade($charactersprite, 0.3)
 
 ####QUESTS

@@ -231,17 +231,7 @@ func _on_spellusebutton_pressed():
 
 
 
-onready var nakedspritesdict = {
-	Cali = {cons = 'calinakedhappy', rape = 'calinakedsad', clothcons = 'calineutral', clothrape = 'calisad'},
-	Tisha = {cons = 'tishanakedhappy', rape = 'tishanakedneutral', clothcons = 'tishahappy', clothrape = 'tishaneutral'},
-	Emily = {cons = 'emilynakedhappy', rape = 'emilynakedneutral', clothcons = 'emily2happy', clothrape = 'emily2worried'},
-	Chloe = {cons = 'chloenakedhappy', rape = 'chloenakedneutral', clothcons = 'chloehappy2', clothrape = 'chloeneutral2'},
-	Maple = {cons = 'fairynaked', rape = 'fairynaked', clothcons = 'fairy', clothrape = 'fairy'},
-	Yris = {cons = 'yrisnormalnaked', rape = 'yrisshocknaked', clothcons = 'yrisnormal', clothrape = 'yrisshock'},
-	Ayneris = {cons = 'aynerisneutralnaked', rape = 'aynerisangrynaked', clothcons = 'aynerisneutral', clothrape = 'aynerisangry'},
-	Zoe = {cons = "zoehappynaked", rape = 'zoesadnaked', clothcons = 'zoehappy', clothrape = 'zoesad'},
-	Melissa = {cons = "melissanakedfriendly", rape = 'melissanakedneutral', clothcons = 'melissafriendly', clothrape = 'melissaneutral'},
-	}
+var nakedspritesdict = globals.gallery.nakedsprites
 
 func _on_talk_pressed(mode = 'talk'):
 	var state = true
@@ -250,6 +240,9 @@ func _on_talk_pressed(mode = 'talk'):
 	var text = ''
 	if person.unique == 'Cali' && globals.state.sidequests.cali in [12,13,22]:
 		globals.events.calitalk0()
+		return
+	elif person.unique == 'Ayda' && globals.state.sidequests.ayda in [9,12,15]:
+		globals.events.aydapersonaltalk()
 		return
 	if nakedspritesdict.has(person.unique):
 		if person.obed >= 50 || person.stress < 10:

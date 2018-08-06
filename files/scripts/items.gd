@@ -1022,6 +1022,93 @@ zoebook = {
 },
 }
 
+var recipeaphrodisiac = {
+basicsolutioning = 1,
+taintedessenceing = 1,
+bestialessenceing = 1,
+}
+
+var recipehairgrowth = {
+basicsolutioning = 1,
+natureessenceing = 1,
+bestialessenceing = 1
+}
+
+var recipematuringpot = {
+majoruspot = 1,
+magicessenceing = 2,
+natureessenceing = 1
+}
+
+var recipeyouthingpot = {
+minoruspot = 1,
+magicessenceing = 2,
+basicsolutioning = 2
+}
+
+var recipeminoruspot = {
+basicsolutioning = 1,
+taintedessenceing = 2,
+fluidsubstanceing = 1
+}
+
+var recipemajoruspot = {
+basicsolutioning = 1,
+bestialessenceing = 2,
+natureessenceing = 1
+}
+
+var recipeamnesiapot = {
+basicsolutioning = 1,
+fluidsubstanceing = 1,
+taintedessenceing = 1
+}
+
+var recipeoblivionpot = {
+amnesiapot = 1,
+magicessenceing = 1,
+fluidsubstanceing = 2
+}
+
+var recipelactationpot = {
+basicsolutioning = 1,
+bestialessenceing = 2,
+natureessenceing = 1
+}
+
+var recipestimulantpot = {
+basicsolutioning = 1,
+fluidsubstanceing = 1,
+natureessenceing = 1
+}
+var recipedeterrentpot = {
+basicsolutioning = 1,
+fluidsubstanceing = 1,
+taintedessenceing = 1
+}
+
+var recipemiscariagepot = {
+basicsolutioning = 1,
+taintedessenceing = 2
+}
+
+var reciperegressionpot = {
+basicsolutioning = 2,
+amnesiapot = 1,
+youthingpot = 1
+}
+var recipeaphroditebrew = {
+aphrodisiac = 2,
+stimulantpot = 1,
+taintedessenceing = 2
+}
+var recipeclaritypot = {
+oblivionpot = 1,
+regressionpot = 1,
+}
+
+
+
 func armor(value):
 	person.stats.armor_cur += value
 
@@ -1408,90 +1495,6 @@ func recipemake(item):
 		item.amount += 1
 
 
-var recipeaphrodisiac = {
-basicsolutioning = 1,
-taintedessenceing = 1,
-bestialessenceing = 1,
-}
-
-var recipehairgrowth = {
-basicsolutioning = 1,
-natureessenceing = 1,
-bestialessenceing = 1
-}
-
-var recipematuringpot = {
-majoruspot = 1,
-magicessenceing = 2,
-natureessenceing = 1
-}
-
-var recipeyouthingpot = {
-minoruspot = 1,
-magicessenceing = 2,
-basicsolutioning = 2
-}
-
-var recipeminoruspot = {
-basicsolutioning = 1,
-taintedessenceing = 2,
-fluidsubstanceing = 1
-}
-
-var recipemajoruspot = {
-basicsolutioning = 1,
-bestialessenceing = 2,
-natureessenceing = 1
-}
-
-var recipeamnesiapot = {
-basicsolutioning = 1,
-fluidsubstanceing = 1,
-taintedessenceing = 1
-}
-
-var recipeoblivionpot = {
-amnesiapot = 1,
-magicessenceing = 1,
-fluidsubstanceing = 2
-}
-
-var recipelactationpot = {
-basicsolutioning = 1,
-bestialessenceing = 2,
-natureessenceing = 1
-}
-
-var recipestimulantpot = {
-basicsolutioning = 1,
-fluidsubstanceing = 1,
-natureessenceing = 1
-}
-var recipedeterrentpot = {
-basicsolutioning = 1,
-fluidsubstanceing = 1,
-taintedessenceing = 1
-}
-
-var recipemiscariagepot = {
-basicsolutioning = 1,
-taintedessenceing = 2
-}
-
-var reciperegressionpot = {
-basicsolutioning = 2,
-amnesiapot = 1,
-youthingpot = 1
-}
-var recipeaphroditebrew = {
-aphrodisiac = 2,
-stimulantpot = 1,
-taintedessenceing = 2
-}
-var recipeclaritypot = {
-oblivionpot = 1,
-regressionpot = 1,
-}
 #unstackable item management
 
 var backpack = false

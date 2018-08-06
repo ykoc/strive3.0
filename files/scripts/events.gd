@@ -1,6 +1,6 @@
 extends Node
 
-var textnode = load('res://files/scripts/questtext.gd').new()
+onready var textnode = globals.questtext
 var emilystate = 0
 var outside
 #Mainquests
@@ -324,115 +324,6 @@ func gornivranwin():
 func gornwaitday():
 	globals.state.mainquest = 15
 
-func gornayda():
-	var text = ''
-	var state = true
-	var sprite
-	var buttons = []
-	if globals.state.mainquest < 37 || globals.state.mainquestcomplete && globals.state.decisions.has("mainquestelves"):
-		outside.setcharacter('aydanormal')
-		if globals.state.mainquest == 15 && !globals.state.sidequests.ivran in ['tobealtered','potionreceived']:
-			text = textnode.MainQuestGornAydaIvran
-			state = false
-			buttons = [{name = 'Accept', function = 'gornaydaivran', args = 1}, {name = 'Reject',function = 'gornaydaivran', args = 2}]
-		elif globals.state.mainquest == 15 && globals.state.sidequests.ivran == 'tobealtered':
-			text = "Ayda asked you to provide her with someone of high magic affinity. "
-			buttons = [{name = 'Select', function = 'gornaydaselect'}]
-		else:
-			if globals.state.sidequests.ayda == 0:
-				text = textnode.MainQuestGornAydaFirstMeet
-				globals.state.sidequests.ayda = 1
-			else:
-				text = textnode.GornAydaReturn
-			if globals.state.sidequests.ayda == 1:
-				buttons.append({name = 'Ask Ayda about herself', function = 'gornaydatalk', args = 1})
-			elif globals.state.sidequests.ayda == 2:
-				buttons.append({name = 'Ask Ayda about monster races',function = 'gornaydatalk', args = 2})
-	
-			elif globals.state.sidequests.ayda >= 3:
-				buttons.append({name = "See Ayda's assortments", function = 'aydashop'})
-		if globals.state.sidequests.yris == 4:
-			buttons.append({name = "Ask about the found ointment", function = "gornaydatalk", args = 3})
-		if state == true:
-			buttons.append({name = "Leave", function = 'leaveayda'})
-		outside.get_node("charactersprite").visible = true
-		globals.main.maintext = globals.player.dictionary(text)
-		outside.buildbuttons(buttons, self)
-	elif globals.state.mainquest == 38:
-		text = textnode.MainQuestFinaleAydaShop
-		globals.state.mainquest = 39
-		globals.main.dialogue(true, self, text, buttons, sprite)
-	else:
-		text = "You try to enter Ayda's shop but she does not appear to be around. "
-		globals.main.dialogue(true, self, text, buttons, sprite)
-	
-
-func leaveayda():
-	outside.togorn()
-	globals.main.exploration.zoneenter('gorn')
-
-func aydashop():
-	outside.shopinitiate("aydashop")
-
-func gornaydatalk(stage = 0):
-	var text = ''
-	var buttons = []
-	outside.setcharacter('aydanormal2')
-	if stage == 1:
-		text = textnode.GornAydaTalk
-		globals.state.sidequests.ayda = 2
-	elif stage == 2:
-		text = textnode.GornAydaTalkMonsters
-		globals.state.sidequests.ayda = 3
-	elif stage == 3:
-		text = textnode.GornYrisAydaReport
-		globals.state.sidequests.yris += 1
-	
-	buttons.append({name = "Continue", function = "gornayda"})
-	
-	globals.main.maintext = globals.player.dictionary(text)
-	outside.buildbuttons(buttons, self)
-
-
-func gornaydaselect(person = null):
-	var text
-	var state = true
-	var sprite
-	var buttons = []
-	if person == null:
-		globals.main.selectslavelist(true, 'gornaydaselect', self, 'globals.currentslave.smaf >= 4')
-	else:
-		text = textnode.MainQuestGornAydaIvranReturn
-		globals.state.sidequests.ayda = 1
-		person.away.duration = 15
-		person.away.at = 'away'
-		globals.state.sidequests.ivran = 'potionreceived'
-		buttons.append({name = "Continue", function = "gornayda"})
-		globals.main.maintext = globals.player.dictionary(text)
-		outside.buildbuttons(buttons, self)
-		#globals.main.dialogue(state, self, text, buttons, sprite)
-	
-
-func gornaydaivran(stage = 0):
-	var text
-	var sprite
-	var buttons = []
-	var state = true
-	if stage == 0:
-		text = textnode.MainQuestGornAydaIvran
-		state = false
-		buttons = [['Accept','gornaydaivran',1], ['Reject','gornaydainvran',2]]
-	elif stage == 1:
-		text = textnode.MainQuestGornAydaIvranAccept
-		globals.state.sidequests.ivran = 'tobealtered'
-	elif stage == 2:
-		text = textnode.MainQuestGornAydaIvranReject
-	
-	buttons.append({name = "Continue", function = "gornayda"})
-	globals.main.maintext = globals.player.dictionary(text)
-	outside.buildbuttons(buttons, self)
-	#globals.main.dialogue(state, self, text, buttons, sprite)
-
 
 func undercitybosswin():
 	var reward
@@ -713,6 +604,7 @@ func mountainelfcamp(stage = 0):
 		globals.state.mainquest = 40
 		globals.state.decisions.append("mainquestelves")
 		closedialogue()
+		globals.state.sidequests.ayda = 5
 		globals.main.exploration.buildenemies("finaleslavers")
 		globals.main.exploration.launchonwin = 'mountainwin'
 		globals.main.get_node("combat").nocaptures = true
@@ -721,6 +613,7 @@ func mountainelfcamp(stage = 0):
 	elif stage == 2:
 		globals.state.mainquest = 40
 		globals.state.decisions.append("mainquestslavers")
+		globals.state.sidequests.ayda = 100
 		closedialogue()
 		globals.main.exploration.buildenemies("finaleelves")
 		globals.main.exploration.launchonwin = 'mountainwin'
@@ -2848,3 +2741,59 @@ func zoepassitems(stage = 0):
 	else:
 		globals.main.scene(self, image, text, buttons)
 
+func aydatimepass():
+	globals.state.sidequests.ayda = 7
+
+func aydapersonaltalk():
+	var state = true
+	var text
+	var buttons = []
+	var sprites = [['aydanormal','pos1','opac']]
+	
+	var ayda
+	for i in globals.slaves:
+		if i.unique == 'Ayda':
+			ayda = i
+	
+	match globals.state.sidequests.ayda:
+		9:
+			text = textnode.aydareturn1
+			ayda.loyal += 5
+			ayda.obed += 10
+			globals.state.sidequests.ayda = 10
+		12:
+			ayda.loyal += 10
+			ayda.obed += 20
+			text = textnode.aydareturn2
+			globals.state.sidequests.ayda = 13
+		15:
+			ayda.loyal += 25
+			ayda.tags.erase('nosex')
+			text = textnode.aydareturn3
+			globals.state.sidequests.ayda = 16
+			state = false
+			buttons = [{text = 'Embrace',function = 'aydasex',args = 1},{text = 'Reject',function = 'aydasex',args = 2}]
+	
+	globals.main.dialogue(state, self, text, buttons, sprites)
+
+func aydasex(stage):
+	var state = true
+	var text
+	var buttons = []
+	var sprites = [['aydanormal','pos1']]
+	var image = 'aydasex'
+	if stage == 1:
+		text = textnode.aydasexscene1
+		buttons = [{text = "Continue", function = 'aydasex', args = 3}]
+	elif stage == 2:
+		text = textnode.aydesexrefuse
+	elif stage == 3:
+		text = textnode.aydasexscene2
+		closedialogue()
+		buttons = [{text = "Close", function = 'closescene'}]
+	
+	if stage != 2:
+		globals.main.scene(self, image, text, buttons)
+	else:
+		globals.main.dialogue(state, self, text, buttons, sprites)
+		

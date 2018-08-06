@@ -439,7 +439,27 @@ func ayda():
 		dict.spriteblack = true
 	return dict
 
-
+func aydapersonaltalk():
+	var text = ''
+	var state = true
+	var sprite = [['aydanormal','pos1','opac']]
+	var buttons = []
+	
+	match globals.state.sidequests.ayda:
+		9:
+			text = textnode.aydareturn1
+			globals.state.sidequests.ayda = 10
+		12:
+			text = textnode.aydareturn2
+			globals.state.sidequests.ayda = 13
+		15:
+			text = textnode.aydareturn3
+			globals.state.sidequests.ayda = 16
+	
+	if globals.state.sidequests.ayda == 15:
+		globals.main.scene(self, 'aydascene', text, buttons)
+	else:
+		globals.main.dialogue(state, self, text, buttons, sprite)
 
 
 

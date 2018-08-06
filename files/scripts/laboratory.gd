@@ -639,6 +639,7 @@ func _on_labconfirm_pressed():
 			person.vagina = 'normal'
 			person.vagvirgin = false
 			person.preg.has_womb = true
+		person.checksex()
 	elif operation.type == 'custom' && operation.code == 'tits':
 		if result == 'developtits':
 			person.titsextradeveloped = true

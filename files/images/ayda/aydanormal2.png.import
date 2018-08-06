@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/aydanormal.png-8eabceee5c6f63250e025aca564d8c4d.stex"
+path="res://.import/aydanormal2.png-760f7b2e5b4010eb8d10398cb01b320f.stex"
 
 [deps]
 
-source_file="res://files/images/aydanormal.png"
-dest_files=[ "res://.import/aydanormal.png-8eabceee5c6f63250e025aca564d8c4d.stex" ]
+source_file="res://files/images/ayda/aydanormal2.png"
+dest_files=[ "res://.import/aydanormal2.png-760f7b2e5b4010eb8d10398cb01b320f.stex" ]
 
 [params]
 

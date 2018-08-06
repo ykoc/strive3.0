@@ -20,6 +20,11 @@ var enemyloot = {stackables = {}, unstackables = []}
 var enemygear = {}
 var areas = load('res://files/scripts/explorationregions.gd').new()
 
+var scriptedareas = {
+	aydashop = load("res://files/scripts/areascripts/aydashop.gd").new(),
+	
+}
+
 var enemygrouppools = combatdata.enemygrouppools
 var capturespool = combatdata.capturespool
 var enemypool = combatdata.enemypool
@@ -461,7 +466,7 @@ var chest = {strength = 0, agility = 0, treasure = {}, trap = ''}
 var selectedpartymember = null
 var chestaction = ''
 
-func treasurechest():
+func getchestlevel():
 	var level = rand_range(currentzone.levelrange[0], currentzone.levelrange[1])
 	if level < 5:
 		level = 'easy'
@@ -475,6 +480,10 @@ func treasurechest():
 		level = 'hard'
 		chest.strength = round(rand_range(5,8))
 		chest.agility = round(rand_range(5,8))
+	return level
+
+func treasurechest():
+	var level = getchestlevel()
 	treasurechestgenerate(level)
 	var text = "You found a hidden [color=yellow]chest[/color]. However, it seems to be locked and is too heavy to carry with you. "
 	treasurechestoptions(text)
@@ -1288,8 +1297,10 @@ func capturedecide(stage): #1 - no reward, 2 - material, 3 - sex, 4 - join
 		else:
 			text = "After getting through $his belongings, $name passes you a piece of gear. "
 			var gear = {number = 1, enchantchance = 75 }
+			
+			var loottable = chestloot[getchestlevel()]
 			winscreenclear()
-			generaterandomloot(gear)
+			generaterandomloot(loottable, gear)
 			showlootscreen()
 	elif stage == 3:
 		if rand_range(0,100) >= 35 + globals.state.reputation[location]/2:
@@ -1704,7 +1715,7 @@ func gornpalace():
 func gornayda():
 	main.animationfade()
 	yield(main, 'animfinished')
-	globals.events.gornayda()
+	scriptedareas.aydashop.gornayda()
 
 func frostford():
 	outside.location = 'frostford'
