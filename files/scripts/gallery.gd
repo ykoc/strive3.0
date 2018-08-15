@@ -55,8 +55,8 @@ unlocked = false, name = 'Maple', descript = chardescript.fairy, sprite = 'fairy
 scenes = [{code = 'mapleflirt', name = 'Risky Affair', unlocked = false, text = 'Build relationship sooner'},{code = 'mapleflirt2', name = 'Repeating Affair', unlocked = false, text = 'Foregone conclusion'}]
 },
 ayda = {
-unlocked = false, name = 'Ayda', descript = chardescript.ayda, sprite = 'aydanormal', naked = 'null', nakedunlocked = false,
-scenes = []
+unlocked = false, name = 'Ayda', descript = chardescript.ayda, sprite = 'aydanormal', naked = 'aydanaked', nakedunlocked = false,
+scenes = [{code = 'aydasex', name = "Deferred Reward", unlocked = false, text = "Be persistent"}]
 },
 garthor = {
 unlocked = false, name = 'Garthor', descript = chardescript.garthor, sprite = 'garthor', naked = 'null', nakedunlocked = false,
@@ -494,7 +494,7 @@ alchemy2 = load("res://files/backgrounds/alchemy2.png"),
 wimborn = load("res://files/backgrounds/town.png"),
 mageorder = load("res://files/backgrounds/mageorder.png"),
 slaverguild = load("res://files/backgrounds/slaveguild.png"),
-market = load("res://files/backgrounds/market.jpg"),
+market = load("res://files/backgrounds/market.png"),
 library1 = load("res://files/backgrounds/library1.png"),
 library2 = load("res://files/backgrounds/library2.png"),
 forest = load("res://files/backgrounds/forest.jpg"),

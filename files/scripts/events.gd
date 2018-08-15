@@ -1619,6 +1619,9 @@ func sexscene(value):
 	elif value == 'zoetentacle2':
 		image = 'zoetentacle2'
 		text = textnode.zoebookwatch + '\n' + textnode.zoebookwatch2virgin + textnode.zoebookwatch3
+	elif value == 'aydasex':
+		image = 'aydasex'
+		text = textnode.aydasexscene1 + '\n' + textnode.aydasexscene2
 	if buttons.empty():
 		buttons.append({text = "Close", function = 'closescene'})
 		globals.main.scene(self, image, text, buttons)
@@ -2771,18 +2774,21 @@ func aydapersonaltalk():
 			ayda.tags.erase('nosex')
 			text = textnode.aydareturn3
 			globals.state.sidequests.ayda = 16
+			ayda.add_trait("Grateful")
 			state = false
 			buttons = [{text = 'Embrace',function = 'aydasex',args = 1},{text = 'Reject',function = 'aydasex',args = 2}]
 	
 	globals.main.dialogue(state, self, text, buttons, sprites)
 
-func aydasex(stage):
+func aydasex(stage = 1):
 	var state = true
 	var text
 	var buttons = []
 	var sprites = [['aydanormal','pos1']]
 	var image = 'aydasex'
 	if stage == 1:
+		globals.charactergallery.ayda.scenes[0].unlocked = true
+		globals.charactergallery.ayda.nakedunlocked = true
 		text = textnode.aydasexscene1
 		buttons = [{text = "Continue", function = 'aydasex', args = 3}]
 	elif stage == 2:
@@ -2796,4 +2802,7 @@ func aydasex(stage):
 		globals.main.scene(self, image, text, buttons)
 	else:
 		globals.main.dialogue(state, self, text, buttons, sprites)
-		
+
+
+
+

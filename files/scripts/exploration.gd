@@ -870,6 +870,7 @@ func enemydefeated():
 	var winpanel = get_node("winningpanel")
 	var goldearned = 0
 	var expearned = 0
+	var questitem = false
 	for unit in enemygroup.units:
 		if unit.state == 'escaped':
 			expearned += unit.rewardexp*0.66
@@ -884,6 +885,10 @@ func enemydefeated():
 					globals.items.unequipitemraw(enemygear[i],unit.capture)
 					if randf() * 100 <= variables.geardropchance:
 						enemyloot.unstackables.append(enemygear[i])
+		
+		if globals.state.sidequests.ayda == 14 && currentzone.code == 'gornoutskirts' && questitem == false:
+			unit.rewardpool.aydajewel = 5
+			questitem == true
 		for i in unit.rewardpool:
 			var chance = unit.rewardpool[i]
 			var bonus = 1
@@ -1104,7 +1109,12 @@ func calculateweight():
 
 func moveitemtobackpack(button):
 	var item = button.get_meta('item')
-	if item.has('owner') == false:
+	if item.type == 'quest':
+		globals.items.call(item.effect, item)
+		enemyloot.stackables[item.code] -= 1
+		if enemyloot.stackables[item.code] <= 0:
+			enemyloot.stackables.erase(item.code)
+	elif item.has('owner') == false:
 		enemyloot.stackables[item.code] -= 1
 		if enemyloot.stackables[item.code] <= 0:
 			enemyloot.stackables.erase(item.code)
@@ -1167,7 +1177,7 @@ func defeatedchoice(ID, person, node):
 
 
 
-
+var secondarywin = false
 
 func _on_confirmwinning_pressed(): #0 leave, 1 capture, 2 rape, 3 kill
 	var text = ''
@@ -1195,7 +1205,7 @@ func _on_confirmwinning_pressed(): #0 leave, 1 capture, 2 rape, 3 kill
 			else:
 				text += defeated.units[i].dictionary("You have released $race $child and set $him free.\n")
 				globals.state.reputation[location] += rand_range(1,2)
-				if rand_range(0,100) < 25 + globals.state.reputation[location]/3 && reward == false:
+				if randf() < 0.25 + globals.state.reputation[location]/3 && reward == false:
 					reward = true
 					rewardslave = defeated.units[i]
 					rewardslavename = defeated.names[i]
@@ -1220,7 +1230,10 @@ func _on_confirmwinning_pressed(): #0 leave, 1 capture, 2 rape, 3 kill
 				i.fear += rand_range(20,35)
 		#for i in captured
 	get_node("winningpanel").visible = false
-	enemyleave()
+	if secondarywin:
+		secondarywin = false
+	else:
+		enemyleave()
 	get_node("winningpanel/defeateddescript").set_bbcode('')
 	outside.playergrouppanel()
 	if orgy == true:
@@ -1297,10 +1310,10 @@ func capturedecide(stage): #1 - no reward, 2 - material, 3 - sex, 4 - join
 		else:
 			text = "After getting through $his belongings, $name passes you a piece of gear. "
 			var gear = {number = 1, enchantchance = 75 }
-			
 			var loottable = chestloot[getchestlevel()]
 			winscreenclear()
 			generaterandomloot(loottable, gear)
+			secondarywin = true
 			showlootscreen()
 	elif stage == 3:
 		if rand_range(0,100) >= 35 + globals.state.reputation[location]/2:

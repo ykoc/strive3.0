@@ -440,7 +440,7 @@ class progress:
 	var mainquestcomplete = false
 	var rank = 0
 	var password = ''
-	var sidequests = {emily = 0, brothel = 0, cali = 0, caliparentsdead = false, chloe = 0, ayda = 0, ivran = '', yris = 0, zoe = 0, ayneris = 0, sebastianumbra = 0, maple = 0}
+	var sidequests = {emily = 0, brothel = 0, cali = 0, caliparentsdead = false, chloe = 0, ayda = 0, ivran = '', yris = 0, zoe = 0, ayneris = 0, sebastianumbra = 0, maple = 0} setget quest_set
 	var repeatables = {wimbornslaveguild = [], frostfordslaveguild = [], gornslaveguild = []}
 	var babylist = []
 	var companion = -1
@@ -500,6 +500,10 @@ class progress:
 	var sexactions = 1
 	var nonsexactions = 1
 	var actionblacklist = []
+	
+	func quest_set(value):
+		sidequests = value
+		globals.main.infotext('Side Quest Advanced',"yellow")
 	
 	func calculateweight():
 		var slave
@@ -1410,8 +1414,10 @@ func addrelations(person, person2, value):
 		value = value/1.5
 	person.relations[person2.id] += value
 	person.relations[person2.id] = clamp(person.relations[person2.id], -1000, 1000)
+	person2.relations[person.id] = person.relations[person2.id]
 	if person.relations[person2.id] < -200 && value < 0:
-		person.stress += rand_range(3,6)
+		person.stress += rand_range(4,8)
+		person2.stress += rand_range(4,8)
 
 func randomportrait(person):
 	var portraitbase
@@ -1546,7 +1552,6 @@ func connectrelatives(person1, person2, way):
 		entry[way] = person1.id
 		if typeof(person1) != TYPE_DICTIONARY && typeof(person2) != TYPE_DICTIONARY:
 			addrelations(person1, person2, 200)
-			addrelations(person2, person1, 200)
 	elif way == 'sibling':
 		var entry = globals.state.relativesdata[person1.id]
 		var entry2 = globals.state.relativesdata[person2.id]
@@ -1564,7 +1569,6 @@ func connectrelatives(person1, person2, way):
 		
 		if typeof(person1) != TYPE_DICTIONARY && typeof(person2) != TYPE_DICTIONARY:
 			addrelations(person1, person2, 0)
-			addrelations(person2, person1, 0)
 
 
 func createrelativesdata(person):

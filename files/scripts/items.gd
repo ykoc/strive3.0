@@ -1020,6 +1020,45 @@ zoebook = {
 	amount = 0,
 	weight = 0,
 },
+aydabrandy = {
+	code = 'aydabrandy',
+	name = 'Ice Brandy',
+	icon = load("res://files/images/items/icebrandy.png"),
+	description = "A quite expensive alcohol beverage brewed with a secret recipe. Feels cold to the taste even if it is not. ",
+	effect = "aydabrandy",
+	recipe = '',
+	cost = 100,
+	type = 'quest',
+	amount = 0,
+	weight = 0,
+	obtainreqs = 'globals.state.sidequests.ayda == 8',
+},
+aydabook = {
+	code = 'aydabook',
+	name = 'Fairies and Their Many Uses',
+	icon = load("res://files/images/items/questbook.png"),
+	description = "A fancy looking book with bright cover. It seems to also have a number of indecent illustrations. ",
+	effect = "aydabook",
+	recipe = '',
+	cost = 250,
+	type = 'quest',
+	amount = 0,
+	weight = 0,
+	obtainreqs = 'globals.state.sidequests.ayda == 11',
+},
+aydajewel = {
+	code = 'aydajewel',
+	name = "Ayda's Necklace",
+	icon = load("res://files/images/items/access.png"),
+	description = "This jewelry must be really important to someone.",
+	effect = "aydajewel",
+	recipe = '',
+	cost = 0,
+	type = 'quest',
+	amount = 0,
+	weight = 0,
+	obtainreqs = 'globals.state.sidequests.ayda == 14',
+},
 }
 
 var recipeaphrodisiac = {
@@ -1572,7 +1611,7 @@ func sortbytype(first, second):
 	else:
 		return true
 
-func foodpurchase():
+func foodpurchase(item):
 	var amount = globals.itemdict.food.amount
 	globals.resources.gold -= amount*globals.itemdict.food.cost
 	globals.resources.food += amount*20
@@ -1586,3 +1625,21 @@ func teleportunlock(item):
 	else:
 		globals.get_tree().get_current_scene().get_node("outside").sebastianquest(4)
 		globals.get_tree().get_current_scene().get_node("outside").shopclose()
+
+func aydabrandy(item):
+	globals.resources.gold -= item.cost
+	globals.state.sidequests.ayda = 9
+	main.get_node('outside/shoppanel/inventory').itemsshop()
+	#globals.main.infotext('Quest advanced','yellow')
+
+func aydabook(item):
+	globals.resources.gold -= item.cost
+	globals.state.sidequests.ayda = 12
+	main.get_node('outside/shoppanel/inventory').itemsshop()
+	#globals.main.infotext('Quest advanced','yellow')
+
+func aydajewel(item):
+	globals.state.sidequests.ayda = 15
+	globals.main.infotext('Quest advanced','yellow')
+	main.popup("You hide the rare jewelry in your pocket. ")
+	

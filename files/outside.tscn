@@ -691,7 +691,6 @@ func itemsinventory():
 		if i.amount < 1 || i.type in ['gear','dummy'] || (filter != '' && (i.name.findn(filter) < 0 && i.description.findn(filter) < 0)):
 			continue
 		elif i.type == 'quest':
-			print(true)
 			continue
 		array.append(i)
 	array.sort_custom(globals.items,'sortitems')
@@ -833,6 +832,8 @@ func itemsshop():
 			var temp = item.code.replace('teleport', '')
 			if temp == globals.state.location || globals.state.portals[temp].enabled == true:
 				continue
+		elif item.has('obtainreqs') && !globals.evaluate(item.obtainreqs):
+			continue
 		var newbutton = $ScrollContainer2/GridContainer/Button.duplicate()
 		var price = getcost(item, 'buy')
 		$ScrollContainer2/GridContainer.add_child(newbutton)
@@ -969,8 +970,8 @@ func _on_confirm_pressed():
 				tmpitem.owner = 'backpack'
 			counter -= 1
 			globals.main.infotext(\"Obtained: \" + item.name, 'green')
-	if item.code in ['food']:
-		globals.items.call(item.effect)
+	if item.code in ['food'] || item.type == 'quest':
+		globals.items.call(item.effect, item)
 	elif item.code.find('teleport') >= 0 && item.code != 'teleportseal':
 		globals.items.call(item.effect, item)
 		selecteditem = null

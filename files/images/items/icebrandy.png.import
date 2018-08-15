@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/market.jpg-1382248534af89f77a3129d88db3ff2c.stex"
+path="res://.import/icebrandy.png-0ec02e1492656eb0a62d3a904b48eeb2.stex"
 
 [deps]
 
-source_file="res://files/backgrounds/market.jpg"
-dest_files=[ "res://.import/market.jpg-1382248534af89f77a3129d88db3ff2c.stex" ]
+source_file="res://files/images/items/icebrandy.png"
+dest_files=[ "res://.import/icebrandy.png-0ec02e1492656eb0a62d3a904b48eeb2.stex" ]
 
 [params]
 

@@ -38,6 +38,7 @@ func _ready():
 		globals.player.name = ''
 	rebuildrepeatablequests()
 	globals.main = self
+	globals.items.main = self
 	globals.resources.panel = get_node("ResourcePanel")
 	globals.events.textnode = globals.questtext
 	if debug == true:
@@ -350,6 +351,7 @@ func _on_new_slave_button_pressed():
 	if true:
 		for i in globals.characters.characters:
 			person = globals.characters.create(i)
+			globals.addrelations(globals.slaves[0], person, -800)
 			person.loyal = 100
 			person.stress = 0
 			person.obed = 100
@@ -610,15 +612,10 @@ func _on_end_pressed():
 					for i in globals.slaves:
 						if i.away.duration == 0 && i.work == person.work && i != person:
 							globals.addrelations(person, i, 0)
-							globals.addrelations(i, person, 0)
 							if person.relations[i.id] < 0 || i.relations[person.id] < -200:
 								globals.addrelations(person, i, (rand_range(-10,-20)))
 							else:
 								globals.addrelations(person, i, (rand_range(10,20)))
-							if i.relations[person.id] < 0 || person.relations[i.id] < -200:
-								globals.addrelations(i, person, (rand_range(-10,-20)))
-							else:
-								globals.addrelations(i, person, (rand_range(10,20)))
 					
 					if person.work != 'rest' && person.energy < 30:
 						text = "$name had no energy to fulfill $his duty and had to take a rest. \n"
@@ -888,7 +885,6 @@ func _on_end_pressed():
 				person.energy += rand_range(25,45)+ person.send*6
 				for i in globals.slaves:
 					if i.sleep == 'your' && i != person:
-						globals.addrelations(person, i, 0)
 						if (person.relations[i.id] <= 200 && !person.traits.has("Fickle")) || person.traits.has("Monogamous"):
 							globals.addrelations(person, i, -rand_range(15,30))
 						else:
@@ -980,14 +976,12 @@ func _on_end_pressed():
 			if i != headgirl && i.traits.find('Loner') < 0 && i.away.duration < 1 && i.sleep != 'jail' && i.sleep != 'farm':
 				headgirl.xp += 3
 				globals.addrelations(i, headgirl, 10)
-				globals.addrelations(headgirl, i, 10)
 				if i.obed < 65 && globals.state.headgirlbehavior == 'strict':
 					var obedbase = i.obed
 					i.fear += (-(i.cour/15) + headgirlconf/7)
 					i.stress += rand_range(5,10)
 					if i.obed <= obedbase:
 						globals.addrelations(i, headgirl, -30)
-						globals.addrelations(headgirl, i, -30)
 						text0.set_bbcode(text0.get_bbcode() + i.dictionary('$name was acting frivolously. ') + headgirl.dictionary('$name tried to put ') + i.dictionary("$him in place, but failed to make any impact.\n\n"))
 					else:
 						text0.set_bbcode(text0.get_bbcode() + i.dictionary('$name was acting frivolously, but ') + headgirl.dictionary('$name managed to make ') + i.dictionary("$him submit to your authority and slightly improve $his behavior.\n\n"))
@@ -1248,6 +1242,7 @@ func launchrandomevent():
 		if personlist[number].attention < rand_range(30,150):
 			get_node("dailyevents").person = personlist[number]
 			rval = get_node("dailyevents").getrandomevent(personlist[number])
+			#rval = $dailyevents.getfixedevent('assaultevent')
 			personlist[number].attention = 0
 			break
 		else:
