@@ -94,6 +94,7 @@ func storebackup(): #clears and restores backups
 	var file = File.new()
 	var dir = Directory.new()
 	
+	print("Making Backup...")
 	for i in globals.dir_contents(backupdir):
 		dir.remove(i)
 	
@@ -108,9 +109,11 @@ func storebackup(): #clears and restores backups
 	file.open(backupdir + "/version", File.WRITE)
 	file.store_line(str(globals.gameversion))
 	file.close()
+	print("Backup finished.")
 
 
 func loadbackup():
+	print("Loading Backup...")
 	for i in file_dictionary:
 		var backup = File.new()
 		backup.open(i.replacen(filedir, backupdir), File.READ)
@@ -119,6 +122,7 @@ func loadbackup():
 		backup.open(i, File.WRITE)
 		backup.store_string(file_string)
 		backup.close()
+	print("Load Finished")
 
 func show():
 	for i in $allmodscontainer/VBoxContainer.get_children():
@@ -215,6 +219,7 @@ func apply_mod_dictionary():
 		core_file.close()
 
 func apply_mod_to_dictionary(mod):
+	loadbackup()
 	var dict = get_mod(mod)
 	
 	for file in dict.keys():

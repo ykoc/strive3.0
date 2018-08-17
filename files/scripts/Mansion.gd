@@ -612,10 +612,14 @@ func _on_end_pressed():
 					for i in globals.slaves:
 						if i.away.duration == 0 && i.work == person.work && i != person:
 							globals.addrelations(person, i, 0)
-							if person.relations[i.id] < 0 || i.relations[person.id] < -200:
-								globals.addrelations(person, i, (rand_range(-10,-20)))
-							else:
-								globals.addrelations(person, i, (rand_range(10,20)))
+							
+							#Calculate relations
+							
+							text2.bbcode_text += person.dictionary("[color=yellow]$name has gotten into a minor quarrel with ") + i.dictionary('$name.[/color]\n')
+#							if person.relations[i.id] < 0 || i.relations[person.id] < -200:
+#								globals.addrelations(person, i, (rand_range(-10,-20)))
+#							else:
+#								globals.addrelations(person, i, (rand_range(10,20)))
 					
 					if person.work != 'rest' && person.energy < 30:
 						text = "$name had no energy to fulfill $his duty and had to take a rest. \n"
@@ -646,7 +650,7 @@ func _on_end_pressed():
 						text = workdict.text
 						if person.spec == 'housekeeper' && person.work in ['rest','cooking','library','nurse','maid','headgirl','farmmanager','labassist','jailer']:
 							globals.state.condition += (5.5 + (person.sagi+person.send)*6)/2
-							text2.set_bbcode(text2.get_bbcode() + person.dictionary("$name has managed to clean the mansion a bit while being around. \n"))
+							text2.bbcode_text += person.dictionary("$name has managed to clean the mansion a bit while being around. \n")
 						if workdict.has("gold"):
 							globals.resources.gold += workdict.gold
 							person.metrics.goldearn += workdict.gold
@@ -886,7 +890,7 @@ func _on_end_pressed():
 				for i in globals.slaves:
 					if i.sleep == 'your' && i != person:
 						if (person.relations[i.id] <= 200 && !person.traits.has("Fickle")) || person.traits.has("Monogamous"):
-							globals.addrelations(person, i, -rand_range(15,30))
+							globals.addrelations(person, i, -rand_range(50,100))
 						else:
 							globals.addrelations(person, i, rand_range(15,30))
 				if person.loyal > 30:
@@ -975,13 +979,13 @@ func _on_end_pressed():
 		for i in globals.slaves:
 			if i != headgirl && i.traits.find('Loner') < 0 && i.away.duration < 1 && i.sleep != 'jail' && i.sleep != 'farm':
 				headgirl.xp += 3
-				globals.addrelations(i, headgirl, 10)
+				globals.addrelations(i, headgirl, 15)
 				if i.obed < 65 && globals.state.headgirlbehavior == 'strict':
 					var obedbase = i.obed
 					i.fear += (-(i.cour/15) + headgirlconf/7)
 					i.stress += rand_range(5,10)
 					if i.obed <= obedbase:
-						globals.addrelations(i, headgirl, -30)
+						globals.addrelations(i, headgirl, -40)
 						text0.set_bbcode(text0.get_bbcode() + i.dictionary('$name was acting frivolously. ') + headgirl.dictionary('$name tried to put ') + i.dictionary("$him in place, but failed to make any impact.\n\n"))
 					else:
 						text0.set_bbcode(text0.get_bbcode() + i.dictionary('$name was acting frivolously, but ') + headgirl.dictionary('$name managed to make ') + i.dictionary("$him submit to your authority and slightly improve $his behavior.\n\n"))
