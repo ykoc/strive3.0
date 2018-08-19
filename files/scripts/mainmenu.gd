@@ -139,6 +139,9 @@ func _ready():
 
 #QMod - Added system/global check helper
 func _ready_system_check():
+	$TextureFrame/Label.text = 'ver. ' + globals.gameversion
+	if $TextureFrame/modpanel.activemods.size() > 0:
+		$TextureFrame/Label2.visible = true
 	if OS.get_name() == "HTML5":
 		globals.rules.custommouse = false
 		$htmlwarn.popup()

@@ -3,12 +3,13 @@ extends Node
 
 var effectdict = {}
 var guildslaves = {wimborn = [], gorn = [], frostford = [], umbra = []}
-var gameversion = 5900
+var gameversion = '0.5.18'
 var state = progress.new()
 var developmode = false
 var gameloaded = false
 
-
+var filedir = 'res://files'
+var backupdir = 'res://backup'
 
 var resources = resource.new()
 var questtext = load("res://files/scripts/questtext.gd").new()
@@ -127,6 +128,8 @@ Mage = "-50% mana cost of spells\nCombat spell deal 20% more damage",
 }
 
 func _init():
+	if OS.get_executable_path() == 'C:\\Users\\1\\Desktop\\godot\\Godot_v3.0.4-stable_win64.exe':
+		developmode = true 
 	randomize()
 	loadsettings()
 	effectdict = effects.effectlist 
@@ -143,11 +146,8 @@ func _init():
 			spritedict[i] = spritedict['old'+ i]
 		characters.characters.Emily.imageportait = "res://files/images/emily/oldemilyportrait.png"
 	
-	loadmods()
 	
 
-func loadmods():
-	pass
 
 func savevars():
 	var file = File.new()
@@ -198,6 +198,7 @@ func loadsettings():
 	temp = storedsettings.folders
 	for i in temp:
 		setfolders[i] = temp[i]
+	modfolder = setfolders.mods
 	if storedsettings.has('savelist') == false:
 		overwritesettings()
 		settings.open_encrypted_with_pass("user://progressdata", File.READ, 'tehpass')
@@ -208,8 +209,10 @@ func loadsettings():
 	settings.close()
 
 var charactergallery = gallery.charactergallery setget savechars
-var setfolders = {portraits = 'user://portraits/', fullbody = 'user://bodies/'} setget savefolders
+var setfolders = {portraits = 'user://portraits/', fullbody = 'user://bodies/', mods = 'user://mods/'} setget savefolders
 var savelist = {}
+var modfolder = setfolders.mods
+
 
 func savechars(value):
 	gallery.charactergallery = value
@@ -2001,7 +2004,7 @@ func load_game(text):
 	
 	
 	gameloaded = true
-	if state.currentversion != gameversion:
+	if str(state.currentversion) != str(gameversion):
 		print("Using old save, attempting repair")
 		repairsave()
 	

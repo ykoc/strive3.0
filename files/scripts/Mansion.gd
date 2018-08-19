@@ -612,10 +612,31 @@ func _on_end_pressed():
 					for i in globals.slaves:
 						if i.away.duration == 0 && i.work == person.work && i != person:
 							globals.addrelations(person, i, 0)
-							
-							#Calculate relations
-							
-							text2.bbcode_text += person.dictionary("[color=yellow]$name has gotten into a minor quarrel with ") + i.dictionary('$name.[/color]\n')
+							if randf() < 0.25 + abs(person.relations[i.id])/2000:
+								var badchance = 0
+								if person.relations[i.id] > 600:
+									badchance = 15
+								elif person.relations[i.id] > 0:
+									badchance = 33
+								elif person.relations[i.id] > -200:
+									badchance = 55
+								elif person.relations[i.id] > -500:
+									badchance = 70
+								else:
+									badchance = 80
+								if randf() * 100 < badchance:
+									globals.addrelations(person, i, -rand_range(25,50))
+									text2.bbcode_text += person.dictionary("[color=yellow]$name has gotten into a minor quarrel with ") + i.dictionary('$name.[/color]\n')
+								else:
+									globals.addrelations(person, i, rand_range(25,50))
+									var temptext = ''
+									if person.work == 'rest':
+										temptext = person.dictionary("[color=yellow]$name has been resting together with ") + i.dictionary('$name and their relationship improved.[/color]\n')
+									else:
+										temptext = person.dictionary("[color=yellow]$name has been working together with ") + i.dictionary('$name and their relationship improved.[/color]\n')
+									text2.bbcode_text += temptext
+								#Calculate relations
+								
 #							if person.relations[i.id] < 0 || i.relations[person.id] < -200:
 #								globals.addrelations(person, i, (rand_range(-10,-20)))
 #							else:

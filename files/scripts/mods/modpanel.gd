@@ -6,14 +6,15 @@ var run_once = false
 var file_dictionary = [] #main files data paths
 var mods_dictionary = {} #mod folder data
 
-var modfolder = 'res://mods'
+var modfolder = globals.setfolders.mods
+var filedir = globals.filedir
+var backupdir = globals.backupdir
 
 var temp_mod_scripts = {} #variable to store all original + mod script data before overwrite
 
-var filedir = 'res://files'
-var backupdir = 'res://backup'
 
 var loadorder = []
+var activemods = []
 
 
 func _ready():
@@ -28,6 +29,14 @@ func _ready():
 			file_dictionary.append(i)
 	for i in scanfolder() : #collects mod_dictionary data
 		if !file.file_exists(i +"/info.txt"): #makes info.txt to store mod description
+			var check = false
+			for i in globals.dir_contents(i):
+				if i.find('.gd') != -1:
+					check = true
+			
+			if check == false:
+				continue
+			
 			file.open(i+'/info.txt', File.WRITE)
 			file.store_line("There's no information on this mod.")
 			file.close()
@@ -45,7 +54,7 @@ func _ready():
 	var text = file.get_as_text()
 	file.close()
 	
-	if int(text) != globals.gameversion:
+	if str(text) != str(globals.gameversion):
 		storebackup()
 
 
@@ -80,6 +89,7 @@ func loadfromconfig():
 	var err = config.load(modfolder + "/FileOrder.ini")
 	if err == OK:
 		loadorder = config.get_value("Mods", "LoadOrder", [])
+		activemods = config.get_value("Mods", "ActiveMods", []) 
 	for i in loadorder:
 		if !dir.dir_exists(modfolder + '/' + str(i)):
 			loadorder.erase(i)
@@ -88,6 +98,7 @@ func saveconfig():
 	var config = ConfigFile.new()
 	config.load(modfolder + "/FileOrder.ini")
 	config.set_value("Mods", "LoadOrder", loadorder)
+	config.set_value("Mods", "ActiveMods", activemods)
 	config.save(modfolder + "/FileOrder.ini")
 
 func storebackup(): #clears and restores backups
@@ -125,6 +136,10 @@ func loadbackup():
 	print("Load Finished")
 
 func show():
+	modfolder = globals.setfolders.mods
+	$modfolder.text =  modfolder
+	$modfolder.hint_tooltip = modfolder
+	
 	for i in $allmodscontainer/VBoxContainer.get_children():
 		if i.name != 'Button':
 			i.hide()
@@ -205,10 +220,14 @@ func moddown(mod):
 
 
 func _on_applymods_pressed():
-	
+	if !globals.developmode:
+		loadbackup()
 	for i in loadorder:
-		apply_mod_to_dictionary(modfolder + '/' + i)
+		if dir.dir_exists(modfolder + '/' + i):
+			activemods.append(i)
+			apply_mod_to_dictionary(modfolder + '/' + i)
 	apply_mod_dictionary()
+	saveconfig()
 	get_tree().quit()
 
 func apply_mod_dictionary():
@@ -219,7 +238,6 @@ func apply_mod_dictionary():
 		core_file.close()
 
 func apply_mod_to_dictionary(mod):
-	loadbackup()
 	var dict = get_mod(mod)
 	
 	for file in dict.keys():
@@ -239,7 +257,8 @@ func get_mod(string):
 
 func apply_file_to_dictionary(file_name, string):
 	var regex_dictionary = {}
-	var func_regex = "(func\\s+\\w*.*).*(([\r\n]*[\\t#]+.*)*)"
+	#var func_regex = "(func\\s+\\w*.*).*(([\r\n]*[\\t#]+.*)*)"
+	var func_regex = "(func\\s+\\w*)(.*([\r\n]*[\\t#]+.*)*)"
 	var class_regex = "(class\\s+\\w*).*(([\r\n]*[\\t#]+.*)*)"
 	var var_regex = "(var.*=)\\s([{]([^\\{\\}]*[\r\n]*)*[}])?([^\\{\\}\\s]*)"
 	var onready_var_regex = "(onready\\svar.*=).*([\\{]([^\\{\\}]*[\r\n]*)*[\\}])?"
@@ -275,6 +294,7 @@ func apply_file_to_dictionary(file_name, string):
 		var offset = 0
 		var has_next = true
 		while has_next :
+			file_string = temp_mod_scripts[key]
 			var all_func = full_func.search_all(file_string)
 			var all_var = full_var.search_all(file_string)
 			var all_signal = full_signal.search_all(file_string)
@@ -414,36 +434,44 @@ func apply_file_to_dictionary(file_name, string):
 					pass
 			offset = new_offset + 1
 
-#func apply_file_to_dictionary(file_name, string):
-#	var full_func = RegEx.new()
-#	full_func.compile("func\\s+(\\w*).*([\r\n]*[\\t#]+.*)*")
-#	var next_match = full_func.search_all(string)
-#	var full_var = RegEx.new()
-#	#full_var.compile("[\r\n]+((signal\\s)?((onready\\s)?var.=))[.\r\n^\\t]*")
-#	full_var.compile("[\r\n]+((onready\\s)?var.*=).*") 
-#	full_var.compile("[\r\n]+((signal\\s\\w+).*")
-#	var next_var_match = full_var.search_all(string)
-#	for key in file_dictionary.keys():
-#		if key.get_file() == file_name.get_file():
-#			var file_string = file_dictionary[key]
-#			var file_match = full_func.search_all(file_string)
-#			for each_match in next_match:
-#				var found_match = false
-#				for nested_match in file_match:
-#					if(each_match.get_string(1) == nested_match.get_string(1)):
-#						file_dictionary[key] = file_dictionary[key].replacen(nested_match.get_string(), each_match.get_string())
-#						found_match = true
-#				if !found_match :
-#					file_dictionary[key] = file_dictionary[key] + "\r\n" + each_match.get_string(1)
-#			file_match = full_var.search_all(file_string)
-#			for each_match in next_var_match:
-#				for nested_match in file_match:
-#					if(each_match.get_string(1) == nested_match.get_string(1)):
-#						file_dictionary[key] = file_dictionary[key].replacen(nested_match.get_string(), each_match.get_string())
-
 func _on_disablemods_pressed():
+	loadorder.clear()
+	activemods.clear()
+	saveconfig()
 	loadbackup()
+	get_tree().quit()
 
 func _on_closemods_pressed():
 	self.visible = false
 
+
+
+func _on_FileDialog_dir_selected(dir):
+	globals.setfolders.mods = dir
+	show()
+
+
+func _on_modfolder_pressed():
+	$FileDialog.popup()
+	$FileDialog.current_dir = modfolder
+
+
+
+func _on_helpclose_pressed():
+	$Panel.hide()
+
+
+func _on_modhelp_pressed():
+	$Panel.show()
+
+
+func _on_openmodfolder_pressed():
+	OS.shell_open(modfolder)
+
+
+func _on_activemods_pressed():
+	var text = ''
+	for i in activemods:
+		text += i + '\n'
+	$activemodlist.popup()
+	$activemodlist/RichTextLabel.bbcode_text = text
