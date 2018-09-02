@@ -201,7 +201,8 @@ func opencharacter(person, combat = false, combatant = null):
 	for i in ['sstr','sagi','smaf','send']:
 		$playergrouppanel/characterinfo/stats.get_node(i+'/Label').text = str(person[i]) + "/" +str(min(person.stats[globals.maxstatdict[i]], person.originvalue[person.origins]))
 	$playergrouppanel/characterinfo/grade.texture = globals.gradeimages[person.origins]
-	$playergrouppanel/characterinfo/spec.texture = globals.specimages[str(person.spec)]
+	if person != globals.player:
+		$playergrouppanel/characterinfo/spec.texture = globals.specimages[str(person.spec)]
 	$playergrouppanel/characterinfo/grade.visible = person != globals.player
 	$playergrouppanel/characterinfo/spec.visible = person != globals.player
 	$playergrouppanel/characterinfo/switch.visible = combat
@@ -407,10 +408,11 @@ func slaveguild(guild = 'wimborn'):
 		buildbuttons(array)
 	elif guild == 'frostford':
 		clearselection()
+		setcharacter('frostfordslaver')
 		slavearray = globals.guildslaves.frostford
 		text = "A humble local guild building is bright and warm inside. Just as the whole of Frostford, this place is serene in its mood compared to what you are used to. "
 		if globals.state.mainquest >= 2:
-			text += "Realizing you belong to the Mage's Order, attendant politely greets you and asks how he could assist you. "
+			text += "Realizing you belong to the Mage's Order, attendant politely greets you and asks how she could assist you. "
 		mansion.maintext = globals.player.dictionaryplayer(text)
 		var array = [{name = 'See slaves for sale',function = 'slaveguildslaves'},{name = 'Offer your servants',function = 'slaveguildsells'}, {name = 'See custom requests', function = 'slaveguildquests'}, {name = 'Services for Slaves',function = 'slaveservice'}, {name = 'Leave', function = 'tofrostford'}]
 		buildbuttons(array)
@@ -490,6 +492,7 @@ func togorn():
 	main.get_node("explorationnode").zoneenter('gorn')
 
 func tofrostford():
+	get_parent().nodefade($charactersprite, 0.3)
 	get_node("playergrouppanel/VBoxContainer").visible = true
 	main.get_node("explorationnode").zoneenter('frostford')
 

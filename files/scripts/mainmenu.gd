@@ -140,6 +140,7 @@ func _ready():
 #QMod - Added system/global check helper
 func _ready_system_check():
 	$TextureFrame/Label.text = 'ver. ' + globals.gameversion
+	globals.mainscreen = 'mainmenu'
 	if $TextureFrame/modpanel.activemods.size() > 0:
 		$TextureFrame/Label2.visible = true
 	if OS.get_name() == "HTML5":
@@ -252,13 +253,13 @@ func _ready_newgame_creator():
 	#Initialize newgame variables
 	player = globals.newslave(playerDefaults.race, playerDefaults.age, playerDefaults.sex, playerDefaults.origins) #Prefer to use a constructor/builder
 	player.cleartraits()
-	player.hairstyle = 'straight'			
-	player.beautybase = 40
+	player.hairstyle = 'straight'
+	player.beautybase = variables.playerstartbeauty
 	globals.player = player #Necessary for descriptions to properly identify player character during newgame creation
 	
 	startSlave = globals.newslave(slaveDefaults.race, slaveDefaults.age, slaveDefaults.sex, slaveDefaults.origins) #Prefer a constructor/builder
 	startSlave.cleartraits()
-	startSlave.beautybase = 40
+	startSlave.beautybase = variables.characterstartbeauty
 	startSlave.memory = slaveBackgrounds.back()
 	
 	globals.resources.panel = null #Clear global variables
@@ -272,7 +273,7 @@ func _build_player_portraits():
 	var portraitFiles = globals.dir_contents("res://files/buttons/portraits")
 	for i in portraitFiles:
 		if i.find('import') >= 0:
-			playerPortraits.append(i.replace('.import',''))	
+			playerPortraits.append(i.replace('.import',''))
 	
 
 ### SETTERS & GETTERS
@@ -323,20 +324,39 @@ func _on_SavePanel_visibility_changed():
 			i.queue_free()
 			i.visible = false
 	
-	$TextureFrame/SavePanel.visible = true	#Display save panel
+	$TextureFrame/SavePanel.visible = true#Display save panel
 	
 	get_node("TextureFrame/SavePanel/saveline").set_text(filesname.replacen("user://saves/",'')) #Displays name of current selected savefile in textbox	
 	
+	
+#	for i in savefiles:
+#		node = get_node("TextureFrame/SavePanel/ScrollContainer/savelist/Button").duplicate()
+#		node.show()
+#		if globals.savelist.has(i):
+#			node.get_node("date").set_text(globals.savelist[i].date)
+#			node.get_node("name").set_text(i.replacen("user://saves/",''))
+#		else:
+#			node.get_node("name").set_text(i.replacen("user://saves/",''))
+#		get_node("menucontrol/menupanel/SavePanel/ScrollContainer/savelist").add_child(node)
+#		node.set_meta("name", i)
+#		node.connect('pressed', self, 'loadchosen', [node])
 	var node
-	for i in globals.dir_contents():		
-		if globals.savelist.has(i): 
-			node = get_node("TextureFrame/SavePanel/ScrollContainer/savelist/Button").duplicate() #Create save file button
-			node.visible = true
-			node.get_node("name").set_text(i.replacen("user://saves/",'')) #Set save file name + date
-			node.get_node("date").set_text(globals.savelist[i].date)			
-			get_node("TextureFrame/SavePanel/ScrollContainer/savelist").add_child(node) #Add button to savefile load display list
-			node.set_meta('text', i)
-			node.connect('pressed', self, '_display_savegame_info', [node]) #Connect button to loadchosen method
+	var savefiles = globals.dir_contents()
+	for i in globals.savelist:
+		if savefiles.find(i) < 0:
+			globals.savelist.erase(i)
+	for i in savefiles:
+		node = get_node("TextureFrame/SavePanel/ScrollContainer/savelist/Button").duplicate() #Create save file button
+		node.visible = true
+		#node.get_node("name").set_text(i.replacen("user://saves/",'')) #Set save file name + date
+		if globals.savelist.has(i):
+			node.get_node("date").set_text(globals.savelist[i].date)
+			node.get_node("name").set_text(i.replacen("user://saves/",''))
+		else:
+			node.get_node("name").set_text(i.replacen("user://saves/",''))
+		get_node("TextureFrame/SavePanel/ScrollContainer/savelist").add_child(node) #Add button to savefile load display list
+		node.set_meta('text', i)
+		node.connect('pressed', self, '_display_savegame_info', [node]) #Connect button to loadchosen method
 
 #QMod - Renamed as func displays save info and doesn't load savegame.
 func _display_savegame_info(node):
@@ -474,7 +494,9 @@ func _select_stage(button):
 		startSlaveHobby = slaveHobbies[0]
 	
 	if stage >= 6: #If backtracking after reaching player specialization stage
+		var spec = player.spec
 		player.cleartraits()
+		player.spec = spec
 		
 	#Update stage and advance
 	self.stage = button.get_position_in_parent()
@@ -505,6 +527,7 @@ func _advance_stage(confirm = false):
 			_stage4()
 		4: #Select Player Basics + Physical Stat Potential			
 			playerBonusStatPoints = 2
+			regenerateplayer()
 			get_node("TextureFrame/newgame/stage5").visible = true
 			_stage5()
 		5: #Select Player Appearance			
@@ -598,7 +621,7 @@ func _on_quickstart_pressed():
 	startSlave = globals.newslave(slaveDefaults.race, slaveDefaults.age, slaveDefaults.sex, 'poor')	
 	player.imageportait = playerPortraits[randi()%playerPortraits.size()]
 	startSlave.cleartraits()
-	_on_slaveconfirm_pressed()	
+	_on_slaveconfirm_pressed()
 
 	
 #Stage03 - Starting Location
@@ -728,7 +751,8 @@ func _on_prevport_pressed():
 #QMod - Commit race change through constructor	
 func _on_raceconfirm_pressed():
 	get_node("TextureFrame/newgame/stagespanel/VBoxContainer/race").set_text(player.race)
-	globals.constructor.changerace(player) #Commit player race change
+	#globals.constructor.changerace(player) #Commit player race change
+	regenerateplayer()
 	self.stage = 4
 	
 	
@@ -751,7 +775,7 @@ func _stage5():
 		if player.age == i:
 			get_node("TextureFrame/newgame/stage5/age").select(get_node("TextureFrame/newgame/stage5/age").get_item_count()-1)
 
-	_update_stage5()	
+	_update_stage5()
 	
 #QMod - Refactor
 func _update_stage5():
@@ -762,10 +786,28 @@ func _update_stage5():
 	
 func _on_sex_item_selected(id):
 	player.sex = get_node("TextureFrame/newgame/stage5/sex").get_item_text(id)
+	regenerateplayer()
 
 func _on_age_item_selected(id):
 	player.age = get_node("TextureFrame/newgame/stage5/age").get_item_text(id)
-	player.mindage = player.age
+	regenerateplayer()
+
+func regenerateplayer():
+	var imageportait = player.imageportait
+	player = globals.newslave(player.race, player.age, player.sex, 'slave')
+	globals.player = player
+	player.cleartraits()
+	player.unique = 'player'
+	player.imageportait = imageportait
+	player.beautybase = variables.playerstartbeauty
+	playerBonusStatPoints = 2
+	for i in ['str','agi','maf','end']:
+		player.stats[i+'_max'] = 4
+	_update_stage5()
+
+func regenerateslave():
+	startSlave = globals.newslave(startSlave.race, startSlave.age, startSlave.sex, 'poor')
+	startSlave.beautybase = variables.characterstartbeauty
 
 #QMod - Rewrote function
 func statup(button):	
@@ -822,7 +864,9 @@ func _process_stage6():
 	for i in get_tree().get_nodes_in_group('lookoption'):
 		i.clear()
 	
-	get_node("TextureFrame/newgame/stage6/virgin").set_disabled(makeoverPerson.vagina == 'none') #I'm guessing this is the intention?
+	#get_node("TextureFrame/newgame/stage6/virgin").set_disabled(makeoverPerson.vagina == 'none') #I'm guessing this is the intention?
+	
+	$TextureFrame/newgame/stage6/virgin.visible = makeoverPerson.vagina != 'none'
 	
 #QMod - Refactor	
 func _process_stage6_sex_options():
@@ -1009,7 +1053,6 @@ func _select_specialization(button):
 	#Set player specialization to selected spec
 	var spec = button.get_meta('spec')
 	player.spec = spec
-	
 	#Set specialization description
 	var text = globals.playerspecs[spec]
 	if player.spec in ['Mage', 'Alchemist']:
@@ -1137,6 +1180,7 @@ func _process_stage8_hobby_list():
 		newbutton.connect("pressed",self,'_slave_hobby', [newbutton])
 
 #QMod - Refactor
+var forbiddentraits = ['Dominant','Submissive']
 func _process_stage8_traits():
 	#Clear trait list
 	for i in $TextureFrame/newgame/stage8/traitpanel/ScrollContainer/VBoxContainer.get_children():
@@ -1146,7 +1190,7 @@ func _process_stage8_traits():
 			
 	#Build trait list
 	for i in globals.origins.traitlist.values():
-		if i.tags.has("secondary"):
+		if i.tags.has("secondary") || forbiddentraits.has(i):
 			continue
 		var newbutton = $TextureFrame/newgame/stage8/traitpanel/ScrollContainer/VBoxContainer/Button.duplicate()
 		newbutton.visible = true
@@ -1215,13 +1259,14 @@ func _slave_option(id, button):
 	match button.get_name():
 		'slaverace':
 			startSlave.race = button.get_item_text(id)
-			globals.constructor.changerace(startSlave)
+			regenerateslave()
 			get_node("TextureFrame/newgame/stage8/backgroundtext").set_bbcode(globals.dictionary.getRaceDescription(startSlave.race, true, true))		
 		'slavesex':
 			startSlave.sex = button.get_item_text(id)
-			globals.assets.getsexfeatures(startSlave)
+			regenerateslave()
 		'slaveage':
 			startSlave.age = button.get_item_text(id)
+			regenerateslave()
 	
 	#Refresh slave customization panel
 	_update_stage8()
@@ -1229,10 +1274,10 @@ func _slave_option(id, button):
 	
 #QMod - Refactored - moved once-per-session processing to separate method	
 func _on_traits_pressed():
-	$TextureFrame/newgame/stage8/traitpanel.popup()	
+	$TextureFrame/newgame/stage8/traitpanel.popup()
 
 #QMod - Renamed, tweaked button toggling, tweaked 'no trait' selected
-func _trait_toggle(trait, button):	
+func _trait_toggle(trait, button):
 	#Set other buttons to 'unpressed'
 	for i in $TextureFrame/newgame/stage8/traitpanel/ScrollContainer/VBoxContainer.get_children():
 		if i != button:
@@ -1271,7 +1316,7 @@ func _on_slaveconfirm_pressed():
 	for i in ['conf','cour','wit','charm']:
 		startSlave[i] = rand_range(30,35)	
 	startSlave.obed = 90
-	startSlave.beautybase = 40
+	startSlave.beautybase = variables.characterstartbeauty
 	if startSlave.memory.find('$sibling') >= 0:
 		globals.connectrelatives(startSlave, player, 'sibling')
 	
@@ -1293,9 +1338,9 @@ func _on_slaveconfirm_pressed():
 	#Add traits
 	if slaveTrait != '':
 		startSlave.add_trait(slaveTrait)
-	startSlave.add_trait('Grateful') #Bonus starting slave trait
 	
 	#Assign start slave to global slave list
+	startSlave.unique = 'startslave'
 	globals.slaves = startSlave	#A bit deceptive as it assigns 'person' to 'array', works because of 'setget'
 	
 	
@@ -1371,8 +1416,9 @@ func _on_slaveconfirm_pressed():
 		globals.state.sidequests.sebastianumbra = 2
 		globals.state.portals.umbra.enabled = true
 		globals.state.sandbox = true #Added this in case it used somewhere in the future?
-		
 	
+	globals.player = player
+	globals.state.upcomingevents.append({code = 'ssinitiate', duration = 1})
 	#Change scene to game start 'Mansion'
 	get_tree().change_scene("res://files/Mansion.scn")
 	

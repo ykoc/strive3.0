@@ -574,7 +574,7 @@ func chestbash(person):
 		text = "$name easily smashes the chest's lock mechanism."
 	else:
 		if 60 - (chest.agility - person.sagi) * 10 >= rand_range(0,100):
-			text = "With some luck, $name manages to crack the chest open "
+			text = "With some luck, $name manages to crack the chest open. "
 			unlock = true
 		else:
 			text = "[color=yellow]$name seems to be too weak to break the chest open. [/color]"
@@ -753,7 +753,7 @@ func merchantencounter(stage = 0):
 
 func slaversgreet():
 	globals.get_tree().get_current_scene().get_node('outside').clearbuttons()
-	globals.get_tree().get_current_scene().get_node('outside').maintext = globals.player.dictionary("You reveal yourself to the slavers' group and wondering if they'd be willing to part with their merchandise saving them hassle of transportation.\n\n- You, $sir, know how to bargain. We'll agree to part with our treasure here for ")+str(max(round(enemygroup.captured.buyprice()*0.7),40))+" gold.\n\nYou still might try to take their hostage by force, but given they know about your presence, you are at considerable disadvantage. "
+	globals.get_tree().get_current_scene().get_node('outside').maintext = globals.player.dictionary("You reveal yourself to the slavers' group and wonder if they'd be willing to part with their merchandise saving them hassle of transportation.\n\n- You, $sir, know how to bargain. We'll agree to part with our treasure here for ")+str(max(round(enemygroup.captured.buyprice()*0.7),40))+" gold.\n\nYou still might try to take their hostage by force, but given they know about your presence, you are at considerable disadvantage. "
 	newbutton = button.duplicate()
 	buttoncontainer.add_child(newbutton)
 	newbutton.set_text('Inspect')
@@ -805,7 +805,7 @@ func snailget():
 func slaverbuy():
 	globals.resources.gold -= max(round(enemygroup.captured.buyprice()*0.7),30)
 	enemycapture()
-	globals.get_tree().get_current_scene().popup("You purchase slavers' captive and return to mansion. " )
+	globals.get_tree().get_current_scene().popup("You purchase slavers' captive and return to the mansion. " )
 
 func inspectenemy():
 	globals.get_tree().get_current_scene().popup(enemygroup.captured.descriptionsmall())
@@ -858,7 +858,7 @@ func enemydefeated():
 		globals.events.call(launchonwin)
 		launchonwin = null
 		return
-	var text = 'You have defeated enemy group!\n'
+	var text = 'You have defeated the enemy group!\n'
 	var ranger = false
 	for i in globals.state.playergroup:
 		if globals.state.findslave(i).spec == 'ranger':
@@ -901,9 +901,10 @@ func enemydefeated():
 			chance = chance*bonus
 			if rand_range(0,100) <= chance:
 				if i == 'gold':
-					goldearned += round(rand_range(unit.rewardgold[0], unit.rewardgold[1]))
+					var gold = round(rand_range(unit.rewardgold[0], unit.rewardgold[1]))
 					if globals.state.spec == 'Hunter':
-						goldearned *= 2
+						gold *= 2
+					goldearned += gold
 				else:
 					if globals.itemdict.has(i):
 						var item = globals.itemdict[i]
@@ -958,7 +959,7 @@ func enemydefeated():
 	builditemlists()
 	
 	if globals.state.sidequests.cali == 18 && defeated.names.find('Bandit 1') >= 0 && currentzone.code == 'forest':
-		main.popup("One of the defeated bandits in exchange for their life reveal location of their camp you've been in search for. ")
+		main.popup("One of the defeated bandits in exchange for their life reveals the location of their camp you've been searching for. ")
 		globals.state.sidequests.cali = 19
 
 func buildcapturelist():
@@ -1205,7 +1206,7 @@ func _on_confirmwinning_pressed(): #0 leave, 1 capture, 2 rape, 3 kill
 			else:
 				text += defeated.units[i].dictionary("You have released $race $child and set $him free.\n")
 				globals.state.reputation[location] += rand_range(1,2)
-				if randf() < 0.25 + globals.state.reputation[location]/3 && reward == false:
+				if randf() < 0.25 + globals.state.reputation[location]/20 && reward == false:
 					reward = true
 					rewardslave = defeated.units[i]
 					rewardslavename = defeated.names[i]
@@ -1241,17 +1242,17 @@ func _on_confirmwinning_pressed(): #0 leave, 1 capture, 2 rape, 3 kill
 		if orgyarray.size() >= 2: ### See if there's more than 1 enemy to rape
 			text += "After freeing those left from their clothes, you joyfully start to savour their bodies one after another. "
 		else:
-			text += "You undress sole defeated and without further hesitation mercilessly rape " + orgyarray[0].dictionary("$race $child") + ". \n"
+			text += "You undress your prisoner and without further hesitation mercilessly rape " + orgyarray[0].dictionary("$race $child") + ". \n"
 		for i in globals.state.playergroup:
 			var person = globals.state.findslave(i)
 			if killed == true && person.fear < 50 && person.loyal < 40:
 				person.fear += rand_range(20,30)
 			if person.sexuals.unlocked == false:
 				if person.loyal < 30:
-					text+= person.dictionary('\n$name watches at your actions with digust, eventually averting $his eyes. ')
+					text+= person.dictionary('\n$name watches your actions with digust, eventually averting $his eyes. ')
 					person.obed += -rand_range(15,25)
 				else:
-					text += person.dictionary('\n$name watches at your deeds with interest, occassionally rustling around $his waist. ')
+					text += person.dictionary('\n$name watches your deeds with interest, occasionally rustling around $his waist. ')
 					person.lust = 20
 			elif person.sexuals.unlocked == true:
 				if person.lust >= 50 && person.lewdness >= 40:
@@ -1259,9 +1260,9 @@ func _on_confirmwinning_pressed(): #0 leave, 1 capture, 2 rape, 3 kill
 					person.asser += rand_range(6,12)
 					person.lastsexday = globals.resources.day
 					person.lust -= rand_range(5,15)
-					text += person.dictionary('\n$name, overwhelemed by situation, joins you and pleasures $himself with one of the captives. ')
+					text += person.dictionary('\n$name, overwhelemed by the situation, joins you and pleasures $himself with one of the captives. ')
 				else:
-					text += person.dictionary("\n$name does not appear to be very interested in ongoing action and just waits patiently.")
+					text += person.dictionary("\n$name does not appear to be very interested in the ongoing action and just waits patiently.")
 		for i in orgyarray:
 			var temp = rand_range(3,5)
 			globals.resources.mana += temp
@@ -1302,7 +1303,7 @@ func capturedecide(stage): #1 - no reward, 2 - material, 3 - sex, 4 - join
 		globals.state.reputation[location] += 1
 	elif stage == 2:
 		if randf() >= 0.25:
-			text = "After getting through $his belongings, $name passes you some valueable and gold. "
+			text = "After getting through $his belongings, $name passes you some valueables and gold. "
 			var goldreward = round(rand_range(3,6)*10)
 			if globals.state.spec == 'Hunter':
 				goldreward *= 2
@@ -1319,7 +1320,7 @@ func capturedecide(stage): #1 - no reward, 2 - material, 3 - sex, 4 - join
 		if rand_range(0,100) >= 35 + globals.state.reputation[location]/2:
 			text = "$name hastily refuses and retreats excusing $himself. "
 		else:
-			text = "After brief pause, $name gives you an accepting nod. After you seclude to nearby bushes, $he rewards you with passionate session. "
+			text = "After a brief pause, $name gives you an accepting nod. After you seclude to nearby bushes, $he rewards you with a passionate session. "
 			globals.resources.mana += 5
 	elif stage == 4:
 		if rand_range(0,100) >= 20 + globals.state.reputation[location]/4:
@@ -1328,7 +1329,7 @@ func capturedecide(stage): #1 - no reward, 2 - material, 3 - sex, 4 - join
 			rewardslave.obed = 85
 			rewardslave.stress = 10
 			globals.slaves = rewardslave
-			text = "$name observes you for some time, measuring you words, but to your surprise, $he complies either out of symphathy, or out of desperate life $he had to carry. "
+			text = "$name observes you for some time, measuring your words, but to your surprise, $he complies either out of symphathy, or out of desperate life $he had to carry. "
 	main.dialogue(true,self,rewardslave.dictionary(text))
 	
 
@@ -1426,7 +1427,7 @@ func gornyris():
 		if globals.resources.gold < 1000 || globals.itemdict.deterrentpot.amount < 1 || globals.state.sidequests.yris < 5:
 			text += "\n\n[color=yellow]You decide, that you should prepare before putting your money on the table.[/color] "
 			if globals.state.sidequests.yris < 5:
-				text += "\n\nPerhaps, somebody skilled in aclhemy might shine some light upon your previous finding. "
+				text += "\n\nPerhaps, somebody skilled in alchemy might shine some light upon your previous finding. "
 			buttons.append({text = "Accept (1000 Gold)", function = "gornyrisaccept", args = 4, disabled = true})
 		else:
 			buttons.append({text = "Accept (1000 Gold)", function = "gornyrisaccept", args = 4})
@@ -1888,7 +1889,7 @@ func unloadgroup():
 			i.sleep = 'jail'
 			get_parent().infotext(i.dictionary("$name has been moved to jail"),'green')
 		else:
-			get_parent().infotext(i.dictionary("With no free cells in jail $name has been assigned to communal room"),'yellow')
+			get_parent().infotext(i.dictionary("With no free cells in jail $name has been assigned to the communal room"),'yellow')
 	for i in globals.state.backpack.stackables:
 		var item = globals.itemdict[i]
 		if item.type in ['ingredient']:

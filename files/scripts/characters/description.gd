@@ -9,7 +9,11 @@ func getslavedescription(tempperson, mode = 'default'):
 	var text = basics() + features() + genitals() + mods() + tattoo() + piercing()
 	if person.customdesc != '':
 		text += '\n\n' + person.customdesc
-	text = person.dictionary(text)
+	if person == globals.player:
+		text = person.dictionaryplayerplus(person.dictionaryplayer(text))
+	else:
+		text = person.dictionary(text)
+	
 	if text.find('[furcolor]'):
 		text = text.replace('[furcolor]', getdescription('furcolor'))
 	
@@ -181,7 +185,7 @@ func race():
 
 func entry():
 	var text = ''
-	if globals.slaves.find(person) >= 0 || globals.player == person || person.fromguild == true:
+	if globals.slaves.find(person) >= 0 || globals.player == person || person.fromguild == true || globals.get_tree().get_current_scene().get("makeoverPerson") != null:
 		if person.sleep == 'jail':
 			text = 'Behind the iron bars you see '
 		elif globals.player == person:

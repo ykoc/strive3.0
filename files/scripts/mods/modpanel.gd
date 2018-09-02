@@ -18,6 +18,8 @@ var activemods = []
 
 
 func _ready():
+	if globals.developmode == true:
+		return
 	var dir = Directory.new()
 	var file = File.new()
 	var files = globals.dir_contents(filedir)
@@ -44,7 +46,7 @@ func _ready():
 		dir.open(i)
 		mods_dictionary[i] = get_mod(i)
 	if !dir.dir_exists(backupdir) || globals.dir_contents(backupdir).size() <= 0:
-		 storebackup()
+		storebackup()
 	
 #	order config file management
 	
@@ -54,7 +56,7 @@ func _ready():
 	var text = file.get_as_text()
 	file.close()
 	
-	if str(text) != str(globals.gameversion):
+	if str(text).strip_edges() != str(globals.gameversion):
 		storebackup()
 
 
@@ -104,6 +106,10 @@ func saveconfig():
 func storebackup(): #clears and restores backups
 	var file = File.new()
 	var dir = Directory.new()
+	
+	if globals.developmode == true:
+		print("Debug mode: No backup stored.")
+		return
 	
 	print("Making Backup...")
 	for i in globals.dir_contents(backupdir):
@@ -256,183 +262,125 @@ func get_mod(string):
 	return mod
 
 func apply_file_to_dictionary(file_name, string):
-	var regex_dictionary = {}
-	#var func_regex = "(func\\s+\\w*.*).*(([\r\n]*[\\t#]+.*)*)"
-	var func_regex = "(func\\s+\\w*)(.*([\r\n]*[\\t#]+.*)*)"
-	var class_regex = "(class\\s+\\w*).*(([\r\n]*[\\t#]+.*)*)"
-	var var_regex = "(var.*=)\\s([{]([^\\{\\}]*[\r\n]*)*[}])?([^\\{\\}\\s]*)"
-	var onready_var_regex = "(onready\\svar.*=).*([\\{]([^\\{\\}]*[\r\n]*)*[\\}])?"
-	var signal_regex = "(signal\\s.*)"
-	var tag_regex = "<(\\w*)(\\s+\\d+)?(\\s\\d+)?>"
-	var add_to = "AddTo"
-	var remove_from = "RemoveFrom"
-	var full_func = RegEx.new()
-	full_func.compile(func_regex)
-	var full_var = RegEx.new()
-	full_var.compile(var_regex)
-	var full_signal = RegEx.new()
-	full_signal.compile(signal_regex) 
-	var full_onready = RegEx.new()
-	full_onready.compile(onready_var_regex)
-	var full_class = RegEx.new()
-	full_class.compile(class_regex)
-	var full_tag = RegEx.new()
-	full_tag.compile(tag_regex) 
-	
-	var key
-	var file_string
 	#print(file_dictionary)
 	if file_dictionary.has(file_name):
-		key = file_dictionary[file_dictionary.find(file_name)]
-		file.open(file_dictionary[file_dictionary.find(file_name)], File.READ)
-		file_string = file.get_as_text()
-		file.close()
 		file.open(file_name, File.READ)
 		temp_mod_scripts[file_name] = file.get_as_text()
 		file.close()
-	if key != null:
 		var offset = 0
-		var has_next = true
-		while has_next :
-			file_string = temp_mod_scripts[key]
-			var all_func = full_func.search_all(file_string)
-			var all_var = full_var.search_all(file_string)
-			var all_signal = full_signal.search_all(file_string)
-			var all_onready = full_onready.search_all(file_string)
-			var all_class = full_class.search_all(file_string)
-			var all_tag = full_tag.search_all(file_string)
-			var which_operation = "NULL"
-			var next_func = full_func.search(string, offset)
-			var next_var = full_var.search(string, offset)
-			var next_signal = full_signal.search(string, offset)
-			var next_onready = full_onready.search(string, offset)
-			var next_class = full_class.search(string, offset)
-			var next_tag = full_tag.search(string, offset)
-			var new_offset = 0
-			has_next = false
-			var current_match
-			if next_func != null && (new_offset == 0 || new_offset == -1 || new_offset > next_func.get_start()) && next_func.get_start() > -1:
-				new_offset = next_func.get_start()
-				current_match = next_func
-				which_operation = "FUNC"
-				has_next = true
-			if next_var != null && (new_offset == 0 || new_offset == -1 || new_offset > next_var.get_start()) && next_var.get_start() > -1:
-				new_offset = next_var.get_start()
-				current_match = next_var
-				which_operation = "VAR"
-				has_next = true
-			if next_signal != null && (new_offset == 0 || new_offset == -1 || new_offset > next_signal.get_start()) && next_signal.get_start() > -1:
-				new_offset = next_signal.get_start()
-				current_match = next_signal
-				which_operation = "SIGN"
-				has_next = true
-			if next_onready != null && (new_offset == 0 || new_offset == -1 || new_offset > next_onready.get_start()) && next_onready.get_start() > -1:
-				new_offset = next_onready.get_start()
-				current_match = next_onready
-				which_operation = "ONREADY"
-				has_next = true
-			if next_class != null && (new_offset == 0 || new_offset == -1 || new_offset > next_class.get_start()) && next_class.get_start() > -1:
-				new_offset = next_class.get_start()
-				current_match = next_class
-				which_operation = "CLASS"
-				has_next = true
-			if new_offset != 0 :
-				new_offset = new_offset + current_match.get_string().length()
-			var file_match
-			if has_next && (next_tag == null || new_offset <= next_tag.get_start() || next_tag.get_start() == -1):
-				if which_operation == "FUNC":
-					file_match = full_func.search_all(file_string)
-				elif which_operation == "VAR":
-					file_match = full_var.search_all(file_string)
-				elif which_operation == "SIGN":
-					file_match = full_signal.search_all(file_string)
-				elif which_operation == "ONREADY":
-					file_match = full_onready.search_all(file_string)
-				elif which_operation == "CLASS":
-					file_match = full_class.search_all(file_string)
-				else:
-					#operation not supported
-					pass
-				var found_match = false
-				for nested_match in file_match:
-					if(current_match.get_string(1) == nested_match.get_string(1)):
-						temp_mod_scripts[key] = temp_mod_scripts[key].replacen(nested_match.get_string(), current_match.get_string())
-						found_match = true
-				if !found_match :
-					#new_offset += current_match.get_string().length() - 1
-					temp_mod_scripts[key] = temp_mod_scripts[key] + "\r\n" + current_match.get_string(1)
-				pass
-			elif has_next :
-				if which_operation == "FUNC":
-					file_match = full_func.search_all(file_string)
-				elif which_operation == "VAR":
-					file_match = full_var.search_all(file_string)
-				elif which_operation == "SIGN":
-					file_match = full_signal.search_all(file_string)
-				elif which_operation == "ONREADY":
-					file_match = full_onready.search_all(file_string)
-				elif which_operation == "CLASS":
-					file_match = full_class.search_all(file_string)
-				else:
-					#operation not supported
-					pass
-				if next_tag.get_string(1) == add_to:
-					var param = next_tag.get_string(2).to_int()
-					for nested_match in file_match:
-						if(current_match.get_string(1) == nested_match.get_string(1)):
-							var pool_string = nested_match.get_string().split("\n")
-							if param > pool_string.size() :
-								param = pool_string.size()
-							var new_string = current_match.get_string()
-							
-							if which_operation in ["FUNC",'CLASS']:
-								var param_temp = param
-								for i in current_match.get_string(2).split("\n"):
-									if i != "":
-										pool_string.insert(param_temp, i)
-										param_temp += 1
-								temp_mod_scripts[key] = temp_mod_scripts[key].replacen(nested_match.get_string(), pool_string.join("\n"))
-							elif which_operation == "VAR":
-								var param_temp = param
-								for i in current_match.get_string(2).replacen("{", "").replacen("}", "").split("\n"):
-									if i != "":
-										pool_string.insert(param_temp, i)
-										param_temp += 1
-								temp_mod_scripts[key] = temp_mod_scripts[key].replacen(nested_match.get_string(), pool_string.join("\n"))
-							elif which_operation == "SIGN":
-								pool_string.insert(param, current_match.get_string(1))
-								temp_mod_scripts[key] = temp_mod_scripts[key].replacen(nested_match.get_string(), pool_string.join("\n"))
-							elif which_operation == "ONREADY":
-								pool_string.insert(param, current_match.get_string(2))
-								temp_mod_scripts[key] = temp_mod_scripts[key].replacen(nested_match.get_string(), pool_string.join("\n"))
-							elif which_operation == "CLASS":
-								var param_temp = param
-								for i in current_match.get_string(2).split("\n"):
-									if i != "":
-										pool_string.insert(param_temp, i)
-										param_temp += 1
-								temp_mod_scripts[key] = temp_mod_scripts[key].replacen(nested_match.get_string(), pool_string.join("\n"))
-							else:
-								#operation not supported
-								pass
-							break
-				elif next_tag.get_string(1) == remove_from:
-					# does not appear functional
-					var param = next_tag.get_string(2).to_int()
-					var param_2 = next_tag.get_string(3).to_int()
-					for nested_match in file_match:
-						if(current_match.get_string(1) == nested_match.get_string(1)):
-							var new_string = nested_match.get_string().split("\n")
-							for i in range(0, param_2 - param + 1):
-								if i < new_string.size():
-									new_string.remove(param)
-							temp_mod_scripts[key] = temp_mod_scripts[key].replacen(nested_match.get_string(), new_string.join("\n"))
-							break
-					pass
-				else:
-					# operation not supported
-					pass
-			offset = new_offset + 1
+		while offset != -1 :
+			offset = apply_next_element_to_dictionary(file_name, string, offset)
+
+func apply_next_element_to_dictionary(key, string, offset):
+	var regex_string_dictionary = {}
+	regex_string_dictionary["FUNC"] = "(func\\s+[\\w][\\w\\d]*).*(([\r\n]*[\\t#]+.*)*)"
+	regex_string_dictionary["VAR"] = "(var.*=)\\s([{]([^\\{\\}]*[\r\n]*)*[}])?([^\\{\\}\\s]*)"
+	regex_string_dictionary["SIGN"] = "(signal\\s.*)"
+	regex_string_dictionary["ONREADY"] = "(onready\\svar.*=).*([\\{]([^\\{\\}]*[\r\n]*)*[\\}])?"
+	regex_string_dictionary["CLASS"] = "(class\\s+[\\w][\\w\\d]*).*(([\r\n]*[\\t#]+.*)*)"
+	
+	var tag_regex = "<(\\w*)(\\s+\\d+)?(\\s\\d+)?>"
+	var add_to = "AddTo"
+	var remove_from = "RemoveFrom"
+	
+	var full_tag = RegEx.new()
+	full_tag.compile(tag_regex) 
+	
+	var has_next = false
+	var file_string = temp_mod_scripts[key]
+	var which_operation = "NULL"
+	var current_match
+	var new_offset = 0
+	
+	for i in regex_string_dictionary.keys():
+		var next_func = RegEx.new()
+		next_func.compile(regex_string_dictionary[i])
+		var next_match = next_func.search(string, offset)
+		if next_match != null && (new_offset == 0 || new_offset > next_match.get_start()) && next_match.get_start() > -1:
+			new_offset = next_match.get_start()
+			current_match = next_match
+			which_operation = i
+			has_next = true
+	
+	var next_tag = full_tag.search(string, offset)
+	if new_offset != 0 :
+		new_offset = new_offset + current_match.get_string().length()
+	var file_match
+	if has_next && (next_tag == null || new_offset <= next_tag.get_start() || next_tag.get_start() == -1):
+		var regex_match = RegEx.new()
+		if regex_string_dictionary.has(which_operation):
+			regex_match.compile(regex_string_dictionary[which_operation])
+			file_match = regex_match.search_all(file_string)
+		var found_match = false
+		for nested_match in file_match:
+			if(current_match.get_string(1) == nested_match.get_string(1)):
+				temp_mod_scripts[key] = temp_mod_scripts[key].replacen(nested_match.get_string(), current_match.get_string())
+				found_match = true
+		if !found_match :
+			temp_mod_scripts[key] = temp_mod_scripts[key] + "\r\n" + current_match.get_string()
+		pass
+	elif has_next :
+		var regex_match = RegEx.new()
+		if regex_string_dictionary.has(which_operation):
+			regex_match.compile(regex_string_dictionary[which_operation])
+			file_match = regex_match.search_all(file_string)
+		if next_tag.get_string(1) == add_to:
+			var param = next_tag.get_string(2).to_int() + 1
+			if param == 0:
+				param = -1
+			
+			for nested_match in file_match:
+				if(current_match.get_string(1) == nested_match.get_string(1)):
+					var pool_string = nested_match.get_string().split("\n")
+					if param > pool_string.size() :
+						param = -1
+					var new_string = current_match.get_string()
+					if which_operation in ["FUNC",'CLASS']:
+						var param_temp = param
+						for i in current_match.get_string(2).split("\n"):
+							if i != "":
+								pool_string.insert(param_temp, i)
+								if param_temp > 0:
+									param_temp += 1
+						temp_mod_scripts[key] = temp_mod_scripts[key].replacen(nested_match.get_string(), pool_string.join("\n"))
+					elif which_operation == "VAR":
+						var param_temp = param
+						for i in current_match.get_string(2).replacen("{", "").replacen("}", "").split("\n"):
+							if i != "":
+								pool_string.insert(param_temp, i)
+								if param_temp > 0:
+									param_temp += 1
+						temp_mod_scripts[key] = temp_mod_scripts[key].replacen(nested_match.get_string(), pool_string.join("\n"))
+					elif which_operation == "SIGN":
+						pool_string.insert(param, current_match.get_string(1))
+						temp_mod_scripts[key] = temp_mod_scripts[key].replacen(nested_match.get_string(), pool_string.join("\n"))
+					elif which_operation == "ONREADY":
+						pool_string.insert(param, current_match.get_string(2))
+						temp_mod_scripts[key] = temp_mod_scripts[key].replacen(nested_match.get_string(), pool_string.join("\n"))
+					else:
+						#operation not supported
+						pass
+					break
+		elif next_tag.get_string(1) == remove_from:
+			var param = next_tag.get_string(2).to_int()
+			var param_2 = next_tag.get_string(3).to_int()
+			for nested_match in file_match:
+				if(current_match.get_string(1) == nested_match.get_string(1)):
+					var new_string = nested_match.get_string().split("\n")
+					for i in range(0, param_2 - param + 1):
+						if i < new_string.size():
+							new_string.remove(param)
+					temp_mod_scripts[key] = temp_mod_scripts[key].replacen(nested_match.get_string(), new_string.join("\n"))
+					break
+			pass
+		else:
+			# operation not supported
+			pass
+	offset = new_offset + 1
+	if(has_next):
+		 return offset
+	else:
+		 return -1
 
 func _on_disablemods_pressed():
 	loadorder.clear()

@@ -938,7 +938,7 @@ armortentacle = {
 	code = 'armortentacle',
 	name = 'Living Armor',
 	icon = "res://files/images/items/armortentacle.png",
-	description = "An unearthy semi-living object which can be weared. Feeds on the fluids of wearer which periodically stimulates in private places. ",
+	description = "An unearthly semi-living object which can be worn. Feeds on the fluids of wearer which periodically stimulates in private places. ",
 	effect = [{type = 'incombat', effect = 'protection', effectvalue = 50, descript = "50% Protection"},{type = 'incombat', effect = 'armor', effectvalue = 8, descript = "+8 Armor"},{type = 'onequip', effect = 'health', effectvalue = 50, descript = "+50 Health"},{type = 'incombatturn', effect = 'lust', effectvalue = 2, descript = "lust grows during the combat"}],
 	recipe = '',
 	reqs = null,
@@ -1013,7 +1013,7 @@ zoebook = {
 	name = 'Mysterious Book',
 	icon = load("res://files/images/items/mysteriousbook.png"),
 	description = "An ancient book written in unknown language...",
-	effect = "",
+	effect = "zoebook",
 	recipe = '',
 	cost = 0,
 	type = 'quest',
@@ -1621,7 +1621,7 @@ func teleportunlock(item):
 	globals.resources.gold -= item.cost
 	globals.state.portals[item.code.replace('teleport','')].enabled = true
 	if item.code != 'teleportumbra':
-		globals.get_tree().get_current_scene().popup("reqs portal to " + item.code.replace('teleport','').capitalize() + '.')
+		globals.get_tree().get_current_scene().popup("Portal to " + item.code.replace('teleport','').capitalize() + ' has been unlocked.')
 	else:
 		globals.get_tree().get_current_scene().get_node("outside").sebastianquest(4)
 		globals.get_tree().get_current_scene().get_node("outside").shopclose()
@@ -1642,4 +1642,7 @@ func aydajewel(item):
 	globals.state.sidequests.ayda = 15
 	globals.main.infotext('Quest advanced','yellow')
 	main.popup("You hide the rare jewelry in your pocket. ")
-	
+
+func zoebook(item):
+	main.popup("The Mysterious Book Acquired. ")
+	globals.itemdict['zoebook'].amount += 1

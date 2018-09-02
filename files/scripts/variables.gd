@@ -11,6 +11,9 @@ var consumerope = 1
 var learnpointsperstat = 3
 
 
+var playerstartbeauty = 40
+var characterstartbeauty = 40
+
 #Pregnancies
 var pregduration = 31
 var growuptimechild = 15

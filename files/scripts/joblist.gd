@@ -2,7 +2,9 @@ extends Popup
 
 var slave 
 var jobdict = globals.jobs.jobdict
-
+#QMod - Variables
+const StaffJobs = ['cooking', 'maid', 'nurse', 'headgirl', 'jailer', 'farmmanager']
+var mansionStaff = {'headslave' : null, 'jailer' : null, 'alchemyAssistant' : null, 'librarian' : null, 'labAssistant' : null, 'farmManager' : null, 'cook' : null, 'nurse' : null, 'maid' : []}
 func sortjobs(first,second):
 	if first.order < second.order:
 		return true
@@ -77,7 +79,38 @@ func joblist():
 			#newbutton.connect("mouse_exit",self,'jobtooltiphide')
 
 func choosejob(button):
+	var oldJob = slave.work
 	slave.work = button.get_meta('job').code
+	
+	#QMod - Staff Jobs
+	if oldJob in StaffJobs: #Clear old job
+		match oldJob:
+			'cooking':
+				mansionStaff.cook = null
+			'nurse':
+				mansionStaff.nurse = null
+			'headgirl':
+				mansionStaff.headslave = null
+			'jailer':
+				mansionStaff.jailer = null
+			'farmmanager':
+				mansionStaff.farmManager = null
+			'maid':
+				mansionStaff.maid.erase(slave)
+	if slave.work in StaffJobs: #Assign new job
+		match slave.work:
+			'cooking':
+				mansionStaff.cook = slave
+			'nurse':
+				mansionStaff.nurse = slave
+			'headgirl':
+				mansionStaff.headslave = slave
+			'jailer':
+				mansionStaff.jailer = slave
+			'farmmanager':
+				mansionStaff.farmManager = slave
+			'maid':
+				mansionStaff.maid.append(slave)
 	_on_jobcancel_pressed()
 	get_tree().get_current_scene().slavepanel.slavetabopen()
 	if get_tree().get_current_scene().get_node("slavelist").is_visible():

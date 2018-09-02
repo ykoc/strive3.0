@@ -97,7 +97,7 @@ entrancement = {
 fear = {
 	code = 'fear',
 	name = 'Fear',
-	description = 'Invokes subconscious feel of terror onto the targer. Can be effective punishment. ',
+	description = 'Invokes subconscious feel of terror onto the target. Can be effective punishment. ',
 	effect = 'feareffect',
 	manacost = 10,
 	req = 0,
@@ -123,7 +123,7 @@ domination = {
 mutate = {
 	code = 'mutate',
 	name = 'Mutation',
-	description = 'Enforces mutation onto targe. Results may vary drastically. ',
+	description = 'Enforces mutation onto target. Results may vary drastically. ',
 	effect = 'mutateeffect',
 	manacost = 15,
 	req = 2,
@@ -499,7 +499,7 @@ func mutate(power=2, silent = false):
 			person.beautybase = round(rand_range(10, 90))
 		elif line == "lactation":
 			if person.lactation == false:
-				text += "$name's breats started secreting milk. "
+				text += "$name's breasts started secreting milk. "
 				person.lactation = true
 			else:
 				power += 1

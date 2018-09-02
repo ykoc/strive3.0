@@ -815,17 +815,13 @@ func startscene(scenescript, cont = false, pretext = ''):
 		if i in givers+takers:
 			i.lastaction = dict
 			if i.sens >= 1000:
-				if i.person.sexexp.orgasms.has(i.lastaction.scene.code):
-					i.person.sexexp.orgasms[i.lastaction.scene.code] += 1
-				else:
-					i.person.sexexp.orgasms[i.lastaction.scene.code] = 1
-				for k in i.lastaction.givers + i.lastaction.takers:
-					if i != k:
-						if i.person.sexexp.orgasmpartners.has(k.person.id):
-							i.person.sexexp.orgasmpartners[k.person.id] += 1
-						else:
-							i.person.sexexp.orgasmpartners[k.person.id] = 1
-				textdict.orgasms += '\n' + orgasm(i)
+				textdict.orgasms += checkorgasm(i)
+		else:
+			for j in ongoingactions:
+				if i in j.givers + j.takers:
+					i.lastaction = j
+					if i.sens >= 1000:
+						textdict.orgasms += checkorgasm(i)
 		if not i.lastaction in ongoingactions:
 			i.lastaction = null
 		
@@ -845,6 +841,20 @@ func startscene(scenescript, cont = false, pretext = ''):
 	rebuildparticipantslist()
 	
 
+func checkorgasm(i):
+	var text = ''
+	if i.person.sexexp.orgasms.has(i.lastaction.scene.code):
+		i.person.sexexp.orgasms[i.lastaction.scene.code] += 1
+	else:
+		i.person.sexexp.orgasms[i.lastaction.scene.code] = 1
+	for k in i.lastaction.givers + i.lastaction.takers:
+		if i != k:
+			if i.person.sexexp.orgasmpartners.has(k.person.id):
+				i.person.sexexp.orgasmpartners[k.person.id] += 1
+			else:
+				i.person.sexexp.orgasmpartners[k.person.id] = 1
+	text += '\n' + orgasm(i)
+	return text
 
 #Effects: pleasure, excitement, pain, deviancy, obedience 
 
@@ -1072,7 +1082,8 @@ func orgasm(member):
 					penistext += " {^semen:seed:cum} {^pours:shoots:pumps:sprays} into [names2] " + temptext + " as [he1] ejaculate[s/1]."
 				elif scene.scene.takerpart == 'nipples':
 					penistext += " {^semen:seed:cum} fills [names2] hollow nipples. "
-				
+				elif scene.scene.takerpart == 'penis':
+					penistext += " {^semen:seed:cum} {^pours:shoots:sprays}, covering [names2] [penis2]. "
 				penistext = decoder(penistext, [member], scene.takers)
 			#penis in taker slot
 			elif scene.takers.find(member) >= 0:

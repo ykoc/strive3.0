@@ -284,13 +284,21 @@ func _ready():
 #	starttutorial()
 
 func _input(event):
+	if event.is_echo() == true || event.is_pressed() == false :
+		return
 	if event.is_action("LMB") && event.is_pressed():
 		if get_node("speech/RichTextLabel").get_visible_characters() < get_node("speech/RichTextLabel").get_total_character_count():
 			get_node("speech/RichTextLabel").set_visible_characters(get_node("speech/RichTextLabel").get_total_character_count())
 		else:
 			if lastline != true && currentdict != null && (get_node("tutsprite").modulate.a >= 1 || get_node("tutsprite").modulate.a <= 0):
 				advance()
-	
+	var buttoncontainer = $response/ScrollContainer/VBoxContainer
+	if str(event.as_text().replace("Kp ",'')) in str(range(1,9)):
+		if buttoncontainer.get_parent().get_parent().visible == false:
+			return
+		var key = int(event.as_text())
+		if buttoncontainer.get_children().size() >= key+1 && buttoncontainer.get_child(key).disabled == false && self.is_visible() == true:
+			buttoncontainer.get_child(key).emit_signal("pressed")
 
 func _process(delta):
 	if get_node("speech/RichTextLabel").get_visible_characters() <= get_node("speech/RichTextLabel").get_total_character_count():

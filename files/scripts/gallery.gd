@@ -56,7 +56,7 @@ scenes = [{code = 'mapleflirt', name = 'Risky Affair', unlocked = false, text = 
 },
 ayda = {
 unlocked = false, name = 'Ayda', descript = chardescript.ayda, sprite = 'aydanormal', naked = 'aydanaked', nakedunlocked = false,
-scenes = [{code = 'aydasex', name = "Deferred Reward", unlocked = false, text = "Be persistent"}]
+scenes = [{code = 'aydasex1', name = "Deferred Reward", unlocked = false, text = "Be persistent"}]
 },
 garthor = {
 unlocked = false, name = 'Garthor', descript = chardescript.garthor, sprite = 'garthor', naked = 'null', nakedunlocked = false,
@@ -462,6 +462,7 @@ goblin = load("res://files/images/goblin.png"),
 centaur = load("res://files/images/centaur.png"),
 forestspirit = load("res://files/images/forestspirit.png"),
 frostfordtrader = load("res://files/images/frostfordtrader.png"),
+frostfordslaver = load("res://files/images/ffslaver.png"),
 }
 var scenes = {
 finale = load("res://files/images/scene/finale.png"),
@@ -483,7 +484,8 @@ yrisbj = load("res://files/images/sexscenes/yrisbj.png"),
 yrissex = load("res://files/images/sexscenes/yrissex.png"),
 zoetentacle1 = load("res://files/images/sexscenes/zoetentacle.png"),
 zoetentacle2 = load("res://files/images/sexscenes/zoetentacle2.png"),
-aydasex = null,
+aydasex1 = load("res://files/images/sexscenes/aydasex1.png"),
+aydasex2 = load("res://files/images/sexscenes/aydasex2.png"),
 }
 var backgrounds = {
 mansion = load("res://files/backgrounds/mansion.png"),

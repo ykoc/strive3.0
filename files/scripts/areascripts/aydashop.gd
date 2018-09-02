@@ -70,19 +70,16 @@ func aydaquest():
 	if ayda == null:
 		globals.state.sidequests.ayda = 100
 		return
-	match globals.state.sidequests.ayda:
+	match int(globals.state.sidequests.ayda):
 		7:
 			text = textnode.aydarequest1
 			globals.state.sidequests.ayda = 8
-			#globals.state.sidequests.ayda = 9
 		10:
 			text = textnode.aydarequest2
 			globals.state.sidequests.ayda = 11
-			#globals.state.sidequests.ayda = 12
 		13:
 			text = textnode.aydarequest3
 			globals.state.sidequests.ayda = 14
-			#globals.state.sidequests.ayda = 15
 		
 	gornayda()
 	globals.main.maintext = globals.player.dictionary(text)

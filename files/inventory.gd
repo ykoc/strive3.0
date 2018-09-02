@@ -465,10 +465,13 @@ func discard(button, confirm = false):
 				button.queue_free()
 	elif state == 'backpack':
 		globals.state.backpack.stackables[item.code] -= 1
-		button.get_node('number').set_text(str(globals.state.backpack.stackables[item.code]))
-		if globals.state.backpack.stackables[item.code] <= 0:
-			globals.state.backpack.stackables.erase(item.code)
+		if !globals.state.backpack.stackables.has(item.code):
+			
 			button.visible = false
+		else:
+			button.get_node('number').set_text(str(globals.state.backpack.stackables[item.code]))
+		#if globals.state.backpack.stackables[item.code] <= 0:
+		#	globals.state.backpack.stackables.erase(item.code)
 		calculateweight()
 
 func movetobackpack(button):

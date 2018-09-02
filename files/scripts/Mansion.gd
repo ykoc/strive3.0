@@ -9,7 +9,7 @@ var testslaveorigin = ['slave','poor','commoner','rich','noble']
 var currentslave = 0 setget currentslave_set
 var selectedslave = -1
 var texture = null
-var startcombatzone = "grove"
+var startcombatzone = "undercityhall"
 var nameportallocation
 var enddayprocess = false
 onready var maintext = '' setget maintext_set, maintext_get
@@ -35,13 +35,14 @@ func _ready():
 		get_node("startcombat").show()
 		get_node("new slave button").show()
 		get_node("debug").show()
-		globals.player.name = ''
 	rebuildrepeatablequests()
 	globals.main = self
 	globals.items.main = self
+	globals.mainscreen = 'mansion'
 	globals.resources.panel = get_node("ResourcePanel")
 	globals.events.textnode = globals.questtext
-	if debug == true:
+	if debug == true && globals.player.unique != 'player':
+		globals.player.name = ''
 		globals.player = globals.newslave('Human', 'teen', 'male')
 		globals.player.ability.append('escape')
 		globals.player.ability.append('heal')
@@ -276,6 +277,7 @@ func startending():
 
 func _on_new_slave_button_pressed():
 	globals.resources.day = 2
+	globals.state.upcomingevents.append({code = 'ssinitiate', duration = 1})
 	for i in globals.state.tutorial:
 		globals.state.tutorial[i] = true
 	#music_set('mansion')
@@ -310,6 +312,7 @@ func _on_new_slave_button_pressed():
 		globals.state.unstackables[str(tmpitem.id)] = tmpitem
 		globals.items.enchantrand(tmpitem)
 	globals.slaves = person
+	person.unique = 'startslave'
 	globals.player.stats.agi_mod = 5
 	person.stats.health_cur = 5
 	globals.state.reputation.wimborn = 41
@@ -328,8 +331,7 @@ func _on_new_slave_button_pressed():
 	globals.resources.upgradepoints += 100
 	globals.state.mainquest = 42
 	globals.state.sidequests.brothel = 1
-	globals.state.sidequests.ayda = 15
-	globals.state.upcomingevents.append({code = 'caliproposal', duration = 1})
+	globals.state.sidequests.ayda = 5
 	#globals.state.decisions.append('')
 	globals.state.rank = 3
 	#globals.state.plotsceneseen = ['garthorscene','hade1','hade2','frostfordscene']#,'slaverguild']
@@ -348,7 +350,7 @@ func _on_new_slave_button_pressed():
 	globals.state.decisions = ['tishaemilytricked','chloebrothel','ivrantaken','goodroute','mainquestelves']
 	#globals.player.relations.a = 1
 	#globals.player.relations.b = globals.player.relations.get('b', 0) + 2
-	if true:
+	if false:
 		for i in globals.characters.characters:
 			person = globals.characters.create(i)
 			globals.addrelations(globals.slaves[0], person, -800)
@@ -910,6 +912,7 @@ func _on_end_pressed():
 				person.energy += rand_range(25,45)+ person.send*6
 				for i in globals.slaves:
 					if i.sleep == 'your' && i != person:
+						globals.addrelations(person, i, 0)
 						if (person.relations[i.id] <= 200 && !person.traits.has("Fickle")) || person.traits.has("Monogamous"):
 							globals.addrelations(person, i, -rand_range(50,100))
 						else:
@@ -1190,13 +1193,17 @@ func nextdayevents():
 			checkforevents = true
 			return
 	
+	#QMod - Insert for new event system
+	var place = {region = 'any', area = 'mansion', location = 'foyer'}
+	var placeEffects = globals.events.call_events(place, 'schedule')
 	
+	#Old scheduled event system
 	for i in globals.state.upcomingevents:
 		if $scene.is_visible_in_tree() == true:
 			continue
-		if i.duration > 0:
-			i.duration -= 1
-		if i.duration <= 0:
+#		if i.duration > 0:
+#			i.duration -= 1
+#		if i.duration <= 0:
 			var text = globals.events.call(i.code)
 			globals.state.upcomingevents.erase(i)
 			if text != null:
@@ -1213,6 +1220,7 @@ func nextdayevents():
 			get_node("dailyevents").show()
 			get_node("dailyevents").currentevent = event
 			get_node("dailyevents").call(event)
+			dailyeventhappend = true
 			checkforevents = true
 			return
 	if globals.state.sandbox == false && globals.state.mainquest < 42 && !$scene.is_visible_in_tree() && !$dialogue.is_visible_in_tree():
@@ -1254,7 +1262,7 @@ func nextdayevents():
 		return
 	startnewday()
 
-
+var dailyeventhappend = false
 
 func launchrandomevent():
 	var rval
@@ -1318,8 +1326,9 @@ func startnewday():
 	autosave()
 	if globals.rules.enddayalise == 0:
 		alisebuild(aliseresults)
-	elif globals.rules.enddayalise == 1:
+	elif globals.rules.enddayalise == 1 && dailyeventhappend:
 		alisebuild(aliseresults)
+		dailyeventhappend = false
 	else:
 		alisehide()
 	_on_mansion_pressed()
@@ -1398,7 +1407,7 @@ func _on_FinishDayCloseButton_pressed():
 
 func popup(text):
 	get_node("popupmessage").popup()
-	get_node("popupmessage/popupmessagetext").set_bbcode(globals.player.dictionaryplayer(text))
+	get_node("popupmessage/popupmessagetext").set_bbcode(globals.player.dictionary(text))
 
 
 func _on_popupmessagetext_meta_clicked( meta ):
@@ -1433,7 +1442,7 @@ func dialogue(showclose, destination, dialogtext, dialogbuttons = null, sprites 
 		closebutton = true
 	else:
 		closebutton = false
-	text.set_bbcode(globals.player.dictionaryplayer(dialogtext))
+	text.set_bbcode(globals.player.dictionary(dialogtext))
 	if dialogbuttons != null:
 		counter = 1
 		for i in dialogbuttons:
@@ -1478,9 +1487,12 @@ func dialoguebuttons(array, destination, counter):
 	newbutton.get_node("Label").set_text(str(counter))
 	newbutton.show()
 	if typeof(array) == TYPE_DICTIONARY:
-		newbutton.set_text(array.text)
+		newbutton.set_text(array.text) #QMod - Handles args = [var1, var2, ...]
 		if array.has('args'):
-			newbutton.connect("pressed", destination, array.function, [array.args])
+			if typeof(array.args) == TYPE_ARRAY:
+				newbutton.connect("pressed", destination, array.function, array.args)
+			else:
+				newbutton.connect("pressed", destination, array.function, [array.args])
 		else:
 			newbutton.connect("pressed", destination, array.function)
 		if array.has('disabled') && array.disabled == true:
@@ -1496,7 +1508,7 @@ func dialoguebuttons(array, destination, counter):
 	$dialogue/buttonscroll/buttoncontainer.add_child(newbutton)
 
 func close_dialogue(mode = 'normal'):
-	#get_node("dialogue/AnimationPlayer").play_backwards("fading")
+
 	nodefade($dialogue, 0.4)
 	get_node("dialogue/blockinput").show()
 	if OS.get_name() != "HTML5" && mode != 'instant':
@@ -1546,7 +1558,10 @@ func newbuttonscene(button, target, counter):
 	newbutton.set_text(button.text)
 	newbutton.get_node("Label").set_text(str(counter))
 	if button.has('args'):
-		newbutton.connect("pressed", target, button.function , [button.args])
+		if typeof(button['args']) == TYPE_ARRAY: #QMod - Tweaked to handle arg array
+			newbutton.connect("pressed", target, button.function , button.args)
+		else:
+			newbutton.connect("pressed", target, button.function , [button.args])
 	else:
 		newbutton.connect("pressed", target, button.function)
 
@@ -1724,7 +1739,7 @@ func savefile():
 	_on_nobutton_pressed()
 	get_node("menucontrol/menupanel/SavePanel").hide()
 	get_node("menucontrol").hide()
-	get_node("music").playing = true
+	music_set('mansion')
 
 
 func _on_saveloadfolder_pressed():
@@ -1859,8 +1874,18 @@ func _on_mansion_pressed():
 	$ResourcePanel/clean.set_text(str(round(globals.state.condition)) + '%')
 	textnode.show()
 	var sleepers = globals.count_sleepers()
-	text = 'You are at your mansion, which is located near [color=aqua]'+ globals.state.location.capitalize()+'[/color].\n\n'
-	text += 'You have '
+	text = 'You are at your mansion, which is located near [color=aqua]'+ globals.state.location.capitalize()+'[/color].'
+	
+	#QMod - Call Triggered Events
+	var place = {region = 'any', area = 'mansion', location = 'foyer'}
+	var placeEffects
+	
+	placeEffects = globals.events.call_events(place, 'trigger')
+	if placeEffects.text != '':
+		text += '\n\n' + placeEffects.text
+	
+	#Fill in mansion info
+	text += '\n\nYou have '
 	if sleepers.communal > globals.state.mansionupgrades.mansioncommunal:
 		text += '[color=#ff4949]'
 	elif sleepers.communal == globals.state.mansionupgrades.mansioncommunal:
@@ -1914,8 +1939,8 @@ func _on_mansion_pressed():
 	else:
 		get_node("Navigation/laboratory").set_disabled(true)
 	music_set('mansion')
-	if globals.state.sidequests.emily == 3:
-		globals.events.emilymansion()
+#	if globals.state.sidequests.emily == 3:
+#		globals.events.emilymansion()
 	if globals.state.capturedgroup.size() > 0:
 		var array = []
 		var nojailcells = false
@@ -2573,7 +2598,7 @@ func _on_selfbutton_pressed():
 	for i in globals.state.reputation:
 		text += i.capitalize() + " - "+ reputationword(globals.state.reputation[i]) + ", "
 	text += "\nYour mage order rank: " + dict[int(globals.state.rank)]
-	if globals.state.spec != "":
+	if globals.state.spec != "" && globals.state.spec != null:
 		text += "\n\nYour speciality: [color=yellow]" + globals.state.spec + "[/color]\nBonuses: " + globals.playerspecs[globals.state.spec]
 	
 	get_node("MainScreen/mansion/selfinspect/mainstatlabel").set_bbcode(text)

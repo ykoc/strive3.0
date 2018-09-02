@@ -54,19 +54,22 @@ func _ready():
 		get_node("TabContainer/Settings/" + i).connect("pressed", self, 'ruletoggle', [i])
 	get_node("TabContainer/Settings/fullscreen").set_pressed(OS.is_window_fullscreen())
 	get_node("TabContainer/Supporter section/cheatpassword").set_text('')
+	get_node("TabContainer/Settings/fontsize").set_editable(globals.rules.fontsize)
+	$TabContainer/Settings/musicslider.connect("value_changed", self, "_on_musicslider_value_changed")
+	$TabContainer/Settings/soundslider.connect("value_changed", self, "_on_soundslider_value_changed")
+	_on_soundslider_value_changed(round(globals.rules.soundvol*3))
+	_on_musicslider_value_changed(round(globals.rules.musicvol*3))
+	checkpatreonpassword()
+	if globals.state.nopoplimit == true:
+		get_node("cheatpanel/removepopcap").set_disabled(true)
+
+func checkpatreonpassword():
 	if globals.state.password == 'fkfynroh':
 		get_node("TabContainer/Supporter section/cheats").set_disabled(false)
 		get_node("TabContainer/Supporter section/cheatpasswordenter").set_disabled(true)
 	else:
 		get_node("TabContainer/Supporter section/cheats").set_disabled(true)
 		get_node("TabContainer/Supporter section/cheatpasswordenter").set_disabled(false)
-	get_node("TabContainer/Settings/fontsize").set_editable(globals.rules.fontsize)
-	$TabContainer/Settings/musicslider.connect("value_changed", self, "_on_musicslider_value_changed")
-	$TabContainer/Settings/soundslider.connect("value_changed", self, "_on_soundslider_value_changed")
-	_on_soundslider_value_changed(round(globals.rules.soundvol*3))
-	_on_musicslider_value_changed(round(globals.rules.musicvol*3))
-	if globals.state.nopoplimit == true:
-		get_node("cheatpanel/removepopcap").set_disabled(true)
 
 func show():
 	selectedslave = null
@@ -96,7 +99,7 @@ func _on_Done_pressed():
 
 func _on_cheatpasswordenter_pressed():
 	globals.state.password = get_node("TabContainer/Supporter section/cheatpassword").get_text()
-	_ready()
+	checkpatreonpassword()
 	if get_node("TabContainer/Supporter section/cheats").is_disabled() == false:
 		if globals.state.supporter == false:
 			get_node("TabContainer/Supporter section/supporterpanel").show()

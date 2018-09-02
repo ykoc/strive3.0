@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/свидания.png-705093de8a29e82adc67743e29d4502e.stex"
+path="res://.import/ffslaver.png-512c9cb9be8a404a954c88a270cfe669.stex"
 
 [deps]
 
-source_file="res://files/buttons/dating/свидания.png"
-dest_files=[ "res://.import/свидания.png-705093de8a29e82adc67743e29d4502e.stex" ]
+source_file="res://files/images/ffslaver.png"
+dest_files=[ "res://.import/ffslaver.png-512c9cb9be8a404a954c88a270cfe669.stex" ]
 
 [params]
 

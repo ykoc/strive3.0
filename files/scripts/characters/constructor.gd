@@ -19,6 +19,8 @@ func getage(age):
 		agearray.append('adult')
 	if age == 'random' || agearray.find(age) < 0:
 		age = agearray[rand_range(0,agearray.size())]
+	if (age == 'child' && globals.rules.children == false) || (age == 'adult' && globals.rules.noadults == true):
+		age = agearray[rand_range(0,agearray.size())]
 	return age
 
 

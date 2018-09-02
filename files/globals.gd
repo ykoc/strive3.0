@@ -3,10 +3,12 @@ extends Node
 
 var effectdict = {}
 var guildslaves = {wimborn = [], gorn = [], frostford = [], umbra = []}
-var gameversion = '0.5.18'
+var gameversion = '0.5.19'
 var state = progress.new()
 var developmode = false
 var gameloaded = false
+
+var mainscreen = 'mainmenu'
 
 var filedir = 'res://files'
 var backupdir = 'res://backup'
@@ -40,7 +42,16 @@ var slavedialogues = load("res://files/scripts/slavedialogues.gd").new()
 var characters = gallery
 var patronlist = load("res://files/scripts/patronlists.gd").new()
 
-
+#QMod - Variables
+var mainQuestTexts = events.mainquestTexts
+var sideQuestTexts = events.sidequestTexts
+var places = {
+	anywhere = {region = 'any', location = 'any'},
+	nowhere = {region = 'none', location = 'none'}, #For events that aren't triggered by location?
+	wimborn = {region = 'wimborn', location = 'any'},
+	gorn = {region = 'gorn', location = 'any'},
+	frostford = {region = 'frostford', location = 'any'}
+}
 var main
 
 var slaves = [] setget slaves_set
@@ -443,7 +454,7 @@ class progress:
 	var mainquestcomplete = false
 	var rank = 0
 	var password = ''
-	var sidequests = {emily = 0, brothel = 0, cali = 0, caliparentsdead = false, chloe = 0, ayda = 0, ivran = '', yris = 0, zoe = 0, ayneris = 0, sebastianumbra = 0, maple = 0} setget quest_set
+	var sidequests = {startslave = 0, emily = 0, brothel = 0, cali = 0, caliparentsdead = false, chloe = 0, ayda = 0, ivran = '', yris = 0, zoe = 0, ayneris = 0, sebastianumbra = 0, maple = 0} setget quest_set
 	var repeatables = {wimbornslaveguild = [], frostfordslaveguild = [], gornslaveguild = []}
 	var babylist = []
 	var companion = -1
@@ -506,7 +517,8 @@ class progress:
 	
 	func quest_set(value):
 		sidequests = value
-		globals.main.infotext('Side Quest Advanced',"yellow")
+		if globals.mainscreen != 'mainmenu':
+			globals.main.infotext('Side Quest Advanced',"yellow")
 	
 	func calculateweight():
 		var slave
@@ -970,10 +982,10 @@ class person:
 			text += "$name is about to suffer from mental breakdown... "
 			color = 'red'
 		if stats.stress_cur < 66 && endvalue >= 66:
-			text += "$name has became considerably stressed. "
+			text += "$name has become considerably stressed. "
 			color = 'red'
 		elif (stats.stress_cur < 33 || stats.stress_cur >= 66) && (endvalue >= 33 && endvalue < 66):
-			text += "$name has became mildly stressed. "
+			text += "$name has become mildly stressed. "
 			color = 'yellow'
 		elif stats.stress_cur >= 33 && endvalue < 33:
 			text += "$name is no longer stressed. "
@@ -1365,7 +1377,7 @@ class person:
 	
 	func removefrommansion():
 		globals.slaves.erase(self)
-		globals.main.infotext(self.dictionary("$name $surname is no longer in your posession. "),'red')
+		globals.main.infotext(self.dictionary("$name $surname is no longer in your possession. "),'red')
 		globals.items.unequipall(self)
 		if globals.state.relativesdata.has(id):
 			globals.state.relativesdata[id].state = 'left'
@@ -1480,7 +1492,7 @@ func impregnation(mother, father = null, anyfather = false):
 	if mother.preg.has_womb == false || mother.preg.duration > 0 || mother == father || mother.effects.has("contraceptive"):
 		return
 	var rand = rand_range(0,100)
-	if main.debug == true:
+	if globals.developmode == true:
 		rand = 0
 	if mother.preg.fertility < rand:
 		if mother.traits.has("Infertile") || father.traits.has("Infertile"):
@@ -1658,7 +1670,8 @@ func slavetooltip(person):
 		node.get_node("name").text = "Master " + node.get_node("name").text
 	else:
 		node.get_node("name").set('custom_colors/font_color', Color(1,1,1))
-	node.get_node("spec").set_texture(specimages[str(person.spec)])
+	if person != globals.player:
+		node.get_node("spec").set_texture(specimages[str(person.spec)])
 	node.get_node("grade").set_texture(gradeimages[person.origins])
 	node.get_node("spec").visible = !globals.player == person
 	node.get_node("grade").visible = !globals.player == person
