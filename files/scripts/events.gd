@@ -1,12 +1,909 @@
 extends Node
 
-onready var textnode = globals.questtext
+####Resources
+var textnode = load('res://files/scripts/questtext.gd').new() #Old quest system text
+var EventBuilder = preload("res://files/scripts/event/event_builder.gd").new()
+const Quest = preload("res://files/scripts/event/quest.gd")
+
+
+#Old Variables
 var emilystate = 0
 var outside
 #Mainquests
 
 func closedialogue():
 	globals.main.close_dialogue()
+
+func closescene():
+	globals.main.closescene()
+
+###Member Variables
+#Event System Variables
+var lastEventPlace = {region = 'none', location = 'none'}
+
+#Quest Variables
+var mainquest
+var sidequests = {}
+
+var mainquestTexts
+var sidequestTexts
+
+
+###Init & Ready
+func _init():
+	init_quest()
+
+func init_quest():
+	var newQuest
+	
+	#Emily Quest
+	newQuest = EventBuilder.quest_maker('emily')
+	sidequests[newQuest.uid] = newQuest
+
+	
+###Public Function
+func call_events(place, startType, callback = null): 
+	var placeEffects
+	
+	match startType:
+		'trigger':
+			if place.hash() == lastEventPlace.hash(): #Cannot repeat or 'farm' trigger events at one place, ToFix - Perhaps make a 3-place history?
+				return placeEffects
+			else:
+				placeEffects = _call_events_trigger(place)			
+		'hook':
+			placeEffects = _call_events_hook(place, callback)
+		'schedule':
+			placeEffects = _call_events_schedule(place)
+	
+	return placeEffects
+			
+func _call_events_trigger(place): #Select one available triggered event per call
+	var availableEvents = _get_events(place, 'trigger')
+	var placeEffects = {text = ''} #Post-Event scene effects?
+	
+	if !availableEvents.empty():
+		var diceRoll = randi() % availableEvents.size()
+		var randomEvent = availableEvents[diceRoll]		
+		_process_event('start', randomEvent)
+		
+	return placeEffects
+
+func _call_events_hook(place, callback):
+	var availableEvents = _get_events(place, 'hook')
+	var placeEffects = {text = '', buttons = []} #Pre-Event scene effects
+	
+	for ievent in availableEvents:
+		var action = ievent.get_start_action()
+		ievent.callback = callback
+		if placeEffects.text == '':
+			placeEffects.text = action.text
+		else:
+			placeEffects.text += "\n\n" + action.text
+		for ibutton in action.get_buttons():
+			placeEffects.buttons.append(ibutton)
+	
+	return placeEffects
+		
+func _call_events_schedule(place):	
+	var placeEffects = {text = ''}
+	
+	var scheduledEvent
+	for ievent in globals.state.upcomingevents:
+		if ievent.duration > 0:
+			ievent.duration -= 1
+		if ievent.duration <= 0:
+			scheduledEvent = ievent			
+	if scheduledEvent == null: #ToFix - extra checks, because of new/old quest mix
+		return placeEffects
+	
+	var availableEvents = _get_events(place, 'schedule')
+	var activeEvent	
+	for ievent in availableEvents:
+		if ievent.name == scheduledEvent.code:
+			activeEvent = ievent
+			break
+	if activeEvent == null:		
+		return placeEffects
+	
+	globals.state.upcomingevents.erase(scheduledEvent) #ToFix - probably a mistake, better handled by events._process_event after event 'finish'?
+	_process_event('start', activeEvent)
+	
+	return placeEffects
+
+
+###Private Functions	
+func _get_events(place, startType = 'any'): #Returns an array of 'available' events at 'place'
+	var availableEvents = []
+	
+	for ikey in sidequests:
+		var partEvents = sidequests[ikey].get_events(place)
+		for ievent in partEvents:
+			if startType == 'any' || startType == ievent.startType:
+				availableEvents.append(ievent)
+	
+	return availableEvents
+
+#Obsolete?
+func _is_event_available(event, startType = 'any'):
+	var isAvailable = false
+	
+	#Check event trigger type
+	if !(startType == 'any' || event.startType == startType): 
+		return isAvailable	
+
+	#Check if event permanently in 'finish' state
+	if event.state == 'finish':
+		return isAvailable
+	
+	isAvailable = true
+	for ireq in event.requirements:
+		match ireq:
+			'sidequests':
+				for iquestReq in event.requirements[ireq]:					
+					if isAvailable == false:
+						break
+					else:
+						match iquestReq.compare:
+							'inSet':							
+								if !sidequests[iquestReq.name].state.stage in iquestReq.state.stage:
+									isAvailable = false
+								elif !sidequests[iquestReq.name].state.branch in iquestReq.state.branch:
+									isAvailable = false
+							'equals':
+								if !sidequests[iquestReq.name].state.stage == iquestReq.state.stage:
+									isAvailable = false
+								elif !sidequests[iquestReq.name].state.branch == iquestReq.state.branch:
+									isAvailable = false								
+							
+	return isAvailable
+
+#Event System Loop
+func _process_event(newEventState, event, result = {}):
+	#Process result of prior EventAction
+	if !result.empty():
+		_process_event_result(result)				
+	
+	#Update Event's state and process next action
+	_process_event_action(newEventState, event)
+		
+func _process_event_result(result):
+	if !result.empty():
+		for ieffect in result:
+			match ieffect:
+				'globalState':
+					var globalState = globals.state
+					for istate in result[ieffect]:
+						match istate:
+							'decisions':
+								for idecision in result[ieffect][istate]:
+									if !globalState[istate].has(idecision):
+										globalState[istate].append(idecision)
+				'sidequest':
+					for iquest in result[ieffect]:
+						globals.events.sidequests[iquest].state.stage = result[ieffect][iquest].stage
+						globals.events.sidequests[iquest].state.branch = result[ieffect][iquest].branch
+						globals.state.sidequests[iquest] = result[ieffect][iquest].stage #ToFix - Temporary for compatibility with old code
+				'scheduleEvent':
+					for ieventcode in result[ieffect]:
+						globals.state.upcomingevents.append({code = ieventcode, duration = result[ieffect][ieventcode]})					
+				'newSlave':
+					if result[ieffect].isUnique:
+						var newSlave = globals.characters.create('Emily')						
+						globals.slaves = newSlave
+				'resources':
+					var resources = globals.resources
+					for ires in result[ieffect]:
+						resources[ires] += result[ieffect][ires]
+				'gallery':
+					for iperson in result['gallery']:
+						if result['gallery'][iperson].has('unlock'):
+							globals.charactergallery[iperson].unlocked = true
+							if result['gallery'][iperson].unlock == 'naked':
+								globals.charactergallery[iperson].nakedunlocked = true
+						
+						if result['gallery'][iperson].has('scenes'): #ToFix - CharacterGallery scenes should be a dictionary, not array
+							if typeof(result['gallery'][iperson].scenes) == TYPE_ARRAY:
+								for i in result['gallery'][iperson].scenes:
+									globals.charactergallery[iperson]['scenes'][i].unlocked = true
+							else:
+								var i = result['gallery'][iperson].scenes
+								globals.charactergallery[iperson]['scenes'][i].unlocked = true
+				'items':
+					var ownedItems = globals.itemdict
+					for kitem in result[ieffect]:
+						ownedItems[kitem].amount += result[ieffect][kitem]
+				'modifyPeople':
+					_process_event_result_modifypeople(result)
+
+func _process_event_result_modifypeople(result):
+	var	focusPerson
+	var peopleEffects = result['modifyPeople']
+	
+	for iperson in peopleEffects:
+		#Find person
+		if peopleEffects[iperson].isUnique == true:
+			for islave in globals.slaves:
+				if islave.unique == iperson.capitalize():
+					focusPerson = islave
+		else:
+			if globals.slaves.empty():
+				return
+			var diceRoll = randi() % globals.slave.size()
+			focusPerson = globals.slaves[diceRoll]
+		
+		#Modify traits
+		for itrait in peopleEffects[iperson]: 
+			match itrait:
+				'consent':
+					focusPerson.consent = peopleEffects[iperson][itrait]
+				'tags':
+					for itag in peopleEffects[iperson][itrait]:
+						if peopleEffects[iperson][itrait][itag] == 'erase':
+							focusPerson.tags.erase(itag)
+						else:
+							if !focusPerson.tags.has(itag):
+								focusPerson.tags.append(itag)
+				'virgin':
+					for ivirgin in peopleEffects[iperson][itrait]:
+						match ivirgin:
+							'vagina':
+								focusPerson.vagvirgin = peopleEffects[iperson][itrait][ivirgin]
+							'ass':
+								focusPerson.assvirgin = peopleEffects[iperson][itrait][ivirgin]
+							'mouth':
+								focusPerson.mouthvirgin = peopleEffects[iperson][itrait][ivirgin]
+				'metrics':
+					for imetric in peopleEffects[iperson][itrait]:
+						if imetric == 'partners':
+							for ipartner in peopleEffects[iperson][itrait][imetric]:
+								if ipartner == 'player' && !focusPerson.metrics.partners.has(globals.player.id):
+									focusPerson.metrics.partners.append(globals.player.id)
+								elif !focusPerson.metrics.partners.has(ipartner):
+									focusPerson.metrics.partners.append(ipartner)
+						else:
+							focusPerson.metrics[imetric] += peopleEffects[iperson][itrait][imetric]
+				'meters':
+					for imeter in peopleEffects[iperson][itrait]:						
+						match imeter:
+							'stress':
+								focusPerson.stress += peopleEffects[iperson][itrait][imeter]
+							'loyal':
+								focusPerson.loyal += peopleEffects[iperson][itrait][imeter]
+							'lust':
+								focusPerson.lust += peopleEffects[iperson][itrait][imeter]
+							'obedience':
+								focusPerson.obed += peopleEffects[iperson][itrait][imeter]
+
+func _process_event_action(newEventState, event):
+	var main = globals.main
+	var action = null
+	var buttons = []
+	var hasClose = false
+	
+	match newEventState:
+		'reset':
+			event.state = 'start'
+			main.close_dialogue()
+			main.closescene() #ToFix - snake_case this
+			if !(event.callback == null):
+				var origin = event.callback.source
+				origin.call_deferred(event.callback.function)
+		'finish':
+			event.state = newEventState
+			main.close_dialogue()
+			main.closescene()
+			if !(event.callback == null):
+				var origin = event.callback.source
+				origin.call_deferred(event.callback.function)
+		_:
+			event.state = newEventState
+			action = event.actions[event.state]
+			match action.actionType:			
+				'dialogue':
+					main.closescene()
+					buttons = action.get_buttons()				
+					main.dialogue(hasClose, self, action.text, buttons, action.sprites)
+				'scene':
+					main.close_dialogue()
+					buttons = action.get_buttons()					
+					main.scene(self, action.image, action.text, buttons)
+				'decision':
+					_process_event_action_decision(event)
+								
+func _process_event_action_decision(event):
+	#Get decisionNode
+	var action = event.actions[event.state]
+	var decisionNode = action.get_node()
+
+	#Process decisionNode
+	_process_event(decisionNode.eventState, event, decisionNode.meta.result)
+	
+	
+	
+			
+			
+					
+					
+
+
+
+### EMILY QUESTS
+#Emily Side Quest
+func emily(state = 1):
+	var buttons = []
+	var text = ''
+	var sprites = null
+	var main = globals.main
+	
+	globals.state.sidequests.emily = state
+	if state == 1:
+		globals.charactergallery.emily.unlocked = true
+		text = textnode.EmilyMeet
+		if globals.resources.food < 10:
+			buttons.append({text = 'Give her food', function = 'emily', args = 2, disabled = true, tooltip = "not enough food"})
+		else:
+			buttons.append(['Give her food', 'emily', 2])
+		buttons.append(['Shoo her away', 'emily', 5])
+		buttons.append(["Make an excuse and tell her you'll bring some later", 'emily', 0])
+		sprites = [['emilynormal','pos1','opac']]
+		main.dialogue(false, self, text, buttons, sprites)
+	elif state == 2:
+		text = textnode.EmilyFeed
+		globals.resources.food -= 10
+		buttons.append(['Offer to take her as a servant', 'emily', 3])
+		buttons.append(["Leave her alone", 'emily', 5])
+		sprites = [['emilynormal','pos1']]
+		main.dialogue(false, self, text, buttons, sprites)
+	elif state == 3:
+		text = textnode.EmilyTake
+		sprites = [['emilyhappy','pos1']]
+		main.dialogue(true, self, text, buttons, sprites)
+		var emily = globals.characters.create('Emily')
+		globals.state.upcomingevents.append({code = 'tishaappearance',duration =7})
+		globals.slaves = emily
+		backstreets()
+	elif state == 5:
+		backstreets()
+		main.close_dialogue()
+	elif state == 0:
+		backstreets()
+		main.close_dialogue()
+
+func emilymansion(stage = 0):
+	var text = ""
+	var state = true
+	var sprite
+	var buttons = []
+	var emily
+	var image
+	for i in globals.slaves:
+		if i.unique == 'Emily':
+			emily = i
+	if stage == 0:
+		text = textnode.EmilyMansion
+		sprite = [['emilyhappy','pos1','opac']]
+		state = false
+		if globals.itemdict.aphrodisiac.amount > 0:
+			buttons.append({text = 'Spike her with aphrodisiac',function = 'emilymansion',args = 1})
+		else:
+			buttons.append({text = 'Spike her with aphrodisiac',function = 'emilymansion',args = 1, disabled = true})
+		buttons.append({text = 'Assault her after bath', function = 'emilymansion', args = 2})
+		buttons.append({text = "Just wait", function = "emilymansion", args = 3})
+	elif stage == 1:
+		image = 'emilyshower'
+		globals.state.decisions.append("emilyseduced")
+		globals.itemdict.aphrodisiac.amount -= 1
+		text = textnode.EmilyShowerSex
+		sprite = [['emilynakedhappy','pos1']]
+		emily.consent = true
+		emily.tags.erase('nosex')
+		emily.vagvirgin = false
+		emily.metrics.orgasm += 1
+		emily.metrics.vag += 1
+		emily.metrics.partners.append(globals.player.id)
+		emily.stress += 50
+		emily.loyal += 15
+		emily.lust += 50
+		globals.charactergallery.emily.scenes[0].unlocked = true
+		globals.charactergallery.emily.nakedunlocked = true
+		buttons.append({text = "Close", function = 'closescene'})
+	elif stage == 2:
+		image = 'emilyshowerrape'
+		globals.state.decisions.append("emilyseduced")
+		text = textnode.EmilyShowerRape
+		sprite = [['emilynakedneutral','pos1']]
+		emily.tags.erase('nosex')
+		emily.consent = true
+		emily.stress += 100
+		emily.vagvirgin = false
+		emily.metrics.vag += 1
+		emily.metrics.partners.append(globals.player.id)
+		emily.obed = 0
+		globals.charactergallery.emily.scenes[1].unlocked = true
+		globals.charactergallery.emily.nakedunlocked = true
+		globals.state.upcomingevents.append({code = 'emilyescape', duration = 2})
+		buttons.append({text = "Close", function = 'closescene'})
+	elif stage == 3:
+		text = textnode.EmilyMansion2
+		sprite = [['emily2happy','pos1','opac']]
+	globals.state.sidequests.emily = 6
+	if stage in [1,2]:
+		globals.main.scene(self, image, text, buttons)
+		globals.main._on_mansion_pressed()
+		closedialogue()
+		return
+	globals.main.dialogue(state,self,text,buttons,sprite)
+
+
+func emilyescape():
+	var emily
+	for i in globals.slaves:
+		if i.unique == 'Emily':
+			emily = i
+	if emily != null:
+		if emily.brand == 'none':
+			globals.slaves.erase(emily)
+			globals.main.dialogue(true,self,'During the night Emily has escaped from the mansion in unknown direction.')
+
+func tishaappearance():
+	var emily = null
+	var buttons = []
+	var sprite
+	for i in globals.slaves:
+		if i.unique == 'Emily':
+			emily = i
+	if emily == null:
+		return
+	var text = textnode.TishaEncounter
+	sprite = [['emily2normal','pos2','opac2'],['tishaangry','pos1','opac']]
+	globals.charactergallery.tisha.unlocked = true
+	if emily.loyal >= 25:
+		text += globals.player.dictionary(textnode.TishaEmilyLoyal)
+		sprite = [['emily2happy','pos2','opac2'],['tishashocked','pos1','opac']]
+		emilystate = 'loyal'
+		buttons.append(['Make Emily leave', 'tishadecision', 1])
+		buttons.append(['Make Emily stay', 'tishadecision', 2])
+	elif emily.brand != 'none':
+		emilystate = 'brand'
+		text += textnode.TishaEmilyBranded
+		[['emily2normal','pos2','opac2'],['tishaangry','pos1','opac']]
+		buttons.append(['Release Emily', 'tishadecision', 3])
+		buttons.append(['Keep Emily', 'tishadecision', 4])
+		buttons.append(['Offer Tisha to take her place', 'tishadecision', 5])
+	else:
+		text += textnode.TishaEmilyUnloyal
+		emilystate = 'unloyal'
+		buttons.append(['Let them leave', 'tishadecision', 6])
+		if globals.resources.gold >= 50 && globals.resources.food >= 50:
+			buttons.append(['Help them with gold and provision', 'tishadecision', 7])		
+		else:
+			buttons.append({text = 'Help them with gold and provisions',function = 'tishadecision',args = 7, disabled = true})
+		buttons.append(['Ask for compensation', 'tishadecision', 8])
+	globals.main.dialogue(false,self,text,buttons,sprite)
+
+func tishadecision(number):
+	var emily
+	var tisha
+	var image
+	var buttons = []
+	var state = true
+	var sprite = []
+	sprite = [['emily2normal','pos2'],['tishaangry','pos1']]
+	for i in globals.slaves:
+		if i.unique == 'Emily':
+			emily = i
+		elif i.unique == 'Tisha':
+			tisha = i
+	var text = ''
+	if number == 1:
+		text = textnode.TishaEmilyLeave
+		buttons.append(['Let them leave', 'tishadecision', 6])
+		if globals.resources.gold >= 50 && globals.resources.food >= 50:
+			buttons.append(['Help them with gold and provision', 'tishadecision', 7])		
+		else:
+			buttons.append({text = 'Help them with gold and provisions',function = 'tishadecision',args = 7, disabled = true})
+			state = false
+	elif number == 2:
+		sprite = [['emily2normal','pos2'],['tishashocked','pos1']]
+		text = textnode.TishaEmilyStay
+	elif number == 3:
+		globals.slaves.erase(emily)
+		text = textnode.TishaEmilyLeaveFree
+	elif number == 4:
+		text = "You send Tisha off as you hold all the rights over Emily now. Having no choice, she curses you and leaves. "
+	elif number == 5:
+		text = textnode.TishaEmilyBrandCompensation
+		sprite = [['tishanakedneutral','pos1']]
+		image = 'tishatable'
+		globals.charactergallery.tisha.scenes[0].unlocked = true
+		globals.charactergallery.tisha.nakedunlocked = true
+		buttons.append({text = 'Go with your word and release Emily', function = 'tishadecision', args = 10})
+		buttons.append({text = 'Keep Emily anyway', function = 'tishadecision', args = 9})
+		text += "\n\n[color=green]You've earned 15 mana.\n\nTisha now belongs to you. [/color]"
+		globals.resources.mana += 15
+		state = false
+		var person = globals.characters.create("Tisha")
+		globals.connectrelatives(person, emily, 'sibling')
+		globals.slaves = person
+	elif number == 6:
+		text = textnode.TishaEmilyLeaveFree
+		if emilystate == 'loyal':
+			emily.away.at = 'hidden'
+			emily.away.duration = -1
+			emily.obed -= 20
+			globals.state.upcomingevents.append({code = 'emilyreturn', duration = 5})
+			globals.state.sidequests.emily = 10
+		else:
+			globals.slaves.erase(emily)
+	elif number == 7:
+		text = textnode.TishaEmilyLeaveHelp
+		sprite = [['emily2normal','pos2'],['tishaneutral','pos1']]
+		emily.away.at = 'hidden'
+		emily.away.duration = -1
+		emily.loyal += 15
+		globals.state.upcomingevents.append({code = 'emilyreturn', duration = 5})
+		globals.resources.food -= 50
+		globals.resources.gold -= 50
+		globals.state.reputation.wimborn += 5
+		globals.state.sidequests.emily = 11
+	elif number == 8:
+		sprite = [['tishaangry','pos1']]
+		text = textnode.TishaEmilyCompensation
+		globals.state.decisions.append("tishatricked")
+		text += "\n\n[color=green]You've earned 15 mana. [/color]"
+		globals.slaves.erase(emily)
+		globals.resources.mana += 15
+	elif number == 9:
+		globals.main.closescene()
+		text = textnode.TishaEmilyKeepEmily
+		globals.state.decisions.append("tishaemilytricked")
+		sprite = [['tishashocked','pos1']]
+		emily.loyal += -100
+		emily.obed += -50
+		tisha.obed += -75
+		var effect = globals.effectdict.captured
+		effect.duration = 15
+		globals.state.reputation.wimborn -= 20
+		emily.add_effect(effect)
+		emily.tags.erase('nosex')
+		tisha.add_effect(effect)
+	elif number == 10:
+		globals.main.closescene()
+		text = textnode.TishaEmilyReleaseEmily
+		globals.state.decisions.append("emilyreleased")
+		sprite = [['emily2normal','pos2'],['tishaneutral','pos1']]
+		globals.state.reputation.wimborn -= 10
+		tisha.obed += 50
+		globals.slaves.erase(emily)
+	if number in [5]:
+		globals.main.scene(self, image, text, buttons)
+		globals.main._on_mansion_pressed()
+		closedialogue()
+		return
+	globals.main.rebuild_slave_list()
+	globals.main.dialogue(state,self,text,buttons,sprite)
+
+
+func emilyreturn():
+	var emily
+	var sprite = [['emily2happy','pos1','opac']]
+	for i in globals.slaves:
+		if i.unique == 'Emily':
+			emily = i
+	emily.away.at = 'none'
+	emily.away.duration = 0
+	var text = textnode.EmilyReturn
+	if globals.state.sidequests.emily == 10:
+		text += "Tisha probably thinks you are not a bad person after all."
+	else:
+		text += "I think she was really surprised that you still helped us, even with her being angry and taking me away… "
+	text += "If I can, can I still stay at your place, $master?[/color]\n\nYou welcome Emily back and she excuses herself, returning to her previous duties. "
+	emily.loyal += 10
+	emily.obed += 80
+	emily.add_trait("Grateful")
+	globals.state.upcomingevents.append({code = 'tishadisappear', duration = round(rand_range(9,14))})
+	globals.main.dialogue(true,self,globals.player.dictionaryplayer(text), null, sprite)
+	globals.main._on_mansion_pressed()
+
+
+func tishadisappear(stage = 0):
+	var emily
+	var buttons = []
+	var sprite
+	var text = ""
+	var state = false
+	for i in globals.slaves:
+		if i.unique == 'Emily':
+			emily = i
+	if emily == null:
+		return
+	if stage == 0:
+		sprite = [['emily2worried','pos1','opac']]
+		text = textnode.EmilyTishaDisappear
+		buttons.append(['Agree to help', 'tishadisappear', 1])
+		buttons.append(['Deny', 'tishadisappear', 2])
+		buttons.append(['Ask for additional service', 'tishadisappear', 3])
+	if stage == 1:
+		sprite = [['emily2happy','pos1']]
+		text = textnode.TishaDisappearAgree
+		globals.state.sidequests.emily = 12
+		emily.loyal += 15
+		emily.obed += 20
+		state = true
+	elif stage == 2:
+		sprite = [['emily2worried','pos1']]
+		text = textnode.TishaDisappearDeny
+		globals.state.sidequests.emily = 100
+		emily.obed -= 30
+		emily.loyal -= 20
+		emily.stress += 40
+		state = true
+	elif stage == 3:
+		sprite = [['emily2worried','pos1']]
+		text = textnode.TishaDisappearUnlock
+		globals.state.sidequests.emily = 12
+		emily.loyal -= 10
+		emily.consent = true
+		emily.tags.erase('nosex')
+		state = true
+	globals.main.dialogue(state,self,text,buttons,sprite)
+	globals.main._on_mansion_pressed()
+
+func tishadorms(stage=0):
+	var emily
+	var buttons = []
+	var text = ""
+	var state = false
+	var sprite = null
+
+	for i in globals.state.playergroup:
+		if globals.state.findslave(i).unique == 'Emily':
+			emily = globals.state.findslave(i)
+	if stage == 0:
+		text = textnode.TishaVisitArchives
+		state = true
+		buttons.append(['Move to Dorms', 'tishadorms', 1])
+	if stage == 1:
+		text = textnode.TishaDorms
+		if emily != null:
+			sprite = [['emily2worried','pos1']]
+			text += textnode.TishaDormsEmilyPresent
+			text += textnode.TishaDormsInfo
+			globals.state.sidequests.emily = 13
+			state = true
+		else:
+			if globals.spelldict.domination.learned == true && globals.spelldict.domination.manacost <= globals.resources.mana:
+				buttons.append(['Cast Domination', 'tishadorms', 2])
+			buttons.append(['Threaten', 'tishadorms', 3])
+			if globals.resources.gold >= 50:
+				buttons.append(['Bribe', 'tishadorms', 4])
+	elif stage == 2:
+		globals.resources.mana -= globals.spelldict.domination.manacost
+		text = textnode.TishaDormsDominate
+		text += textnode.TishaDormsInfo
+		state = true
+	elif stage == 3:
+		text = textnode.TishaDormsThreat
+		text += textnode.TishaDormsInfo
+		state = true
+	elif stage == 4:
+		globals.resources.gold -= 50
+		text = textnode.TishaDormsBribe
+		text += textnode.TishaDormsInfo
+		state = true
+	if stage >= 2:
+		globals.state.sidequests.emily = 13
+		globals.main.get_node("outside").mageorder()
+	globals.main.dialogue(state,self,text,buttons)
+
+func tishabackstreets(stage = 0):
+	var emily
+	var buttons = []
+	var text = ""
+	var state = false
+	var main = globals.main
+
+	if stage == 0:
+		text = textnode.TishaBackstreets
+		buttons.append(['Fight', 'tishabackstreets', 1])
+		buttons.append(['Leave', 'tishabackstreets', 2])
+	elif stage == 1:
+		main.get_node("explorationnode").buildenemies("tishaquestenemy")
+		closedialogue()
+		globals.main.exploration.launchonwin = 'tishabackstreetswin'
+		globals.main.get_node("combat").nocaptures = true
+		globals.main.exploration.enemyfight()
+		return
+	elif stage == 2:
+		main.close_dialogue()
+		globals.main.get_node("outside").backstreets()
+		return
+
+	globals.main.dialogue(state,self,text,buttons)
+
+func tishabackstreetswin():
+	var text = ""
+	globals.state.sidequests.emily = 14
+	text = textnode.TishaBackstreetsAftercombat
+	globals.main.dialogue(true,self,text)
+	globals.main.get_node("outside").backstreets()
+
+func tishagornguild(stage = 0):
+	var buttons = []
+	var text = ""
+	var state = false
+	var sprite 
+	var image
+	
+	var emily
+	
+	for i in globals.slaves:
+		if i.unique == 'Emily':
+			emily = i
+	
+	if stage == 0:
+		sprite = [['tishaangry', 'pos1', 'opac']]
+		if globals.state.sidequests.emily == 14:
+			text = textnode.TishaGornGuild
+			globals.state.sidequests.emily = 15
+		else:
+			text = textnode.TishaGornGuildRevisit
+		if globals.resources.gold >= 500:
+			buttons.append(['Pay', 'tishagornguild', 1])
+		else:
+			buttons.append({text = 'Pay',function = 'tishagornguild',args = 1, disabled = true})
+		buttons.append(['Leave', 'tishagornguild', 2])
+	elif stage == 1:
+		text = textnode.TishaGornPay
+		sprite = [['tishaneutral', 'pos1']]
+		globals.resources.gold -= 500
+		buttons.append(['Brand', 'tishagornguild', 3])
+		buttons.append(['Refuse', 'tishagornguild', 4])
+	elif stage == 2:
+		closedialogue()
+		globals.main.get_node("outside").slaveguild('gorn')
+		return
+	elif stage == 3:
+		text = textnode.TishaGornBrand
+		sprite = [['tishashocked', 'pos1']]
+		globals.state.sidequests.emily = 101
+		var person = globals.characters.create("Tisha")
+		globals.connectrelatives(person, emily, 'sibling')
+		emily.relations[person.id] = 250
+		person.relations[emily.id] = 500
+		person.brand = 'basic'
+		globals.slaves = person
+		state = true
+		globals.main.get_node("outside").slaveguild('gorn')
+	elif stage == 4:
+		sprite = [['tishaneutral', 'pos1']]
+		text = textnode.TishaGornRefuseBrand
+		buttons.append(['Continue', 'tishagornguild', 5])
+	elif stage == 5:
+		sprite = [['tishaneutral', 'pos1']]
+		globals.main._on_mansion_pressed()
+		if OS.get_name() != "HTML5":
+			yield(globals.main, 'animfinished')
+		text = textnode.TishaAfterGorn
+		buttons.append(['Ask for money', 'tishagornguild', 6])
+		buttons.append(['Have sex', 'tishagornguild', 7])
+		buttons.append(["Don't ask for anything", 'tishagornguild', 8])
+	elif stage == 6:
+		sprite = [['tishaneutral', 'pos1']]
+		text = textnode.TishaAskPayment
+		globals.state.sidequests.emily = 17
+		globals.state.upcomingevents.append({code = "tishapay", duration = 7})
+		state = true
+	elif stage == 7:
+		image = 'tishafinale'
+		sprite = [['tishanakedhappy', 'pos1']]
+		text = textnode.TishaSexSceneStart
+		globals.charactergallery.tisha.nakedunlocked = true
+		globals.charactergallery.tisha.scenes[1].unlocked = true
+		if globals.player.penis != 'none':
+			text += "\n\n" + textnode.TishaSexSceneEnd
+		globals.resources.mana += 10
+		buttons.append({text = 'Offer Tisha work for you',function = 'tishagornguild', args = 9})
+		buttons.append({text ='Not bother her',function = 'tishagornguild', args = 10})
+	elif stage == 8:
+		image = 'tishafinale'
+		sprite = [['tishanakedhappy', 'pos1']]
+		globals.charactergallery.tisha.nakedunlocked = true
+		globals.charactergallery.tisha.scenes[1].unlocked = true
+		text = textnode.TishaRefusePayment + textnode.TishaSexSceneStart
+		globals.resources.mana += 10
+		if globals.player.penis != 'none':
+			text += "\n\n" + textnode.TishaSexSceneEnd
+		buttons.append({text = 'Offer Tisha work for you',function = 'tishagornguild', args = 9})
+		buttons.append({text ='Not bother her',function = 'tishagornguild', args = 10})
+	elif stage == 9:
+		globals.main.closescene()
+		for i in globals.slaves:
+			if i.unique == "Emily":
+				i.tags.erase('nosex')
+		text = textnode.TishaOfferJob
+		sprite = [['tishanakedhappy', 'pos1']]
+		var person = globals.characters.create("Tisha")
+		globals.connectrelatives(person, emily, 'sibling')
+		emily.relations[person.id] = 250
+		person.relations[emily.id] = 500
+		person.consent = true
+		person.add_trait("Grateful")
+		person.obed += 90
+		person.loyal += 15
+		globals.slaves = person
+		state = true
+		globals.state.sidequests.emily = 16
+		globals.resources.upgradepoints += 10
+		for i in globals.slaves:
+			if i.unique == 'Emily':
+				i.consent = true
+				i.tags.erase("nosex")
+	elif stage == 10:
+		globals.main.closescene()
+		sprite = [['tishaneutral', 'pos1']]
+		for i in globals.slaves:
+			if i.unique == "Emily":
+				i.tags.erase('nosex')
+		text = textnode.TishaLeave
+		state = true
+		globals.state.sidequests.emily = 16
+		globals.resources.upgradepoints += 10
+	if stage in [7,8]:
+		globals.main.scene(self, image, text, buttons)
+		globals.main._on_mansion_pressed()
+		closedialogue()
+		return
+	globals.main.dialogue(state,self,text,buttons, sprite)
+
+func tishapay():
+	var text = "At the morning you receive a delivery: nice sum of gold from Tisha, who you helped previously. "
+	globals.resources.gold += 500
+	globals.main.popup(text)
+
+func emilytishasex(stage = 0):
+	var text
+	var state
+	var buttons = []
+	var emily
+	var tisha
+	var sprite = []
+	var image
+	if stage == 0:
+		image = 'tishaemily'
+		text = globals.questtext.TishaEmilySex
+		sprite = [['tishanakedhappy', 'pos1'], ['emilynakedhappy','pos2']]
+		for i in globals.slaves:
+			if i.unique == 'Emily':
+				emily = i
+			elif i.unique == 'Tisha':
+				tisha = i
+		emily.metrics.sex += 1
+		tisha.metrics.sex += 1
+		emily.metrics.partners.append(tisha.id)
+		tisha.metrics.partners.append(emily.id)
+		emily.away.duration = 7
+		tisha.away.duration = 7
+		state = false
+		globals.resources.mana += 25
+		globals.charactergallery.emily.scenes[2].unlocked = true
+		globals.charactergallery.tisha.scenes[2].unlocked = true
+		globals.charactergallery.emily.nakedunlocked = true
+		globals.charactergallery.tisha.nakedunlocked = true
+		buttons.append({text = 'Continue',function = 'emilytishasex',args = 1})
+		globals.main.scene(self, image, text, buttons)
+	elif stage == 1:
+		globals.main.closescene()
+		sprite = [['tishahappy', 'pos1'], ['emily2happy','pos2']]
+		text = globals.questtext.TishaEmilySex2
+		state = true
+		globals.main.dialogue(state,self,text,buttons, sprite)
+
+#Event Dialogue
+func event_dialogue(text, buttons, sprite, state = true):
+	globals.main.dialogue(state, self, text, buttons, sprite)
+
 
 func gornpalace():
 	var text = ''
@@ -621,6 +1518,7 @@ func mountainelfcamp(stage = 0):
 		globals.main.exploration.enemyfight()
 #Sidequests
 
+
 func mountainwin(stage = 0):
 	var state = false
 	var text = ''
@@ -896,6 +1794,7 @@ func bestslave(first, second):
 		return true
 	else:
 		return false
+
 
 
 func mapletimepass():
@@ -1633,539 +2532,6 @@ func sexscene(value):
 		globals.main.scene(self, image, text, buttons)
 		return
 	globals.main.dialogue(true,self,text,[],sprite)
-
-func emilymansion(stage = 0):
-	var text = ""
-	var state = true
-	var sprite
-	var buttons = []
-	var emily
-	var image
-	for i in globals.slaves:
-		if i.unique == 'Emily':
-			emily = i
-	if stage == 0:
-		text = textnode.EmilyMansion
-		sprite = [['emilyhappy','pos1','opac']]
-		state = false
-		if globals.itemdict.aphrodisiac.amount > 0:
-			buttons.append({text = 'Spike her with aphrodisiac',function = 'emilymansion',args = 1})
-		else:
-			buttons.append({text = 'Spike her with aphrodisiac',function = 'emilymansion',args = 1, disabled = true})
-		buttons.append({text = 'Assault her after bath', function = 'emilymansion', args = 2})
-		buttons.append({text = "Just wait", function = "emilymansion", args = 3})
-	elif stage == 1:
-		image = 'emilyshower'
-		globals.state.decisions.append("emilyseduced")
-		globals.itemdict.aphrodisiac.amount -= 1
-		text = textnode.EmilyShowerSex
-		sprite = [['emilynakedhappy','pos1']]
-		emily.consent = true
-		emily.tags.erase('nosex')
-		emily.vagvirgin = false
-		emily.metrics.orgasm += 1
-		emily.metrics.vag += 1
-		emily.metrics.partners.append(globals.player.id)
-		emily.stress += 50
-		emily.loyal += 15
-		emily.lust += 50
-		globals.charactergallery.emily.scenes[0].unlocked = true
-		globals.charactergallery.emily.nakedunlocked = true
-		buttons.append({text = "Close", function = 'closescene'})
-	elif stage == 2:
-		image = 'emilyshowerrape'
-		globals.state.decisions.append("emilyseduced")
-		text = textnode.EmilyShowerRape
-		sprite = [['emilynakedneutral','pos1']]
-		emily.tags.erase('nosex')
-		emily.consent = true
-		emily.stress += 100
-		emily.vagvirgin = false
-		emily.metrics.vag += 1
-		emily.metrics.partners.append(globals.player.id)
-		emily.obed = 0
-		globals.charactergallery.emily.scenes[1].unlocked = true
-		globals.charactergallery.emily.nakedunlocked = true
-		globals.state.upcomingevents.append({code = 'emilyescape', duration = 2})
-		buttons.append({text = "Close", function = 'closescene'})
-	elif stage == 3:
-		text = textnode.EmilyMansion2
-		sprite = [['emily2happy','pos1','opac']]
-	globals.state.sidequests.emily = 6
-	if stage in [1,2]:
-		globals.main.scene(self, image, text, buttons)
-		globals.main._on_mansion_pressed()
-		closedialogue()
-		return
-	globals.main.dialogue(state,self,text,buttons,sprite)
-
-func closescene():
-	globals.main.closescene()
-
-func emilyescape():
-	var emily
-	for i in globals.slaves:
-		if i.unique == 'Emily':
-			emily = i
-	if emily != null:
-		if emily.brand == 'none':
-			globals.slaves.erase(emily)
-			globals.main.dialogue(true,self,'During the night Emily has escaped from the mansion in unknown direction.')
-
-func tishaappearance():
-	var emily = null
-	var buttons = []
-	var sprite
-	for i in globals.slaves:
-		if i.unique == 'Emily':
-			emily = i
-	if emily == null:
-		return
-	var text = textnode.TishaEncounter
-	sprite = [['emily2normal','pos2','opac2'],['tishaangry','pos1','opac']]
-	globals.charactergallery.tisha.unlocked = true
-	if emily.loyal >= 25:
-		text += globals.player.dictionary(textnode.TishaEmilyLoyal)
-		sprite = [['emily2happy','pos2','opac2'],['tishashocked','pos1','opac']]
-		emilystate = 'loyal'
-		buttons.append(['Make Emily leave', 'tishadecision', 1])
-		buttons.append(['Make Emily stay', 'tishadecision', 2])
-	elif emily.brand != 'none':
-		emilystate = 'brand'
-		text += textnode.TishaEmilyBranded
-		[['emily2normal','pos2','opac2'],['tishaangry','pos1','opac']]
-		buttons.append(['Release Emily', 'tishadecision', 3])
-		buttons.append(['Keep Emily', 'tishadecision', 4])
-		buttons.append(['Offer Tisha to take her place', 'tishadecision', 5])
-	else:
-		text += textnode.TishaEmilyUnloyal
-		emilystate = 'unloyal'
-		buttons.append(['Let them leave', 'tishadecision', 6])
-		if globals.resources.gold >= 50 && globals.resources.food >= 50:
-			buttons.append(['Help them with gold and provision', 'tishadecision', 7])		
-		else:
-			buttons.append({text = 'Help them with gold and provisions',function = 'tishadecision',args = 7, disabled = true})
-		buttons.append(['Ask for compensation', 'tishadecision', 8])
-	globals.main.dialogue(false,self,text,buttons,sprite)
-
-func tishadecision(number):
-	var emily
-	var tisha
-	var image
-	var buttons = []
-	var state = true
-	var sprite = []
-	sprite = [['emily2normal','pos2'],['tishaangry','pos1']]
-	for i in globals.slaves:
-		if i.unique == 'Emily':
-			emily = i
-		elif i.unique == 'Tisha':
-			tisha = i
-	var text = ''
-	if number == 1:
-		text = textnode.TishaEmilyLeave
-		buttons.append(['Let them leave', 'tishadecision', 6])
-		if globals.resources.gold >= 50 && globals.resources.food >= 50:
-			buttons.append(['Help them with gold and provision', 'tishadecision', 7])		
-		else:
-			buttons.append({text = 'Help them with gold and provisions',function = 'tishadecision',args = 7, disabled = true})
-			state = false
-	elif number == 2:
-		sprite = [['emily2normal','pos2'],['tishashocked','pos1']]
-		text = textnode.TishaEmilyStay
-	elif number == 3:
-		globals.slaves.erase(emily)
-		text = textnode.TishaEmilyLeaveFree
-	elif number == 4:
-		text = "You send Tisha off as you hold all the rights over Emily now. Having no choice, she curses you and leaves. "
-	elif number == 5:
-		text = textnode.TishaEmilyBrandCompensation
-		sprite = [['tishanakedneutral','pos1']]
-		image = 'tishatable'
-		globals.charactergallery.tisha.scenes[0].unlocked = true
-		globals.charactergallery.tisha.nakedunlocked = true
-		buttons.append({text = 'Go with your word and release Emily', function = 'tishadecision', args = 10})
-		buttons.append({text = 'Keep Emily anyway', function = 'tishadecision', args = 9})
-		text += "\n\n[color=green]You've earned 15 mana.\n\nTisha now belongs to you. [/color]"
-		globals.resources.mana += 15
-		state = false
-		var person = globals.characters.create("Tisha")
-		globals.connectrelatives(person, emily, 'sibling')
-		globals.slaves = person
-	elif number == 6:
-		text = textnode.TishaEmilyLeaveFree
-		if emilystate == 'loyal':
-			emily.away.at = 'hidden'
-			emily.away.duration = -1
-			emily.obed -= 20
-			globals.state.upcomingevents.append({code = 'emilyreturn', duration = 5})
-			globals.state.sidequests.emily = 10
-		else:
-			globals.slaves.erase(emily)
-	elif number == 7:
-		text = textnode.TishaEmilyLeaveHelp
-		sprite = [['emily2normal','pos2'],['tishaneutral','pos1']]
-		emily.away.at = 'hidden'
-		emily.away.duration = -1
-		emily.loyal += 15
-		globals.state.upcomingevents.append({code = 'emilyreturn', duration = 5})
-		globals.resources.food -= 50
-		globals.resources.gold -= 50
-		globals.state.reputation.wimborn += 5
-		globals.state.sidequests.emily = 11
-	elif number == 8:
-		sprite = [['tishaangry','pos1']]
-		text = textnode.TishaEmilyCompensation
-		globals.state.decisions.append("tishatricked")
-		text += "\n\n[color=green]You've earned 15 mana. [/color]"
-		globals.slaves.erase(emily)
-		globals.resources.mana += 15
-	elif number == 9:
-		globals.main.closescene()
-		text = textnode.TishaEmilyKeepEmily
-		globals.state.decisions.append("tishaemilytricked")
-		sprite = [['tishashocked','pos1']]
-		emily.loyal += -100
-		emily.obed += -50
-		tisha.obed += -75
-		var effect = globals.effectdict.captured
-		effect.duration = 15
-		globals.state.reputation.wimborn -= 20
-		emily.add_effect(effect)
-		emily.tags.erase('nosex')
-		tisha.add_effect(effect)
-	elif number == 10:
-		globals.main.closescene()
-		text = textnode.TishaEmilyReleaseEmily
-		globals.state.decisions.append("emilyreleased")
-		sprite = [['emily2normal','pos2'],['tishaneutral','pos1']]
-		globals.state.reputation.wimborn -= 10
-		tisha.obed += 50
-		globals.slaves.erase(emily)
-	if number in [5]:
-		globals.main.scene(self, image, text, buttons)
-		globals.main._on_mansion_pressed()
-		closedialogue()
-		return
-	globals.main.rebuild_slave_list()
-	globals.main.dialogue(state,self,text,buttons,sprite)
-
-
-func emilyreturn():
-	var emily
-	var sprite = [['emily2happy','pos1','opac']]
-	for i in globals.slaves:
-		if i.unique == 'Emily':
-			emily = i
-	emily.away.at = 'none'
-	emily.away.duration = 0
-	var text = textnode.EmilyReturn
-	if globals.state.sidequests.emily == 10:
-		text += "Tisha probably thinks you are not a bad person after all."
-	else:
-		text += "I think she was really surprised that you still helped us, even with her being angry and taking me away… "
-	text += "If I can, can I still stay at your place, $master?[/color]\n\nYou welcome Emily back and she excuses herself, returning to her previous duties. "
-	emily.loyal += 10
-	emily.obed += 80
-	emily.add_trait("Grateful")
-	globals.state.upcomingevents.append({code = 'tishadisappear', duration = round(rand_range(9,14))})
-	globals.main.dialogue(true,self,globals.player.dictionaryplayer(text), null, sprite)
-	globals.main._on_mansion_pressed()
-
-
-func tishadisappear(stage = 0):
-	var emily
-	var buttons = []
-	var sprite
-	var text = ""
-	var state = false
-	for i in globals.slaves:
-		if i.unique == 'Emily':
-			emily = i
-	if emily == null:
-		return
-	if stage == 0:
-		sprite = [['emily2worried','pos1','opac']]
-		text = textnode.EmilyTishaDisappear
-		buttons.append(['Agree to help', 'tishadisappear', 1])
-		buttons.append(['Deny', 'tishadisappear', 2])
-		buttons.append(['Ask for additional service', 'tishadisappear', 3])
-	if stage == 1:
-		sprite = [['emily2happy','pos1']]
-		text = textnode.TishaDisappearAgree
-		globals.state.sidequests.emily = 12
-		emily.loyal += 15
-		emily.obed += 20
-		state = true
-	elif stage == 2:
-		sprite = [['emily2worried','pos1']]
-		text = textnode.TishaDisappearDeny
-		globals.state.sidequests.emily = 100
-		emily.obed -= 30
-		emily.loyal -= 20
-		emily.stress += 40
-		state = true
-	elif stage == 3:
-		sprite = [['emily2worried','pos1']]
-		text = textnode.TishaDisappearUnlock
-		globals.state.sidequests.emily = 12
-		emily.loyal -= 10
-		emily.consent = true
-		emily.tags.erase('nosex')
-		state = true
-	globals.main.dialogue(state,self,text,buttons,sprite)
-	globals.main._on_mansion_pressed()
-
-func tishadorms(stage=0):
-	var emily
-	var buttons = []
-	var text = ""
-	var state = false
-	var sprite = null
-
-	for i in globals.state.playergroup:
-		if globals.state.findslave(i).unique == 'Emily':
-			emily = globals.state.findslave(i)
-	if stage == 0:
-		text = textnode.TishaVisitArchives
-		state = true
-		buttons.append(['Move to Dorms', 'tishadorms', 1])
-	if stage == 1:
-		text = textnode.TishaDorms
-		if emily != null:
-			sprite = [['emily2worried','pos1']]
-			text += textnode.TishaDormsEmilyPresent
-			text += textnode.TishaDormsInfo
-			globals.state.sidequests.emily = 13
-			state = true
-		else:
-			if globals.spelldict.domination.learned == true && globals.spelldict.domination.manacost <= globals.resources.mana:
-				buttons.append(['Cast Domination', 'tishadorms', 2])
-			buttons.append(['Threaten', 'tishadorms', 3])
-			if globals.resources.gold >= 50:
-				buttons.append(['Bribe', 'tishadorms', 4])
-	elif stage == 2:
-		globals.resources.mana -= globals.spelldict.domination.manacost
-		text = textnode.TishaDormsDominate
-		text += textnode.TishaDormsInfo
-		state = true
-	elif stage == 3:
-		text = textnode.TishaDormsThreat
-		text += textnode.TishaDormsInfo
-		state = true
-	elif stage == 4:
-		globals.resources.gold -= 50
-		text = textnode.TishaDormsBribe
-		text += textnode.TishaDormsInfo
-		state = true
-	if stage >= 2:
-		globals.state.sidequests.emily = 13
-		globals.main.get_node("outside").mageorder()
-	globals.main.dialogue(state,self,text,buttons)
-
-func tishabackstreets(stage = 0):
-	var emily
-	var buttons = []
-	var text = ""
-	var state = false
-	var main = globals.main
-
-	if stage == 0:
-		text = textnode.TishaBackstreets
-		buttons.append(['Fight', 'tishabackstreets', 1])
-		buttons.append(['Leave', 'tishabackstreets', 2])
-	elif stage == 1:
-		main.get_node("explorationnode").buildenemies("tishaquestenemy")
-		closedialogue()
-		globals.main.exploration.launchonwin = 'tishabackstreetswin'
-		globals.main.get_node("combat").nocaptures = true
-		globals.main.exploration.enemyfight()
-		return
-	elif stage == 2:
-		main.close_dialogue()
-		globals.main.get_node("outside").backstreets()
-		return
-
-	globals.main.dialogue(state,self,text,buttons)
-
-func tishabackstreetswin():
-	var text = ""
-	globals.state.sidequests.emily = 14
-	text = textnode.TishaBackstreetsAftercombat
-	globals.main.dialogue(true,self,text)
-	globals.main.get_node("outside").backstreets()
-
-func tishagornguild(stage = 0):
-	var buttons = []
-	var text = ""
-	var state = false
-	var sprite 
-	var image
-	
-	var emily
-	
-	for i in globals.slaves:
-		if i.unique == 'Emily':
-			emily = i
-	
-	if stage == 0:
-		sprite = [['tishaangry', 'pos1', 'opac']]
-		if globals.state.sidequests.emily == 14:
-			text = textnode.TishaGornGuild
-			globals.state.sidequests.emily = 15
-		else:
-			text = textnode.TishaGornGuildRevisit
-		if globals.resources.gold >= 500:
-			buttons.append(['Pay', 'tishagornguild', 1])
-		else:
-			buttons.append({text = 'Pay',function = 'tishagornguild',args = 1, disabled = true})
-		buttons.append(['Leave', 'tishagornguild', 2])
-	elif stage == 1:
-		text = textnode.TishaGornPay
-		sprite = [['tishaneutral', 'pos1']]
-		globals.resources.gold -= 500
-		buttons.append(['Brand', 'tishagornguild', 3])
-		buttons.append(['Refuse', 'tishagornguild', 4])
-	elif stage == 2:
-		closedialogue()
-		globals.main.get_node("outside").slaveguild('gorn')
-		return
-	elif stage == 3:
-		text = textnode.TishaGornBrand
-		sprite = [['tishashocked', 'pos1']]
-		globals.state.sidequests.emily = 101
-		var person = globals.characters.create("Tisha")
-		globals.connectrelatives(person, emily, 'sibling')
-		emily.relations[person.id] = 250
-		person.relations[emily.id] = 500
-		person.brand = 'basic'
-		globals.slaves = person
-		state = true
-		globals.main.get_node("outside").slaveguild('gorn')
-	elif stage == 4:
-		sprite = [['tishaneutral', 'pos1']]
-		text = textnode.TishaGornRefuseBrand
-		buttons.append(['Continue', 'tishagornguild', 5])
-	elif stage == 5:
-		sprite = [['tishaneutral', 'pos1']]
-		globals.main._on_mansion_pressed()
-		if OS.get_name() != "HTML5":
-			yield(globals.main, 'animfinished')
-		text = textnode.TishaAfterGorn
-		buttons.append(['Ask for money', 'tishagornguild', 6])
-		buttons.append(['Have sex', 'tishagornguild', 7])
-		buttons.append(["Don't ask for anything", 'tishagornguild', 8])
-	elif stage == 6:
-		sprite = [['tishaneutral', 'pos1']]
-		text = textnode.TishaAskPayment
-		globals.state.sidequests.emily = 17
-		globals.state.upcomingevents.append({code = "tishapay", duration = 7})
-		state = true
-	elif stage == 7:
-		image = 'tishafinale'
-		sprite = [['tishanakedhappy', 'pos1']]
-		text = textnode.TishaSexSceneStart
-		globals.charactergallery.tisha.nakedunlocked = true
-		globals.charactergallery.tisha.scenes[1].unlocked = true
-		if globals.player.penis != 'none':
-			text += "\n\n" + textnode.TishaSexSceneEnd
-		globals.resources.mana += 10
-		buttons.append({text = 'Offer Tisha work for you',function = 'tishagornguild', args = 9})
-		buttons.append({text ='Not bother her',function = 'tishagornguild', args = 10})
-	elif stage == 8:
-		image = 'tishafinale'
-		sprite = [['tishanakedhappy', 'pos1']]
-		globals.charactergallery.tisha.nakedunlocked = true
-		globals.charactergallery.tisha.scenes[1].unlocked = true
-		text = textnode.TishaRefusePayment + textnode.TishaSexSceneStart
-		globals.resources.mana += 10
-		if globals.player.penis != 'none':
-			text += "\n\n" + textnode.TishaSexSceneEnd
-		buttons.append({text = 'Offer Tisha work for you',function = 'tishagornguild', args = 9})
-		buttons.append({text ='Not bother her',function = 'tishagornguild', args = 10})
-	elif stage == 9:
-		globals.main.closescene()
-		for i in globals.slaves:
-			if i.unique == "Emily":
-				i.tags.erase('nosex')
-		text = textnode.TishaOfferJob
-		sprite = [['tishanakedhappy', 'pos1']]
-		var person = globals.characters.create("Tisha")
-		globals.connectrelatives(person, emily, 'sibling')
-		emily.relations[person.id] = 250
-		person.relations[emily.id] = 500
-		person.consent = true
-		person.add_trait("Grateful")
-		person.obed += 90
-		person.loyal += 15
-		globals.slaves = person
-		state = true
-		globals.state.sidequests.emily = 16
-		globals.resources.upgradepoints += 10
-		for i in globals.slaves:
-			if i.unique == 'Emily':
-				i.consent = true
-				i.tags.erase("nosex")
-	elif stage == 10:
-		globals.main.closescene()
-		sprite = [['tishaneutral', 'pos1']]
-		for i in globals.slaves:
-			if i.unique == "Emily":
-				i.tags.erase('nosex')
-		text = textnode.TishaLeave
-		state = true
-		globals.state.sidequests.emily = 16
-		globals.resources.upgradepoints += 10
-	if stage in [7,8]:
-		globals.main.scene(self, image, text, buttons)
-		globals.main._on_mansion_pressed()
-		closedialogue()
-		return
-	globals.main.dialogue(state,self,text,buttons, sprite)
-
-func tishapay():
-	var text = "At the morning you receive a delivery: nice sum of gold from Tisha, who you helped previously. "
-	globals.resources.gold += 500
-	globals.main.popup(text)
-
-func emilytishasex(stage = 0):
-	var text
-	var state
-	var buttons = []
-	var emily
-	var tisha
-	var sprite = []
-	var image
-	if stage == 0:
-		image = 'tishaemily'
-		text = globals.questtext.TishaEmilySex
-		sprite = [['tishanakedhappy', 'pos1'], ['emilynakedhappy','pos2']]
-		for i in globals.slaves:
-			if i.unique == 'Emily':
-				emily = i
-			elif i.unique == 'Tisha':
-				tisha = i
-		emily.metrics.sex += 1
-		tisha.metrics.sex += 1
-		emily.metrics.partners.append(tisha.id)
-		tisha.metrics.partners.append(emily.id)
-		emily.away.duration = 7
-		tisha.away.duration = 7
-		state = false
-		globals.resources.mana += 25
-		globals.charactergallery.emily.scenes[2].unlocked = true
-		globals.charactergallery.tisha.scenes[2].unlocked = true
-		globals.charactergallery.emily.nakedunlocked = true
-		globals.charactergallery.tisha.nakedunlocked = true
-		buttons.append({text = 'Continue',function = 'emilytishasex',args = 1})
-		globals.main.scene(self, image, text, buttons)
-	elif stage == 1:
-		globals.main.closescene()
-		sprite = [['tishahappy', 'pos1'], ['emily2happy','pos2']]
-		text = globals.questtext.TishaEmilySex2
-		state = true
-		globals.main.dialogue(state,self,text,buttons, sprite)
-
 #Chloe
 
 func chloeforest(stage = 0):
@@ -2828,7 +3194,11 @@ func ssinitiate(stage = 0):
 			startslave = i
 	if startslave == null:
 		return
-	
+	if startslave.imagefull != null:
+		if stage == 0:
+			sprites = [[startslave.imagefull,'pos1','opac']]
+		else:
+			sprites = [[startslave.imagefull,'pos1']]
 	globals.state.sidequests.startslave = 1
 	
 	match stage:
@@ -2885,7 +3255,11 @@ func ssmassage(stage = 0):
 		return
 	
 	var textdict 
-	
+	if startslave.imagefull != null:
+		if stage == 0:
+			sprites = [[startslave.imagefull,'pos1','opac']]
+		else:
+			sprites = [[startslave.imagefull,'pos1']]
 	globals.state.sidequests.startslave = 2
 	
 	match stage:
@@ -2902,15 +3276,17 @@ func ssmassage(stage = 0):
 		1:
 			text = ssnode.ssmassageobedient
 			globals.state.decisions.append("ssmassagefair")
+			startslave.loyal += 10
 		2:
 			if startslave.memory == '$sibling':
 				text = ssnode.ssmassageroughsibling
 			else:
 				text = ssnode.ssmassageroughfriend
 			globals.state.decisions.append("ssmassagestrict")
+			startslave.obed += 20
 		3:
 			textdict = {ssfair = ssnode.ssmassagerefusefair, ssstrict = ssnode.ssmassagerefusestrict, ssweak = ssnode.ssmassagerefuseweak}
-			
+			startslave.obed -= 10
 			for i in textdict:
 				if globals.state.decisions.has(i):
 					text = textdict[i]
@@ -2940,6 +3316,11 @@ func sspotion(stage = 0):
 	
 	var textdict 
 	
+	if startslave.imagefull != null:
+		if stage == 0:
+			sprites = [[startslave.imagefull,'pos1','opac']]
+		else:
+			sprites = [[startslave.imagefull,'pos1']]
 	globals.state.sidequests.startslave = 3
 	
 	match stage:
@@ -2953,6 +3334,7 @@ func sspotion(stage = 0):
 			buttons.append({text = 'Scold', function = 'sspotion', args = 2})
 			buttons.append({text = 'Pass Towel and Leave', function = 'sspotion', args = 3})
 		1:
+			startslave.loyal += 10
 			globals.state.decisions.append("sspotionfair")
 			buttons.append({text = 'Continue', function = 'sspotionaftermatch', args = 0})
 			if startslave.sex == 'male':
@@ -2960,6 +3342,7 @@ func sspotion(stage = 0):
 			else:
 				text = ssnode.sspotionfairfemale 
 		2:
+			startslave.obed += 25
 			globals.state.decisions.append("sspotionstrict")
 			if startslave.sex == 'male':
 				text = ssnode.sspotionstrictmale
@@ -2996,6 +3379,8 @@ func sspotionaftermatch(stage = 0):
 	if startslave == null:
 		return
 	
+	if startslave.imagefull != null:
+		sprites = [[startslave.imagefull,'pos1','opac']]
 	
 	globals.main.animationfade(1.5)
 	yield(globals.main, 'animfinished')
@@ -3073,7 +3458,11 @@ func sssexscene(stage = 0):
 			startslave = i
 	if startslave == null:
 		return
-	
+	if startslave.imagefull != null:
+		if stage == 0:
+			sprites = [[startslave.imagefull,'pos1','opac']]
+		else:
+			sprites = [[startslave.imagefull,'pos1']]
 	match stage:
 		0:
 			state = false
@@ -3128,6 +3517,8 @@ func sssexscene(stage = 0):
 			}
 			text = sexdict[category][textvar]
 			startslave.add_trait("Grateful")
+			startslave.loyal += 25
+			startslave.obed += 20
 		2:
 			text = ssnode.sssexignore
 	

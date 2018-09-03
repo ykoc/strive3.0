@@ -10,6 +10,9 @@ var location = ''
 var questgiveawayslave
 var currentzone
 
+#QMod - Variables
+onready var mainQuestTexts = globals.mainQuestTexts
+onready var sideQuestTexts = globals.sideQuestTexts
 func _ready():
 	if globals.guildslaves.wimborn.size() < 2:
 		var rand = round(rand_range(4,6))
@@ -63,17 +66,21 @@ func clearbuttons():
 			i.queue_free()
 
 
-func buildbuttons(array, target = self):
-	clearbuttons()
-	var counter = 0
+func buildbuttons(array, target = self, doClear = true, curCount = 0):
+	if doClear: #Added for multi-step button builds
+		clearbuttons()
+	var counter = curCount
 	for i in array:
 		var newbutton = button.duplicate()
 		buttoncontainer.add_child(newbutton)
 		newbutton.set_text(i.name)
 		newbutton.get_node("Label").set_text(str(counter+1))
 		newbutton.visible = true
-		if i.has('args'):
-			newbutton.connect('pressed', target, i.function, [i.args])
+		if i.has('args'): #QMod - Changed to handle args = [] vs single args only
+			if typeof(i.args) == TYPE_ARRAY:
+				newbutton.connect('pressed', target, i.function, i.args)
+			else:
+				newbutton.connect('pressed', target, i.function, [i.args])
 		else:
 			newbutton.connect('pressed', target, i.function)
 		if i.has('disabled'):
@@ -1876,60 +1883,96 @@ func sebastianfarmpurchase():
 	buildbuttons(array)
 
 ################ backstreets
+#func backstreets():
+#	var text = "This part of town is populated by criminals and the poor. Brothel is located here. "
+#	main.background_set('wimborn')
+#	yield(main, 'animfinished')
+#
+#	var array = [{name = 'Enter Brothel',function = 'brothel'}, {name = 'Return', function = 'town'}]
+#	if globals.state.sidequests.cali in [14,15,16]:
+#		array.insert(1,{name = "Visit local bar", function = "calibarquest"})
+#	if globals.state.sidequests.emily <= 1:
+#		text += '\n\nYou see an urchin girl trying to draw your attention'
+#		array.insert(1,{name = 'Respond to the urchin girl', function = 'emily'})
+#	if globals.state.sidequests.emily == 13:
+#		array.insert(1,{name = 'Search Backstreets', function = 'tishaquest'})
+#	mansion.maintext = text
+#	buildbuttons(array)
+#
+#func emily(state = 1):
+#	var buttons = []
+#	var text = ''
+#	var sprites = null
+#	globals.state.sidequests.emily = state
+#	if state == 1:
+#		globals.charactergallery.emily.unlocked = true
+#		text = questtext.EmilyMeet
+#		if globals.resources.food < 10:
+#			buttons.append({text = 'Give her food', function = 'emily', args = 2, disabled = true, tooltip = "not enough food"})
+#		else:
+#			buttons.append(['Give her food', 'emily', 2])
+#		buttons.append(['Shoo her away', 'emily', 5])
+#		buttons.append(["Make an excuse and tell her you'll bring some later", 'emily', 0])
+#		sprites = [['emilynormal','pos1','opac']]
+#		main.dialogue(false, self, text, buttons, sprites)
+#	elif state == 2:
+#		text = questtext.EmilyFeed
+#		globals.resources.food -= 10
+#		buttons.append(['Offer to take her as a servant', 'emily', 3])
+#		buttons.append(["Leave her alone", 'emily', 5])
+#		sprites = [['emilynormal','pos1']]
+#		main.dialogue(false, self, text, buttons, sprites)
+#	elif state == 3:
+#		text = questtext.EmilyTake
+#		sprites = [['emilyhappy','pos1']]
+#		main.dialogue(true, self, text, buttons, sprites)
+#		var emily = globals.characters.create('Emily')
+#		globals.state.upcomingevents.append({code = 'tishaappearance',duration =7})
+#		globals.slaves = emily
+#		backstreets()
+#	elif state == 5:
+#		backstreets()
+#		main.close_dialogue()
+#	elif state == 0:
+#		backstreets()
+#		main.close_dialogue()
+
 func backstreets():
-	var text = "This part of town is populated by criminals and the poor. Brothel is located here. "
+	var text = "This part of town is populated by criminals and the poor.  The brothel is located here."
 	main.background_set('wimborn')
 	yield(main, 'animfinished')
 	
-	var array = [{name = 'Enter Brothel',function = 'brothel'}, {name = 'Return', function = 'town'}]
+	var buttons = [{name = 'Enter Brothel',function = 'brothel'}]
+	#Original quest event 'hooks'
 	if globals.state.sidequests.cali in [14,15,16]:
-		array.insert(1,{name = "Visit local bar", function = "calibarquest"})
-	if globals.state.sidequests.emily <= 1:
-		text += '\n\nYou see an urchin girl trying to draw your attention'
-		array.insert(1,{name = 'Respond to the urchin girl', function = 'emily'})
+		buttons.insert(1,{name = "Visit local bar", function = "calibarquest"})
+
+
+
 	if globals.state.sidequests.emily == 13:
-		array.insert(1,{name = 'Search Backstreets', function = 'tishaquest'})
+		buttons.insert(1,{name = 'Search Backstreets', function = 'tishaquest'})	
+	buildbuttons(buttons, self)
+	var buttonCount = buttons.size()
+	
+	#QMod - Revised Quest Event System	
+	var place = {region = 'wimborn', area = 'wimbornCity', location = 'backstreets'}
+	var placeEffects
+	
+	placeEffects = globals.events.call_events(place, 'trigger')
+	if placeEffects.text != '':
+		text += '\n\n' + placeEffects.text
+		
+	placeEffects = globals.events.call_events(place, 'hook', {source = self, function = 'backstreets'})
+	if placeEffects.text != '':
+		text += '\n\n' + placeEffects.text
+	buttons = placeEffects.buttons
+	buildbuttons(buttons, globals.events, false, buttonCount)
+	buttonCount += buttons.size()
+	
+	#Return to town center button
+	buttons = [{name = 'Return', function = 'town'}]
+	buildbuttons(buttons, self, false, buttonCount)
 	mansion.maintext = text
-	buildbuttons(array)
-
-func emily(state = 1):
-	var buttons = []
-	var text = ''
-	var sprites = null
-	globals.state.sidequests.emily = state
-	if state == 1:
-		globals.charactergallery.emily.unlocked = true
-		text = questtext.EmilyMeet
-		if globals.resources.food < 10:
-			buttons.append({text = 'Give her food', function = 'emily', args = 2, disabled = true, tooltip = "not enough food"})
-		else:
-			buttons.append(['Give her food', 'emily', 2])
-		buttons.append(['Shoo her away', 'emily', 5])
-		buttons.append(["Make an excuse and tell her you'll bring some later", 'emily', 0])
-		sprites = [['emilynormal','pos1','opac']]
-		main.dialogue(false, self, text, buttons, sprites)
-	elif state == 2:
-		text = questtext.EmilyFeed
-		globals.resources.food -= 10
-		buttons.append(['Offer to take her as a servant', 'emily', 3])
-		buttons.append(["Leave her alone", 'emily', 5])
-		sprites = [['emilynormal','pos1']]
-		main.dialogue(false, self, text, buttons, sprites)
-	elif state == 3:
-		text = questtext.EmilyTake
-		sprites = [['emilyhappy','pos1']]
-		main.dialogue(true, self, text, buttons, sprites)
-		var emily = globals.characters.create('Emily')
-		globals.state.upcomingevents.append({code = 'tishaappearance',duration =7})
-		globals.slaves = emily
-		backstreets()
-	elif state == 5:
-		backstreets()
-		main.close_dialogue()
-	elif state == 0:
-		backstreets()
-		main.close_dialogue()
-
 
 func brothel(person = null):
 	mansion.background_set("brothel")

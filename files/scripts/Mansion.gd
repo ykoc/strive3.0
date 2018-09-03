@@ -1201,9 +1201,9 @@ func nextdayevents():
 	for i in globals.state.upcomingevents:
 		if $scene.is_visible_in_tree() == true:
 			continue
-#		if i.duration > 0:
-#			i.duration -= 1
-#		if i.duration <= 0:
+		if i.duration > 0:
+			i.duration -= 1
+		if i.duration <= 0:
 			var text = globals.events.call(i.code)
 			globals.state.upcomingevents.erase(i)
 			if text != null:
