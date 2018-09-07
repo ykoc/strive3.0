@@ -1,18 +1,18 @@
 ### Ku-Ku-Ku-Kurapanda!!!
-### Quest - An collection of linked or related Events
+### Quest - A collection of linked or related Events
 
-#Resources
+### Resources
 const ReqCheck = preload("res://files/scripts/event/event_requirement_check.gd")
 const Event = preload("res://files/scripts/event/event.gd")
 
-#Member Variables
-var uid = '' #Identifier for quest
-var state = {stage = 0, branch = -1} #stage = major progress, branch = variations/minor progress, -1 value = 'inactive'
+### Member Variables
+var uid = ''
+var state = {stage = -1, branch = -1} #stage = major progress, branch = variations/minor progress, value {-1 = 'inactive_start', -2 = 'self_suspend', -3 = 'external_suspend', -10 = 'finish', 0 = 'active_start', [1, x] = 'quest_progression'
 var events = {} #Dictionary of 'place.region' : {eventName : event}
 
 
-#PUBLIC FUNCTIONS
-#Event functions	
+### Public Functions
+#Event accessors
 func add_event(event):
 	if !events.has(event.place.region):
 		events[event.place.region] = {}

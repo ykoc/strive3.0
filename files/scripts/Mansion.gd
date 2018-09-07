@@ -1,4 +1,4 @@
-
+### Mansion - Main
 extends Node
 
 var test = File.new()
@@ -26,6 +26,9 @@ signal animfinished
 
 var checkforevents = false
 var debug = false
+
+#QMod - Variables
+onready var mansionStaff = get_node("joblist").mansionStaff
 
 func _ready():
 	get_node("music").set_meta('currentsong', 'none')
@@ -331,7 +334,7 @@ func _on_new_slave_button_pressed():
 	globals.resources.upgradepoints += 100
 	globals.state.mainquest = 42
 	globals.state.sidequests.brothel = 1
-	globals.state.sidequests.ayda = 5
+	globals.state.sidequests.emily = 12
 	#globals.state.decisions.append('')
 	globals.state.rank = 3
 	#globals.state.plotsceneseen = ['garthorscene','hade1','hade2','frostfordscene']#,'slaverguild']
@@ -1196,13 +1199,14 @@ func nextdayevents():
 	#QMod - Insert for new event system
 	var place = {region = 'any', area = 'mansion', location = 'foyer'}
 	var placeEffects = globals.events.call_events(place, 'schedule')
-	
+	if placeEffects.hasEvent:
+		checkforevents = true
+		return
+		
 	#Old scheduled event system
 	for i in globals.state.upcomingevents:
 		if $scene.is_visible_in_tree() == true:
 			continue
-		if i.duration > 0:
-			i.duration -= 1
 		if i.duration <= 0:
 			var text = globals.events.call(i.code)
 			globals.state.upcomingevents.erase(i)
@@ -1939,8 +1943,7 @@ func _on_mansion_pressed():
 	else:
 		get_node("Navigation/laboratory").set_disabled(true)
 	music_set('mansion')
-#	if globals.state.sidequests.emily == 3:
-#		globals.events.emilymansion()
+	
 	if globals.state.capturedgroup.size() > 0:
 		var array = []
 		var nojailcells = false

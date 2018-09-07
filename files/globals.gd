@@ -3,7 +3,7 @@ extends Node
 
 var effectdict = {}
 var guildslaves = {wimborn = [], gorn = [], frostford = [], umbra = []}
-var gameversion = '0.5.19'
+var gameversion = '0.5.19b'
 var state = progress.new()
 var developmode = false
 var gameloaded = false
@@ -46,11 +46,11 @@ var patronlist = load("res://files/scripts/patronlists.gd").new()
 var mainQuestTexts = events.mainquestTexts
 var sideQuestTexts = events.sidequestTexts
 var places = {
-	anywhere = {region = 'any', location = 'any'},
-	nowhere = {region = 'none', location = 'none'}, #For events that aren't triggered by location?
-	wimborn = {region = 'wimborn', location = 'any'},
-	gorn = {region = 'gorn', location = 'any'},
-	frostford = {region = 'frostford', location = 'any'}
+	anywhere = {region = 'any', area = 'any', location = 'any'},
+	nowhere = {region = 'none', area = 'none', location = 'none'},
+	wimborn = {region = 'wimborn', area = 'any', location = 'any'},
+	gorn = {region = 'gorn', area = 'any', location = 'any'},
+	frostford = {region = 'frostford', area = 'any', location = 'any'}
 }
 var main
 
@@ -140,7 +140,7 @@ Mage = "-50% mana cost of spells\nCombat spell deal 20% more damage",
 
 func _init():
 	if OS.get_executable_path() == 'C:\\Users\\1\\Desktop\\godot\\Godot_v3.0.4-stable_win64.exe':
-		developmode = true 
+		developmode = true
 	randomize()
 	loadsettings()
 	effectdict = effects.effectlist 

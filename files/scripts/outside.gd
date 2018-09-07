@@ -409,17 +409,41 @@ func slaveguild(guild = 'wimborn'):
 		setcharacter('goblin')
 		slavearray = globals.guildslaves.gorn
 		mansion.maintext = globals.player.dictionaryplayer("Huge part of supposed guild takes a makeshift platform and tents on the outside with few half-empty cages. In the middle, you can see a presentation podium which is easily observable from main street. Despite Gorn being very different from common, primarily human-populated towns, it still directly follows Mage's Order directives — race diversity and casual slavery are very omnipresent. \n\nAs you walk in, one of the goblin receptionists quickly recognizes you as an Order member and hastily grabs your attention, sensing a profitable customer.\n\n— $sir interested in some heat-tolerant 'orkers? *chuckles* Or you are in preference of short girls? We quite often get those as well, for every taste and color!")
-		var array = [{name = 'See slaves for sale',function = 'slaveguildslaves'}, {name = 'Offer your servants',function = 'slaveguildsells'}, {name = 'See custom requests', function = 'slaveguildquests'},{name = 'Services for Slaves',function = 'slaveservice'}, {name = 'Leave',function = 'togorn'}]
+		var array = [{name = 'See slaves for sale',function = 'slaveguildslaves'}, {name = 'Offer your servants',function = 'slaveguildsells'}, {name = 'See custom requests', function = 'slaveguildquests'},{name = 'Services for Slaves',function = 'slaveservice'}]
+		#Old Event Hooks
 		if globals.state.sidequests.emily in [14,15]:
 			array.insert(1, {name = 'Search for Tisha', function = 'tishaquest'})
-		buildbuttons(array)
+		
+		#QMod - New Event System
+		if array.size() > 0:
+			buildbuttons(array)	
+		
+		var place = {'region' : 'gorn', 'area' : 'slaveGuild', 'location' : 'lobby'}
+		var placeEffects
+		var buttonCount = array.size() #ToFix - Keep an eye on this, links old quest button and new quest button counts.
+		
+		placeEffects = globals.events.call_events(place, 'trigger') #ToFix - Should a triggered event be able to create a 'hook' event as a follow-up?
+		if placeEffects.text != '':
+			text += '\n\n' + placeEffects.text
+			
+		placeEffects = globals.events.call_events(place, 'hook', {source = self, function = 'slaveguild'})
+		if placeEffects.text != '':
+			text += '\n\n' + placeEffects.text
+		var buttons = placeEffects.buttons
+		if buttons.size() > 0:
+			buildbuttons(buttons, globals.events, false, buttonCount)
+			buttonCount += buttons.size()
+		# - End New Event System
+		
+		array = [{name = 'Leave', function = 'togorn'}]
+		buildbuttons(array, self, false, buttonCount)
 	elif guild == 'frostford':
 		clearselection()
 		setcharacter('frostfordslaver')
 		slavearray = globals.guildslaves.frostford
 		text = "A humble local guild building is bright and warm inside. Just as the whole of Frostford, this place is serene in its mood compared to what you are used to. "
 		if globals.state.mainquest >= 2:
-			text += "Realizing you belong to the Mage's Order, attendant politely greets you and asks how she could assist you. "
+			text += "Realizing you belong to the Mage's Order, the attendant politely greets you and asks how she may assist you. "
 		mansion.maintext = globals.player.dictionaryplayer(text)
 		var array = [{name = 'See slaves for sale',function = 'slaveguildslaves'},{name = 'Offer your servants',function = 'slaveguildsells'}, {name = 'See custom requests', function = 'slaveguildquests'}, {name = 'Services for Slaves',function = 'slaveservice'}, {name = 'Leave', function = 'tofrostford'}]
 		buildbuttons(array)
@@ -1259,23 +1283,53 @@ func mageorder():
 		globals.events.orderfinale()
 		return
 	mansion.maintext = "This massive building takes a large part of the street. The Wimborn's Mage's Order is the centerpiece of your career achievments. Here you'll be able to buy necessary equipment and learn spells, assuming you are part of it of course."
+
+	#Old Event hooks
+	#Main Quest
 	if globals.state.mainquest <= 1:
 		array.append({name = 'Seek Audience', function = 'mageorderquest1'})
 	elif globals.state.mainquest == 2:
 		array.append({name = 'Consult on further promotions',function = 'mageorderquest1'})
 	elif globals.state.mainquest >= 3 && globals.state.mainquestcomplete != true:
 		array.append({name = 'Find Melissa', function = 'mageorderquest1'})
+	if globals.state.mainquest == 27:
+		array.append({name = "Teleport to Capital", function = 'capitalteleport'})	
+	
+	#Non-Quest Mage Order Spell Store
 	if globals.state.rank >= 1:
 		array.append({name = 'Purchase New Spells',function = 'mageservices'})
 	
+	#Sidequest
 	if globals.state.sidequests.emily == 12:
 		array.append({name = "Visit Tisha's workplace", function = "tishaquest"})
-	if globals.state.mainquest == 27:
-		array.append({name = "Teleport to Capital", function = 'capitalteleport'})
 	if globals.state.sidequests.maple in [4,5]:
 		array.append({name = "Audience Slaver Guild Host", function = 'slaveguildfairy', args = 3})
-	array.append({name = 'Return to city',function = 'town'})
-	buildbuttons(array)
+	
+	#QMod - New Event System
+	if array.size() > 0:
+		buildbuttons(array)	
+	
+	var place = {'region' : 'wimborn', 'area' : 'mageOrder', 'location' : 'lobby'} #Even though 'MageOrder' is in 'WimbornCity', area = 'MageOrder', because it is a potential multi-location spot.  Rule of thumb - outdoor city areas = 'wimbornCity'
+	var placeEffects
+	var buttonCount = array.size() #ToFix - Keep an eye on this, links old quest button and new quest button counts.
+	var text = ''
+	
+	placeEffects = globals.events.call_events(place, 'trigger')
+	if placeEffects.text != '':
+		text += '\n\n' + placeEffects.text
+		
+	placeEffects = globals.events.call_events(place, 'hook', {source = self, function = 'mageorder'})
+	if placeEffects.text != '':
+		text += '\n\n' + placeEffects.text
+	var buttons = placeEffects.buttons
+	if buttons.size() > 0:
+		buildbuttons(buttons, globals.events, false, buttonCount)
+		buttonCount += buttons.size()
+	# - End Event System
+	
+	mansion.maintext += text
+	array = [{name = 'Return to city',function = 'town'}]
+	buildbuttons(array, self, false, buttonCount)
 
 func capitalteleport():
 	var buttons = []
@@ -1883,101 +1937,53 @@ func sebastianfarmpurchase():
 	buildbuttons(array)
 
 ################ backstreets
-#func backstreets():
-#	var text = "This part of town is populated by criminals and the poor. Brothel is located here. "
-#	main.background_set('wimborn')
-#	yield(main, 'animfinished')
-#
-#	var array = [{name = 'Enter Brothel',function = 'brothel'}, {name = 'Return', function = 'town'}]
-#	if globals.state.sidequests.cali in [14,15,16]:
-#		array.insert(1,{name = "Visit local bar", function = "calibarquest"})
-#	if globals.state.sidequests.emily <= 1:
-#		text += '\n\nYou see an urchin girl trying to draw your attention'
-#		array.insert(1,{name = 'Respond to the urchin girl', function = 'emily'})
-#	if globals.state.sidequests.emily == 13:
-#		array.insert(1,{name = 'Search Backstreets', function = 'tishaquest'})
-#	mansion.maintext = text
-#	buildbuttons(array)
-#
-#func emily(state = 1):
-#	var buttons = []
-#	var text = ''
-#	var sprites = null
-#	globals.state.sidequests.emily = state
-#	if state == 1:
-#		globals.charactergallery.emily.unlocked = true
-#		text = questtext.EmilyMeet
-#		if globals.resources.food < 10:
-#			buttons.append({text = 'Give her food', function = 'emily', args = 2, disabled = true, tooltip = "not enough food"})
-#		else:
-#			buttons.append(['Give her food', 'emily', 2])
-#		buttons.append(['Shoo her away', 'emily', 5])
-#		buttons.append(["Make an excuse and tell her you'll bring some later", 'emily', 0])
-#		sprites = [['emilynormal','pos1','opac']]
-#		main.dialogue(false, self, text, buttons, sprites)
-#	elif state == 2:
-#		text = questtext.EmilyFeed
-#		globals.resources.food -= 10
-#		buttons.append(['Offer to take her as a servant', 'emily', 3])
-#		buttons.append(["Leave her alone", 'emily', 5])
-#		sprites = [['emilynormal','pos1']]
-#		main.dialogue(false, self, text, buttons, sprites)
-#	elif state == 3:
-#		text = questtext.EmilyTake
-#		sprites = [['emilyhappy','pos1']]
-#		main.dialogue(true, self, text, buttons, sprites)
-#		var emily = globals.characters.create('Emily')
-#		globals.state.upcomingevents.append({code = 'tishaappearance',duration =7})
-#		globals.slaves = emily
-#		backstreets()
-#	elif state == 5:
-#		backstreets()
-#		main.close_dialogue()
-#	elif state == 0:
-#		backstreets()
-#		main.close_dialogue()
-
 func backstreets():
 	var text = "This part of town is populated by criminals and the poor.  The brothel is located here."
 	main.background_set('wimborn')
 	yield(main, 'animfinished')
+	get_node("charactersprite").visible = false
 	
-	var buttons = [{name = 'Enter Brothel',function = 'brothel'}]
+	var array = [{name = 'Enter Brothel',function = 'brothel'}]
 	#Original quest event 'hooks'
 	if globals.state.sidequests.cali in [14,15,16]:
-		buttons.insert(1,{name = "Visit local bar", function = "calibarquest"})
-
-
-
+		array.insert(1,{name = "Visit local bar", function = "calibarquest"})
 	if globals.state.sidequests.emily == 13:
-		buttons.insert(1,{name = 'Search Backstreets', function = 'tishaquest'})	
-	buildbuttons(buttons, self)
-	var buttonCount = buttons.size()
+		array.insert(1,{name = 'Search Backstreets', function = 'tishaquest'})
 	
-	#QMod - Revised Quest Event System	
-	var place = {region = 'wimborn', area = 'wimbornCity', location = 'backstreets'}
+		
+	#QMod - New Event System
+	if array.size() > 0:
+		buildbuttons(array)	
+	
+	var place = {'region' : 'wimborn', 'area' : 'wimbornCity', 'location' : 'backstreets'}
 	var placeEffects
+	var buttonCount = array.size() #ToFix - Keep an eye on this, links old quest button and new quest button counts.
 	
-	placeEffects = globals.events.call_events(place, 'trigger')
+	placeEffects = globals.events.call_events(place, 'trigger') #ToFix - Should a triggered event be able to create a 'hook' event as a follow-up?
 	if placeEffects.text != '':
 		text += '\n\n' + placeEffects.text
 		
 	placeEffects = globals.events.call_events(place, 'hook', {source = self, function = 'backstreets'})
 	if placeEffects.text != '':
 		text += '\n\n' + placeEffects.text
-	buttons = placeEffects.buttons
-	buildbuttons(buttons, globals.events, false, buttonCount)
-	buttonCount += buttons.size()
+	var buttons = placeEffects.buttons
+	if buttons.size() > 0:
+		buildbuttons(buttons, globals.events, false, buttonCount)
+		buttonCount += buttons.size()
+	# - End New Event System
+	
 	
 	#Return to town center button
-	buttons = [{name = 'Return', function = 'town'}]
-	buildbuttons(buttons, self, false, buttonCount)
+	array = [{name = 'Return', function = 'town'}]
+	buildbuttons(array, self, false, buttonCount)
+		
 	mansion.maintext = text
-
+	
 func brothel(person = null):
 	mansion.background_set("brothel")
 	yield(main, 'animfinished')
 	clearbuttons()
+	setcharacter('brothelhost')
 	
 	var text = "Doorman greets you and shows you the way around brothel until you meet with the Madam.\n\n— Greetings, what would you like?  "
 	get_parent().slavearray.clear()

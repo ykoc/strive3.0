@@ -3,19 +3,15 @@ extends Node
 ####Resources
 var textnode = load('res://files/scripts/questtext.gd').new() #Old quest system text
 var EventBuilder = preload("res://files/scripts/event/event_builder.gd").new()
+const EventResult = preload("res://files/scripts/event/event_result.gd")
 const Quest = preload("res://files/scripts/event/quest.gd")
 
 
 #Old Variables
 var emilystate = 0
 var outside
-#Mainquests
-
-func closedialogue():
-	globals.main.close_dialogue()
-
-func closescene():
-	globals.main.closescene()
+var ivran
+var finaleperson
 
 ###Member Variables
 #Event System Variables
@@ -39,12 +35,16 @@ func init_quest():
 	#Emily Quest
 	newQuest = EventBuilder.quest_maker('emily')
 	sidequests[newQuest.uid] = newQuest
+	
+	#Tisha Quest
+	#newQuest = EventBuilder.quest_maker('tisha')
+	#sidequests[newQuest.uid] = newQuest
 
 	
 ###Public Function
 func call_events(place, startType, callback = null): 
 	var placeEffects
-	
+		
 	match startType:
 		'trigger':
 			if place.hash() == lastEventPlace.hash(): #Cannot repeat or 'farm' trigger events at one place, ToFix - Perhaps make a 3-place history?
@@ -69,7 +69,7 @@ func _call_events_trigger(place): #Select one available triggered event per call
 		
 	return placeEffects
 
-func _call_events_hook(place, callback):
+func _call_events_hook(place, callback = null):
 	var availableEvents = _get_events(place, 'hook')
 	var placeEffects = {text = '', buttons = []} #Pre-Event scene effects
 	
@@ -85,8 +85,8 @@ func _call_events_hook(place, callback):
 	
 	return placeEffects
 		
-func _call_events_schedule(place):	
-	var placeEffects = {text = ''}
+func _call_events_schedule(place, callback = null):	
+	var placeEffects = {hasEvent = false, text = ''}
 	
 	var scheduledEvent
 	for ievent in globals.state.upcomingevents:
@@ -94,7 +94,7 @@ func _call_events_schedule(place):
 			ievent.duration -= 1
 		if ievent.duration <= 0:
 			scheduledEvent = ievent			
-	if scheduledEvent == null: #ToFix - extra checks, because of new/old quest mix
+	if scheduledEvent == null:
 		return placeEffects
 	
 	var availableEvents = _get_events(place, 'schedule')
@@ -106,7 +106,8 @@ func _call_events_schedule(place):
 	if activeEvent == null:		
 		return placeEffects
 	
-	globals.state.upcomingevents.erase(scheduledEvent) #ToFix - probably a mistake, better handled by events._process_event after event 'finish'?
+	placeEffects.hasEvent = true
+	globals.state.upcomingevents.erase(scheduledEvent) #ToFix - probably a mistake, better handled by events._process_event after event 'finish'?	
 	_process_event('start', activeEvent)
 	
 	return placeEffects
@@ -124,162 +125,22 @@ func _get_events(place, startType = 'any'): #Returns an array of 'available' eve
 	
 	return availableEvents
 
-#Obsolete?
-func _is_event_available(event, startType = 'any'):
-	var isAvailable = false
-	
-	#Check event trigger type
-	if !(startType == 'any' || event.startType == startType): 
-		return isAvailable	
-
-	#Check if event permanently in 'finish' state
-	if event.state == 'finish':
-		return isAvailable
-	
-	isAvailable = true
-	for ireq in event.requirements:
-		match ireq:
-			'sidequests':
-				for iquestReq in event.requirements[ireq]:					
-					if isAvailable == false:
-						break
-					else:
-						match iquestReq.compare:
-							'inSet':							
-								if !sidequests[iquestReq.name].state.stage in iquestReq.state.stage:
-									isAvailable = false
-								elif !sidequests[iquestReq.name].state.branch in iquestReq.state.branch:
-									isAvailable = false
-							'equals':
-								if !sidequests[iquestReq.name].state.stage == iquestReq.state.stage:
-									isAvailable = false
-								elif !sidequests[iquestReq.name].state.branch == iquestReq.state.branch:
-									isAvailable = false								
-							
-	return isAvailable
 
 #Event System Loop
 func _process_event(newEventState, event, result = {}):
 	#Process result of prior EventAction
 	if !result.empty():
-		_process_event_result(result)				
+		EventResult.process_result(result)					
 	
 	#Update Event's state and process next action
 	_process_event_action(newEventState, event)
-		
-func _process_event_result(result):
-	if !result.empty():
-		for ieffect in result:
-			match ieffect:
-				'globalState':
-					var globalState = globals.state
-					for istate in result[ieffect]:
-						match istate:
-							'decisions':
-								for idecision in result[ieffect][istate]:
-									if !globalState[istate].has(idecision):
-										globalState[istate].append(idecision)
-				'sidequest':
-					for iquest in result[ieffect]:
-						globals.events.sidequests[iquest].state.stage = result[ieffect][iquest].stage
-						globals.events.sidequests[iquest].state.branch = result[ieffect][iquest].branch
-						globals.state.sidequests[iquest] = result[ieffect][iquest].stage #ToFix - Temporary for compatibility with old code
-				'scheduleEvent':
-					for ieventcode in result[ieffect]:
-						globals.state.upcomingevents.append({code = ieventcode, duration = result[ieffect][ieventcode]})					
-				'newSlave':
-					if result[ieffect].isUnique:
-						var newSlave = globals.characters.create('Emily')						
-						globals.slaves = newSlave
-				'resources':
-					var resources = globals.resources
-					for ires in result[ieffect]:
-						resources[ires] += result[ieffect][ires]
-				'gallery':
-					for iperson in result['gallery']:
-						if result['gallery'][iperson].has('unlock'):
-							globals.charactergallery[iperson].unlocked = true
-							if result['gallery'][iperson].unlock == 'naked':
-								globals.charactergallery[iperson].nakedunlocked = true
-						
-						if result['gallery'][iperson].has('scenes'): #ToFix - CharacterGallery scenes should be a dictionary, not array
-							if typeof(result['gallery'][iperson].scenes) == TYPE_ARRAY:
-								for i in result['gallery'][iperson].scenes:
-									globals.charactergallery[iperson]['scenes'][i].unlocked = true
-							else:
-								var i = result['gallery'][iperson].scenes
-								globals.charactergallery[iperson]['scenes'][i].unlocked = true
-				'items':
-					var ownedItems = globals.itemdict
-					for kitem in result[ieffect]:
-						ownedItems[kitem].amount += result[ieffect][kitem]
-				'modifyPeople':
-					_process_event_result_modifypeople(result)
-
-func _process_event_result_modifypeople(result):
-	var	focusPerson
-	var peopleEffects = result['modifyPeople']
-	
-	for iperson in peopleEffects:
-		#Find person
-		if peopleEffects[iperson].isUnique == true:
-			for islave in globals.slaves:
-				if islave.unique == iperson.capitalize():
-					focusPerson = islave
-		else:
-			if globals.slaves.empty():
-				return
-			var diceRoll = randi() % globals.slave.size()
-			focusPerson = globals.slaves[diceRoll]
-		
-		#Modify traits
-		for itrait in peopleEffects[iperson]: 
-			match itrait:
-				'consent':
-					focusPerson.consent = peopleEffects[iperson][itrait]
-				'tags':
-					for itag in peopleEffects[iperson][itrait]:
-						if peopleEffects[iperson][itrait][itag] == 'erase':
-							focusPerson.tags.erase(itag)
-						else:
-							if !focusPerson.tags.has(itag):
-								focusPerson.tags.append(itag)
-				'virgin':
-					for ivirgin in peopleEffects[iperson][itrait]:
-						match ivirgin:
-							'vagina':
-								focusPerson.vagvirgin = peopleEffects[iperson][itrait][ivirgin]
-							'ass':
-								focusPerson.assvirgin = peopleEffects[iperson][itrait][ivirgin]
-							'mouth':
-								focusPerson.mouthvirgin = peopleEffects[iperson][itrait][ivirgin]
-				'metrics':
-					for imetric in peopleEffects[iperson][itrait]:
-						if imetric == 'partners':
-							for ipartner in peopleEffects[iperson][itrait][imetric]:
-								if ipartner == 'player' && !focusPerson.metrics.partners.has(globals.player.id):
-									focusPerson.metrics.partners.append(globals.player.id)
-								elif !focusPerson.metrics.partners.has(ipartner):
-									focusPerson.metrics.partners.append(ipartner)
-						else:
-							focusPerson.metrics[imetric] += peopleEffects[iperson][itrait][imetric]
-				'meters':
-					for imeter in peopleEffects[iperson][itrait]:						
-						match imeter:
-							'stress':
-								focusPerson.stress += peopleEffects[iperson][itrait][imeter]
-							'loyal':
-								focusPerson.loyal += peopleEffects[iperson][itrait][imeter]
-							'lust':
-								focusPerson.lust += peopleEffects[iperson][itrait][imeter]
-							'obedience':
-								focusPerson.obed += peopleEffects[iperson][itrait][imeter]
 
 func _process_event_action(newEventState, event):
 	var main = globals.main
 	var action = null
 	var buttons = []
 	var hasClose = false
+	var text = ''
 	
 	match newEventState:
 		'reset':
@@ -302,14 +163,22 @@ func _process_event_action(newEventState, event):
 			match action.actionType:			
 				'dialogue':
 					main.closescene()
-					buttons = action.get_buttons()				
-					main.dialogue(hasClose, self, action.text, buttons, action.sprites)
+					buttons = action.get_buttons()
+					text = action.text
+					if action.pov == 'player': #ToFix - Redundant as dialogue/scene default to 'player' pov.  When future povs are enabled, this will be the edit point
+						text = globals.player.dictionaryplayer(text)
+					main.dialogue(hasClose, self, text, buttons, action.sprites)
 				'scene':
 					main.close_dialogue()
-					buttons = action.get_buttons()					
-					main.scene(self, action.image, action.text, buttons)
+					buttons = action.get_buttons()
+					text = action.text
+					if action.pov == 'player':
+						text = globals.player.dictionaryplayer(text)					
+					main.scene(self, action.image, text, buttons)
 				'decision':
 					_process_event_action_decision(event)
+				'combat':
+					_process_event_action_combat(event)
 								
 func _process_event_action_decision(event):
 	#Get decisionNode
@@ -319,12 +188,36 @@ func _process_event_action_decision(event):
 	#Process decisionNode
 	_process_event(decisionNode.eventState, event, decisionNode.meta.result)
 	
+func _process_event_action_combat(event):
+	var action = event.actions[event.state]
+	var combatNodes = action.get_combat()
+	var combatData = combatNodes.combat
 	
+	#Setup combat
+	globals.main.get_node("explorationnode").buildenemies(combatData.enemies)
+	globals.main_get_node("combat").nocaptures = true
+	globals.main.exploration.launchonwin = '_process_combat_end'
 	
-			
-			
-					
-					
+	if combatData.enemy.has('hasCaptures'):
+		globals.main.get_node("combat").nocaptures = !combatData.hasCaptures
+	if combatData.has('hasRewards') && combatData.hasRewards == true:
+		globals.main.exploration.launchonwin = null
+		
+	#Combat
+	globals.main.exploration.enemyfight()
+	
+	#Post-Combat - Currently only 'win' condition available, 'lose' = 'gameover' ToFix?
+	var win = combatNodes.win
+	_process_event(win.eventState, event, win.result)
+	
+		
+func _process_combat_end():
+	pass
+		
+
+
+
+
 
 
 
@@ -435,7 +328,6 @@ func emilymansion(stage = 0):
 		return
 	globals.main.dialogue(state,self,text,buttons,sprite)
 
-
 func emilyescape():
 	var emily
 	for i in globals.slaves:
@@ -467,7 +359,7 @@ func tishaappearance():
 	elif emily.brand != 'none':
 		emilystate = 'brand'
 		text += textnode.TishaEmilyBranded
-		[['emily2normal','pos2','opac2'],['tishaangry','pos1','opac']]
+		sprite = [['emily2normal','pos2','opac2'],['tishaangry','pos1','opac']]
 		buttons.append(['Release Emily', 'tishadecision', 3])
 		buttons.append(['Keep Emily', 'tishadecision', 4])
 		buttons.append(['Offer Tisha to take her place', 'tishadecision', 5])
@@ -583,7 +475,6 @@ func tishadecision(number):
 		return
 	globals.main.rebuild_slave_list()
 	globals.main.dialogue(state,self,text,buttons,sprite)
-
 
 func emilyreturn():
 	var emily
@@ -900,11 +791,97 @@ func emilytishasex(stage = 0):
 		state = true
 		globals.main.dialogue(state,self,text,buttons, sprite)
 
+
+### EVENT FUNCTIONS - PUBLIC FUNCTIONS
+#Sex Scene Loader
+func sexscene(value):
+	var text = ''
+	var image
+	var sprite = []
+	var buttons = []
+	if value == 'emilyshowersex':
+		image = 'emilyshower'
+		text = textnode.EmilyShowerSex
+	elif value == 'showerrape':
+		image = 'emilyshowerrape'
+		text = textnode.EmilyShowerRape
+	elif value == 'tishaemilysex':
+		text = globals.questtext.TishaEmilySex
+		image = 'tishaemily'
+	elif value == 'tishablackmail':
+		image = 'tishatable'
+		text = textnode.TishaEmilyBrandCompensation
+	elif value == 'tishareward':
+		image = 'tishafinale'
+		text = textnode.TishaSexSceneStart + '\n\n' + textnode.TishaSexSceneEnd
+	elif value == "calivirgin":
+		image = 'calisex'
+		text = textnode.CaliAcceptProposal + '\n' + textnode.CaliProposalSexMale
+	elif value == 'yrisblowjob':
+		image = 'yrisbj'
+		text = textnode.GornYrisAccept1
+	elif value == 'yrissex':
+		image = 'yrissex'
+		text = textnode.GornYrisAccept2
+	elif value == 'yrissex2':
+		image = 'yrissex'
+		text = textnode.GornYrisAccept3
+	elif value == "chloemana":
+		image = 'chloebj'
+		text = textnode.ChloeShaliqTakeMana
+	elif value == 'chloeforest':
+		image = 'chloewoods'
+		text = textnode.ChloeGroveFound + '\n\n' + textnode.ChloeGroveSex
+	elif value == "aynerispunish":
+		image = 'aynerispunish'
+		text = textnode.AynerisPunish1
+	elif value == "aynerissex":
+		image = 'aynerissex'
+		text = textnode.AynerisPunish2
+	elif value == "mapleflirt":
+		image = 'maplebj'
+		sprite = [['fairy', 'pos1']]
+		text = textnode.MapleFlirt
+	elif value == "mapleflirt2":
+		image = 'maplesex'
+		text = textnode.MapleFlirt2
+	elif value == 'zoetentacle':
+		image = 'zoetentacle1'
+		text = textnode.zoebookdelivercontinue
+		buttons.append({text = 'Continue', function = 'sexscene', args = 'zoetentacle2'})
+		globals.main.scene(self, image, text, buttons)
+		return
+	elif value == 'zoetentacle2':
+		image = 'zoetentacle2'
+		text = textnode.zoebookwatch + '\n' + textnode.zoebookwatch2virgin + textnode.zoebookwatch3
+	elif value == 'aydasex1':
+		image = 'aydasex1'
+		text = textnode.aydasexscene1
+		buttons.append({text = 'Continue', function = 'sexscene', args = 'aydasex2'})
+		globals.main.scene(self, image, text, buttons)
+		return
+	elif value == 'aydasex2':
+		image = 'aydasex2'
+		text = textnode.aydasexscene2
+	if buttons.empty():
+		buttons.append({text = "Close", function = 'closescene'})
+		globals.main.scene(self, image, text, buttons)
+		return
+	globals.main.dialogue(true,self,text,[],sprite)
+
 #Event Dialogue
 func event_dialogue(text, buttons, sprite, state = true):
 	globals.main.dialogue(state, self, text, buttons, sprite)
 
+#Close Scene
+func closescene():
+	globals.main.closescene()		
+		
+### MAIN QUESTS
 
+func closedialogue():
+	globals.main.close_dialogue()	
+	
 func gornpalace():
 	var text = ''
 	var state = true
@@ -932,8 +909,6 @@ func gornpalace():
 		sprite = [['garthor','pos1','opac']]
 	
 	globals.main.dialogue(state, self, text, buttons, sprite)
-
-var ivran
 
 func gornpalaceivran(stage):
 	var text
@@ -1070,7 +1045,6 @@ func hadescene1(stage = 0):
 		return
 	
 	globals.main.dialogue(state, self, text, buttons, sprite)
-
 
 func hadescene2(stage = 0):
 	var text
@@ -1221,6 +1195,111 @@ func gornivranwin():
 func gornwaitday():
 	globals.state.mainquest = 15
 
+func gornayda():
+	var text = ''
+	var state = true
+	var sprite
+	var buttons = []
+	if globals.state.mainquest < 37 || globals.state.mainquestcomplete && globals.state.decisions.has("mainquestelves"):
+		outside.setcharacter('aydanormal')
+		if globals.state.mainquest == 15 && !globals.state.sidequests.ivran in ['tobealtered','potionreceived']:
+			text = textnode.MainQuestGornAydaIvran
+			state = false
+			buttons = [{name = 'Accept', function = 'gornaydaivran', args = 1}, {name = 'Reject',function = 'gornaydaivran', args = 2}]
+		elif globals.state.mainquest == 15 && globals.state.sidequests.ivran == 'tobealtered':
+			text = "Ayda asked you to provide her with someone of high magic affinity. "
+			buttons = [{name = 'Select', function = 'gornaydaselect'}]
+		else:
+			if globals.state.sidequests.ayda == 0:
+				text = textnode.MainQuestGornAydaFirstMeet
+				globals.state.sidequests.ayda = 1
+			else:
+				text = textnode.GornAydaReturn
+			if globals.state.sidequests.ayda == 1:
+				buttons.append({name = 'Ask Ayda about herself', function = 'gornaydatalk', args = 1})
+			elif globals.state.sidequests.ayda == 2:
+				buttons.append({name = 'Ask Ayda about monster races',function = 'gornaydatalk', args = 2})
+	
+			elif globals.state.sidequests.ayda >= 3:
+				buttons.append({name = "See Ayda's assortments", function = 'aydashop'})
+		if globals.state.sidequests.yris == 4:
+			buttons.append({name = "Ask about the found ointment", function = "gornaydatalk", args = 3})
+		if state == true:
+			buttons.append({name = "Leave", function = 'leaveayda'})
+		outside.get_node("charactersprite").visible = true
+		globals.main.maintext = globals.player.dictionary(text)
+		outside.buildbuttons(buttons, self)
+	elif globals.state.mainquest == 38:
+		text = textnode.MainQuestFinaleAydaShop
+		globals.state.mainquest = 39
+		globals.main.dialogue(true, self, text, buttons, sprite)
+	else:
+		text = "You try to enter Ayda's shop but she does not appear to be around. "
+		globals.main.dialogue(true, self, text, buttons, sprite)
+
+func leaveayda():
+	outside.togorn()
+	globals.main.exploration.zoneenter('gorn')
+
+func aydashop():
+	outside.shopinitiate("aydashop")
+
+func gornaydatalk(stage = 0):
+	var text = ''
+	var buttons = []
+	outside.setcharacter('aydanormal2')
+	if stage == 1:
+		text = textnode.GornAydaTalk
+		globals.state.sidequests.ayda = 2
+	elif stage == 2:
+		text = textnode.GornAydaTalkMonsters
+		globals.state.sidequests.ayda = 3
+	elif stage == 3:
+		text = textnode.GornYrisAydaReport
+		globals.state.sidequests.yris += 1
+	
+	buttons.append({name = "Continue", function = "gornayda"})
+	
+	globals.main.maintext = globals.player.dictionary(text)
+	outside.buildbuttons(buttons, self)
+
+func gornaydaselect(person = null):
+	var text
+	var state = true
+	var sprite
+	var buttons = []
+	if person == null:
+		globals.main.selectslavelist(true, 'gornaydaselect', self, 'globals.currentslave.smaf >= 4')
+	else:
+		text = textnode.MainQuestGornAydaIvranReturn
+		globals.state.sidequests.ayda = 1
+		person.away.duration = 15
+		person.away.at = 'away'
+		globals.state.sidequests.ivran = 'potionreceived'
+		buttons.append({name = "Continue", function = "gornayda"})
+		globals.main.maintext = globals.player.dictionary(text)
+		outside.buildbuttons(buttons, self)
+		#globals.main.dialogue(state, self, text, buttons, sprite)
+
+func gornaydaivran(stage = 0):
+	var text
+	var sprite
+	var buttons = []
+	var state = true
+	if stage == 0:
+		text = textnode.MainQuestGornAydaIvran
+		state = false
+		buttons = [['Accept','gornaydaivran',1], ['Reject','gornaydainvran',2]]
+	elif stage == 1:
+		text = textnode.MainQuestGornAydaIvranAccept
+		globals.state.sidequests.ivran = 'tobealtered'
+	elif stage == 2:
+		text = textnode.MainQuestGornAydaIvranReject
+	
+	buttons.append({name = "Continue", function = "gornayda"})
+	globals.main.maintext = globals.player.dictionary(text)
+	outside.buildbuttons(buttons, self)
+	#globals.main.dialogue(state, self, text, buttons, sprite)
 
 func undercitybosswin():
 	var reward
@@ -1397,7 +1476,6 @@ func dryadfight(stage = 0):
 		globals.main.exploration.launchonwin = 'zoefightwin'
 		globals.main.get_node("combat").nocaptures = true
 		globals.main.exploration.enemyfight()
-		
 
 func dryadfightwin():
 	var text  = ''
@@ -1516,9 +1594,9 @@ func mountainelfcamp(stage = 0):
 		globals.main.exploration.launchonwin = 'mountainwin'
 		globals.main.get_node("combat").nocaptures = true
 		globals.main.exploration.enemyfight()
-#Sidequests
 
 
+#Main Quest Finale
 func mountainwin(stage = 0):
 	var state = false
 	var text = ''
@@ -1729,8 +1807,6 @@ func finalebadroute():
 	var background = 'mainorderfinale'
 	globals.main.dialogue(state, self, text, buttons, sprite, background)
 
-var finaleperson
-
 func finalemelissa(stage = 0):
 	var text = ''
 	var state = false
@@ -1796,7 +1872,9 @@ func bestslave(first, second):
 		return false
 
 
+### SIDE QUESTS
 
+#Cali Side Quest
 func mapletimepass():
 	globals.state.sidequests.maple = 3
 
@@ -2458,81 +2536,8 @@ func calireturn():
 func caliparentsdie():
 	globals.state.sidequests.caliparentsdead = true
 
-func sexscene(value):
-	var text = ''
-	var image
-	var sprite = []
-	var buttons = []
-	if value == 'emilyshowersex':
-		image = 'emilyshower'
-		text = textnode.EmilyShowerSex
-	elif value == 'showerrape':
-		image = 'emilyshowerrape'
-		text = textnode.EmilyShowerRape
-	elif value == 'tishaemilysex':
-		text = globals.questtext.TishaEmilySex
-		image = 'tishaemily'
-	elif value == 'tishablackmail':
-		image = 'tishatable'
-		text = textnode.TishaEmilyBrandCompensation
-	elif value == 'tishareward':
-		image = 'tishafinale'
-		text = textnode.TishaSexSceneStart + '\n\n' + textnode.TishaSexSceneEnd
-	elif value == "calivirgin":
-		image = 'calisex'
-		text = textnode.CaliAcceptProposal + '\n' + textnode.CaliProposalSexMale
-	elif value == 'yrisblowjob':
-		image = 'yrisbj'
-		text = textnode.GornYrisAccept1
-	elif value == 'yrissex':
-		image = 'yrissex'
-		text = textnode.GornYrisAccept2
-	elif value == 'yrissex2':
-		image = 'yrissex'
-		text = textnode.GornYrisAccept3
-	elif value == "chloemana":
-		image = 'chloebj'
-		text = textnode.ChloeShaliqTakeMana
-	elif value == 'chloeforest':
-		image = 'chloewoods'
-		text = textnode.ChloeGroveFound + '\n\n' + textnode.ChloeGroveSex
-	elif value == "aynerispunish":
-		image = 'aynerispunish'
-		text = textnode.AynerisPunish1
-	elif value == "aynerissex":
-		image = 'aynerissex'
-		text = textnode.AynerisPunish2
-	elif value == "mapleflirt":
-		image = 'maplebj'
-		sprite = [['fairy', 'pos1']]
-		text = textnode.MapleFlirt
-	elif value == "mapleflirt2":
-		image = 'maplesex'
-		text = textnode.MapleFlirt2
-	elif value == 'zoetentacle':
-		image = 'zoetentacle1'
-		text = textnode.zoebookdelivercontinue
-		buttons.append({text = 'Continue', function = 'sexscene', args = 'zoetentacle2'})
-		globals.main.scene(self, image, text, buttons)
-		return
-	elif value == 'zoetentacle2':
-		image = 'zoetentacle2'
-		text = textnode.zoebookwatch + '\n' + textnode.zoebookwatch2virgin + textnode.zoebookwatch3
-	elif value == 'aydasex1':
-		image = 'aydasex1'
-		text = textnode.aydasexscene1
-		buttons.append({text = 'Continue', function = 'sexscene', args = 'aydasex2'})
-		globals.main.scene(self, image, text, buttons)
-		return
-	elif value == 'aydasex2':
-		image = 'aydasex2'
-		text = textnode.aydasexscene2
-	if buttons.empty():
-		buttons.append({text = "Close", function = 'closescene'})
-		globals.main.scene(self, image, text, buttons)
-		return
-	globals.main.dialogue(true,self,text,[],sprite)
-#Chloe
+		
+#Chloe Side Quest
 
 func chloeforest(stage = 0):
 	var text = ''
@@ -2791,7 +2796,7 @@ func chloealchemy(stage = 0):
 	globals.main.dialogue(true, self, text, buttons)
 
 
-
+#Ayneris Side Quest
 func aynerisforest(stage = 0):
 	var state = false
 	var text = ''
@@ -3014,6 +3019,8 @@ func aynerisrapieramberguard(stage = 0):
 func undercitylibrarywin():
 	globals.main.exploration.undercitylibrarywin()
 
+	
+#Zoe Side Quest
 func zoebookevent(stage = 0):
 	var zoe = null
 	var text = ''
@@ -3115,7 +3122,6 @@ func zoepassitems(stage = 0):
 		globals.main.dialogue(state, self, text, buttons, sprite)
 	else:
 		globals.main.scene(self, image, text, buttons)
-
 func aydatimepass():
 	globals.state.sidequests.ayda = 7
 
@@ -3152,9 +3158,27 @@ func aydapersonaltalk():
 	
 	globals.main.dialogue(state, self, text, buttons, sprites)
 
-
-
-
+#func aydapersonaltalk():
+#	var text = ''
+#	var state = true
+#	var sprite = [['aydanormal','pos1','opac']]
+#	var buttons = []
+#
+#	match globals.state.sidequests.ayda:
+#		9:
+#			text = textnode.aydareturn1
+#			globals.state.sidequests.ayda = 10
+#		12:
+#			text = textnode.aydareturn2
+#			globals.state.sidequests.ayda = 13
+#		15:
+#			text = textnode.aydareturn3
+#			globals.state.sidequests.ayda = 16
+#
+#	if globals.state.sidequests.ayda == 15:
+#		globals.main.scene(self, 'aydascene', text, buttons)
+#	else:
+#		globals.main.dialogue(state, self, text, buttons, sprite)
 func aydasex(stage = 1):
 	var state = true
 	var text
@@ -3525,5 +3549,3 @@ func sssexscene(stage = 0):
 	
 	
 	globals.main.dialogue(state, self, startslave.dictionary(text), buttons, sprites)
-
-

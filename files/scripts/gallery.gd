@@ -463,6 +463,7 @@ centaur = load("res://files/images/centaur.png"),
 forestspirit = load("res://files/images/forestspirit.png"),
 frostfordtrader = load("res://files/images/frostfordtrader.png"),
 frostfordslaver = load("res://files/images/ffslaver.png"),
+brothelhost = load("res://files/images/brothelhost.png"),
 }
 var scenes = {
 finale = load("res://files/images/scene/finale.png"),

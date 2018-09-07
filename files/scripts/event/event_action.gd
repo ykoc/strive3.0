@@ -1,12 +1,13 @@
-###Ku-Ku-Ku-Kurapanda!!!
-###EventAction - One action within an Event
+### Ku-Ku-Ku-Kurapanda!!!
+### EventAction - One action within an Event
 
-#Resources
+### Resources
 const ReqCheck = preload("res://files/scripts/event/event_requirement_check.gd")
 
-###Member Variables
-var event
-var actionType = 'dialogue' #Types - 'dialogue', 'scene', 'decision'
+### Member Variables
+var event = null
+var actionType = 'dialogue' #Types - 'dialogue', 'scene', 'decision', 'combat'
+var pov = ''
 var text = ''
 var image = ''
 var sprites = []
@@ -16,6 +17,8 @@ var nodes = []
 ###Public Functions
 #'Node' accessors
 func add_node(node): #node = {eventState = eventStateVal, meta = {requirements = {}, result = {}}}
+	if !node.has('meta'):
+		node['meta'] = {'requirements' : {}, 'result' : {}}
 	nodes.append(node)
 
 func get_node():	
@@ -34,12 +37,14 @@ func get_node():
 			availableNodes.append(inode)
 	
 	#Select decisionNode
-	if availableNodes.empty():
+	if !availableNodes.empty():
+		var diceRoll = randi() % availableNodes.size()
+		decisionNode = availableNodes[diceRoll]		
+	elif !defaultNodes.empty():
 		var diceRoll = randi() % defaultNodes.size()
 		decisionNode = defaultNodes[diceRoll]
 	else:
-		var diceRoll = randi() % availableNodes.size()
-		decisionNode = availableNodes[diceRoll]
+		decisionNode = {'eventState' : 'finish', 'meta' : {'requirements' : {}, 'result' : {}}} #This case shouldn't occur, it's a fallback for broken events
 		
 	return decisionNode
 	
@@ -61,11 +66,29 @@ func get_buttons():
 			finalButtons.append({name = ibutton.name, text = ibutton.name, function = '_process_event', args = [ibutton.eventState, event, result], disabled = true, tooltip = checkResult.meta.tooltip})				
 		
 	return finalButtons
+
+#'Combat' accessors
+func add_combat(combat, combatFinish): # combat = {'combat' = {combatData}}, combatFinish = {'win' = {'eventState' : {}, 'results' : {}}}
+	nodes.append(combat)
+	
+	for ifinish in combatFinish:
+		nodes.append(ifinish)
+
+func get_combat():
+	var combatNodes = {'combat' : null, 'win' : null}
+		
+	for inode in nodes:
+		if inode.has('combat'):
+			combatNodes.combat = inode.combat
+		elif inode.has('win'):
+			combatNodes.win = inode.win
+		
+	return combatNodes
 	
 #Utiliy Functions	
 func clear():
 	event = null
-	actionType = 'decision' #default type
+	actionType = 'dialogue'
 	text = ''
 	image = ''
 	sprites.clear()
@@ -73,12 +96,13 @@ func clear():
 	
 #File system functions
 func to_dict():
-	var actionDict = {'actionType' : actionType, 'text' : text, 'image' : image, 'sprites': sprites, 'nodes' : nodes}
+	var actionDict = {'actionType' : actionType, 'pov' : pov, 'text' : text, 'image' : image, 'sprites': sprites, 'nodes' : nodes}
 	return actionDict
 	
 func from_dict(actionDict):
 	clear()		
 	actionType = actionDict.actionType
+	pov = actionDict.actionType
 	text = actionDict.text
 	image = actionDict.image
 	sprites = actionDict.sprites

@@ -1,26 +1,26 @@
-###Ku-Ku-Ku-Kurapanda!!!
-###Event - A single game encounter composed of EventActions
+### Ku-Ku-Ku-Kurapanda!!!
+### Event - A single game encounter composed of EventActions
 
-#Resources
+### Resources
 const ReqCheck = preload("res://files/scripts/event/event_requirement_check.gd")
 const EventAction = preload("res://files/scripts/event/event_action.gd")
 
 
-#Member Variables
+### Member Variables
 var name = ''
-var startType = 'none' #'none' - not activated by event handler methods, 'hook' - activated by player action/choice, 'trigger' - automatically activated if event requirements are met, 'schedule' - called on scheduled time
+var startType = 'none' #'none' - direct-call only, 'hook' - activated by player action/choice, 'trigger' - automatically activated if event requirements are met, 'schedule' - called by event scheduler
 var activateChance = 100
 var place = {region = 'none', area = 'none', location = 'none'}
-var state = 'start' #Quest event's internal state, values = 'start', 'anyName01', 'anyName02', ..., 'finish'
+var state = 'start' #values = 'start', ['anyName01', 'anyName02', ...], 'finish', 'reset' - back to 'start'
 var callback = null
 
-var requirements = {} #Requirements for event availability		
-var actions = {} #Dictionary of actions {'Event.state' : EventAction}, one action per event state
+var requirements = {} 
+var actions = {} #Dictionary of actions {'Event.state' : EventAction}
 
 
 ### Public Functions
 #'Availability' functions, checks if event requirements are met
-func is_available(placeReq = globals.places.anywhere):
+func is_available(currentPlace = globals.places.anywhere):
 	var checkResult	= {'meetsReqs' : true, 'meta' : {tooltip = ''}}
 	
 	#Check event state
@@ -29,7 +29,7 @@ func is_available(placeReq = globals.places.anywhere):
 		return checkResult
 		
 	#Check for correct place
-	checkResult = ReqCheck.check_place_reqs(placeReq, place)	
+	checkResult = ReqCheck.check_place_reqs(place, currentPlace)	
 	if checkResult.meetsReqs == false:
 		return checkResult	
 	

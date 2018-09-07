@@ -274,7 +274,8 @@ func apply_file_to_dictionary(file_name, string):
 func apply_next_element_to_dictionary(key, string, offset):
 	var regex_string_dictionary = {}
 	regex_string_dictionary["FUNC"] = "(func\\s+[\\w][\\w\\d]*).*(([\r\n]*[\\t#]+.*)*)"
-	regex_string_dictionary["VAR"] = "(var.*=)\\s([{]([^\\{\\}]*[\r\n]*)*[}])?([^\\{\\}\\s]*)"
+	#regex_string_dictionary["VAR"] = "(var.*=)\\s([{]([^\\{\\}]*[\r\n]*)*[}])?([^\\{\\}\\s]*)"
+	regex_string_dictionary["VAR"] = "(var.*=)\\s+(([\\{\\[][\n\r]+[\\S\\s]*?[\r\n]+[\\}\\]]([\r\n]+|\\Z))|([^\n\r]*))"
 	regex_string_dictionary["SIGN"] = "(signal\\s.*)"
 	regex_string_dictionary["ONREADY"] = "(onready\\svar.*=).*([\\{]([^\\{\\}]*[\r\n]*)*[\\}])?"
 	regex_string_dictionary["CLASS"] = "(class\\s+[\\w][\\w\\d]*).*(([\r\n]*[\\t#]+.*)*)"
