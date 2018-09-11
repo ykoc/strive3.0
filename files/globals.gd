@@ -3,7 +3,7 @@ extends Node
 
 var effectdict = {}
 var guildslaves = {wimborn = [], gorn = [], frostford = [], umbra = []}
-var gameversion = '0.5.19b'
+var gameversion = '0.5.19c'
 var state = progress.new()
 var developmode = false
 var gameloaded = false
@@ -1213,6 +1213,7 @@ class person:
 		string = string.replace('$him', globals.fastif(sex == 'male', 'him', 'her'))
 		string = string.replace('$son', globals.fastif(sex == 'male', 'son', 'daughter'))
 		string = string.replace('$sibling', globals.fastif(sex == 'male', 'brother', 'sister'))
+		string = string.replace('$parent', globals.fastif(sex == 'male', 'father', 'mother'))
 		string = string.replace('$sir', globals.fastif(sex == 'male', 'Sir', "Ma'am"))
 		string = string.replace('$race', globals.decapitalize(race).replace('_', ' '))
 		string = string.replace('$playername', globals.player.name_short())
@@ -1629,6 +1630,34 @@ func checkifrelatives(person, person2):
 			result = true
 	
 	
+	return result
+
+func getrelativename(person, person2):
+	var result = null
+	var data1 
+	var data2
+	if globals.state.relativesdata.has(person.id):
+		data1 = globals.state.relativesdata[person.id]
+	else:
+		createrelativesdata(person)
+		data1 = globals.state.relativesdata[person.id]
+	if globals.state.relativesdata.has(person2.id):
+		data2 = globals.state.relativesdata[person2.id]
+	else:
+		createrelativesdata(person2)
+		data2 = globals.state.relativesdata[person2.id]
+	
+	#print(data1, data2)
+	for i in ['mother','father']:
+		if str(data1[i]) == str(data2.id):
+			result = '$parent'
+		elif str(data2[i]) == str(data1.id):
+			result = '$son'
+	for i in [data1, data2]:
+		if i.siblings.has(data1.id) || i.siblings.has(data2.id):
+			result = '$sibling'
+	if result != null:
+		result = person2.dictionary(result)
 	return result
 
 func showtooltip(text):

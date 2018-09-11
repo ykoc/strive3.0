@@ -268,6 +268,10 @@ func _ready():
 			person.obed = 90
 			person.lewdness = 70
 			person.mods['hollownipples'] = 'hollownipples'
+			person.sex = 'male'
+			if participants.size() > 0:
+				person.sex = 'female'
+				globals.connectrelatives(participants[0].person, person, 'father')
 			newmember.loyalty = person.loyal
 			newmember.submission = person.obed
 			newmember.person = person

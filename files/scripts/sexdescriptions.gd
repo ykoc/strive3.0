@@ -297,7 +297,10 @@ func name(group):
 			if i.person == globals.player:
 				text += 'you'
 			else:
-				text += i.name
+				if globals.getrelativename(givers[0].person, i.person) != null && randf() >= 0.5:
+					text += givers[0].person.dictionary('$his ') + globals.getrelativename(givers[0].person ,i.person)
+				else:
+					text += i.name
 			text += '[/color]'
 			if i != takers.back() && takers.find(i) != takers.size()-2:
 				text += ', '

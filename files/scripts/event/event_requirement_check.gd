@@ -71,7 +71,7 @@ static func _check_progress_reqs(progress):
 	var tooltip = ''
 	
 	for icategory in progress:
-		match icategory:			
+		match icategory:
 			'decisions':
 				for idecision in progress[icategory]:
 					if !globals.state[icategory].has(idecision):
@@ -201,18 +201,18 @@ static func _check_sidequest_reqs(sidequests):
 		var compareType = '=='
 		if questReqs.has('compare'):
 			compareType = questReqs.compare
-		
-		#Compare quest 'stage' and 'branch'		
-		if !_compare(quests[iquestname].state.stage, questReqs.state.stage, compareType):
+		#Compare quest 'stage' and 'branch'
+		quests[iquestname].state.stage = globals.state.sidequests[iquestname]
+		if !_compare(str(quests[iquestname].state.stage), str(questReqs.state.stage), compareType):
 			if tooltip != '':
 				tooltip += '\n'
 			tooltip += "Needs quest stage " + compareType + " " + str(questReqs.state.stage)
-		elif !_compare(quests[iquestname].state.branch, questReqs.state.branch, compareType):
+		elif !_compare(str(quests[iquestname].state.branch), str(questReqs.state.branch), compareType):
 			if tooltip != '':
 				tooltip += '\n'
 			tooltip += "Needs quest branch " + compareType + " " + str(questReqs.state.branch)
 		
-	if tooltip != '':		
+	if tooltip != '':
 		checkResult.meetsReqs = false
 		checkResult.meta.tooltip = tooltip
 	

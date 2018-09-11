@@ -27,11 +27,10 @@ func get_node():
 	var availableNodes = []
 	
 	#Fill in defaultNodes & availableNodes
-	for inode in nodes:		
+	for inode in nodes:
 		if inode.meta.requirements.empty():
 			defaultNodes.append(inode)
 			continue
-					
 		var checkResult = ReqCheck.check_requirements(inode.meta.requirements)
 		if checkResult.meetsReqs:
 			availableNodes.append(inode)
@@ -100,7 +99,7 @@ func to_dict():
 	return actionDict
 	
 func from_dict(actionDict):
-	clear()		
+	clear()
 	actionType = actionDict.actionType
 	pov = actionDict.actionType
 	text = actionDict.text

@@ -31,7 +31,7 @@ func is_available(currentPlace = globals.places.anywhere):
 	#Check for correct place
 	checkResult = ReqCheck.check_place_reqs(place, currentPlace)	
 	if checkResult.meetsReqs == false:
-		return checkResult	
+		return checkResult
 	
 	#Check event requirements
 	checkResult = ReqCheck.check_requirements(requirements)

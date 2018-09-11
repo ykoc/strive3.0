@@ -520,6 +520,7 @@ func mutate(power=2, silent = false):
 			text += "$name's lust has greatly increased. "
 			person.lust += rand_range(40,80)
 		power -= 1
+	person.checksex()
 	person.toxicity -= rand_range(20,30)
 	text = person.dictionary(text)
 	return text

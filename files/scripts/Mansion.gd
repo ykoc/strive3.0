@@ -317,7 +317,7 @@ func _on_new_slave_button_pressed():
 	globals.slaves = person
 	person.unique = 'startslave'
 	globals.player.stats.agi_mod = 5
-	person.stats.health_cur = 5
+	person.stats.health_cur = 100
 	globals.state.reputation.wimborn = 41
 	globals.state.sidequests.ivran = 'potionreceived'
 	globals.state.mansionupgrades.mansionnursery = 1
@@ -334,7 +334,7 @@ func _on_new_slave_button_pressed():
 	globals.resources.upgradepoints += 100
 	globals.state.mainquest = 42
 	globals.state.sidequests.brothel = 1
-	globals.state.sidequests.emily = 12
+	#globals.state.sidequests.emily = 12
 	#globals.state.decisions.append('')
 	globals.state.rank = 3
 	#globals.state.plotsceneseen = ['garthorscene','hade1','hade2','frostfordscene']#,'slaverguild']
@@ -1161,8 +1161,8 @@ func _on_end_pressed():
 	else:
 		text = text + 'Your food storage grew by [color=aqua]' + str(globals.resources.food - start_food) + '[/color] units of food.\n'
 	text0.set_bbcode(text0.get_bbcode() + text)
-	globals.state.sexactions = ceil(globals.player.send/2) + 1
-	globals.state.nonsexactions = ceil(globals.player.send/2) + 1
+	globals.state.sexactions = ceil(globals.player.send/2) + variables.basesexactions
+	globals.state.nonsexactions = ceil(globals.player.send/2) + variables.basenonsexactions
 	if deads_array.size() > 0:
 		results = 'worst'
 		deads_array.invert()
@@ -1987,7 +1987,7 @@ func _on_jailpanel_visibility_changed():
 	if get_node("MainScreen/mansion/jailpanel").visible == false:
 		return
 	for i in globals.slaves:
-		if i.sleep == 'jail':
+		if i.sleep == 'jail' && i.away.duration == 0:
 			temp = temp + i.name
 			prisoners.append(i)
 			var button = Button.new()
@@ -1996,7 +1996,7 @@ func _on_jailpanel_visibility_changed():
 			button.set_text(i.name_long())
 			button.set_name(str(count))
 			button.connect('pressed', self, 'prisonertab', [count])
-		if i.work == 'jailer':
+		if i.work == 'jailer' && i.away.duration == 0:
 			jailer = i
 		count += 1
 	if temp == '':
@@ -3318,7 +3318,8 @@ func _on_confirmentertext_pressed():
 	elif meta == 'eyecolor':
 		person = get_node("entertext").get_meta("slave")
 		person.eyecolor = text
-		person.away.duration = 2
+		if person != globals.player:
+			person.away.duration = 2
 		person.away.at = 'lab'
 		globals.resources.gold -= 100
 		globals.resources.mana -= 40

@@ -26,15 +26,15 @@ func quest_maker(questName):
 	#Build Quest
 	match questName:
 		'emily':
-			_quest_maker_emily()			
+			_quest_maker_emily()
 		'tisha':
 			_quest_maker_tisha()
 	
 	return buildQuest
 
-func quest_loader():	
+func quest_loader():
 	### Load Emily Quest
-	var emilyQuestFile = File.new()	
+	var emilyQuestFile = File.new()
 	emilyQuestFile.open("res://files/data/quest/emilyQuest.json", File.READ)
 	
 	var emilyQuestDict = JSON.parse(emilyQuestFile.get_as_text()).result
@@ -44,7 +44,7 @@ func quest_loader():
 	return buildQuest
 	
 	
-#Emily Quest Maker	
+#Emily Quest Maker
 func _quest_maker_emily():
 	### Create Quest Event
 	buildQuest = Quest.new()
@@ -52,7 +52,7 @@ func _quest_maker_emily():
 	buildQuest.state = {stage = 0, branch = -1}
 	
 	#Add meetEmilyEvent
-	var emilyEvent = _quest_maker_emily_01()	
+	var emilyEvent = _quest_maker_emily_01()
 	buildQuest.add_event(emilyEvent)
 	
 	#Add emilyMansionEvent
@@ -62,12 +62,14 @@ func _quest_maker_emily():
 	#Add emilyEscapeEvent
 	emilyEvent = _quest_maker_emily_03()
 	buildQuest.add_event(emilyEvent)
-		
+	
+	
+	
 	#Convert quest to json file
 	var sidequestFile = File.new()
 	sidequestFile.open("res://files/data/quest/emilyQuest.json", File.WRITE)
 	sidequestFile.store_string(JSON.print(buildQuest.to_dict(), "    "))
-	sidequestFile.close()	
+	sidequestFile.close()
 	
 func _quest_maker_emily_01():
 	#Create meetEmilyEvent

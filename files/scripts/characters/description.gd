@@ -54,7 +54,7 @@ func genitals():
 		elif person.preg.duration > variables.pregduration/4:
 			text += "\n\n$His unborn fetus causes $his belly to bulge slightly."
 		if person.preg.has_womb == false && person.sex != 'male':
-			text += "\n\n[color=yellow]$name is sterile.[/color]"
+			text += "\n\n[color=yellow]$name's womb is sterile.[/color]"
 	else:
 		text += "Omitted. "
 	
@@ -63,7 +63,7 @@ func genitals():
 func lowergenitals():
 	var text = ''
 	if person.vagina == 'normal':
-		if person.vagvirgin == true && person.vagina != 'none':
+		if person.vagvirgin == true:
 			text = '$He has a tight, [color=yellow]virgin pussy[/color]. '
 		else:
 			text = '$He has a [color=yellow]normal pussy[/color] below $his waist. '
@@ -73,6 +73,8 @@ func lowergenitals():
 			text += penisdescription[temp]
 	if person.balls != 'none':
 		text += getdescription('balls')
+	if person.vagina == 'none' && person.penis == 'none' && person.balls == 'none':
+		text += "For some reason, $his crotch has no visible genitals. "
 	return text
 
 func piercing():

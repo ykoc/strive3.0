@@ -111,7 +111,7 @@ func _on_labcancel_pressed():
 
 func _on_labselect_pressed():
 	if get_node("labmodpanel/labselect").get_text() == 'Select Subject':
-		get_tree().get_current_scene().selectslavelist(true,'_on_labstart_pressed',self,"globals.currentslave.work != 'labassist'",true)
+		get_tree().get_current_scene().selectslavelist(true,'_on_labstart_pressed',self,"person.work != 'labassist' && person.race != 'Slime'",true)
 	else:
 		labperson = null
 		_on_labstart_pressed()
@@ -185,8 +185,10 @@ felineshape = {price = {mana = 60, gold = 300}, items = {bestialessenceing = 2},
 canineshape = {price = {mana = 60, gold = 350}, items = {bestialessenceing = 2}, time = 4},
 equineshape = {price = {mana = 60, gold = 400}, items = {bestialessenceing = 2}, time = 6},
 pussy = {price = {mana = 50, gold = 300}, items = {natureessenceing = 2, fluidsubstanceing = 2}, time = 5},
+removepussy = {price = {mana = 50, gold = 300}, items = {taintedessenceing = 2}, time = 4},
 },
 }
+
 var balls = {
 code = 'balls',
 type = 'custom',
@@ -302,6 +304,13 @@ func labbuttonselected(string):
 				get_node("labmodpanel/ScrollContainer1/secondarymodlist").add_child(newbutton)
 				newbutton.connect("pressed",self,'customenh', [dict[string],'pussy'])
 				newbutton.set_meta('effect', 'pussy')
+			if person.vagina != 'none':
+				newbutton = get_node("labmodpanel/ScrollContainer1/secondarymodlist/buttontemp").duplicate()
+				newbutton.visible = true
+				newbutton.set_text('Remove Vagina')
+				get_node("labmodpanel/ScrollContainer1/secondarymodlist").add_child(newbutton)
+				newbutton.connect("pressed",self,'customenh', [dict[string],'removepussy'])
+				newbutton.set_meta('effect', 'removepussy')
 		elif dict[string].code == 'tits':
 			if person.titsextra >= 1 && person.titsextra <= 4&& person.titsextradeveloped == false:
 				newbutton = get_node("labmodpanel/ScrollContainer1/secondarymodlist/buttontemp").duplicate()
@@ -527,6 +536,8 @@ func customenh(dict, action):
 			text = "$name will obtain a fully functional vagina capable of pregnancy. \n\nRequirements:"
 		else:
 			text = "$name's womb will be restored and capable of pregnancy again. \n\nRequirements:"
+	elif modification.code == 'penis' && action == 'removepussy':
+		text = "$name's female genitals and reproduction system will be removed. \n\nRequirements"
 	elif modification.code == 'tits' && action == 'developtits':
 		text = "$name's additional rudimentary nipples will be developed into full-functional mammaries. \n\nRequirements:"
 	elif modification.code == 'tits' && action == 'reversetits':
@@ -639,6 +650,10 @@ func _on_labconfirm_pressed():
 			person.vagina = 'normal'
 			person.vagvirgin = false
 			person.preg.has_womb = true
+		elif result == 'removepussy':
+			person.vagina = 'none'
+			person.vagvirgin = false
+			person.preg.has_womb = false
 		person.checksex()
 	elif operation.type == 'custom' && operation.code == 'tits':
 		if result == 'developtits':

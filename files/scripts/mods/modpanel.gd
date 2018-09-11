@@ -18,8 +18,8 @@ var activemods = []
 
 
 func _ready():
-	if globals.developmode == true:
-		return
+#	if globals.developmode == true:
+#		return
 	var dir = Directory.new()
 	var file = File.new()
 	var files = globals.dir_contents(filedir)
@@ -107,9 +107,9 @@ func storebackup(): #clears and restores backups
 	var file = File.new()
 	var dir = Directory.new()
 	
-	if globals.developmode == true:
-		print("Debug mode: No backup stored.")
-		return
+#	if globals.developmode == true:
+#		print("Debug mode: No backup stored.")
+#		return
 	
 	print("Making Backup...")
 	for i in globals.dir_contents(backupdir):

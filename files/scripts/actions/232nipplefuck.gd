@@ -22,7 +22,7 @@ func getongoingdescription(givers, takers):
 
 func requirements():
 	var valid = true
-	if takers.size() != 1 || givers.size() != 1:
+	if takers.size() != 1 || givers.size() < 1 || givers.size() > 2:
 		valid = false
 	else:
 		for i in givers:

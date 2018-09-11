@@ -14,6 +14,10 @@ var learnpointsperstat = 3
 var playerstartbeauty = 40
 var characterstartbeauty = 40
 
+var basesexactions = 1
+var basenonsexactions = 1
+
+
 #Pregnancies
 var pregduration = 31
 var growuptimechild = 15

@@ -1953,7 +1953,7 @@ func backstreets():
 		
 	#QMod - New Event System
 	if array.size() > 0:
-		buildbuttons(array)	
+		buildbuttons(array)
 	
 	var place = {'region' : 'wimborn', 'area' : 'wimbornCity', 'location' : 'backstreets'}
 	var placeEffects
