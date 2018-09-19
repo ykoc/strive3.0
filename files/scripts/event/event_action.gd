@@ -21,7 +21,7 @@ func add_node(node): #node = {eventState = eventStateVal, meta = {requirements =
 		node['meta'] = {'requirements' : {}, 'result' : {}}
 	nodes.append(node)
 
-func get_node():	
+func get_node():
 	var decisionNode
 	var defaultNodes = []
 	var availableNodes = []

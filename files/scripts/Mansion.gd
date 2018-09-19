@@ -4,12 +4,12 @@ extends Node
 var test = File.new()
 var testslaverace = ["Slime"] #globals.allracesarray
 var testslaveage = 'random'
-var testslavegender = 'random'
+var testslavegender = 'male'
 var testslaveorigin = ['slave','poor','commoner','rich','noble']
 var currentslave = 0 setget currentslave_set
 var selectedslave = -1
 var texture = null
-var startcombatzone = "undercityhall"
+var startcombatzone = "marsh"
 var nameportallocation
 var enddayprocess = false
 onready var maintext = '' setget maintext_set, maintext_get
@@ -292,13 +292,10 @@ func _on_new_slave_button_pressed():
 	person.xp += 9990
 	person.consent = true
 	person.lust = 100
-	#person.add_effect(globals.effectdict.contraceptive)
 	globals.connectrelatives(globals.player, person, 'sibling')
 	globals.impregnation(person, globals.player)
-	#person.preg.duration = variables.pregduration
 	person.attention = 70
 	person.skillpoints = 100
-	#person.add_trait('Scarred')
 	for i in ['conf','cour','charm','wit']:
 		person[i] = 100
 	person.ability.append('heavystike')
@@ -333,8 +330,8 @@ func _on_new_slave_button_pressed():
 	globals.player.xp += 50
 	globals.resources.upgradepoints += 100
 	globals.state.mainquest = 42
-	globals.state.sidequests.brothel = 1
-	#globals.state.sidequests.emily = 12
+	#globals.state.sidequests.ayda = 15
+	globals.state.sidequests.cali = 26
 	#globals.state.decisions.append('')
 	globals.state.rank = 3
 	#globals.state.plotsceneseen = ['garthorscene','hade1','hade2','frostfordscene']#,'slaverguild']
@@ -344,9 +341,11 @@ func _on_new_slave_button_pressed():
 	globals.state.mansionupgrades.mansionalchemy = 1
 	globals.state.mansionupgrades.mansionparlor = 1
 	globals.state.backpack.stackables.teleportseal = 2
-	globals.player.sstr = 1
 	globals.player.send = 5
 	globals.player.stats.agi_max = 5
+	globals.player.stats.str_max = 100
+	globals.player.stats.str_base = 100
+	globals.player.sstr = 100
 	globals.player.sagi = 1
 	globals.state.reputation.frostford = 50
 	globals.state.condition -= 100
@@ -3184,7 +3183,7 @@ func _on_startcombat_pressed():
 	for i in globals.state.playergroup:
 		array.append(globals.state.findslave(i))
 	for i in array:
-		i.stats.str_base = 2
+		i.stats.str_base = 500
 		for j in ['health_max','health_cur']:
 			i.stats[j] += 500
 	get_node("outside").gooutside()
@@ -3875,7 +3874,9 @@ func _on_traitselectclose_pressed():
 	$traitselect.hide()
 
 
-
-
-
-
+func _on_selfgear_pressed():
+	globals.main._on_inventory_pressed()
+	globals.main.get_node('inventory').selectcategory(globals.main.get_node('inventory/everything'))
+	globals.main.get_node('inventory/gear').pressed = true
+	globals.main.get_node('inventory').selectcategory(globals.main.get_node('inventory/gear'))
+	globals.main.get_node('inventory').selectbuttonslave(globals.player)

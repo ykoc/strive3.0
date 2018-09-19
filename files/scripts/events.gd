@@ -173,7 +173,7 @@ func _process_event_action(newEventState, event):
 					buttons = action.get_buttons()
 					text = action.text
 					if action.pov == 'player':
-						text = globals.player.dictionaryplayer(text)					
+						text = globals.player.dictionaryplayer(text)
 					main.scene(self, action.image, text, buttons)
 				'decision':
 					_process_event_action_decision(event)
@@ -494,7 +494,7 @@ func emilyreturn():
 	emily.obed += 80
 	emily.add_trait("Grateful")
 	globals.state.upcomingevents.append({code = 'tishadisappear', duration = round(rand_range(9,14))})
-	globals.main.dialogue(true,self,globals.player.dictionaryplayer(text), null, sprite)
+	globals.main.dialogue(true,self,text, null, sprite)
 	globals.main._on_mansion_pressed()
 
 
@@ -2151,7 +2151,7 @@ func calibar1(value):
 	globals.main.dialogue(false, self, text, buttons, sprite)
 
 func calivillage():
-	globals.main.dialogue(true,self,globals.player.dictionaryplayer(textnode.CaliVillageEnter1))
+	globals.main.dialogue(true,self,textnode.CaliVillageEnter1)
 	globals.state.sidequests.cali = 18
 	globals.main.exploration.zoneenter('shaliq')
 
@@ -2371,7 +2371,7 @@ func calislaverscampwin():
 	else:
 		text = textnode.CaliSlaversFightWinWithout
 	globals.state.sidequests.cali = 25
-	globals.main.dialogue(true, self, globals.player.dictionaryplayer(text), null, sprite)
+	globals.main.dialogue(true, self, text, null, sprite)
 	globals.main.exploration.zoneenter('wimbornoutskirts')
 
 
@@ -2395,7 +2395,7 @@ func calistraybandit():
 func calistraybanditwin():
 	var sprite = [['calineutral','pos1','opac']]
 	globals.main.exploration.zoneenter('wimbornoutskirts')
-	globals.main.dialogue(true,self,globals.player.dictionaryplayer(textnode.CaliStrayBanditWin), null, sprite)
+	globals.main.dialogue(true,self,textnode.CaliStrayBanditWin, null, sprite)
 	globals.state.sidequests.cali = 26
 	if globals.state.sidequests.calibarsex in ['none','sebastianfinish']:
 		globals.state.upcomingevents.append({code = 'caliproposal', duration = 1})
@@ -2407,12 +2407,12 @@ func calireturnhome():
 	var state
 	var sprite
 	if globals.state.sidequests.caliparentsdead == true:
-		text = globals.player.dictionaryplayer(textnode.CaliBadEnd)
+		text = textnode.CaliBadEnd
 		sprite = [['calisad','pos1','opac']]
 		buttons.append(['Let her be','calireturnhome1',1])
 		buttons.append(['Comfort her','calireturnhome1',2])
 	else:
-		text = globals.player.dictionaryplayer(textnode.CaliGoodEnd)
+		text = textnode.CaliGoodEnd
 		sprite = [['calihappy','pos1','opac']]
 		buttons.append(['Tell them no reward is necessary','caligoodend',1])
 		buttons.append(['Tell them anything would be fine','caligoodend',2])
@@ -2438,7 +2438,7 @@ func calireturnhome1(choice):
 	buttons.append(['Tell her to be your slave','calibadend',2])
 	buttons.append(['Tell her to become your plaything','calibadend',3])
 	buttons.append(['Leave her alone','calibadend',4])
-	globals.main.dialogue(false,self,globals.player.dictionaryplayer(text),buttons,sprite)
+	globals.main.dialogue(false,self,text,buttons,sprite)
 
 func calibadend(choice):
 	var text = ''
@@ -2483,7 +2483,7 @@ func calibadend(choice):
 	globals.resources.upgradepoints += 10
 	cali.add_trait("Grateful")
 	globals.main.exploration.zoneenter('grove')
-	globals.main.dialogue(true,self,globals.player.dictionaryplayer(text),null,sprite)
+	globals.main.dialogue(true,self,text,null,sprite)
 	globals.state.sidequests.cali = 102
 
 
@@ -2518,7 +2518,7 @@ func caligoodend(choice):
 		globals.main.exploration.zoneenter('grove')
 	globals.resources.upgradepoints += 15
 	cali.add_trait("Grateful")
-	globals.main.dialogue(true,self,globals.player.dictionaryplayer(text),null,sprite)
+	globals.main.dialogue(true,self,text,null,sprite)
 	globals.state.sidequests.cali = 103
 
 func calireturn():
@@ -2529,7 +2529,7 @@ func calireturn():
 	var sprite = [['calihappy','pos1']]
 	cali.away.at = 'none'
 	cali.away.duration = 0
-	globals.main.dialogue(true,self,globals.player.dictionaryplayer(textnode.CaliGoodEndNoRewardReturn),null,sprite)
+	globals.main.dialogue(true,self,textnode.CaliGoodEndNoRewardReturn,null,sprite)
 	globals.main._on_mansion_pressed()
 
 
@@ -3122,6 +3122,7 @@ func zoepassitems(stage = 0):
 		globals.main.dialogue(state, self, text, buttons, sprite)
 	else:
 		globals.main.scene(self, image, text, buttons)
+
 func aydatimepass():
 	globals.state.sidequests.ayda = 7
 
@@ -3136,18 +3137,21 @@ func aydapersonaltalk():
 		if i.unique == 'Ayda':
 			ayda = i
 	
-	match globals.state.sidequests.ayda:
+	match int(globals.state.sidequests.ayda):
 		9:
 			text = textnode.aydareturn1
+			globals.itemdict.aydabrandy.amount = 0
 			ayda.loyal += 5
 			ayda.obed += 10
 			globals.state.sidequests.ayda = 10
 		12:
+			globals.itemdict.aydabook.amount = 0
 			ayda.loyal += 10
 			ayda.obed += 20
 			text = textnode.aydareturn2
 			globals.state.sidequests.ayda = 13
 		15:
+			globals.itemdict.aydajewel.amount = 0
 			ayda.loyal += 25
 			ayda.tags.erase('nosex')
 			text = textnode.aydareturn3

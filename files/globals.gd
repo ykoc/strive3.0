@@ -3,7 +3,7 @@ extends Node
 
 var effectdict = {}
 var guildslaves = {wimborn = [], gorn = [], frostford = [], umbra = []}
-var gameversion = '0.5.19c'
+var gameversion = '0.5.19d'
 var state = progress.new()
 var developmode = false
 var gameloaded = false
@@ -416,10 +416,13 @@ class resource:
 	func upgradepoints_set(value):
 		var difference = upgradepoints - value
 		var bonus = 0
+		var gifted = false
 		if difference < 0:
 			for i in globals.slaves:
 				if i.traits.has("Gifted"):
-					bonus = ceil(abs(difference) * 0.2)
+					gifted = true
+		if gifted:
+			bonus = ceil(abs(difference) * 0.2)
 		var text = ""
 		upgradepoints = value + bonus
 		
@@ -1356,9 +1359,12 @@ class person:
 		
 		if effects.has('captured') == true && alternative == false:
 			price = price/2
+		var influential = false
 		for i in globals.slaves:
 			if i.traits.has("Influential"):
-				price *= 1.2
+				influential = true
+		if influential:
+			price *= 1.2
 		price = max(round(price), variables.priceminimumsell)
 		if globals.state.spec == 'Slaver' && fromguild == false:
 			price *= 2
@@ -1400,11 +1406,11 @@ class person:
 			female = true
 		
 		if male && female:
-			return 'futanari'
+			sex = 'futanari'
 		elif male:
-			return 'male'
+			sex = 'male'
 		else:
-			return 'female'
+			sex = 'female'
 	
 	func fetch(dict):
 		for key in dict:
@@ -1418,7 +1424,7 @@ class person:
 	
 
 func addrelations(person, person2, value):
-	if person == player || person2 == player:
+	if person == player || person2 == player || person == person2:
 		return
 	if person.relations.has(person2.id) == false:
 		person.relations[person2.id] = 0

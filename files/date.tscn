@@ -363,6 +363,7 @@ _sections_unfolded = [ "custom_styles" ]
 
 [node name="categories" type="HBoxContainer" parent="panel" index="0"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -484,6 +485,7 @@ _sections_unfolded = [ "Rect" ]
 
 [node name="ScrollContainer" type="ScrollContainer" parent="panel" index="1"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -502,6 +504,7 @@ scroll_horizontal_enabled = true
 scroll_horizontal = 0
 scroll_vertical_enabled = true
 scroll_vertical = 0
+scroll_deadzone = 0
 _sections_unfolded = [ "Size Flags" ]
 
 [node name="GridContainer" type="GridContainer" parent="panel/ScrollContainer" index="0"]
@@ -544,6 +547,29 @@ text = "Test"
 flat = false
 align = 1
 _sections_unfolded = [ "Rect", "Size Flags", "custom_fonts" ]
+
+[node name="consent" type="Label" parent="panel" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 21.0
+margin_top = 275.0
+margin_right = 181.0
+margin_bottom = 295.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_colors/font_color = Color( 0.910156, 0.359085, 0.88863, 1 )
+text = "Intimacy Unlocked"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Material", "Visibility", "custom_colors" ]
 
 [node name="mood" type="TextureProgress" parent="." index="4"]
 
@@ -635,6 +661,7 @@ blend_times = [  ]
 
 [node name="fear" type="TextureProgress" parent="." index="5"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -724,6 +751,7 @@ blend_times = [  ]
 
 [node name="stress" type="TextureProgress" parent="." index="6"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -813,6 +841,7 @@ blend_times = [  ]
 
 [node name="turns" type="TextureRect" parent="." index="7"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -899,6 +928,7 @@ max_lines_visible = -1
 
 [node name="supply" type="TextureRect" parent="." index="9"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -942,6 +972,7 @@ max_lines_visible = -1
 
 [node name="gold" type="TextureRect" parent="." index="10"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -985,6 +1016,7 @@ max_lines_visible = -1
 
 [node name="end" type="Panel" parent="." index="11"]
 
+editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -1075,6 +1107,7 @@ _sections_unfolded = [ "BBCode" ]
 
 [node name="sexswitch" type="Panel" parent="." index="12"]
 
+editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0

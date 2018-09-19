@@ -45,7 +45,7 @@ static func _process_progress_result(progress):
 	for icategory in progress:
 		match icategory:
 			'gallery':
-				for iperson in progress[icategory]:				
+				for iperson in progress[icategory]:
 					if progress[icategory][iperson].has('unlock'):
 						globals.charactergallery[iperson].unlocked = true
 						if progress[icategory][iperson].unlock == 'naked':

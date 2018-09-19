@@ -1945,6 +1945,9 @@ func backstreets():
 	
 	var array = [{name = 'Enter Brothel',function = 'brothel'}]
 	#Original quest event 'hooks'
+#	if globals.state.sidequests.emily <= 1:
+#		text += '\n\nYou see an urchin girl trying to draw your attention'
+#		array.insert(1,{name = 'Respond to the urchin girl', function = 'emily'})
 	if globals.state.sidequests.cali in [14,15,16]:
 		array.insert(1,{name = "Visit local bar", function = "calibarquest"})
 	if globals.state.sidequests.emily == 13:
@@ -1978,7 +1981,10 @@ func backstreets():
 	buildbuttons(array, self, false, buttonCount)
 		
 	mansion.maintext = text
-	
+
+#func emily():
+#	globals.events.emily()
+
 func brothel(person = null):
 	mansion.background_set("brothel")
 	yield(main, 'animfinished')

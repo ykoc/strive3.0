@@ -1101,6 +1101,8 @@ func orgasm(member):
 					penistext += " {^sticky:white:hot} {^semen:seed:cum} {^sprays onto:shoots all over:covers} [names1] tail[/s1] as [he2] ejaculate[s/2]."
 				elif scene.scene.giverpart == '':
 					penistext += " {^semen:seed:cum} {^pours onto:shoots onto:falls to} the {^ground:floor} as [he2] ejaculate[s/2]."
+				elif scene.scene.giverpart == 'penis':
+					penistext += " {^semen:seed:cum} {^pours:shoots:sprays}, covering [names1] [penis1]. "
 				elif ['anus','vagina','mouth'].has(scene.scene.giverpart):
 					temptext = scene.scene.giverpart.replace('anus', '[anus1]').replace('vagina','[pussy1]')
 					penistext += " {^semen:seed:cum} {^pours:shoots:pumps:sprays} into [names1] " + temptext + " as [he2] ejaculate[s/2]."

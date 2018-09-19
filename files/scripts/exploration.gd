@@ -886,7 +886,7 @@ func enemydefeated():
 					if randf() * 100 <= variables.geardropchance:
 						enemyloot.unstackables.append(enemygear[i])
 		
-		if globals.state.sidequests.ayda == 14 && currentzone.code == 'gornoutskirts' && questitem == false:
+		if int(globals.state.sidequests.ayda) == 14 && currentzone.code == 'gornoutskirts' && questitem == false && globals.itemdict.aydajewel.amount == 0:
 			unit.rewardpool.aydajewel = 5
 			questitem == true
 		for i in unit.rewardpool:
@@ -1247,20 +1247,19 @@ func _on_confirmwinning_pressed(): #0 leave, 1 capture, 2 rape, 3 kill
 			var person = globals.state.findslave(i)
 			if killed == true && person.fear < 50 && person.loyal < 40:
 				person.fear += rand_range(20,30)
-			if person.sexuals.unlocked == false:
+			if person.consent == false:
 				if person.loyal < 30:
-					text+= person.dictionary('\n$name watches your actions with digust, eventually averting $his eyes. ')
+					text+= person.dictionary('\n$name watches your actions with disgust, eventually averting $his eyes. ')
 					person.obed += -rand_range(15,25)
 				else:
 					text += person.dictionary('\n$name watches your deeds with interest, occasionally rustling around $his waist. ')
 					person.lust = 20
-			elif person.sexuals.unlocked == true:
+			elif person.consent == true:
 				if person.lust >= 50 && person.lewdness >= 40:
-					person.sexuals.affection += round(rand_range(2,4))
 					person.asser += rand_range(6,12)
 					person.lastsexday = globals.resources.day
 					person.lust -= rand_range(5,15)
-					text += person.dictionary('\n$name, overwhelemed by the situation, joins you and pleasures $himself with one of the captives. ')
+					text += person.dictionary('\n$name, overwhelmed by the situation, joins you and pleasures $himself with one of the captives. ')
 				else:
 					text += person.dictionary("\n$name does not appear to be very interested in the ongoing action and just waits patiently.")
 		for i in orgyarray:

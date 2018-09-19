@@ -643,7 +643,6 @@ func ffprostitution(person):
 	person.metrics.brothel += 1
 	var jobactions = ['vaginal','anal','oral','toys']
 	if person.vagvirgin == true:
-		person.sexuals.actions.pussy = 1
 		person.vagvirgin = false
 		#slave.pussy.first = 'brothel'
 		person.health -= 5
@@ -655,9 +654,6 @@ func ffprostitution(person):
 	if rand_range(1,10) > 4:
 		globals.impregnation(person)
 	var counter = 0
-	for i in jobactions:
-		if person.sexuals.unlocks.has(i):
-			counter += 1
 	gold = rand_range(1,5) + person.charm/4 + person.send*15 + person.beauty/5 + person.lewdness/2
 	if person.traits.has('Sex-crazed') == true:
 		person.stress += -counter*4
@@ -666,12 +662,6 @@ func ffprostitution(person):
 		gold = gold * 1.15
 	person.metrics.randompartners += round(rand_range(2,4))
 	person.metrics.sex += round(rand_range(2,5))
-	if person.sexuals.unlocks.find('penetration') && person.vagina != 'none':
-		person.metrics.vag += round(rand_range(1,4))
-	if person.sexuals.unlocks.find('anal') >= 0:
-		person.metrics.anal += round(rand_range(1,4))
-	if person.sexuals.unlocks.find('oral') >= 0:
-		person.metrics.oral += round(rand_range(1,2))
 	if person.race.find('Bunny') >= 0 || person.spec in ['geisha','nympho']:
 		person.stress += 12 - min(counter*4, 10)
 	else:
@@ -728,7 +718,6 @@ func fucktoy(person):
 	text = "$name was sent to Umbra to be used as a Fucktoy.\n"
 	var jobactions = ['oral','anal','vaginal','fetish','fetish2','toy','group']
 	if person.vagvirgin == true:
-		person.sexuals.actions.pussy = 1
 		person.vagvirgin = false
 		#slave.pussy.first = 'brothel'
 		person.health -= 5
@@ -739,9 +728,6 @@ func fucktoy(person):
 		globals.impregnation(person)
 	var counter = 0
 	person.lastsexday = globals.resources.day
-	for i in jobactions:
-		if person.sexuals.unlocks.has(i) :
-			counter += 1
 	for i in globals.state.reputation:
 		if globals.state.reputation[i] < 0:
 			gold += abs(globals.state.reputation[i])
@@ -750,14 +736,6 @@ func fucktoy(person):
 		person.stress -= counter*3
 	person.metrics.sex += round(rand_range(3,6))
 	person.metrics.randompartners += round(rand_range(2,5))
-	if person.sexuals.unlocks.find('penetration') >= 0 && person.vagina != 'none':
-		person.metrics.vag += round(rand_range(2,5))
-	if person.sexuals.unlocks.find('anal') >= 0:
-		person.metrics.anal += round(rand_range(2,5))
-	if person.sexuals.unlocks.find('oral') >= 0:
-		person.metrics.oral += round(rand_range(1,4))
-	if person.sexuals.unlocks.find('orgy') >= 0:
-		person.metrics.orgy += round(rand_range(1,3))
 	if person.mods.has("augmenttongue"):
 		gold = gold * 1.15
 	gold = round(gold)
@@ -870,7 +848,6 @@ func whorewimborn(person):
 	person.metrics.brothel += 1
 	var jobactions = ['vaginal','anal','oral','toys']
 	if person.vagvirgin == true:
-		person.sexuals.actions.pussy = 1
 		person.vagvirgin = false
 		#slave.pussy.first = 'brothel'
 		person.health -= 5
@@ -882,9 +859,6 @@ func whorewimborn(person):
 	if rand_range(1,10) > 4:
 		globals.impregnation(person)
 	var counter = 0
-#	for i in jobactions:
-#		if person.sexuals.unlocks.has(i):
-#			counter += 1
 	gold = rand_range(1,5) + person.charm/4 + person.send*15 + person.beauty/5 + person.lewdness/2
 	if person.traits.has('Sex-crazed') == true:
 		person.stress += -counter*4
@@ -896,21 +870,9 @@ func whorewimborn(person):
 		gold = gold/2
 		person.metrics.sex += round(rand_range(1,3))
 		person.metrics.randompartners += round(rand_range(1,2))
-		if person.sexuals.unlocks.find('penetration') && person.vagina != 'none':
-			person.metrics.vag += round(rand_range(1,2))
-		if person.sexuals.unlocks.find('anal') >= 0:
-			person.metrics.anal += round(rand_range(1,2))
-		if person.sexuals.unlocks.find('oral') >= 0:
-			person.metrics.oral += round(rand_range(0,1))
 	else:
 		person.metrics.randompartners += round(rand_range(2,4))
 		person.metrics.sex += round(rand_range(2,5))
-		if person.sexuals.unlocks.find('penetration') && person.vagina != 'none':
-			person.metrics.vag += round(rand_range(1,4))
-		if person.sexuals.unlocks.find('anal') >= 0:
-			person.metrics.anal += round(rand_range(1,4))
-		if person.sexuals.unlocks.find('oral') >= 0:
-			person.metrics.oral += round(rand_range(1,2))
 	if person.race.find('Bunny') >= 0 || person.spec in ['geisha','nympho']:
 		person.stress += 12 - min(counter*4, 10)
 	else:
@@ -930,8 +892,6 @@ func escortwimborn(person):
 	var gold
 	if person.vagvirgin == true:
 		person.vagvirgin = false
-		#slave.pussy.first = 'brothel'
-		person.sexuals.actions.pussy = 1
 		person.health -= 5
 		if person.race.find('Bunny') >= 0:
 			person.stress += 7
@@ -940,9 +900,9 @@ func escortwimborn(person):
 		person.loyal += rand_range(-1,-3)
 		text += "$His virginity was taken by one of the customers.\n"
 		if person.race.find('Bunny') >= 0:
-			person.stress += 10 - min(person.sexuals.actions.size()*3, 8)
+			person.stress += 10 - person.lewdness/10
 		else:
-			person.stress += 20 - min(person.sexuals.actions.size()*2, 15)
+			person.stress += 20 - person.lewdness/10
 	person.lust -= rand_range(10,20)
 	person.lastsexday = globals.resources.day
 	if rand_range(1,10) > 7:
@@ -962,12 +922,6 @@ func escortwimborn(person):
 	person.xp += gold/6
 	person.metrics.randompartners += round(rand_range(1,2))
 	person.metrics.sex += round(rand_range(1,2))
-	if person.sexuals.unlocks.find('penetration') && person.vagina != 'none':
-		person.metrics.vag += round(rand_range(1,3))
-	if person.sexuals.unlocks.find('anal') >= 0:
-		person.metrics.anal += round(rand_range(1,3))
-	if person.sexuals.unlocks.find('oral') >= 0:
-		person.metrics.oral += round(rand_range(0,2))
 	text += "By the end of the day $he earned [color=yellow]"+ str(gold) + "[/color] gold.\n"
 	
 	var dict = {text = text, gold = gold}
@@ -980,7 +934,6 @@ func fucktoywimborn(person):
 	text = "$name went to work as an exotic whore.\n"
 	var jobactions = ['oral','anal','vaginal','fetish','fetish2','toy','group']
 	if person.vagvirgin == true:
-		person.sexuals.actions.pussy = 1
 		person.vagvirgin = false
 		#slave.pussy.first = 'brothel'
 		person.health -= 5
@@ -990,9 +943,6 @@ func fucktoywimborn(person):
 	if rand_range(1,10) > 2:
 		globals.impregnation(person)
 	var counter = 0
-	for i in jobactions:
-		if person.sexuals.unlocks.has(i) :
-			counter += 1
 	gold = rand_range(5,10) + person.cour/2.3 + person.send*15 + person.beauty/5 + person.lewdness/1.5
 	if person.traits.has('Sex-crazed') == true:
 		person.stress += -counter*4
@@ -1008,26 +958,10 @@ func fucktoywimborn(person):
 		person.metrics.sex += round(rand_range(2,4))
 		gold = gold/2
 		person.metrics.randompartners += round(rand_range(1,4))
-		if person.sexuals.unlocks.find('penetration') && person.vagina != 'none':
-			person.metrics.vag += round(rand_range(1,3))
-		if person.sexuals.unlocks.find('anal') >= 0:
-			person.metrics.anal += round(rand_range(1,3))
-		if person.sexuals.unlocks.find('oral') >= 0:
-			person.metrics.oral += round(rand_range(1,2))
-		if person.sexuals.unlocks.find('orgy') >= 0:
-			person.metrics.orgy += round(rand_range(0,2))
 	else:
 		
 		person.metrics.sex += round(rand_range(3,6))
 		person.metrics.randompartners += round(rand_range(2,5))
-		if person.sexuals.unlocks.find('penetration') >= 0 && person.vagina != 'none':
-			person.metrics.vag += round(rand_range(2,5))
-		if person.sexuals.unlocks.find('anal') >= 0:
-			person.metrics.anal += round(rand_range(2,5))
-		if person.sexuals.unlocks.find('oral') >= 0:
-			person.metrics.oral += round(rand_range(1,4))
-		if person.sexuals.unlocks.find('orgy') >= 0:
-			person.metrics.orgy += round(rand_range(1,3))
 	
 	
 	if person.race.find('Bunny') >= 0 || person.spec == 'nympho':

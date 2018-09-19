@@ -219,7 +219,7 @@ func _process(delta):
 		if combatant.state in ['defeated','escaped'] && combatant.animationplaying == false:
 			combatant.effects.clear()
 			i.hide()
-			i.queue_free()
+			#i.queue_free()
 			combatantnodes.erase(i)
 			return
 		
@@ -239,7 +239,7 @@ func _process(delta):
 		if i.has_node('stress') && combatant.person != globals.player:
 			i.get_node('stress').visible = true
 			i.get_node('stress/Label').text = str(combatant.stress)
-			i.get_node('stress').value = float(combatant.stress)/combatant.stressmax*100
+			i.get_node('stress').value = round(float(combatant.stress)/combatant.stressmax*100)
 		if combatant.energy > 0 && combatant.passives.has('exhausted'):
 			removebuff('exhaust', combatant)
 			combatant.passives.erase("exhaust")
@@ -386,6 +386,7 @@ class combatant:
 		if scene.get_parent().get_node("explorationnode").deeperregion:
 			attack = ceil(attack * 1.25)
 			hpmax = ceil(hpmax * 1.5)
+			hp = hpmax
 			speed = ceil(speed + 5)
 		
 	
@@ -566,6 +567,7 @@ class combatant:
 		state = 'defeated'
 		scene.defeatanimation(self)
 		yield(scene, 'defeatfinished')
+		node.hide()
 		animationplaying = false
 		scene.combatlog += scene.combatantdictionary(self, self, "\n[color=aqua][name1] has been defeated.[/color]")
 		if group == 'player':
@@ -575,7 +577,7 @@ class combatant:
 				if OS.get_name() != 'HTML5':
 					yield(globals.main, 'animfinished')
 				globals.main.get_node("gameover").show()
-				globals.main.get_node("gameover/Panel/text").set_bbcode("[center]You have died. \nGame over.[/center]")
+				globals.main.get_node("gameover/Panel/text").set_bbcode("[center]You have died.[/center]")
 				scene.period = 'end'
 				return
 			else:
@@ -591,6 +593,8 @@ class combatant:
 					for i in globals.state.playergroup:
 						globals.state.findslave(i).stress += rand_range(25,40)
 					slave.death()
+		else:
+			scene.repositionanimation()
 		scene.endcombatcheck()
 	
 
@@ -1145,7 +1149,7 @@ func playerescape():
 		i.person.stats.energy_cur = i.energy
 		i.person.stats.health_cur = i.hp
 	globals.main.get_node("explorationnode").enemyleave()
-	globals.main.popup('You hastly escape from the fight. ')
+	globals.main.popup('You hastily escape from the fight. ')
 	globals.main.get_node("outside").show()
 	globals.main.get_node("ResourcePanel").show()
 
@@ -1290,7 +1294,36 @@ func defeatanimation(combatant):
 	tween.interpolate_property(node, "modulate", Color(1,1,1,1), Color(1,1,1,0), 1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, 0.5)
 	tween.interpolate_callback(self, 1.5, 'defeatfinished')
 	tween.start()
+
+func repositionanimation():
+	var previousposition
+	var tempposition
+	if enemygroup.size() < 10:
+		return
 	
+	var counter = 0
+	for i in enemygroup:
+		if i.state != 'defeated' && i.node.visible == true:
+			counter += 1
+	
+	if counter < 8:
+		return
+	
+	var replacedead = false
+	
+	for i in enemygroup:
+		if i.node.visible == false:
+			previousposition = i.node.get_position()
+			replacedead = true
+			continue
+		if previousposition != null:
+			tempposition = i.node.get_position()
+			if replacedead == true:
+				i.node.set_position(Vector2(previousposition.x, previousposition.y - 25))
+				replacedead = false
+			else:
+				i.node.set_position(Vector2(previousposition.x, previousposition.y))
+			previousposition = tempposition
 
 func takedamage(combatant):
 	var node = combatant.node

@@ -406,6 +406,8 @@ func initiate(tempperson):
 		elif person.traits.has("Devoted"):
 			mood += 10
 	
+	$panel/consent.visible = person.consent
+	
 	self.showntext = text
 	updatelist()
 	$panel/categories/Actions.emit_signal("pressed")

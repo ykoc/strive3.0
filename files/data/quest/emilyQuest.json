@@ -263,38 +263,38 @@
                                         "progress": {
                                             "decisions": [
                                                 "emilyseduced"
-                                            ]
-                                        },
-                                        "people": [
-                                            {
-                                                "id": {
-                                                    "unique": "emily"
-                                                },
-                                                "consent": true,
-                                                "tags": {
-                                                    "nosex": "erase"
-                                                },
-                                                "virgin": {
-                                                    "vagina": false
-                                                },
-                                                "metrics": {
-                                                    "orgasm": 1,
-                                                    "vag": 1,
-                                                    "partners": [
-                                                        "player"
-                                                    ]
-                                                },
-                                                "meters": {
-                                                    "stress": 50,
-                                                    "loyal": 15,
-                                                    "lust": 50
+                                            ],
+                                            "people": [
+                                                {
+                                                    "id": {
+                                                        "unique": "emily"
+                                                    },
+                                                    "consent": true,
+                                                    "tags": {
+                                                        "nosex": "erase"
+                                                    },
+                                                    "virgin": {
+                                                        "vagina": false
+                                                    },
+                                                    "metrics": {
+                                                        "orgasm": 1,
+                                                        "vag": 1,
+                                                        "partners": [
+                                                            "player"
+                                                        ]
+                                                    },
+                                                    "meters": {
+                                                        "stress": 50,
+                                                        "loyal": 15,
+                                                        "lust": 50
+                                                    }
                                                 }
-                                            }
-                                        ],
-                                        "gallery": {
-                                            "emily": {
-                                                "unlock": "naked",
-                                                "scenes": 0
+                                            ],
+                                            "gallery": {
+                                                "emily": {
+                                                    "unlock": "naked",
+                                                    "scenes": 0
+                                                }
                                             }
                                         }
                                     }
@@ -311,41 +311,41 @@
                                         "progress": {
                                             "decisions": [
                                                 "emilyseduced"
-                                            ]
-                                        },
-                                        "people": [
-                                            {
-                                                "id": {
-                                                    "unique": "emily"
-                                                },
-                                                "consent": true,
-                                                "tags": {
-                                                    "nosex": "erase"
-                                                },
-                                                "virgin": {
-                                                    "vagina": false
-                                                },
-                                                "metrics": {
-                                                    "vag": 1,
-                                                    "partners": [
-                                                        "player"
-                                                    ]
-                                                },
-                                                "meters": {
-                                                    "stress": 100,
-                                                    "obedience": -100
+                                            ],
+                                            "people": [
+                                                {
+                                                    "id": {
+                                                        "unique": "emily"
+                                                    },
+                                                    "consent": true,
+                                                    "tags": {
+                                                        "nosex": "erase"
+                                                    },
+                                                    "virgin": {
+                                                        "vagina": false
+                                                    },
+                                                    "metrics": {
+                                                        "vag": 1,
+                                                        "partners": [
+                                                            "player"
+                                                        ]
+                                                    },
+                                                    "meters": {
+                                                        "stress": 100,
+                                                        "obedience": -100
+                                                    }
                                                 }
-                                            }
-                                        ],
-                                        "gallery": {
-                                            "emily": {
-                                                "unlock": "naked",
-                                                "scenes": 1
-                                            }
-                                        },
-                                        "world": {
-                                            "scheduleEvent": {
-                                                "emilyEscape": 2
+                                            ],
+                                            "gallery": {
+                                                "emily": {
+                                                    "unlock": "naked",
+                                                    "scenes": 1
+                                                }
+                                            },
+                                            "world": {
+                                                "scheduleEvent": {
+                                                    "emilyEscape": 2
+                                                }
                                             }
                                         }
                                     }

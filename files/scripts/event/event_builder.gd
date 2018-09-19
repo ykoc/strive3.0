@@ -129,10 +129,10 @@ func _quest_maker_emily_02():
 	emilyMansionAction.sprites.append(['emilynormal','pos1','opac'])
 	
 	var peopleMods = [{'id' : {'unique': 'emily'}, 'consent' : true, 'tags' : {'nosex' : 'erase'}, 'virgin' : {'vagina' : false}, 'metrics' : {'orgasm' : 1, 'vag' : 1, 'partners' : ['player']}, 'meters' : {'stress' : 50, 'loyal' : 15, 'lust' : 50}}]
-	emilyMansionAction.add_button("Spike her with aphrodisiac", '1.aphrodisiac', {'requirements' : {'items' : {'aphrodisiac' : 1}}, 'result' : {'items' : {'aphrodisiac' : -1}, 'progress' : {'decisions' : ['emilyseduced']}, 'people' : peopleMods, 'gallery' : {'emily' : {'unlock' : 'naked', 'scenes' : 0}}}})
+	emilyMansionAction.add_button("Spike her with aphrodisiac", '1.aphrodisiac', {'requirements' : {'items' : {'aphrodisiac' : 1}}, 'result' : {'items' : {'aphrodisiac' : -1}, 'progress' : {'decisions' : ['emilyseduced'], 'people' : peopleMods, 'gallery' : {'emily' : {'unlock' : 'naked', 'scenes' : 0}}}}})
 	
 	peopleMods = [{'id' : {'unique': 'emily'}, 'consent' : true, 'tags' : {'nosex' : 'erase'}, 'virgin' : {'vagina' : false}, 'metrics' : {'vag' : 1, 'partners' : ['player']}, 'meters' : {'stress' : 100, 'obedience' : -100}}]
-	emilyMansionAction.add_button("Assault her after bath", '1.sexAssault', {'requirements' : {}, 'result' : {'progress' : {'decisions' : ['emilyseduced']}, 'people' : peopleMods, 'gallery' : {'emily' : {'unlock' : 'naked', 'scenes' : 1}}, 'world' : {'scheduleEvent' : {'emilyEscape' : 2}}}})
+	emilyMansionAction.add_button("Assault her after bath", '1.sexAssault', {'requirements' : {}, 'result' : {'progress' : {'decisions' : ['emilyseduced'], 'people' : peopleMods, 'gallery' : {'emily' : {'unlock' : 'naked', 'scenes' : 1}}, 'world' : {'scheduleEvent' : {'emilyEscape' : 2}}}}})
 	emilyMansionAction.add_button("Wait patiently", '1.wait', {'requirements' : {}, 'result' : {}})
 	emilyMansionEvent.add_action('start', emilyMansionAction)
 	

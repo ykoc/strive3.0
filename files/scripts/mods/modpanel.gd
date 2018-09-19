@@ -31,17 +31,19 @@ func _ready():
 			file_dictionary.append(i)
 	for i in scanfolder() : #collects mod_dictionary data
 		if !file.file_exists(i +"/info.txt"): #makes info.txt to store mod description
+			file.open(i+'/info.txt', File.WRITE)
+			file.store_line("There's no information on this mod.")
+			file.close()
 			var check = false
-			for i in globals.dir_contents(i):
-				if i.find('.gd') != -1:
+			print(scanfolder())
+			for k in globals.dir_contents(i):
+				if k.find('.gd') != -1:
 					check = true
 			
 			if check == false:
 				continue
 			
-			file.open(i+'/info.txt', File.WRITE)
-			file.store_line("There's no information on this mod.")
-			file.close()
+			
 		
 		dir.open(i)
 		mods_dictionary[i] = get_mod(i)
@@ -107,9 +109,9 @@ func storebackup(): #clears and restores backups
 	var file = File.new()
 	var dir = Directory.new()
 	
-#	if globals.developmode == true:
-#		print("Debug mode: No backup stored.")
-#		return
+	if globals.developmode == true:
+		print("Debug mode: No backup stored.")
+		return
 	
 	print("Making Backup...")
 	for i in globals.dir_contents(backupdir):

@@ -345,7 +345,7 @@ var nakedspritesdict = globals.gallery.nakedsprites
 
 func slavegear(person):
 	var text = ''
-	text += "Health: " + str(person.health) + "/" + str(person.stats.health_max) + '\nEnergy: ' + str(person.energy) + '/' + str(person.stats.energy_max) + '\n'
+	text += person.name_short() + "\nHealth: " + str(person.health) + "/" + str(person.stats.health_max) + '\nEnergy: ' + str(person.energy) + '/' + str(person.stats.energy_max) + '\n'
 	for i in person.gear:
 		if person.gear[i] == null:
 			continue
