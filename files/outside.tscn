@@ -1,4 +1,4 @@
-[gd_scene load_steps=125 format=2]
+[gd_scene load_steps=127 format=2]
 
 [ext_resource path="res://files/theme.tres" type="Theme" id=1]
 [ext_resource path="res://files/scripts/outside.gd" type="Script" id=2]
@@ -82,12 +82,14 @@
 [ext_resource path="res://files/buttons/inventory/33.png" type="Texture" id=80]
 [ext_resource path="res://files/buttons/bigpanel.png" type="Texture" id=81]
 [ext_resource path="res://files/buttons/inventory/1.png" type="Texture" id=82]
-[ext_resource path="res://files/buttons/combat/8.png" type="Texture" id=83]
-[ext_resource path="res://files/buttons/combat/9.png" type="Texture" id=84]
-[ext_resource path="res://files/buttons/combat/8.1.png" type="Texture" id=85]
-[ext_resource path="res://files/buttons/combat/12.png" type="Texture" id=86]
-[ext_resource path="res://files/buttons/combat/13.png" type="Texture" id=87]
-[ext_resource path="res://files/buttons/combat/14.png" type="Texture" id=88]
+[ext_resource path="res://files/buttons/itemactive2.png" type="Texture" id=83]
+[ext_resource path="res://files/images/items/armorchain.png" type="Texture" id=84]
+[ext_resource path="res://files/buttons/combat/8.png" type="Texture" id=85]
+[ext_resource path="res://files/buttons/combat/9.png" type="Texture" id=86]
+[ext_resource path="res://files/buttons/combat/8.1.png" type="Texture" id=87]
+[ext_resource path="res://files/buttons/combat/12.png" type="Texture" id=88]
+[ext_resource path="res://files/buttons/combat/13.png" type="Texture" id=89]
+[ext_resource path="res://files/buttons/combat/14.png" type="Texture" id=90]
 
 [sub_resource type="StyleBoxTexture" id=1]
 
@@ -4614,6 +4616,7 @@ max_lines_visible = -1
 
 [node name="slaveguildquestpanel" type="Control" parent="." index="14"]
 
+editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -5436,7 +5439,6 @@ _sections_unfolded = [ "Rect" ]
 "blockmaininput",
 ]]
 
-visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -5495,19 +5497,19 @@ text = "Trade"
 flat = false
 align = 1
 
-[node name="sellbutton" type="Button" parent="shoppanel/Panel" index="1"]
+[node name="exchange" type="Button" parent="shoppanel/Panel" index="1"]
 
-visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 22.0
-margin_top = 81.0
+margin_top = 91.0
 margin_right = 205.0
-margin_bottom = 121.0
+margin_bottom = 131.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
+hint_tooltip = "Exchage your enchanted gear for a random one"
 focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
@@ -5517,37 +5519,12 @@ toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "Sell from Storage"
+text = "Exchange"
 flat = false
 align = 1
+_sections_unfolded = [ "Hint" ]
 
-[node name="sellbuttonbp" type="Button" parent="shoppanel/Panel" index="2"]
-
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 22.0
-margin_top = 121.0
-margin_right = 205.0
-margin_bottom = 161.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-toggle_mode = true
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Sell from Backpack"
-flat = false
-align = 1
-
-[node name="closebutton" type="Button" parent="shoppanel/Panel" index="3"]
+[node name="closebutton" type="Button" parent="shoppanel/Panel" index="2"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -5572,7 +5549,7 @@ text = "Close"
 flat = false
 align = 1
 
-[node name="title" type="Label" parent="shoppanel/Panel" index="4"]
+[node name="title" type="Label" parent="shoppanel/Panel" index="3"]
 
 anchor_left = 1.0
 anchor_top = 0.0
@@ -5597,6 +5574,8 @@ max_lines_visible = -1
 
 [node name="inventory" type="TextureRect" parent="shoppanel" index="1"]
 
+editor/display_folded = true
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -6783,9 +6762,167 @@ caret_blink_speed = 0.65
 caret_position = 0
 _sections_unfolded = [ "Placeholder" ]
 
+[node name="exchange" type="Panel" parent="shoppanel" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 239.0
+margin_top = 63.0
+margin_right = 1009.0
+margin_bottom = 563.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="shoppanel/exchange" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 20.0
+margin_top = 17.0
+margin_right = 290.0
+margin_bottom = 477.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+scroll_horizontal_enabled = false
+scroll_horizontal = 0
+scroll_vertical_enabled = true
+scroll_vertical = 0
+scroll_deadzone = 0
+_sections_unfolded = [ "Scroll" ]
+
+[node name="GridContainer" type="GridContainer" parent="shoppanel/exchange/ScrollContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+columns = 5
+
+[node name="Button" type="TextureButton" parent="shoppanel/exchange/ScrollContainer/GridContainer" index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 50.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 43 )
+texture_pressed = ExtResource( 83 )
+expand = true
+stretch_mode = 6
+_sections_unfolded = [ "Hint", "Rect", "Textures" ]
+
+[node name="Icon" type="TextureRect" parent="shoppanel/exchange/ScrollContainer/GridContainer/Button" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 45.0
+margin_bottom = 45.0
+rect_min_size = Vector2( 40, 40 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 84 )
+expand = true
+stretch_mode = 6
+_sections_unfolded = [ "Material", "Mouse", "Rect" ]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="shoppanel/exchange" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 350.0
+margin_top = 27.0
+margin_right = 750.0
+margin_bottom = 127.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+bbcode_enabled = false
+bbcode_text = "Select enchanted gear you wish to exchange. 
+3 items will be exchanged for 1 random item."
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = "Select enchanted gear you wish to exchange. 
+3 items will be exchanged for 1 random item."
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+_sections_unfolded = [ "BBCode" ]
+
+[node name="TradeButton" type="Button" parent="shoppanel/exchange" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 310.0
+margin_top = 437.0
+margin_right = 440.0
+margin_bottom = 476.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Trade"
+flat = false
+align = 1
+
 [node name="sebastiannode" type="Control" parent="." index="18"]
 
-editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -6885,6 +7022,7 @@ align = 1
 
 [node name="choseparty" type="Panel" parent="." index="19"]
 
+editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -6939,10 +7077,10 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 83 )
-texture_pressed = ExtResource( 84 )
-texture_hover = ExtResource( 84 )
-texture_disabled = ExtResource( 85 )
+texture_normal = ExtResource( 85 )
+texture_pressed = ExtResource( 86 )
+texture_hover = ExtResource( 86 )
+texture_disabled = ExtResource( 87 )
 _sections_unfolded = [ "Textures" ]
 
 [node name="stats" type="TextureRect" parent="choseparty/HBoxContainer/Button" index="0"]
@@ -7073,9 +7211,9 @@ page = 0.0
 value = 50.0
 exp_edit = true
 rounded = false
-texture_under = ExtResource( 86 )
+texture_under = ExtResource( 88 )
 texture_over = null
-texture_progress = ExtResource( 87 )
+texture_progress = ExtResource( 89 )
 radial_fill_degrees = 360.0
 radial_center_offset = Vector2( 0, 0 )
 nine_patch_stretch = false
@@ -7104,9 +7242,9 @@ page = 0.0
 value = 50.0
 exp_edit = true
 rounded = false
-texture_under = ExtResource( 86 )
+texture_under = ExtResource( 88 )
 texture_over = null
-texture_progress = ExtResource( 88 )
+texture_progress = ExtResource( 90 )
 radial_fill_degrees = 360.0
 radial_center_offset = Vector2( 0, 0 )
 nine_patch_stretch = false
@@ -7364,10 +7502,6 @@ _sections_unfolded = [ "Textures" ]
 [connection signal="pressed" from="mageorderservices/close" to="." method="_on_close_pressed"]
 
 [connection signal="pressed" from="shoppanel/Panel/buybutton" to="." method="shopbuy"]
-
-[connection signal="pressed" from="shoppanel/Panel/sellbutton" to="." method="shopsell"]
-
-[connection signal="pressed" from="shoppanel/Panel/sellbuttonbp" to="." method="_on_sellbuttonbp_pressed"]
 
 [connection signal="pressed" from="shoppanel/Panel/closebutton" to="." method="shopclose"]
 

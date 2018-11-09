@@ -34,6 +34,7 @@ func alphabeticalsortbycode(first, second):
 
 func _on_trainingabils_pressed():
 	get_node("trainingabilspanel").popup()
+	get_parent().upgradecostupdate()
 	for i in get_node("trainingabilspanel/ScrollContainer/VBoxContainer").get_children():
 		if i != get_node("trainingabilspanel/ScrollContainer/VBoxContainer/Button"):
 			i.visible = true

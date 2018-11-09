@@ -177,7 +177,7 @@ func showevent():
 	if person.imageportait != null:
 		if globals.loadimage(person.imageportait):
 			get_node("textpanel/Panel").visible = true
-			get_node("textpanel/portrait").set_texture(load(person.imageportait))
+			get_node("textpanel/portrait").set_texture(globals.loadimage(person.imageportait))
 		else:
 			person.imageportait = null
 			get_node("textpanel/Panel").visible = false

@@ -3,7 +3,7 @@ extends Node
 
 var effectdict = {}
 var guildslaves = {wimborn = [], gorn = [], frostford = [], umbra = []}
-var gameversion = '0.5.19d'
+var gameversion = '0.5.21'
 var state = progress.new()
 var developmode = false
 var gameloaded = false
@@ -55,18 +55,14 @@ var places = {
 var main
 
 var slaves = [] setget slaves_set
-var starting_pc_races = ['Human', 'Elf', 'Dark Elf', 'Orc', 'Demon', 'Beastkin Cat', 'Beastkin Wolf', 'Beastkin Fox', 'Halfkin Cat', 'Halfkin Wolf', 'Halfkin Fox', 'Taurus']
-var wimbornraces = ['Human', 'Elf', 'Dark Elf', 'Demon', 'Beastkin Cat', 'Beastkin Wolf','Beastkin Tanuki','Beastkin Bunny', 'Halfkin Cat', 'Halfkin Wolf', 'Halfkin Tanuki','Halfkin Bunny','Taurus','Fairy']
-var gornraces = ['Human', 'Orc', 'Goblin', 'Gnome', 'Taurus', 'Centaur','Beastkin Cat', 'Beastkin Tanuki','Beastkin Bunny', 'Halfkin Cat','Halfkin Bunny','Harpy']
-var frostfordraces = ['Human','Elf','Drow','Beastkin Cat', 'Beastkin Wolf', 'Beastkin Fox', 'Beastkin Tanuki','Beastkin Bunny', 'Halfkin Cat', 'Halfkin Wolf', 'Halfkin Fox','Halfkin Bunny', 'Nereid']
-var allracesarray = ['Human', 'Elf', 'Dark Elf', 'Orc', 'Drow','Beastkin Cat', 'Beastkin Wolf', 'Beastkin Fox','Beastkin Tanuki','Beastkin Bunny', 'Halfkin Cat', 'Halfkin Wolf', 'Halfkin Fox','Halfkin Tanuki','Halfkin Bunny','Taurus', 'Demon', 'Seraph', 'Gnome','Goblin','Centaur','Lamia','Arachna','Scylla', 'Slime', 'Harpy','Dryad','Fairy','Nereid','Dragonkin']
-var banditraces = ['Human', 'Elf', 'Dark Elf', 'Demon', 'Cat', 'Wolf','Bunny','Taurus','Orc','Goblin']
-var monsterraces = ['Centaur','Lamia','Arachna','Scylla', 'Slime', 'Harpy','Nereid']
+#var starting_pc_races #= variables.starting_pc_races #['Human', 'Elf', 'Dark Elf', 'Orc', 'Demon', 'Beastkin Cat', 'Beastkin Wolf', 'Beastkin Fox', 'Halfkin Cat', 'Halfkin Wolf', 'Halfkin Fox', 'Taurus']
+#var wimbornraces = variables.wimbornraces #['Human', 'Elf', 'Dark Elf', 'Demon', 'Beastkin Cat', 'Beastkin Wolf','Beastkin Tanuki','Beastkin Bunny', 'Halfkin Cat', 'Halfkin Wolf', 'Halfkin Tanuki','Halfkin Bunny','Taurus','Fairy']
+#var gornraces = variables.gornraces#['Human', 'Orc', 'Goblin', 'Gnome', 'Taurus', 'Centaur','Beastkin Cat', 'Beastkin Tanuki','Beastkin Bunny', 'Halfkin Cat','Halfkin Bunny','Harpy']
+#var frostfordraces = variables.frostfordraces#['Human','Elf','Drow','Beastkin Cat', 'Beastkin Wolf', 'Beastkin Fox', 'Beastkin Tanuki','Beastkin Bunny', 'Halfkin Cat', 'Halfkin Wolf', 'Halfkin Fox','Halfkin Bunny', 'Nereid']
+var allracesarray = [] #variables.allracesarray#['Human', 'Elf', 'Dark Elf', 'Orc', 'Drow','Beastkin Cat', 'Beastkin Wolf', 'Beastkin Fox','Beastkin Tanuki','Beastkin Bunny', 'Halfkin Cat', 'Halfkin Wolf', 'Halfkin Fox','Halfkin Tanuki','Halfkin Bunny','Taurus', 'Demon', 'Seraph', 'Gnome','Goblin','Centaur','Lamia','Arachna','Scylla', 'Slime', 'Harpy','Dryad','Fairy','Nereid','Dragonkin']
 var specarray = ['geisha','ranger','executor','bodyguard','assassin','housekeeper','trapper','nympho','merchant','tamer']
 var player = person.new()
 var partner
-#var clothes = load("res://files/scripts/clothes.gd").costumelist()
-#var underwear = load("res://files/scripts/clothes.gd").underwearlist()
 
 var spritedict = gallery.sprites
 var musicdict = {
@@ -152,12 +148,13 @@ func _init():
 #			variables[i] = tempnode[i]
 #	tempnode.queue_free()
 	
+	for i in races:
+		allracesarray.append(i)
+	
 	if variables.oldemily == true:
 		for i in ["emilyhappy", "emilynormal","emily2normal","emily2happy","emily2worried","emilynakedhappy","emilynakedneutral"]:
 			spritedict[i] = spritedict['old'+ i]
 		characters.characters.Emily.imageportait = "res://files/images/emily/oldemilyportrait.png"
-	
-	
 
 
 func savevars():
@@ -175,6 +172,7 @@ func loadsettings():
 	for i in setfolders.values():
 		if dir.dir_exists(i) == false:
 			dir.make_dir(i)
+		
 	if settings.file_exists("user://settings.ini") == false:
 		settings.open("user://settings.ini", File.WRITE)
 		settings.store_line(var2str(rules))
@@ -208,6 +206,8 @@ func loadsettings():
 		storedsettings = settings.get_var()
 	temp = storedsettings.folders
 	for i in temp:
+		if !temp[i].ends_with('/'):
+			temp[i] += '/'
 		setfolders[i] = temp[i]
 	modfolder = setfolders.mods
 	if storedsettings.has('savelist') == false:
@@ -257,8 +257,9 @@ func newslave(race, age, sex, origins = 'slave'):
 func slaves_set(person):
 	person.originstrue = person.origins
 	person.health = max(person.health, 5)
-	person.ability.append("protect")
-	person.abilityactive.append("protect")
+	if person.ability.has('protect') == false:
+		person.ability.append("protect")
+		person.abilityactive.append("protect")
 	slaves.append(person)
 	if get_tree().get_current_scene().find_node('CharList'):
 		get_tree().get_current_scene().rebuild_slave_list()
@@ -314,9 +315,19 @@ enddayalise = 1,
 spritesindialogues = true,
 instantcombatanimation = false,
 randomcustomportraits = true,
+thumbnails = false,
 }
 
+var scenedict = {
+	Mansion = 'res://files/Mansion.scn',
+}
 
+var CurrentScene
+
+func ChangeScene(name):
+	var loadscreen = load("res://files/LoadScreen.tscn").instance()
+	get_tree().get_root().add_child(loadscreen)
+	loadscreen.goto_scene(scenedict[name])
 
 
 class resource:
@@ -527,12 +538,12 @@ class progress:
 		var slave
 		var tempitem
 		var currentweight = 0
-		var maxweight = 10 + max(globals.player.sstr*4, 0)
+		var maxweight = variables.basecarryweight + max(globals.player.sstr*variables.carryweightperstrplayer, 0)
 		var array = [globals.player]
 		for i in globals.state.playergroup:
 			slave = globals.state.findslave(i)
 			array.append(slave)
-			maxweight += max(slave.sstr*5,0) + 3
+			maxweight += max(slave.sstr*variables.slavecarryweightperstr,0) + variables.baseslavecarryweight
 		for i in globals.state.backpack.stackables:
 			if globals.itemdict[i].has('weight'):
 				currentweight += globals.itemdict[i].weight * globals.state.backpack.stackables[i]
@@ -1322,8 +1333,7 @@ class person:
 		var bonus = 1
 		price = beautybase*variables.priceperbasebeauty + beautytemp*variables.priceperbonusbeauty
 		price += (level-1)*variables.priceperlevel
-		if variables.racepricemods.has(race):
-			price = price*variables.racepricemods[race]
+		price = price*globals.races[race].pricemod
 		if vagvirgin == true:
 			bonus += variables.pricebonusvirgin
 		if sex == 'futanari':
@@ -1496,7 +1506,7 @@ func impregnation(mother, father = null, anyfather = false):
 		if father.penis == 'none':
 			return
 #		realfather = father.id
-	if mother.preg.has_womb == false || mother.preg.duration > 0 || mother == father || mother.effects.has("contraceptive"):
+	if mother.preg.has_womb == false || mother.preg.duration > 0 || mother == father || mother.effects.has("contraceptive") || father.effects.has('contraceptive'):
 		return
 	var rand = rand_range(0,100)
 	if globals.developmode == true:
@@ -1961,7 +1971,8 @@ func load_game(text):
 	var currentline = {} 
 	savegame.open(text, File.READ)
 	currentline = parse_json(savegame.get_as_text())
-	get_tree().change_scene("res://files/Mansion.scn")
+	ChangeScene("Mansion")
+	#get_tree().change_scene("res://files/Mansion.scn")
 	for i in currentline.values():
 		if i.has("@path") && i['@path'] in ["res://globals.gdc",'res://globals.gdc']:
 			i['@path'] = "res://globals.gd"
@@ -2131,6 +2142,25 @@ func buildportrait(node, person):
 		var newlayer = node.duplicate()
 		node.add_child(newlayer)
 		newlayer.set_texture(imagedict[i][person[i]])
+
+func getracedata(person):
+	var race = person.race
+	return races[race.replace('Halfkin', 'Beastkin')]
+
+func getracebygroup(group):
+	var array = []
+	for i in races:
+		if group == 'bandits' && races[i].banditrace == true:
+			array.append(i)
+		elif group == 'starting' && races[i].startingrace == true:
+			array.append(i)
+		elif group == 'wimborn' && races[i].wimbornrace == true:
+			array.append(i)
+		elif group == 'gorn' && races[i].wimbornrace == true:
+			array.append(i)
+		elif group == 'frostford' && races[i].wimbornrace == true:
+			array.append(i)
+	return array[randi()%array.size()]
 
 func checkfurryrace(text):
 	if text in ['Cat','Wolf','Fox','Bunny','Tanuki']:

@@ -39,9 +39,10 @@ func addrandomenchant(item, number = 1):
 	while number > 0 && encharray.size() > 0:
 		number -= 1
 		item.enchant = 'basic'
-		var tempenchant = enchantmentdict[encharray[randi()%encharray.size()]]
+		var encharrayid = encharray[randi()%encharray.size()]
+		var tempenchant = enchantmentdict[encharrayid]
 		var enchant = {type = tempenchant.type, effect = tempenchant.effect, effectvalue = 0, descript = ""}
-		encharray.erase(tempenchant)
+		encharray.erase(encharrayid)
 		if tempenchant.has("mineffect") and tempenchant.has("maxeffect"):
 			if tempenchant.maxeffect < 1:
 				enchant.effectvalue = round(rand_range(tempenchant.mineffect, tempenchant.maxeffect)*100)/100

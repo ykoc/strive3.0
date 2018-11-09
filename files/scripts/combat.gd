@@ -910,13 +910,13 @@ func useskills(skill, caster = null, target = null, retarget = false):
 		target = targetarray
 	
 	self.combatlog += '\n' + combatantdictionary(caster, target, text)
-	emit_signal("skillplayed")
 	endcombatcheck()
 	if period == 'win':
 		playerwin() 
 	if period == 'skilluse':
 		period = 'base'
 		
+	emit_signal("skillplayed")
 
 func scripteffect(caster,target,script):
 	globals.abilities.call(script, caster, target)
@@ -1043,8 +1043,8 @@ func enemyturn():
 					continue
 				if i.aipatterns.has('attack'):
 					skill.append({value = i, weight = i.aipriority})
-			
-					
+		
+		
 		
 		
 		if playergroup.size() == 0:
@@ -1223,14 +1223,14 @@ signal defeatfinished
 var ongoinganimation = false
 
 func damagein():
-	emit_signal("damagetrigger")
-	ongoinganimation = false
 	yield(get_tree(), 'idle_frame')
+	ongoinganimation = false
+	emit_signal("damagetrigger")
 
 func tweenfinished():
 	yield(get_tree(), 'idle_frame')
-	emit_signal("tweenfinished")
 	ongoinganimation = false
+	emit_signal("tweenfinished")
 
 
 func defeatfinished():
@@ -1256,9 +1256,9 @@ func attackanimation(combatant):
 	if combatant.group == 'enemy':
 		change = -change
 	tween.interpolate_property(node, "rect_position", pos, Vector2(pos.x, pos.y-change), timings.speed1, Tween.TRANS_ELASTIC, Tween.EASE_IN_OUT)
-	tween.interpolate_callback(self, timings.delaydamage, 'damagein')
+	tween.interpolate_deferred_callback(self, timings.delaydamage, 'damagein')
 	tween.interpolate_property(node, "rect_position", Vector2(pos.x, pos.y-change), pos,  timings.speed2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, timings.delay2)
-	tween.interpolate_callback(self, timings.delayfinish, 'tweenfinished')
+	tween.interpolate_deferred_callback(self, timings.delayfinish, 'tweenfinished')
 	tween.start()
 
 func slamanimation(combatant):

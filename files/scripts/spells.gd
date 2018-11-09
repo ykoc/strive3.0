@@ -38,7 +38,7 @@ mindread = {
 	combat = true,
 	learned = false,
 	type = 'control',
-	flavor = "Reading other person's thoughts hardly worth the effort: way too often they are just chaotic streams changing one after another. Netherless, you can grasp some understanding how others think by devoting your time to them. ",
+	flavor = "Reading other person's thoughts hardly worth the effort: way too often they are just chaotic streams changing one after another. Nevertheless, you can grasp some understanding how others think by devoting your time to them. ",
 	},
 sedation = {
 	code = 'sedation',
@@ -162,7 +162,7 @@ shackle = {
 acidspit = {
 	code = 'acidspit',
 	name = 'Acid Spit',
-	description = "Turns your saliva into highly potent corrosive substance for a short time. \nDeals spell damage to single target enemy and recudes it's armor. ",
+	description = "Turns your saliva into highly potent corrosive substance for a short time. \nDeals spell damage to single target enemy and reduces it's armor. ",
 	effect = '',
 	manacost = 5,
 	req = 2,

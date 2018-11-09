@@ -300,10 +300,11 @@ func buildslave(i):
 	elif i.capturerace.find('any') >= 0:
 		race = globals.allracesarray[rand_range(0,globals.allracesarray.size())]
 	elif i.capturerace.find('bandits') >= 0:
-		if rand_range(0,10) <= 7:
+		if randf() <= variables.banditishumanchance/100:
 			race = 'Human'
 		else:
-			race = globals.banditraces[rand_range(0,globals.banditraces.size())]
+			
+			race = globals.getracebygroup('bandits') #globals.banditraces[rand_range(0,globals.banditraces.size())]
 	else:
 		race = globals.weightedrandom(i.capturerace)
 	race = globals.checkfurryrace(race)
@@ -327,6 +328,8 @@ func buildslave(i):
 	if i.has('gear'):
 		var gear = {}
 		for k in ['armor','weapon','costume','underwear','accessory']:
+			if k == 'armor' && globals.player.level < 2:
+				continue
 			if !combatdata.enemyequips[i.gear].has(k):
 				continue
 			gear[k] = globals.weightedrandom(combatdata.enemyequips[i.gear][k])
@@ -447,11 +450,7 @@ func patrolbribe(sum):
 
 ##############
 
-var treasurepool = [['armorninja',5],['armorplate',1],['armorleather',20],['armorchain',11],['armorelvenchain',3],['armorrobe',4],
-['weapondagger',20], ['weaponsword',9], ['weaponclaymore',3], ['weaponhammer', 4],
-['clothsundress',10], ['clothmaid',10], ['clothkimono',7], ['clothmiko',5], ['clothpet',3], ['clothbutler',10], ['clothbedlah',4],
-['accgoldring',3],['accslavecollar',4],['acchandcuffs',3],['acctravelbag',5],['accamuletemerald', 1], ['accamuletruby', 1], 
-]
+
 var treasuremisc = [['magicessenceing',7],['taintedessenceing',7],['natureessenceing',7],['bestialessenceing',7],['fluidsubstanceing',7],['gem',1],['claritypot',0.5],['regressionpot',1],['youthingpot',2],['maturingpot',2]]
 
 var chestloot = {
@@ -1000,7 +999,7 @@ func captureslave(person):
 		globals.state.backpack.stackables.rope -= variables.consumerope
 	for i in person.gear:
 		i = null
-	if person.race in ['Lamia','Arachna','Harpy','Nereid','Slime','Scylla','Dryad','Fairy']:
+	if globals.races[person.race].uncivilized == true:
 		person.add_trait('Uncivilized')
 	captureeffect(person)
 	if defeated.names[defeated.units.find(person)] == 'Captured':

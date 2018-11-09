@@ -13,6 +13,7 @@ var currentzone
 #QMod - Variables
 onready var mainQuestTexts = globals.mainQuestTexts
 onready var sideQuestTexts = globals.sideQuestTexts
+
 func _ready():
 	if globals.guildslaves.wimborn.size() < 2:
 		var rand = round(rand_range(4,6))
@@ -36,6 +37,8 @@ func _ready():
 		$playergrouppanel/characterinfo/combstats.get_node(i).connect("mouse_entered",self,'statinfo',[i])
 		$playergrouppanel/characterinfo/combstats.get_node(i).connect("mouse_exited",self,'iteminfoclose')
 	$minimappanel/map/Control.set_process_input(false)
+	$shoppanel/Panel/exchange.connect("pressed", self, "exchangeitems")
+	$shoppanel/exchange/TradeButton.connect('pressed', self, 'exchangeitemsconfirm')
 
 
 
@@ -331,11 +334,11 @@ func newslaveinguild(number, town = 'wimborn'):
 		var origin
 		var originpool 
 		if town == 'wimborn':
-			racearray = [[globals.wimbornraces[rand_range(0,globals.wimbornraces.size())],1],['Drow', 1],['Dark Elf', 1.5],['Elf', 2],['Human', 6]]
+			racearray = [[globals.getracebygroup("wimborn"),1],['Drow', 1],['Dark Elf', 1.5],['Elf', 2],['Human', 6]]
 		elif town == 'gorn':
-			racearray = [[globals.gornraces[rand_range(0,globals.gornraces.size())],1],['Centaur', 1],['Human', 2],['Goblin', 2],['Orc', 5]]
+			racearray = [[globals.getracebygroup("gorn"),1],['Centaur', 1],['Human', 2],['Goblin', 2],['Orc', 5]]
 		elif town == 'frostford':
-			racearray = [[globals.frostfordraces[rand_range(0,globals.frostfordraces.size())],1],['Human', 1.5],['Halfkin Wolf', 3],['Beastkin Wolf', 5]]
+			racearray = [[globals.getracebygroup("frostford"),1],['Human', 1.5],['Halfkin Wolf', 3],['Beastkin Wolf', 5]]
 		elif town == 'umbra':
 			racearray = [[globals.allracesarray[rand_range(0,globals.allracesarray.size())],1]]
 		if globals.rules.slaverguildallraces == true && globals.state.sandbox == true:
@@ -345,9 +348,9 @@ func newslaveinguild(number, town = 'wimborn'):
 		else:
 			race = globals.weightedrandom(racearray)
 			if town == 'umbra':
-				originpool = [['noble', 1],{value = 'rich', weight = 2},{value = 'commoner', weight = 3},{value = 'poor', weight = 3},{value = 'slave',weight = 1}]
+				originpool = [['noble', 1],['rich',2],['commoner',3], ['poor', 3], ['slave',1]]
 			else:
-				originpool = [{value = 'rich', weight = 1},{value = 'commoner', weight = 3},{value = 'poor', weight = 6},{value = 'slave',weight = 6}]
+				originpool = [['rich',1], ['commoner',3], ['poor', 6], ['slave', 6]]
 			origin = globals.weightedrandom(originpool)
 		var newslave = globals.newslave(race, 'random', 'random', origin)
 		if town == 'umbra':
@@ -1699,6 +1702,9 @@ func shopinitiate(shopname):
 		get_node("shoppanel/Panel/title").set_text(currentshop.name)
 		get_node("shoppanel").visible = true
 		#get_node("shoppanel/itempanel").visible = false
+	$shoppanel/Panel/exchange.visible = shopname == 'blackmarket'
+	$shoppanel/exchange.visible = false
+	
 	if currentshop.has('sprite'):
 		setcharacter(currentshop.sprite)
 
@@ -1716,6 +1722,58 @@ func shopclose():
 	get_node("shoppanel").visible = false
 	if currentshop.has('sprite') && currentshop.code != 'aydashop':
 		get_parent().nodefade($charactersprite, 0.3)
+
+func exchangeitems():
+	$shoppanel/exchange.visible = true
+	for i in $shoppanel/exchange/ScrollContainer/GridContainer.get_children():
+		if i.name != 'Button':
+			i.hide()
+			i.free()
+	
+	for i in globals.state.unstackables.values():
+		if i.owner == null && i.enchant == 'basic':
+			var newbutton = $shoppanel/exchange/ScrollContainer/GridContainer/Button.duplicate()
+			newbutton.show()
+			newbutton.get_node('Icon').texture = load(i.icon)
+			$shoppanel/exchange/ScrollContainer/GridContainer.add_child(newbutton)
+			newbutton.connect('mouse_entered', globals, 'itemtooltip', [i])
+			newbutton.connect("mouse_exited", globals, 'itemtooltiphide')
+			newbutton.connect("pressed", self, 'calculateexchange')
+			newbutton.set_meta("item", i)
+	calculateexchange()
+
+var ItemsForExchange = []
+
+func calculateexchange():
+	var itemarray = []
+	ItemsForExchange.clear()
+	for i in $shoppanel/exchange/ScrollContainer/GridContainer.get_children():
+		if i.pressed == true:
+			itemarray.append(i.get_meta('item'))
+	ItemsForExchange = itemarray.duplicate()
+	$shoppanel/exchange/TradeButton.disabled = itemarray.size() < 3
+
+var treasurepool = [['armorninja',5],['armorplate',1],['armorleather',20],['armorchain',11],['armorelvenchain',3],['armorrobe',4],
+['weapondagger',20], ['weaponsword',9], ['weaponclaymore',3], ['weaponhammer', 4], ['underwearlacy', 3], ['underwearboxers', 3],
+['clothsundress',10], ['clothmaid',10], ['clothkimono',7], ['clothmiko',5], ['clothpet',3], ['clothbutler',10], ['clothbedlah',4],
+['accgoldring',3],['accslavecollar',4],['acchandcuffs',3],['acctravelbag',5],['accamuletemerald', 1], ['accamuletruby', 1], 
+['weaponelvensword',3], ['weaponnaturestaff',2], ['armortentacle', 0.5], ['clothtentacle', 1], 
+['armorrogue', 0.5],['weaponcursedsword', 0.5]
+]
+
+func exchangeitemsconfirm():
+	for i in ItemsForExchange:
+		globals.state.unstackables.erase(i.id)
+	ItemsForExchange.clear()
+	var newitem = globals.items.createunstackable(globals.weightedrandom(treasurepool))
+	if newitem.enchant != 'unique':
+		if randf() >= 0.3:
+			globals.items.enchantrand(newitem, 2)
+		else:
+			globals.items.enchantrand(newitem)
+		#newitem.enchant = 'rare'
+	globals.state.unstackables[newitem.id] = newitem
+	exchangeitems()
 
 ####QUESTS
 var cali
@@ -1945,9 +2003,9 @@ func backstreets():
 	
 	var array = [{name = 'Enter Brothel',function = 'brothel'}]
 	#Original quest event 'hooks'
-#	if globals.state.sidequests.emily <= 1:
-#		text += '\n\nYou see an urchin girl trying to draw your attention'
-#		array.insert(1,{name = 'Respond to the urchin girl', function = 'emily'})
+	if globals.state.sidequests.emily <= 1:
+		text += '\n\nYou see an urchin girl trying to draw your attention'
+		array.insert(1,{name = 'Respond to the urchin girl', function = 'emily'})
 	if globals.state.sidequests.cali in [14,15,16]:
 		array.insert(1,{name = "Visit local bar", function = "calibarquest"})
 	if globals.state.sidequests.emily == 13:
@@ -1957,22 +2015,22 @@ func backstreets():
 	#QMod - New Event System
 	if array.size() > 0:
 		buildbuttons(array)
-	
+
 	var place = {'region' : 'wimborn', 'area' : 'wimbornCity', 'location' : 'backstreets'}
 	var placeEffects
 	var buttonCount = array.size() #ToFix - Keep an eye on this, links old quest button and new quest button counts.
-	
-	placeEffects = globals.events.call_events(place, 'trigger') #ToFix - Should a triggered event be able to create a 'hook' event as a follow-up?
-	if placeEffects.text != '':
-		text += '\n\n' + placeEffects.text
-		
-	placeEffects = globals.events.call_events(place, 'hook', {source = self, function = 'backstreets'})
-	if placeEffects.text != '':
-		text += '\n\n' + placeEffects.text
-	var buttons = placeEffects.buttons
-	if buttons.size() > 0:
-		buildbuttons(buttons, globals.events, false, buttonCount)
-		buttonCount += buttons.size()
+#
+#	placeEffects = globals.events.call_events(place, 'trigger') #ToFix - Should a triggered event be able to create a 'hook' event as a follow-up?
+#	if placeEffects.text != '':
+#		text += '\n\n' + placeEffects.text
+#
+#	placeEffects = globals.events.call_events(place, 'hook', {source = self, function = 'backstreets'})
+#	if placeEffects.text != '':
+#		text += '\n\n' + placeEffects.text
+#	var buttons = placeEffects.buttons
+#	if buttons.size() > 0:
+#		buildbuttons(buttons, globals.events, false, buttonCount)
+#		buttonCount += buttons.size()
 	# - End New Event System
 	
 	
@@ -1982,8 +2040,113 @@ func backstreets():
 		
 	mansion.maintext = text
 
-#func emily():
-#	globals.events.emily()
+var textnode = globals.questtext
+
+func emily(state = 1):
+	var buttons = []
+	var text = ''
+	var sprites = null
+	var main = globals.main
+	
+	globals.state.sidequests.emily = state
+	if state == 1:
+		globals.charactergallery.emily.unlocked = true
+		text = textnode.EmilyMeet
+		if globals.resources.food < 10:
+			buttons.append({text = 'Give her food', function = 'emily', args = 2, disabled = true, tooltip = "not enough food"})
+		else:
+			buttons.append(['Give her food', 'emily', 2])
+		buttons.append(['Shoo her away', 'emily', 5])
+		buttons.append(["Make an excuse and tell her you'll bring some later", 'emily', 0])
+		sprites = [['emilynormal','pos1','opac']]
+		main.dialogue(false, self, text, buttons, sprites)
+	elif state == 2:
+		text = textnode.EmilyFeed
+		globals.resources.food -= 10
+		buttons.append(['Offer to take her as a servant', 'emily', 3])
+		buttons.append(["Leave her alone", 'emily', 5])
+		sprites = [['emilynormal','pos1']]
+		main.dialogue(false, self, text, buttons, sprites)
+	elif state == 3:
+		text = textnode.EmilyTake
+		sprites = [['emilyhappy','pos1']]
+		main.dialogue(true, self, text, buttons, sprites)
+		var emily = globals.characters.create('Emily')
+		globals.state.upcomingevents.append({code = 'tishaappearance',duration =7})
+		globals.slaves = emily
+		backstreets()
+	elif state == 5:
+		backstreets()
+		main.close_dialogue()
+	elif state == 0:
+		backstreets()
+		main.close_dialogue()
+
+func emilymansion(stage = 0):
+	var text = ""
+	var state = true
+	var sprite
+	var buttons = []
+	var emily
+	var image
+	for i in globals.slaves:
+		if i.unique == 'Emily':
+			emily = i
+	if stage == 0:
+		text = textnode.EmilyMansion
+		sprite = [['emilyhappy','pos1','opac']]
+		state = false
+		if globals.itemdict.aphrodisiac.amount > 0:
+			buttons.append({text = 'Spike her with aphrodisiac',function = 'emilymansion',args = 1})
+		else:
+			buttons.append({text = 'Spike her with aphrodisiac',function = 'emilymansion',args = 1, disabled = true})
+		buttons.append({text = 'Assault her after bath', function = 'emilymansion', args = 2})
+		buttons.append({text = "Just wait", function = "emilymansion", args = 3})
+	elif stage == 1:
+		image = 'emilyshower'
+		globals.state.decisions.append("emilyseduced")
+		globals.itemdict.aphrodisiac.amount -= 1
+		text = textnode.EmilyShowerSex
+		sprite = [['emilynakedhappy','pos1']]
+		emily.consent = true
+		emily.tags.erase('nosex')
+		emily.vagvirgin = false
+		emily.metrics.orgasm += 1
+		emily.metrics.vag += 1
+		emily.metrics.partners.append(globals.player.id)
+		emily.stress += 50
+		emily.loyal += 15
+		emily.lust += 50
+		globals.charactergallery.emily.scenes[0].unlocked = true
+		globals.charactergallery.emily.nakedunlocked = true
+		buttons.append({text = "Close", function = 'closescene'})
+	elif stage == 2:
+		image = 'emilyshowerrape'
+		globals.state.decisions.append("emilyseduced")
+		text = textnode.EmilyShowerRape
+		sprite = [['emilynakedneutral','pos1']]
+		emily.tags.erase('nosex')
+		emily.consent = true
+		emily.stress += 100
+		emily.vagvirgin = false
+		emily.metrics.vag += 1
+		emily.metrics.partners.append(globals.player.id)
+		emily.obed = 0
+		globals.charactergallery.emily.scenes[1].unlocked = true
+		globals.charactergallery.emily.nakedunlocked = true
+		globals.state.upcomingevents.append({code = 'emilyescape', duration = 2})
+		buttons.append({text = "Close", function = 'closescene'})
+	elif stage == 3:
+		text = textnode.EmilyMansion2
+		sprite = [['emily2happy','pos1','opac']]
+	globals.state.sidequests.emily = 6
+	if stage in [1,2]:
+		globals.main.scene(self, image, text, buttons)
+		globals.main._on_mansion_pressed()
+		closedialogue()
+		return
+	globals.main.dialogue(state,self,text,buttons,sprite)
+
 
 func brothel(person = null):
 	mansion.background_set("brothel")

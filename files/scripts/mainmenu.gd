@@ -13,7 +13,6 @@ enum StageName {
 	StartSlave = 7
 }
 
-
 #QMod - Dictionaries
 var locationDict = {
 	wimborn = {code = 'wimborn', name = 'Wimborn', descript = "Wimborn is the biggest local human city, its rich infrastructure and dense population allows even beginners to make out their living, as long as they are diligent.\n\n[color=aqua][center]Default Start — Recommended.[/center][/color]"},
@@ -95,7 +94,7 @@ var makeoverPerson #Used for character appearance customization
 var player
 var playerDefaults = {race = 'Human', age = 'teen', sex = 'male', origins = 'poor'}
 var playerPortraits = []
-var playerBonusStatPoints = 2
+var playerBonusStatPoints = variables.playerbonusstatpoint
 
 var malesizes = ['masculine', 'flat']
 var femalesizes = ['flat','small','average','big','huge']
@@ -122,6 +121,10 @@ var introText02 = "Although you have managed to dodge any sort of terrible fate,
 
 #QMod - Refactored
 func _ready():
+	variables = load("res://files/scripts/variables.gd").new()
+	var constantsloader = load("res://files/constmodinstal.gd").new()
+	constantsloader.run()
+	
 	#System/OS + global checks and settings	
 	_ready_system_check()
 	
@@ -135,7 +138,10 @@ func _ready():
 	_ready_music() #Separated from adult_warning to show top-level flow better	
 	_ready_credits()
 	get_node("TextureFrame/changelog/RichTextLabel").set_selection_enabled(true)
-	_ready_newgame_creator()	
+	_ready_newgame_creator()
+	
+	
+	
 
 #QMod - Added system/global check helper
 func _ready_system_check():
@@ -328,33 +334,21 @@ func _on_SavePanel_visibility_changed():
 	
 	get_node("TextureFrame/SavePanel/saveline").set_text(filesname.replacen("user://saves/",'')) #Displays name of current selected savefile in textbox	
 	
-	
-#	for i in savefiles:
-#		node = get_node("TextureFrame/SavePanel/ScrollContainer/savelist/Button").duplicate()
-#		node.show()
-#		if globals.savelist.has(i):
-#			node.get_node("date").set_text(globals.savelist[i].date)
-#			node.get_node("name").set_text(i.replacen("user://saves/",''))
-#		else:
-#			node.get_node("name").set_text(i.replacen("user://saves/",''))
-#		get_node("menucontrol/menupanel/SavePanel/ScrollContainer/savelist").add_child(node)
-#		node.set_meta("name", i)
-#		node.connect('pressed', self, 'loadchosen', [node])
-	var node
+	#var node
 	var savefiles = globals.dir_contents()
 	for i in globals.savelist:
 		if savefiles.find(i) < 0:
 			globals.savelist.erase(i)
+	
 	for i in savefiles:
-		node = get_node("TextureFrame/SavePanel/ScrollContainer/savelist/Button").duplicate() #Create save file button
-		node.visible = true
-		#node.get_node("name").set_text(i.replacen("user://saves/",'')) #Set save file name + date
-		if globals.savelist.has(i):
+		var node = get_node("TextureFrame/SavePanel/ScrollContainer/savelist/Button").duplicate() #Create save file button
+		get_node("TextureFrame/SavePanel/ScrollContainer/savelist").add_child(node) #Add button to savefile load display list
+		node.show()
+		if globals.savelist.has(i) == true:
 			node.get_node("date").set_text(globals.savelist[i].date)
 			node.get_node("name").set_text(i.replacen("user://saves/",''))
 		else:
 			node.get_node("name").set_text(i.replacen("user://saves/",''))
-		get_node("TextureFrame/SavePanel/ScrollContainer/savelist").add_child(node) #Add button to savefile load display list
 		node.set_meta('text', i)
 		node.connect('pressed', self, '_display_savegame_info', [node]) #Connect button to loadchosen method
 
@@ -526,7 +520,7 @@ func _advance_stage(confirm = false):
 			get_node("TextureFrame/newgame/stage4").visible = true
 			_stage4()
 		4: #Select Player Basics + Physical Stat Potential			
-			playerBonusStatPoints = 2
+			playerBonusStatPoints = variables.playerbonusstatpoint
 			regenerateplayer()
 			get_node("TextureFrame/newgame/stage5").visible = true
 			_stage5()
@@ -596,9 +590,10 @@ func _on_quickstart_pressed():
 	
 	#Generate random Player
 	if isSandbox: #Randomize from sandbox full race list
-		player.race = globals.allracesarray[rand_range(0, globals.allracesarray.size())]		
+		player.race = globals.allracesarray[rand_range(0, globals.allracesarray.size())]
 	else: #Randomize from story starting race list
-		player.race = globals.starting_pc_races[rand_range(0, globals.starting_pc_races.size())]
+		player.race = globals.getracebygroup('starting')
+		#player.race = globals.starting_pc_races[rand_range(0, globals.starting_pc_races.size())]
 	
 	if !globals.rules.futa: #If futanari not allowed, remove futa
 		sexArray.erase('futanari')
@@ -614,7 +609,7 @@ func _on_quickstart_pressed():
 	if isSandbox: #Randomize from sandbox full race list
 		slaveDefaults.race = globals.allracesarray[rand_range(0, globals.allracesarray.size())]
 	else: #Randomize from story starting race list
-		slaveDefaults.race = globals.starting_pc_races[rand_range(0, globals.starting_pc_races.size())]
+		slaveDefaults.race = globals.getracebygroup('starting')
 	
 	slaveDefaults.age = ageArray[rand_range(0,ageArray.size())]
 	slaveDefaults.sex = 'random'
@@ -665,11 +660,14 @@ func _stage4():
 			i.queue_free()
 	
 	#Get source race list according to game mode
-	var raceArray
+	var raceArray = []
 	if isSandbox == true: #Set available races according to game mode
 		raceArray = globals.allracesarray
 	else:
-		raceArray = globals.starting_pc_races		
+		for i in globals.races:
+			if globals.races[i].startingrace == true:
+				raceArray.append(i)
+		#raceArray = globals.starting_pc_races		
 	
 	#Populate race list and eliminate rule-blocked races
 	var newbutton
@@ -800,7 +798,7 @@ func regenerateplayer():
 	player.unique = 'player'
 	player.imageportait = imageportait
 	player.beautybase = variables.playerstartbeauty
-	playerBonusStatPoints = 2
+	playerBonusStatPoints = variables.playerbonusstatpoint
 	for i in ['str','agi','maf','end']:
 		player.stats[i+'_max'] = 4
 	_update_stage5()
@@ -1101,11 +1099,14 @@ func _process_stage8():
 #QMod - Refactor
 func _process_stage8_race_options():
 	#Build race options
-	var slaveRaces
+	var slaveRaces = []
 	if isSandbox:
 		slaveRaces = globals.allracesarray
 	else:
-		slaveRaces = globals.starting_pc_races
+		for i in globals.races:
+			if globals.races[i].startingrace == true:
+				slaveRaces.append(i)
+		#slaveRaces = globals.starting_pc_races
 	
 	for i in slaveRaces:
 		if i.find('Beastkin') >= 0 && globals.rules.furry == false: #Skip beastkin if no furries allowed
@@ -1420,7 +1421,9 @@ func _on_slaveconfirm_pressed():
 	globals.player = player
 	globals.state.upcomingevents.append({code = 'ssinitiate', duration = 1})
 	#Change scene to game start 'Mansion'
-	get_tree().change_scene("res://files/Mansion.scn")
+	globals.ChangeScene("Mansion")
+	#self.queue_free()
+	#get_tree().change_scene("res://files/Mansion.scn")
 	
 	
 	

@@ -7,22 +7,10 @@ var portaitsbuilt = false
 var bodybuilt = false
 var portraitspath = globals.setfolders.portraits
 var bodypath = globals.setfolders.fullbody
+var thumbnailpath = "user://thumbnails/"
 
-#func _ready():
-#	loadportraitsdata()
-
-#func loadportraitsdata():
-#	var currentpath = portraitspath
-#	var dir = Directory.new()
-#	var filecheck = File.new()
-#	if dir.dir_exists(currentpath) == false:
-#		dir.make_dir(currentpath)
-#	if !globals.dir_contents(currentpath).has(currentpath + "/!portraitdata.txt"):
-#		File.new().open(currentpath + "/!portraitdata.txt", File.WRITE)
-#	for i in  globals.dir_contents(currentpath):
-#		if filecheck.file_exists(i) && (i.find('.png') >= 0 || i.find('.jpg') >= 0):
-#			pass
-
+func _ready():
+	get_node("ScrollContainer/_v_scroll").connect("value_changed", self, "_on_scroll")
 
 func mode_set(value):
 	if mode != value:
@@ -45,11 +33,12 @@ func chooseimage():
 func _on_reloadlist_pressed():
 	buildimagelist(mode)
 
+var currentpath 
+
 func buildimagelist(type = mode):
 	var dir = Directory.new()
 	var array = []
 	var filecheck = File.new()
-	var currentpath 
 	if type == 'portrait':
 		currentpath = portraitspath
 	else:
@@ -60,17 +49,45 @@ func buildimagelist(type = mode):
 			i.free()
 	if dir.dir_exists(currentpath) == false:
 		dir.make_dir(currentpath)
+	if dir.dir_exists(thumbnailpath) == false:
+		dir.make_dir(thumbnailpath)
+	if dir.dir_exists(thumbnailpath + type) == false:
+		dir.make_dir(thumbnailpath + type)
 	for i in globals.dir_contents(currentpath):
 		if filecheck.file_exists(i) && (i.find('.png') >= 0 || i.find('.jpg') >= 0):
 			var node = get_node("ScrollContainer/GridContainer/Button").duplicate()
+			var iconpath = i.replace(currentpath, thumbnailpath + type)
+			node.set_meta('thumbnail', iconpath)
+			if !filecheck.file_exists(iconpath) && globals.rules.thumbnails == true:
+				createimagethumbnail(i, iconpath)
 			get_node("ScrollContainer/GridContainer").add_child(node)
-			node.get_node("pic").set_texture(globals.loadimage(i))
+			#node.get_node("pic").set_texture(globals.loadimage(iconpath))
 			node.connect('pressed', self, 'setslaveimage', [i])
 			node.get_node("Label").set_text(i.replacen(currentpath + '/','').replacen('.jpg','').replacen('.png',''))
 			node.set_meta("type", i)
+			node.set_meta("loaded", false)
 	$ScrollContainer/GridContainer.move_child($ScrollContainer/GridContainer/Button, $ScrollContainer/GridContainer.get_children().size())
 	resort()
 
+func createimagethumbnail(originpath, newpath):
+	var image = Image.new()
+	image.load(originpath)
+	image.resize(100, 100)
+	var filepath = originpath.replace(bodypath, '').replace(portraitspath, '')
+	filepath = Array(filepath.split('/'))
+	for i in filepath:
+		if i.findn('.jpg') != -1 || i.findn('.png') != -1:
+			filepath.erase(i)
+	var workingpath = thumbnailpath + mode
+	for i in filepath:
+		if !workingpath.ends_with('/'):
+			workingpath += '/'
+		workingpath += i
+		var dir = Directory.new()
+		if dir.dir_exists(workingpath) == false:
+			dir.make_dir(workingpath)
+		
+	image.save_png(newpath)
 
 func resort():
 	var strictsearch = get_node("racelock").is_pressed()
@@ -219,4 +236,17 @@ func _on_folderdialogue_dir_selected( dir ):
 func _on_closefolderselect_pressed():
 	get_node("selectfolders").visible = false
 
-
+func _on_scroll(value):
+	var scrolled_top = value
+	var scrolled_bottom = scrolled_top + get_node("ScrollContainer").get_size().y
+	for node in get_node("ScrollContainer/GridContainer").get_children():
+		if node.is_visible_in_tree() && !node.get_meta("loaded"):
+			var node_rect = node.get_rect()
+			var node_top = node_rect.position.y
+			var node_bottom = node_rect.end.y
+			if (node_top >= scrolled_top && node_top < scrolled_bottom) || (node_bottom >= scrolled_top && node_bottom < scrolled_bottom):
+				if globals.rules.thumbnails == true:
+					node.get_node("pic").set_texture(globals.loadimage(node.get_meta("thumbnail")))
+				else:
+					node.get_node("pic").set_texture(globals.loadimage(node.get_meta("type")))
+				node.set_meta("loaded", true)

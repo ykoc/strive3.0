@@ -107,6 +107,9 @@ func _ready():
 	$outside/textpanelexplore/outsidetextbox2.connect("meta_hover_started",self,'slavehover')
 	$outside/textpanel/outsidetextbox.connect("meta_hover_ended",globals, 'slavetooltiphide')
 	$outside/textpanelexplore/outsidetextbox2.connect("meta_hover_ended",globals, 'slavetooltiphide')
+	
+	$MainScreen/mansion/selfinspect/Contraception.connect("pressed", self, 'contraceptiontoggle')
+	
 	for i in [$sexselect/managerypanel/dogplus, $sexselect/managerypanel/dogminus, $sexselect/managerypanel/horseplus, $sexselect/managerypanel/horseminus]:
 		i.connect("pressed", self, 'animalforsex', [i])
 	_on_mansion_pressed()
@@ -279,6 +282,7 @@ func startending():
 
 
 func _on_new_slave_button_pressed():
+	
 	globals.resources.day = 2
 	globals.state.upcomingevents.append({code = 'ssinitiate', duration = 1})
 	for i in globals.state.tutorial:
@@ -1666,7 +1670,8 @@ func _on_SavePanel_visibility_changed():
 		node = get_node("menucontrol/menupanel/SavePanel/ScrollContainer/savelist/Button").duplicate()
 		node.show()
 		if globals.savelist.has(i):
-			node.get_node("date").set_text(globals.savelist[i].date)
+			if globals.savelist[i].has('date'):
+				node.get_node("date").set_text(globals.savelist[i].date)
 			node.get_node("name").set_text(i.replacen("user://saves/",''))
 		else:
 			node.get_node("name").set_text(i.replacen("user://saves/",''))
@@ -2576,7 +2581,7 @@ func _on_selfbutton_pressed():
 	hide_everything()
 	get_node("MainScreen/mansion/selfinspect").show()
 	get_node("MainScreen/mansion/selfinspect/selflookspanel").hide()
-	var text = '[center]Personal Achievments[/center]\n'
+	var text = '[center]Personal Achievements[/center]\n'
 	var text2 = ''
 	var person = globals.player
 	var dict = {
@@ -2615,9 +2620,13 @@ func _on_selfbutton_pressed():
 		$MainScreen/mansion/selfinspect/selfpierce.set_disabled(true)
 		$MainScreen/mansion/selfinspect/selftattoo.set_tooltip("Unlock Beauty Parlor to access Tattoo options. ")
 		$MainScreen/mansion/selfinspect/selfpierce.set_tooltip("Unlock Beauty Parlor to access Piercing options. ")
+	$MainScreen/mansion/selfinspect/Contraception.pressed = person.effects.has("contraceptive")
 
-
-
+func contraceptiontoggle():
+	if $MainScreen/mansion/selfinspect/Contraception.pressed:
+		globals.player.add_effect(globals.effectdict.contraceptive)
+	else:
+		globals.player.add_effect(globals.effectdict.contraceptive, true)
 
 func stattooltip(value):
 	var text = globals.statsdescript[value]

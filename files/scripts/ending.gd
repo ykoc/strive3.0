@@ -169,7 +169,7 @@ func finale():
 	if globals.state.decisions.has("goodroute"):
 		dict.text = "With some effort, The Council was eventually able to restore order around the headquarters following your rescue. A long series of censures, imprisonments and executions followed the event, which would later be called “The Southern Treason”, due to many offenders originating from the southern regions. \n\nYour actions were rewarded and revered among The Order to the point where you were made Headmaster of the Wimborn Order. "
 		if globals.state.decisions.has("haderelease"):
-			dict.text += "\n\nA few distant perpetrators managed to stay hidden but, due to Melissa's letter, a couple officials, including a few prominent slave traders, were arrested. "
+			dict.text += "\n\nA few distant perpetrators managed to stay hidden but, due to Melissa's letter, a several officials, including a few prominent slave traders, were arrested. "
 		elif globals.state.decisions.has('hadekeep'):
 			dict.text += "\n\nHade was publicly executed and, at your request, Melissa has been entrusted to you as payment for killing your servant; her fate now is in your hands. "
 	elif globals.state.decisions.has('badroute'):
@@ -199,7 +199,7 @@ func gorn():
 		dict.spriteblack = true
 		dict.text += "Garthor has gone missing and has not been seen since the incident. His clan lost most of their power and has been subject to harsh oversight. "
 	elif globals.state.decisions.has('killgarthor'):
-		dict.text += "Garhor's death served a grim reminder for those clans willing to oppose The Empire's influence. His clan lost most of their power and has been subject to harsh oversight. "
+		dict.text += "Garthor's death served a grim reminder for those clans willing to oppose The Empire's influence. His clan lost most of their power and has been subject to harsh oversight. "
 		dict.spriteblack = true
 	else:
 		dict.text += "Garthor and his clan soon acquired the highest standing in Gorn's Palace. After that, he became an official Chieftain, seizing power around the southern lands. "
@@ -211,7 +211,7 @@ func frostford():
 		dict.spriteblack = true
 		dict.text += "After losing their previous leader due to your decision, Frostford's standing grew weaker over time. The Order's affiliated government has made sure it remains dependant, however. "
 	elif globals.state.decisions.has("zoesaved"):
-		dict.text += "Frostford soon flourished with prosperity after acquiring new methods of food production. In spite of such economic success, Theron's respect has strengthened Frostford's relationship with both The Empire and yourself."
+		dict.text += "Frostford soon flourished with prosperity after acquiring new methods of food production. As a result of this economic success, Theron's respect has strengthened Frostford's relationship with both The Empire and yourself."
 	elif globals.state.decisions.has("zoedied"):
 		dict.text += "Over time, Frostford grew more distant from The Order’s main governing body. Even after his defeat Theron is still searching for new ways to gain more independence from The Empire."
 	else:
@@ -227,7 +227,7 @@ func amberguard():
 
 func melissa():
 	var dict = {text = "", background = "wimborn", sprite = 'melissaneutral'}
-	dict.text = "Melissa has disappeared from Wimborn and hasn't been seen again. Some said she was one of perpetraitors, but you weren't able to confirm that. "
+	dict.text = "Melissa has disappeared from Wimborn and hasn't been seen again. Some said she was one of the perpetrators, but you weren't able to confirm that. "
 	dict.spriteblack = true
 	return dict
 
@@ -236,7 +236,7 @@ func sebastian():
 	if globals.state.decisions.has('goodroute'):
 		dict.text = "Despite his old affiliations, Sebastian managed to dodge any repression against Hade's supporters. After some time he returned to his business in Wimborn. "
 	else:
-		dict.text = "Sebastian stayed out of Hade's and Melissa's political games focusing on his business goals. After short time he managed to seize a considerable wealth. "
+		dict.text = "Sebastian stayed out of Hade's and Melissa's political games focusing on his business goals. Quite quickly he managed to seize a considerable wealth. "
 	return dict
 
 func emilytisha():
@@ -250,7 +250,7 @@ func emilytisha():
 		elif i.unique == 'Tisha':
 			slaves.tisha = true
 	if globals.state.sidequests.emily >= 16 && slaves.emily && slaves.tisha:
-		dict.text = "Both Tisha and Emily continued to stay at your household. Their compassion for each other and yourself growing ever stronger. "
+		dict.text = "Both Tisha and Emily continued to stay at your household. Their affection for each other and yourself growing ever stronger. "
 		dict.background = 'mansion'
 		dict.sprite = 'tishahappy'
 		dict.sprite2 = 'emily2happy'
@@ -290,7 +290,7 @@ func cali():
 	
 	
 	if cali == false &&  !globals.state.decisions.has("calireturnedhome"):
-		dict.text = "After Cali's disappearance, you stood no chance of hearing from her again. Her quick wits may have helped her to return home or at least to survive on her own."
+		dict.text = "After Cali's disappearance, you never heard from her again. Her quick wits may have helped her to return home or at least to survive on her own."
 		dict.sprite = "calineutral"
 		dict.background = 'wimborn'
 	elif globals.state.decisions.has("calireturnedhome"):
@@ -304,7 +304,7 @@ func cali():
 		dict.sprite = 'calihappy'
 		dict.background = 'mansion'
 	elif globals.state.decisions.has("calibadstayed"):
-		dict.text = "Having no better options, Cali stayed at your mansion. While she holds no ill will toward you, she has been anything but cheerful. "
+		dict.text = "Having no better options, Cali stayed at your mansion. While she holds no ill will towards you, she has been anything but cheerful. "
 		dict.sprite = 'calisad'
 		dict.background = 'mansion'
 	elif cali:
@@ -328,7 +328,7 @@ func chloe():
 	if chloe && !crazed:
 		dict.background = 'mansion'
 		dict.sprite = 'chloehappy'
-		dict.text = "After joining you, Chloe eventually grew accustomed to life in your household and continued her research. She also started working on your biography."
+		dict.text = "After joining you, Chloe eventually grew accustomed to living in your household and continued her research. She also started working on your biography."
 	elif crazed:
 		dict.background = 'mansion'
 		dict.sprite = 'chloenakedshy'
@@ -336,10 +336,10 @@ func chloe():
 	elif globals.state.decisions.has("chloebrothel"):
 		dict.background = 'shaliq'
 		dict.sprite = 'chloenakedhappy'
-		dict.text = "What was left of Chloe is still serving clients of certain small brothel attracting customers."
+		dict.text = "What was left of Chloe is still serving clients of a certain small brothel, attracting customers."
 	else:
 		dict.background = 'shaliq'
-		dict.text = "Chloe continued to live at Shaliq, working on her research and, sometimes, thinking about you."
+		dict.text = "Chloe continued to live in Shaliq, working on her research and, sometimes, thinking about you."
 		dict.sprite = 'chloehappy'
 	
 	return dict
@@ -355,7 +355,7 @@ func yris():
 	if yris:
 		dict = {text = "Yris stays with you to this day. Surprisingly to her, she seems content with your ownership.", background = "mansion", sprite = 'yrisalt'}
 	else:
-		dict = {text = "Yris still looking for a ways to survive around Gorn using her charm and wits.", background = "gorn", sprite = 'yrisalt'}
+		dict = {text = "Yris is still looking for a way to survive around Gorn using her charm and wits.", background = "gorn", sprite = 'yrisalt'}
 	return dict
 
 
@@ -370,16 +370,16 @@ func zoe():
 		dict.sprite = "zoehappy"
 		dict.background = 'mansion'
 	elif globals.state.decisions.has("zoewander"):
-		dict.text = "After some time Zoe, ran away from Frostford, venturing out into the world and seeking a different fate."
+		dict.text = "After some time, Zoe ran away from Frostford, venturing out into the world and seeking a different fate."
 		dict.sprite = "zoeneutral"
 		dict.background = "frostford"
 	elif globals.state.decisions.has("zoedied"):
-		dict.text = "Due to unfortunate circumstances Zoe deceased and has been buried at homeland in Frostford."
+		dict.text = "Due to unfortunate circumstances Zoe deceased and has been buried in her homeland in Frostford."
 		dict.sprite = "zoesad"
 		dict.background = "frostford"
 		dict.spriteblack = true
 	else:
-		dict.text = "After some time Zoe, ran away from Frostford, venturing out into the world and seeking a different fate."
+		dict.text = "After some time, Zoe ran away from Frostford, venturing out into the world and seeking a different fate."
 		dict.background = 'frostford'
 		dict.sprite = 'zoeneutral'
 	
@@ -433,7 +433,7 @@ func ayneris():
 func ayda():
 	var dict = {text = "", background = "gorn", sprite = 'aydanormal'}
 	if globals.state.decisions.has("mainquestelves"):
-		dict.text = "Ayda returned to her work in Gorn, sending you letter of gratitude. Her assistant was exceptionally happy and continues to serve his master."
+		dict.text = "Ayda returned to her work in Gorn, sending you a letter of gratitude. Her assistant was exceptionally happy and continues to serve her master."
 	else:
 		dict.text = "Due to your actions in the caves, Ayda has died. After her funeral, her shop was closed and her servant sold to the local slaver guild. "
 		dict.spriteblack = true

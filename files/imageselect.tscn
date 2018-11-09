@@ -40,11 +40,12 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-scroll_horizontal_enabled = true
+scroll_horizontal_enabled = false
 scroll_horizontal = 0
 scroll_vertical_enabled = true
 scroll_vertical = 0
 scroll_deadzone = 0
+_sections_unfolded = [ "Scroll" ]
 
 [node name="GridContainer" type="GridContainer" parent="ScrollContainer" index="0"]
 
@@ -633,7 +634,6 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 toggle_mode = true
-pressed = true
 enabled_focus_mode = 2
 shortcut = null
 group = null

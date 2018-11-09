@@ -10,29 +10,6 @@ var categories = {everything = true, potion = false, ingredient = false, gear = 
 onready var itemgrid = get_node("ScrollContainer/GridContainer")
 
 var shades = {
-arachna = {male = load("res://files/buttons/inventory/shades/Arachna_M.png"), female = load("res://files/buttons/inventory/shades/Arachna_F.png")},
-bunny = {male = load("res://files/buttons/inventory/shades/Beastkin-Bunny_M.png"), female = load("res://files/buttons/inventory/shades/Beastkin-Bunny_F.png")},
-cat = {male = load("res://files/buttons/inventory/shades/Beastkin-Cat_M.png"), female = load("res://files/buttons/inventory/shades/Beastkin-Cat_F.png")},
-fox = {male = load("res://files/buttons/inventory/shades/Beastkin-Fox_M.png"), female = load("res://files/buttons/inventory/shades/Beastkin-Fox_F.png")},
-tanuki = {male = load("res://files/buttons/inventory/shades/Beastkin-Tanuki_M.png"), female = load("res://files/buttons/inventory/shades/Beastkin-Tanuki_F.png")},
-wolf = {male = load("res://files/buttons/inventory/shades/Beastkin-Wolf_M.png"), female = load("res://files/buttons/inventory/shades/Beastkin-Wolf_F.png")},
-centaur = {male = load("res://files/buttons/inventory/shades/Centaur_M.png"), female = load("res://files/buttons/inventory/shades/Centaur_F.png")},
-demon = {male = load("res://files/buttons/inventory/shades/Demon_M.png"), female = load("res://files/buttons/inventory/shades/Demon_F.png")},
-dragonkin = {male = load("res://files/buttons/inventory/shades/Dragonkin_M.png"), female = load("res://files/buttons/inventory/shades/Dragonkin_F.png")},
-dryad = {male = load("res://files/buttons/inventory/shades/Dryad_M.png"), female = load("res://files/buttons/inventory/shades/Dryad_F.png")},
-elf = {male = load("res://files/buttons/inventory/shades/Elf_M.png"), female = load("res://files/buttons/inventory/shades/Elf_F.png")},
-fairy = {male = load("res://files/buttons/inventory/shades/Fairy_M.png"), female = load("res://files/buttons/inventory/shades/Fairy_F.png")},
-gnome = {male = load("res://files/buttons/inventory/shades/Gnome_M.png"), female = load("res://files/buttons/inventory/shades/Gnome_F.png")},
-goblin = {male = load("res://files/buttons/inventory/shades/Goblin_M.png"), female = load("res://files/buttons/inventory/shades/Goblin_F.png")},
-harpy = {male = load("res://files/buttons/inventory/shades/Harpy_M.png"), female = load("res://files/buttons/inventory/shades/Harpy_F.png")},
-human = {male = load("res://files/buttons/inventory/shades/Human_M.png"), female = load("res://files/buttons/inventory/shades/Human_F.png")},
-lamia = {male = load("res://files/buttons/inventory/shades/Lamia_M.png"), female = load("res://files/buttons/inventory/shades/Lamia_F.png")},
-nereid = {male = load("res://files/buttons/inventory/shades/Nereid_M.png"), female = load("res://files/buttons/inventory/shades/Nereid_F.png")},
-scylla = {male = load("res://files/buttons/inventory/shades/Scylla_M.png"), female = load("res://files/buttons/inventory/shades/Scylla_F.png")},
-seraph = {male = load("res://files/buttons/inventory/shades/Seraph_M.png"), female = load("res://files/buttons/inventory/shades/Seraph_F.png")},
-slime = {male = load("res://files/buttons/inventory/shades/Slime_M.png"), female = load("res://files/buttons/inventory/shades/Slime_F.png")},
-taurus = {male = load("res://files/buttons/inventory/shades/Taurus_M.png"), female = load("res://files/buttons/inventory/shades/Taurus_F.png")},
-orc = {male = load("res://files/buttons/inventory/shades/Orc_-M.png"), female = load("res://files/buttons/inventory/shades/Orc_F.png")},
 
 }
 
@@ -360,15 +337,15 @@ func slavegear(person):
 	var sex
 	var race
 	sex = person.sex.replace('futanari','female')
-	race = person.race.replace("Beastkin ",'').replace("Halfkin ", '').to_lower()
-	if race in ['dark elf', 'drow']:
-		race = 'elf'
+	race = person.race.replace("Halfkin ",'').replace("Beastkin ", '')
+	if race in ['Dark elf', 'Drow']:
+		race = 'Elf'
 	if globals.loadimage(person.imagefull) != null:
 		$gearpanel/charframe.texture = globals.loadimage(person.imagefull)
 	elif nakedspritesdict.has(person.unique):
 		$gearpanel/charframe.texture = globals.spritedict[nakedspritesdict[person.unique].clothcons]
 	else:
-		get_node("gearpanel/charframe").set_texture(shades[race][sex])
+		get_node("gearpanel/charframe").set_texture(load(globals.races[race].shade[sex]))
 	
 	
 	for i in ['weapon','costume','underwear','armor','accessory']:

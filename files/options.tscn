@@ -155,7 +155,7 @@ margin_right = 261.0
 margin_bottom = 172.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
-hint_tooltip = "They game will attempt to assign a random portrait when generating a new slave
+hint_tooltip = "The game will attempt to assign a random portrait when generating a new slave
 Portraits are selected from default portrait folder
 Available portraits are based on paths (including both file and folder names) similarities to slave's race
 I.e. Elf1.jpg might be assigned to any elf, while elfhumanorc.jpg can be assigned to any of elves, humans and orcs.
@@ -174,7 +174,35 @@ flat = false
 align = 0
 _sections_unfolded = [ "Hint" ]
 
-[node name="Label2" type="Label" parent="TabContainer/Settings" index="4"]
+[node name="thumbnails" type="CheckBox" parent="TabContainer/Settings" index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 17.0
+margin_top = 172.0
+margin_right = 261.0
+margin_bottom = 199.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "The game will create thumbnails from user portraits and body images on first attempt
+This can save some RAM when using very big user image folders."
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Create Thumbnails"
+flat = false
+align = 0
+_sections_unfolded = [ "Hint" ]
+
+[node name="Label2" type="Label" parent="TabContainer/Settings" index="5"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -195,7 +223,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="fullscreen" type="CheckBox" parent="TabContainer/Settings" index="5"]
+[node name="fullscreen" type="CheckBox" parent="TabContainer/Settings" index="6"]
 
 anchor_left = 0.0
 anchor_top = 1.0
@@ -222,7 +250,7 @@ flat = false
 align = 0
 _sections_unfolded = [ "Hint" ]
 
-[node name="fontsize" type="SpinBox" parent="TabContainer/Settings" index="6"]
+[node name="fontsize" type="SpinBox" parent="TabContainer/Settings" index="7"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -249,7 +277,7 @@ editable = true
 prefix = ""
 suffix = ""
 
-[node name="musicslider" type="HSlider" parent="TabContainer/Settings" index="7"]
+[node name="musicslider" type="HSlider" parent="TabContainer/Settings" index="8"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -299,7 +327,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="soundslider" type="HSlider" parent="TabContainer/Settings" index="8"]
+[node name="soundslider" type="HSlider" parent="TabContainer/Settings" index="9"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -349,7 +377,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="instantcombatanimation" type="CheckBox" parent="TabContainer/Settings" index="9"]
+[node name="instantcombatanimation" type="CheckBox" parent="TabContainer/Settings" index="10"]
 
 anchor_left = 0.0
 anchor_top = 0.0

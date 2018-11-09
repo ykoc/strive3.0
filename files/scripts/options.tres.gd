@@ -3,7 +3,7 @@ extends Node
 var selectedslave
 
 func ruletoggle(rule):
-	if rule in ['fadinganimation','spritesindialogues','randomcustomportraits','instantcombatanimation']:
+	if rule in ['fadinganimation','spritesindialogues','randomcustomportraits','instantcombatanimation','thumbnails']:
 		globals.rules[rule] = get_node("TabContainer/Settings/"+rule).pressed
 	else:
 		globals.rules[rule] = get_node("TabContainer/Game/"+rule).pressed
@@ -49,7 +49,7 @@ func _ready():
 	for i in ['furry','furrynipples','futa','futaballs','slaverguildallraces','children','receiving','permadeath','noadults']:
 		get_node("TabContainer/Game/" + i).pressed = globals.rules[i]
 		get_node("TabContainer/Game/" + i).connect("pressed", self, 'ruletoggle', [i])
-	for i in ['fadinganimation','spritesindialogues','randomcustomportraits','instantcombatanimation']:
+	for i in ['fadinganimation','spritesindialogues','randomcustomportraits','instantcombatanimation','thumbnails']:
 		get_node("TabContainer/Settings/" + i).pressed = globals.rules[i]
 		get_node("TabContainer/Settings/" + i).connect("pressed", self, 'ruletoggle', [i])
 	get_node("TabContainer/Settings/fullscreen").set_pressed(OS.is_window_fullscreen())

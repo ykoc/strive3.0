@@ -92,10 +92,13 @@ func changerace(person, race = null):
 		if typeof(races[personrace][i]) == TYPE_ARRAY:
 			person[i] = races[personrace][i][rand_range(0,races[personrace][i].size())]
 		elif typeof(races[personrace][i]) == TYPE_DICTIONARY:
+			if person.get(i) == null:
+				continue
 			for k in (races[personrace][i]):
 				person[i][k] = races[personrace][i][k]
 		else:
-			person[i] = races[personrace][i]
+			if person.get(i) != null:
+				person[i] = races[personrace][i]
 	
 
 func get_caste(person, caste):

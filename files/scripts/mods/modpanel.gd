@@ -74,7 +74,7 @@ func scanfolder(): #makes an array of all folders in modfolder
 		var file_name = dir.get_next()
 		while file_name != "":
 			if dir.current_is_dir() && !file_name in ['.','..',null]:
-				array.append(target + '/' + file_name)
+				array.append(target + file_name)
 			file_name = dir.get_next()
 		return array
 
@@ -90,28 +90,28 @@ var file = File.new()
 
 func loadfromconfig():
 	var config = ConfigFile.new()
-	var err = config.load(modfolder + "/FileOrder.ini")
+	var err = config.load(modfolder + "FileOrder.ini")
 	if err == OK:
 		loadorder = config.get_value("Mods", "LoadOrder", [])
 		activemods = config.get_value("Mods", "ActiveMods", []) 
 	for i in loadorder:
-		if !dir.dir_exists(modfolder + '/' + str(i)):
+		if !dir.dir_exists(modfolder + str(i)):
 			loadorder.erase(i)
 
 func saveconfig():
 	var config = ConfigFile.new()
-	config.load(modfolder + "/FileOrder.ini")
+	config.load(modfolder + "FileOrder.ini")
 	config.set_value("Mods", "LoadOrder", loadorder)
 	config.set_value("Mods", "ActiveMods", activemods)
-	config.save(modfolder + "/FileOrder.ini")
+	config.save(modfolder + "FileOrder.ini")
 
 func storebackup(): #clears and restores backups
 	var file = File.new()
 	var dir = Directory.new()
 	
-	if globals.developmode == true:
-		print("Debug mode: No backup stored.")
-		return
+#	if globals.developmode == true:
+#		print("Debug mode: No backup stored.")
+#		return
 	
 	print("Making Backup...")
 	for i in globals.dir_contents(backupdir):
@@ -157,7 +157,7 @@ func show():
 		array.append(i)
 	array.sort_custom(self, 'sortmods')
 	for i in array:
-		i = i.replace(modfolder+'/',"")
+		i = i.replace(modfolder,"")
 		var modactive = loadorder.has(i)
 		var newbutton = $allmodscontainer/VBoxContainer/Button.duplicate()
 		$allmodscontainer/VBoxContainer.add_child(newbutton)
@@ -175,9 +175,9 @@ func show():
 		newbutton.connect("pressed",self, 'togglemod', [i])
 
 func sortmods(first,second):
-	if loadorder.has(first.replace(modfolder+'/',"")):
-		if loadorder.has(second.replace(modfolder+'/',"")):
-			if loadorder.find(first.replace(modfolder+'/',"")) < loadorder.find(second.replace(modfolder+'/',"")):
+	if loadorder.has(first.replace(modfolder,"")):
+		if loadorder.has(second.replace(modfolder,"")):
+			if loadorder.find(first.replace(modfolder,"")) < loadorder.find(second.replace(modfolder,"")):
 				return true
 			else:
 				return false
@@ -189,7 +189,7 @@ func sortmods(first,second):
 
 func moddescript(mod):
 	var text
-	file.open(modfolder + '/' + mod + '/info.txt', File.READ)
+	file.open(modfolder + mod + '/info.txt', File.READ)
 	text = file.get_as_text()
 	file.close()
 	if text == '':
@@ -231,12 +231,12 @@ func _on_applymods_pressed():
 	if !globals.developmode:
 		loadbackup()
 	for i in loadorder:
-		if dir.dir_exists(modfolder + '/' + i):
+		if dir.dir_exists(modfolder + i):
 			activemods.append(i)
-			apply_mod_to_dictionary(modfolder + '/' + i)
+			apply_mod_to_dictionary(modfolder + i)
 	apply_mod_dictionary()
 	saveconfig()
-	get_tree().quit()
+	$restartpanel.show()
 
 func apply_mod_dictionary():
 	for i in temp_mod_scripts:
@@ -282,7 +282,7 @@ func apply_next_element_to_dictionary(key, string, offset):
 	regex_string_dictionary["ONREADY"] = "(onready\\svar.*=).*([\\{]([^\\{\\}]*[\r\n]*)*[\\}])?"
 	regex_string_dictionary["CLASS"] = "(class\\s+[\\w][\\w\\d]*).*(([\r\n]*[\\t#]+.*)*)"
 	
-	var tag_regex = "<(\\w*)(\\s+\\d+)?(\\s\\d+)?>"
+	var tag_regex = "<(\\w*)(\\s+[0-9\\-]+)?(\\s[0-9\\-]+)?>"
 	var add_to = "AddTo"
 	var remove_from = "RemoveFrom"
 	
@@ -390,7 +390,7 @@ func _on_disablemods_pressed():
 	activemods.clear()
 	saveconfig()
 	loadbackup()
-	get_tree().quit()
+	$restartpanel.show()
 
 func _on_closemods_pressed():
 	self.visible = false
@@ -399,6 +399,7 @@ func _on_closemods_pressed():
 
 func _on_FileDialog_dir_selected(dir):
 	globals.setfolders.mods = dir
+	print(dir)
 	show()
 
 
@@ -426,3 +427,8 @@ func _on_activemods_pressed():
 		text += i + '\n'
 	$activemodlist.popup()
 	$activemodlist/RichTextLabel.bbcode_text = text
+
+
+func _on_restartbutton_pressed():
+	
+	get_tree().quit()

@@ -5,7 +5,7 @@ var chardescript = {
 emily = "Young girl from Wimborn's orphanage. Despite her harsh life she's pretty naive and kind. ",
 tisha = "Emily's older sister. Since an early age she has aimed to work hard to provide for both herself and her sister a better life than what they initially had. Being constantly abused by rich and powerful people, Tisha grew to despise others. She is rather protective towards her sister. ",
 cali = "Halfkin wolf-girl who ended up in Wimborn due to some unfortunate events. Although her age and appearance might not suggest it, she is quite cheeky. ",
-chloe = "A gnome girl from Shaliq village, who decided to venture out of her homeland due to her research or in search of adventure. Contrary to that, she's pretty timid and seems to be insecure about her height. ",
+chloe = "A gnome girl from Shaliq village, who decided to venture out of her homeland due to her research or in search of adventure. Despite that, she's pretty timid and seems to be insecure about her height. ",
 yris = "A beastkin resident of Gorn's bar. A Catgirl with a playful nature who loves thrill and challenges. ",
 zoe = "Young member of Frostford's ruling wolven clan. Being discontent with her suggested position, she seeks a way to prove herself and try a different life. Theron's niece. ",
 ayneris = "Youngest child of a powerful elven clan with declining prosperity. Her attempts to rival her siblings didn't worked out in a way she wanted, but in return she may have discovered something exciting about herself... ",
@@ -14,7 +14,7 @@ fairy = "One of the Wimborn Slaver Guild's main attendants. Her cheerful and fri
 ayda = "Resident alchemist in Gorn's Palace. Though she prefers to keep to herself, she is forced to cooperate to fulfill her needs. ",
 garthor = "One of the leading persons around Gorn. As a head of his clan, he's very dependanble and a skillful politician.",
 theron = "Frostford's leader and a chieftain of his clan. His high moral standards and combat skills earned him great respect around Frostford. ",
-hade = "An unknown man recently appearing around The Empire with hidden intentions. Few authorities around The Order believe he might be a dangerous hostile. ",
+hade = "An unknown man recently appearing around The Empire with hidden intentions. Some authorities around The Order believe he might be a dangerous hostile. ",
 }
 
 var charactergallery = { 

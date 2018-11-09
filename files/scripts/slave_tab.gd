@@ -24,6 +24,8 @@ func _ready():
 	$stats/customization/relativespanel/relativestext.connect("meta_hover_ended",globals, 'slavetooltiphide')
 	$stats/customization/relativespanel/relativestext.connect("meta_clicked",self, "relativesselected")
 	
+	$stats/trainingabilspanel/upgradepointsbuy.connect("pressed", self, "buyattributepoint")
+	
 	for i in ['cour','conf','wit','charm']:
 		get_node("stats/trainingabilspanel/" +i + '/Button').connect("pressed", self, 'mentalup',[i])
 		get_node("stats/trainingabilspanel/" +i + '/Button2').connect("pressed", self, 'mentalup5',[i])
@@ -49,6 +51,18 @@ func mentalup5(mental):
 	$stats._on_trainingabils_pressed()
 
 var nakedspritesdict = globals.gallery.nakedsprites
+
+func upgradecostupdate():
+	var text = 'Atr. Points per Upgrade point: ' + str(variables.attributepointsperupgradepoint) + '\nAvailable Atr. Points: ' + str(person.skillpoints)
+	$stats/trainingabilspanel/upgradecost.text = text
+
+func buyattributepoint():
+	if person.skillpoints >= variables.attributepointsperupgradepoint:
+		person.skillpoints -= variables.attributepointsperupgradepoint
+		globals.resources.upgradepoints += 1
+	else:
+		get_tree().get_root().infotext("[color=red]Not enough attribute points[/color]")
+	upgradecostupdate()
 
 func slavetabopen():
 	var label
