@@ -3,7 +3,7 @@ extends Node
 
 var effectdict = {}
 var guildslaves = {wimborn = [], gorn = [], frostford = [], umbra = []}
-var gameversion = '0.5.21'
+var gameversion = '0.5.22a'
 var state = progress.new()
 var developmode = false
 var gameloaded = false
@@ -41,6 +41,8 @@ var gallery = load("res://files/scripts/gallery.gd").new()
 var slavedialogues = load("res://files/scripts/slavedialogues.gd").new()
 var characters = gallery
 var patronlist = load("res://files/scripts/patronlists.gd").new()
+var areas = load('res://files/scripts/explorationregions.gd').new()
+var combatdata = load("res://files/scripts/combatdata.gd").new()
 
 #QMod - Variables
 var mainQuestTexts = events.mainquestTexts
@@ -55,11 +57,7 @@ var places = {
 var main
 
 var slaves = [] setget slaves_set
-#var starting_pc_races #= variables.starting_pc_races #['Human', 'Elf', 'Dark Elf', 'Orc', 'Demon', 'Beastkin Cat', 'Beastkin Wolf', 'Beastkin Fox', 'Halfkin Cat', 'Halfkin Wolf', 'Halfkin Fox', 'Taurus']
-#var wimbornraces = variables.wimbornraces #['Human', 'Elf', 'Dark Elf', 'Demon', 'Beastkin Cat', 'Beastkin Wolf','Beastkin Tanuki','Beastkin Bunny', 'Halfkin Cat', 'Halfkin Wolf', 'Halfkin Tanuki','Halfkin Bunny','Taurus','Fairy']
-#var gornraces = variables.gornraces#['Human', 'Orc', 'Goblin', 'Gnome', 'Taurus', 'Centaur','Beastkin Cat', 'Beastkin Tanuki','Beastkin Bunny', 'Halfkin Cat','Halfkin Bunny','Harpy']
-#var frostfordraces = variables.frostfordraces#['Human','Elf','Drow','Beastkin Cat', 'Beastkin Wolf', 'Beastkin Fox', 'Beastkin Tanuki','Beastkin Bunny', 'Halfkin Cat', 'Halfkin Wolf', 'Halfkin Fox','Halfkin Bunny', 'Nereid']
-var allracesarray = [] #variables.allracesarray#['Human', 'Elf', 'Dark Elf', 'Orc', 'Drow','Beastkin Cat', 'Beastkin Wolf', 'Beastkin Fox','Beastkin Tanuki','Beastkin Bunny', 'Halfkin Cat', 'Halfkin Wolf', 'Halfkin Fox','Halfkin Tanuki','Halfkin Bunny','Taurus', 'Demon', 'Seraph', 'Gnome','Goblin','Centaur','Lamia','Arachna','Scylla', 'Slime', 'Harpy','Dryad','Fairy','Nereid','Dragonkin']
+var allracesarray = []
 var specarray = ['geisha','ranger','executor','bodyguard','assassin','housekeeper','trapper','nympho','merchant','tamer']
 var player = person.new()
 var partner
@@ -150,6 +148,8 @@ func _init():
 	
 	for i in races:
 		allracesarray.append(i)
+		if i.find("Beastkin") >= 0:
+			allracesarray.append(i.replace("Beastkin", "Halfkin"))
 	
 	if variables.oldemily == true:
 		for i in ["emilyhappy", "emilynormal","emily2normal","emily2happy","emily2worried","emilynakedhappy","emilynakedneutral"]:
@@ -449,6 +449,8 @@ class resource:
 		if panel != null:
 			panel.get_node("energy").set_text(str(round(globals.player.energy)))
 
+var portalnames = {wimborn = 'Wimborn', gorn = 'Gorn', frostford = 'Frostford', umbra = 'Umbra',amberguard = 'Amberguard', dragonnests = 'Dragon Nests'}
+
 class progress:
 	var tutorialcomplete = false
 	var supporter = false
@@ -528,6 +530,7 @@ class progress:
 	var sexactions = 1
 	var nonsexactions = 1
 	var actionblacklist = []
+	var marklocation 
 	
 	func quest_set(value):
 		sidequests = value
@@ -1333,7 +1336,7 @@ class person:
 		var bonus = 1
 		price = beautybase*variables.priceperbasebeauty + beautytemp*variables.priceperbonusbeauty
 		price += (level-1)*variables.priceperlevel
-		price = price*globals.races[race].pricemod
+		price = price*globals.races[race.replace('Halfkin', 'Beastkin')].pricemod
 		if vagvirgin == true:
 			bonus += variables.pricebonusvirgin
 		if sex == 'futanari':
@@ -2156,11 +2159,18 @@ func getracebygroup(group):
 			array.append(i)
 		elif group == 'wimborn' && races[i].wimbornrace == true:
 			array.append(i)
-		elif group == 'gorn' && races[i].wimbornrace == true:
+		elif group == 'gorn' && races[i].gornrace == true:
 			array.append(i)
-		elif group == 'frostford' && races[i].wimbornrace == true:
+		elif group == 'frostford' && races[i].frostfordrace == true:
 			array.append(i)
+	addnonfurrycounterpart(array)
 	return array[randi()%array.size()]
+
+func addnonfurrycounterpart(array):
+	for i in array:
+		if i.find('Beastkin') >= 0:
+			array.append(i.replace('Beastkin', 'Halfkin'))
+
 
 func checkfurryrace(text):
 	if text in ['Cat','Wolf','Fox','Bunny','Tanuki']:

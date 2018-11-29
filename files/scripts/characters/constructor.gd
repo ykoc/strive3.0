@@ -29,7 +29,7 @@ func newslave(race, age, sex, origins = 'slave'):
 	var temp2
 	var person = globals.person.new()
 	if race == 'randomcommon':
-		race = globals.starting_pc_races[rand_range(0,globals.starting_pc_races.size())]
+		race = globals.getracebygroup("starting")
 	elif race == 'randomany':
 		race = globals.allracesarray[rand_range(0,globals.allracesarray.size())]
 	person.race = race

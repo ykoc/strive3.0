@@ -97,6 +97,17 @@ func loadfromconfig():
 	for i in loadorder:
 		if !dir.dir_exists(modfolder + str(i)):
 			loadorder.erase(i)
+	removeduplicates()
+
+func removeduplicates():
+	for i in loadorder:
+		var counter = 0
+		for k in loadorder:
+			if k == i:
+				counter += 1
+		while counter > 1:
+			loadorder.erase(i)
+			counter -= 1
 
 func saveconfig():
 	var config = ConfigFile.new()

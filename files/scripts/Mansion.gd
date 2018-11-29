@@ -2,14 +2,14 @@
 extends Node
 
 var test = File.new()
-var testslaverace = ["Slime"] #globals.allracesarray
+var testslaverace = globals.allracesarray
 var testslaveage = 'random'
 var testslavegender = 'male'
 var testslaveorigin = ['slave','poor','commoner','rich','noble']
 var currentslave = 0 setget currentslave_set
 var selectedslave = -1
 var texture = null
-var startcombatzone = "marsh"
+var startcombatzone = "dragonnests"
 var nameportallocation
 var enddayprocess = false
 onready var maintext = '' setget maintext_set, maintext_get
@@ -333,7 +333,7 @@ func _on_new_slave_button_pressed():
 	globals.player.energy += 100
 	globals.player.xp += 50
 	globals.resources.upgradepoints += 100
-	globals.state.mainquest = 42
+	globals.state.mainquest = 41
 	#globals.state.sidequests.ayda = 15
 	globals.state.sidequests.cali = 26
 	#globals.state.decisions.append('')
@@ -345,17 +345,12 @@ func _on_new_slave_button_pressed():
 	globals.state.mansionupgrades.mansionalchemy = 1
 	globals.state.mansionupgrades.mansionparlor = 1
 	globals.state.backpack.stackables.teleportseal = 2
-	globals.player.send = 5
-	globals.player.stats.agi_max = 5
-	globals.player.stats.str_max = 100
-	globals.player.stats.str_base = 100
-	globals.player.sstr = 100
-	globals.player.sagi = 1
 	globals.state.reputation.frostford = 50
 	globals.state.condition -= 100
 	globals.state.decisions = ['tishaemilytricked','chloebrothel','ivrantaken','goodroute','mainquestelves']
 	#globals.player.relations.a = 1
-	#globals.player.relations.b = globals.player.relations.get('b', 0) + 2
+	#globals.player.relations.b = globals.player.relations.get('b', 0) + 2\
+	buildtestcombatgroup()
 	if false:
 		for i in globals.characters.characters:
 			person = globals.characters.create(i)
@@ -371,6 +366,40 @@ func _on_new_slave_button_pressed():
 			person.learningpoints = 50
 			globals.slaves = person
 	#globals.events.zoepassitems()
+
+func buildtestcombatgroup():
+	var x = 3
+	var array = [globals.player]
+	while x > 0:
+		var person = globals.newslave(testslaverace[rand_range(0,testslaverace.size())], testslaveage, testslavegender, testslaveorigin[rand_range(0,testslaveorigin.size())])
+		globals.slaves = person
+		x -= 1
+		array.append(person)
+	for i in array:
+		i.level = 25
+		i.mods['augmentscales'] = 'augmentscales'
+		i.add_effect(globals.effectdict.augmentscales)
+		i.mods['augmentstr'] = 'augmentstr'
+		i.add_effect(globals.effectdict.augmentstr)
+		i.mods['augmentagi'] = 'augmentagi'
+		i.add_effect(globals.effectdict.augmentagi)
+		i.mods['augmenthearing'] = 'augmenthearing'
+		for k in ['str','agi','maf','end']:
+			i.stats[k + '_base'] = i.stats[k+"_max"]
+		if i != globals.player:
+			globals.state.playergroup.append(i.id)
+		for k in ['armorrogue','weaponelvensword','accamuletemerald']:
+			var tmpitem = globals.items.createunstackable(k)
+			globals.state.unstackables[str(tmpitem.id)] = tmpitem
+			globals.items.enchantrand(tmpitem)
+			globals.items.equipitem(tmpitem.id, i)
+		i.health = i.stats.health_max
+		i.energy = i.stats.energy_max
+		for k in globals.abilities.abilitydict.values():
+			if i.ability.has(k.code) || k.learnable == false:
+				continue
+			i.ability.append(k.code)
+
 
 func mansion():
 	_on_mansion_pressed()
@@ -588,7 +617,7 @@ func _on_end_pressed():
 		if person.away.duration == 0:
 			if person.bodyshape == 'shortstack':
 				globals.state.condition = -0.65
-			elif person.race in globals.monsterraces:
+			elif person.race in ['Lamia','Arachna','Centaur', 'Harpy', 'Scylla']:
 				globals.state.condition = -1.8
 			elif person.race.find('Beastkin') >= 0:
 				globals.state.condition = -1.3
@@ -2915,7 +2944,7 @@ func _on_relativesclose_pressed():
 
 
 func showracedescript(person):
-	var text = globals.dictionary.getRaceDescription(person.race)
+	var text = globals.dictionary.getRaceDescription(person.race.replace("Beastkin","Halfkin"))
 	dialogue(true, self, text)
 
 func showracedescriptsimple(race):
@@ -2956,11 +2985,17 @@ func _on_portals_pressed():
 			newbutton.show()
 		if i.enabled == true:
 			newbutton.disabled = false
-			newbutton.set_text(i.code.capitalize())
+			newbutton.set_text(globals.portalnames[i.code])
 			newbutton.connect('pressed', self, 'portalbuttonpressed', [newbutton, i])
 		else:
 			newbutton.set_text('???')
 			newbutton.disabled = true
+	if globals.state.marklocation != null:
+		var newbutton = button.duplicate()
+		newbutton.show()
+		list.add_child(newbutton)
+		newbutton.text = exploration.areas.database[globals.state.marklocation].name
+		newbutton.connect('pressed', self, 'portalbuttonpressed', [newbutton, exploration.areas.database[globals.state.marklocation]])
 
 
 func portalbuttonpressed(newbutton, portal):
@@ -2970,10 +3005,17 @@ func portalbuttonpressed(newbutton, portal):
 	for i in $MainScreen/mansion/portalspanel/ScrollContainer/VBoxContainer.get_children():
 		i.pressed = (i== newbutton)
 		if i.pressed == true:
-			get_node("MainScreen/mansion/portalspanel/imagelocation").set_texture(globals.backgrounds[nameportallocation])
+			var bg 
+			if globals.backgrounds.has(nameportallocation):
+				bg = globals.backgrounds[nameportallocation]
+			else:
+				bg = globals.backgrounds[globals.areas.database[nameportallocation].background]
+			get_node("MainScreen/mansion/portalspanel/imagelocation").set_texture(bg)
 			get_node("MainScreen/mansion/portalspanel/imagelocation/namelocation").text = newbutton.text+" Portal"
 			if newbutton.text == 'Umbra':
 				get_node("MainScreen/mansion/portalspanel/imagelocation/RichTextLabel").text = "Portal leads to the "+newbutton.text+" Undergrounds"
+			elif globals.backgrounds.has(nameportallocation):
+				get_node("MainScreen/mansion/portalspanel/imagelocation/RichTextLabel").text = "Portal leads to the " +newbutton.text + '.'
 			else:
 				get_node("MainScreen/mansion/portalspanel/imagelocation/RichTextLabel").text = "Portal leads to the city of "+newbutton.text
 
@@ -3186,18 +3228,8 @@ func _on_choseslavecancel_pressed():
 
 
 func _on_startcombat_pressed():
-	globals.state.playergroup.append(globals.slaves[0].id)
-	var array = []
-	array.append(globals.player)
-	for i in globals.state.playergroup:
-		array.append(globals.state.findslave(i))
-	for i in array:
-		i.stats.str_base = 500
-		for j in ['health_max','health_cur']:
-			i.stats[j] += 500
 	get_node("outside").gooutside()
 	globals.state.backpack.stackables.rope = 3
-	
 	get_node("explorationnode").zoneenter(startcombatzone)
 	#get_node("combat").start_battle()
 

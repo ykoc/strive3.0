@@ -9,9 +9,7 @@ var filter = ''
 var categories = {everything = true, potion = false, ingredient = false, gear = false, supply = false}
 onready var itemgrid = get_node("ScrollContainer/GridContainer")
 
-var shades = {
 
-}
 
 
 func _ready():
@@ -337,7 +335,7 @@ func slavegear(person):
 	var sex
 	var race
 	sex = person.sex.replace('futanari','female')
-	race = person.race.replace("Halfkin ",'').replace("Beastkin ", '')
+	race = person.race
 	if race in ['Dark elf', 'Drow']:
 		race = 'Elf'
 	if globals.loadimage(person.imagefull) != null:
@@ -345,7 +343,7 @@ func slavegear(person):
 	elif nakedspritesdict.has(person.unique):
 		$gearpanel/charframe.texture = globals.spritedict[nakedspritesdict[person.unique].clothcons]
 	else:
-		get_node("gearpanel/charframe").set_texture(load(globals.races[race].shade[sex]))
+		get_node("gearpanel/charframe").set_texture(globals.loadimage(globals.races[race.replace("Halfkin", "Beastkin")].shade[sex]))
 	
 	
 	for i in ['weapon','costume','underwear','armor','accessory']:

@@ -35,6 +35,8 @@
 [ext_resource path="res://files/buttons/mana2.png" type="Texture" id=33]
 [ext_resource path="res://files/buttons/sexicons/time.png" type="Texture" id=34]
 
+
+
 [sub_resource type="StyleBoxTexture" id=1]
 
 content_margin_left = -1.0

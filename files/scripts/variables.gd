@@ -66,16 +66,6 @@ var priceminimumsell = 10.0
 #sidecharacters
 var oldemily = false
 
-
-#var racepricemods = { #race mod will apply to _base_ price as baseprice*mod
-#	Elf = 1.5, "Dark Elf" : 1.5, Orc = 1.5, Goblin = 1.5, Gnome = 1.5,
-#	Drow = 2.5, Demon = 2.5, Seraph = 2.5,
-#	"Beastkin Cat" : 1.75, "Beastkin Wolf" : 1.75, "Beastkin Tanuki" : 1.75, "Beastkin Bunny" : 1.75,
-#	"Halfkin Cat" : 1.75, "Halfkin Wolf" : 1.75, "Halfkin Tanuki" : 1.75, "Halfkin Bunny" : 1.75,
-#	"Beaskin Fox" : 2, "Halfkin Fox" : 2, Fairy = 2, Dryad = 2, Taurus = 2,
-#	Slime = 2.5, Lamia = 2.5, Arachna = 2.5, Harpy = 2.5, Scylla = 2.5,
-#	Dragonkin = 3.5,
-#	}
 var gradepricemod = { # grade and age mods will be added as bonus to base price which starts at 1 [baseprice*(1+value)]
 	slave = -0.2, poor = 0, commoner = 0.2, rich = 0.5, noble = 1
 	}
@@ -128,14 +118,5 @@ basecarryweight = {descript = 'Base carry weight'},
 carryweightperstrplayer = {descript = 'Bonus carry weight from player strength'},
 baseslavecarryweight = {descript = 'Bonus carry weight for having a slave in party'},
 slavecarryweightperstr = {descript = "Bonus carry weight per slave's point of strength"},
-
-starting_pc_races = {descript = 'array of available races during character creation'},
-wimbornraces = {descript = 'Allowed Wimborn races'},
-gornraces = {descript = 'Allowed Gorn races'},
-frostfordraces = {descript = 'Allowed Frostford races'},
-allracesarray = {descript = 'Array of all existing races'},
-banditraces = {descript = 'Array of allowed bandit races'},
-monsterraces = {descript = 'Array of monster races'},
-banditishumanchance = {descript = 'Percent of how many bandits will be generated as humans'},
 
 }

@@ -1790,7 +1790,7 @@ func orderfinale(stage = 0):
 		elif stage == 2:
 			text = textnode.MainQuestFinaleBadOrder2
 			buttons.append({text = "Fight", function = 'orderfinale', args = 3})
-		elif stage -- 3:
+		elif stage == 3:
 			globals.main.exploration.buildenemies("finalecouncil")
 			globals.main.exploration.launchonwin = 'finalebadroute'
 			globals.main.get_node("combat").nocaptures = true
@@ -3553,3 +3553,179 @@ func sssexscene(stage = 0):
 	
 	
 	globals.main.dialogue(state, self, startslave.dictionary(text), buttons, sprites)
+
+func umbraportalenc():
+	var state = true
+	var text = textnode.umbrateleportenc
+	var buttons = []
+	globals.state.portals.dragonnests = {'enabled' : true, 'code' : 'dragonnests'}
+	text += "\n\n[color=yellow]New Portal unlocked[/color]"
+	globals.main.dialogue(state, self, text, buttons)
+
+func dragonbossenc():
+	var state = false
+	var text = textnode.dragonbossenc
+	var buttons = []
+	
+	buttons.append({text = 'Fight', function = 'dragonbossfight'})
+	globals.main.dialogue(state, self, text, buttons)
+
+func dragonbossfight():
+	closedialogue()
+	globals.main.exploration.buildenemies("bossdragon")
+	globals.main.exploration.launchonwin = 'dragonbosswin'
+	globals.main.get_node("combat").nocaptures = true
+	globals.main.exploration.enemyfight()
+
+func dragonbosswin():
+	var state = true
+	var text = textnode.dragonbosswin
+	var buttons = []
+	globals.state.decisions.append("dragonkilled")
+	globals.main.dialogue(state, self, text, buttons)
+	globals.main.exploration.progress = 9
+	globals.main.exploration.winscreenclear()
+	globals.main.exploration.generaterandomloot([], {number = 0}, rand_range(1,3), [1,3])
+	globals.main.exploration.generateloot([globals.weightedrandom(bossloot), 1], '')
+	globals.main.exploration.generateloot([globals.weightedrandom(bossloot), 1], '')
+
+func cultbossenc():
+	var state = false
+	var text = textnode.cultbossenc
+	var buttons = []
+	
+	buttons.append({text = 'Fight', function = 'cultbossfight'})
+	globals.main.dialogue(state, self, text, buttons)
+
+func cultbossfight():
+	closedialogue()
+	globals.main.music_set('combat2')
+	globals.main.exploration.buildenemies("bosscultist")
+	globals.main.exploration.launchonwin = 'cultbosswin'
+	globals.main.get_node("combat").nocaptures = true
+	globals.main.exploration.enemyfight(true)
+
+func cultbosswin():
+	var state = true
+	var text = textnode.cultbosswin
+	var buttons = []
+	globals.state.decisions.append("cultbosskilled")
+	globals.main.dialogue(state, self, text, buttons)
+	globals.main.exploration.progress = 9
+	globals.main.exploration.winscreenclear()
+	globals.main.exploration.generaterandomloot([], {number = 0}, rand_range(1,4), [1,4])
+	globals.main.exploration.generateloot([globals.weightedrandom(bossloot), 1], '')
+	globals.main.exploration.generateloot([globals.weightedrandom(bossloot), 1], '')
+	globals.main.exploration.generateloot([globals.weightedrandom(bossloot), 1], '')
+
+func cavelakedoor():
+	var state = true
+	var text = "As you make it to the other end, you find yourself at the large stone gates. There's no clear way to open it right now, so you should try to scout another area. "
+	var buttons = []
+	globals.main.dialogue(state, self, text, buttons)
+
+func finalbossenc(stage = 0):
+	var state = false
+	var text = textnode.finalbossenc
+	var buttons = []
+	match stage:
+		0:
+			if !globals.state.decisions.has("joindarkness"):
+				buttons.append({text = 'Ask about its nature', function = 'finalbossenc', args = 1})
+				buttons.append({text = 'Try to negotiate', function = 'finalbossenc', args = 2})
+				buttons.append({text = 'Fight', function = 'finalbossenc', args = 5})
+			else:
+				text = 'You can sacrifice your party to gain more power. '
+				if globals.state.playergroup.size() >= 1:
+					buttons.append({text = 'Sacrifice your party', function = 'finalbossenc', args = 7})
+				buttons.append({text = 'Leave', function = 'finalbossenc', args = 6})
+		1:
+			text = textnode.finalbosstalk
+			buttons.append({text = 'Try to negotiate', function = 'finalbossenc', args = 2})
+			buttons.append({text = 'Fight', function = 'finalbossenc', args = 5})
+		2:
+			text = textnode.finalbossnegotiate
+			buttons.append({text = 'Accept', function = 'finalbossenc', args = 3})
+			buttons.append({text = 'Refuse', function = 'finalbossenc', args = 4})
+		3:
+			text = textnode.finalbossnegotiateaccept
+			var names = ''
+			var counter = 0
+			for i in globals.state.playergroup:
+				var slave = globals.state.findslave(i)
+				slave.removefrommansion()
+				names += slave.name_short()
+				counter += 1
+				if globals.state.playergroup.size() == counter+1:
+					names += ' and '
+				elif globals.state.playergroup.size() > counter:
+					names += ', '
+			globals.state.playergroup.clear()
+			globals.main.get_node("outside").playergrouppanel()
+			globals.state.decisions.append('joindarkness')
+			text = text.replace('[names]', names)
+			while counter > 0:
+				for i in ['str','agi','maf','end']:
+					globals.player.stats[i+'_base'] += 1
+				counter -= 1
+			buttons.append({text = 'Leave', function = 'finalbossenc', args = 6})
+		4:
+			text = textnode.finalbossnegotiaterefuse
+			buttons.append({text = 'Ask about its nature', function = 'finalbossenc', args = 1})
+			buttons.append({text = 'Fight', function = 'finalbossenc', args = 5})
+		5:
+			text = textnode.finalbossfight
+			buttons.append({text = 'Fight', function = 'finalbossfight'})
+		6:
+			closedialogue()
+			return
+		7:
+			var counter = 0
+			var names = ''
+			text = "After sacrificing your party, your power grows again. "
+			for i in globals.state.playergroup:
+				var slave = globals.state.findslave(i)
+				slave.removefrommansion()
+				names += slave.name_short()
+				counter += 1
+				if globals.state.playergroup.size() == counter+1:
+					names += ' and '
+				elif globals.state.playergroup.size() > counter:
+					names += ', '
+			globals.state.playergroup.clear()
+			globals.main.get_node("outside").playergrouppanel()
+			while counter > 0:
+				for i in ['str','agi','maf','end']:
+					globals.player.stats[i+'_base'] += 1
+				counter -= 1
+			buttons.append({text = 'Leave', function = 'finalbossenc', args = 6})
+		
+		
+	globals.main.dialogue(state, self, text, buttons)
+
+func finalbossfight():
+	closedialogue()
+	globals.main.music_set('combat2')
+	globals.main.exploration.buildenemies("finalboss")
+	globals.main.exploration.launchonwin = 'finalbosswin'
+	globals.main.get_node("combat").nocaptures = true
+	globals.main.exploration.enemyfight(true)
+
+func finalbosswin():
+	var state = true
+	var text = textnode.finalbosswin
+	var buttons = []
+	globals.state.decisions.append('darknessdefeated')
+	globals.main.dialogue(state, self, text, buttons)
+	globals.main.exploration.generaterandomloot([], {number = 0}, rand_range(2,5), [2,5])
+	globals.main.exploration.generateloot([globals.weightedrandom(bossloot), 1], '')
+	globals.main.exploration.generateloot([globals.weightedrandom(bossloot), 1], '')
+	globals.main.exploration.generateloot([globals.weightedrandom(bossloot), 1], '')
+	globals.main.exploration.generateloot([globals.weightedrandom(bossloot), 1], '')
+
+func randombossdrop():
+	var item = globals.weightedrandom(bossloot)
+	return item
+
+var bossloot = [["armorplate+",1],['weaponsword+',1],['weaponclaymore+',1],['weaponcursedsword',1],['weaponhammer+',1], ['weaponkatana+',1],['weaponshortsword+',1],['armorcarapace',1],['armorredcloak',1], ['accessoryneck+',1],['armorrogue',1],['armortentacle',1], ['weaponelvensword+', 1] ]
+

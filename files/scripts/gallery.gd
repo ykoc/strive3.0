@@ -522,6 +522,11 @@ mainorderfinale = load("res://files/backgrounds/mainorderfinale.png"),
 umbra = load("res://files/backgrounds/umbra.png"),
 nightdesert = load("res://files/backgrounds/nightdesert.jpeg"),
 brothel = load("res://files/backgrounds/brothel.png"),
+dragonnests = load('res://files/backgrounds/dragonnest.png'),
+redcave = load("res://files/backgrounds/redcave.png"),
+culthideout = load("res://files/backgrounds/culthideout.png"),
+cavelake = load("res://files/backgrounds/cavelake.png"),
+darkness = load("res://files/backgrounds/darkness.png"),
 }
 
 var nakedsprites = {

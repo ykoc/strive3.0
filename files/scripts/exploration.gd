@@ -13,12 +13,12 @@ var awareness = 0
 var ambush = false
 var scout
 var launchonwin = null
-var combatdata = load("res://files/scripts/combatdata.gd").new()
+var combatdata = globals.combatdata
 var deeperregion = false
 var capturedtojail = 0
 var enemyloot = {stackables = {}, unstackables = []}
 var enemygear = {}
-var areas = load('res://files/scripts/explorationregions.gd').new()
+var areas = globals.areas
 
 var scriptedareas = {
 	aydashop = load("res://files/scripts/areascripts/aydashop.gd").new(),
@@ -47,6 +47,7 @@ func event(eventname):
 
 func zoneenter(zone):
 	var text = ''
+	var endofarea = false
 	if lastzone == null:
 		lastzone = zones[zone].code
 	else:
@@ -90,6 +91,8 @@ func zoneenter(zone):
 	outside.clearbuttons()
 	showmap(currentzone)
 	text += zone.description
+	if globals.state.marklocation == zone.code:
+		text += "\n\n[color=aqua]You have a mark in this area[/color]"
 	if zone.code in ['wimborn','gorn','amberguard','frostford']:
 		text += "\n\n[color=yellow]You can use public teleport to return to mansion from this location.[/color]"
 	mansion.maintext = text
@@ -97,10 +100,11 @@ func zoneenter(zone):
 		call(zone.locationscript)
 		return
 	else:
-		if zone.code in ['mountaincave','undercitytunnels','undercityruins','undercityhall']:
-			main.music_set('dungeon')
-		else:
-			main.music_set('explore')
+		main.music_set(zone.music)
+#		if zone.code in ['mountaincave','undercitytunnels','undercityruins','undercityhall','redcave','darkness','culthideout','cavelake']:
+#			main.music_set('dungeon')
+#		else:
+#			main.music_set('explore')
 	var array = []
 	if zone.combat == true && progress >= zone.length:
 		for i in zone.exits:
@@ -115,6 +119,7 @@ func zoneenter(zone):
 			array[array.size()-1].disabled = true
 			array[array.size()-1].tooltip = 'Can only be done once per day'
 		progress = 0
+		endofarea = true
 		if deeperregion == false:
 			array.insert(0,{name = 'Move deeper into the region', function = 'deepzone', args = currentzone.code})
 			array.insert(0,{name = 'Explore this area again', function = 'zoneenter', args = currentzone.code})
@@ -137,6 +142,12 @@ func zoneenter(zone):
 		array.append({name = "Find the Bandit",function = 'event',args = 'calistraybandit'})
 	elif (globals.state.sidequests.cali == 26) && zone.code == 'grove':
 		array.append({name = "Find Cali's village",function = 'event',args = 'calireturnhome'})
+	elif zone.code == 'dragonnests' && endofarea && globals.state.decisions.has('dragonkilled') == false:
+		array.append({name = "Approach Cave Entrance", function = 'event',args = 'dragonbossenc'})
+	elif zone.code == 'culthideout' && endofarea && globals.state.decisions.has('cultbosskilled') == false:
+		array.append({name = "Approach Central Hall", function = 'event',args = 'cultbossenc'})
+	elif zone.code == 'darkness' && endofarea && globals.state.decisions.has('darknessbosskilled') == false:
+		array.append({name = "Approach Bright Passage", function = 'event',args = 'finalbossenc'})
 	if globals.state.mainquest == 13 && zone.code == 'gornoutskirts':
 		array.append({name = "Search for Ivran's location",function = 'event',args = 'gornivran'})
 	if zone.code == 'undercitytunnels' && progress >= 6 && globals.state.lorefound.find('amberguardlog1') < 0:
@@ -156,8 +167,12 @@ func zoneenter(zone):
 		event('garthorencounter')
 	if zone.code == 'gornoutskirts' && globals.state.mainquest == 40 && globals.state.decisions.has("badroute"):
 		event('davidencounter')
-	if progress == 0 && lastzone != zone.code && globals.evaluate(zones[lastzone].reqs) == true:
+	if zone.code == 'cavelake' && !globals.state.decisions.has("cultbosskilled") && endofarea:
+		event('cavelakedoor')
+	if progress == 0 && lastzone != zone.code && globals.evaluate(zones[lastzone].reqs) == true && lastzone != 'umbra':
 		array.append({name = "Return to " + zones[lastzone].name, function = "zoneenter", args = lastzone})
+	if zone.code == 'dragonnests' && progress == 0:
+		array.append({name = "Return to Mansion",function = 'mansion'})
 	outside.buildbuttons(array, self)
 
 func showmap(currentzone):
@@ -999,7 +1014,7 @@ func captureslave(person):
 		globals.state.backpack.stackables.rope -= variables.consumerope
 	for i in person.gear:
 		i = null
-	if globals.races[person.race].uncivilized == true:
+	if globals.races[person.race.replace("Halfkin", "Beastkin")].uncivilized == true:
 		person.add_trait('Uncivilized')
 	captureeffect(person)
 	if defeated.names[defeated.units.find(person)] == 'Captured':
@@ -1196,6 +1211,8 @@ func _on_confirmwinning_pressed(): #0 leave, 1 capture, 2 rape, 3 kill
 		location = 'gorn'
 	elif currentzone.tags.find("amberguard") >= 0:
 		location = 'amberguard'
+	else:
+		location = 'wimborn'
 	for i in range(0, defeated.units.size()):
 		if defeated.faction[i] == 'stranger' && defeated.names[i] != "Captured":
 			globals.state.reputation[location] -= 1
@@ -1814,6 +1831,8 @@ func umbra():
 		globals.state.umbrafirstvisit = false
 		mansion.maintext = mansion.maintext + "\n\n" + globals.questtext.UmbraFirstVisit
 	var array = []
+	if globals.state.mainquest >= 38 && globals.state.portals.has('dragonnests') == false:
+		globals.events.umbraportalenc()
 	outside.location = 'umbra'
 	array.append({name = "Black Market (shop)", function = 'umbrashop'})
 	array.append({name = "Buy Slaves", function = 'umbrabuyslaves'})
@@ -1893,5 +1912,4 @@ func unloadgroup():
 		if item.type in ['ingredient']:
 			item.amount += globals.state.backpack.stackables[i]
 			globals.state.backpack.stackables.erase(i)
-
 

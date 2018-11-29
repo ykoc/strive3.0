@@ -17,11 +17,16 @@ protection = "[color=yellow]Protection[/color] - Mitigates a percent of incoming
 }
 
 static func getRaceDescription(race, full = true, reverse = false): #show description for X race
-	var text
-	var text2
+	var text = ''
+	var text2 = ''
 	
-	text = globals.races[race.replace('Halfkin','Beastkin')].description
-	text2 = globals.races[race.replace('Halfkin','Beastkin')].details
+	if race.find("Beastkin") >= 0:
+		text += globals.racefile.beastkindescription + '\n\n'
+	elif race.find("Halfkin") >= 0:
+		text += globals.racefile.halfkindescription + '\n\n'
+	
+	text += globals.races[race.replace('Halfkin','Beastkin')].description
+	text2 += globals.races[race.replace('Halfkin','Beastkin')].details
 	if full == true:
 		if reverse == false:
 			text = text + '\n\n' + text2

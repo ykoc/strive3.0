@@ -3722,7 +3722,7 @@ expand = true
 
 [node name="minimappanel" type="Panel" parent="." index="10"]
 
-editor/display_folded = true
+modulate = Color( 1, 1, 1, 0 )
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -3738,7 +3738,7 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 custom_styles/panel = SubResource( 27 )
-_sections_unfolded = [ "custom_styles" ]
+_sections_unfolded = [ "Visibility", "custom_styles" ]
 
 [node name="map" type="ScrollContainer" parent="minimappanel" index="0"]
 
@@ -5439,6 +5439,7 @@ _sections_unfolded = [ "Rect" ]
 "blockmaininput",
 ]]
 
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -6764,6 +6765,7 @@ _sections_unfolded = [ "Placeholder" ]
 
 [node name="exchange" type="Panel" parent="shoppanel" index="2"]
 
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0

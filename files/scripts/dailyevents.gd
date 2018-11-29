@@ -296,7 +296,7 @@ func forestfind(stage = 0):
 	var age = ['child','teen']
 	var origins = ['slave','poor','commoner']
 	if stage == 0:
-		slave2 = globals.newslave(globals.wimbornraces[rand_range(0,globals.wimbornraces.size())], age[rand_range(0, age.size())], 'random', origins[rand_range(0, origins.size())])
+		slave2 = globals.newslave(globals.getracebygroup(globals.state.location), age[rand_range(0, age.size())], 'random', origins[rand_range(0, origins.size())])
 		showntext = eventstext[currentevent][stage]
 		slave2.fromguild = true
 		showntext += slave2.descriptionsmall() + "\nWhat would you like to do with $2him?"
@@ -551,7 +551,7 @@ func escapedslave(stage = 0):
 	var age = ['adult','teen']
 	var origins = ['slave','poor']
 	if stage == 0:
-		slave2 = globals.newslave(globals.wimbornraces[rand_range(0,globals.wimbornraces.size())], age[rand_range(0, age.size())], 'random', origins[rand_range(0, origins.size())])
+		slave2 = globals.newslave(globals.getracebygroup(globals.state.location), age[rand_range(0, age.size())], 'random', origins[rand_range(0, origins.size())])
 		slave2.fromguild = true
 		tempbuttons = [["Keep $2him to yourself",1],["Return $2him to the city (-25 energy)",2], ["Ignore", 3]]
 	if stage == 1:
@@ -610,7 +610,7 @@ func devotedevent(stage = 0):
 	var origins = ['slave','poor', 'commoner']
 	showntext = dictionary(eventstext[currentevent][stage])
 	if stage == 0:
-		slave2 = globals.newslave(globals.wimbornraces[rand_range(0,globals.wimbornraces.size())], 'random', 'random', origins[rand_range(0, origins.size())])
+		slave2 = globals.newslave(globals.getracebygroup(globals.state.location), 'random', 'random', origins[rand_range(0, origins.size())])
 		showntext += '\n' + slave2.descriptionsmall()
 		tempbuttons = [["Accept",1],["Reject",2]]
 	if stage == 1:

@@ -465,7 +465,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=31]
+[sub_resource type="StyleBoxTexture" id=26]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -485,7 +485,7 @@ modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 _sections_unfolded = [ "Margin" ]
 
-[sub_resource type="StyleBoxTexture" id=32]
+[sub_resource type="StyleBoxTexture" id=27]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -505,7 +505,7 @@ modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 _sections_unfolded = [ "Expand Margin", "Margin" ]
 
-[sub_resource type="StyleBoxTexture" id=33]
+[sub_resource type="StyleBoxTexture" id=28]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -525,7 +525,7 @@ modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 _sections_unfolded = [ "Expand Margin", "Margin" ]
 
-[sub_resource type="StyleBoxTexture" id=34]
+[sub_resource type="StyleBoxTexture" id=29]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -545,7 +545,7 @@ modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 _sections_unfolded = [ "Margin" ]
 
-[sub_resource type="StyleBoxTexture" id=35]
+[sub_resource type="StyleBoxTexture" id=30]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -565,7 +565,7 @@ modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 _sections_unfolded = [ "Axis Stretch", "Expand Margin", "Margin" ]
 
-[sub_resource type="StyleBoxTexture" id=30]
+[sub_resource type="StyleBoxTexture" id=31]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -683,11 +683,11 @@ VScrollBar/icons/decrement_hilite = null
 VScrollBar/icons/increment = null
 VScrollBar/icons/increment_highlight = null
 VScrollBar/icons/increment_hilite = null
-VScrollBar/styles/grabber = SubResource( 31 )
-VScrollBar/styles/grabber_highlight = SubResource( 32 )
-VScrollBar/styles/grabber_hilite = SubResource( 33 )
-VScrollBar/styles/grabber_pressed = SubResource( 34 )
-VScrollBar/styles/scroll = SubResource( 35 )
+VScrollBar/styles/grabber = SubResource( 26 )
+VScrollBar/styles/grabber_highlight = SubResource( 27 )
+VScrollBar/styles/grabber_hilite = SubResource( 28 )
+VScrollBar/styles/grabber_pressed = SubResource( 29 )
+VScrollBar/styles/scroll = SubResource( 30 )
 VScrollBar/styles/scroll_focus = null
 WindowDialog/colors/title_color = Color( 1, 1, 1, 1 )
 WindowDialog/constants/close_h_ofs = 22
@@ -697,6 +697,6 @@ WindowDialog/constants/titlebar_height = 18
 WindowDialog/fonts/title_font = null
 WindowDialog/icons/close = null
 WindowDialog/icons/close_hilite = null
-WindowDialog/styles/panel = SubResource( 30 )
+WindowDialog/styles/panel = SubResource( 31 )
 _sections_unfolded = [ "PopupMenu/icons", "PopupMenu/styles", "PopupPanel/styles", "TooltipLabel/colors", "TooltipPanel", "TooltipPanel/styles", "VScrollBar", "VScrollBar/icons", "VScrollBar/styles", "WindowDialog/colors" ]
 

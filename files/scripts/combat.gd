@@ -152,6 +152,7 @@ func start_battle(nosound = false):
 		newbutton.visible = true
 		playergroup.append(newcombatant)
 		newbutton.set_meta('combatant', newcombatant)
+		checkforinheritdebuffs(newcombatant)
 		combatantnodes.append(newbutton)
 	
 	for i in currentenemies:
@@ -240,22 +241,7 @@ func _process(delta):
 			i.get_node('stress').visible = true
 			i.get_node('stress/Label').text = str(combatant.stress)
 			i.get_node('stress').value = round(float(combatant.stress)/combatant.stressmax*100)
-		if combatant.energy > 0 && combatant.passives.has('exhausted'):
-			removebuff('exhaust', combatant)
-			combatant.passives.erase("exhaust")
-		elif combatant.energy <= 0:
-			getbuff(makebuff('exhaust', combatant, combatant), combatant)
-			combatant.passives.exhaust = {code = 'exhaust'}
-		if combatant.person != null && combatant.person != globals.player:
-			if combatant.person.lust >= 80:
-				getbuff(makebuff('luststrong', combatant, combatant), combatant)
-				removebuff('lustweak', combatant)
-			elif combatant.person.lust >= 50:
-				getbuff(makebuff('lustweak', combatant, combatant), combatant)
-				removebuff('luststrong', combatant)
-			else:
-				removebuff('luststrong',combatant)
-				removebuff('lustweak',combatant)
+		
 	
 	#Reset panel textures
 	if period == 'base':
@@ -292,7 +278,6 @@ func rebuildbuffs(combatant):
 			if i.name != 'TextureRect':
 				i.hide()
 				i.free()
-		
 	for i in combatant.effects.values():
 		var newnode = node.get_node("buffscontainer/TextureRect").duplicate()
 		node.get_node("buffscontainer").add_child(newnode)
@@ -351,6 +336,7 @@ class combatant:
 	var cooldowns = {}
 	var actionpoints = 1
 	var effects = {}
+	var faction
 	
 	var animationplaying = false
 	
@@ -367,6 +353,9 @@ class combatant:
 			group = 'enemy'
 		abilities = data.stats.abilities
 		#Filling values
+		
+		if data.has('faction'):
+			faction = data.faction
 		
 		hp = data.stats.health
 		hpmax = data.stats.health
@@ -570,6 +559,13 @@ class combatant:
 		node.hide()
 		animationplaying = false
 		scene.combatlog += scene.combatantdictionary(self, self, "\n[color=aqua][name1] has been defeated.[/color]")
+		if group == 'enemy':
+			for i in scene.enemygroup:
+				if i.passives.has("cultleaderpassive") && i != self:
+					i.hpmax += 150
+					i.hp += 300
+					i.attack += 50
+					scene.combatlog += "\n[color=red]Cult leader absorbs the power of defeated ally and grows stronger![/color]"
 		if group == 'player':
 			scene.playergroup.remove(scene.playergroup.find(person.id))
 			if person == globals.player:
@@ -696,6 +692,8 @@ func physdamage(caster, target, skill):
 	if target.passives.has('defenseless'):
 		armor = 0
 		protection = 1
+	if target.passives.has("armorbreaker"):
+		armor = max(0, armor-8)
 	if caster.passives.has('exhaust'):
 		power = power * 0.66
 	
@@ -713,7 +711,10 @@ func spelldamage(caster, target, skill):
 	var damage = 0
 	damage = max(1,(caster.magic * 4)) * skill.power
 	if skill.code == 'mindblast':
-		damage += target.hpmax/5
+		if target.faction == 'boss':
+			damage += target.hpmax/15
+		else:
+			damage += target.hpmax/5
 	if globals.state.spec == 'Mage' && caster.group == 'player':
 		damage *= 1.2
 	if target.person != null && target.person.traits.has("Sturdy"):
@@ -867,6 +868,8 @@ func useskills(skill, caster = null, target = null, retarget = false):
 						else:
 							i.dodge()
 							text += "[targetname" + str(counter) + "] [color=yellow]dodges[/color]. "
+					if hit == 'hit' && skill.effect != null:
+						sendbuff(caster, i, skill.effect)
 					counter += 1
 			
 			
@@ -885,7 +888,7 @@ func useskills(skill, caster = null, target = null, retarget = false):
 			self.combatlog += "[targetname1] being held in place! "
 			removebuff("escapeeffect",target)
 		
-		if skill.effect != null && hit == 'hit':
+		if skill.effect != null && hit == 'hit' && skill.target != 'all':
 			sendbuff(caster, target, skill.effect)
 		if skill.has('script') && hit == 'hit':
 			scripteffect(caster,target,skill.script)
@@ -930,6 +933,8 @@ func makebuff(code, target, caster):
 	var buff = {duration = effect.duration, name = effect.name, code = effect.code, type = effect.type, stats = {}, icon = effect.icon, description = null, caster = caster}
 	if effect.has('description'):
 		buff.description = effect.description
+	if effect.has('script'):
+		buff.script = effect.script
 	for i in effect.stats:
 		var temp = i[1].split(',')
 		temp = Array(temp)
@@ -949,6 +954,11 @@ func makebuff(code, target, caster):
 
 func getbuff(buff, target):
 	var buffexists = false
+	if target.faction == 'boss' && buff.type == 'debuff':
+		if buff.duration > 1:
+			buff.duration = 1
+		for i in buff.stats:
+			buff.stats[i] = buff.stats[i]/2
 	if target.effects.has(buff.code):
 		buffexists = true
 	if buffexists == true:
@@ -957,7 +967,8 @@ func getbuff(buff, target):
 		target.effects[buff.code] = buff
 		for i in buff.stats:
 			target[i] = target[i] + buff.stats[i]
-	
+	if buff.type == 'script':
+		globals.abilities.call(buff.script, target)
 	rebuildbuffs(target)
 
 func removebuff(buffcode, target):
@@ -1001,6 +1012,7 @@ func enemyturn():
 	for i in enemygroup + playergroup:
 		if i.state != 'normal':
 			continue
+		
 		for effect in i.effects.values():
 			if effect.caster.group == 'enemy':
 				if effect.code == 'escapeeffect':
@@ -1012,6 +1024,8 @@ func enemyturn():
 						continue
 					escapeanimation(i)
 					i.state = 'escaped'
+				if effect.type == 'onendturn':
+					self.combatlog += "\n" + combatantdictionary(i, i, globals.abilities.call(globals.abilities.effects[effect.code].script, i))
 				if effect.duration > 0:
 					effect.duration -= 1
 				if effect.duration == 0:
@@ -1035,10 +1049,6 @@ func enemyturn():
 				else:
 					combatant.ai = 'attack'
 			if combatant.ai == 'attack':
-				if combatant.aimemory != 'attack':
-					skill = combatant.abilities[0]
-					combatant.aimemory = 'attack'
-					break
 				if combatant.cooldowns.has(i.code):
 					continue
 				if i.aipatterns.has('attack'):
@@ -1053,6 +1063,7 @@ func enemyturn():
 		
 		if typeof(skill) == TYPE_ARRAY:
 			skill = globals.weightedrandom(skill)
+			combatant.aimemory = skill.code
 		if skill == null:
 			skill = globals.abilities.abilitydict[combatant.abilities[0]]
 		elif typeof(skill) == TYPE_STRING:
@@ -1092,6 +1103,7 @@ func enemyturn():
 				if effect.duration == 0:
 					removebuff(effect.code, i)
 	for i in playergroup:
+		checkforinheritdebuffs(i)
 		i.stress += 3
 		if i.person.traits.has("Coward"):
 			i.stress += 3
@@ -1135,6 +1147,26 @@ func endcombatcheck():
 		return
 	
 	return 'continue'
+
+func checkforinheritdebuffs(combatant):
+	if combatant.person == globals.player:
+		return
+	if combatant.energy > 0 && combatant.passives.has('exhausted'):
+		removebuff('exhaust', combatant)
+		combatant.passives.erase("exhaust")
+	elif combatant.energy <= 0:
+		getbuff(makebuff('exhaust', combatant, combatant), combatant)
+		combatant.passives.exhaust = {code = 'exhaust'}
+	if combatant.person != null && combatant.person != globals.player:
+		if combatant.person.lust >= 80:
+			getbuff(makebuff('luststrong', combatant, combatant), combatant)
+			removebuff('lustweak', combatant)
+		elif combatant.person.lust >= 50:
+			getbuff(makebuff('lustweak', combatant, combatant), combatant)
+			removebuff('luststrong', combatant)
+		else:
+			removebuff('luststrong',combatant)
+			removebuff('lustweak',combatant)
 
 func playerescape():
 	for i in playergroup:
@@ -1259,6 +1291,39 @@ func attackanimation(combatant):
 	tween.interpolate_deferred_callback(self, timings.delaydamage, 'damagein')
 	tween.interpolate_property(node, "rect_position", Vector2(pos.x, pos.y-change), pos,  timings.speed2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, timings.delay2)
 	tween.interpolate_deferred_callback(self, timings.delayfinish, 'tweenfinished')
+	tween.start()
+
+func firebreathanimationcaster(combatant):
+	var node = combatant.node
+	var tween = $Tween
+	var pos = node.rect_position
+	var change = 30
+	
+	var timings = {speed1 = 0.5,speed2 = 0.5,delay2 = 0.6,delaydamage = 0.5,delayfinish = 1.1}
+	
+	if instantanimation == true:
+		for i in timings:
+			timings[i] = 0.05
+		timings.delay2 = 0
+	
+	globals.main.sound('attack')
+	
+	
+	ongoinganimation = true
+	if combatant.group == 'enemy':
+		change = -change
+	tween.interpolate_property(node, "rect_position", pos, Vector2(pos.x, pos.y-change), timings.speed1, Tween.TRANS_ELASTIC, Tween.EASE_IN_OUT)
+	tween.interpolate_deferred_callback(self, timings.delaydamage, 'damagein')
+	tween.interpolate_property(node, "rect_position", Vector2(pos.x, pos.y-change), pos,  timings.speed2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, timings.delay2)
+	tween.interpolate_deferred_callback(self, timings.delayfinish, 'tweenfinished')
+	tween.start()
+
+
+func firebreathanimationtarget(combatant):
+	var node = combatant.node
+	var tween = $Tween
+	
+	tween.interpolate_property(node, "modulate", Color(1,0.25,0.25,1), Color(1,1,1,1), 0.6, Tween.TRANS_SINE, Tween.EASE_IN)
 	tween.start()
 
 func slamanimation(combatant):

@@ -2269,7 +2269,7 @@ func _on_details_pressed(empty = null):
 		newbutton.connect("pressed",self,'itembackpackselect', [item])
 	calculateweight()
 	
-	for i in ['heal','mindread','invigorate','guidance']:
+	for i in ['heal','mindread','invigorate','guidance','mark']:
 		var spell = globals.spelldict[i]
 		if spell.learned == false:
 			continue
@@ -2334,6 +2334,8 @@ func spellbackpackselect(spell):
 		get_node("playergroupdetails/Panel/usebutton").set_disabled(true)
 	if spell.code == 'guidance':
 		get_node("playergroupdetails/Panel/usebutton").set_disabled(get_parent().exploration.inencounter)
+	elif spell.code == 'mark':
+		get_node("playergroupdetails/Panel/usebutton").set_disabled(!get_parent().exploration.currentzone.combat)
 	var text ='[center]' + spell.name + '[/center]\n' + spell.description + '\n\nMana Cost: ' + str(spell.manacost)
 	get_node("playergroupdetails/Panel/itemdescript").set_bbcode(text)
 
@@ -2378,6 +2380,8 @@ func usespell(spell, person):
 		text = globals.spells.mindreadeffect()
 	elif spell.code == 'guidance':
 		text = globals.spells.guidanceeffect()
+	elif spell.code == 'mark':
+		text = globals.spells.markeffect()
 	main.popup(text)
 	_on_details_pressed()
 	playergrouppanel()

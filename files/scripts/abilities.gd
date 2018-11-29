@@ -28,7 +28,7 @@ aipatterns = ['attack'],
 aitargets = '1enemy',
 aiselfcond = 'any',
 aitargetcond = 'any',
-aipriority = 0,
+aipriority = 1,
 castersfx = 'attackanimation',
 },
 "pass" : {
@@ -345,7 +345,7 @@ aipatterns = ['attack'],
 aitargets = '1enemy',
 aiselfcond = 'any',
 aitargetcond = 'any',
-aipriority = 3,
+aipriority = 1,
 castersfx = 'attackanimation',
 },
 aimedstrike = {
@@ -405,7 +405,7 @@ aipatterns = ['attack'],
 aitargets = '1enemy',
 aiselfcond = 'any',
 aitargetcond = 'any',
-aipriority = 3,
+aipriority = 2,
 castersfx = 'attackanimation',
 },
 mindread = {
@@ -448,7 +448,7 @@ usetext = '$name performs [color=aqua]Slam attack[/color]. ',
 target = 'all',
 targetgroup = 'enemy',
 effect = null,
-can_miss = false,
+can_miss = true,
 power = 0.8,
 cooldown = 4,
 type = 'physical',
@@ -462,9 +462,67 @@ aipatterns = ['attack'],
 aitargets = 'enemies',
 aiselfcond = 'any',
 aitargetcond = 'any',
-aipriority = 5,
+aipriority = 100,
 castersfx = 'attackanimation',
 targetsfx = 'slamanimation'
+},
+dragonfirebreath = {
+name = 'Dragon Breath',
+code = 'dragonfirebreath',
+iconnorm = load("res://files/buttons/abils/Attack.png"),
+iconpressed = load("res://files/buttons/abils/Attack2.png"),
+learnable = false,
+description = 'Attempts to attack chosen enemy.',
+usetext = '$name uses [color=aqua]Dragon Breath[/color]. ',
+target = 'all',
+targetgroup = 'enemy',
+effect = 'firebreatheffect',
+can_miss = false,
+power = 0.4,
+cooldown = 6,
+type = 'spell',
+price = 0,
+costenergy = 0,
+costmana = 0,
+costother = '',
+attributes = ['damage','allparty','debuff'],
+reqs = {level = 0},
+aipatterns = ['attack'],
+aitargets = 'enemies',
+aiselfcond = 'any',
+aitargetcond = 'any',
+aipriority = 100,
+castersfx = 'firebreathanimationcaster',
+targetsfx = 'firebreathanimationtarget'
+},
+darknessattack = {
+name = 'Darkness Attack',
+code = 'darknessattack',
+iconnorm = load("res://files/buttons/abils/Attack.png"),
+iconpressed = load("res://files/buttons/abils/Attack2.png"),
+learnable = false,
+description = 'Attempts to attack chosen enemy.',
+usetext = '$name uses [color=aqua]Drain[/color]. ',
+target = 'all',
+targetgroup = 'enemy',
+effect = 'darknesscurseeffect',
+can_miss = false,
+power = 1,
+cooldown = 4,
+type = 'spell',
+price = 0,
+costenergy = 0,
+costmana = 0,
+costother = '',
+attributes = ['damage','allparty','debuff'],
+reqs = {level = 0},
+aipatterns = ['attack'],
+aitargets = 'enemies',
+aiselfcond = 'any',
+aitargetcond = 'any',
+aipriority = 100,
+castersfx = 'firebreathanimationcaster',
+targetsfx = 'firebreathanimationtarget'
 },
 alwayshitattack = {
 name = 'Precise Attack',
@@ -666,6 +724,44 @@ code = 'acidspiteffect',
 type = 'debuff',
 stats = [['armor', '-(3+,caster.magic,)']],
 },
+firebreatheffect = {
+icon = load("res://files/buttons/combat/fire.png"),
+duration = 2,
+name = "On Fire",
+code = 'firebreatheffect',
+type = 'onendturn',
+description = "Target is taking damage every turn",
+script = 'firebreathdamage',
+stats = [],
+},
+darknesscurseeffect = {
+icon = load("res://files/buttons/abils/Acid spit.png"),
+duration = 4,
+name = "Drained",
+code = 'darknesscurseeffect',
+type = 'script',
+description = "",
+script = 'darknesscurse',
+stats = [],
+},
+curseeffectatk = {
+icon = load("res://files/buttons/combat/curse1.png"),
+duration = 5,
+name = "Drained",
+code = 'curseeffectatk',
+type = 'debuff',
+description = "Attack is drastically reduced.",
+stats = [['attack', '-(25, )']],
+},
+curseeffectmgc = {
+icon = load("res://files/buttons/combat/curse2.png"),
+duration = 5,
+name = "Drained",
+code = 'curseeffectmgc',
+type = 'debuff',
+description = "Magic is drastically reduced.",
+stats = [['magic', '-(6, )']],
+},
 enemyslow = {
 icon = load("res://files/buttons/abils/Sedation.png"),
 duration = 3,
@@ -721,8 +817,8 @@ stats = [],
 
 func restorehealth(caster, target):
 	var text = ''
-	var value = 25 + (caster.magic*5)
-	target.hp += value
+	var value = 25 + (caster.magic*9)
+	target.hp += max(value, 10)
 	text = '$name restores ' + str(value) + ' health.'
 	return text
 
@@ -747,10 +843,28 @@ func lust(combatant, value):
 var passivesdict = {
 doubleattack15 = {code = 'doubleattack15', effect = 'doubleattack', effectvalue = 15, descript = '15% chance to attack twice'},
 doubleattack25 = {code = 'doubleattack25', effect = 'doubleattack', effectvalue = 25, descript = '25% chance to attack twice'},
-
+cultleaderpassive = {code = 'cultleaderpassive', effect = 'cultleaderpassive', effectvalue = null, descript = 'Grows stronger when alies defeated'}
 }
 
-func stunchance(caster, target):
-	if caster.person != null && caster.person.sstr*8 >= rand_range(0,100):
+func stunchance(caster, target, basechance = 25):
+	var chance = basechance
+	if caster.person != null:
+		chance = caster.person.sstr*8
+	if target.faction == 'boss':
+		chance = chance/4
+	if chance >= rand_range(0,100):
 		caster.scene.sendbuff(caster, target, 'stun')
 		target.actionpoints = 0
+
+func firebreathdamage(target):
+	var value = 6
+	target.hp -= value
+	var text = '$name burns for [color=red]' + str(value) + '[/color] damage.'
+	return target.person.dictionary(text)
+
+func darknesscurse(target):
+	target.scene.removebuff("darknesscurseeffect",target)
+	if randf() >= 0.5:
+		target.scene.sendbuff(target,target,"curseeffectatk")
+	else:
+		target.scene.sendbuff(target,target,"curseeffectmgc")

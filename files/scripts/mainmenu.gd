@@ -121,7 +121,6 @@ var introText02 = "Although you have managed to dodge any sort of terrible fate,
 
 #QMod - Refactored
 func _ready():
-	variables = load("res://files/scripts/variables.gd").new()
 	var constantsloader = load("res://files/constmodinstal.gd").new()
 	constantsloader.run()
 	
@@ -667,6 +666,8 @@ func _stage4():
 		for i in globals.races:
 			if globals.races[i].startingrace == true:
 				raceArray.append(i)
+				if i.find('Beastkin') >= 0:
+					raceArray.append(i.replace("Beastkin","Halfkin"))
 		#raceArray = globals.starting_pc_races		
 	
 	#Populate race list and eliminate rule-blocked races
@@ -1106,6 +1107,8 @@ func _process_stage8_race_options():
 		for i in globals.races:
 			if globals.races[i].startingrace == true:
 				slaveRaces.append(i)
+				if i.find('Beastkin') >= 0:
+					slaveRaces.append(i.replace("Beastkin","Halfkin"))
 		#slaveRaces = globals.starting_pc_races
 	
 	for i in slaveRaces:

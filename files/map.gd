@@ -50,8 +50,7 @@ func _process(delta):
 		$TextureRect.rect_global_position.x += ((parentrect.end.x) - (rect.end.x))
 	if rect.end.y < parentrect.end.y:
 		$TextureRect.rect_global_position.y += ((parentrect.end.y) - (rect.end.y))
-#	if $TextureRect.get_global_rect().encloses(get_parent().get_global_rect()) == false:
-#		$TextureRect.rect_global_position = 
+
 
 func showtooltip(node):
 	if is_processing_input() == false:

@@ -224,6 +224,19 @@ guidance = {
 	learned = false,
 	type = 'utility',
 	},
+mark = {
+	code = 'mark',
+	name = 'Mark',
+	description = "An utility spell, leaving a permanent mark on the location, allowing to return to it from portal room later on. Only 1 mark at the time is allowed. ",
+	effect = 'markeffect',
+	manacost = 10,
+	req = 2,
+	price = 500,
+	personal = false,
+	combat = false,
+	learned = false,
+	type = 'utility',
+	},
 }
 
 func spellcost(spell):
@@ -362,11 +375,19 @@ func guidanceeffect():
 	globals.resources.mana -= spellcost(spell)
 	var text = 'You cast guidance and move forward through the area avoiding any unnecessary encounters. '
 	
-	if main.exploration.currentzone.tags.has("noreturn"):
-		main.exploration.progress += round((2 + globals.player.smaf*.15)/2)
+	if main.exploration.currentzone.tags.has("enclosed"):
+		main.exploration.progress += round((2 + globals.player.smaf*1.5)/2)
 	else:
 		main.exploration.progress += round(2 + globals.player.smaf*1.5)
 	main.exploration.zoneenter(main.exploration.currentzone.code)
+	return text
+
+func markeffect():
+	var spell = globals.spelldict.mark
+	globals.resources.mana -= spellcost(spell)
+	var text = 'You cast the Mark on hidden spot to return here later. '
+	globals.state.marklocation = main.exploration.currentzone.code
+	
 	return text
 
 func tentacleeffect():
