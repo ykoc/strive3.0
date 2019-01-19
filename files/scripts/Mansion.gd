@@ -9,7 +9,7 @@ var testslaveorigin = ['slave','poor','commoner','rich','noble']
 var currentslave = 0 setget currentslave_set
 var selectedslave = -1
 var texture = null
-var startcombatzone = "dragonnests"
+var startcombatzone = "darkness"
 var nameportallocation
 var enddayprocess = false
 onready var maintext = '' setget maintext_set, maintext_get
@@ -32,7 +32,7 @@ onready var mansionStaff = get_node("joblist").mansionStaff
 
 func _ready():
 	get_node("music").set_meta('currentsong', 'none')
-	if OS.get_executable_path() == 'C:\\Users\\1\\Desktop\\godot\\Godot_v3.0.4-stable_win64.exe':
+	if OS.get_executable_path() == 'C:\\Users\\1\\Desktop\\godot\\Godot_v3.0.6-stable_win64.exe':
 		globals.developmode = true
 		debug = true
 		get_node("startcombat").show()
@@ -109,6 +109,12 @@ func _ready():
 	$outside/textpanelexplore/outsidetextbox2.connect("meta_hover_ended",globals, 'slavetooltiphide')
 	
 	$MainScreen/mansion/selfinspect/Contraception.connect("pressed", self, 'contraceptiontoggle')
+	
+	if variables.oldemily == true:
+		for i in ["emilyhappy", "emilynormal","emily2normal","emily2happy","emily2worried","emilynakedhappy","emilynakedneutral"]:
+			globals.spritedict[i] = globals.spritedict['old'+ i]
+		globals.characters.characters.Emily.imageportait = "res://files/images/emily/oldemilyportrait.png"
+	
 	
 	for i in [$sexselect/managerypanel/dogplus, $sexselect/managerypanel/dogminus, $sexselect/managerypanel/horseplus, $sexselect/managerypanel/horseminus]:
 		i.connect("pressed", self, 'animalforsex', [i])
@@ -284,7 +290,6 @@ func startending():
 func _on_new_slave_button_pressed():
 	
 	globals.resources.day = 2
-	globals.state.upcomingevents.append({code = 'ssinitiate', duration = 1})
 	for i in globals.state.tutorial:
 		globals.state.tutorial[i] = true
 	#music_set('mansion')
@@ -333,7 +338,7 @@ func _on_new_slave_button_pressed():
 	globals.player.energy += 100
 	globals.player.xp += 50
 	globals.resources.upgradepoints += 100
-	globals.state.mainquest = 41
+	globals.state.mainquest = 42
 	#globals.state.sidequests.ayda = 15
 	globals.state.sidequests.cali = 26
 	#globals.state.decisions.append('')
@@ -350,8 +355,8 @@ func _on_new_slave_button_pressed():
 	globals.state.decisions = ['tishaemilytricked','chloebrothel','ivrantaken','goodroute','mainquestelves']
 	#globals.player.relations.a = 1
 	#globals.player.relations.b = globals.player.relations.get('b', 0) + 2\
-	buildtestcombatgroup()
-	if false:
+	#buildtestcombatgroup()
+	if true:
 		for i in globals.characters.characters:
 			person = globals.characters.create(i)
 			globals.addrelations(globals.slaves[0], person, -800)
@@ -719,13 +724,11 @@ func _on_end_pressed():
 			######## Counting food
 			for i in person.effects.values():
 				if i.has('duration') && i.code != 'captured':
-					if person.fear >= 50 && randf() >= 0.4:
-						i.duration -= 1
 					if person.race != 'Dark Elf' || randf() > 0.5:
 						i.duration -= 1
 					if i.duration <= 0:
 						person.add_effect(i, true)
-				elif i.has('duration'):
+				elif i.code == 'captured':
 					i.duration -= 1
 					if person.sleep == 'jail' && globals.state.mansionupgrades.jailincenses == 1 && randf() >= 0.5:
 						i.duration -= 1
@@ -793,7 +796,7 @@ func _on_end_pressed():
 			#Traits
 			if person.traits.has("Uncivilized"):
 				for i in globals.slaves:
-					if i.spec == 'tamer' && (i.work == person.work || i.work in ['rest','headgirl','jailer']) && i.away.duration == 0:
+					if i.spec == 'tamer' && (i.work == person.work || i.work in ['rest','headgirl','jailer']) && i.away.duration == 0 && i.obed > 60:
 						person.obed += 30
 						person.loyal += 5
 						if randf() < 0.1:
@@ -1002,7 +1005,7 @@ func _on_end_pressed():
 							elif person.preg.duration == floor(variables.pregduration/2.7):
 								text0.set_bbcode(text0.get_bbcode() + headgirl.dictionary('[color=yellow]$name reports, that ') + person.dictionary('$name will likely give birth soon. [/color]\n'))
 				else:
-					if person.preg.duration > 10:
+					if person.preg.duration > variables.pregduration/3:
 						person.lactation = true
 						if headgirl != null:
 							if person.preg.duration == floor(variables.pregduration/2.5):
@@ -1229,12 +1232,12 @@ func nextdayevents():
 			return
 	
 	#QMod - Insert for new event system
-	var place = {region = 'any', area = 'mansion', location = 'foyer'}
-	var placeEffects = globals.events.call_events(place, 'schedule')
-	if placeEffects.hasEvent:
-		checkforevents = true
-		return
-		
+#	var place = {region = 'any', area = 'mansion', location = 'foyer'}
+#	var placeEffects = globals.events.call_events(place, 'schedule')
+#	if placeEffects.hasEvent:
+#		checkforevents = true
+#		return
+#
 	#Old scheduled event system
 	for i in globals.state.upcomingevents:
 		if $scene.is_visible_in_tree() == true:
@@ -1657,21 +1660,21 @@ func _on_cancelsaveload_pressed():
 var yesbutton = {target = null, function = null}
 
 func yesnopopup(text, yesfunc, target = self):
-	if yesbutton.target != null && get_node("menucontrol/yesnopopup/HBoxContainer/yesbutton").is_connected("pressed",yesbutton.target, yesbutton.function):
-		get_node("menucontrol/yesnopopup/HBoxContainer/yesbutton").disconnect("pressed",yesbutton.target,yesbutton.function)
-	get_node("menucontrol/yesnopopup/HBoxContainer/yesbutton").connect('pressed',target,yesfunc,[],4)
+	if yesbutton.target != null && get_node("yesnopopup/HBoxContainer/yesbutton").is_connected("pressed",yesbutton.target, yesbutton.function):
+		get_node("yesnopopup/HBoxContainer/yesbutton").disconnect("pressed",yesbutton.target,yesbutton.function)
+	get_node("yesnopopup/HBoxContainer/yesbutton").connect('pressed',target,yesfunc,[],4)
 	yesbutton.target = target
 	yesbutton.function = yesfunc
-	get_node("menucontrol/yesnopopup/Label").set_bbcode(text)
-	get_node("menucontrol/yesnopopup").popup()
+	get_node("yesnopopup/Label").set_bbcode(text)
+	get_node("yesnopopup").popup()
 
 
 func _on_yesbutton_pressed():
-	get_node("menucontrol/yesnopopup").hide()
+	get_node("yesnopopup").hide()
 
 
 func _on_nobutton_pressed():
-	get_node("menucontrol/yesnopopup").hide()
+	get_node("yesnopopup").hide()
 
 ##### Saveload
 
@@ -2367,7 +2370,7 @@ var yrisquestdict = {
 "5":"Beat Yris at her challenge at Gorn's Bar. You'll also need to bring 1000 gold and Deterrent potion. ",
 }
 var zoequestdict = {
-"4":"Deliver to Zoe 10 Teleport Seals, 5 Magic Essences, 5 Tainted Essences.",
+"5":"Deliver to Zoe 10 Teleport Seals, 5 Magic Essences, 5 Tainted Essences.",
 	
 }
 var aydaquestdict = {
@@ -2409,6 +2412,8 @@ func _on_questnode_visibility_changed():
 		sidetext.set_bbcode(sidetext.get_bbcode() + "—"+ yrisquestdict[str(globals.state.sidequests.yris)]+"\n\n")
 	if aydaquestdict.has(str(globals.state.sidequests.ayda)):
 		sidetext.set_bbcode(sidetext.get_bbcode() + "—"+ aydaquestdict[str(globals.state.sidequests.ayda)]+"\n\n")
+	if zoequestdict.has(str(globals.state.sidequests.zoe)):
+		sidetext.set_bbcode(sidetext.get_bbcode() + "—"+ zoequestdict[str(globals.state.sidequests.zoe)]+"\n\n")
 	#repeatables
 	for i in get_node("questnode/TabContainer/Repeatable Quests/ScrollContainer/VBoxContainer").get_children():
 		if i != get_node("questnode/TabContainer/Repeatable Quests/ScrollContainer/VBoxContainer/Button"):

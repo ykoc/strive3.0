@@ -1,8 +1,17 @@
 shader_type canvas_item;
 
-uniform float amount : hint_range(0,5);
+render_mode unshaded;
 
-void fragment() {
+uniform int blurSize : hint_range(0,20); 
 
-	COLOR.rgb = textureLod(SCREEN_TEXTURE,SCREEN_UV,amount).rgb;
+void fragment() 
+{
+COLOR.rgb = textureLod(SCREEN_TEXTURE, SCREEN_UV, float(blurSize)/10.0).rgb; 
 }
+
+//uniform float amount : hint_range(0,5);
+//
+//void fragment() {
+//
+//	COLOR.rgb = textureLod(SCREEN_TEXTURE,SCREEN_UV,amount).rgb;
+//}

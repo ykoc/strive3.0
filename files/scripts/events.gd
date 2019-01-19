@@ -1411,7 +1411,7 @@ func frostfordcityhall(stage = 0):
 
 func frostforddryad():
 	var text 
-	var sprite
+	var sprite = [['forestspirit','pos1','opac']]
 	var state = true
 	var buttons = []
 	if str(globals.state.mainquest) == '28.1':
@@ -3154,6 +3154,7 @@ func aydapersonaltalk():
 			globals.itemdict.aydajewel.amount = 0
 			ayda.loyal += 25
 			ayda.tags.erase('nosex')
+			ayda.consent = true
 			text = textnode.aydareturn3
 			globals.state.sidequests.ayda = 16
 			ayda.add_trait("Grateful")

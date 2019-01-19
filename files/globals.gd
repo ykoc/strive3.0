@@ -3,7 +3,7 @@ extends Node
 
 var effectdict = {}
 var guildslaves = {wimborn = [], gorn = [], frostford = [], umbra = []}
-var gameversion = '0.5.22a'
+var gameversion = '0.5.22b'
 var state = progress.new()
 var developmode = false
 var gameloaded = false
@@ -151,10 +151,10 @@ func _init():
 		if i.find("Beastkin") >= 0:
 			allracesarray.append(i.replace("Beastkin", "Halfkin"))
 	
-	if variables.oldemily == true:
-		for i in ["emilyhappy", "emilynormal","emily2normal","emily2happy","emily2worried","emilynakedhappy","emilynakedneutral"]:
-			spritedict[i] = spritedict['old'+ i]
-		characters.characters.Emily.imageportait = "res://files/images/emily/oldemilyportrait.png"
+#	if variables.oldemily == true:
+#		for i in ["emilyhappy", "emilynormal","emily2normal","emily2happy","emily2worried","emilynakedhappy","emilynakedneutral"]:
+#			spritedict[i] = spritedict['old'+ i]
+#		characters.characters.Emily.imageportait = "res://files/images/emily/oldemilyportrait.png"
 
 
 func savevars():
@@ -1919,7 +1919,8 @@ func itemdescription(item, short = false):
 
 #saveload system
 func save():
-	var array = []
+	state.spelllist.clear()
+	state.itemlist.clear()
 	var dict = {}
 	for i in spelldict:
 		if spelldict[i].learned == true:
@@ -2164,12 +2165,20 @@ func getracebygroup(group):
 		elif group == 'frostford' && races[i].frostfordrace == true:
 			array.append(i)
 	addnonfurrycounterpart(array)
+	if rules.furry == false:
+		removefurries(array)
 	return array[randi()%array.size()]
+
 
 func addnonfurrycounterpart(array):
 	for i in array:
 		if i.find('Beastkin') >= 0:
 			array.append(i.replace('Beastkin', 'Halfkin'))
+
+func removefurries(array):
+	for i in array:
+		if i.find('Beastkin') >= 0:
+			array.erase(i)
 
 
 func checkfurryrace(text):

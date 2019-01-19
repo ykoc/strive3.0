@@ -613,7 +613,7 @@ func _on_quickstart_pressed():
 	slaveDefaults.age = ageArray[rand_range(0,ageArray.size())]
 	slaveDefaults.sex = 'random'
 	startSlave = globals.newslave(slaveDefaults.race, slaveDefaults.age, slaveDefaults.sex, 'poor')	
-	player.imageportait = playerPortraits[randi()%playerPortraits.size()]
+	player.imageportait = playerPortraits[randi()%playerPortraits.size()].path()
 	startSlave.cleartraits()
 	_on_slaveconfirm_pressed()
 

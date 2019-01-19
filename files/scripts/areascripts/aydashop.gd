@@ -38,6 +38,7 @@ func gornayda():
 		globals.main.get_node("outside").buildbuttons(buttons, self)
 	elif globals.state.mainquest == 38:
 		text = textnode.MainQuestFinaleAydaShop
+		sprite = []
 		globals.state.sidequests.ayda = 4
 		globals.state.mainquest = 39
 		globals.main.dialogue(true, self, text, buttons, sprite)

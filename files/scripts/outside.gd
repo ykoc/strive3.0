@@ -1223,7 +1223,7 @@ abortion = {
 code = 'abortion',
 name = 'Commit Abortion',
 number = 2,
-reqs = "person.preg.duration >= 5",
+reqs = "person.preg.duration >= variables.pregduration/6",
 description = "[color=yellow]Stops pregnancy. [/color] ",
 price = 75,
 confirm = "You leave $name in the custody of guild's specialists. As $his pregnancy ends, you can notice how $name looks considerably more stressed."
@@ -1925,13 +1925,22 @@ func sebastianorder():
 		mansion.maintext = "— If you need someone of a specific race, I'll make sure to get one next time you come.  That will cost you 100 gold though. Money up front!"
 		clearbuttons()
 		get_node("sebastiannode").visible = true
-		if globals.rules.furry == false:
-			var counter = get_node("sebastiannode/sebastionorder").get_item_count()
-			var counter2 = 0
-			while counter > counter2:
-				if get_node("sebastiannode/sebastionorder").get_item_text(counter).find('Beastkin') >= 0:
-					get_node("sebastiannode/sebastionorder").remove_item(counter)
-				counter -= 1
+		$sebastiannode/sebastionorder.clear()
+		var array = []
+		for i in globals.races:
+			if globals.races[i].sebastian == true:
+				array.append(i)
+		globals.addnonfurrycounterpart(array)
+		for i in array:
+			$sebastiannode/sebastionorder.add_item(i)
+		
+#		if globals.rules.furry == false:
+#			var counter = get_node("sebastiannode/sebastionorder").get_item_count()
+#			var counter2 = 0
+#			while counter > counter2:
+#				if get_node("sebastiannode/sebastionorder").get_item_text(counter).find('Beastkin') >= 0:
+#					get_node("sebastiannode/sebastionorder").remove_item(counter)
+#				counter -= 1
 	else:
 		var person = globals.state.sebastianslave
 		var array = [{name = "Pay", function = "sebastianpay"}, {name = "Refuse", function = "sebastianrefuse"}]

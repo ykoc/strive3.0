@@ -1103,7 +1103,7 @@ stats = {health = 500, power = 120, speed = 45, energy = 50, armor = 10, magic =
 skills = [],
 },
 finalboss = {
-name = '',
+name = '??',
 code = 'finalboss',
 faction = 'boss',
 icon = load("res://files/images/enemies/darkboss.png"),

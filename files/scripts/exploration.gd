@@ -5,7 +5,7 @@ onready var mansion = get_parent()
 
 var progress = 0.0
 var enemygroup = {}
-var defeated = {}
+var defeated = {units = {}}
 var inencounter = false
 var currentzone
 var lastzone
