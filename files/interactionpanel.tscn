@@ -1,13 +1,15 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://files/theme.tres" type="Theme" id=1]
 [ext_resource path="res://files/scripts/newsexsystem.gd" type="Script" id=2]
 [ext_resource path="res://files/buttons/menupanel.png" type="Texture" id=3]
 [ext_resource path="res://files/buttons/Panel.png" type="Texture" id=4]
-[ext_resource path="res://files/buttons/sexicons/lust1.png" type="Texture" id=5]
-[ext_resource path="res://files/images/maple/mapleportrait.png" type="Texture" id=6]
-[ext_resource path="res://files/images/maple/maple.png" type="Texture" id=7]
-[ext_resource path="res://files/buttons/sexicons/time.png" type="Texture" id=8]
+[ext_resource path="res://files/buttons/sexicons/sens3.png" type="Texture" id=5]
+[ext_resource path="res://files/buttons/sexicons/sens5.png" type="Texture" id=6]
+[ext_resource path="res://files/images/maple/mapleportrait.png" type="Texture" id=7]
+[ext_resource path="res://files/buttons/sexicons/lust1.png" type="Texture" id=8]
+[ext_resource path="res://files/images/maple/maple.png" type="Texture" id=9]
+[ext_resource path="res://files/buttons/sexicons/time.png" type="Texture" id=10]
 
 [sub_resource type="StyleBoxTexture" id=1]
 
@@ -28,7 +30,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=2]
+[sub_resource type="StyleBoxTexture" id=10]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -132,92 +134,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=8]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
-margin_left = 0.0
-margin_right = 0.0
-margin_top = 0.0
-margin_bottom = 0.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
-
-[sub_resource type="StyleBoxTexture" id=9]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
-margin_left = 0.0
-margin_right = 0.0
-margin_top = 0.0
-margin_bottom = 0.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
-
-[sub_resource type="StyleBoxTexture" id=10]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
-margin_left = 0.0
-margin_right = 0.0
-margin_top = 0.0
-margin_bottom = 0.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
-
-[sub_resource type="StyleBoxTexture" id=11]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
-margin_left = 0.0
-margin_right = 0.0
-margin_top = 0.0
-margin_bottom = 0.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
-
-[sub_resource type="StyleBoxTexture" id=12]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
-margin_left = 0.0
-margin_right = 0.0
-margin_top = 0.0
-margin_bottom = 0.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
-
-[node name="Control" type="Control"]
+[node name="Control" type="Control" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -241,10 +158,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 27.0
-margin_top = 24.0
+margin_left = 7.0
+margin_top = 3.0
 margin_right = 25.0
-margin_bottom = 96.0
+margin_bottom = 127.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -252,16 +169,16 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 
-[node name="Panel" type="Panel" parent="Panel" index="0"]
+[node name="LogPanel" type="Panel" parent="Panel" index="0"]
 
 anchor_left = 0.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
-margin_top = -368.0
+margin_top = -314.0
 margin_right = -14.0
-margin_bottom = -92.0
+margin_bottom = -64.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -278,9 +195,9 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 32.0
-margin_top = -351.0
+margin_top = -299.0
 margin_right = -504.0
-margin_bottom = -110.0
+margin_bottom = -76.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = true
 mouse_filter = 0
@@ -288,18 +205,17 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 bbcode_enabled = true
-bbcode_text = "Text1
-"
+bbcode_text = "test"
 visible_characters = -1
 percent_visible = 1.0
 meta_underlined = false
 tab_size = 4
-text = "Text1
-"
+text = "test"
 scroll_active = true
-scroll_following = false
+scroll_following = true
 selection_enabled = false
 override_selected_font_color = false
+_sections_unfolded = [ "BBCode" ]
 
 [node name="VSeparator" type="VSeparator" parent="Panel" index="2"]
 
@@ -308,9 +224,9 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -501.0
-margin_top = -361.0
+margin_top = -307.0
 margin_right = -486.0
-margin_bottom = -98.0
+margin_bottom = -73.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -325,9 +241,9 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -486.0
-margin_top = -351.0
+margin_top = -299.0
 margin_right = -32.0
-margin_bottom = -111.0
+margin_bottom = -82.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = true
 mouse_filter = 0
@@ -352,10 +268,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 19.0
-margin_top = 61.0
-margin_right = -601.0
-margin_bottom = -383.0
+margin_left = 455.0
+margin_top = 16.0
+margin_right = -430.0
+margin_bottom = -412.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = true
 mouse_filter = 0
@@ -381,19 +297,22 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-columns = 2
-_sections_unfolded = [ "Size Flags" ]
+custom_constants/vseparation = -2
+custom_constants/hseparation = -2
+columns = 3
+_sections_unfolded = [ "Size Flags", "custom_constants" ]
 
 [node name="Button" type="Button" parent="Panel/GridContainer/GridContainer" index="0"]
 
+editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 200.0
+margin_right = 150.0
 margin_bottom = 39.0
-rect_min_size = Vector2( 200, 20 )
+rect_min_size = Vector2( 150, 20 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -409,7 +328,7 @@ text = "Caress"
 flat = false
 clip_text = true
 align = 0
-_sections_unfolded = [ "Size Flags" ]
+_sections_unfolded = [ "Rect", "Size Flags" ]
 
 [node name="continue" type="Button" parent="Panel/GridContainer/GridContainer/Button" index="0"]
 
@@ -418,8 +337,8 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 162.0
-margin_right = 202.0
+margin_left = 112.0
+margin_right = 152.0
 margin_bottom = 39.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -460,16 +379,134 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Visibility", "custom_colors" ]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel" index="5"]
+[node name="GridContainer2" type="ScrollContainer" parent="Panel" index="5"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 454.0
+margin_top = 368.0
+margin_right = -435.0
+margin_bottom = -304.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+scroll_horizontal_enabled = false
+scroll_horizontal = 0
+scroll_vertical_enabled = true
+scroll_vertical = 0
+scroll_deadzone = 0
+_sections_unfolded = [ "Scroll" ]
+
+[node name="GridContainer" type="GridContainer" parent="Panel/GridContainer2" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 17.0
-margin_top = 19.0
-margin_right = 655.0
-margin_bottom = 59.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_constants/vseparation = -2
+custom_constants/hseparation = -2
+columns = 3
+_sections_unfolded = [ "Size Flags", "custom_constants" ]
+
+[node name="Button" type="Button" parent="Panel/GridContainer2/GridContainer" index="0"]
+
+editor/display_folded = true
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 150.0
+margin_bottom = 39.0
+rect_min_size = Vector2( 150, 20 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Caress"
+flat = false
+clip_text = true
+align = 0
+_sections_unfolded = [ "Rect", "Size Flags" ]
+
+[node name="continue" type="Button" parent="Panel/GridContainer2/GridContainer/Button" index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 162.0
+margin_right = 202.0
+margin_bottom = 39.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "∞"
+flat = false
+align = 1
+
+[node name="Label" type="Label" parent="Panel/GridContainer2/GridContainer/Button" index="1"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 144.0
+margin_top = 11.0
+margin_right = 164.0
+margin_bottom = 33.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_colors/font_color = Color( 0.295026, 0.11673, 0.332031, 1 )
+text = "A"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Visibility", "custom_colors" ]
+
+[node name="HBoxContainer" type="VBoxContainer" parent="Panel" index="6"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 413.0
+margin_top = 15.0
+margin_right = 453.0
+margin_bottom = 231.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -484,11 +521,12 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 100.0
-margin_bottom = 39.0
-rect_min_size = Vector2( 100, 0 )
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
+hint_tooltip = "Petting"
 focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
@@ -498,9 +536,10 @@ toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "Caress"
+text = "P"
 flat = false
 align = 1
+_sections_unfolded = [ "Hint", "Rect" ]
 
 [node name="fucking" type="Button" parent="Panel/HBoxContainer" index="1"]
 
@@ -508,12 +547,13 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 104.0
-margin_right = 204.0
-margin_bottom = 39.0
-rect_min_size = Vector2( 100, 0 )
+margin_top = 44.0
+margin_right = 40.0
+margin_bottom = 84.0
+rect_min_size = Vector2( 40, 40 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
+hint_tooltip = "Penetration"
 focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
@@ -523,9 +563,10 @@ toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "Fucking"
+text = "F"
 flat = false
 align = 1
+_sections_unfolded = [ "Hint", "Rect" ]
 
 [node name="tools" type="Button" parent="Panel/HBoxContainer" index="2"]
 
@@ -533,12 +574,13 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 208.0
-margin_right = 308.0
-margin_bottom = 39.0
-rect_min_size = Vector2( 100, 0 )
+margin_top = 88.0
+margin_right = 40.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 40, 40 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
+hint_tooltip = "Tools"
 focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
@@ -548,9 +590,10 @@ toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "Tools"
+text = "T"
 flat = false
 align = 1
+_sections_unfolded = [ "Hint", "Rect" ]
 
 [node name="SM" type="Button" parent="Panel/HBoxContainer" index="3"]
 
@@ -558,12 +601,13 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 312.0
-margin_right = 412.0
-margin_bottom = 39.0
-rect_min_size = Vector2( 100, 0 )
+margin_top = 132.0
+margin_right = 40.0
+margin_bottom = 172.0
+rect_min_size = Vector2( 40, 40 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
+hint_tooltip = "S&M"
 focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
@@ -573,9 +617,10 @@ toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "SM"
+text = "S"
 flat = false
 align = 1
+_sections_unfolded = [ "Hint", "Rect" ]
 
 [node name="humiliation" type="Button" parent="Panel/HBoxContainer" index="4"]
 
@@ -583,12 +628,13 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 416.0
-margin_right = 525.0
-margin_bottom = 39.0
-rect_min_size = Vector2( 100, 0 )
+margin_top = 176.0
+margin_right = 40.0
+margin_bottom = 216.0
+rect_min_size = Vector2( 40, 40 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
+hint_tooltip = "Humiliation"
 focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
@@ -598,9 +644,10 @@ toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "Humiliation"
+text = "H"
 flat = false
 align = 1
+_sections_unfolded = [ "Hint", "Rect" ]
 
 [node name="other" type="Button" parent="Panel/HBoxContainer" index="5"]
 
@@ -609,9 +656,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 529.0
-margin_right = 629.0
-margin_bottom = 39.0
+margin_top = 215.0
+margin_right = 100.0
+margin_bottom = 254.0
 rect_min_size = Vector2( 100, 0 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -628,17 +675,16 @@ text = "Other"
 flat = false
 align = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Panel" index="6"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel" index="7"]
 
-editor/display_folded = true
 anchor_left = 1.0
 anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 0.0
-margin_left = -574.0
-margin_top = 26.0
-margin_right = -24.0
-margin_bottom = 332.0
+margin_left = -1324.0
+margin_top = 11.0
+margin_right = -949.0
+margin_bottom = 392.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = true
 mouse_filter = 0
@@ -675,19 +721,53 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 550.0
+margin_right = 375.0
 margin_bottom = 45.0
-rect_min_size = Vector2( 550, 45 )
+rect_min_size = Vector2( 375, 45 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 0
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 2 )
+custom_styles/panel = SubResource( 10 )
 _sections_unfolded = [ "Rect", "Size Flags" ]
 
-[node name="name" type="Button" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="0"]
+[node name="arousal" type="TextureProgress" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 246.0
+margin_top = 2.0
+margin_right = 346.0
+margin_bottom = 102.0
+rect_scale = Vector2( 0.4, 0.4 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Arousal"
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+min_value = 0.0
+max_value = 1000.0
+step = 1.0
+page = 0.0
+value = 100.0
+exp_edit = false
+rounded = false
+texture_under = ExtResource( 5 )
+texture_over = null
+texture_progress = ExtResource( 6 )
+fill_mode = 3
+radial_fill_degrees = 360.0
+radial_center_offset = Vector2( 0, 0 )
+nine_patch_stretch = false
+_sections_unfolded = [ "Hint", "Mouse", "Percent", "Rect", "Size Flags", "Textures", "Visibility" ]
+
+[node name="name" type="Button" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="1"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -695,7 +775,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 59.0
 margin_top = 10.0
-margin_right = 116.0
+margin_right = 142.0
 margin_bottom = 29.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -722,15 +802,15 @@ flat = false
 clip_text = true
 align = 0
 
-[node name="sex" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="1"]
+[node name="sex" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="2"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 126.0
+margin_left = 146.0
 margin_top = 11.0
-margin_right = 148.0
+margin_right = 168.0
 margin_bottom = 31.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -742,184 +822,7 @@ expand = true
 stretch_mode = 6
 _sections_unfolded = [ "Hint" ]
 
-[node name="sens" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 264.0
-margin_top = 9.0
-margin_right = 289.0
-margin_bottom = 34.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-hint_tooltip = "arousal"
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-texture = ExtResource( 5 )
-expand = true
-stretch_mode = 6
-_sections_unfolded = [ "Hint" ]
-
-[node name="lust" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 336.0
-margin_top = 9.0
-margin_right = 361.0
-margin_bottom = 34.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-hint_tooltip = "lust"
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-texture = ExtResource( 5 )
-expand = true
-stretch_mode = 6
-_sections_unfolded = [ "Hint" ]
-
-[node name="lube" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="4"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 300.0
-margin_top = 9.0
-margin_right = 325.0
-margin_bottom = 34.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-hint_tooltip = "lubrication"
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-texture = ExtResource( 5 )
-expand = true
-stretch_mode = 6
-_sections_unfolded = [ "Hint" ]
-
-[node name="stress" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="5"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 370.0
-margin_top = 9.0
-margin_right = 395.0
-margin_bottom = 34.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-hint_tooltip = "stress"
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-texture = ExtResource( 5 )
-expand = true
-stretch_mode = 6
-_sections_unfolded = [ "Hint" ]
-
-[node name="mood" type="Label" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="6"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 449.0
-margin_top = 12.0
-margin_right = 538.0
-margin_bottom = 32.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 0
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-text = "Mood"
-clip_text = true
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="give" type="Button" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="7"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 156.0
-margin_top = 6.0
-margin_right = 198.0
-margin_bottom = 36.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-custom_styles/hover = SubResource( 8 )
-custom_styles/pressed = SubResource( 9 )
-custom_styles/focus = SubResource( 10 )
-custom_styles/disabled = SubResource( 11 )
-custom_styles/normal = SubResource( 12 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_colors/font_color_hover = Color( 0.557155, 0.149261, 0.570313, 1 )
-custom_colors/font_color_pressed = Color( 0.171875, 1, 0, 1 )
-toggle_mode = true
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "give"
-flat = false
-align = 1
-
-[node name="take" type="Button" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="8"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 202.0
-margin_top = 6.0
-margin_right = 244.0
-margin_bottom = 36.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-custom_styles/hover = SubResource( 8 )
-custom_styles/pressed = SubResource( 9 )
-custom_styles/focus = SubResource( 10 )
-custom_styles/disabled = SubResource( 11 )
-custom_styles/normal = SubResource( 12 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_colors/font_color_hover = Color( 0.557155, 0.149261, 0.570313, 1 )
-custom_colors/font_color_pressed = Color( 0.171875, 1, 0, 1 )
-toggle_mode = true
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "take"
-flat = false
-align = 1
-
-[node name="portrait" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="9"]
+[node name="portrait" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="3"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -935,21 +838,237 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 6 )
+texture = ExtResource( 7 )
 expand = true
 stretch_mode = 7
 _sections_unfolded = [ "Hint", "Rect" ]
 
-[node name="stopbutton" type="Button" parent="Panel" index="7"]
+[node name="sens" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="4"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 259.0
+margin_top = 2.0
+margin_right = 299.0
+margin_bottom = 42.0
+rect_min_size = Vector2( 40, 40 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "arousal"
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 8 )
+expand = true
+stretch_mode = 6
+_sections_unfolded = [ "Hint", "Rect" ]
+
+[node name="lust" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="5"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 303.0
+margin_top = 2.0
+margin_right = 343.0
+margin_bottom = 42.0
+rect_min_size = Vector2( 40, 40 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "lust"
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 8 )
+expand = true
+stretch_mode = 6
+_sections_unfolded = [ "Hint", "Rect" ]
+
+[node name="lube" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="6"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 347.0
+margin_top = 2.0
+margin_right = 387.0
+margin_bottom = 42.0
+rect_min_size = Vector2( 40, 40 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "lubrication"
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 8 )
+expand = true
+stretch_mode = 6
+_sections_unfolded = [ "Hint", "Rect" ]
+
+[node name="stress" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="7"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 391.0
+margin_top = 2.0
+margin_right = 431.0
+margin_bottom = 42.0
+rect_min_size = Vector2( 40, 40 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "stress"
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 8 )
+expand = true
+stretch_mode = 6
+_sections_unfolded = [ "Hint", "Rect" ]
+
+[node name="tied" type="Label" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="8"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 203.0
+margin_top = 12.0
+margin_right = 213.0
+margin_bottom = 32.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Tied"
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "T"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Focus", "Hint", "Mouse" ]
+
+[node name="sexcrazed" type="Label" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="9"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 221.0
+margin_top = 12.0
+margin_right = 232.0
+margin_bottom = 32.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Sex-crazed"
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "S"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Focus", "Hint", "Mouse" ]
+
+[node name="drunk" type="Label" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="10"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 238.0
+margin_top = 12.0
+margin_right = 251.0
+margin_bottom = 32.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Drunk"
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "D"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Focus", "Hint", "Mouse" ]
+
+[node name="resist" type="Label" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="11"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 186.0
+margin_top = 12.0
+margin_right = 199.0
+margin_bottom = 32.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Resists"
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "R"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Focus", "Hint", "Mouse" ]
+
+[node name="forced" type="Label" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="12"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 171.0
+margin_top = 12.0
+margin_right = 184.0
+margin_bottom = 32.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Forced"
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "F"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Hint", "Mouse" ]
+
+[node name="stopbutton" type="Button" parent="Panel" index="8"]
 
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -189.0
-margin_top = -74.0
-margin_right = -24.0
-margin_bottom = -29.0
+margin_left = -183.0
+margin_top = -60.0
+margin_right = -18.0
+margin_bottom = -15.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -965,16 +1084,16 @@ text = "Stop"
 flat = false
 align = 1
 
-[node name="passbutton" type="Button" parent="Panel" index="8"]
+[node name="passbutton" type="Button" parent="Panel" index="9"]
 
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -342.0
-margin_top = -74.0
-margin_right = -197.0
-margin_bottom = -29.0
+margin_left = -336.0
+margin_top = -60.0
+margin_right = -191.0
+margin_bottom = -15.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 hint_tooltip = "Hotkey: F"
@@ -992,9 +1111,8 @@ flat = false
 align = 1
 _sections_unfolded = [ "Hint" ]
 
-[node name="bodyimage" type="TextureRect" parent="Panel" index="9"]
+[node name="bodyimage" type="TextureRect" parent="Panel" index="10"]
 
-editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -1010,7 +1128,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 7 )
+texture = ExtResource( 9 )
 expand = true
 stretch_mode = 6
 _sections_unfolded = [ "Rect" ]
@@ -1032,16 +1150,16 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 _sections_unfolded = [ "Visibility" ]
 
-[node name="blacklist" type="Button" parent="Panel" index="10"]
+[node name="blacklist" type="Button" parent="Panel" index="11"]
 
 anchor_left = 0.0
 anchor_top = 1.0
 anchor_right = 0.0
 anchor_bottom = 1.0
 margin_left = 17.0
-margin_top = -55.0
+margin_top = -59.0
 margin_right = 176.0
-margin_bottom = -16.0
+margin_bottom = -20.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -1057,16 +1175,16 @@ text = "Action visibility"
 flat = false
 align = 1
 
-[node name="aiallow" type="Button" parent="Panel" index="11"]
+[node name="aiallow" type="Button" parent="Panel" index="12"]
 
 anchor_left = 0.0
 anchor_top = 1.0
 anchor_right = 0.0
 anchor_bottom = 1.0
 margin_left = 187.0
-margin_top = -55.0
+margin_top = -59.0
 margin_right = 346.0
-margin_bottom = -16.0
+margin_bottom = -20.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 hint_tooltip = "When toggled, main character won't be selected for actions by other participants."
@@ -1084,6 +1202,168 @@ flat = false
 align = 1
 _sections_unfolded = [ "Focus", "Hint", "Rect" ]
 
+[node name="givetakepanel" type="Panel" parent="Panel" index="13"]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 924.0
+margin_right = 1336.0
+margin_bottom = 397.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="givercontainer" type="VBoxContainer" parent="Panel/givetakepanel" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 16.0
+margin_top = 39.0
+margin_right = 196.0
+margin_bottom = 218.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+alignment = 0
+
+[node name="Button" type="Button" parent="Panel/givetakepanel/givercontainer" index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 180.0
+margin_bottom = 39.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Name"
+flat = false
+align = 1
+
+[node name="receivercontainer" type="VBoxContainer" parent="Panel/givetakepanel" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 216.0
+margin_top = 39.0
+margin_right = 396.0
+margin_bottom = 218.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+alignment = 0
+
+[node name="Button" type="Button" parent="Panel/givetakepanel/receivercontainer" index="0"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 180.0
+margin_bottom = 39.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Name"
+flat = false
+align = 1
+
+[node name="Label" type="Label" parent="Panel/givetakepanel" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 61.0
+margin_top = 19.0
+margin_right = 159.0
+margin_bottom = 39.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "Actors"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Label2" type="Label" parent="Panel/givetakepanel" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 261.0
+margin_top = 19.0
+margin_right = 359.0
+margin_bottom = 39.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "Receivers"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="VSeparator" type="VSeparator" parent="Panel/givetakepanel" index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 205.0
+margin_top = 9.0
+margin_right = 209.0
+margin_bottom = 388.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
 [node name="TextureFrame" type="TextureRect" parent="." index="1"]
 
 editor/display_folded = true
@@ -1091,17 +1371,17 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -407.0
-margin_top = 27.0
-margin_right = -362.0
-margin_bottom = 65.0
+margin_left = -393.0
+margin_top = 69.0
+margin_right = -348.0
+margin_bottom = 107.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-texture = ExtResource( 8 )
+texture = ExtResource( 10 )
 expand = true
 stretch_mode = 6
 
@@ -1403,9 +1683,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 220.0
+margin_left = 390.0
 margin_top = 680.0
-margin_right = 340.0
+margin_right = 510.0
 margin_bottom = 719.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false

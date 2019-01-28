@@ -74,6 +74,3 @@ func initiate():
 	temparray += ["[name1] grab[s/1] [name2] and {^deeply :}kiss[es/1] [him2], {^driving [his1] tongue[/s1] into [his2] mouth[/s2]:eagerly tasting [his2] lips}."]
 	return temparray[randi()%temparray.size()]
 	
-	#move this to reaction
-	#if takers[0].lust > 50 || takers[0].person.loyal >= 50:
-	#	text += "[name2] enthusiastically returns the kiss with a dreamy expression on [his2] face..."

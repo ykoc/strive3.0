@@ -9,7 +9,7 @@ const giverpart = 'mouth'
 const takerpart = 'penis'
 const virginloss = false
 const giverconsent = 'basic'
-const takerconsent = 'basic'
+const takerconsent = 'any'
 
 func getname(state = null):
 	if givers.size() + takers.size() == 2:

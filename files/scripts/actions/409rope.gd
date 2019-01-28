@@ -22,9 +22,8 @@ func getongoingdescription(givers, takers):
 	
 func requirements():
 	var valid = true
-#	for i in takers:
-#		if i.acc4 != null:
-#			valid = false
+	if globals.itemdict.rope.amount <= 0:
+		valid = false
 	if takers.size() < 1 || givers.size() < 1:
 		valid = false
 	elif givers.size() > 2:
@@ -54,32 +53,22 @@ func takereffect(member):
 		result = 'average'
 	else:
 		result = 'bad'
-	if member.person.sex == 'male':
-		effects.sens /= 1.3
 	return [result, effects]
 
 func initiate():
 	var text = ''
 	var temparray = []
-	temparray += ["[name1] {^place:stick}[s/1] a rope around [names2] body to enable restricted type of actions."]
-#	temparray += ["[name1] latch[es/1] onto [names2] nipples"]
+	temparray += ["[name1] {^wrap:tie}[s/1] a rope around [names2] body to restrict [his2] movements."]
 	text += temparray[randi()%temparray.size()]
+	for i in takers:
+		globals.itemdict.rope.amount -= 1
+		i.effects.append('tied')
 	temparray.clear()
 	return text
 
 func reaction(member):
 	var text = ''
 	if member.energy == 0:
-		text = "[name2] lie[s/2] unconscious, with her body still tied down."
-	#elif member.consent == false:
-		#TBD
-# probably fear used here as in fear to be abuse and been unable to move to avoid the abose
-#	elif member.sens < 100:
-#		text = "[name2] {^show:give}[s/2] little {^response:reaction} to [his2] nipples being {^stimulated:teased:sucked on:suckled}."
-#	elif member.sens < 400:
-#		text = "[name2] {^begin:start}[s/2] to {^respond:react} as [his2] nipples are {^stimulated:teased:sucked on:suckled}."
-#	elif member.sens < 800:
-#		text = "[name2] {^moans[s/2]:crie[s/2] out} in {^pleasure:arousal:extacy} as [his2] nipples are {^stimulated:teased:sucked on:suckled}."
-#	else:
-#		text = "[names2] body {^trembles:quivers} {^at the slightest movement of [names1] tongue[/s1]:in response to [names1] suckling}{^ as [he2] rapidly near[s/2] orgasm: as [he2] approach[es/2] orgasm: as [he2] edge[s/2] toward orgasm:}."
+		text = "[name2] lie[s/2] unconscious, with [his2] body still tied down."
+
 	return text

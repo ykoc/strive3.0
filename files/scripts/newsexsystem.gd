@@ -21,6 +21,8 @@ var penetratecategories = ['missionary','missionaryanal','doggy','doggyanal','lo
 
 var filter = ['nosehook','relaxinginsense','facesit','afacesit','grovel','enemaplug']
 
+var statuseffects = ['tied', 'subdued', 'drunk', 'resist', 'sexcrazed']
+
 
 var statsicons = {
 lub1 = load("res://files/buttons/sexicons/lub1.png"),
@@ -64,6 +66,8 @@ class member:
 	var orgasms = 0
 	var lastaction
 	
+	var number = 0
+	
 	var svagina = 0
 	var smouth = 0
 	var sclit = 0
@@ -71,13 +75,18 @@ class member:
 	var spenis = 0
 	var sanus = 0
 	var lewd
+	var activeactions = []
+	
+	var orgasm = false
+	var virginitytaken = false
+	
+	var effects = []
+	
+	var subduedby = []
+	var subduing
 	
 	var energy = 100
 	
-	var knowledge
-	
-	var giving = []
-	var taking = []
 	
 	var vagina
 	var penis
@@ -258,35 +267,49 @@ func _ready():
 	
 	filter = globals.state.actionblacklist
 	
-	var i = 5
+	var i = 4
 	if globals.player.name == '':
 		globals.itemdict.supply.amount = 10
+		globals.itemdict.rope.amount = 10
 		while i > 0:
 			i -= 1
-			var person = globals.newslave(globals.allracesarray[rand_range(0,globals.allracesarray.size())], 'random', 'random')
-			var newmember = member.new()
-			person.obed = 90
-			person.lewdness = 70
-			person.mods['hollownipples'] = 'hollownipples'
-			person.sex = 'male'
-			if participants.size() > 0:
-				person.sex = 'female'
-				globals.connectrelatives(participants[0].person, person, 'father')
-			newmember.loyalty = person.loyal
-			newmember.submission = person.obed
-			newmember.person = person
-			newmember.sex = person.sex
-			newmember.name = person.name_short()
-			newmember.svagina = person.sensvagina
-			newmember.smouth = person.sensmouth
-			newmember.spenis = person.senspenis
-			newmember.sanus = person.sensanal
-			newmember.lewd = person.lewdness
-			participants.append(newmember)
+			createtestdummy()
+#			var person = globals.newslave(globals.allracesarray[rand_range(0,globals.allracesarray.size())], 'random', 'random')
+#			var newmember = member.new()
+#			person.obed = 90
+#			person.lewdness = 70
+#			person.mods['hollownipples'] = 'hollownipples'
+#			person.sex = 'male'
+#			if participants.size() > 0:
+#				person.sex = 'female'
+#				globals.connectrelatives(participants[0].person, person, 'father')
+#			newmember.loyalty = person.loyal
+#			newmember.submission = person.obed
+#			newmember.person = person
+#			newmember.sex = person.sex
+#			newmember.name = person.name_short()
+#			newmember.svagina = person.sensvagina
+#			newmember.smouth = person.sensmouth
+#			newmember.spenis = person.senspenis
+#			newmember.sanus = person.sensanal
+#			newmember.lewd = person.lewdness
+#			participants.append(newmember)
 		turns = variables.timeforinteraction
+		createtestdummy('resist')
 		changecategory('caress')
 		clearstate()
+		#$Panel/sceneeffects.bbcode_text = '1' + '[img]' + add_portrait_to_text(participants[0]) + '[/img]' 
 		rebuildparticipantslist()
+
+func add_portrait_to_text(member):
+	var newimage = Image.new()
+	if !File.new().file_exists(member.person.imageportait):
+		return
+	newimage.load(member.person.imageportait)
+	var subimage = ImageTexture.new()
+	subimage.create_from_image(newimage)
+	subimage.set_size_override(Vector2(24,24))
+	$Panel/sceneeffects.add_image(subimage)
 
 func _input(event):
 	if !event is InputEventKey || is_visible_in_tree() == false:
@@ -296,16 +319,55 @@ func _input(event):
 		var key = dict[event.scancode]
 		if event.is_action_pressed(str(key)) == true && participants.size() >= key:
 			if !givers.has(participants[key-1]) && !takers.has(participants[key-1]):
-				$Panel/ScrollContainer/VBoxContainer.get_child(key).get_node('give').emit_signal("pressed")
+				$Panel/givetakepanel/givercontainer.get_child(key).emit_signal("pressed")
 			else:
-				$Panel/ScrollContainer/VBoxContainer.get_child(key).get_node('take').emit_signal("pressed")
+				$Panel/givetakepanel/receivercontainer.get_child(key).emit_signal("pressed")
 	if event.is_action_pressed("F") && $Panel/passbutton.disabled == false:
 		_on_passbutton_pressed()
+
+var dummycounter = 0
+
+func createtestdummy(type = 'normal'):
+	var person = globals.newslave(globals.allracesarray[rand_range(0,globals.allracesarray.size())], 'random', 'random')
+	var newmember = member.new()
+	person.obed = 90
+	person.lewdness = 70
+	person.mods['hollownipples'] = 'hollownipples'
+	#person.sex = 'male'
+	person.consent = true
+	if type == 'resist':
+		person.obed = 0
+		person.consent = false
+#	if participants.size() > 0:
+#		person.sex = 'female'
+#		globals.connectrelatives(participants[0].person, person, 'father')
+	
+	newmember.loyalty = person.loyal
+	newmember.submission = person.obed
+	newmember.person = person
+	newmember.sex = person.sex
+	newmember.name = person.name_short()
+	newmember.svagina = person.sensvagina
+	newmember.smouth = person.sensmouth
+	newmember.spenis = person.senspenis
+	newmember.sanus = person.sensanal
+	newmember.lewd = person.lewdness
+	newmember.consent = person.consent
+	newmember.number = dummycounter
+	dummycounter += 1
+	
+	if person.consent == false && person != globals.player:
+		newmember.effects.append('forced')
+	if person.obed < 80 && person != globals.player:
+		newmember.effects.append('resist')
+	
+	participants.append(newmember)
 
 
 func startsequence(actors, mode = null, secondactors = [], otheractors = []):
 	participants.clear()
 	secondactorcounter.clear()
+	$Panel/sceneeffects.clear()
 	get_node("Control").hide()
 	for person in actors:
 		var newmember = member.new()
@@ -330,34 +392,14 @@ func startsequence(actors, mode = null, secondactors = [], otheractors = []):
 		newmember.lewd = person.lewdness
 		newmember.person.metrics.sex += 1
 		participants.append(newmember)
-	$Panel/aiallow.pressed = aiobserve
-	if mode == 'abuse':
-		for person in secondactors:
-			var newmember = member.new()
-			for i in actors + secondactors:
-				if person != i:
-					if person.sexexp.watchers.has(i.id):
-						person.sexexp.watchers[i.id] += 1
-					else:
-						person.sexexp.watchers[i.id] = 1
-			person.lastinteractionday = globals.resources.day
-			newmember.loyalty = person.loyal
-			newmember.submission = person.obed
-			newmember.person = person
-			newmember.sex = person.sex
-			newmember.lust = person.lust*10
-			newmember.sens = newmember.lust/2
-			newmember.name = person.name_short()
-			newmember.svagina = person.sensvagina
-			newmember.smouth = person.sensmouth
-			newmember.spenis = person.senspenis
-			newmember.sanus = person.sensanal
-			newmember.lewd = person.lewdness
-			newmember.mode = 'forced'
+		if person.consent == false && person != globals.player:
 			newmember.consent = false
-			newmember.person.metrics.sex += 1
-			newmember.person.metrics.roughsex += 1
-			participants.append(newmember)
+			newmember.effects.append('forced')
+		if person.obed < 80 && person != globals.player:
+			newmember.effects.append('resist')
+		if person.traits.has("Sex-crazed"):
+			newmember.effects.append("sexcrazed")
+	$Panel/aiallow.pressed = aiobserve
 	get_node("Panel/sceneeffects").set_bbcode("You bring selected participants into your bedroom. ")
 	for i in otheractors:
 		while otheractors[i] > 0:
@@ -370,8 +412,11 @@ func startsequence(actors, mode = null, secondactors = [], otheractors = []):
 				participants[participants.size()-1].npc = true
 			otheractors[i] -= 1
 	
+	var counter = 0
 	for i in participants:
 		i.person.attention = 0
+		i.number = counter
+		counter += 1
 	turns = variables.timeforinteraction
 	changecategory('caress')
 	clearstate()
@@ -396,7 +441,7 @@ func rebuildparticipantslist():
 	var effects
 	if selectmode == 'ai':
 		clearstate()
-	for i in get_node("Panel/ScrollContainer/VBoxContainer").get_children() + get_node("Panel/GridContainer/GridContainer").get_children():
+	for i in get_node("Panel/ScrollContainer/VBoxContainer").get_children() + get_node("Panel/GridContainer/GridContainer").get_children() + get_node("Panel/givetakepanel/givercontainer").get_children() + get_node("Panel/givetakepanel/receivercontainer").get_children() + $Panel/GridContainer2/GridContainer.get_children():
 		if !i.get_name() in ['Panel', 'Button']:
 			i.visible = false
 			i.queue_free()
@@ -406,85 +451,126 @@ func rebuildparticipantslist():
 		get_node("Panel/ScrollContainer/VBoxContainer").add_child(newnode)
 		newnode.get_node("name").set_text(i.person.dictionary('$name'))
 		newnode.get_node("name").connect("pressed",self,"slavedescription",[i])
-		if givers.find(i) >= 0:
-			newnode.get_node("give").set_pressed(true)
-		elif takers.find(i) >= 0:
-			newnode.get_node("take").set_pressed(true)
 		newnode.set_meta("person", i)
 		newnode.get_node("sex").set_texture(globals.sexicon[i.person.sex])
 		newnode.get_node("sex").set_tooltip(i.person.sex)
-		newnode.get_node("lust").set_texture(statsicons['lust' + str(max(1,ceil(i.lust/200)))])
-		newnode.get_node("sens").set_texture(statsicons['sens' + str(max(1,ceil(i.sens/200)))])
-		newnode.get_node("lube").set_texture(statsicons['lub' + str(clamp(ceil(i.lube/2), 1, 5))])
-		newnode.get_node("stress").set_texture(statsicons['stress'+str(clamp(round(i.person.stress/33)+1,1,3))])
-		newnode.get_node("stress").set_tooltip("Stress: " + str(floor(i.person.stress))+"%")
-		newnode.get_node("give").connect("pressed",self,'switchsides',[newnode, 'give'])
-		newnode.get_node("take").connect("pressed",self,'switchsides',[newnode, 'take'])
+		newnode.get_node('arousal').value = i.sens
+#		newnode.get_node("lust").set_texture(statsicons['lust' + str(max(1,ceil(i.lust/200)))])
+		#newnode.get_node("sens").set_texture(statsicons['sens' + str(max(1,ceil(i.sens/200)))])
+#		newnode.get_node("lube").set_texture(statsicons['lub' + str(clamp(ceil(i.lube/2), 1, 5))])
+#		newnode.get_node("stress").set_texture(statsicons['stress'+str(clamp(round(i.person.stress/33)+1,1,3))])
+#		newnode.get_node("stress").set_tooltip("Stress: " + str(floor(i.person.stress))+"%")
 		newnode.get_node("portrait").texture = globals.loadimage(i.person.imageportait)
 		newnode.get_node("portrait").connect("mouse_entered",self,'showbody',[i])
 		newnode.get_node("portrait").connect("mouse_exited",self,'hidebody')
-		if ai.has(i):
-			newnode.get_node('name').set('custom_colors/font_color', Color(1,0.2,0.8))
-			newnode.get_node('name').hint_tooltip = 'Leads'
 		
-		if i.person == globals.player:
-			newnode.get_node("mood").hide()
-			continue
+		for k in i.effects:
+			newnode.get_node(k).visible = true
 		
-		if i.person.obed < 90:
-			newnode.get_node("mood").set("custom_colors/font_color", Color(1,i.person.obed/100,i.person.obed/100))
-			newnode.get_node("mood").set_text("Rebellious")
+#		if ai.has(i):
+#			newnode.get_node('name').set('custom_colors/font_color', Color(1,0.2,0.8))
+#			newnode.get_node('name').hint_tooltip = 'Leads'
 		
-		if i.mode == 'forced':
-			newnode.get_node("mood").set("custom_colors/font_color", Color(1,i.person.obed/100,i.person.obed/100))
-			newnode.get_node("mood").set_text("Forced")
-		elif i.lust > 200:
-			newnode.get_node("mood").set("custom_colors/font_color", Color(1,0.2,0.8))
-			newnode.get_node("mood").set_text("Horny")
-		else:
-			newnode.get_node("mood").set_text("Neutral")
+		newnode = get_node("Panel/givetakepanel/givercontainer/Button").duplicate()
+		get_node("Panel/givetakepanel/givercontainer").add_child(newnode)
+		if givers.find(i) >= 0:
+			newnode.set_pressed(true)
+		newnode.visible = true
+		newnode.text = i.person.dictionary('$name')
+		newnode.set_meta("person", i)
+		newnode.connect("pressed",self,'switchsides',[newnode, 'give'])
+		newnode = get_node("Panel/givetakepanel/receivercontainer/Button").duplicate()
+		get_node("Panel/givetakepanel/receivercontainer").add_child(newnode)
+		if takers.find(i) >= 0:
+			newnode.set_pressed(true)
+		newnode.visible = true
+		newnode.text = i.person.dictionary('$name')
+		newnode.set_meta("person", i)
+		newnode.connect("pressed",self,'switchsides',[newnode, 'take'])
 		
 	var text = ''
 	
 	#check for double dildo scenes between participants
 	var doubledildo = doubledildocheck()
+	var actionarray = []
 	
-	for i in categories[selectedcategory]:
-		i.givers = givers
-		i.takers = takers
-		var result = checkaction(i, doubledildo)
-		if result[0] == 'false':
-			continue
-		newnode = get_node("Panel/GridContainer/GridContainer/Button").duplicate()
-		get_node("Panel/GridContainer/GridContainer").add_child(newnode)
-		newnode.visible = true
-		newnode.set_text(i.getname())
-		if result[0] == 'disabled':
-			newnode.disabled = true
-			newnode.hint_tooltip = result[1]
-		newnode.connect("pressed",self,'startscene',[i])
-		if i.canlast == true && newnode.disabled == false:
-			newnode.get_node("continue").visible = true
-			newnode.get_node("continue").connect("pressed",self,'startscenecontinue',[i])
-		for j in ongoingactions:
-			if j.scene.code == i.code && j.givers == i.givers && j.takers == i.takers:
-				newnode.get_node("continue").pressed = true
-	if selectedcategory == 'caress' && givers.size() >= 1 && givers[0].person != globals.player && selectmode != 'ai':
-		newnode = get_node("Panel/GridContainer/GridContainer/Button").duplicate()
-		get_node("Panel/GridContainer/GridContainer").add_child(newnode)
-		newnode.visible = true
-		if givers.size() < 2:
-			newnode.set_text(givers[0].person.dictionary("Let $name Lead"))
-		else:
-			newnode.set_text("Let Selected Lead")
-		newnode.connect("pressed",self,'activateai')
-	elif selectmode == 'ai':
-		newnode = get_node("Panel/GridContainer/GridContainer/Button").duplicate()
-		get_node("Panel/GridContainer/GridContainer").add_child(newnode)
-		newnode.visible = true
-		newnode.set_text("Stop")
-		newnode.connect("pressed",self,'activateai')
+	
+	for i in categories:
+		for k in categories[i]:
+			actionarray.append(k)
+	
+	actionarray.sort_custom(self, 'sortactions')
+	
+	var showactions = true
+	var actionreplacetext = ''
+	
+	for i in givers:
+		if i.effects.has('tied') :
+			showactions = false
+			actionreplacetext = i.person.dictionary("$name is tied and can't act.")
+		elif i.subduedby.size() > 0:
+			showactions = false
+			actionreplacetext = i.person.dictionary("$name is struggling and can't act.")
+		elif i.effects.has('resist'):
+			showactions = false
+			actionreplacetext = i.person.dictionary("$name resists and won't follow any orders.")
+		elif i.subduing != null && ((takers.size() > 0 && takers[0] != i.subduing) || takers.size() > 1 ) :
+			showactions = false
+			actionreplacetext = i.person.dictionary("$name is busy holding down ") + i.subduing.person.dictionary("$name \nand can only act on $him. ")
+	
+	var array = []
+	
+	
+	if showactions == true:
+		for i in actionarray:
+			i.givers = givers
+			i.takers = takers
+			var result = checkaction(i, doubledildo)
+			if result[0] == 'false' || i.code in ['wait']:
+				continue
+			if i.code in ['rope', 'subdue', 'strapon']:
+				newnode = get_node("Panel/GridContainer2/GridContainer/Button").duplicate()
+				get_node("Panel/GridContainer2/GridContainer").add_child(newnode)
+			else:
+				newnode = get_node("Panel/GridContainer/GridContainer/Button").duplicate()
+				get_node("Panel/GridContainer/GridContainer").add_child(newnode)
+			newnode.visible = true
+			newnode.set_text(i.getname())
+			newnode.hint_tooltip = i.getname()
+			if result[0] == 'disabled':
+				newnode.disabled = true
+				newnode.hint_tooltip += ' - ' + result[1]
+			
+			newnode.connect("pressed",self,'startscene',[i])
+			if i.canlast == true && newnode.disabled == false:
+				newnode.get_node("continue").visible = true
+				newnode.get_node("continue").connect("pressed",self,'startscenecontinue',[i])
+			for j in ongoingactions:
+				if j.scene.code == i.code && j.givers == i.givers && j.takers == i.takers:
+					newnode.get_node("continue").pressed = true
+		if selectedcategory == 'caress' && givers.size() >= 1 && givers[0].person != globals.player && selectmode != 'ai':
+			newnode = get_node("Panel/GridContainer2/GridContainer/Button").duplicate()
+			get_node("Panel/GridContainer2/GridContainer").add_child(newnode)
+			newnode.visible = true
+			if givers.size() < 2:
+				newnode.set_text(givers[0].person.dictionary("Let $name Lead"))
+			else:
+				newnode.set_text("Let Selected Lead")
+			newnode.connect("pressed",self,'activateai')
+		elif selectmode == 'ai':
+			newnode = get_node("Panel/GridContainer/GridContainer/Button").duplicate()
+			get_node("Panel/GridContainer/GridContainer").add_child(newnode)
+			newnode.visible = true
+			newnode.set_text("Stop")
+			newnode.connect("pressed",self,'activateai')
+	else:
+			newnode = Label.new()
+			get_node("Panel/GridContainer/GridContainer").add_child(newnode)
+			newnode.visible = true
+			#newnode.disabled = true
+			newnode.set_text(actionreplacetext)
 	$Panel/GridContainer/GridContainer.move_child($Panel/GridContainer/GridContainer/Button, $Panel/GridContainer/GridContainer.get_child_count()-1)
+	$Panel/GridContainer2/GridContainer.move_child($Panel/GridContainer2/GridContainer/Button, $Panel/GridContainer2/GridContainer.get_child_count()-1)
 	for i in givers:
 		text += '[color=yellow]' + i.name + '[/color], '
 	if givers.size() == 0:
@@ -519,6 +605,14 @@ func rebuildparticipantslist():
 	if turns == 0:
 		endencounter()
 
+var categoriesorder = ['caress', 'fucking', 'tools', 'SM', 'humiliation']
+
+func sortactions(first, second):
+	if categoriesorder.find(first.category) >= categoriesorder.find(second.category):
+		return false
+	else:
+		return true
+
 var ai = []
 
 func activateai():
@@ -526,6 +620,8 @@ func activateai():
 		if i.submission < 90 || i.consent == false:
 			$Control/Panel/RichTextLabel.bbcode_text = i.person.dictionary('$name refuses to participate. ')
 			return
+		elif i.effects.has('tied') || i.subduedby.size() > 0:
+			$Control/Panel/RichTextLabel.bbcode_text = i.person.dictionary("$name is immobile and can't do anything. ")
 	ai.clear()
 	if selectmode != 'ai':
 		selectmode = 'ai'
@@ -578,7 +674,7 @@ func checkaction(action, doubledildo):
 	for k in givers:
 		if k.person == globals.player:
 			continue
-		if action.giverconsent != 'any' && ((k.mode == 'forced' || k.person.obed < 80) && !k.person.traits.has('Masochist') && !k.person.traits.has('Likes it rough') ):
+		if action.giverconsent != 'any' && ((k.effects.has('resist') || k.person.obed < 80) && !k.person.traits.has('Masochist') && !k.person.traits.has('Likes it rough') ):
 			disabled = true
 			hint_tooltip = k.person.dictionary("$name refuses to perform this action (low obedience)")
 			continue
@@ -589,7 +685,7 @@ func checkaction(action, doubledildo):
 	for k in takers:
 		if k.person == globals.player:
 			continue
-		if action.takerconsent != 'any' && ((k.mode == 'forced' || k.person.obed < 80) && !k.person.traits.has('Masochist') && !k.person.traits.has('Likes it rough')  ):
+		if action.takerconsent != 'any' && ((k.effects.has('resist')  || k.person.obed < 80) && !k.person.traits.has('Masochist') && !k.person.traits.has('Likes it rough')  ):
 			disabled = true
 			hint_tooltip = k.person.dictionary("$name refuses to perform this action (low obedience)")
 			continue
@@ -614,7 +710,7 @@ func showbody(i):
 		$Panel/bodyimage.visible = true
 		$Panel/bodyimage.texture = globals.loadimage(i.person.imagefull)
 	elif nakedspritesdict.has(i.person.unique):
-		if i.mode == 'forced':
+		if i.effects.has('resist'):
 			$Panel/bodyimage.texture = globals.spritedict[nakedspritesdict[i.person.unique].rape]
 			$Panel/bodyimage.visible = true
 		else:
@@ -640,12 +736,21 @@ func switchsides(panel, side):
 	rebuildparticipantslist()
 
 func startscene(scenescript, cont = false, pretext = ''):
-	var textdict = {mainevent = pretext, repeats = '', orgasms = ''}
+	var textdict = {mainevent = pretext, repeats = '', orgasms = '', speech = ''}
 	var pain = 0
 	var effects
 	scenescript.givers = givers
 	scenescript.takers = takers
+	turns -= 1
 	
+	for i in givers + takers:
+		if i.effects.has('resist') && scenescript.code != 'subdue':
+			var result = resistattempt(i)
+			textdict.mainevent += result.text
+			if result.consent == false:
+				get_node("Panel/sceneeffects").set_bbcode(textdict.mainevent + "\n" + textdict.repeats + "\n" + textdict.orgasms)
+				rebuildparticipantslist()
+				return
 	
 	for i in givers + takers:
 		if isencountersamesex(givers,takers,i) == true:
@@ -681,7 +786,6 @@ func startscene(scenescript, cont = false, pretext = ''):
 		centralized = true
 		textdict.mainevent += output(scenescript, scenescript.initiate, givers, takers) + output(scenescript, scenescript.ongoing, givers, takers)
 		
-	turns -= 1
 	
 	if centralized == false:
 		if scenescript.has_method('reaction'):
@@ -740,10 +844,9 @@ func startscene(scenescript, cont = false, pretext = ''):
 			i.actioneffect(effects[0], effects[1], dict)
 		i.lube()
 	
-	#if scenescript.has(
 	
 	
-	if scenescript.code in ['strapon', 'rope']:
+	if scenescript.code in ['strapon', 'rope', 'subdue']:
 		cont = true
 	#to make action switch on that hole even if they comes from another body part
 	if scenescript.code in ['doubledildo','doubledildoass','tribadism']:
@@ -772,6 +875,14 @@ func startscene(scenescript, cont = false, pretext = ''):
 			if i.scene.code == 'grovel' && (i.givers.has(givers[0]) || i.takers.has(givers[0]) || i.givers.has(takers[0]) || i.takers.has(takers[0])):
 				if i.givers == givers && i.takers == takers:
 					stopongoingaction(i)
+	if scenescript.code == 'rope':
+		for i in takers:
+			var cleararray = []
+			for k in i.activeactions:
+				if k.scene.code == 'subdue':
+					cleararray.append(k)
+			for k in cleararray:
+				stopongoingaction(k)
 	
 	
 	
@@ -819,19 +930,27 @@ func startscene(scenescript, cont = false, pretext = ''):
 		if i in givers+takers:
 			i.lastaction = dict
 			if i.sens >= 1000:
-				textdict.orgasms += checkorgasm(i)
+				textdict.orgasms += triggerorgasm(i)
+				i.orgasm = true
+			else:
+				i.orgasm = false
 		else:
 			for j in ongoingactions:
 				if i in j.givers + j.takers:
 					i.lastaction = j
 					if i.sens >= 1000:
-						textdict.orgasms += checkorgasm(i)
+						textdict.orgasms += triggerorgasm(i)
+						i.orgasm = true
+					else:
+						i.orgasm = false
 		if not i.lastaction in ongoingactions:
 			i.lastaction = null
 		
 	
 	if cont == true && sceneexists == false: 
 		ongoingactions.append(dict)
+		for i in givers + takers:
+			i.activeactions.append(dict)
 	else:
 		for i in givers:
 			if scenescript.giverpart != '':
@@ -840,12 +959,145 @@ func startscene(scenescript, cont = false, pretext = ''):
 			if scenescript.takerpart != '':
 				i[scenescript.takerpart] = null
 	
+	var x = (givers.size()+takers.size())/2
 	
-	get_node("Panel/sceneeffects").set_bbcode(textdict.mainevent + "\n" + textdict.repeats + "\n" + textdict.orgasms)
+	while x > 0:
+		if randf() < 1: #0.3
+			var charspeech = characterspeech(dict)
+			if charspeech.text != '':
+				textdict.speech += charspeech.character.name + ': ' + decoder(charspeech.text, [charspeech.character], [charspeech.partner]) + '\n'
+		x -= 1
+	
+	var text = textdict.mainevent + "\n" + textdict.repeats + '\n' + textdict.speech + textdict.orgasms
+#	temptext = ''
+#	while text.length() > 0:
+#		if !text.begins_with('%'):
+#			if text.find('%') >= 0:
+#				temptext = text.substr(0,text.find('%'))
+#			else:
+#				temptext = text
+#			text = text.replace(temptext, '')
+#			$Panel/sceneeffects.append_bbcode(temptext)
+#		else:
+#			var string = text.substr(text.find("%"), 2)
+#			add_portrait_to_text(participants[int(string.substr(1,1))])
+#			text.erase(0,2)
+		#print($Panel/sceneeffects.text)
+		#get_node("Panel/sceneeffects").add_text()
+	#$Panel/sceneeffects.bbcode_enabled = true
+	get_node("Panel/sceneeffects").bbcode_text += '\n' + text
 	rebuildparticipantslist()
-	
 
-func checkorgasm(i):
+func characterspeech(scene, details = []):
+	var character
+	var partner
+	var text = ''
+	
+	#who speaks
+	
+	var array = []
+	for i in scene.takers+scene.givers:
+		if i.person != globals.player:
+			array.append(i)
+	
+	var partnerside
+	
+	character = array[randi()%array.size()]
+	
+	if character in scene.takers:
+		partnerside = 'givers'
+	else:
+		partnerside = 'takers'
+	
+	partner = scene[partnerside][0]
+	
+	array.clear() #array will serve as speech selector
+	var preventrest = true
+	var dict = {}
+	var prevailing_lines = ['mute', 'silence', 'orgasm', 'resistorgasm', 'resist', 'blowjob']
+	
+	
+	
+	if character.person.traits.has('Mute'):
+		dict.mute = [speechdict.mute, 1]
+	if character.person.traits.has('Sex-crazed'):
+		dict.sexcrazed = [speechdict.sexcrazed, 1]
+	if character.person.traits.has('Enjoys Anal'):
+		dict.sexcrazed = [speechdict.enjoysanal, 1]
+	if character.person.traits.has('Likes it rough'):
+		dict.sexcrazed = [speechdict.rough, 1]
+	if character.person.rules.silence == true:
+		dict.silence = [speechdict.silence, 1]
+	if character.effects.has('resist'):
+		dict.resist = [speechdict.resist, 1]
+		if scene.scene.code in ['missionaryanal', 'doggyanal', 'lotusanal','revlotusanal', 'inserttaila', 'insertinturnsass']  && partnerside == 'givers':
+			dict.analrape = [speechdict.analrape, 1]
+	if character.orgasm == true:
+		if character.effects.has('resist'):
+			dict.resistorgasm = [speechdict.resistorgasm, 1]
+		else:
+			dict.orgasm = [speechdict.orgasm, 1]
+	if scene.scene.code in ['blowjob'] && partnerside == 'takers':
+		dict.mouth = [speechdict.blowjob, 1]
+	if scene.scene.code in ['blowjob'] && partnerside == 'givers':
+		dict.mouth = [speechdict.blowjobtake, 1]
+	if scene.scene.code in ['missionary', 'doggy', 'lotus', 'revlotus', 'inserttailv', 'insertinturns'] && partnerside == 'givers':
+		dict.vagina = [speechdict.vagina, 1]
+	if scene.scene.code in ['missionaryanal', 'doggyanal', 'lotusanal','revlotusanal', 'inserttaila', 'insertinturnsass'] && partnerside == 'givers':
+		dict.anal = [speechdict.anal, 1]
+	if (!character.person.traits.has('Lesbian') && !character.person.traits.has("Bisexual")) && character.sex != 'male' && partner.sex != 'male' && partnerside == 'givers':
+		dict.nonlesbian = [speechdict.nonlesbian, 1]
+	
+	
+	dict.moans = [speechdict.moans, 0.5]
+	
+	for i in prevailing_lines:
+		if dict.has(i):
+			var temp = dict[i].duplicate()
+			dict.clear() 
+			dict[i] = temp
+			break
+	for i in dict.values():
+		array.append(i)
+	text = globals.weightedrandom(array)
+	if text != null:
+		text = text[randi()%text.size()]
+	
+	if text == null:
+		text = ''
+	
+	if partner.person == globals.player:
+		text = text.replace('[name2]', character.person.masternoun)
+	else:
+		text = text.replace('[name2]', partner.name)
+	
+	
+	return {text = '[color=lime]' + text + '[/color]', character = character, partner = partner}
+
+var speechdict = {
+resist = ["Stop it!", "No... I don't want to!", "Why are you doing this...", "You, bastard...", "Let me go!"],
+resistorgasm = ["Ahh-hh... No...", "*Sob* why... this feels so good...", "No, Please stop, before I... Ahh... No *sob*"],
+mute = ['...', '...!', '......', '*gasp*'],
+blowjob = ["Does it feel good? *slurp*", "Mh-m... this smell...", "Does this feel good, [name2]?", "You like my mouth, [name2]?"],
+blowjobtake = ["Like my cock, [name2]?" , "Yes, suck it, dear...", "Mmmm, suck it like that."],
+inexperienced = ["I've never done this...", "What's this?", "Not so fast, [name2], I'm new to this..."],
+#virgin = ["Aaah! My first time...", "My first time...", "My first time... you took it..."],
+vagina = ["Ah! Yes! Fuck my pussy!", "Yes, fill me up, [name2]!", "More, give me more, [name2]!", "Ah, this is so good, [name2]..."],
+anal = ["My {^ass:butt}... feels good...", "Ah... My {^ass:butt}...", "Keep {^fucking:ravaging:grinding} my {^ass:butt}, [name2]..."],
+orgasm = ["Cumming, I'm cumming!..", "Ah, Ahh, AAAHH!","[name2], please hold me, I'm cumming!"],
+analrape = ["Stop! Where are you putting it!?", "No, please, not there!", "No, not my {^ass:butt}... I beg you..."],
+sexcrazed = ["Your {^dick:cock:penis}... Yes...", "Give me your {^dick:cock:penis}, [name2]... I need it", "Fuck me, [name2], I begging you!.."],
+nonlesbian = ["No, we shouldn't...", "No, we are both girls...","[name2], Ah, stop, I'm not into girls..."],
+enjoysanal = ["Please, put my {^butt:ass} into a good use, [name2]...", "I want it in my {^butt:ass}..."],
+rough = ["[name2], do me harder...", "Yes... Please, abuse me!"],
+pain = ["Ouch! It hurts...", "Please, no more...", "*sob*"],
+silence = ['Mmhmm...', '*gasp*', 'Mhm!!'],
+moans = ["Ah...", "Oh...", "Mmmh...", "[name2]..."]
+
+}
+
+
+func triggerorgasm(i):
 	var text = ''
 	if i.person.sexexp.orgasms.has(i.lastaction.scene.code):
 		i.person.sexexp.orgasms[i.lastaction.scene.code] += 1
@@ -983,7 +1235,6 @@ func output(scenescript, valid_lines, givers, takers):
 			output += linearray[randi()%linearray.size()]
 	
 	return decoder(output, givers, takers)
-
 
 func orgasm(member):
 	member.sens = member.sens/4
@@ -1195,9 +1446,24 @@ func stopongoingaction(meta, rebuild = false):
 			i[action.scene.takerpart2] = null
 	if action.scene.code == 'strapon' && action.givers[0]['penis'] != null:
 		stopongoingaction(action.givers[0]['penis'])
+	if action.scene.code == 'rope':
+		for i in action.takers:
+			i.effects.erase('tied')
+	if action.scene.code == 'subdue':
+		var erasearray = []
+		for taker in action.takers:
+			for giver in action.givers:
+				giver.subduing = null
+				erasearray.append(giver)
+			for giver in erasearray:
+				taker.subduedby.erase(giver)
+	for i in action.givers + action.takers:
+		i.activeactions.erase(action)
 	ongoingactions.erase(action)
 	if rebuild == true:
 		rebuildparticipantslist()
+
+
 
 func _on_passbutton_pressed():
 	if selectmode == 'normal':
@@ -1530,8 +1796,57 @@ func _on_debug_pressed():
 func _on_aiallow_pressed():
 	aiobserve = $Panel/aiallow.pressed
 
-
-
+func resistattempt(member):
+	var result = {text = '', consent = true}
+	var resistwill = 0
+	var resiststrength = member.person.sstr + 1
+	var subdue = 0
+	if member.consent == false:
+		resistwill += 100
+	if member.person.obed < 80:
+		resistwill += 100-member.person.obed
+	
+	resistwill -= member.person.loyal/3
+	if member.person.traits.has("Likes it rough"):
+		resistwill -= member.lewd/1.5
+	else:
+		resistwill -= member.lewd/2
+	
+	
+	if member.effects.has('drunk'):
+		resistwill /= 3
+	elif member.effects.has('sexcrazed'):
+		resistwill = 0
+	if member.effects.has('tied'):
+		resiststrength = 0
+		
+		result.text += '[name1] is powerless to resist, as [his1] limbs are restricted by rope.\n'
+	
+	
+	for i in member.subduedby:
+		subdue += i.person.sstr + 1
+	
+	if resistwill > 0:
+		if resiststrength >= subdue && resiststrength != 0:
+			result.consent = false
+			result.text += '[name1] resists the attempt with brute force.\n'
+			member.person.obed -= rand_range(4,8)
+		else:
+			if !member.person.traits.has("Likes it rough") && member.person.traits.has("Submissive"):
+				member.person.conf -= rand_range(2,4)
+				member.person.cour -= rand_range(2,4)
+			
+			if member.subduedby.size() == 0:
+				result.text += '[name1] tries to struggle, but [his1] strength is not enough to fight back...\n'
+			else:
+				result.text += "[name1]'s attempts to resist are stopped by being held by [name2]. \n"
+			
+	else:
+		member.effects.erase('resist')
+		result.text += '[name1] no longer fights back.\n'
+	
+	result.text = decoder(result.text, [member], member.subduedby)
+	return result
 
 
 

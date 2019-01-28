@@ -281,6 +281,8 @@ func him(group):
 func name(group):
 	var text = ''
 	for i in group:
+		#text += "%" + str(i.number) #portraittag
+		
 		if group == givers:
 			text += '[color=yellow]'
 			if i.person == globals.player:
@@ -315,6 +317,7 @@ func name(group):
 func names(group):
 	var text = ''
 	for i in group:
+		#text += "%" + str(i.number)
 		if group == givers:
 			text += '[color=yellow]'
 			if i.person == globals.player:

@@ -299,7 +299,7 @@ func _on_new_slave_button_pressed():
 	person.obed += 100
 	person.loyal += 100
 	person.xp += 9990
-	person.consent = true
+	person.consent = false
 	person.lust = 100
 	globals.connectrelatives(globals.player, person, 'sibling')
 	globals.impregnation(person, globals.player)
@@ -3544,7 +3544,7 @@ func _on_sexbutton_pressed():
 	if globals.state.tutorial.interactions == false:
 		get_node("tutorialnode").interactions()
 
-var sexarray = ['meet','sex','abuse']
+var sexarray = ['meet','sex']
 var sexmode = 'meet'
 
 func sexselect():
@@ -3575,19 +3575,6 @@ func sexselect():
 				newbutton.set_disabled(true)
 				newbutton.set_tooltip(i.dictionary('You have already interacted with $name today.'))
 		elif sexmode == 'sex':
-			if i.consent == false || i.away.duration != 0 || i.sleep in ['jail','farm']:
-				continue
-			newbutton = get_node("sexselect/ScrollContainer/VBoxContainer/Button").duplicate()
-			get_node("sexselect/ScrollContainer/VBoxContainer").add_child(newbutton)
-			newbutton.set_text(i.dictionary('$name'))
-			newbutton.show()
-			if sexslaves.find(i) >= 0:
-				newbutton.set_pressed(true)
-			newbutton.connect("pressed",self,'selectsexslave',[newbutton, i])
-			if i.lastinteractionday == globals.resources.day:
-				newbutton.set_disabled(true)
-				newbutton.set_tooltip(i.dictionary('You have already interacted with $name today.'))
-		elif sexmode == 'abuse':
 			if i.away.duration != 0 || i.sleep in ['farm']:
 				continue
 			newbutton = get_node("sexselect/ScrollContainer/VBoxContainer/Button").duplicate()
@@ -3596,23 +3583,39 @@ func sexselect():
 			newbutton.show()
 			if sexslaves.find(i) >= 0:
 				newbutton.set_pressed(true)
-			elif sexslaves.size() > 0:
-				newbutton.set_disabled(true)
 			newbutton.connect("pressed",self,'selectsexslave',[newbutton, i])
-			if i.consent == false || sexslaves.find(i) >= 0:
-				continue
-			newbutton = get_node("sexselect/ScrollContainer/VBoxContainer/Button").duplicate()
-			get_node("sexselect/ScrollContainer1/VBoxContainer").add_child(newbutton)
-			newbutton.set_text(i.dictionary('$name'))
-			newbutton.show()
-			if sexassist.find(i) >= 0:
-				newbutton.set_pressed(true)
-			elif sexassist.size() > 0:
-				newbutton.set_disabled(true)
-			newbutton.connect("pressed",self,'selectassist',[newbutton, i])
+			if i.consent == false:
+				newbutton.set('custom_colors/font_color', Color(1,0.2,0.2))
+				newbutton.hint_tooltip = i.dictionary('$name gave you no consent. ')
 			if i.lastinteractionday == globals.resources.day:
 				newbutton.set_disabled(true)
 				newbutton.set_tooltip(i.dictionary('You have already interacted with $name today.'))
+#		elif sexmode == 'abuse':
+#			if i.away.duration != 0 || i.sleep in ['farm']:
+#				continue
+#			newbutton = get_node("sexselect/ScrollContainer/VBoxContainer/Button").duplicate()
+#			get_node("sexselect/ScrollContainer/VBoxContainer").add_child(newbutton)
+#			newbutton.set_text(i.dictionary('$name'))
+#			newbutton.show()
+#			if sexslaves.find(i) >= 0:
+#				newbutton.set_pressed(true)
+#			elif sexslaves.size() > 0:
+#				newbutton.set_disabled(true)
+#			newbutton.connect("pressed",self,'selectsexslave',[newbutton, i])
+#			if i.consent == false || sexslaves.find(i) >= 0:
+#				continue
+#			newbutton = get_node("sexselect/ScrollContainer/VBoxContainer/Button").duplicate()
+#			get_node("sexselect/ScrollContainer1/VBoxContainer").add_child(newbutton)
+#			newbutton.set_text(i.dictionary('$name'))
+#			newbutton.show()
+#			if sexassist.find(i) >= 0:
+#				newbutton.set_pressed(true)
+#			elif sexassist.size() > 0:
+#				newbutton.set_disabled(true)
+#			newbutton.connect("pressed",self,'selectassist',[newbutton, i])
+#			if i.lastinteractionday == globals.resources.day:
+#				newbutton.set_disabled(true)
+#				newbutton.set_tooltip(i.dictionary('You have already interacted with $name today.'))
 	updatedescription()
 
 func animalforsex(node):
