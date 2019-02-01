@@ -32,7 +32,7 @@ onready var mansionStaff = get_node("joblist").mansionStaff
 
 func _ready():
 	get_node("music").set_meta('currentsong', 'none')
-	if OS.get_executable_path() == 'C:\\Users\\1\\Desktop\\godot\\Godot_v3.0.6-stable_win64.exe':
+	if OS.get_executable_path() == 'C:\\Users\\1\\Desktop\\godot\\Godot_v3.0.4-stable_win64.exe':
 		globals.developmode = true
 		debug = true
 		get_node("startcombat").show()
@@ -1240,6 +1240,7 @@ func nextdayevents():
 #
 	#Old scheduled event system
 	for i in globals.state.upcomingevents:
+		i.duration -= 1
 		if $scene.is_visible_in_tree() == true:
 			continue
 		if i.duration <= 0:

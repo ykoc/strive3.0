@@ -2,6 +2,7 @@ extends Node
 
 const category = 'tools'
 const code = 'ringgag'
+const order = 6
 var givers
 var takers
 const canlast = true
@@ -10,6 +11,8 @@ const takerpart = 'acc1'
 const virginloss = false
 const giverconsent = 'basic'
 const takerconsent = 'any'
+const givertags = ['noorgasm']
+const takertags = ['punish', 'mouth', 'noorgasm']
 
 func getname(state = null):
 	return "Ring Gag"
@@ -34,7 +37,7 @@ func requirements():
 #Disabling until something is decided about tools
 func givereffect(member):
 	var result
-	var effects = {lust = 0}
+	var effects = {}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 10):
 		result = 'good'
 	elif member.person.traits.find("Likes it rough") >= 0:
@@ -46,15 +49,13 @@ func givereffect(member):
 #Disabling until something is decided about tools
 func takereffect(member):
 	var result
-	var effects = {lust = 0}
+	var effects = {}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 10):
 		result = 'good'
 	elif member.person.traits.find("Likes it rough") >= 0:
 		result = 'average'
 	else:
 		result = 'bad'
-	if member.person.sex == 'male':
-		effects.sens /= 1.3
 	return [result, effects]
 
 func initiate():

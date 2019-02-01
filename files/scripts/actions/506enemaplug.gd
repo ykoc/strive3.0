@@ -10,6 +10,8 @@ const takerpart = 'anus'
 const virginloss = false
 const giverconsent = 'basic'
 const takerconsent = 'any'
+const givertags = ['noorgasm']
+const takertags = ['shame', 'punish', 'anal']
 
 func getname(state = null):
 	return "Enema + Plug"
@@ -34,7 +36,7 @@ func requirements():
 #Disabling until something is decided about tools
 func givereffect(member):
 	var result
-	var effects = {lust = 0}
+	var effects = {sens = 20}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 10):
 		result = 'good'
 	elif member.person.traits.find("Likes it rough") >= 0:
@@ -46,7 +48,7 @@ func givereffect(member):
 #Disabling until something is decided about tools
 func takereffect(member):
 	var result
-	var effects = {lust = 50, sens = 90}
+	var effects = {sens = 120}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 10):
 		result = 'good'
 	elif member.person.traits.find("Likes it rough") >= 0:

@@ -10,6 +10,8 @@ const takerpart = 'posh1'
 const virginloss = false
 const giverconsent = 'basic'
 const takerconsent = 'any'
+const givertags = []
+const takertags = ['shame']
 
 func getname(state = null):
 	return "Grovelling"

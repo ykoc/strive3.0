@@ -2,6 +2,7 @@ extends Node
 
 const category = 'caress'
 const code = 'titjob'
+const order = 7
 var givers
 var takers
 const canlast = true
@@ -10,6 +11,8 @@ const takerpart = 'penis'
 const virginloss = false
 const giverconsent = 'basic'
 const takerconsent = 'any'
+const givertags = ['pet','noorgasm']
+const takertags = ['penis']
 
 func getname(state = null):
 	if givers.size() + takers.size() == 2:
@@ -44,7 +47,7 @@ func requirements():
 
 func givereffect(member):
 	var result
-	var effects = {lust = 65, lewd = 1}
+	var effects = {sens = 90}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 20):
 		result = 'good'
 	elif member.person.traits.find("Likes it rough") >= 0:
@@ -55,8 +58,8 @@ func givereffect(member):
 
 func takereffect(member):
 	var result
-	var effects = {lust = 75, sens = 100, lewd = 2}
-	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lust >= 200):
+	var effects = {sens = 150}
+	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.sens >= 200):
 		result = 'good'
 	elif member.person.traits.find("Likes it rough") >= 0:
 		result = 'average'

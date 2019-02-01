@@ -2,6 +2,7 @@ extends Node
 
 const category = 'SM'
 const code = 'nippleclap'
+const order = 4
 var givers
 var takers
 const canlast = true
@@ -10,6 +11,8 @@ const takerpart = 'acc5'#nipple extra
 const virginloss = false
 const giverconsent = 'basic'
 const takerconsent = 'any'
+const givertags = ['noorgasm']
+const takertags = ['punish','pain', 'tits']
 
 func getname(state = null):
 	return "Nipple Clap"
@@ -31,7 +34,7 @@ func requirements():
 
 func givereffect(member):
 	var result
-	var effects = {lust = 0}
+	var effects = {lust = 25}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 10):
 		result = 'good'
 	elif member.person.traits.find("Likes it rough") >= 0:
@@ -42,7 +45,7 @@ func givereffect(member):
 
 func takereffect(member):
 	var result
-	var effects = {sens = 30, pain = 1, tags = ['punish'], obed = rand_range(3,6), stress = rand_range(3,6)}
+	var effects = {sens = 75, pain = 1, tags = ['punish'], obed = rand_range(3,6), stress = rand_range(3,6)}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 10):
 		result = 'good'
 	elif member.person.traits.find("Likes it rough") >= 0:

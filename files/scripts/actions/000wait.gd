@@ -2,6 +2,7 @@ extends Node
 
 const category = 'other'
 const code = 'wait'
+const order = 0
 var givers
 var takers
 const canlast = false
@@ -10,6 +11,8 @@ const takerpart = ''
 const virginloss = false
 const giverconsent = 'any'
 const takerconsent = 'any'
+const givertags = []
+const takertags = []
 
 
 func getname(state = null):

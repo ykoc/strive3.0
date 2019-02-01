@@ -395,6 +395,7 @@ func slaveguild(guild = 'wimborn'):
 		else:
 			text += "You enter through the guild’s doors, and are greeted once again by the busy sights and sounds of customers, slaves, and workers shuffling around at blistering speeds. You give a polite bow to one of the receptionists and grab a pen to sign in. In few moments Maple appears before you.\n\n[color=yellow]— Ah, my pleasure, $name, how can I help you today?[/color] "
 		var array = [{name = 'See slaves for sale', function = 'slaveguildslaves'}, {name = 'Offer your servants',function = 'slaveguildsells'}, {name = 'See custom requests', function = 'slaveguildquests'},{name = 'Services for Slaves',function = 'slaveservice'},{name = 'Leave', function = 'town'}]
+		if globals.state.sandbox == true && globals.state.sidequests.maple < 1: globals.state.sidequests.maple = 1
 		if globals.state.mainquest == 3:
 			array.insert(3, {name = "Ask about fairies", function = 'slaveguildfairy'})
 		if globals.state.sidequests.maple in [1,3] && globals.state.reputation.wimborn >= 40:

@@ -10,6 +10,8 @@ const takerpart = 'mouth'
 const virginloss = false
 const giverconsent = 'advanced'
 const takerconsent = 'any'
+const givertags = ['vagina']
+const takertags = ['shame', 'punish', 'mouth','noorgasm']
 
 func getname(state = null):
 	return "Face sitting"
@@ -34,7 +36,7 @@ func requirements():
 #Disabling until something is decided about tools
 func givereffect(member):
 	var result
-	var effects = {lust = 30, tags = ['pervert']}
+	var effects = {sens = 100, tags = ['pervert']}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 40):
 		result = 'good'
 	elif member.person.traits.find("Likes it rough") >= 0:
@@ -46,7 +48,7 @@ func givereffect(member):
 #Disabling until something is decided about tools
 func takereffect(member):
 	var result
-	var effects = {lust = 20, sens = 0, tags = ['punish','pervert']}
+	var effects = {sens = 30, tags = ['punish','pervert']}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 40):
 		result = 'good'
 	elif member.person.traits.find("Likes it rough") >= 0:

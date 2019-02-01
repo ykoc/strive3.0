@@ -10,6 +10,8 @@ const takerpart = 'acc4'#body extra to change some getname into restrained getna
 const virginloss = false
 const giverconsent = 'basic'
 const takerconsent = 'any'
+const givertags = []
+const takertags = ['punish']
 
 func getname(state = null):
 	return "Rope"
@@ -35,7 +37,7 @@ func requirements():
 
 func givereffect(member):
 	var result
-	var effects = {lust = 0}
+	var effects = {}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 10):
 		result = 'good'
 	elif member.person.traits.find("Likes it rough") >= 0:
@@ -46,7 +48,7 @@ func givereffect(member):
 
 func takereffect(member):
 	var result
-	var effects = {lust = 0}
+	var effects = {}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 10):
 		result = 'good'
 	elif member.person.traits.find("Likes it rough") >= 0:

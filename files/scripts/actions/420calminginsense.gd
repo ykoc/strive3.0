@@ -2,6 +2,7 @@ extends Node
 
 const category = 'tools'
 const code = 'relaxinginsense'
+const order = 12
 var givers
 var takers
 const canlast = false
@@ -10,6 +11,8 @@ const takerpart = ''
 const virginloss = false
 const giverconsent = 'basic'
 const takerconsent = 'any'
+const givertags = []
+const takertags = []
 
 func getname(state = null):
 	return "Relaxing Insense"

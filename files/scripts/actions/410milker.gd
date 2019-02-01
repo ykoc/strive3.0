@@ -2,6 +2,7 @@ extends Node
 
 const category = 'tools'
 const code = 'milker'
+const order = 11
 var givers
 var takers
 const canlast = true
@@ -10,6 +11,8 @@ const takerpart = 'acc5'
 const virginloss = false
 const giverconsent = 'basic'
 const takerconsent = 'any'
+const givertags = ['pet','noorgasm']
+const takertags = ['tits']
 
 func getname(state = null):
 	return "Milker"

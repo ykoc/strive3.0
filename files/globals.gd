@@ -3,7 +3,7 @@ extends Node
 
 var effectdict = {}
 var guildslaves = {wimborn = [], gorn = [], frostford = [], umbra = []}
-var gameversion = '0.5.22b'
+var gameversion = '0.5.23a'
 var state = progress.new()
 var developmode = false
 var gameloaded = false

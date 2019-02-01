@@ -10,6 +10,8 @@ const takerpart = 'vagina'
 const virginloss = false
 const giverconsent = 'basic'
 const takerconsent = 'any'
+const givertags = ['noorgasm']
+const takertags = ['vagina','shame']
 
 func getname(state = null):
 	return "Masturbation Show"
@@ -37,7 +39,7 @@ func requirements():
 #Disabling until something is decided about tools
 func givereffect(member):
 	var result
-	var effects = {lust = 10}
+	var effects = {sens = 50}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0):
 		result = 'good'
 	elif member.person.traits.find("Likes it rough") >= 0:
@@ -49,8 +51,8 @@ func givereffect(member):
 #Disabling until something is decided about tools
 func takereffect(member):
 	var result
-	var effects = {lust = 40, sens = 50, tags = ['pervert']}
-	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lust >= 250):
+	var effects = {sens = 110, tags = ['pervert']}
+	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.sens >= 250):
 		result = 'good'
 	elif member.person.traits.find("Likes it rough") >= 0:
 		result = 'average'

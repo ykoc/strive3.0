@@ -2,6 +2,7 @@ extends Node
 
 const category = 'fucking'
 const code = 'revlotus'
+const order = 4
 var givers
 var takers
 const canlast = true
@@ -10,6 +11,8 @@ const takerpart = 'vagina'
 const virginloss = true
 const giverconsent = 'basic'
 const takerconsent = 'any'
+const givertags = ['penis']
+const takertags = ['vagina', 'penetration']
 
 func requirements():
 	var valid = true
@@ -38,8 +41,8 @@ func getongoingname(givers, takers):
 
 func givereffect(member):
 	var result
-	var effects = {lust = 100, sens = 100, lewd = 1}
-	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lust >= 200):
+	var effects = {sens = 220}
+	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.sens >= 200):
 		result = 'good'
 	elif member.person.traits.find("Likes it rough") >= 0:
 		result = 'average'
@@ -47,14 +50,13 @@ func givereffect(member):
 		result = 'bad'
 	if member.person.penis == 'none':
 		effects.sens /= 1.2
-		effects.lust /= 1.2
 	return [result, effects]
 
 func takereffect(member):
 	var result
-	var effects = {lust = 100, sens = 100, lewd = 1}
+	var effects = {sens = 200}
 	member.person.metrics.vag += 1
-	if (member.consent == true || member.person.traits.find("Likes it rough") >= 0) && member.lust >= 300 && member.lube >= 3:
+	if (member.consent == true || member.person.traits.find("Likes it rough") >= 0) && member.sens >= 300 && member.lube >= 3:
 		result = 'good'
 	elif (member.consent == true || member.person.traits.find("Likes it rough") >= 0):
 		result = 'average'

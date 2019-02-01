@@ -2,6 +2,7 @@ extends Node
 
 const category = 'fucking'
 const code = 'inserttailv'
+const order = 11
 var givers
 var takers
 const canlast = true
@@ -10,6 +11,8 @@ const takerpart = 'vagina'
 const virginloss = true
 const giverconsent = 'advanced'
 const takerconsent = 'any'
+const givertags = ['tail', 'noorgasm']
+const takertags = ['vagina', 'penetration']
 
 func getname(state = null):
 	return "Insert Tail Pussy"
@@ -39,7 +42,7 @@ func requirements():
 
 func givereffect(member):
 	var result
-	var effects = {lust = 50, lewd = 2, tags = ['pervert']}
+	var effects = {sens = 100, tags = ['pervert']}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 30):
 		result = 'good'
 	elif member.person.traits.find("Likes it rough") >= 0:
@@ -50,7 +53,7 @@ func givereffect(member):
 
 func takereffect(member):
 	var result
-	var effects = {lust = 80, sens = 110, lewd = 2, tags = ['pervert']}
+	var effects = {sens = 240, tags = ['pervert']}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 30):
 		result = 'good'
 	elif member.person.traits.find("Likes it rough") >= 0:

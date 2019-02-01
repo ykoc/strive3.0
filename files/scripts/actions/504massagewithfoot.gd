@@ -10,6 +10,8 @@ const takerpart = 'feet'
 const virginloss = false
 const giverconsent = 'basic'
 const takerconsent = 'any'
+const givertags = ['pet','noorgasm']
+const takertags = ['shame', 'punish']
 
 func getname(state = null):
 	return "Massage with foot"
@@ -37,7 +39,7 @@ func requirements():
 #Disabling until something is decided about tools
 func givereffect(member):
 	var result
-	var effects = {lust = 0}
+	var effects = {sens = 25}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 10):
 		result = 'good'
 	elif member.person.traits.find("Likes it rough") >= 0:
@@ -49,7 +51,7 @@ func givereffect(member):
 #Disabling until something is decided about tools
 func takereffect(member):
 	var result
-	var effects = {lust = 30, sens = 70}
+	var effects = {sens = 150}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 20):
 		result = 'good'
 	elif member.person.traits.find("Likes it rough") >= 0:

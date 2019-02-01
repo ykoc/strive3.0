@@ -10,6 +10,8 @@ const takerpart = ''
 const virginloss = false
 const giverconsent = 'basic'
 const takerconsent = 'any'
+const givertags = ['pet']
+const takertags = ['punish']
 
 func getname(state = null):
 	return "Subdue"

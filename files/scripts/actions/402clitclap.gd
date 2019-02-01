@@ -2,6 +2,7 @@ extends Node
 
 const category = 'SM'
 const code = 'clitclap'
+const order = 5
 var givers
 var takers
 const canlast = true
@@ -10,6 +11,8 @@ const takerpart = 'acc6'#clit
 const virginloss = false
 const giverconsent = 'basic'
 const takerconsent = 'any'
+const givertags = ['noorgasm']
+const takertags = ['punish','pain', 'vagina']
 
 func getname(state = null):
 	return "Clit Clap"
@@ -33,7 +36,7 @@ func requirements():
 
 func givereffect(member):
 	var result
-	var effects = {lust = 0}
+	var effects = {sens = 30}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 10):
 		result = 'good'
 	elif member.person.traits.find("Likes it rough") >= 0:
@@ -44,7 +47,7 @@ func givereffect(member):
 
 func takereffect(member):
 	var result
-	var effects = {sens = 60, pain = 3, tags = ['punish'], obed = rand_range(5,10), stress = rand_range(3,6)}
+	var effects = {sens = 120, pain = 3, tags = ['punish'], obed = rand_range(5,10), stress = rand_range(3,6)}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 10):
 		result = 'good'
 	elif member.person.traits.find("Likes it rough") >= 0:

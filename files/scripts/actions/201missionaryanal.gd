@@ -2,6 +2,7 @@ extends Node
 
 const category = 'fucking'
 const code = 'missionaryanal'
+const order = 5
 var givers
 var takers
 const canlast = true
@@ -10,6 +11,8 @@ const takerpart = 'anus'
 const virginloss = true
 const giverconsent = 'basic'
 const takerconsent = 'any'
+const givertags = ['penis']
+const takertags = ['anal', 'penetration']
 
 func requirements():
 	var valid = true
@@ -29,30 +32,30 @@ func requirements():
 	return valid
 
 func getname(state = null):
-	if givers[0].strapon != null:
-		return "Missionary Pegging"
-	else:
-		return "Missionary Anal"
+	
+	return "Missionary Anal"
 
 func getongoingname(givers, takers):
 	return "[name1] fuck[s/1] [names2] ass[/es2] in the missionary position."
 
 func givereffect(member):
 	var result
-	var effects = {lust = 90, sens = 100, lewd = 3}
-	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lust >= 200):
+	var effects = {sens = 200}
+	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.sens >= 200):
 		result = 'good'
 	elif member.person.traits.find("Likes it rough") >= 0:
 		result = 'average'
 	else:
 		result = 'bad'
+	if member.person.penis == 'none':
+		effects.sens /= 1.2
 	return [result, effects]
 
 func takereffect(member):
 	var result
-	var effects = {lust = 80, sens = 110, lewd = 3}
+	var effects = {sens = 190}
 	member.person.metrics.anal += 1
-	if (member.consent == true || member.person.traits.find("Likes it rough") >= 0) && member.lust >= 300 && member.lube >= 5:
+	if (member.consent == true || member.person.traits.find("Likes it rough") >= 0) && member.sens >= 300 && member.lube >= 5:
 		result = 'good'
 	elif (member.consent == true || member.person.traits.find("Likes it rough") >= 0):
 		result = 'average'
@@ -60,9 +63,7 @@ func takereffect(member):
 		result = 'bad'
 	if member.lube < 5:
 		effects.pain = 3
-	if member.person.penis == 'none':
-		effects.sens /= 1.2
-		effects.lust /= 1.2
+	
 	return [result, effects]
 
 #orientation of givers/takers

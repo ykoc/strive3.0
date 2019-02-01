@@ -2,6 +2,7 @@ extends Node
 
 const category = 'SM'
 const code = 'spanking'
+const order = 1
 var givers
 var takers
 const canlast = false
@@ -10,6 +11,8 @@ const takerpart = ''
 const virginloss = false
 const giverconsent = 'basic'
 const takerconsent = 'any'
+const givertags = ['pet','noorgasm']
+const takertags = ['pet', 'punish', 'pain']
 
 func getname(state = null):
 	return "Spanking"
@@ -29,7 +32,7 @@ func requirements():
 
 func givereffect(member):
 	var result
-	var effects = {lewd = 1}
+	var effects = {sens = 10}
 	if member.consent == true || (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 10):
 		result = 'good'
 	elif member.person.traits.find("Likes it rough") >= 0:
@@ -40,13 +43,13 @@ func givereffect(member):
 
 func takereffect(member):
 	var result
-	var effects = {sens = 45, pain = 2, tags = ['punish'], obed = rand_range(10,15), stress = rand_range(3,6)}
+	var effects = {tags = ['punish'], obed = rand_range(10,15), stress = rand_range(3,6)}
 	if (member.person.traits.find("Likes it rough") >= 0 && member.lewd >= 20) || member.person.traits.find('Masochist') >= 0:
 		result = 'good'
-		effects.lust = 70
-	elif member.person.traits.find("Likes it rough") >= 0 || member.lust >= 700:
+		effects.sens = 90
+	elif member.person.traits.find("Likes it rough") >= 0 || member.sens >= 700:
 		result = 'average'
-		effects.lust = 30
+		effects.sens = 55
 	else:
 		result = 'bad'
 	return [result, effects]
@@ -69,9 +72,5 @@ func reaction(member):
 		text = "[names2] moans make it {^hard:difficult} to tell if [he2] in pain or enjoying [himself2]."
 	else:
 		text = "[names2] body {^trembles:quivers} {^with each swat:each time [name1] slap[s/1] [his2] [ass2]}{^ as [he2] rapidly near[s/2] orgasm: as [he2] approach[es/2] orgasm: as [he2] edge[s/2] toward orgasm:}."
-	if member.person.obed >= 90 && member.person != globals.player:
-		text += "\n[color=green]Afterward, {^[name2] seems to have:it looks as though [name2] [has2]} {^learned [his2] lesson:reformed [his2] rebellious ways:surrendered} and shows {^complete:total} {^submission:obedience:compliance}"
-		if member.person.traits.find("Masochist") >= 0:
-			text += ", but there is also {^an unusual:a strange} {^flash:hint:look} of desire in [his2] eyes"
-		text += '. [/color]'
+	
 	return text

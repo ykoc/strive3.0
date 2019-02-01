@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://files/theme.tres" type="Theme" id=1]
 [ext_resource path="res://files/scripts/newsexsystem.gd" type="Script" id=2]
@@ -6,10 +6,16 @@
 [ext_resource path="res://files/buttons/Panel.png" type="Texture" id=4]
 [ext_resource path="res://files/buttons/sexicons/sens3.png" type="Texture" id=5]
 [ext_resource path="res://files/buttons/sexicons/sens5.png" type="Texture" id=6]
-[ext_resource path="res://files/images/maple/mapleportrait.png" type="Texture" id=7]
-[ext_resource path="res://files/buttons/sexicons/lust1.png" type="Texture" id=8]
-[ext_resource path="res://files/images/maple/maple.png" type="Texture" id=9]
-[ext_resource path="res://files/buttons/sexicons/time.png" type="Texture" id=10]
+[ext_resource path="res://files/buttons/sexicons/female.png" type="Texture" id=7]
+[ext_resource path="res://files/images/maple/mapleportrait.png" type="Texture" id=8]
+[ext_resource path="res://files/buttons/sexicons/lust5.png" type="Texture" id=9]
+[ext_resource path="res://files/buttons/sexicons/rope.png" type="Texture" id=10]
+[ext_resource path="res://files/buttons/sexicons/sexcrazed.png" type="Texture" id=11]
+[ext_resource path="res://files/buttons/sexicons/drunk.png" type="Texture" id=12]
+[ext_resource path="res://files/buttons/sexicons/resist.png" type="Texture" id=13]
+[ext_resource path="res://files/buttons/sexicons/forced.png" type="Texture" id=14]
+[ext_resource path="res://files/images/maple/maple.png" type="Texture" id=15]
+[ext_resource path="res://files/buttons/sexicons/time.png" type="Texture" id=16]
 
 [sub_resource type="StyleBoxTexture" id=1]
 
@@ -30,7 +36,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=10]
+[sub_resource type="StyleBoxTexture" id=2]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -150,7 +156,7 @@ size_flags_horizontal = 2
 size_flags_vertical = 2
 theme = ExtResource( 1 )
 script = ExtResource( 2 )
-_sections_unfolded = [ "Mouse" ]
+_sections_unfolded = [ "Material", "Mouse", "Visibility" ]
 
 [node name="Panel" type="Panel" parent="." index="0"]
 
@@ -205,12 +211,12 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 bbcode_enabled = true
-bbcode_text = "test"
+bbcode_text = ""
 visible_characters = -1
 percent_visible = 1.0
 meta_underlined = false
 tab_size = 4
-text = "test"
+text = ""
 scroll_active = true
 scroll_following = true
 selection_enabled = false
@@ -268,9 +274,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 455.0
+margin_left = 481.0
 margin_top = 16.0
-margin_right = -430.0
+margin_right = -439.0
 margin_bottom = -412.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = true
@@ -299,20 +305,19 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 custom_constants/vseparation = -2
 custom_constants/hseparation = -2
-columns = 3
+columns = 2
 _sections_unfolded = [ "Size Flags", "custom_constants" ]
 
 [node name="Button" type="Button" parent="Panel/GridContainer/GridContainer" index="0"]
 
-editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 150.0
+margin_right = 200.0
 margin_bottom = 39.0
-rect_min_size = Vector2( 150, 20 )
+rect_min_size = Vector2( 200, 20 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -337,8 +342,8 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 112.0
-margin_right = 152.0
+margin_left = 160.0
+margin_right = 200.0
 margin_bottom = 39.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -496,16 +501,328 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Visibility", "custom_colors" ]
 
-[node name="HBoxContainer" type="VBoxContainer" parent="Panel" index="6"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel" index="6"]
+
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+margin_left = -1344.0
+margin_top = 11.0
+margin_right = -919.0
+margin_bottom = 392.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+scroll_horizontal_enabled = false
+scroll_horizontal = 0
+scroll_vertical_enabled = true
+scroll_vertical = 0
+scroll_deadzone = 0
+_sections_unfolded = [ "Scroll" ]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_constants/separation = -1
+alignment = 0
+_sections_unfolded = [ "Rect", "Size Flags" ]
+
+[node name="Panel" type="Panel" parent="Panel/ScrollContainer/VBoxContainer" index="0"]
 
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 413.0
+margin_right = 425.0
+margin_bottom = 45.0
+rect_min_size = Vector2( 425, 45 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 0
+size_flags_vertical = 2
+custom_styles/panel = SubResource( 2 )
+_sections_unfolded = [ "Rect", "Size Flags" ]
+
+[node name="arousal" type="TextureProgress" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 380.0
+margin_top = 2.0
+margin_right = 480.0
+margin_bottom = 102.0
+rect_scale = Vector2( 0.4, 0.4 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Arousal"
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+min_value = 0.0
+max_value = 1000.0
+step = 1.0
+page = 0.0
+value = 100.0
+exp_edit = false
+rounded = false
+texture_under = ExtResource( 5 )
+texture_over = null
+texture_progress = ExtResource( 6 )
+fill_mode = 3
+radial_fill_degrees = 360.0
+radial_center_offset = Vector2( 0, 0 )
+nine_patch_stretch = false
+_sections_unfolded = [ "Hint", "Mouse", "Percent", "Rect", "Size Flags", "Textures", "Visibility" ]
+
+[node name="name" type="Button" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 59.0
+margin_top = 10.0
+margin_right = 142.0
+margin_bottom = 29.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_styles/hover = SubResource( 3 )
+custom_styles/pressed = SubResource( 4 )
+custom_styles/focus = SubResource( 5 )
+custom_styles/disabled = SubResource( 6 )
+custom_styles/normal = SubResource( 7 )
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0.03125, 1, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.171875, 1, 0, 1 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Name"
+flat = false
+clip_text = true
+align = 0
+
+[node name="sex" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 146.0
+margin_top = 11.0
+margin_right = 168.0
+margin_bottom = 31.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 7 )
+expand = true
+stretch_mode = 6
+_sections_unfolded = [ "Hint" ]
+
+[node name="portrait" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 6.0
+margin_top = 5.0
+margin_right = 41.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 8 )
+expand = true
+stretch_mode = 7
+_sections_unfolded = [ "Hint", "Rect" ]
+
+[node name="desire" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="4"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 341.0
+margin_top = 1.0
+margin_right = 381.0
+margin_bottom = 41.0
+rect_min_size = Vector2( 40, 40 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "lust"
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+texture = ExtResource( 9 )
+expand = true
+stretch_mode = 6
+_sections_unfolded = [ "Hint", "Rect" ]
+
+[node name="tied" type="TextureButton" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="5"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 248.0
+margin_top = 7.0
+margin_right = 278.0
+margin_bottom = 37.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Tied"
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 10 )
+expand = true
+stretch_mode = 4
+_sections_unfolded = [ "Focus", "Hint", "Mouse", "Rect", "Textures" ]
+
+[node name="sexcrazed" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="6"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 276.0
+margin_top = 7.0
+margin_right = 306.0
+margin_bottom = 37.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Sex-crazed"
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 11 )
+expand = true
+stretch_mode = 5
+_sections_unfolded = [ "Focus", "Hint", "Mouse", "Rect" ]
+
+[node name="drunk" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="7"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 301.0
+margin_top = 7.0
+margin_right = 331.0
+margin_bottom = 37.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Drunk"
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 12 )
+expand = true
+stretch_mode = 5
+_sections_unfolded = [ "Focus", "Hint", "Mouse", "Rect" ]
+
+[node name="resist" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="8"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 218.0
+margin_top = 7.0
+margin_right = 248.0
+margin_bottom = 37.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Resists"
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 13 )
+expand = true
+stretch_mode = 0
+_sections_unfolded = [ "Focus", "Hint", "Mouse", "Rect" ]
+
+[node name="forced" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="9"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 188.0
+margin_top = 7.0
+margin_right = 218.0
+margin_bottom = 37.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+hint_tooltip = "Forced"
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 14 )
+expand = true
+stretch_mode = 0
+_sections_unfolded = [ "Hint", "Mouse", "Rect" ]
+
+[node name="HBoxContainer" type="VBoxContainer" parent="Panel" index="7"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 439.0
 margin_top = 15.0
-margin_right = 453.0
+margin_right = 479.0
 margin_bottom = 231.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -675,390 +992,6 @@ text = "Other"
 flat = false
 align = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Panel" index="7"]
-
-anchor_left = 1.0
-anchor_top = 0.0
-anchor_right = 1.0
-anchor_bottom = 0.0
-margin_left = -1324.0
-margin_top = 11.0
-margin_right = -949.0
-margin_bottom = 392.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-scroll_horizontal_enabled = false
-scroll_horizontal = 0
-scroll_vertical_enabled = true
-scroll_vertical = 0
-scroll_deadzone = 0
-_sections_unfolded = [ "Scroll" ]
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 0
-size_flags_vertical = 0
-custom_constants/separation = -1
-alignment = 0
-_sections_unfolded = [ "Size Flags" ]
-
-[node name="Panel" type="Panel" parent="Panel/ScrollContainer/VBoxContainer" index="0"]
-
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 375.0
-margin_bottom = 45.0
-rect_min_size = Vector2( 375, 45 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 0
-size_flags_vertical = 2
-custom_styles/panel = SubResource( 10 )
-_sections_unfolded = [ "Rect", "Size Flags" ]
-
-[node name="arousal" type="TextureProgress" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 246.0
-margin_top = 2.0
-margin_right = 346.0
-margin_bottom = 102.0
-rect_scale = Vector2( 0.4, 0.4 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-hint_tooltip = "Arousal"
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-min_value = 0.0
-max_value = 1000.0
-step = 1.0
-page = 0.0
-value = 100.0
-exp_edit = false
-rounded = false
-texture_under = ExtResource( 5 )
-texture_over = null
-texture_progress = ExtResource( 6 )
-fill_mode = 3
-radial_fill_degrees = 360.0
-radial_center_offset = Vector2( 0, 0 )
-nine_patch_stretch = false
-_sections_unfolded = [ "Hint", "Mouse", "Percent", "Rect", "Size Flags", "Textures", "Visibility" ]
-
-[node name="name" type="Button" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 59.0
-margin_top = 10.0
-margin_right = 142.0
-margin_bottom = 29.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 0
-custom_styles/hover = SubResource( 3 )
-custom_styles/pressed = SubResource( 4 )
-custom_styles/focus = SubResource( 5 )
-custom_styles/disabled = SubResource( 6 )
-custom_styles/normal = SubResource( 7 )
-custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_colors/font_color_hover = Color( 0.03125, 1, 0, 1 )
-custom_colors/font_color_pressed = Color( 0.171875, 1, 0, 1 )
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Name"
-flat = false
-clip_text = true
-align = 0
-
-[node name="sex" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 146.0
-margin_top = 11.0
-margin_right = 168.0
-margin_bottom = 31.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-expand = true
-stretch_mode = 6
-_sections_unfolded = [ "Hint" ]
-
-[node name="portrait" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 6.0
-margin_top = 5.0
-margin_right = 41.0
-margin_bottom = 40.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-texture = ExtResource( 7 )
-expand = true
-stretch_mode = 7
-_sections_unfolded = [ "Hint", "Rect" ]
-
-[node name="sens" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="4"]
-
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 259.0
-margin_top = 2.0
-margin_right = 299.0
-margin_bottom = 42.0
-rect_min_size = Vector2( 40, 40 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-hint_tooltip = "arousal"
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-texture = ExtResource( 8 )
-expand = true
-stretch_mode = 6
-_sections_unfolded = [ "Hint", "Rect" ]
-
-[node name="lust" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="5"]
-
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 303.0
-margin_top = 2.0
-margin_right = 343.0
-margin_bottom = 42.0
-rect_min_size = Vector2( 40, 40 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-hint_tooltip = "lust"
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-texture = ExtResource( 8 )
-expand = true
-stretch_mode = 6
-_sections_unfolded = [ "Hint", "Rect" ]
-
-[node name="lube" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="6"]
-
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 347.0
-margin_top = 2.0
-margin_right = 387.0
-margin_bottom = 42.0
-rect_min_size = Vector2( 40, 40 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-hint_tooltip = "lubrication"
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-texture = ExtResource( 8 )
-expand = true
-stretch_mode = 6
-_sections_unfolded = [ "Hint", "Rect" ]
-
-[node name="stress" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="7"]
-
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 391.0
-margin_top = 2.0
-margin_right = 431.0
-margin_bottom = 42.0
-rect_min_size = Vector2( 40, 40 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-hint_tooltip = "stress"
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-texture = ExtResource( 8 )
-expand = true
-stretch_mode = 6
-_sections_unfolded = [ "Hint", "Rect" ]
-
-[node name="tied" type="Label" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="8"]
-
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 203.0
-margin_top = 12.0
-margin_right = 213.0
-margin_bottom = 32.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-hint_tooltip = "Tied"
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-text = "T"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Focus", "Hint", "Mouse" ]
-
-[node name="sexcrazed" type="Label" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="9"]
-
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 221.0
-margin_top = 12.0
-margin_right = 232.0
-margin_bottom = 32.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-hint_tooltip = "Sex-crazed"
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-text = "S"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Focus", "Hint", "Mouse" ]
-
-[node name="drunk" type="Label" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="10"]
-
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 238.0
-margin_top = 12.0
-margin_right = 251.0
-margin_bottom = 32.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-hint_tooltip = "Drunk"
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-text = "D"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Focus", "Hint", "Mouse" ]
-
-[node name="resist" type="Label" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="11"]
-
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 186.0
-margin_top = 12.0
-margin_right = 199.0
-margin_bottom = 32.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-hint_tooltip = "Resists"
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-text = "R"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Focus", "Hint", "Mouse" ]
-
-[node name="forced" type="Label" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="12"]
-
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 171.0
-margin_top = 12.0
-margin_right = 184.0
-margin_bottom = 32.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-hint_tooltip = "Forced"
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-text = "F"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Hint", "Mouse" ]
-
 [node name="stopbutton" type="Button" parent="Panel" index="8"]
 
 anchor_left = 1.0
@@ -1128,7 +1061,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 9 )
+texture = ExtResource( 15 )
 expand = true
 stretch_mode = 6
 _sections_unfolded = [ "Rect" ]
@@ -1381,7 +1314,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-texture = ExtResource( 10 )
+texture = ExtResource( 16 )
 expand = true
 stretch_mode = 6
 

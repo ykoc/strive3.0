@@ -1372,7 +1372,7 @@ func gorn():
 	array.append({name = "Visit local bar", function = 'gornbar'})
 	if globals.state.mainquest in [12,13,14,15,37]:
 		array.append({name = "Visit Palace", function = 'gornpalace'})
-	if (globals.state.sidequests.ivran in ['tobetaken','tobealtered','potionreceived'] || globals.state.mainquest >= 16) && !globals.state.decisions.has("mainquestslavers"):
+	if ((globals.state.sidequests.ivran in ['tobetaken','tobealtered','potionreceived'] || globals.state.mainquest >= 16) && !globals.state.decisions.has("mainquestslavers")) || globals.state.sandbox == true:
 		array.append({name = "Visit Alchemist", function = 'gornayda'})
 	array.append({name = "Gorn's Market (shop)", function = 'gornmarket'})
 	array.append({name = "Outskirts", function = 'zoneenter', args = 'gornoutskirts'})
@@ -1759,6 +1759,8 @@ func frostford():
 		buttons.append({text = 'Accept', function = "frostfordzoe", args = 1})
 		buttons.append({text = 'Refuse', function = "frostfordzoe", args = 2})
 		main.dialogue(false, self, text, buttons, sprite)
+	if globals.state.sandbox == true && globals.state.reputation.frostford >= 20:
+		array.append({text = "Invite Zoe to your mansion", function = 'frostfordzoe', args = 3})
 	array.append({name = "Visit local Slaver Guild", function = 'frostfordslaveguild'})
 	array.append({name = "Frostford's Market (shop)", function = 'frostfordmarket'})
 	array.append({name = "Outskirts", function = 'zoneenter', args = 'frostfordoutskirts'})
@@ -1782,6 +1784,12 @@ func frostfordzoe(stage):
 	elif stage == 2:
 		text = globals.questtext.MainQuestFrostfordCityhallZoeRefuse
 		globals.state.sidequests.zoe = 100
+	elif stage == 3:
+		text = globals.questtext.MainQuestFrostfordZoeJoin
+		sprite = [['zoehappy','pos1']]
+		var person = globals.characters.create("Zoe")
+		globals.state.sidequests.zoe = 3
+		globals.slaves = person
 	
 	main.dialogue(true, self, text, buttons, sprite)
 
