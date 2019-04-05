@@ -32,7 +32,7 @@ onready var mansionStaff = get_node("joblist").mansionStaff
 
 func _ready():
 	get_node("music").set_meta('currentsong', 'none')
-	if OS.get_executable_path() == 'C:\\Users\\1\\Desktop\\godot\\Godot_v3.0.4-stable_win64.exe':
+	if OS.get_executable_path() == 'C:\\Users\\1\\Desktop\\godot\\Godot_v3.0.6-stable_win64.exe':
 		globals.developmode = true
 		debug = true
 		get_node("startcombat").show()
@@ -301,6 +301,7 @@ func _on_new_slave_button_pressed():
 	person.xp += 9990
 	person.consent = false
 	person.lust = 100
+	person.spec = 'merchant'
 	globals.connectrelatives(globals.player, person, 'sibling')
 	globals.impregnation(person, globals.player)
 	person.attention = 70
@@ -738,6 +739,8 @@ func _on_end_pressed():
 						if i.code == 'captured':
 							text0.set_bbcode(text0.get_bbcode() + person.dictionary('$name grew accustomed to your ownership.\n'))
 						person.add_effect(i, true)
+				if i.has("ondayend"):
+					globals.effects.call(i.ondayend, person)
 			if globals.resources.food >= 5:
 				person.loyal += rand_range(0,1)
 				person.obed += person.loyal/5 - (person.cour+person.conf)/10
@@ -1240,9 +1243,9 @@ func nextdayevents():
 #
 	#Old scheduled event system
 	for i in globals.state.upcomingevents:
-		i.duration -= 1
 		if $scene.is_visible_in_tree() == true:
-			continue
+			break
+		i.duration -= 1
 		if i.duration <= 0:
 			var text = globals.events.call(i.code)
 			globals.state.upcomingevents.erase(i)
@@ -1251,8 +1254,8 @@ func nextdayevents():
 			else:
 				checkforevents = true
 				return
-	globals.state.dailyeventcountdown -= 1
 	if globals.state.dailyeventcountdown <= 0 && !$scene.is_visible_in_tree() && !$dialogue.is_visible_in_tree():
+		globals.state.dailyeventcountdown -= 1
 		var event
 		event = launchrandomevent()
 		if event != null:

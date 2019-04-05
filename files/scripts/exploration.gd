@@ -1759,8 +1759,8 @@ func frostford():
 		buttons.append({text = 'Accept', function = "frostfordzoe", args = 1})
 		buttons.append({text = 'Refuse', function = "frostfordzoe", args = 2})
 		main.dialogue(false, self, text, buttons, sprite)
-	if globals.state.sandbox == true && globals.state.reputation.frostford >= 20:
-		array.append({text = "Invite Zoe to your mansion", function = 'frostfordzoe', args = 3})
+	if globals.state.sandbox == true && globals.state.reputation.frostford >= 20 && globals.state.sidequests.zoe < 3:
+		array.append({name = "Invite Zoe to your mansion", function = 'frostfordzoe', args = 3})
 	array.append({name = "Visit local Slaver Guild", function = 'frostfordslaveguild'})
 	array.append({name = "Frostford's Market (shop)", function = 'frostfordmarket'})
 	array.append({name = "Outskirts", function = 'zoneenter', args = 'frostfordoutskirts'})
@@ -1790,6 +1790,7 @@ func frostfordzoe(stage):
 		var person = globals.characters.create("Zoe")
 		globals.state.sidequests.zoe = 3
 		globals.slaves = person
+		frostford()
 	
 	main.dialogue(true, self, text, buttons, sprite)
 

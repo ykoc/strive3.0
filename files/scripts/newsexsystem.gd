@@ -67,6 +67,7 @@ class member:
 	var orgasms = 0
 	var lastaction
 	var request
+	var requestsdone = 0
 	
 	var number = 0
 	var sceneref
@@ -860,7 +861,7 @@ func generaterequest(member):
 		rval.erase('fuckgive')
 	if member.person.vagina == 'none':
 		rval.erase('pussy')
-	if member.person.traits.has('Submissive'):
+	if member.person.traits.has('Dominant'):
 		rval.erase('humiliate')
 	if member.person.traits.has('Likes it rough'):
 		rval.erase('punish')
@@ -910,7 +911,7 @@ func checkrequest(member):
 			if lastaction.takers.has(member) && lastaction.scene.get('takertags') != null && lastaction.scene.takertags.has('punish'):
 				conditionsatisfied = true
 		'humiliate':
-			if lastaction.takers.has(member) && lastaction.scene.get('takertags') != null && lastaction.scene.takertags.has('humiliate'):
+			if lastaction.takers.has(member) && lastaction.scene.get('takertags') != null && lastaction.scene.takertags.has('shame'):
 				conditionsatisfied = true
 		'group':
 			if (lastaction.givers.has(member) && lastaction.takers.size() > 1) || (lastaction.takers.has(member) && lastaction.givers.size() > 1):
@@ -919,8 +920,9 @@ func checkrequest(member):
 	
 	if conditionsatisfied == true:
 		member.request = null
+		member.requestsdone += 1
 		#$Panel/sceneeffects.bbcode_text += '[color=green]Wish satisfied.[/color]\n'
-		globals.resources.mana += 10
+		#globals.resources.mana += 10
 		member.person.loyal += rand_range(5,10)
 		member.person.lewdness += rand_range(3,6)
 		member.sensmod += 0.2
@@ -1541,7 +1543,7 @@ func output(scenescript, valid_lines, givers, takers):
 			checks.virgin = false
 	#assign consent
 	for i in takers:
-		if i.mode == 'forced':
+		if i.mode == 'forced' || i.effects.has('resist'):
 			checks.consent = false
 	#based on screen values, subject to adjustment
 	if takers.size() == 1:
@@ -1856,12 +1858,15 @@ func endencounter():
 			mana += round(i.orgasms*3 + rand_range(1,2))
 		else:
 			mana += round(i.sens/500)
-		if i.person.race == 'Dark Elf':
+		if i.person.race == 'Drow':
 			mana = round(mana*1.2)
 		if i.person.spec == 'nympho':
 			mana += 2
 		if i.person == globals.player:
 			mana /= 2
+		if i.requestsdone > 0:
+			mana += i.requestsdone*10
+			text += ", [color=aqua]Desires fullfiled: " + str(i.requestsdone) + '[/color]'
 		totalmana = mformula(mana, totalmana)
 		text += "\n"
 	totalmana = round(totalmana)

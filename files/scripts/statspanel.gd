@@ -60,6 +60,8 @@ func show():
 				text2 = "[color=#ff4949]" + text2 + '[/color]'
 			text += text2 + ', '
 		text = text.substr(0, text.length() - 2) + '.'
+	if person.spec != null:
+		text += "\n\nSpecialization: [color=aqua]" + globals.jobs.specs[person.spec].name + "[/color]."
 	get_node("traittext").set_bbcode(person.dictionary(text))
 	if mode == 'full':
 		text = "[url=race][color=aqua]"+ person.race + "[/color][/url]\nHealth : " + str(round(person.health)) + '/' + str(round(person.stats.health_max)) + '\nEnergy : ' + str(round(person.energy)) + '/' + str(round(person.stats.energy_max)) + '\nLevel : '+str(person.level) + '\nAttribute Points : '+str(person.skillpoints)

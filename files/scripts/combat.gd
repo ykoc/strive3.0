@@ -424,6 +424,7 @@ class combatant:
 			attack += 3
 		if person.spec == 'assassin':
 			speed += 5
+			attack += 5
 		
 		if person.preg.duration > variables.pregduration/3:
 			speed = round(speed - speed*0.25)
@@ -1092,10 +1093,13 @@ func enemyturn():
 		i.actionpoints = 1
 		if i.effects.has('stun'):
 			i.actionpoints = 0
+		var cooldownstoerase = []
 		for k in i.cooldowns:
 			i.cooldowns[k] -= 1
 			if i.cooldowns[k] <= 0:
-				i.cooldowns.erase(k)
+				cooldownstoerase.append(k)
+		for k in cooldownstoerase:
+			i.cooldowns.erase(k)
 		for effect in i.effects.values():
 			if effect.caster.group == 'player':
 				if effect.duration > 0:

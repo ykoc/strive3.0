@@ -316,7 +316,7 @@ func invigorateeffect():
 	var spell = globals.spelldict.invigorate
 	globals.resources.mana -= spellcost(spell)
 	person.energy += person.stats.energy_max/2
-	person.stress += rand_range(25,35)-globals.player.smaf*4
+	person.stress += max(rand_range(25,35)-globals.player.smaf*4, 10)
 	globals.player.energy += 50
 	text = person.dictionary("You cast Invigorate on $name. Your and $his energy is partly restored. $His stress has increased. ")
 	return text
