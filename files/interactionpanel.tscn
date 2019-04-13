@@ -18,166 +18,53 @@
 [ext_resource path="res://files/buttons/sexicons/time.png" type="Texture" id=16]
 
 [sub_resource type="StyleBoxTexture" id=1]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
 texture = ExtResource( 3 )
 region_rect = Rect2( 0, 0, 500, 500 )
 margin_left = 10.0
 margin_right = 10.0
 margin_top = 10.0
 margin_bottom = 10.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
 
 [sub_resource type="StyleBoxTexture" id=2]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
 texture = ExtResource( 4 )
 region_rect = Rect2( 0, 0, 50, 50 )
 margin_left = 15.0
 margin_right = 15.0
 margin_top = 10.0
 margin_bottom = 10.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
 
 [sub_resource type="StyleBoxTexture" id=3]
 
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
-margin_left = 0.0
-margin_right = 0.0
-margin_top = 0.0
-margin_bottom = 0.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
-
 [sub_resource type="StyleBoxTexture" id=4]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
-margin_left = 0.0
-margin_right = 0.0
-margin_top = 0.0
-margin_bottom = 0.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
 
 [sub_resource type="StyleBoxTexture" id=5]
 
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
-margin_left = 0.0
-margin_right = 0.0
-margin_top = 0.0
-margin_bottom = 0.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
-
 [sub_resource type="StyleBoxTexture" id=6]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
-margin_left = 0.0
-margin_right = 0.0
-margin_top = 0.0
-margin_bottom = 0.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
 
 [sub_resource type="StyleBoxTexture" id=7]
 
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
-margin_left = 0.0
-margin_right = 0.0
-margin_top = 0.0
-margin_bottom = 0.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
-
 [node name="Control" type="Control"]
-
-anchor_left = 0.0
-anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = -22.0
 margin_bottom = -129.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 theme = ExtResource( 1 )
 script = ExtResource( 2 )
-_sections_unfolded = [ "Material", "Mouse", "Visibility" ]
 
-[node name="Panel" type="Panel" parent="." index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
+[node name="Panel" type="Panel" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 7.0
 margin_top = 3.0
 margin_right = 25.0
 margin_bottom = 127.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 
-[node name="LogPanel" type="Panel" parent="Panel" index="0"]
-
-anchor_left = 0.0
+[node name="LogPanel" type="Panel" parent="Panel"]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -185,18 +72,11 @@ margin_left = 10.0
 margin_top = -314.0
 margin_right = -14.0
 margin_bottom = -64.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 custom_styles/panel = SubResource( 1 )
-_sections_unfolded = [ "Rect" ]
 
-[node name="sceneeffects" type="RichTextLabel" parent="Panel" index="1"]
-
-anchor_left = 0.0
+[node name="sceneeffects" type="RichTextLabel" parent="Panel"]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -204,27 +84,13 @@ margin_left = 32.0
 margin_top = -299.0
 margin_right = -504.0
 margin_bottom = -76.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 bbcode_enabled = true
-bbcode_text = ""
-visible_characters = -1
-percent_visible = 1.0
 meta_underlined = false
-tab_size = 4
-text = ""
-scroll_active = true
 scroll_following = true
-selection_enabled = false
-override_selected_font_color = false
-_sections_unfolded = [ "BBCode" ]
 
-[node name="VSeparator" type="VSeparator" parent="Panel" index="2"]
-
+[node name="VSeparator" type="VSeparator" parent="Panel"]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -233,15 +99,10 @@ margin_left = -501.0
 margin_top = -307.0
 margin_right = -486.0
 margin_bottom = -73.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 
-[node name="sceneeffects1" type="RichTextLabel" parent="Panel" index="3"]
-
+[node name="sceneeffects1" type="RichTextLabel" parent="Panel"]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -250,364 +111,148 @@ margin_left = -486.0
 margin_top = -299.0
 margin_right = -32.0
 margin_bottom = -82.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 bbcode_enabled = true
 bbcode_text = "Text2"
-visible_characters = -1
-percent_visible = 1.0
-meta_underlined = true
-tab_size = 4
 text = "Text2"
-scroll_active = true
-scroll_following = false
-selection_enabled = false
-override_selected_font_color = false
 
-[node name="GridContainer" type="ScrollContainer" parent="Panel" index="4"]
-
-anchor_left = 0.0
-anchor_top = 0.0
+[node name="GridContainer" type="ScrollContainer" parent="Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 481.0
 margin_top = 16.0
 margin_right = -439.0
 margin_bottom = -412.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 scroll_horizontal_enabled = false
-scroll_horizontal = 0
-scroll_vertical_enabled = true
-scroll_vertical = 0
-scroll_deadzone = 0
-_sections_unfolded = [ "Scroll" ]
 
-[node name="GridContainer" type="GridContainer" parent="Panel/GridContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
+[node name="GridContainer" type="GridContainer" parent="Panel/GridContainer"]
 custom_constants/vseparation = -2
 custom_constants/hseparation = -2
 columns = 2
-_sections_unfolded = [ "Size Flags", "custom_constants" ]
 
-[node name="Button" type="Button" parent="Panel/GridContainer/GridContainer" index="0"]
-
+[node name="Button" type="Button" parent="Panel/GridContainer/GridContainer"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_right = 200.0
 margin_bottom = 39.0
 rect_min_size = Vector2( 200, 20 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Caress"
-flat = false
 clip_text = true
 align = 0
-_sections_unfolded = [ "Rect", "Size Flags" ]
 
-[node name="continue" type="Button" parent="Panel/GridContainer/GridContainer/Button" index="0"]
-
+[node name="continue" type="Button" parent="Panel/GridContainer/GridContainer/Button"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 160.0
 margin_right = 200.0
 margin_bottom = 39.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 toggle_mode = true
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "∞"
-flat = false
-align = 1
 
-[node name="Label" type="Label" parent="Panel/GridContainer/GridContainer/Button" index="1"]
-
+[node name="Label" type="Label" parent="Panel/GridContainer/GridContainer/Button"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 144.0
 margin_top = 11.0
 margin_right = 164.0
 margin_bottom = 33.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 custom_colors/font_color = Color( 0.295026, 0.11673, 0.332031, 1 )
 text = "A"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Visibility", "custom_colors" ]
 
-[node name="GridContainer2" type="ScrollContainer" parent="Panel" index="5"]
-
-anchor_left = 0.0
-anchor_top = 0.0
+[node name="GridContainer2" type="ScrollContainer" parent="Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 454.0
 margin_top = 368.0
 margin_right = -435.0
 margin_bottom = -304.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 scroll_horizontal_enabled = false
-scroll_horizontal = 0
-scroll_vertical_enabled = true
-scroll_vertical = 0
-scroll_deadzone = 0
-_sections_unfolded = [ "Scroll" ]
 
-[node name="GridContainer" type="GridContainer" parent="Panel/GridContainer2" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
+[node name="GridContainer" type="GridContainer" parent="Panel/GridContainer2"]
 custom_constants/vseparation = -2
 custom_constants/hseparation = -2
 columns = 3
-_sections_unfolded = [ "Size Flags", "custom_constants" ]
 
-[node name="Button" type="Button" parent="Panel/GridContainer2/GridContainer" index="0"]
-
+[node name="Button" type="Button" parent="Panel/GridContainer2/GridContainer"]
 editor/display_folded = true
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_right = 150.0
 margin_bottom = 39.0
 rect_min_size = Vector2( 150, 20 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Caress"
-flat = false
 clip_text = true
 align = 0
-_sections_unfolded = [ "Rect", "Size Flags" ]
 
-[node name="continue" type="Button" parent="Panel/GridContainer2/GridContainer/Button" index="0"]
-
+[node name="continue" type="Button" parent="Panel/GridContainer2/GridContainer/Button"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 162.0
 margin_right = 202.0
 margin_bottom = 39.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 toggle_mode = true
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "∞"
-flat = false
-align = 1
 
-[node name="Label" type="Label" parent="Panel/GridContainer2/GridContainer/Button" index="1"]
-
+[node name="Label" type="Label" parent="Panel/GridContainer2/GridContainer/Button"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 144.0
 margin_top = 11.0
 margin_right = 164.0
 margin_bottom = 33.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 custom_colors/font_color = Color( 0.295026, 0.11673, 0.332031, 1 )
 text = "A"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Visibility", "custom_colors" ]
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Panel" index="6"]
-
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel"]
 anchor_left = 1.0
-anchor_top = 0.0
 anchor_right = 1.0
-anchor_bottom = 0.0
 margin_left = -1344.0
 margin_top = 11.0
 margin_right = -919.0
 margin_bottom = 392.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 scroll_horizontal_enabled = false
-scroll_horizontal = 0
-scroll_vertical_enabled = true
-scroll_vertical = 0
-scroll_deadzone = 0
-_sections_unfolded = [ "Scroll" ]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer"]
 size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_constants/separation = -1
-alignment = 0
-_sections_unfolded = [ "Rect", "Size Flags" ]
 
-[node name="Panel" type="Panel" parent="Panel/ScrollContainer/VBoxContainer" index="0"]
-
+[node name="Panel" type="Panel" parent="Panel/ScrollContainer/VBoxContainer"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_right = 425.0
 margin_bottom = 45.0
 rect_min_size = Vector2( 425, 45 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 0
 size_flags_vertical = 2
 custom_styles/panel = SubResource( 2 )
-_sections_unfolded = [ "Rect", "Size Flags" ]
 
-[node name="arousal" type="TextureProgress" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="arousal" type="TextureProgress" parent="Panel/ScrollContainer/VBoxContainer/Panel"]
 margin_left = 380.0
 margin_top = 2.0
 margin_right = 480.0
 margin_bottom = 102.0
 rect_scale = Vector2( 0.4, 0.4 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 hint_tooltip = "Arousal"
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-min_value = 0.0
 max_value = 1000.0
-step = 1.0
-page = 0.0
 value = 100.0
-exp_edit = false
-rounded = false
 texture_under = ExtResource( 5 )
-texture_over = null
 texture_progress = ExtResource( 6 )
 fill_mode = 3
-radial_fill_degrees = 360.0
-radial_center_offset = Vector2( 0, 0 )
-nine_patch_stretch = false
-_sections_unfolded = [ "Hint", "Mouse", "Percent", "Rect", "Size Flags", "Textures", "Visibility" ]
 
-[node name="name" type="Button" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="name" type="Button" parent="Panel/ScrollContainer/VBoxContainer/Panel"]
 margin_left = 59.0
 margin_top = 10.0
 margin_right = 142.0
 margin_bottom = 29.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 0
 custom_styles/hover = SubResource( 3 )
@@ -619,381 +264,175 @@ custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_hover = Color( 0.03125, 1, 0, 1 )
 custom_colors/font_color_pressed = Color( 0.171875, 1, 0, 1 )
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Name"
-flat = false
 clip_text = true
 align = 0
 
-[node name="sex" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="sex" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel"]
 margin_left = 146.0
 margin_top = 11.0
 margin_right = 168.0
 margin_bottom = 31.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 texture = ExtResource( 7 )
 expand = true
 stretch_mode = 6
-_sections_unfolded = [ "Hint" ]
 
-[node name="portrait" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="portrait" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel"]
 margin_left = 6.0
 margin_top = 5.0
 margin_right = 41.0
 margin_bottom = 40.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 8 )
 expand = true
 stretch_mode = 7
-_sections_unfolded = [ "Hint", "Rect" ]
 
-[node name="desire" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="4"]
-
+[node name="desire" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 341.0
 margin_top = 1.0
 margin_right = 381.0
 margin_bottom = 41.0
 rect_min_size = Vector2( 40, 40 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 hint_tooltip = "lust"
-mouse_filter = 1
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 texture = ExtResource( 9 )
 expand = true
 stretch_mode = 6
-_sections_unfolded = [ "Hint", "Rect" ]
 
-[node name="tied" type="TextureButton" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="5"]
-
+[node name="tied" type="TextureButton" parent="Panel/ScrollContainer/VBoxContainer/Panel"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 248.0
 margin_top = 7.0
 margin_right = 278.0
 margin_bottom = 37.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 hint_tooltip = "Tied"
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 texture_normal = ExtResource( 10 )
 expand = true
 stretch_mode = 4
-_sections_unfolded = [ "Focus", "Hint", "Mouse", "Rect", "Textures" ]
 
-[node name="sexcrazed" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="6"]
-
+[node name="sexcrazed" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 276.0
 margin_top = 7.0
 margin_right = 306.0
 margin_bottom = 37.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 hint_tooltip = "Sex-crazed"
 mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 11 )
 expand = true
 stretch_mode = 5
-_sections_unfolded = [ "Focus", "Hint", "Mouse", "Rect" ]
 
-[node name="drunk" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="7"]
-
+[node name="drunk" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 301.0
 margin_top = 7.0
 margin_right = 331.0
 margin_bottom = 37.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 hint_tooltip = "Drunk"
 mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 12 )
 expand = true
 stretch_mode = 5
-_sections_unfolded = [ "Focus", "Hint", "Mouse", "Rect" ]
 
-[node name="resist" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="8"]
-
+[node name="resist" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 218.0
 margin_top = 7.0
 margin_right = 248.0
 margin_bottom = 37.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 hint_tooltip = "Resists"
 mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 13 )
 expand = true
-stretch_mode = 0
-_sections_unfolded = [ "Focus", "Hint", "Mouse", "Rect" ]
 
-[node name="forced" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel" index="9"]
-
+[node name="forced" type="TextureRect" parent="Panel/ScrollContainer/VBoxContainer/Panel"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 188.0
 margin_top = 7.0
 margin_right = 218.0
 margin_bottom = 37.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 hint_tooltip = "Forced"
 mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 14 )
 expand = true
-stretch_mode = 0
-_sections_unfolded = [ "Hint", "Mouse", "Rect" ]
 
-[node name="HBoxContainer" type="VBoxContainer" parent="Panel" index="7"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="HBoxContainer" type="VBoxContainer" parent="Panel"]
 margin_left = 439.0
 margin_top = 15.0
 margin_right = 479.0
 margin_bottom = 231.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-alignment = 0
 
-[node name="caress" type="Button" parent="Panel/HBoxContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="caress" type="Button" parent="Panel/HBoxContainer"]
 margin_right = 40.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 40, 40 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 hint_tooltip = "Petting"
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 0
 size_flags_vertical = 2
 toggle_mode = true
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "P"
-flat = false
-align = 1
-_sections_unfolded = [ "Hint", "Rect" ]
 
-[node name="fucking" type="Button" parent="Panel/HBoxContainer" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="fucking" type="Button" parent="Panel/HBoxContainer"]
 margin_top = 44.0
 margin_right = 40.0
 margin_bottom = 84.0
 rect_min_size = Vector2( 40, 40 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 hint_tooltip = "Penetration"
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 0
 size_flags_vertical = 2
 toggle_mode = true
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "F"
-flat = false
-align = 1
-_sections_unfolded = [ "Hint", "Rect" ]
 
-[node name="tools" type="Button" parent="Panel/HBoxContainer" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="tools" type="Button" parent="Panel/HBoxContainer"]
 margin_top = 88.0
 margin_right = 40.0
 margin_bottom = 128.0
 rect_min_size = Vector2( 40, 40 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 hint_tooltip = "Tools"
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 0
 size_flags_vertical = 2
 toggle_mode = true
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "T"
-flat = false
-align = 1
-_sections_unfolded = [ "Hint", "Rect" ]
 
-[node name="SM" type="Button" parent="Panel/HBoxContainer" index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="SM" type="Button" parent="Panel/HBoxContainer"]
 margin_top = 132.0
 margin_right = 40.0
 margin_bottom = 172.0
 rect_min_size = Vector2( 40, 40 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 hint_tooltip = "S&M"
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 0
 size_flags_vertical = 2
 toggle_mode = true
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "S"
-flat = false
-align = 1
-_sections_unfolded = [ "Hint", "Rect" ]
 
-[node name="humiliation" type="Button" parent="Panel/HBoxContainer" index="4"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="humiliation" type="Button" parent="Panel/HBoxContainer"]
 margin_top = 176.0
 margin_right = 40.0
 margin_bottom = 216.0
 rect_min_size = Vector2( 40, 40 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 hint_tooltip = "Humiliation"
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 0
 size_flags_vertical = 2
 toggle_mode = true
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "H"
-flat = false
-align = 1
-_sections_unfolded = [ "Hint", "Rect" ]
 
-[node name="other" type="Button" parent="Panel/HBoxContainer" index="5"]
-
+[node name="other" type="Button" parent="Panel/HBoxContainer"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_top = 215.0
 margin_right = 100.0
 margin_bottom = 254.0
 rect_min_size = Vector2( 100, 0 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 0
 size_flags_vertical = 2
 toggle_mode = true
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Other"
-flat = false
-align = 1
 
-[node name="stopbutton" type="Button" parent="Panel" index="8"]
-
+[node name="stopbutton" type="Button" parent="Panel"]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -1002,23 +441,11 @@ margin_left = -183.0
 margin_top = -60.0
 margin_right = -18.0
 margin_bottom = -15.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Stop"
-flat = false
-align = 1
 
-[node name="passbutton" type="Button" parent="Panel" index="9"]
-
+[node name="passbutton" type="Button" parent="Panel"]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -1027,278 +454,101 @@ margin_left = -336.0
 margin_top = -60.0
 margin_right = -191.0
 margin_bottom = -15.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 hint_tooltip = "Hotkey: F"
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Pass"
-flat = false
-align = 1
-_sections_unfolded = [ "Hint" ]
 
-[node name="bodyimage" type="TextureRect" parent="Panel" index="10"]
-
+[node name="bodyimage" type="TextureRect" parent="Panel"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 156.0
 margin_top = 21.0
 margin_right = 756.0
 margin_bottom = 621.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 15 )
 expand = true
 stretch_mode = 6
-_sections_unfolded = [ "Rect" ]
 
-[node name="Panel" type="Panel" parent="Panel/bodyimage" index="0"]
-
+[node name="Panel" type="Panel" parent="Panel/bodyimage"]
 show_behind_parent = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_right = 604.0
 margin_bottom = 609.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-_sections_unfolded = [ "Visibility" ]
 
-[node name="blacklist" type="Button" parent="Panel" index="11"]
-
-anchor_left = 0.0
+[node name="blacklist" type="Button" parent="Panel"]
 anchor_top = 1.0
-anchor_right = 0.0
 anchor_bottom = 1.0
 margin_left = 17.0
 margin_top = -59.0
 margin_right = 176.0
 margin_bottom = -20.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Action visibility"
-flat = false
-align = 1
 
-[node name="aiallow" type="Button" parent="Panel" index="12"]
-
-anchor_left = 0.0
+[node name="aiallow" type="Button" parent="Panel"]
 anchor_top = 1.0
-anchor_right = 0.0
 anchor_bottom = 1.0
 margin_left = 187.0
 margin_top = -59.0
 margin_right = 346.0
 margin_bottom = -20.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 hint_tooltip = "When toggled, main character won't be selected for actions by other participants."
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 toggle_mode = true
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Only watch"
-flat = false
-align = 1
-_sections_unfolded = [ "Focus", "Hint", "Rect" ]
 
-[node name="givetakepanel" type="Panel" parent="Panel" index="13"]
-
+[node name="givetakepanel" type="Panel" parent="Panel"]
 editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 924.0
 margin_right = 1336.0
 margin_bottom = 397.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 
-[node name="givercontainer" type="VBoxContainer" parent="Panel/givetakepanel" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="givercontainer" type="VBoxContainer" parent="Panel/givetakepanel"]
 margin_left = 16.0
 margin_top = 39.0
 margin_right = 196.0
 margin_bottom = 218.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-alignment = 0
 
-[node name="Button" type="Button" parent="Panel/givetakepanel/givercontainer" index="0"]
-
+[node name="Button" type="Button" parent="Panel/givetakepanel/givercontainer"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_right = 180.0
 margin_bottom = 39.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 toggle_mode = true
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Name"
-flat = false
-align = 1
 
-[node name="receivercontainer" type="VBoxContainer" parent="Panel/givetakepanel" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="receivercontainer" type="VBoxContainer" parent="Panel/givetakepanel"]
 margin_left = 216.0
 margin_top = 39.0
 margin_right = 396.0
 margin_bottom = 218.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-alignment = 0
 
-[node name="Button" type="Button" parent="Panel/givetakepanel/receivercontainer" index="0"]
-
+[node name="Button" type="Button" parent="Panel/givetakepanel/receivercontainer"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_right = 180.0
 margin_bottom = 39.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 toggle_mode = true
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Name"
-flat = false
-align = 1
 
-[node name="Label" type="Label" parent="Panel/givetakepanel" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Label" type="Label" parent="Panel/givetakepanel"]
 margin_left = 61.0
 margin_top = 19.0
 margin_right = 159.0
 margin_bottom = 39.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = "Actors"
 align = 1
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
 
-[node name="Label2" type="Label" parent="Panel/givetakepanel" index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Label2" type="Label" parent="Panel/givetakepanel"]
 margin_left = 261.0
 margin_top = 19.0
 margin_right = 359.0
 margin_bottom = 39.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = "Receivers"
 align = 1
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
 
-[node name="VSeparator" type="VSeparator" parent="Panel/givetakepanel" index="4"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="VSeparator" type="VSeparator" parent="Panel/givetakepanel"]
 margin_left = 205.0
 margin_top = 9.0
 margin_right = 209.0
 margin_bottom = 388.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 
-[node name="TextureFrame" type="TextureRect" parent="." index="1"]
-
+[node name="TextureFrame" type="TextureRect" parent="."]
 editor/display_folded = true
 anchor_left = 1.0
 anchor_top = 1.0
@@ -1308,347 +558,120 @@ margin_left = -393.0
 margin_top = 69.0
 margin_right = -348.0
 margin_bottom = 107.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 texture = ExtResource( 16 )
 expand = true
 stretch_mode = 6
 
-[node name="Label" type="Label" parent="TextureFrame" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Label" type="Label" parent="TextureFrame"]
 margin_left = 39.0
 margin_top = 15.0
 margin_right = 79.0
 margin_bottom = 31.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 0
 text = "x20"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
 
-[node name="Control" type="Control" parent="." index="2"]
-
+[node name="Control" type="Control" parent="."]
 editor/display_folded = true
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = -35.0
 margin_top = -15.0
 margin_right = 1390.0
 margin_bottom = 809.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-_sections_unfolded = [ "Mouse" ]
 
-[node name="Panel" type="Panel" parent="Control" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
+[node name="Panel" type="Panel" parent="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 431.0
 margin_top = 162.0
 margin_right = -390.0
 margin_bottom = -301.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Control/Panel" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/Panel"]
 margin_left = 53.0
 margin_top = 33.0
 margin_right = 553.0
 margin_bottom = 264.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 bbcode_enabled = true
-bbcode_text = ""
-visible_characters = -1
-percent_visible = 1.0
-meta_underlined = true
-tab_size = 4
-text = ""
-scroll_active = true
-scroll_following = false
-selection_enabled = false
-override_selected_font_color = false
 
-[node name="finishbutton" type="Button" parent="Control/Panel" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="finishbutton" type="Button" parent="Control/Panel"]
 margin_left = 231.0
 margin_top = 289.0
 margin_right = 384.0
 margin_bottom = 328.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Finish"
-flat = false
-align = 1
 
-[node name="blacklist" type="Panel" parent="." index="3"]
-
+[node name="blacklist" type="Panel" parent="."]
 editor/display_folded = true
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 420.0
 margin_top = 34.0
 margin_right = 881.0
 margin_bottom = 654.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="blacklist" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ScrollContainer" type="ScrollContainer" parent="blacklist"]
 margin_left = 21.0
 margin_top = 77.0
 margin_right = 438.0
 margin_bottom = 543.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-scroll_horizontal_enabled = true
-scroll_horizontal = 0
-scroll_vertical_enabled = true
-scroll_vertical = 0
-scroll_deadzone = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="blacklist/ScrollContainer" index="0"]
+[node name="VBoxContainer" type="VBoxContainer" parent="blacklist/ScrollContainer"]
 
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-alignment = 0
-
-[node name="CheckBox" type="CheckBox" parent="blacklist/ScrollContainer/VBoxContainer" index="0"]
-
+[node name="CheckBox" type="CheckBox" parent="blacklist/ScrollContainer/VBoxContainer"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_right = 59.0
 margin_bottom = 20.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = true
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "test"
-flat = false
-align = 0
 
-[node name="closeblacklist" type="Button" parent="blacklist" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="closeblacklist" type="Button" parent="blacklist"]
 margin_left = 150.0
 margin_top = 566.0
 margin_right = 318.0
 margin_bottom = 605.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Close"
-flat = false
-align = 1
 
-[node name="RichTextLabel" type="RichTextLabel" parent="blacklist" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="RichTextLabel" type="RichTextLabel" parent="blacklist"]
 margin_left = 23.0
 margin_top = 23.0
 margin_right = 427.0
 margin_bottom = 70.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 bbcode_enabled = true
 bbcode_text = "You can hide unwanted actions by unchecking them."
-visible_characters = -1
-percent_visible = 1.0
-meta_underlined = true
-tab_size = 4
 text = "You can hide unwanted actions by unchecking them."
-scroll_active = true
-scroll_following = false
-selection_enabled = false
-override_selected_font_color = false
-_sections_unfolded = [ "BBCode" ]
 
-[node name="PopupPanel" type="PopupPanel" parent="." index="4"]
-
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="PopupPanel" type="PopupPanel" parent="."]
 margin_left = 204.0
 margin_top = 64.0
 margin_right = 1277.0
 margin_bottom = 653.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-popup_exclusive = false
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PopupPanel" index="0"]
+[node name="RichTextLabel" type="RichTextLabel" parent="PopupPanel"]
+margin_right = 1073.0
+margin_bottom = 589.0
 
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 39.0
-margin_top = 18.0
-margin_right = 1026.0
-margin_bottom = 548.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-bbcode_enabled = false
-bbcode_text = ""
-visible_characters = -1
-percent_visible = 1.0
-meta_underlined = true
-tab_size = 4
-text = ""
-scroll_active = true
-scroll_following = false
-selection_enabled = false
-override_selected_font_color = false
-
-[node name="debug" type="Button" parent="." index="5"]
-
+[node name="debug" type="Button" parent="."]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 390.0
 margin_top = 680.0
 margin_right = 510.0
 margin_bottom = 719.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Debug"
-flat = false
-align = 1
 
 [connection signal="meta_clicked" from="Panel/sceneeffects1" to="." method="_on_sceneeffects1_meta_clicked"]
-
 [connection signal="pressed" from="Panel/stopbutton" to="." method="_on_stopbutton_pressed"]
-
 [connection signal="pressed" from="Panel/passbutton" to="." method="_on_passbutton_pressed"]
-
 [connection signal="pressed" from="Panel/blacklist" to="." method="_on_blacklist_pressed"]
-
 [connection signal="pressed" from="Panel/aiallow" to="." method="_on_aiallow_pressed"]
-
 [connection signal="pressed" from="Control/Panel/finishbutton" to="." method="_on_finishbutton_pressed"]
-
 [connection signal="pressed" from="blacklist/closeblacklist" to="." method="_on_closeblacklist_pressed"]
-
 [connection signal="pressed" from="debug" to="." method="_on_debug_pressed"]
-
-

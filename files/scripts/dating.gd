@@ -1,4 +1,4 @@
-extends Node
+extends Control
 
 var location
 var person
@@ -429,7 +429,7 @@ func turns_set(value):
 	if turns == 0:
 		endencounter()
 
-func turns_get(value):
+func turns_get():
 	return turns
 
 func selectcategory(button):

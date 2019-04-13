@@ -1,4 +1,4 @@
-extends Node
+extends Control
 
 var parser = load("res://files/scripts/sexdescriptions.gd").new()
 

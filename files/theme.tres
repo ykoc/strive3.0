@@ -22,398 +22,133 @@
 [ext_resource path="res://files/buttons/img-scr.png" type="Texture" id=20]
 
 [sub_resource type="DynamicFont" id=1]
-
-size = 16
-use_mipmaps = false
 use_filter = true
 extra_spacing_top = 3
 font_data = ExtResource( 1 )
 
 [sub_resource type="StyleBoxTexture" id=2]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
 texture = ExtResource( 2 )
 region_rect = Rect2( 0, 0, 100, 100 )
 margin_left = 10.0
 margin_right = 10.0
 margin_top = 10.0
 margin_bottom = 10.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
 
 [sub_resource type="StyleBoxTexture" id=3]
 
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
-margin_left = 0.0
-margin_right = 0.0
-margin_top = 0.0
-margin_bottom = 0.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
-
 [sub_resource type="StyleBoxTexture" id=4]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
 texture = ExtResource( 3 )
 region_rect = Rect2( 0, 0, 100, 100 )
 margin_left = 10.0
 margin_right = 10.0
 margin_top = 10.0
 margin_bottom = 10.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
 
 [sub_resource type="StyleBoxTexture" id=5]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
 texture = ExtResource( 4 )
 region_rect = Rect2( 0, 0, 100, 100 )
 margin_left = 10.0
 margin_right = 10.0
 margin_top = 10.0
 margin_bottom = 10.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
 
 [sub_resource type="StyleBoxTexture" id=6]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
 texture = ExtResource( 5 )
 region_rect = Rect2( 0, 0, 100, 100 )
 margin_left = 10.0
 margin_right = 10.0
 margin_top = 10.0
 margin_bottom = 10.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
 
 [sub_resource type="StyleBoxTexture" id=7]
 
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
-margin_left = 0.0
-margin_right = 0.0
-margin_top = 0.0
-margin_bottom = 0.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
-
 [sub_resource type="StyleBoxTexture" id=8]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
-margin_left = 0.0
-margin_right = 0.0
-margin_top = 0.0
-margin_bottom = 0.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
 
 [sub_resource type="StyleBoxLine" id=9]
 
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
-color = Color( 0, 0, 0, 1 )
-grow = 1.0
-thickness = 1
-vertical = false
-
 [sub_resource type="StyleBoxTexture" id=10]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
-margin_left = 0.0
-margin_right = 0.0
-margin_top = 0.0
-margin_bottom = 0.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
 
 [sub_resource type="StyleBoxTexture" id=11]
 
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
-margin_left = 0.0
-margin_right = 0.0
-margin_top = 0.0
-margin_bottom = 0.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
-
 [sub_resource type="StyleBoxTexture" id=12]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
 texture = ExtResource( 9 )
 region_rect = Rect2( 0, 0, 50, 50 )
 margin_left = 7.0
 margin_right = 7.0
 margin_top = 7.0
 margin_bottom = 7.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
 
 [sub_resource type="StyleBoxTexture" id=13]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
 texture = ExtResource( 10 )
 region_rect = Rect2( 0, 0, 50, 50 )
 margin_left = 7.0
 margin_right = 7.0
 margin_top = 7.0
 margin_bottom = 7.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
 
 [sub_resource type="StyleBoxTexture" id=14]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
 texture = ExtResource( 2 )
 region_rect = Rect2( 0, 0, 100, 100 )
 margin_left = 10.0
 margin_right = 10.0
 margin_top = 10.0
 margin_bottom = 10.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
 
 [sub_resource type="StyleBoxTexture" id=15]
 
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
-margin_left = 0.0
-margin_right = 0.0
-margin_top = 0.0
-margin_bottom = 0.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
-
 [sub_resource type="StyleBoxTexture" id=16]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
 texture = ExtResource( 3 )
 region_rect = Rect2( 0, 0, 100, 100 )
 margin_left = 10.0
 margin_right = 10.0
 margin_top = 10.0
 margin_bottom = 10.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
 
 [sub_resource type="StyleBoxTexture" id=17]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
 texture = ExtResource( 4 )
 region_rect = Rect2( 0, 0, 100, 100 )
 margin_left = 10.0
 margin_right = 10.0
 margin_top = 10.0
 margin_bottom = 10.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
 
 [sub_resource type="StyleBoxTexture" id=18]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
 texture = ExtResource( 5 )
 region_rect = Rect2( 0, 0, 100, 100 )
 margin_left = 10.0
 margin_right = 10.0
 margin_top = 10.0
 margin_bottom = 10.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
 
 [sub_resource type="StyleBoxTexture" id=19]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
 texture = ExtResource( 12 )
 region_rect = Rect2( 0, 0, 500, 500 )
 margin_left = 15.0
 margin_right = 15.0
 margin_top = 15.0
 margin_bottom = 15.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
 
 [sub_resource type="StyleBoxTexture" id=20]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
 texture = ExtResource( 13 )
 region_rect = Rect2( 0, 0, 54, 54 )
 margin_left = 10.0
 margin_right = 10.0
 margin_top = 10.0
 margin_bottom = 10.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
 
 [sub_resource type="StyleBoxTexture" id=21]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
 texture = ExtResource( 14 )
 region_rect = Rect2( 0, 0, 860, 682 )
 margin_left = 3.0
 margin_right = 3.0
 margin_top = 3.0
 margin_bottom = 3.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
 
 [sub_resource type="StyleBoxTexture" id=22]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
 texture = ExtResource( 12 )
 region_rect = Rect2( 0, 0, 500, 500 )
-margin_left = 0.0
-margin_right = 0.0
-margin_top = 0.0
-margin_bottom = 0.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
 
 [sub_resource type="StyleBoxTexture" id=23]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
 texture = ExtResource( 15 )
 region_rect = Rect2( 0, 0, 500, 500 )
 margin_left = 10.0
@@ -424,169 +159,66 @@ expand_margin_left = 5.0
 expand_margin_right = 5.0
 expand_margin_top = 5.0
 expand_margin_bottom = 5.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
 
 [sub_resource type="StyleBoxTexture" id=24]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
 texture = ExtResource( 16 )
 region_rect = Rect2( 0, 0, 156, 41 )
 margin_left = 9.0
 margin_right = 9.0
 margin_top = 5.0
 margin_bottom = 2.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
 
 [sub_resource type="StyleBoxTexture" id=25]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
 texture = ExtResource( 17 )
 region_rect = Rect2( 0, 0, 154, 44 )
 margin_left = 9.0
 margin_right = 9.0
 margin_top = 5.0
 margin_bottom = 2.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
 
 [sub_resource type="StyleBoxTexture" id=26]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
 texture = ExtResource( 18 )
 region_rect = Rect2( 0, 0, 34, 26 )
-margin_left = 0.0
-margin_right = 0.0
 margin_top = 5.0
 margin_bottom = 5.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
-_sections_unfolded = [ "Margin" ]
 
 [sub_resource type="StyleBoxTexture" id=27]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
 texture = ExtResource( 19 )
 region_rect = Rect2( 0, 0, 34, 26 )
-margin_left = 0.0
-margin_right = 0.0
 margin_top = 5.0
 margin_bottom = 5.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
-_sections_unfolded = [ "Expand Margin", "Margin" ]
 
 [sub_resource type="StyleBoxTexture" id=28]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
 texture = ExtResource( 19 )
 region_rect = Rect2( 0, 0, 34, 26 )
-margin_left = 0.0
-margin_right = 0.0
 margin_top = 5.0
 margin_bottom = 5.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
 expand_margin_top = 5.0
 expand_margin_bottom = 5.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
-_sections_unfolded = [ "Expand Margin", "Margin" ]
 
 [sub_resource type="StyleBoxTexture" id=29]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
 texture = ExtResource( 19 )
 region_rect = Rect2( 0, 0, 34, 26 )
-margin_left = 0.0
-margin_right = 0.0
 margin_top = 5.0
 margin_bottom = 5.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
-_sections_unfolded = [ "Margin" ]
 
 [sub_resource type="StyleBoxTexture" id=30]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
 texture = ExtResource( 20 )
 region_rect = Rect2( 0, 0, 34, 58 )
 margin_left = 10.0
 margin_right = 10.0
 margin_top = 20.0
 margin_bottom = 20.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
-_sections_unfolded = [ "Axis Stretch", "Expand Margin", "Margin" ]
 
 [sub_resource type="StyleBoxTexture" id=31]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
 texture = ExtResource( 12 )
 region_rect = Rect2( 0, 0, 500, 500 )
 margin_left = 5.0
 margin_right = 5.0
 margin_top = 5.0
 margin_bottom = 5.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
-_sections_unfolded = [ "Margin" ]
 
 [resource]
-
 default_font = ExtResource( 6 )
 Button/colors/font_color = Color( 0, 0, 0, 1 )
 Button/colors/font_color_disabled = Color( 0.597656, 0.453642, 0.268478, 1 )
@@ -698,5 +330,4 @@ WindowDialog/fonts/title_font = null
 WindowDialog/icons/close = null
 WindowDialog/icons/close_hilite = null
 WindowDialog/styles/panel = SubResource( 31 )
-_sections_unfolded = [ "PopupMenu/icons", "PopupMenu/styles", "PopupPanel/styles", "TooltipLabel/colors", "TooltipPanel", "TooltipPanel/styles", "VScrollBar", "VScrollBar/icons", "VScrollBar/styles", "WindowDialog/colors" ]
 

@@ -24,64 +24,26 @@
 [ext_resource path="res://files/buttons/mainscreen/gold.png" type="Texture" id=22]
 
 [sub_resource type="ShaderMaterial" id=1]
-
 render_priority = 1
 shader = ExtResource( 3 )
-shader_param/amount = 0.8
-_sections_unfolded = [ "shader_param" ]
+shader_param/blurSize = null
 
 [sub_resource type="StyleBoxTexture" id=2]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
 texture = ExtResource( 5 )
 region_rect = Rect2( 0, 0, 1353, 607 )
-margin_left = 0.0
-margin_right = 0.0
-margin_top = 0.0
-margin_bottom = 0.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
 
 [sub_resource type="StyleBoxTexture" id=3]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
 texture = ExtResource( 10 )
 region_rect = Rect2( 0, 0, 1353, 383 )
-margin_left = 0.0
-margin_right = 0.0
-margin_top = 0.0
-margin_bottom = 0.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
 
 [sub_resource type="DynamicFont" id=4]
-
 size = 36
-use_mipmaps = false
 use_filter = true
 extra_spacing_top = 1
 font_data = ExtResource( 14 )
-_sections_unfolded = [ "Extra Spacing", "Font", "Font/fallback", "Resource", "Settings" ]
 
 [sub_resource type="Animation" id=5]
-
 length = 0.8
-loop = false
-step = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
 tracks/0/interp = 1
@@ -96,10 +58,7 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=6]
-
 length = 0.8
-loop = false
-step = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
 tracks/0/interp = 1
@@ -114,10 +73,7 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=7]
-
 length = 0.8
-loop = false
-step = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
 tracks/0/interp = 1
@@ -132,1107 +88,398 @@ tracks/0/keys = {
 }
 
 [node name="date" type="Control"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_right = 40.0
 margin_bottom = 40.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 theme = ExtResource( 1 )
 script = ExtResource( 2 )
-_sections_unfolded = [ "Theme" ]
 
-[node name="TextureRect" type="TextureRect" parent="." index="0"]
-
+[node name="TextureRect" type="TextureRect" parent="."]
 material = SubResource( 1 )
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = -1.0
 margin_top = -1.0
 margin_right = 1378.0
 margin_bottom = 774.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 4 )
 expand = true
-stretch_mode = 0
 
-[node name="fullbody" type="TextureRect" parent="." index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="fullbody" type="TextureRect" parent="."]
 margin_left = 803.0
 margin_top = 52.0
 margin_right = 1525.0
 margin_bottom = 767.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 expand = true
 stretch_mode = 6
-_sections_unfolded = [ "Mouse" ]
 
-[node name="textfield" type="Panel" parent="." index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="textfield" type="Panel" parent="."]
 margin_left = 5.0
 margin_top = 362.0
 margin_right = 969.0
 margin_bottom = 765.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 custom_styles/panel = SubResource( 2 )
-_sections_unfolded = [ "custom_styles" ]
 
-[node name="RichTextLabel" type="RichTextLabel" parent="textfield" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="RichTextLabel" type="RichTextLabel" parent="textfield"]
 margin_left = 45.0
 margin_top = 24.0
 margin_right = 738.0
 margin_bottom = 303.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 bbcode_enabled = true
-bbcode_text = ""
-visible_characters = -1
-percent_visible = 1.0
-meta_underlined = true
-tab_size = 4
-text = ""
-scroll_active = true
-scroll_following = false
-selection_enabled = false
-override_selected_font_color = false
-_sections_unfolded = [ "BBCode" ]
 
-[node name="slaveportrait" type="TextureRect" parent="textfield" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="slaveportrait" type="TextureRect" parent="textfield"]
 margin_left = 755.0
 margin_top = 8.0
 margin_right = 945.0
 margin_bottom = 198.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 6 )
 expand = true
 stretch_mode = 7
-_sections_unfolded = [ "Rect" ]
 
-[node name="TextureRect" type="TextureRect" parent="textfield/slaveportrait" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="TextureRect" type="TextureRect" parent="textfield/slaveportrait"]
 margin_right = 190.0
 margin_bottom = 190.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 7 )
 expand = true
-stretch_mode = 0
 
-[node name="masterportrait" type="TextureRect" parent="textfield" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="masterportrait" type="TextureRect" parent="textfield"]
 margin_left = 756.0
 margin_top = 203.0
 margin_right = 946.0
 margin_bottom = 393.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 8 )
 expand = true
 stretch_mode = 7
-_sections_unfolded = [ "Rect" ]
 
-[node name="TextureRect" type="TextureRect" parent="textfield/masterportrait" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="TextureRect" type="TextureRect" parent="textfield/masterportrait"]
 margin_left = -1.0
 margin_top = 1.0
 margin_right = 189.0
 margin_bottom = 191.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 7 )
 expand = true
-stretch_mode = 0
 
-[node name="Label" type="Label" parent="textfield" index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Label" type="Label" parent="textfield"]
 margin_left = 317.0
 margin_top = -360.0
 margin_right = 629.0
 margin_bottom = -302.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 custom_fonts/font = ExtResource( 9 )
 text = "Test"
 align = 1
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "custom_colors", "custom_fonts" ]
 
-[node name="panel" type="Panel" parent="." index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="panel" type="Panel" parent="."]
 margin_left = 4.0
 margin_top = 58.0
 margin_right = 968.0
 margin_bottom = 361.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 custom_styles/panel = SubResource( 3 )
-_sections_unfolded = [ "custom_styles" ]
 
-[node name="categories" type="HBoxContainer" parent="panel" index="0"]
-
+[node name="categories" type="HBoxContainer" parent="panel"]
 editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 16.0
 margin_top = 12.0
 margin_right = 216.0
 margin_bottom = 57.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-alignment = 0
 
-[node name="Actions" type="Button" parent="panel/categories" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Actions" type="Button" parent="panel/categories"]
 margin_right = 200.0
 margin_bottom = 45.0
 rect_min_size = Vector2( 200, 45 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 toggle_mode = true
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Actions"
-flat = false
-align = 1
-_sections_unfolded = [ "Rect" ]
 
-[node name="P&P" type="Button" parent="panel/categories" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="P&P" type="Button" parent="panel/categories"]
 margin_left = 204.0
 margin_right = 404.0
 margin_bottom = 45.0
 rect_min_size = Vector2( 200, 45 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 toggle_mode = true
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Discipline"
-flat = false
-align = 1
-_sections_unfolded = [ "Rect" ]
 
-[node name="Items" type="Button" parent="panel/categories" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Items" type="Button" parent="panel/categories"]
 margin_left = 408.0
 margin_right = 608.0
 margin_bottom = 45.0
 rect_min_size = Vector2( 200, 45 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 toggle_mode = true
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Items"
-flat = false
-align = 1
-_sections_unfolded = [ "Rect" ]
 
-[node name="Location" type="Button" parent="panel/categories" index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Location" type="Button" parent="panel/categories"]
 margin_left = 612.0
 margin_right = 812.0
 margin_bottom = 45.0
 rect_min_size = Vector2( 200, 45 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 toggle_mode = true
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Location"
-flat = false
-align = 1
-_sections_unfolded = [ "Rect" ]
 
-[node name="ScrollContainer" type="ScrollContainer" parent="panel" index="1"]
-
+[node name="ScrollContainer" type="ScrollContainer" parent="panel"]
 editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 16.0
 margin_top = 64.0
 margin_right = 920.0
 margin_bottom = 269.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-scroll_horizontal_enabled = true
-scroll_horizontal = 0
-scroll_vertical_enabled = true
-scroll_vertical = 0
-scroll_deadzone = 0
-_sections_unfolded = [ "Size Flags" ]
 
-[node name="GridContainer" type="GridContainer" parent="panel/ScrollContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
+[node name="GridContainer" type="GridContainer" parent="panel/ScrollContainer"]
 size_flags_horizontal = 0
 size_flags_vertical = 0
 columns = 3
-_sections_unfolded = [ "Size Flags" ]
 
-[node name="Button" type="Button" parent="panel/ScrollContainer/GridContainer" index="0"]
-
+[node name="Button" type="Button" parent="panel/ScrollContainer/GridContainer"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_right = 200.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 200, 40 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Test"
-flat = false
-align = 1
-_sections_unfolded = [ "Rect", "Size Flags", "custom_fonts" ]
 
-[node name="consent" type="Label" parent="panel" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="consent" type="Label" parent="panel"]
 margin_left = 21.0
 margin_top = 275.0
 margin_right = 181.0
 margin_bottom = 295.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 custom_colors/font_color = Color( 0.910156, 0.359085, 0.88863, 1 )
 text = "Intimacy Unlocked"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Material", "Visibility", "custom_colors" ]
 
-[node name="mood" type="TextureProgress" parent="." index="4"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="mood" type="TextureProgress" parent="."]
 margin_left = 843.0
 margin_top = 81.0
 margin_right = 875.0
 margin_bottom = 303.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-min_value = 0.0
-max_value = 100.0
-step = 1.0
-page = 0.0
 value = 50.0
-exp_edit = false
-rounded = false
 texture_under = ExtResource( 11 )
-texture_over = null
 texture_progress = ExtResource( 12 )
 fill_mode = 3
-radial_fill_degrees = 360.0
-radial_center_offset = Vector2( 0, 0 )
-nine_patch_stretch = false
-_sections_unfolded = [ "Hint", "Radial Fill", "Textures" ]
 
-[node name="TextureRect" type="TextureRect" parent="mood" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="TextureRect" type="TextureRect" parent="mood"]
 margin_top = 227.0
 margin_right = 33.0
 margin_bottom = 259.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 13 )
 expand = true
 stretch_mode = 6
-_sections_unfolded = [ "Hint" ]
 
-[node name="Label" type="Label" parent="mood" index="1"]
-
+[node name="Label" type="Label" parent="mood"]
 modulate = Color( 1, 1, 1, 0 )
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 1.0
 margin_top = -26.0
 margin_right = 31.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 1, 0.367188, 1 )
 text = "+"
 align = 1
 valign = 1
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Visibility", "custom_colors", "custom_fonts" ]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="mood/Label" index="0"]
-
-root_node = NodePath("..")
-autoplay = ""
-playback_process_mode = 1
-playback_default_blend_time = 0.0
-playback_speed = 1.0
+[node name="AnimationPlayer" type="AnimationPlayer" parent="mood/Label"]
 anims/fade = SubResource( 5 )
-blend_times = [  ]
 
-[node name="fear" type="TextureProgress" parent="." index="5"]
-
+[node name="fear" type="TextureProgress" parent="."]
 editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 878.0
 margin_top = 81.0
 margin_right = 910.0
 margin_bottom = 303.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-min_value = 0.0
-max_value = 100.0
-step = 1.0
-page = 0.0
 value = 50.0
-exp_edit = false
-rounded = false
 texture_under = ExtResource( 11 )
-texture_over = null
 texture_progress = ExtResource( 15 )
 fill_mode = 3
-radial_fill_degrees = 360.0
-radial_center_offset = Vector2( 0, 0 )
-nine_patch_stretch = false
-_sections_unfolded = [ "Hint", "Textures" ]
 
-[node name="TextureRect" type="TextureRect" parent="fear" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="TextureRect" type="TextureRect" parent="fear"]
 margin_top = 227.0
 margin_right = 33.0
 margin_bottom = 259.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 16 )
 expand = true
 stretch_mode = 6
-_sections_unfolded = [ "Hint" ]
 
-[node name="Label" type="Label" parent="fear" index="1"]
-
+[node name="Label" type="Label" parent="fear"]
 modulate = Color( 1, 1, 1, 0 )
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 1.0
 margin_top = -26.0
 margin_right = 31.0
 margin_bottom = 11.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 1, 0.367188, 1 )
 text = "+"
 align = 1
 valign = 1
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Visibility", "custom_colors", "custom_fonts" ]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="fear/Label" index="0"]
-
-root_node = NodePath("..")
-autoplay = ""
-playback_process_mode = 1
-playback_default_blend_time = 0.0
-playback_speed = 1.0
+[node name="AnimationPlayer" type="AnimationPlayer" parent="fear/Label"]
 anims/fade = SubResource( 6 )
-blend_times = [  ]
 
-[node name="stress" type="TextureProgress" parent="." index="6"]
-
+[node name="stress" type="TextureProgress" parent="."]
 editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 913.0
 margin_top = 81.0
 margin_right = 945.0
 margin_bottom = 303.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-min_value = 0.0
-max_value = 100.0
-step = 1.0
-page = 0.0
 value = 50.0
-exp_edit = false
-rounded = false
 texture_under = ExtResource( 11 )
-texture_over = null
 texture_progress = ExtResource( 17 )
 fill_mode = 3
-radial_fill_degrees = 360.0
-radial_center_offset = Vector2( 0, 0 )
-nine_patch_stretch = false
-_sections_unfolded = [ "Focus", "Hint", "Textures" ]
 
-[node name="TextureRect" type="TextureRect" parent="stress" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="TextureRect" type="TextureRect" parent="stress"]
 margin_top = 227.0
 margin_right = 33.0
 margin_bottom = 259.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 18 )
 expand = true
 stretch_mode = 6
-_sections_unfolded = [ "Hint" ]
 
-[node name="Label" type="Label" parent="stress" index="1"]
-
+[node name="Label" type="Label" parent="stress"]
 modulate = Color( 1, 1, 1, 0 )
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 1.0
 margin_top = -26.0
 margin_right = 31.0
 margin_bottom = 11.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 1, 0.367188, 1 )
 text = "+"
 align = 1
 valign = 1
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Visibility", "custom_colors", "custom_fonts" ]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="stress/Label" index="0"]
-
-root_node = NodePath("..")
-autoplay = ""
-playback_process_mode = 1
-playback_default_blend_time = 0.0
-playback_speed = 1.0
+[node name="AnimationPlayer" type="AnimationPlayer" parent="stress/Label"]
 anims/fade = SubResource( 7 )
-blend_times = [  ]
 
-[node name="turns" type="TextureRect" parent="." index="7"]
-
+[node name="turns" type="TextureRect" parent="."]
 editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 627.0
 margin_top = 702.0
 margin_right = 675.0
 margin_bottom = 752.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 hint_tooltip = "Actions left"
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 19 )
 expand = true
 stretch_mode = 6
-_sections_unfolded = [ "Focus", "Hint" ]
 
-[node name="Label" type="Label" parent="turns" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Label" type="Label" parent="turns"]
 margin_left = 45.0
 margin_top = 15.0
 margin_right = 85.0
 margin_bottom = 35.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = "x10"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
 
-[node name="mana" type="TextureRect" parent="." index="8"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="mana" type="TextureRect" parent="."]
 margin_left = 537.0
 margin_top = 702.0
 margin_right = 585.0
 margin_bottom = 752.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 hint_tooltip = "Mana"
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 20 )
 expand = true
 stretch_mode = 6
-_sections_unfolded = [ "Focus", "Hint" ]
 
-[node name="Label" type="Label" parent="mana" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Label" type="Label" parent="mana"]
 margin_left = 50.0
 margin_top = 15.0
 margin_right = 90.0
 margin_bottom = 35.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = "x10"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
 
-[node name="supply" type="TextureRect" parent="." index="9"]
-
+[node name="supply" type="TextureRect" parent="."]
 editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 158.0
 margin_top = 702.0
 margin_right = 206.0
 margin_bottom = 752.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 hint_tooltip = "Supply"
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 21 )
 expand = true
 stretch_mode = 6
-_sections_unfolded = [ "Focus", "Hint" ]
 
-[node name="Label" type="Label" parent="supply" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Label" type="Label" parent="supply"]
 margin_left = 50.0
 margin_top = 15.0
 margin_right = 90.0
 margin_bottom = 35.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = "x10"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
 
-[node name="gold" type="TextureRect" parent="." index="10"]
-
+[node name="gold" type="TextureRect" parent="."]
 editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 28.0
 margin_top = 702.0
 margin_right = 76.0
 margin_bottom = 752.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 hint_tooltip = "Gold"
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 22 )
 expand = true
 stretch_mode = 6
-_sections_unfolded = [ "Focus", "Hint" ]
 
-[node name="Label" type="Label" parent="gold" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Label" type="Label" parent="gold"]
 margin_left = 50.0
 margin_top = 15.0
 margin_right = 90.0
 margin_bottom = 35.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = "x10"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
 
-[node name="end" type="Panel" parent="." index="11"]
-
+[node name="end" type="Panel" parent="."]
 editor/display_folded = true
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 410.0
 margin_top = 80.0
 margin_right = 1019.0
 margin_bottom = 642.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 
-[node name="Control" type="Control" parent="end" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Control" type="Control" parent="end"]
 margin_left = -407.0
 margin_top = -77.0
 margin_right = 956.0
 margin_bottom = 693.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-_sections_unfolded = [ "Mouse" ]
 
-[node name="finishbutton" type="Button" parent="end" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="finishbutton" type="Button" parent="end"]
 margin_left = 195.0
 margin_top = 506.0
 margin_right = 420.0
 margin_bottom = 545.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Confirm"
-flat = false
-align = 1
 
-[node name="RichTextLabel" type="RichTextLabel" parent="end" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="RichTextLabel" type="RichTextLabel" parent="end"]
 margin_left = 93.0
 margin_top = 67.0
 margin_right = 540.0
 margin_bottom = 361.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 bbcode_enabled = true
-bbcode_text = ""
-visible_characters = -1
-percent_visible = 1.0
-meta_underlined = true
-tab_size = 4
-text = ""
-scroll_active = true
-scroll_following = false
-selection_enabled = false
-override_selected_font_color = false
-_sections_unfolded = [ "BBCode" ]
 
-[node name="sexswitch" type="Panel" parent="." index="12"]
-
+[node name="sexswitch" type="Panel" parent="."]
 editor/display_folded = true
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 410.0
 margin_top = 80.0
 margin_right = 1019.0
 margin_bottom = 642.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 
-[node name="Control" type="Control" parent="sexswitch" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Control" type="Control" parent="sexswitch"]
 margin_left = -407.0
 margin_top = -77.0
 margin_right = 956.0
 margin_bottom = 693.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-_sections_unfolded = [ "Mouse" ]
 
-[node name="confirmsex" type="Button" parent="sexswitch" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="confirmsex" type="Button" parent="sexswitch"]
 margin_left = 195.0
 margin_top = 456.0
 margin_right = 420.0
 margin_bottom = 495.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Proceed"
-flat = false
-align = 1
 
-[node name="cancelsex" type="Button" parent="sexswitch" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="cancelsex" type="Button" parent="sexswitch"]
 margin_left = 195.0
 margin_top = 506.0
 margin_right = 420.0
 margin_bottom = 545.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Cancel"
-flat = false
-align = 1
 
-[node name="RichTextLabel" type="RichTextLabel" parent="sexswitch" index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="RichTextLabel" type="RichTextLabel" parent="sexswitch"]
 margin_left = 93.0
 margin_top = 67.0
 margin_right = 540.0
 margin_bottom = 361.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 bbcode_enabled = true
-bbcode_text = ""
-visible_characters = -1
-percent_visible = 1.0
-meta_underlined = true
-tab_size = 4
-text = ""
-scroll_active = true
-scroll_following = false
-selection_enabled = false
-override_selected_font_color = false
-_sections_unfolded = [ "BBCode" ]
 
 [connection signal="pressed" from="panel/categories/Actions" to="." method="selectcategory" binds= [ "Actions" ]]
-
 [connection signal="pressed" from="panel/categories/P&P" to="." method="selectcategory" binds= [ "P&P" ]]
-
 [connection signal="pressed" from="panel/categories/Items" to="." method="selectcategory" binds= [ "Items" ]]
-
 [connection signal="pressed" from="panel/categories/Location" to="." method="selectcategory" binds= [ "Location" ]]
-
 [connection signal="pressed" from="end/finishbutton" to="." method="_on_finishbutton_pressed"]
-
 [connection signal="pressed" from="sexswitch/confirmsex" to="." method="_on_confirmsex_pressed"]
-
 [connection signal="pressed" from="sexswitch/cancelsex" to="." method="_on_cancelsex_pressed"]
-
-

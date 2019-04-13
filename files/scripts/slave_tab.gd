@@ -1,5 +1,5 @@
 
-extends Node
+extends Control
 
 var person
 var tab
@@ -17,8 +17,8 @@ func _ready():
 	for i in [sstr,sagi, smaf, send]:
 		i.get_node('Button').connect("pressed",self,'statup', [i.get_name()])
 	for i in globals.statsdict:
-		self[i].get_node('Control').connect('mouse_entered', self, 'stattooltip',[i])
-		self[i].get_node('Control').connect('mouse_exited', globals, 'hidetooltip') 
+		get(i).get_node('Control').connect('mouse_entered', self, 'stattooltip',[i])
+		get(i).get_node('Control').connect('mouse_exited', globals, 'hidetooltip') 
 	
 	$stats/customization/relativespanel/relativestext.connect("meta_hover_started",self,'relativeshover')
 	$stats/customization/relativespanel/relativestext.connect("meta_hover_ended",globals, 'slavetooltiphide')
@@ -38,7 +38,8 @@ func _input(event):
 		if event.scancode in [KEY_1,KEY_2,KEY_3,KEY_4]:
 			var key = dict[event.scancode]
 			if event.is_action_pressed(str(key)) == true && self.is_visible() == true && get_tree().get_current_scene().get_node("dialogue").is_hidden() == true:
-				set_current_tab(key-1)
+				#set_current_tab(key-1)
+				pass
 
 func mentalup(mental):
 	person[mental] += 1
@@ -852,16 +853,16 @@ func updatestats():
 	var mentals = [$stats/statspanel/cour, $stats/statspanel/conf, $stats/statspanel/wit, $stats/statspanel/charm]
 	for i in globals.statsdict:
 		text = str(person[i]) 
-		self[i].get_node('cur').set_text(text)
+		get(i).get_node('cur').set_text(text)
 		if i in ['sstr','sagi','smaf','send']:
 			if person.stats[globals.maxstatdict[i].replace("_max",'_mod')] >= 1:
-				self[i].get_node('cur').set('custom_colors/font_color', Color(0,1,0))
+				get(i).get_node('cur').set('custom_colors/font_color', Color(0,1,0))
 			elif person.stats[globals.maxstatdict[i].replace("_max",'_mod')] < 0:
-				self[i].get_node('cur').set('custom_colors/font_color', Color(1,0.29,0.29))
+				get(i).get_node('cur').set('custom_colors/font_color', Color(1,0.29,0.29))
 			else:
-				self[i].get_node('cur').set('custom_colors/font_color', Color(1,1,1))
-		self[i].get_node('max').set_text(str(min(person.stats[globals.maxstatdict[i]], person.originvalue[person.origins])))
-		#self[i].set_bbcode(text)
+				get(i).get_node('cur').set('custom_colors/font_color', Color(1,1,1))
+		get(i).get_node('max').set_text(str(min(person.stats[globals.maxstatdict[i]], person.originvalue[person.origins])))
+		#get(i).set_bbcode(text)
 	for i in mentals:
 		if person == globals.player:
 			i.get_parent().visible = false

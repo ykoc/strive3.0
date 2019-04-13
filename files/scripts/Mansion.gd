@@ -1,5 +1,5 @@
 ### Mansion - Main
-extends Node
+extends Control
 
 var test = File.new()
 var testslaverace = globals.allracesarray
@@ -90,9 +90,9 @@ func _ready():
 		infotext("Game Loaded.",'green')
 	
 	for i in ['sstr','sagi','smaf','send']:
-		self[i].get_node('Control').connect('mouse_entered', self, 'stattooltip',[i])
-		self[i].get_node('Control').connect('mouse_exited', globals, 'hidetooltip')
-		self[i].get_node('Button').connect("pressed",self,'statup', [i])
+		get(i).get_node('Control').connect('mouse_entered', self, 'stattooltip',[i])
+		get(i).get_node('Control').connect('mouse_exited', globals, 'hidetooltip')
+		get(i).get_node('Button').connect("pressed",self,'statup', [i])
 	
 	
 	$MainScreen/mansion/selfinspect/relativespanel/relativestext.connect("meta_hover_started",self,'relativeshover')
@@ -2685,15 +2685,15 @@ func updatestats(person):
 	var text = ''
 	for i in ['sstr','sagi','smaf','send']:
 		text = str(person[i])
-		self[i].get_node('cur').set_text(text)
+		get(i).get_node('cur').set_text(text)
 		if i in ['sstr','sagi','smaf','send']:
 			if person.stats[globals.maxstatdict[i].replace("_max",'_mod')] >= 1:
-				self[i].get_node('cur').set('custom_colors/font_color', Color(0,1,0))
+				get(i).get_node('cur').set('custom_colors/font_color', Color(0,1,0))
 			elif person.stats[globals.maxstatdict[i].replace("_max",'_mod')] < 0:
-				self[i].get_node('cur').set('custom_colors/font_color', Color(1,0.29,0.29))
+				get(i).get_node('cur').set('custom_colors/font_color', Color(1,0.29,0.29))
 			else:
-				self[i].get_node('cur').set('custom_colors/font_color', Color(1,1,1))
-		self[i].get_node('max').set_text(str(min(person.stats[globals.maxstatdict[i]], person.originvalue[person.origins])))
+				get(i).get_node('cur').set('custom_colors/font_color', Color(1,1,1))
+		get(i).get_node('max').set_text(str(min(person.stats[globals.maxstatdict[i]], person.originvalue[person.origins])))
 	text = person.name_long() + '\n[color=aqua][url=race]' +person.dictionary('$race[/url][/color]').capitalize() +  '\nLevel : '+str(person.level)
 	get_node("MainScreen/mansion/selfinspect/statspanel/info").set_bbcode(person.dictionary(text))
 	get_node("MainScreen/mansion/selfinspect/statspanel/attribute").set_text("Free Attribute Points : "+str(person.skillpoints))
@@ -2715,7 +2715,7 @@ func updatestats(person):
 		$MainScreen/mansion/selfinspect/statspanel/TextureRect/portrait.set_texture(null)
 
 var gradeimages = {
-slave = load("res://files/buttons/mainscreen/40.png"),
+'slave' : load("res://files/buttons/mainscreen/40.png"),
 poor = load("res://files/buttons/mainscreen/41.png"),
 commoner = load("res://files/buttons/mainscreen/42.png"),
 rich = load("res://files/buttons/mainscreen/43.png"),

@@ -81,11 +81,11 @@ func launch():
 	if globals.state.sidequests.ayneris > 0:
 		scenearray.append("ayneris")
 	currentscene = scenearray[0]
-	show(call(currentscene))
+	show_(call(currentscene))
 	timer.set_wait_time(15)
 	timer.start()
 
-func show(dict):
+func show_(dict):
 	get_node("background").texture = globals.backgrounds[dict.background]
 	get_node("textpanel/RichTextLabel").set_bbcode('[color=yellow]'+dict.text+'[/color]')
 	if dict.sprite != null:
@@ -119,7 +119,7 @@ func advance():
 		currentscene = scenearray[scenearray.find(currentscene)+1]
 		get_parent().animationfade(2)
 		yield(get_parent(), "animfinished")
-		show(call(currentscene))
+		show_(call(currentscene))
 		timer.set_wait_time(15)
 		timer.start()
 	elif stage == 'credits':

@@ -1,4 +1,4 @@
-extends Node
+extends WindowDialog
 
 var mode = 'portrait' setget mode_set
 var person

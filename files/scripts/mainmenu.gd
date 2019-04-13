@@ -1,4 +1,4 @@
-extends Node
+extends Control
 
 
 #QMod - Enumerations
@@ -76,6 +76,7 @@ var hobbydescription = {
 	'Servitude' : "[color=aqua]Endurance: +1; +Obedience[/color]\n\n$name has spent $his youth in harsh training which lead to $him being more physically fit and respecting to $his superiors."
 }
 
+#warning-ignore:unused_class_variable
 var backgrounddict = {
 	mercenary = {code = 'mercenary', name = "Mercenary", descript = "After spending your early days as a recruit and soldier for the local governor, you eventually left for better opportunities and new experience. After spending few years being a sellsword with limited opportunities, given lack of local conflicts, the news about your inheritance reached your ears and you decided, that at the very least new career option should be less of a hassle. \n\n[color=aqua]Start with 2 Leather Armors and 2 Swords[/color]"},
 	farmer = {code = 'farmer', name = "Farmer", descript = "Your childhood has been spent on the family farm. After your father died, there was little option but to take his place and start taking care of it. Upon hearing news of your newfound inheritance, you being fed up with the rural routine and sold your possessions, and moved onto your new life. \n\n[color=aqua]Start with extra 250 gold and 250 food. [/color]"},
@@ -163,6 +164,7 @@ func _ready_adult_warning():
 	
 	var settings = File.new()
 	#Disables Adult warning if settings file exists, for own convenience
+#warning-ignore:unused_variable
 	var showWarning = !settings.file_exists("user://settings.ini")
 	#showWarning = true ### Uncomment this to always show warning as in original
 	if true:
@@ -187,6 +189,7 @@ func _ready_music():
 	
 	#Set & start main menu/theme music
 	var music = get_node("music")
+#warning-ignore:unused_variable
 	var path = ''
 	music.set_autoplay(true)
 	music.set_stream(globals.musicdict.maintheme) #Directly call music dictionary's maintheme 
@@ -253,6 +256,7 @@ func _ready_newgame_creator():
 		i.connect("pressed",self,'_option_toggle',[i])
 	
 	#Connect virgin option
+#warning-ignore:return_value_discarded
 	get_node("TextureFrame/newgame/stage6/virgin").connect("pressed", self, '_virgin_press')
 	
 	#Initialize newgame variables
@@ -383,21 +387,21 @@ func _load_savegame_file():
 	_on_SavePanel_visibility_changed()	
 
 #QMod - These delete savegame functions indicate that the savegame filesystem should be refactored out of mainmenu	
-func _on_deletebuttonssave_pressed():
-	var dir = Directory.new()
-	if dir.file_exists(filesname):
-		yesnopopup('Delete this file?', '_delete_savefile', 'cancel')
-	else:
-		popup('No file with such name') 
+#func _on_deletebuttonssave_pressed():
+#	var dir = Directory.new()
+#	if dir.file_exists(filesname):
+#		yesnopopup('Delete this file?', '_delete_savefile', 'cancel')
+#	else:
+#		popup('No file with such name') 
 
 #QMod - Renamed
-func _delete_savefile():
-	var dir = Directory.new()
-	if dir.dir_exists("user://saves") == false:
-		dir.make_dir("user://saves")
-	dir.remove(filesname)
-	cancel()
-	_on_SavePanel_visibility_changed()
+#func _delete_savefile():
+#	var dir = Directory.new()
+#	if dir.dir_exists("user://saves") == false:
+#		dir.make_dir("user://saves")
+#	dir.remove(filesname)
+#	cancel()
+#	_on_SavePanel_visibility_changed()
 
 func _on_cancelsaveload_pressed():
 	get_node("TextureFrame/SavePanel").visible = false
@@ -463,15 +467,19 @@ func _on_exit_pressed():
 
 #Patreon, Blogspot, itch.io, and wikia link buttons
 func _on_patreonbutton_pressed():
+#warning-ignore:return_value_discarded
 	OS.shell_open('https://www.patreon.com/maverik')
 
 func _on_blogbutton_pressed():
+#warning-ignore:return_value_discarded
 	OS.shell_open('https://strivefopower.blogspot.com')
 
 func _on_itchbutton_pressed():
+#warning-ignore:return_value_discarded
 	OS.shell_open('https://strive4power.itch.io/strive-for-power')
 
 func _on_wikibutton_pressed():
+#warning-ignore:return_value_discarded
 	OS.shell_open('http://strive4power.wikia.com/wiki/Strive4power_Wiki')
 	
 
@@ -497,6 +505,7 @@ func _select_stage(button):
 	
 #QMod - Refactored to use Match
 #Changed 'remember prior choices during creation' to 'forget changes' as default
+#warning-ignore:unused_argument
 func _advance_stage(confirm = false):		
 	#Process newgame creation stage panel visuals
 	_process_stage_panels()			
@@ -988,6 +997,7 @@ func _update_stage6():
 	get_node("TextureFrame/newgame/stage6/chardescript").set_bbcode(text)
 
 #Update makeoverPerson appearance to selected option
+#warning-ignore:unused_argument
 func _lookline_text(text, node):
 	makeoverPerson[node.get_name()] = node.get_text()
 	_update_stage6()
@@ -1011,7 +1021,7 @@ func _on_lookconfirm_pressed():
 #Stage07 - Select specialization
 func _stage7():
 	#Reset specialization
-	player.spec == null
+	player.spec = null
 	
 	#Set default description
 	var text = "Specialization provides a\n" + "considerable bonus to certain way of\n" + "playing."

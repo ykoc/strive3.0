@@ -18,10 +18,13 @@ var finaleperson
 var lastEventPlace = {region = 'none', location = 'none'}
 
 #Quest Variables
+#warning-ignore:unused_class_variable
 var mainquest
 var sidequests = {}
 
+#warning-ignore:unused_class_variable
 var mainquestTexts
+#warning-ignore:unused_class_variable
 var sidequestTexts
 
 
@@ -85,6 +88,7 @@ func _call_events_hook(place, callback = null):
 	
 	return placeEffects
 		
+#warning-ignore:unused_argument
 func _call_events_schedule(place, callback = null):	
 	var placeEffects = {hasEvent = false, text = ''}
 	
@@ -255,12 +259,12 @@ func emily(state = 1):
 		var emily = globals.characters.create('Emily')
 		globals.state.upcomingevents.append({code = 'tishaappearance',duration =7})
 		globals.slaves = emily
-		backstreets()
+		#backstreets()
 	elif state == 5:
-		backstreets()
+		#backstreets()
 		main.close_dialogue()
 	elif state == 0:
-		backstreets()
+		#backstreets()
 		main.close_dialogue()
 
 func emilymansion(stage = 0):
@@ -546,6 +550,7 @@ func tishadorms(stage=0):
 	var buttons = []
 	var text = ""
 	var state = false
+#warning-ignore:unused_variable
 	var sprite = null
 
 	for i in globals.state.playergroup:
@@ -589,6 +594,7 @@ func tishadorms(stage=0):
 	globals.main.dialogue(state,self,text,buttons)
 
 func tishabackstreets(stage = 0):
+#warning-ignore:unused_variable
 	var emily
 	var buttons = []
 	var text = ""
@@ -1265,7 +1271,9 @@ func gornaydatalk(stage = 0):
 
 func gornaydaselect(person = null):
 	var text
+#warning-ignore:unused_variable
 	var state = true
+#warning-ignore:unused_variable
 	var sprite
 	var buttons = []
 	if person == null:
@@ -1283,8 +1291,10 @@ func gornaydaselect(person = null):
 
 func gornaydaivran(stage = 0):
 	var text
+#warning-ignore:unused_variable
 	var sprite
 	var buttons = []
+#warning-ignore:unused_variable
 	var state = true
 	if stage == 0:
 		text = textnode.MainQuestGornAydaIvran
@@ -1302,6 +1312,7 @@ func gornaydaivran(stage = 0):
 	#globals.main.dialogue(state, self, text, buttons, sprite)
 
 func undercitybosswin():
+#warning-ignore:unused_variable
 	var reward
 	var text = ''
 	if globals.state.mainquest == 24:
@@ -1486,6 +1497,7 @@ func dryadfightwin():
 	globals.main.exploration.zoneenter('frostfordoutskirts')
 	globals.main.dialogue(true, self, text, buttons, sprite)
 
+#warning-ignore:unused_argument
 func zoefightwin(stage = 0):
 	var state = false
 	var text  = ''
@@ -1514,6 +1526,7 @@ func zoechooseslave(person = null):
 	buttons.append({text = "Refuse", function = "zoerefusehelp", args = 0})
 	globals.main.dialogue(state, self, text, buttons, sprite)
 
+#warning-ignore:unused_argument
 func zoerefusehelp(stage = 0):
 	var state = true
 	var text = textnode.MainQuestFrostfordZoeDie
@@ -1672,6 +1685,7 @@ func mountainwin(stage = 0):
 		
 	globals.main.dialogue(state, self, text, buttons, sprite)
 
+#warning-ignore:unused_argument
 func garthorencounter(stage = 0):
 	var sprite = [['garthor','pos1','opac']]
 	var buttons = []
@@ -1680,6 +1694,7 @@ func garthorencounter(stage = 0):
 	buttons.append({text = "Fight", function = 'semifinalfight'})
 	globals.main.dialogue(false, self, text, buttons, sprite)
 
+#warning-ignore:unused_argument
 func davidencounter(stage = 0):
 	var sprite = null
 	var buttons = []
@@ -2359,7 +2374,9 @@ func calislaver(choice):
 func calislaverscampwin():
 	var cali = null
 	var text = ""
+#warning-ignore:unused_variable
 	var buttons = []
+#warning-ignore:unused_variable
 	var state
 	var sprite
 	for i in globals.state.playergroup:
@@ -2377,8 +2394,11 @@ func calislaverscampwin():
 
 func calistraybandit():
 	var cali = null
+#warning-ignore:unused_variable
 	var text = ""
+#warning-ignore:unused_variable
 	var buttons = []
+#warning-ignore:unused_variable
 	var state
 	for i in globals.state.playergroup:
 		if globals.state.findslave(i).unique == 'Cali':
@@ -2404,6 +2424,7 @@ func calistraybanditwin():
 func calireturnhome():
 	var text = ""
 	var buttons = []
+#warning-ignore:unused_variable
 	var state
 	var sprite
 	if globals.state.sidequests.caliparentsdead == true:
@@ -2665,7 +2686,7 @@ func chloevillage(stage = 0):
 		if globals.state.sidequests.chloe == 7:
 			text = textnode.ChloeVillageHelp
 			globals.state.sidequests.chloe = 8
-			[['chloeshy2', 'pos1','opac']]
+			sprite = [['chloeshy2', 'pos1','opac']]
 		elif globals.state.sidequests.chloe == 8:
 			text = textnode.ChloeHelpReturn
 		elif globals.state.sidequests.chloe == 9:
@@ -3343,6 +3364,7 @@ func sspotion(stage = 0):
 	if startslave == null:
 		return
 	
+#warning-ignore:unused_variable
 	var textdict 
 	
 	if startslave.imagefull != null:
@@ -3396,6 +3418,7 @@ func sspotion(stage = 0):
 	
 	globals.main.dialogue(state, self, startslave.dictionary(text), buttons, sprites)
 
+#warning-ignore:unused_argument
 func sspotionaftermatch(stage = 0):
 	var state = true
 	var text
@@ -3426,6 +3449,7 @@ func sspotionaftermatch(stage = 0):
 	else:
 		var weak = 0
 		var strict = 0
+#warning-ignore:unused_variable
 		var fair = 0
 		
 		var weakdict = ['ssweak','ssmassageweak','sspotionweak']
@@ -3653,9 +3677,9 @@ func finalbossenc(stage = 0):
 			var names = ''
 			var counter = 0
 			for i in globals.state.playergroup:
-				var slave = globals.state.findslave(i)
-				slave.removefrommansion()
-				names += slave.name_short()
+				var _slave = globals.state.findslave(i)
+				_slave.removefrommansion()
+				names += _slave.name_short()
 				counter += 1
 				if globals.state.playergroup.size() == counter+1:
 					names += ' and '
@@ -3682,12 +3706,13 @@ func finalbossenc(stage = 0):
 			return
 		7:
 			var counter = 0
+#warning-ignore:unused_variable
 			var names = ''
 			text = "After sacrificing your party, your power grows again. "
 			for i in globals.state.playergroup:
-				var slave = globals.state.findslave(i)
-				slave.removefrommansion()
-				names += slave.name_short()
+				var _slave = globals.state.findslave(i)
+				_slave.removefrommansion()
+				names += _slave.name_short()
 				counter += 1
 				if globals.state.playergroup.size() == counter+1:
 					names += ' and '

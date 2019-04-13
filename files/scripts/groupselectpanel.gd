@@ -1,4 +1,4 @@
-extends Node
+extends Panel
 
 func show():
 	var newbutton

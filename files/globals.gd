@@ -2,28 +2,40 @@
 extends Node
 
 var effectdict = {}
+#warning-ignore:unused_class_variable
 var guildslaves = {wimborn = [], gorn = [], frostford = [], umbra = []}
 var gameversion = '0.5.23c'
 var state = progress.new()
 var developmode = false
 var gameloaded = false
 
+#warning-ignore:unused_class_variable
 var mainscreen = 'mainmenu'
 
+#warning-ignore:unused_class_variable
 var filedir = 'res://files'
+#warning-ignore:unused_class_variable
 var backupdir = 'res://backup'
 
 var resources = resource.new()
+#warning-ignore:unused_class_variable
 var questtext = load("res://files/scripts/questtext.gd").new()
+#warning-ignore:unused_class_variable
 var slavegen = load("res://files/scripts/slavegen.gd").new()
+#warning-ignore:unused_class_variable
 var assets = load("res://files/scripts/assets.gd").new()
 var constructor = load("res://files/scripts/characters/constructor.gd").new()
+#warning-ignore:unused_class_variable
 var origins = load("res://files/scripts/origins.gd").new()
 var description = load("res://files/scripts/characters/description.gd").new()
 var dictionary = load("res://files/scripts/dictionary.gd").new()
+#warning-ignore:unused_class_variable
 var sexscenes = load("res://files/scripts/sexscenes.gd").new()
+#warning-ignore:unused_class_variable
 var glossary = load("res://files/scripts/glossary.gd").new()
+#warning-ignore:unused_class_variable
 var repeatables = load("res://files/scripts/repeatable_quests.gd").new()
+#warning-ignore:unused_class_variable
 var abilities = load("res://files/scripts/abilities.gd").new()
 var effects = load("res://files/scripts/effects.gd").new()
 var events = load("res://files/scripts/events.gd").new()
@@ -33,20 +45,31 @@ var spelldict = spells.spelllist
 var itemdict = items.itemlist
 var racefile = load("res://files/scripts/characters/races.gd").new()
 var races = racefile.races
+#warning-ignore:unused_class_variable
 var names = racefile.names
+#warning-ignore:unused_class_variable
 var dailyevents = load("res://files/scripts/dailyevents.gd").new()
+#warning-ignore:unused_class_variable
 var jobs = load("res://files/scripts/jobs&specs.gd").new()
 var mansionupgrades = load("res://files/scripts/mansionupgrades.gd").new()
 var gallery = load("res://files/scripts/gallery.gd").new()
+#warning-ignore:unused_class_variable
 var slavedialogues = load("res://files/scripts/slavedialogues.gd").new()
+#warning-ignore:unused_class_variable
 var characters = gallery
+#warning-ignore:unused_class_variable
 var patronlist = load("res://files/scripts/patronlists.gd").new()
+#warning-ignore:unused_class_variable
 var areas = load('res://files/scripts/explorationregions.gd').new()
+#warning-ignore:unused_class_variable
 var combatdata = load("res://files/scripts/combatdata.gd").new()
 
 #QMod - Variables
+#warning-ignore:unused_class_variable
 var mainQuestTexts = events.mainquestTexts
+#warning-ignore:unused_class_variable
 var sideQuestTexts = events.sidequestTexts
+#warning-ignore:unused_class_variable
 var places = {
 	anywhere = {region = 'any', area = 'any', location = 'any'},
 	nowhere = {region = 'none', area = 'none', location = 'none'},
@@ -58,11 +81,15 @@ var main
 
 var slaves = [] setget slaves_set
 var allracesarray = []
+#warning-ignore:unused_class_variable
 var specarray = ['geisha','ranger','executor','bodyguard','assassin','housekeeper','trapper','nympho','merchant','tamer']
 var player = person.new()
+#warning-ignore:unused_class_variable
 var partner
 
+#warning-ignore:unused_class_variable
 var spritedict = gallery.sprites
+#warning-ignore:unused_class_variable
 var musicdict = {
 combat1 = load("res://files/music/battle1.ogg"),
 combat2 = load("res://files/music/battle2.ogg"),
@@ -80,6 +107,7 @@ ending = load("res://files/music/ending.ogg"),
 dungeon = load("res://files/music/dungeon.ogg"),
 intimate = load("res://files/music/intimate.ogg"),
 }
+#warning-ignore:unused_class_variable
 var sounddict = {
 door = load("res://files/sounds/door.wav"),
 stab = load("res://files/sounds/stab.wav"),
@@ -89,11 +117,14 @@ fall = load("res://files/sounds/fall.wav"),
 page = load("res://files/sounds/page.wav"),
 attack = load("res://files/sounds/normalattack.wav"),
 }
+#warning-ignore:unused_class_variable
 var backgrounds = gallery.backgrounds
+#warning-ignore:unused_class_variable
 var scenes = gallery.scenes
+#warning-ignore:unused_class_variable
 var mansionupgradesdict = mansionupgrades.dict
 var gradeimages = {
-slave = load("res://files/buttons/mainscreen/40.png"),
+"slave" : load("res://files/buttons/mainscreen/40.png"),
 poor = load("res://files/buttons/mainscreen/41.png"),
 commoner = load("res://files/buttons/mainscreen/42.png"),
 rich = load("res://files/buttons/mainscreen/43.png"),
@@ -113,6 +144,7 @@ merchant = load("res://files/buttons/mainscreen/35.png"),
 tamer = load("res://files/buttons/mainscreen/32.png"),
 }
 
+#warning-ignore:unused_class_variable
 var sexicon = {
 female = load("res://files/buttons/sexicons/female.png"),
 male = load("res://files/buttons/sexicons/male.png"),
@@ -121,10 +153,13 @@ futanari = load("res://files/buttons/sexicons/futa.png"),
 
 #var combatencounterdata = explorationscrips.enemygroup
 
+#warning-ignore:unused_class_variable
 var noimage = load("res://files/buttons/noimagesmall.png")
 
+#warning-ignore:unused_class_variable
 var punishcategories = ['spanking','whipping','nippleclap','clitclap','nosehook','mashshow','facesit','afacesit','grovel']
 
+#warning-ignore:unused_class_variable
 var playerspecs = {
 Slaver = "+100% gold from selling captured slaves\n+33% gold reward from slave delivery tasks",
 Hunter = "+100% gold drop from random encounters\n+20% gear drop chance\nBonus to preventing ambushes",
@@ -183,6 +218,7 @@ func loadsettings():
 		if temp.has(i):
 			rules[i] = temp[i]
 	settings.close()
+#warning-ignore:unused_variable
 	var data = {chars = charactergallery, folders = setfolders}
 	
 	if settings.file_exists("user://progressdata") == false:
@@ -228,6 +264,7 @@ var modfolder = setfolders.mods
 func savechars(value):
 	gallery.charactergallery = value
 
+#warning-ignore:unused_argument
 func savefolders(value):
 	overwritesettings()
 
@@ -269,7 +306,7 @@ func slaves_set(person):
 		globals.get_tree().get_current_scene().infotext("New Character acquired: " + person.name_long(),'green')
 
 func loadimage(path):
-	var file = File.new()
+	#var file = File.new()
 	if typeof(path) == TYPE_OBJECT:
 		return path
 	if path == null:
@@ -319,9 +356,11 @@ thumbnails = false,
 }
 
 var scenedict = {
-	Mansion = 'res://files/Mansion.scn',
+	#Mansion = 'res://files/Mansion.scn',
+	Mansion = 'res://files/Mansion.tscn',
 }
 
+#warning-ignore:unused_class_variable
 var CurrentScene
 
 func ChangeScene(name):
@@ -344,7 +383,8 @@ class resource:
 	
 	func update():
 		for i in array:
-			self[i] += 0
+			#self[i] += 0
+			set(i, get(i))
 	
 	func reset():
 		day = 1
@@ -403,7 +443,7 @@ class resource:
 	
 	func mana_set(value):
 		value = round(value)
-		var color
+		#var color
 		var difference = mana - value
 		var text = ""
 		mana = value
@@ -420,7 +460,7 @@ class resource:
 				text = "Used " + str(abs(difference)) +  " mana"
 		
 		if globals.get_tree().get_current_scene().has_node("infotext"):
-			globals.get_tree().get_current_scene().infotext(text,color)
+			globals.get_tree().get_current_scene().infotext(text)
 		
 		
 	
@@ -445,62 +485,110 @@ class resource:
 		if globals.get_tree().get_current_scene().has_node("infotext"):
 			globals.get_tree().get_current_scene().infotext(text,'green')
 	
+#warning-ignore:unused_argument
 	func energy_set(value):
 		if panel != null:
 			panel.get_node("energy").set_text(str(round(globals.player.energy)))
 
+#warning-ignore:unused_class_variable
 var portalnames = {wimborn = 'Wimborn', gorn = 'Gorn', frostford = 'Frostford', umbra = 'Umbra',amberguard = 'Amberguard', dragonnests = 'Dragon Nests'}
 
 class progress:
+#warning-ignore:unused_class_variable
 	var tutorialcomplete = false
+#warning-ignore:unused_class_variable
 	var supporter = false
+#warning-ignore:unused_class_variable
 	var location = 'wimborn'
+#warning-ignore:unused_class_variable
 	var nopoplimit = false
 	var condition = 85 setget cond_set
 	var conditionmod = 1.3
+#warning-ignore:unused_class_variable
 	var spec = ''
+#warning-ignore:unused_class_variable
 	var farm = 0 
+#warning-ignore:unused_class_variable
 	var apiary = 0
+#warning-ignore:unused_class_variable
 	var branding = 0
+#warning-ignore:unused_class_variable
 	var slaveguildvisited = 0
+#warning-ignore:unused_class_variable
 	var umbrafirstvisit = true
+#warning-ignore:unused_class_variable
 	var itemlist = {}
+#warning-ignore:unused_class_variable
 	var spelllist = {}
+#warning-ignore:unused_class_variable
 	var mainquest = 0
+#warning-ignore:unused_class_variable
 	var mainquestcomplete = false
+#warning-ignore:unused_class_variable
 	var rank = 0
+#warning-ignore:unused_class_variable
 	var password = ''
 	var sidequests = {startslave = 0, emily = 0, brothel = 0, cali = 0, caliparentsdead = false, chloe = 0, ayda = 0, ivran = '', yris = 0, zoe = 0, ayneris = 0, sebastianumbra = 0, maple = 0} setget quest_set
+#warning-ignore:unused_class_variable
 	var repeatables = {wimbornslaveguild = [], frostfordslaveguild = [], gornslaveguild = []}
 	var babylist = []
+#warning-ignore:unused_class_variable
 	var companion = -1
+#warning-ignore:unused_class_variable
 	var headgirlbehavior = 'none'
+#warning-ignore:unused_class_variable
 	var portals = {wimborn = {'enabled' : false, 'code' : 'wimborn'}, gorn = {'enabled':false, 'code' : 'gorn'}, frostford = {'enabled':false, 'code' : 'frostford'}, amberguard = {'enabled':false, 'code':'amberguard'}, umbra = {'enabled':false, 'code':'umbra'}}
+#warning-ignore:unused_class_variable
 	var sebastianorder = {race = 'none', taken = false, duration = 0}
+#warning-ignore:unused_class_variable
 	var sebastianslave
+#warning-ignore:unused_class_variable
 	var sandbox = false
+#warning-ignore:unused_class_variable
 	var snails = 0
+#warning-ignore:unused_class_variable
 	var groupsex = true
+#warning-ignore:unused_class_variable
 	var playergroup = []
+#warning-ignore:unused_class_variable
 	var timedevents = {}
+#warning-ignore:unused_class_variable
 	var customcursor = "res://files/buttons/kursor1.png"
+#warning-ignore:unused_class_variable
 	var upcomingevents = []
+#warning-ignore:unused_class_variable
 	var reputation = {wimborn = 0, frostford = 0, gorn = 0, amberguard = 0} setget reputation_set
+#warning-ignore:unused_class_variable
 	var dailyeventcountdown = 0
+#warning-ignore:unused_class_variable
 	var dailyeventprevious = 0
+#warning-ignore:unused_class_variable
 	var currentversion = 5000
+#warning-ignore:unused_class_variable
 	var unstackables = {}
+#warning-ignore:unused_class_variable
 	var supplykeep = 10
+#warning-ignore:unused_class_variable
 	var foodbuy = 200
+#warning-ignore:unused_class_variable
 	var supplybuy = false
+#warning-ignore:unused_class_variable
 	var tutorial = {basics = false, person = false, alchemy = false, jail = false, lab = false, farm = false, outside = false, combat = false, interactions = false}
+#warning-ignore:unused_class_variable
 	var itemcounter = 0
+#warning-ignore:unused_class_variable
 	var slavecounter = 0
+#warning-ignore:unused_class_variable
 	var alisecloth = 'normal'
+#warning-ignore:unused_class_variable
 	var decisions = []
+#warning-ignore:unused_class_variable
 	var lorefound = []
+#warning-ignore:unused_class_variable
 	var relativesdata = {}
+#warning-ignore:unused_class_variable
 	var descriptsettings = {full = true, basic = true, appearance = true, genitals = true, piercing = true, tattoo = true, mods = true}
+#warning-ignore:unused_class_variable
 	var mansionupgrades = {
 	farmcapacity = 0,
 	farmhatchery = 0,
@@ -521,15 +609,23 @@ class progress:
 	mansionnursery = 0,
 	mansionparlor = 0,
 	}
+#warning-ignore:unused_class_variable
 	var plotsceneseen = []
+#warning-ignore:unused_class_variable
 	var capturedgroup = []
 	var ghostrep = {wimborn = 0, frostford = 0, gorn = 0, amberguard = 0}
 	var backpack = {stackables = {}, unstackables = []} setget backpack_set
+#warning-ignore:unused_class_variable
 	var restday = 0
+#warning-ignore:unused_class_variable
 	var defaultmasternoun = "Master"
+#warning-ignore:unused_class_variable
 	var sexactions = 1
+#warning-ignore:unused_class_variable
 	var nonsexactions = 1
+#warning-ignore:unused_class_variable
 	var actionblacklist = []
+#warning-ignore:unused_class_variable
 	var marklocation 
 	
 	func quest_set(value):
@@ -538,15 +634,16 @@ class progress:
 			globals.main.infotext('Side Quest Advanced',"yellow")
 	
 	func calculateweight():
-		var slave
+		var _slave
+#warning-ignore:unused_variable
 		var tempitem
 		var currentweight = 0
 		var maxweight = variables.basecarryweight + max(globals.player.sstr*variables.carryweightperstrplayer, 0)
 		var array = [globals.player]
 		for i in globals.state.playergroup:
-			slave = globals.state.findslave(i)
-			array.append(slave)
-			maxweight += max(slave.sstr*variables.slavecarryweightperstr,0) + variables.baseslavecarryweight
+			_slave = globals.state.findslave(i)
+			array.append(_slave)
+			maxweight += max(_slave.sstr*variables.slavecarryweightperstr,0) + variables.baseslavecarryweight
 		for i in globals.state.backpack.stackables:
 			if globals.itemdict[i].has('weight'):
 				currentweight += globals.itemdict[i].weight * globals.state.backpack.stackables[i]
@@ -613,81 +710,131 @@ class person:
 	var name = ''
 	var surname = ''
 	var nickname = ''
+#warning-ignore:unused_class_variable
 	var unique = null
 	var id = 0
 	var race = ''
 	var age = ''
+#warning-ignore:unused_class_variable
 	var mindage = ''
 	var sex = ''
 	var spec = null
+#warning-ignore:unused_class_variable
 	var imageportait = null
+#warning-ignore:unused_class_variable
 	var imagefull = null
 	var haircolor = ''
+#warning-ignore:unused_class_variable
 	var hairlength = ''
+#warning-ignore:unused_class_variable
 	var hairstyle = ''
 	var eyecolor = ''
+#warning-ignore:unused_class_variable
 	var skin = ''
+#warning-ignore:unused_class_variable
 	var height = ''
+#warning-ignore:unused_class_variable
 	var titssize = ''
+#warning-ignore:unused_class_variable
 	var asssize = ''
+#warning-ignore:unused_class_variable
 	var eyeshape = 'normal'
+#warning-ignore:unused_class_variable
 	var eyesclera = 'normal'
+#warning-ignore:unused_class_variable
 	var arms = 'normal'
+#warning-ignore:unused_class_variable
 	var legs = 'normal'
+#warning-ignore:unused_class_variable
 	var bodyshape = 'humanoid'
+#warning-ignore:unused_class_variable
 	var skincov = 'none'
+#warning-ignore:unused_class_variable
 	var furcolor = 'none'
+#warning-ignore:unused_class_variable
 	var ears = 'human'
+#warning-ignore:unused_class_variable
 	var tail = 'none'
+#warning-ignore:unused_class_variable
 	var wings = 'none'
+#warning-ignore:unused_class_variable
 	var horns = 'none'
+#warning-ignore:unused_class_variable
 	var beauty = 0 setget ,beauty_get
 	var beautybase = 0 setget beautybase_set
 	var beautytemp = 0 
 	
+#warning-ignore:unused_class_variable
 	var asser = 0
+#warning-ignore:unused_class_variable
 	var pubichair = 'clean'
 	
 	var fear = 0 setget fear_set,fear_get
 	var fear_mod = 1
 	
 	var lewdness = 0 setget lewdness_set
+#warning-ignore:unused_class_variable
 	var lactation = false
+#warning-ignore:unused_class_variable
 	var titsextra = 0
+#warning-ignore:unused_class_variable
 	var titsextradeveloped = false
+#warning-ignore:unused_class_variable
 	var consent = false
 	var vagina = 'normal'
 	var vagvirgin = true
+#warning-ignore:unused_class_variable
 	var mouthvirgin = true
+#warning-ignore:unused_class_variable
 	var assvirgin = true
+#warning-ignore:unused_class_variable
 	var penisvirgin = true
 	var penis = 'none'
+#warning-ignore:unused_class_variable
 	var balls = 'none'
+#warning-ignore:unused_class_variable
 	var penistype = 'human'
+#warning-ignore:unused_class_variable
 	var penisextra = 0
+#warning-ignore:unused_class_variable
 	var sensvagina = 0
+#warning-ignore:unused_class_variable
 	var sensmouth = 0
+#warning-ignore:unused_class_variable
 	var senspenis = 0
+#warning-ignore:unused_class_variable
 	var sensanal = 0
+#warning-ignore:unused_class_variable
 	var knowntechniques = []
 	
 	
+#warning-ignore:unused_class_variable
 	var state = 'normal'
 	var preg = {fertility = 0, has_womb = true, duration = 0, baby = null}
 	var rules = {'silence':false, 'pet':false, 'contraception':false, 'aphrodisiac':false, 'masturbation':false, 'nudity':false, 'betterfood':false, 'personalbath':false,'cosmetics':false,'pocketmoney':false}
 	var traits = []
+#warning-ignore:unused_class_variable
 	var gear = {costume = null, underwear = null, armor = null, weapon = null, accessory = null}
+#warning-ignore:unused_class_variable
 	var genes = {}
 	var effects = {}
+#warning-ignore:unused_class_variable
 	var brand = 'none'
+#warning-ignore:unused_class_variable
 	var work = 'rest'
 	var sleep = ''
+#warning-ignore:unused_class_variable
 	var farmoutcome = false
 	
+#warning-ignore:unused_class_variable
 	var ability = ['attack']
+#warning-ignore:unused_class_variable
 	var abilityactive = ['attack']
+#warning-ignore:unused_class_variable
 	var customdesc = ''
+#warning-ignore:unused_class_variable
 	var piercing = {earlobes = null, eyebrow = null, nose = null, lips = null, tongue = null, navel = null, nipples = null, clit = null, labia = null, penis = null}
+#warning-ignore:unused_class_variable
 	var tattoo = {chest = 'none', face = 'none', ass = 'none', arms = 'none', legs = 'none', waist = 'none'}
 	var level = 1
 	var xp = 0 setget xp_set, xp_get
@@ -695,27 +842,42 @@ class person:
 	var skillpoints = 2
 	var levelupreqs = {} setget levelupreqs_set
 	var away = {duration = 0, at = ''}
+#warning-ignore:unused_class_variable
 	var cattle = {is_cattle = false, work = '', used_for = 'food'}
 	var mods = {}
+#warning-ignore:unused_class_variable
 	var tattooshow = {chest = true, face = true, ass = true, arms = true, legs = true, waist = true}
+#warning-ignore:unused_class_variable
 	var tags = []
 	var origins = 'slave'
+#warning-ignore:unused_class_variable
 	var originstrue = ''
+#warning-ignore:unused_class_variable
 	var memory = ''
+#warning-ignore:unused_class_variable
 	var attention = 0
+#warning-ignore:unused_class_variable
 	var sexuals = {actions = {}, unlocked = false, affection = 0, kinks = {}, unlocks = [], lastaction = ''}
+#warning-ignore:unused_class_variable
 	var kinks = []
+#warning-ignore:unused_class_variable
 	var forcedsex = false
+#warning-ignore:unused_class_variable
 	var sexexp = {partners = {}, watchers = {}, actions = {}, seenactions = {}, orgasms = {}, orgasmpartners = {}}
+#warning-ignore:unused_class_variable
 	var sensation = {}
+#warning-ignore:unused_class_variable
 	var metrics = {ownership = 0, jail = 0, mods = 0, brothel = 0, sex = 0, partners = [], randompartners = 0, item = 0, spell = 0, orgy = 0, threesome = 0, win = 0, capture = 0, goldearn = 0, foodearn = 0, manaearn = 0, birth = 0, preg = 0, vag = 0, anal = 0, oral = 0, roughsex = 0, roughsexlike = 0, orgasm = 0}
 	var fromguild = false
 	var masternoun = 'Master'
+#warning-ignore:unused_class_variable
 	var lastinteractionday = 0
+#warning-ignore:unused_class_variable
 	var lastsexday = 0
 	var learningpoints = 0 setget learningpoints_set
 	var luxury = 0
 	
+#warning-ignore:unused_class_variable
 	var relations = {}
 	
 	var stats = {
@@ -771,6 +933,7 @@ class person:
 		loyal_min = 0,
 	}
 	var health setget health_set,health_get
+#warning-ignore:unused_class_variable
 	var obed setget obed_set,obed_get
 	var stress setget stress_set,stress_get
 	var loyal setget loyal_set,loyal_get
@@ -778,12 +941,17 @@ class person:
 	var conf setget conf_set,conf_get
 	var wit setget wit_set,wit_get
 	var charm setget charm_set,charm_get
+#warning-ignore:unused_class_variable
 	var lust setget lust_set,lust_get
 	var toxicity setget tox_set,tox_get
+#warning-ignore:unused_class_variable
 	var energy setget energy_set,energy_get
+#warning-ignore:unused_class_variable
 	var sstr setget str_set,str_get
 	var sagi setget agi_set,agi_get
+#warning-ignore:unused_class_variable
 	var smaf setget maf_set,maf_get
+#warning-ignore:unused_class_variable
 	var send setget end_set,end_get
 	
 	func fear_raw(value):
@@ -796,6 +964,7 @@ class person:
 			array.append(globals.origins.trait(i))
 		return array
 	
+#warning-ignore:unused_argument
 	func add_trait(trait, remove = false):
 		trait = globals.origins.trait(trait)
 		var conflictexists = false
@@ -902,14 +1071,16 @@ class person:
 					if stats.has(i):
 						stats[i] = stats[i] + -effect[i]
 					elif self.get(i) != null:
-						self[i] -= effect[i]
+						#self[i] -= effect[i]
+						set(i, get(i) - effect[i])
 		elif remove != true:
 			effects[effect.code] = effect
 			for i in effect:
 				if stats.has(i):
 					stats[i] = stats[i] + effect[i]
 				elif self.get(i) != null:
-					self[i] += effect[i]
+					#self[i] += effect[i]
+					set(i, get(i) + effect[i])
 	
 	
 	func beauty_get():
@@ -925,7 +1096,9 @@ class person:
 	func obed_set(value):
 		var difference = stats.obed_cur - value
 		var string = ""
+#warning-ignore:unused_variable
 		var color
+#warning-ignore:unused_variable
 		var text = ""
 		stats.obed_mod = clamp(stats.obed_mod, 0.2, 2)
 		if difference > 0:
@@ -958,7 +1131,9 @@ class person:
 	func loyal_set(value):
 		var difference = stats.loyal_cur - value
 		var string = ""
+#warning-ignore:unused_variable
 		var color
+#warning-ignore:unused_variable
 		var text = ""
 		if difference > 0:
 			difference = abs(difference)
@@ -1073,12 +1248,15 @@ class person:
 		else:
 			stats.lust_cur = clamp(stats.lust_cur + difference,stats.lust_min,stats.lust_max)
 	
+#warning-ignore:unused_argument
 	func str_set(value):
 		stats.str_base = min(stats.str_base, stats.str_max)
 	
+#warning-ignore:unused_argument
 	func agi_set(value):
 		stats.agi_base = min(stats.agi_base, stats.agi_max)
 	
+#warning-ignore:unused_argument
 	func maf_set(value):
 		stats.maf_base = min(stats.maf_base, stats.maf_max)
 	
@@ -1301,7 +1479,8 @@ class person:
 				templuxury += 5
 				globals.itemdict.supply.amount -= value
 			else:
-				nosupply == true
+				#nosupply == true
+				nosupply = true
 		if rules.pocketmoney == true:
 			if spec != 'housekeeper':
 				value = 10
@@ -1429,11 +1608,11 @@ class person:
 		for key in dict:
 			var tv = dict[key]
 			if typeof(tv) == TYPE_DICTIONARY:
-				globals.merge(self[key], dict[key])
+				globals.merge(get(key), dict[key])
 			elif typeof(tv) == TYPE_INT:
-				self[key] = self[key] + dict[key]
+				set(key, get(key) + dict[key])
 			else:
-				self[key] = dict[key]
+				set(key, dict[key])
 	
 
 func addrelations(person, person2, value):
@@ -1566,6 +1745,7 @@ func impregnation(mother, father = null, anyfather = false):
 	mother.metrics.preg += 1
 	globals.state.babylist.append(baby)
 
+#warning-ignore:unused_class_variable
 var baby
 
 
@@ -1746,6 +1926,7 @@ func slavetooltip(person):
 	if node.get_rect().end.y >= screen.size.y:
 		node.rect_global_position.y -= node.get_rect().end.y - screen.size.y
 
+#warning-ignore:unused_argument
 func slavetooltiphide(empty = null):
 	if get_tree().get_current_scene().has_node('slavetooltip'):
 		get_tree().get_current_scene().get_node('slavetooltip').visible = false
@@ -1775,6 +1956,7 @@ func itemtooltip(item):
 		node.rect_global_position.y -= node.get_rect().end.y - screen.size.y
 	
 
+#warning-ignore:unused_argument
 func itemtooltiphide(empty = null):
 	if get_tree().get_current_scene().has_node('itemtooltip'):
 		get_tree().get_current_scene().get_node('itemtooltip').visible = false
@@ -1874,22 +2056,39 @@ static func sortbynumber(first, second):
 		return false
 
 
+#warning-ignore:unused_class_variable
 var hairlengtharray = ['ear','neck','shoulder','waist','hips']
+#warning-ignore:unused_class_variable
 var sizearray = ['masculine','flat','small','average','big','huge']
+#warning-ignore:unused_class_variable
 var heightarray = ['petite','short','average','tall','towering']
+#warning-ignore:unused_class_variable
 var agesarray = ['child','teen','adult']
+#warning-ignore:unused_class_variable
 var genitaliaarray = ['small','average','big']
+#warning-ignore:unused_class_variable
 var originsarray = ['slave','poor','commoner','rich','noble']
+#warning-ignore:unused_class_variable
 var longtails = ['cat','fox','wolf','demon','dragon','scruffy','snake tail','racoon']
+#warning-ignore:unused_class_variable
 var skincovarray = ['none','scales','feathers','full_body_fur', 'plants']
+#warning-ignore:unused_class_variable
 var penistypearray = ['human','canine','feline','equine']
+#warning-ignore:unused_class_variable
 var alltails = ['cat','fox','wolf','bunny','bird','demon','dragon','scruffy','snake tail','racoon']
+#warning-ignore:unused_class_variable
 var allwings = ['feathered_black', 'feathered_white', 'feathered_brown', 'leather_black','leather_red','insect']
+#warning-ignore:unused_class_variable
 var allears = ['human','feathery','pointy','short_furry','long_pointy_furry','fins','long_round_furry', 'long_droopy_furry']
+#warning-ignore:unused_class_variable
 var statsdict = {sstr = 'Strength', sagi = 'Agility', smaf = "Magic Affinity", send = "Endurance", cour = 'Courage', conf = 'Confidence', wit = 'Wit', charm = 'Charm'}
+#warning-ignore:unused_class_variable
 var maxstatdict = {sstr = 'str_max', sagi = 'agi_max', smaf = 'maf_max', send = 'end_max', cour = 'cour_max', conf = 'conf_max', wit = 'wit_max', charm = 'charm_max'}
+#warning-ignore:unused_class_variable
 var basestatdict = {sstr = 'str_base', sagi = 'agi_base', smaf = 'maf_base', send = 'end_base', cour = 'cour_base', conf = 'conf_base', wit = 'wit_base', charm = 'charm_base'}
+#warning-ignore:unused_class_variable
 var statsdescript = dictionary.statdescription
+#warning-ignore:unused_class_variable
 var sleepdict = {communal = {name = 'Communal Room'}, jail = {name = "Jail"}, personal = {name = 'Personal Room'}, your = {name = "Your bed"}}
 
 
@@ -2083,6 +2282,7 @@ func repairsave():
 			i.enchant = ''
 	globals.state.playergroup.clear()
 
+#warning-ignore:unused_class_variable
 var showalisegreet = false
 
 func dir_contents(target = "user://saves"):
@@ -2102,6 +2302,7 @@ func dir_contents(target = "user://saves"):
 		print("An error occurred when trying to access the path.")
 
 var currentslave
+#warning-ignore:unused_class_variable
 var currentsexslave
 
 func evaluate(input): #used to read strings as conditions when needed

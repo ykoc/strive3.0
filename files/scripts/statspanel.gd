@@ -1,4 +1,4 @@
-extends Node
+extends Panel
 
 var person
 onready var sstr = get_node("sstr/Label")
@@ -15,8 +15,8 @@ func _ready():
 	for i in ['send','smaf','sstr','sagi']:
 		get_node(i+'/Button').connect("pressed", self, 'statup', [i])
 	for i in globals.statsdict:
-		self[i].get_parent().get_node("Control").connect("mouse_entered", self, 'showtooltip', [i])
-		self[i].get_parent().get_node("Control").connect("mouse_exited", globals, 'hidetooltip')
+		get(i).get_parent().get_node("Control").connect("mouse_entered", self, 'showtooltip', [i])
+		get(i).get_parent().get_node("Control").connect("mouse_exited", globals, 'hidetooltip')
 	
 
 func showtooltip(value):
@@ -43,7 +43,7 @@ func show():
 			if text.find('color') >= 0:
 				text += "[/color]"
 			text += "/" +str(min(person.stats[globals.maxstatdict[i]], person.originvalue[person.origins]))
-		self[i].set_bbcode(text)
+		get(i).set_bbcode(text)
 	for i in mentals:
 		if mode == 'slavebase':
 			i.get_parent().visible = false

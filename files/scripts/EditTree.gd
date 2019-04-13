@@ -3,7 +3,7 @@ var dict
 
 
 
-func show(type = 'races'):
+func show_(type = 'races'):
 	if type == 'races':
 		dict = globals.racefile.races
 	elif type == 'bodyparts':
@@ -40,7 +40,7 @@ func buildtree():
 func _on_edittree_button_pressed(item, column, id):
 	if column == 0:
 		if globals.description.descriptions.has(item.get_text(0)):
-			show("bodyparts")
+			show_("bodyparts")
 	elif column == 1:
 		get_parent().editarray(item.get_metadata(column))
 

@@ -22,7 +22,7 @@ func _on_trainingcancel_pressed():
 
 func _on_training_pressed():
 	get_node("trainingpanel").visible = true
-	_on_skillname_item_selected(get_node("trainingpanel/skillname").get_selected())
+	#_on_skillname_item_selected(get_node("trainingpanel/skillname").get_selected())
 
 
 func alphabeticalsortbycode(first, second):

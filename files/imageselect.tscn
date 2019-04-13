@@ -4,7 +4,6 @@
 [ext_resource path="res://files/buttons/noimage.png" type="Texture" id=2]
 
 [node name="Panel" type="WindowDialog"]
-
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -13,579 +12,233 @@ margin_left = -1134.0
 margin_top = -671.0
 margin_right = -265.0
 margin_bottom = -178.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-popup_exclusive = false
-window_title = ""
-resizable = false
 script = ExtResource( 1 )
 
-[node name="ScrollContainer" type="ScrollContainer" parent="." index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
 margin_left = 33.0
 margin_top = 7.0
 margin_right = 693.0
 margin_bottom = 407.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 scroll_horizontal_enabled = false
-scroll_horizontal = 0
-scroll_vertical_enabled = true
-scroll_vertical = 0
-scroll_deadzone = 0
-_sections_unfolded = [ "Scroll" ]
 
-[node name="GridContainer" type="GridContainer" parent="ScrollContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer"]
 size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_constants/vseparation = 15
 custom_constants/hseparation = 5
 columns = 6
-_sections_unfolded = [ "Size Flags", "custom_constants" ]
 
-[node name="Button" type="TextureButton" parent="ScrollContainer/GridContainer" index="0"]
-
+[node name="Button" type="TextureButton" parent="ScrollContainer/GridContainer"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_right = 100.0
 margin_bottom = 120.0
 rect_min_size = Vector2( 100, 120 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 expand = true
-_sections_unfolded = [ "Size Flags" ]
 
-[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Button" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/Button"]
 margin_top = 100.0
 margin_right = 101.0
 margin_bottom = 137.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 0
 text = "nagdsagashfhahhmejgpg"
 align = 1
 autowrap = true
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
 
-[node name="pic" type="TextureRect" parent="ScrollContainer/GridContainer/Button" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="pic" type="TextureRect" parent="ScrollContainer/GridContainer/Button"]
 margin_right = 100.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 100, 100 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 texture = ExtResource( 2 )
 expand = true
 stretch_mode = 6
 
-[node name="cancelportait" type="Button" parent="." index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="cancelportait" type="Button" parent="."]
 margin_left = 329.0
 margin_top = 439.0
 margin_right = 543.0
 margin_bottom = 473.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Cancel"
-flat = false
-align = 1
 
-[node name="racelock" type="CheckBox" parent="." index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="racelock" type="CheckBox" parent="."]
 margin_left = 701.0
 margin_top = 20.0
 margin_right = 865.0
 margin_bottom = 47.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-toggle_mode = true
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Race Locked"
-flat = false
-align = 0
 
-[node name="search" type="LineEdit" parent="." index="4"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="search" type="LineEdit" parent="."]
 margin_left = 705.0
 margin_top = 55.0
 margin_right = 864.0
 margin_bottom = 83.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 1
 size_flags_horizontal = 2
 size_flags_vertical = 2
-focus_mode = 2
-context_menu_enabled = true
 placeholder_text = "Search"
-placeholder_alpha = 0.6
-caret_blink = false
-caret_blink_speed = 0.65
-caret_position = 0
 
-[node name="noimagestext" type="RichTextLabel" parent="." index="5"]
-
+[node name="noimagestext" type="RichTextLabel" parent="."]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 50.0
 margin_top = 33.0
 margin_right = 674.0
 margin_bottom = 172.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 bbcode_enabled = true
 bbcode_text = "[center]You have no images with fitting criterias available.[/center]
 [center]Put your images into portrait folder and hit 'Reload Portraits' button[/center]"
-visible_characters = -1
-percent_visible = 1.0
-meta_underlined = true
-tab_size = 4
 text = "You have no images with fitting criterias available.
 Put your images into portrait folder and hit 'Reload Portraits' button"
-scroll_active = true
-scroll_following = false
-selection_enabled = false
-override_selected_font_color = false
 
-[node name="addcustom" type="Button" parent="." index="6"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="addcustom" type="Button" parent="."]
 margin_left = 706.0
 margin_top = 101.0
 margin_right = 863.0
 margin_bottom = 135.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Add custom image"
-flat = false
-align = 1
 
-[node name="openfolder" type="Button" parent="." index="7"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="openfolder" type="Button" parent="."]
 margin_left = 706.0
 margin_top = 149.0
 margin_right = 863.0
 margin_bottom = 183.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Open system folder"
-flat = false
-align = 1
 
-[node name="reloadlist" type="Button" parent="." index="8"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="reloadlist" type="Button" parent="."]
 margin_left = 706.0
 margin_top = 195.0
 margin_right = 863.0
 margin_bottom = 229.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Reload portraits"
-flat = false
-align = 1
 
-[node name="removeportrait" type="Button" parent="." index="9"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="removeportrait" type="Button" parent="."]
 margin_left = 706.0
 margin_top = 240.0
 margin_right = 863.0
 margin_bottom = 274.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Reset the image"
-flat = false
-align = 1
 
-[node name="reverseportrait" type="Button" parent="." index="10"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="reverseportrait" type="Button" parent="."]
 margin_left = 706.0
 margin_top = 286.0
 margin_right = 863.0
 margin_bottom = 320.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Reverse to default"
-flat = false
-align = 1
 
-[node name="selectfolder" type="Button" parent="." index="11"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="selectfolder" type="Button" parent="."]
 margin_left = 706.0
 margin_top = 331.0
 margin_right = 863.0
 margin_bottom = 365.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Select Folders"
-flat = false
-align = 1
 
-[node name="FileDialog" type="FileDialog" parent="." index="12"]
-
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="FileDialog" type="FileDialog" parent="."]
 margin_left = -39.0
 margin_top = -4.0
 margin_right = 613.0
 margin_bottom = 401.0
-rect_min_size = Vector2( 200, 70 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-popup_exclusive = false
 window_title = "Open a File"
-resizable = false
 dialog_text = "Select New Portait"
 dialog_hide_on_ok = true
-mode_overrides_title = true
 mode = 0
 access = 2
 filters = PoolStringArray( "*.jpg", "*.png" )
-show_hidden_files = false
-current_dir = "C:/Users/1/Desktop/godot/strive3"
-current_file = ""
-current_path = "C:/Users/1/Desktop/godot/strive3/"
+current_dir = "D:/Program Files2/proj/GitHub/strive3.0"
+current_path = "D:/Program Files2/proj/GitHub/strive3.0/"
 
-[node name="selectfolders" type="WindowDialog" parent="." index="13"]
-
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="selectfolders" type="WindowDialog" parent="."]
 margin_left = 132.0
 margin_top = 190.0
 margin_right = 814.0
 margin_bottom = 425.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-popup_exclusive = false
-window_title = ""
-resizable = false
 
-[node name="portratislabel" type="Label" parent="selectfolders" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="portratislabel" type="Label" parent="selectfolders"]
 margin_left = 14.0
 margin_top = 14.0
 margin_right = 267.0
 margin_bottom = 32.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 0
 text = "Portrait folder: "
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
 
-[node name="spritelabel" type="Label" parent="selectfolders" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="spritelabel" type="Label" parent="selectfolders"]
 margin_left = 14.0
 margin_top = 64.0
 margin_right = 269.0
 margin_bottom = 85.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 0
 text = "Body folder: "
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
 
-[node name="closefolderselect" type="Button" parent="selectfolders" index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="closefolderselect" type="Button" parent="selectfolders"]
 margin_left = 260.0
 margin_top = 185.0
 margin_right = 422.0
 margin_bottom = 216.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Close"
-flat = false
-align = 1
 
-[node name="chooseportraitolder" type="Button" parent="selectfolders" index="4"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="chooseportraitolder" type="Button" parent="selectfolders"]
 margin_left = 121.0
 margin_top = 12.0
 margin_right = 641.0
 margin_bottom = 32.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Close"
-flat = false
 align = 0
 
-[node name="choosebodyfolder" type="Button" parent="selectfolders" index="5"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="choosebodyfolder" type="Button" parent="selectfolders"]
 margin_left = 121.0
 margin_top = 62.0
 margin_right = 640.0
 margin_bottom = 82.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Close"
-flat = false
 align = 0
 
-[node name="RichTextLabel" type="RichTextLabel" parent="selectfolders" index="6"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="RichTextLabel" type="RichTextLabel" parent="selectfolders"]
 margin_left = 33.0
 margin_top = 98.0
 margin_right = 639.0
 margin_bottom = 156.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 bbcode_enabled = true
 bbcode_text = "Selected folder and all subfolders in it will provide images to the required area and will be saved upon exit"
-visible_characters = -1
-percent_visible = 1.0
-meta_underlined = true
-tab_size = 4
 text = "Selected folder and all subfolders in it will provide images to the required area and will be saved upon exit"
-scroll_active = true
-scroll_following = false
-selection_enabled = false
-override_selected_font_color = false
 
-[node name="folderdialogue" type="FileDialog" parent="." index="14"]
-
-visible = false
+[node name="folderdialogue" type="FileDialog" parent="."]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -594,80 +247,34 @@ margin_left = 224.0
 margin_top = 122.0
 margin_right = -422.0
 margin_bottom = -213.0
-rect_min_size = Vector2( 200, 70 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-popup_exclusive = false
 window_title = "Open a Directory"
-resizable = false
 dialog_text = "Select default path folder"
-dialog_hide_on_ok = false
-mode_overrides_title = true
 mode = 2
 access = 1
-filters = PoolStringArray(  )
-show_hidden_files = false
 current_dir = "user://"
-current_file = ""
 current_path = "user://"
 
-[node name="assignboth" type="CheckBox" parent="." index="15"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="assignboth" type="CheckBox" parent="."]
 margin_left = 710.0
 margin_top = 390.0
 margin_right = 861.0
 margin_bottom = 414.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
 hint_tooltip = "Will attempt to assign both portrait and body image, if same file name exists in both folders"
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = true
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Assign Both"
-flat = false
-align = 0
-_sections_unfolded = [ "Hint" ]
 
 [connection signal="pressed" from="cancelportait" to="." method="_on_cancelportait_pressed"]
-
 [connection signal="pressed" from="racelock" to="." method="_on_racelock_pressed"]
-
 [connection signal="text_changed" from="search" to="." method="_on_search_text_changed"]
-
 [connection signal="pressed" from="addcustom" to="." method="_on_addcustom_pressed"]
-
 [connection signal="pressed" from="openfolder" to="." method="_on_openfolder_pressed"]
-
 [connection signal="pressed" from="reloadlist" to="." method="_on_reloadlist_pressed"]
-
 [connection signal="pressed" from="removeportrait" to="." method="_on_removeportrait_pressed"]
-
 [connection signal="pressed" from="reverseportrait" to="." method="_on_reverseportrait_pressed"]
-
 [connection signal="pressed" from="selectfolder" to="." method="_on_selectfolder_pressed"]
-
 [connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
-
 [connection signal="pressed" from="selectfolders/closefolderselect" to="." method="_on_closefolderselect_pressed"]
-
 [connection signal="pressed" from="selectfolders/chooseportraitolder" to="." method="_on_chooseportraitolder_pressed"]
-
 [connection signal="pressed" from="selectfolders/choosebodyfolder" to="." method="_on_choosebodyfolder_pressed"]
-
 [connection signal="dir_selected" from="folderdialogue" to="." method="_on_folderdialogue_dir_selected"]
-
-

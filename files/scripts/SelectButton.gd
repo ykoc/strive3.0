@@ -1,5 +1,5 @@
 
-extends Node
+extends Button
 signal button_selected(value)
 var height = 0
 

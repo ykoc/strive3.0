@@ -1,4 +1,4 @@
-extends Node
+extends TextureRect
 
 var state
 var location = 'mansion'

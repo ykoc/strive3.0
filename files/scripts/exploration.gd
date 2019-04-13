@@ -1,5 +1,5 @@
 
-extends Node
+extends Control
 
 onready var mansion = get_parent()
 
@@ -818,7 +818,7 @@ func snailget():
 
 func slaverbuy():
 	globals.resources.gold -= max(round(enemygroup.captured.buyprice()*0.7),30)
-	enemycapture()
+	#enemycapture()
 	globals.get_tree().get_current_scene().popup("You purchase slavers' captive and return to the mansion. " )
 
 func inspectenemy():
@@ -1349,7 +1349,8 @@ func capturedecide(stage): #1 - no reward, 2 - material, 3 - sex, 4 - join
 	
 
 func _on_sellconfirm_pressed():
-	_on_confirmwinning_pressed(true)
+	#_on_confirmwinning_pressed(true)
+	_on_confirmwinning_pressed()
 	get_node("winningpanel/sellpanel").visible = false
 
 

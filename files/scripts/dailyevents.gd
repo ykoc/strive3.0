@@ -1,4 +1,4 @@
-extends Node
+extends Control
 
 var person #triggering person
 var slave2 #additional person spot

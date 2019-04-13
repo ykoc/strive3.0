@@ -1,4 +1,4 @@
-extends Node
+extends Panel
 
 onready var undress = get_node("undress")
 onready var sprite = get_node("TextureFrame")

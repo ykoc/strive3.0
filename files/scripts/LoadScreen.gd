@@ -15,7 +15,7 @@ func _ready():
 func goto_scene(path): # game requests to switch to this scene
 	loader = ResourceLoader.load_interactive(path)
 	if loader == null: # check for errors
-		show_error()
+		#show_error()
 		return
 	#print(true)
 	set_process(true)
@@ -27,6 +27,7 @@ func goto_scene(path): # game requests to switch to this scene
 	wait_frames = 1
 
 
+#warning-ignore:unused_argument
 func _process(delta):
 	if loader == null:
 	    # no need to process anymore
@@ -42,13 +43,14 @@ func _process(delta):
 		if err == ERR_FILE_EOF: # load finished
 			var resource = loader.get_resource()
 			loader = null
+#warning-ignore:return_value_discarded
 			get_tree().change_scene_to(resource)
 			#set_new_scene(resource)
 			break
 		elif err == OK:
 			update_progress()
 		else: # error during loading
-			show_error()
+			#show_error()
 			loader = null
 			break
 
@@ -63,6 +65,7 @@ func update_progress():
 	# call this on a paused animation. use "true" as the second parameter to force the animation to update
 	#get_node("animation").seek(progress * length, true)
 
+#warning-ignore:unused_argument
 func set_new_scene(scene_resource):
 	pass
 #	current_scene = scene_resource.instance()

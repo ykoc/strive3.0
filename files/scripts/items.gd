@@ -1132,86 +1132,101 @@ aydajewel = {
 },
 }
 
+#warning-ignore:unused_class_variable
 var recipeaphrodisiac = {
 basicsolutioning = 1,
 taintedessenceing = 1,
 bestialessenceing = 1,
 }
 
+#warning-ignore:unused_class_variable
 var recipehairgrowth = {
 basicsolutioning = 1,
 natureessenceing = 1,
 bestialessenceing = 1
 }
 
+#warning-ignore:unused_class_variable
 var recipematuringpot = {
 majoruspot = 1,
 magicessenceing = 2,
 natureessenceing = 1
 }
 
+#warning-ignore:unused_class_variable
 var recipeyouthingpot = {
 minoruspot = 1,
 magicessenceing = 2,
 basicsolutioning = 2
 }
 
+#warning-ignore:unused_class_variable
 var recipeminoruspot = {
 basicsolutioning = 1,
 taintedessenceing = 2,
 fluidsubstanceing = 1
 }
 
+#warning-ignore:unused_class_variable
 var recipemajoruspot = {
 basicsolutioning = 1,
 bestialessenceing = 2,
 natureessenceing = 1
 }
 
+#warning-ignore:unused_class_variable
 var recipeamnesiapot = {
 basicsolutioning = 1,
 fluidsubstanceing = 1,
 taintedessenceing = 1
 }
 
+#warning-ignore:unused_class_variable
 var recipeoblivionpot = {
 amnesiapot = 1,
 magicessenceing = 1,
 fluidsubstanceing = 2
 }
 
+#warning-ignore:unused_class_variable
 var recipelactationpot = {
 basicsolutioning = 1,
 bestialessenceing = 2,
 natureessenceing = 1
 }
 
+#warning-ignore:unused_class_variable
 var recipestimulantpot = {
 basicsolutioning = 1,
 fluidsubstanceing = 1,
 natureessenceing = 1
 }
+#warning-ignore:unused_class_variable
 var recipedeterrentpot = {
 basicsolutioning = 1,
 fluidsubstanceing = 1,
 taintedessenceing = 1
 }
 
+#warning-ignore:unused_class_variable
 var recipemiscariagepot = {
 basicsolutioning = 1,
 taintedessenceing = 2
 }
 
+#warning-ignore:unused_class_variable
 var reciperegressionpot = {
 basicsolutioning = 2,
 amnesiapot = 1,
 youthingpot = 1
 }
+#warning-ignore:unused_class_variable
 var recipeaphroditebrew = {
 aphrodisiac = 2,
 stimulantpot = 1,
 taintedessenceing = 2
 }
+#warning-ignore:unused_class_variable
 var recipeclaritypot = {
 oblivionpot = 1,
 regressionpot = 1,
@@ -1304,6 +1319,7 @@ func maiduniformeffect(person):
 	person.obed += rand_range(5,10)
 	return "$name's maid uniform inspires $him to be more obedient.\n"
 
+#warning-ignore:unused_argument
 func kimonoeffect(person):
 	pass
 
@@ -1333,6 +1349,7 @@ func bedlaheffect(person):
 	person.charm += rand_range(1,3)
 	return text
 
+#warning-ignore:unused_argument
 func chainbikinieffect(person):
 	return
 
@@ -1565,6 +1582,7 @@ func beautyeffect():
 	person.add_effect(globals.effectdict.beautypot)
 	return text
 
+#warning-ignore:unused_class_variable
 var currentpotion = ''
 
 func bondageeffect():
@@ -1582,9 +1600,9 @@ func recipedecrypt(item):
 	var text = ''
 	var recipe = item.recipe
 	var canmake = true
-	for i in self[recipe]:
+	for i in get(recipe):
 		var ingredient = globals.itemdict[i]
-		var amount = self[recipe][i]
+		var amount = get(recipe)[i]
 		text += ingredient.name + ' - '+ str(amount) + ', '
 		if ingredient.amount < amount:
 			canmake = false
@@ -1595,9 +1613,9 @@ func recipedecrypt(item):
 
 func recipemake(item):
 	var recipe = item.recipe
-	for i in self[recipe]:
+	for i in get(recipe):
 		var ingredient = globals.itemdict[i]
-		var amount = self[recipe][i]
+		var amount = get(recipe)[i]
 		ingredient.amount -= amount
 	if globals.state.spec == 'Alchemist':
 		item.amount += 2
@@ -1682,6 +1700,7 @@ func sortbytype(first, second):
 	else:
 		return true
 
+#warning-ignore:unused_argument
 func foodpurchase(item):
 	var amount = globals.itemdict.food.amount
 	globals.resources.gold -= amount*globals.itemdict.food.cost
@@ -1709,11 +1728,13 @@ func aydabook(item):
 	main.get_node('outside/shoppanel/inventory').itemsshop()
 	#globals.main.infotext('Quest advanced','yellow')
 
+#warning-ignore:unused_argument
 func aydajewel(item):
 	globals.state.sidequests.ayda = 15
 	globals.main.infotext('Quest advanced','yellow')
 	main.popup("You hide the rare jewelry in your pocket. ")
 
+#warning-ignore:unused_argument
 func zoebook(item):
 	main.popup("The Mysterious Book Acquired. ")
 	globals.itemdict['zoebook'].amount += 1

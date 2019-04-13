@@ -40,30 +40,30 @@ func trait(trait):
 
 
 
-static func set_childhood(person, specify = 'empty'):
-	var childhood
-	if specify == 'empty':
-		return
-	elif specify == '$person':
-		childhood = childhood_pool('personry')
-		person.cour = -rand_range(5,15)
-		person.conf = -rand_range(5,15)
-		person.wit = -rand_range(5,15)
-		person.charm = -rand_range(5,15)
-		person.face.beauty = rand_range(1,40)
-		if rand_range(0,10) > 7:
-			if rand_range(0,10) < 6:
-				person.traits = traits('detrimental')
-			else:
-				person.traits = traits('any')
-	else:
-		person.traits = traits('any')
-		childhood = childhood_pool('personry')
-	#person.traits = traits('any')
-	person.origins.childhood = childhood
-	var effects = childhood.effects
-	person.fetch(effects)
-	return person
+#static func set_childhood(person, specify = 'empty'):
+#	var childhood
+#	if specify == 'empty':
+#		return
+#	elif specify == '$person':
+#		childhood = childhood_pool('personry')
+#		person.cour = -rand_range(5,15)
+#		person.conf = -rand_range(5,15)
+#		person.wit = -rand_range(5,15)
+#		person.charm = -rand_range(5,15)
+#		person.face.beauty = rand_range(1,40)
+#		if rand_range(0,10) > 7:
+#			if rand_range(0,10) < 6:
+#				person.traits = traits('detrimental')
+#			else:
+#				person.traits = traits('any')
+#	else:
+#		person.traits = traits('any')
+#		childhood = childhood_pool('personry')
+#	#person.traits = traits('any')
+#	person.origins.childhood = childhood
+#	var effects = childhood.effects
+#	person.fetch(effects)
+#	return person
 
 static func calculate(person, origin):
 	for key in origin.stats:

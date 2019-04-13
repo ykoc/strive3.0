@@ -1,9 +1,9 @@
-extends Node
+extends Panel
 
 var array
 
 
-func show(temparray):
+func show_(temparray):
 	self.visible = true
 	array = temparray
 	$Tree.clear()
@@ -24,12 +24,12 @@ func _on_closearray_pressed():
 func _on_deletearray_pressed():
 	if $Tree.get_selected() != null:
 		array.erase($Tree.get_selected().get_metadata(0))
-		show(array)
+		show_(array)
 
 
 func _on_addnewarray_pressed():
 	array.append("NewEntry")
-	show(array)
+	show_(array)
 
 
 func _on_Tree_item_edited():

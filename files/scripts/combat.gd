@@ -1,17 +1,21 @@
 
-extends Node
+extends Control
 
 var period = 'base'
+#warning-ignore:unused_class_variable
 var phase = ''
 var currentenemies
+#warning-ignore:unused_class_variable
 var enemygear = {}
 var playergroup = []
 var enemygroup = []
 var selectedcharacter
 var targetskill
 var nocaptures = false
+#warning-ignore:unused_class_variable
 var area
 var trapper = false
+#warning-ignore:unused_class_variable
 var trappername
 var turns = 0
 var combatantnodes = []
@@ -114,7 +118,8 @@ func start_battle(nosound = false):
 	resetpanels()
 	yield(get_parent(),'animfinished')
 	get_node("autowin").visible = get_parent().get_node("new slave button").visible
-	var slave
+	var _slave
+#warning-ignore:unused_variable
 	var combatant
 	trapper = false
 	enemyturn = false
@@ -196,6 +201,7 @@ func start_battle(nosound = false):
 		globals.main.get_node("tutorialnode").combat()
 
 
+#warning-ignore:unused_argument
 func _process(delta):
 	if self.visible == false:
 		return
@@ -287,7 +293,7 @@ func rebuildbuffs(combatant):
 		newnode.connect("mouse_exited", globals, 'hidetooltip')
 
 func _input(event):
-	if event.is_echo() == true || event.is_pressed() == false || get_node("abilitites/Panel").visible == true || self.is_visible_in_tree() == false:
+	if event.is_echo() == true || event.is_pressed() == false || get_node("abilitites/Panel").visible == true || is_visible_in_tree() == false:
 		return
 	#Cancel skill by rightclick
 	if event.is_action_pressed("RMB") && period == 'skilltarget':
@@ -310,6 +316,7 @@ class combatant:
 	var person
 	var group
 	var state = 'normal'
+#warning-ignore:unused_class_variable
 	var panel
 	var name
 	var hp setget health_set, health_get
@@ -324,9 +331,11 @@ class combatant:
 	var attack = 0
 	var magic = 0
 	var armor = 0
+#warning-ignore:unused_class_variable
 	var protection = 0
 	var speed = 0
 	var portrait
+#warning-ignore:unused_class_variable
 	var target
 	var geareffects = []
 	var abilities
@@ -335,12 +344,14 @@ class combatant:
 	var scene
 	var cooldowns = {}
 	var actionpoints = 1
+#warning-ignore:unused_class_variable
 	var effects = {}
 	var faction
 	
 	var animationplaying = false
 	
 	var ai = ''
+#warning-ignore:unused_class_variable
 	var aimemory = ''
 	
 	
@@ -478,7 +489,7 @@ class combatant:
 		if group == 'player':
 			node.get_node('Panel').visible = true
 			for i in ['attack','speed','protection','armor']:
-				node.get_node('Panel/' + i + '/Label').text = str(self[i])
+				node.get_node('Panel/' + i + '/Label').text = str(get(i))
 			if actionpoints <= 0:
 				node.hint_tooltip = 'No action points left'
 			else:
@@ -488,7 +499,7 @@ class combatant:
 				node.get_node('Panel').visible = true
 				node.get_parent().move_child(node, node.get_parent().get_children().size())
 				for i in ['attack','speed','protection','armor']:
-					node.get_node('Panel/' + i + '/Label').text = str(self[i])
+					node.get_node('Panel/' + i + '/Label').text = str(get(i))
 	
 	func hidecombatanttooltip():
 		node.get_node("Panel").hide()
@@ -529,6 +540,7 @@ class combatant:
 		scene.floattext(node.rect_global_position, 'Miss!', '#ffff00')
 	
 	func health_set(value):
+#warning-ignore:unused_variable
 		var effect = ''
 		var color = 'white'
 		var difference = ceil(value - hp)
@@ -550,7 +562,7 @@ class combatant:
 		if hp <= 0:
 			defeat()
 	
-	func health_get(value):
+	func health_get():
 		return hp
 	
 	func defeat():
@@ -578,18 +590,18 @@ class combatant:
 				scene.period = 'end'
 				return
 			else:
-				var slave = person
+				var _slave = person
 				if globals.rules.permadeath == false:
-					slave.stats.health_cur = 15
-					slave.away.duration = 3
-					slave.away.at = 'rest'
-					slave.work = 'rest'
+					_slave.stats.health_cur = 15
+					_slave.away.duration = 3
+					_slave.away.at = 'rest'
+					_slave.work = 'rest'
 					globals.state.playergroup.erase(person.id)
 				else:
 					globals.state.playergroup.erase(person.id)
 					for i in globals.state.playergroup:
 						globals.state.findslave(i).stress += rand_range(25,40)
-					slave.death()
+					_slave.death()
 		else:
 			scene.repositionanimation()
 		scene.endcombatcheck()
@@ -600,6 +612,7 @@ func checkforresults():
 		lose()
 		return
 	var counter = 0
+#warning-ignore:unused_variable
 	var text = ''
 	
 	for i in playergroup:
@@ -786,6 +799,7 @@ func useskills(skill, caster = null, target = null, retarget = false):
 	var damage = 0
 	var group
 	var hit = 'hit'
+#warning-ignore:unused_variable
 	var targetparty
 	var targetarray
 	globals.hidetooltip()
@@ -1000,6 +1014,7 @@ func deselectall():
 		if i.get_class() == 'TextureButton':
 			i.pressed = false
 
+#warning-ignore:function_conflicts_variable
 func enemyturn():
 	if $autoattack.pressed == true:
 		for i in playergroup:
@@ -1217,10 +1232,12 @@ func speed(combatant, value):
 func protection(combatant, value):
 	combatant.protection += value
 
+#warning-ignore:unused_argument
 func lust(combatant, value):
 	combatant.person.lust += 2
 
 func victory():
+#warning-ignore:unused_variable
 	var deads = []
 	
 	get_parent().animationfade(0.4)
@@ -1330,6 +1347,7 @@ func firebreathanimationtarget(combatant):
 	tween.interpolate_property(node, "modulate", Color(1,0.25,0.25,1), Color(1,1,1,1), 0.6, Tween.TRANS_SINE, Tween.EASE_IN)
 	tween.start()
 
+#warning-ignore:unused_argument
 func slamanimation(combatant):
 	var tween = $Tween
 	

@@ -1,5 +1,5 @@
 
-extends Node
+extends Control
 
 onready var main = get_parent()
 onready var buttoncontainer = $buttonpanel/outsidebuttoncontainer
@@ -2547,3 +2547,9 @@ func partymemberchosen(person):
 
 func _on_chosepartyclose_pressed():
 	$choseparty.hide()
+
+func _on_mageorderservices_visibility_changed():
+	pass
+
+func closedialogue():
+	globals.main.close_dialogue()

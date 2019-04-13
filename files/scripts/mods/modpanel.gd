@@ -1,4 +1,4 @@
-extends Node
+extends Panel
 
 var run_once = false
 

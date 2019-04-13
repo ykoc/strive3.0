@@ -67,13 +67,13 @@ var priceminimumsell = 10.0
 var oldemily = false
 
 var gradepricemod = { # grade and age mods will be added as bonus to base price which starts at 1 [baseprice*(1+value)]
-	slave = -0.2, poor = 0, commoner = 0.2, rich = 0.5, noble = 1
+	"slave": -0.2, poor = 0, commoner = 0.2, rich = 0.5, noble = 1
 	}
 var agepricemods = {
 	child = 0, teen = 0, adult = 0
 }
 
-var luxuryreqs = {slave = 0, poor = 5, commoner = 15,rich = 25, noble = 40}
+var luxuryreqs = {"slave" : 0, poor = 5, commoner = 15,rich = 25, noble = 40}
 
 
 var list = {

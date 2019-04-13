@@ -1,135 +1,75 @@
-[gd_scene load_steps=9 format=2]
-
+[gd_scene format=2]
 
 [node name="SavePanel" type="Panel"]
-
-focus_ignore_mouse = false
-focus_stop_mouse = true
-size_flags_horizontal = 2
-size_flags_vertical = 2
 margin_left = -211.0
 margin_top = 2.0
 margin_right = 488.0
 margin_bottom = 339.0
-
-[node name="savefilebutton" type="Button" parent="."]
-
-focus_ignore_mouse = false
-focus_stop_mouse = true
 size_flags_horizontal = 2
 size_flags_vertical = 2
+
+[node name="savefilebutton" type="Button" parent="."]
 margin_left = 34.0
 margin_top = 249.0
 margin_right = 159.0
 margin_bottom = 296.0
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-text = "save"
-flat = false
-
-[node name="loadbutton" type="Button" parent="."]
-
-focus_ignore_mouse = false
-focus_stop_mouse = true
 size_flags_horizontal = 2
 size_flags_vertical = 2
+text = "save"
+
+[node name="loadbutton" type="Button" parent="."]
 margin_left = 175.0
 margin_top = 249.0
 margin_right = 300.0
 margin_bottom = 296.0
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-text = "load"
-flat = false
-
-[node name="cancelsaveload" type="Button" parent="."]
-
-focus_ignore_mouse = false
-focus_stop_mouse = true
 size_flags_horizontal = 2
 size_flags_vertical = 2
+text = "load"
+
+[node name="cancelsaveload" type="Button" parent="."]
 margin_left = 530.0
 margin_top = 250.0
 margin_right = 655.0
 margin_bottom = 297.0
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-text = "cancel"
-flat = false
-
-[node name="deletebutton" type="Button" parent="."]
-
-focus_ignore_mouse = false
-focus_stop_mouse = true
 size_flags_horizontal = 2
 size_flags_vertical = 2
+text = "cancel"
+
+[node name="deletebutton" type="Button" parent="."]
 margin_left = 388.0
 margin_top = 250.0
 margin_right = 513.0
 margin_bottom = 297.0
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-text = "delete"
-flat = false
-
-[node name="saveline" type="LineEdit" parent="."]
-
-focus_ignore_mouse = false
-focus_stop_mouse = true
 size_flags_horizontal = 2
 size_flags_vertical = 2
+text = "delete"
+
+[node name="saveline" type="LineEdit" parent="."]
 margin_left = 43.0
 margin_top = 186.0
 margin_right = 658.0
 margin_bottom = 215.0
-placeholder_text = "filename"
-placeholder_alpha = 0.6
-focus_mode = 2
-caret_blink = false
-caret_blink_speed = 0.65
-
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
-
-focus_ignore_mouse = false
-focus_stop_mouse = true
 size_flags_horizontal = 2
 size_flags_vertical = 2
+placeholder_text = "filename"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
 margin_left = 36.0
 margin_top = 27.0
 margin_right = 662.0
 margin_bottom = 176.0
-scroll_horizontal = false
-scroll_vertical = true
+size_flags_horizontal = 2
+size_flags_vertical = 2
 
 [node name="savelist" type="VBoxContainer" parent="ScrollContainer"]
-
-focus_ignore_mouse = false
-focus_stop_mouse = false
 size_flags_horizontal = 2
 size_flags_vertical = 2
-margin_left = 0.0
-margin_top = 0.0
-margin_right = 0.0
-margin_bottom = 0.0
-alignment = 0
 
 [node name="Button" type="Button" parent="ScrollContainer/savelist"]
-
 visible = false
-rect_min_size = Vector2( 620, 35 )
-focus_ignore_mouse = false
-focus_stop_mouse = true
-size_flags_horizontal = 2
-size_flags_vertical = 2
-margin_left = 0.0
-margin_top = 0.0
 margin_right = 620.0
 margin_bottom = 35.0
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-flat = false
+rect_min_size = Vector2( 620, 35 )
+size_flags_horizontal = 2
+size_flags_vertical = 2
+

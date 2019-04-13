@@ -1,4 +1,4 @@
-extends Node
+extends Control
 
 
 var alisesprites = {
@@ -314,7 +314,7 @@ func startinput():
 	set_process_input(true)
 
 func advance():
-	show(currentline)
+	show_(currentline)
 	counter += 1
 	if currentdict.size() > counter:
 		currentline = currentdict[counter]
@@ -327,7 +327,7 @@ func currentdict_set(value):
 	currentline = currentdict[0]
 	advance()
 
-func show(dict):
+func show_(dict):
 	set_process_input(true)
 	set_process(true)
 	if dict.has('sprite'):
