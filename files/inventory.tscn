@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=2]
+[gd_scene load_steps=58 format=2]
 
 [ext_resource path="res://files/theme.tres" type="Theme" id=1]
 [ext_resource path="res://files/buttons/inventory/11-litter.png" type="Texture" id=2]
@@ -51,11 +51,9 @@
 [ext_resource path="res://files/buttons/inventory/9.png" type="Texture" id=49]
 [ext_resource path="res://files/buttons/inventory/4.png" type="Texture" id=50]
 [ext_resource path="res://files/buttons/inventory/5.png" type="Texture" id=51]
-[ext_resource path="res://files/buttons/inventory/33.png" type="Texture" id=52]
-[ext_resource path="res://files/buttons/menupanel.png" type="Texture" id=53]
-[ext_resource path="res://files/buttons/arrows/down.png" type="Texture" id=54]
-[ext_resource path="res://files/buttons/arrows/down-press.png" type="Texture" id=55]
-[ext_resource path="res://files/buttons/arrows/down-hl.png" type="Texture" id=56]
+[ext_resource path="res://files/buttons/arrows/down.png" type="Texture" id=52]
+[ext_resource path="res://files/buttons/arrows/down-press.png" type="Texture" id=53]
+[ext_resource path="res://files/buttons/arrows/down-hl.png" type="Texture" id=54]
 
 [sub_resource type="StyleBoxTexture" id=1]
 
@@ -114,45 +112,7 @@ expand_margin_bottom = 0.0
 modulate_color = Color( 1, 1, 1, 1 )
 draw_center = true
 
-[sub_resource type="StyleBoxTexture" id=4]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
-texture = ExtResource( 52 )
-region_rect = Rect2( 0, 0, 1318, 493 )
-margin_left = 0.0
-margin_right = 0.0
-margin_top = 0.0
-margin_bottom = 0.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
-
-[sub_resource type="StyleBoxTexture" id=5]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
-texture = ExtResource( 53 )
-region_rect = Rect2( 0, 0, 500, 500 )
-margin_left = 10.0
-margin_right = 10.0
-margin_top = 10.0
-margin_bottom = 10.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
-
-[node name="inventory" type="TextureRect"]
+[node name="inventory" type="TextureRect" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -1098,6 +1058,7 @@ _sections_unfolded = [ "Rect" ]
 
 [node name="gearpanel" type="TextureRect" parent="." index="13"]
 
+editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -1713,7 +1674,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="iteminfo" type="PopupPanel" parent="." index="15"]
+[node name="iteminfo" type="Popup" parent="." index="15"]
 
 editor/display_folded = true
 visible = false
@@ -1731,7 +1692,6 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 4 )
 popup_exclusive = false
 
 [node name="RichTextLabel" type="RichTextLabel" parent="iteminfo" index="0"]
@@ -1781,7 +1741,7 @@ size_flags_vertical = 2
 expand = true
 stretch_mode = 6
 
-[node name="hairchange" type="PopupPanel" parent="." index="16"]
+[node name="hairchange" type="Popup" parent="." index="16"]
 
 editor/display_folded = true
 visible = false
@@ -1799,7 +1759,6 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 5 )
 popup_exclusive = false
 
 [node name="TextEdit" type="LineEdit" parent="hairchange" index="0"]
@@ -1877,7 +1836,7 @@ text = "Cancel"
 flat = false
 align = 1
 
-[node name="itemrename" type="PopupPanel" parent="." index="17"]
+[node name="itemrename" type="Popup" parent="." index="17"]
 
 editor/display_folded = true
 visible = false
@@ -1895,7 +1854,6 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 5 )
 popup_exclusive = false
 _sections_unfolded = [ "Popup" ]
 
@@ -1975,7 +1933,7 @@ text = "Cancel"
 flat = false
 align = 1
 
-[node name="amnesia" type="PopupPanel" parent="." index="18"]
+[node name="amnesia" type="Popup" parent="." index="18"]
 
 visible = false
 anchor_left = 0.0
@@ -1992,7 +1950,6 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 5 )
 popup_exclusive = false
 
 [node name="name" type="LineEdit" parent="amnesia" index="0"]
@@ -2149,9 +2106,9 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-texture_normal = ExtResource( 54 )
-texture_pressed = ExtResource( 55 )
-texture_hover = ExtResource( 56 )
+texture_normal = ExtResource( 52 )
+texture_pressed = ExtResource( 53 )
+texture_hover = ExtResource( 54 )
 expand = true
 _sections_unfolded = [ "Hint", "Textures" ]
 
