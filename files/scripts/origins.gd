@@ -20,6 +20,7 @@ func traits(tag):
 			if traits[i]['tags'].has('secondary') != true:
 				rval.append(traits[i])
 	else:
+#warning-ignore:unused_variable
 		var temp = traits.keys()
 		if typeof(tag) != TYPE_ARRAY:
 			for i in traits:
@@ -31,6 +32,7 @@ func traits(tag):
 					rval.append(traits[i])
 	return rval[rand_range(0, rval.size())]
 
+#warning-ignore:unused_class_variable
 var traitscript = load("res://files/scripts/traits.gd")
 
 func trait(trait):

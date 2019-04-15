@@ -241,6 +241,7 @@ func sebastian():
 
 func emilytisha():
 	var dict = {text = "", background = 'wimborn', sprite = null}
+#warning-ignore:unused_variable
 	var text = ''
 	var slaves = {emily = false, tisha = false}
 	

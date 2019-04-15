@@ -11,7 +11,9 @@ var questgiveawayslave
 var currentzone
 
 #QMod - Variables
+#warning-ignore:unused_class_variable
 onready var mainQuestTexts = globals.mainQuestTexts
+#warning-ignore:unused_class_variable
 onready var sideQuestTexts = globals.sideQuestTexts
 
 func _ready():
@@ -28,16 +30,24 @@ func _ready():
 		var rand = round(rand_range(4,6))
 		newslaveinguild(rand, 'umbra')
 	for i in ['armor','weapon','costume','accessory','underwear']:
+#warning-ignore:return_value_discarded
 		$playergrouppanel/characterinfo.get_node(i).connect('mouse_entered',self,'iteminfo',[i])
+#warning-ignore:return_value_discarded
 		$playergrouppanel/characterinfo.get_node(i).connect('mouse_exited',self,'iteminfoclose')
 	for i in ['sstr','sagi','smaf','send']:
+#warning-ignore:return_value_discarded
 		$playergrouppanel/characterinfo/stats.get_node(i).connect("mouse_entered",self,'statinfo',[i])
+#warning-ignore:return_value_discarded
 		$playergrouppanel/characterinfo/stats.get_node(i).connect("mouse_exited",self,'iteminfoclose')
 	for i in ['attack','speed','armor','protection']:
+#warning-ignore:return_value_discarded
 		$playergrouppanel/characterinfo/combstats.get_node(i).connect("mouse_entered",self,'statinfo',[i])
+#warning-ignore:return_value_discarded
 		$playergrouppanel/characterinfo/combstats.get_node(i).connect("mouse_exited",self,'iteminfoclose')
 	$minimappanel/map/Control.set_process_input(false)
+#warning-ignore:return_value_discarded
 	$shoppanel/Panel/exchange.connect("pressed", self, "exchangeitems")
+#warning-ignore:return_value_discarded
 	$shoppanel/exchange/TradeButton.connect('pressed', self, 'exchangeitemsconfirm')
 
 
@@ -162,6 +172,7 @@ var geardefaulticon = {
 
 func iteminfo(gear):
 	var item
+#warning-ignore:unused_variable
 	var text = ''
 	if partyselectedchar.gear[gear] != null:
 		item = globals.state.unstackables[partyselectedchar.gear[gear]]
@@ -327,6 +338,7 @@ func outskirts():
 ############## person GUILD
 
 
+#warning-ignore:unused_argument
 func newslaveinguild(number, town = 'wimborn'):
 	while number > 0:
 		var racearray
@@ -677,6 +689,7 @@ func _on_purchasebutton_pressed():
 
 
 func _on_slavesellbutton_pressed():
+#warning-ignore:unused_variable
 	var upgradefromslave = false
 	var text = ''
 	globals.resources.gold += selectedslaveprice
@@ -1679,6 +1692,7 @@ func market():
 
 var currentshop
 var selecteditem
+#warning-ignore:unused_class_variable
 var mode
 
 #-----------------------------------------------------------------------
@@ -1858,6 +1872,7 @@ func caliqueststart(value = ''):
 	main.dialogue(false, self, text, buttons, sprites)
 
 func sebastian():
+#warning-ignore:unused_variable
 	var text = ''
 	setcharacter('sebastian')
 	var array = [{name = 'Return',function = 'market'}]
@@ -2026,7 +2041,9 @@ func backstreets():
 	if array.size() > 0:
 		buildbuttons(array)
 
+#warning-ignore:unused_variable
 	var place = {'region' : 'wimborn', 'area' : 'wimbornCity', 'location' : 'backstreets'}
+#warning-ignore:unused_variable
 	var placeEffects
 	var buttonCount = array.size() #ToFix - Keep an eye on this, links old quest button and new quest button counts.
 #
@@ -2224,14 +2241,17 @@ var backpackselecteditem
 var backpackselectedspell
 var partyselectedslave
 
+#warning-ignore:unused_argument
 func _on_details_pressed(empty = null):
 	var newbutton
 	backpackselecteditem = null
 	partyselectedslave = null
 	backpackselectedspell = null
 	if get_node("playergroupdetails/TabContainer").is_connected('tab_changed',self,'_on_details_pressed') == false:
+#warning-ignore:return_value_discarded
 		get_node("playergroupdetails/TabContainer").connect("tab_changed",self,"_on_details_pressed")
 	if get_node("playergroupdetails/Panel/TabContainer").is_connected('tab_changed',self,'_on_details_pressed') == false:
+#warning-ignore:return_value_discarded
 		get_node("playergroupdetails/Panel/TabContainer").connect("tab_changed",self,"_on_details_pressed")
 	get_node("playergroupdetails").popup()
 	get_node("playergroupdetails/Panel/itemdescript").set_bbcode("")
@@ -2321,6 +2341,7 @@ func itembackpackselect(item):
 	backpackselecteditem = item
 	for i in get_node("playergroupdetails/Panel/TabContainer/Items/VBoxContainer").get_children():
 		i.set_pressed(false) if i.get_name() == 'Button' || i.get_meta("item") != item else i.set_pressed(true)
+		#possible bug, don't know quick fix for typo if it's one
 	get_node("playergroupdetails/Panel/discardbutton").set_disabled(false)
 	if item.code in ['bandage','teleportseal'] && partyselectedslave != null:
 		get_node("playergroupdetails/Panel/usebutton").set_disabled(false)
@@ -2335,6 +2356,7 @@ func spellbackpackselect(spell):
 	backpackselectedspell = spell
 	for i in get_node("playergroupdetails/Panel/TabContainer/Spells/VBoxContainer").get_children():
 		i.set_pressed(false) if i.get_name() == 'Button' || i.get_meta("spell") != spell else i.set_pressed(true)
+		#possible bug, don't know quick fix for typo if it's one
 	get_node("playergroupdetails/Panel/discardbutton").set_disabled(false)
 	if globals.resources.mana >= spell.manacost && partyselectedslave != null:
 		get_node("playergroupdetails/Panel/usebutton").set_disabled(false)
@@ -2454,6 +2476,7 @@ func _on_capturedmindread_pressed():
 
 
 func _on_quicksell_pressed():
+#warning-ignore:unused_variable
 	var text = ''
 	var gold = 0
 	var array = []

@@ -345,6 +345,7 @@ func prositutebuyout(stage = 0):
 func abortion(stage = 0):
 	var tempbuttons
 	showntext = eventstext[currentevent][stage]
+#warning-ignore:unused_variable
 	var price
 	if stage == 0:
 		if globals.itemdict.miscariagepot.amount >= 1:

@@ -5,6 +5,7 @@ extends Node
 	#globals.effectdict = effectlist
 
 
+#warning-ignore:unused_class_variable
 var effectlist = {
 captured = {code = 'captured', obed_max = -50, duration = 5},
 stimulated = {code = 'stimulated',lust_mod = 50,duration = 1},

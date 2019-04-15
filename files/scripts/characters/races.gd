@@ -1,9 +1,11 @@
 
 extends Node
 var namefile = load("res://files/scripts/characters/names.gd").new()
+#warning-ignore:unused_class_variable
 var names = namefile.names
 
 
+#warning-ignore:unused_class_variable
 var races = {
 Human = {
 	skin = ['pale', 'fair', 'olive', 'tan'],
@@ -585,5 +587,7 @@ Scylla = {
 },
 }
 
+#warning-ignore:unused_class_variable
 var beastkindescription = "The term Beastkin refers to a wide range of sentient species with prominent humanoid and animalistic traits. True beastkin are fully covered in fur, feathers, or scales, with similar stature and proportions to a human. Even among individual species, there are wide differences to be observed with inherited animal traits, such as eyes, claws, and teeth. It is unknown whether Beastkin are man-made or the product of nature, as their spread and diversity often leads to inconsistent findings."
+#warning-ignore:unused_class_variable
 var halfkindescription = "Halfkin are the offspring produced by the union of a beastkin and a human. Halfkin most prominently display their human lineage, lacking fur and other major animalistic characteristics, but do possess secondary traits from their beastkin forebears, such as claws, ears, and tails, and tend to exhibit behavior from both parents equally.\n\nThe fate of halfkin varies from place to place, some living normally as any other race, others living under persecution and prejudice, and even rumors of far off lands where they are respected and worshipped. Regardless of what kind of environment they live in, halfkin are a popular item among collectors for their exotic appearance and the unique quality that their offspring will often swing back to fully human or fully beast."

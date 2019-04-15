@@ -17,10 +17,15 @@ func _ready():
 	
 	
 	for i in ['costume','weapon','armor','accessory','underwear']:
+#warning-ignore:return_value_discarded
 		get_node("gearpanel/" + i).connect("pressed", self, 'gearinfo', [i])
+#warning-ignore:return_value_discarded
 		get_node("gearpanel/" + i).connect("mouse_entered", self, 'geartooltip', [i])
+#warning-ignore:return_value_discarded
 		get_node("gearpanel/" + i + '/TextureFrame').connect("mouse_entered", self, 'geartooltip', [i])
+#warning-ignore:return_value_discarded
 		get_node("gearpanel/" + i + '/TextureFrame').connect("mouse_exited", globals, 'itemtooltiphide')
+#warning-ignore:return_value_discarded
 		get_node("gearpanel/" + i + "/unequip").connect("pressed", self, 'unequip', [i])
 	
 	for i in get_tree().get_nodes_in_group("invcategory"):
@@ -116,6 +121,7 @@ func itemsinventory():
 	
 	var button
 	var array = []
+#warning-ignore:unused_variable
 	var tempitem
 	
 	for i in globals.itemdict.values():
@@ -196,9 +202,11 @@ func sortgear(first, second):
 		return first
 
 func itemsbackpack():
+#warning-ignore:unused_variable
 	var itemgrid = get_node("ScrollContainer/GridContainer")
 	var button
 	var array = []
+#warning-ignore:unused_variable
 	var items = false
 	var tempitem
 	for i in globals.state.backpack.stackables:
@@ -359,6 +367,7 @@ func use(button):
 		get_tree().get_current_scene().infotext("No person selected")
 		return
 	var item = button.get_meta('item')
+#warning-ignore:unused_variable
 	var tempitem
 	var person = selectedslave
 	globals.items.person = person

@@ -274,7 +274,9 @@ signal textshown
 func _ready():
 	#set_process_input(true)
 	#set_process(true)
+#warning-ignore:return_value_discarded
 	get_node("speech/RichTextLabel").connect("mouse_entered", self, 'stopinput')
+#warning-ignore:return_value_discarded
 	get_node("speech/RichTextLabel").connect("mouse_exited", self, 'startinput')
 	var date = OS.get_date()
 	if globals.state.supporter == false && globals.state.alisecloth == 'normal' && ((OS.get_date().month == 12 && date.day > 14) || (OS.get_date().month == 1 && date.day < 12)):
@@ -300,6 +302,7 @@ func _input(event):
 		if buttoncontainer.get_children().size() >= key+1 && buttoncontainer.get_child(key).disabled == false && self.is_visible() == true:
 			buttoncontainer.get_child(key).emit_signal("pressed")
 
+#warning-ignore:unused_argument
 func _process(delta):
 	if get_node("speech/RichTextLabel").get_visible_characters() <= get_node("speech/RichTextLabel").get_total_character_count():
 		get_node("speech/RichTextLabel").set_visible_characters(get_node("speech/RichTextLabel").get_visible_characters() + 2)
@@ -379,6 +382,7 @@ func buildbody(node, sprite):
 	node.set_texture(texture)
 
 func gamewiki():
+#warning-ignore:return_value_discarded
 	OS.shell_open('http://strive4power.wikia.com/wiki/Strive4power_Wiki')
 
 func showchoice(arg):
@@ -565,10 +569,13 @@ func close():
 
 func _on_RichTextLabel_meta_clicked( meta ):
 	if meta == 'patreon':
+#warning-ignore:return_value_discarded
 		OS.shell_open('https://www.patreon.com/maverik')
 	elif meta == 'itch':
+#warning-ignore:return_value_discarded
 		OS.shell_open('https://itch.io/t/89635/bug-report-thread')
 	elif meta == "blogpost":
+#warning-ignore:return_value_discarded
 		OS.shell_open('http://strivefopower.blogspot.com')
 
 func galleryshow():

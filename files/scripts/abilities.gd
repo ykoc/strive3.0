@@ -1,6 +1,7 @@
 
 extends Node
 
+#warning-ignore:unused_class_variable
 var abilitydict = {
 attack = {
 name = 'Attack',
@@ -639,6 +640,7 @@ aipriority = 2,
 },
 }
 
+#warning-ignore:unused_class_variable
 var effects = {
 protecteffect = {
 icon = load("res://files/buttons/abils/Protect.png"),
@@ -837,9 +839,11 @@ func passive(combatant, value):
 func protection(combatant, value):
 	combatant.protection += value
 
+#warning-ignore:unused_argument
 func lust(combatant, value):
 	combatant.lust += 2
 
+#warning-ignore:unused_class_variable
 var passivesdict = {
 doubleattack15 = {code = 'doubleattack15', effect = 'doubleattack', effectvalue = 15, descript = '15% chance to attack twice'},
 doubleattack25 = {code = 'doubleattack25', effect = 'doubleattack', effectvalue = 25, descript = '25% chance to attack twice'},

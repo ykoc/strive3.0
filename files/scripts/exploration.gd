@@ -9,6 +9,7 @@ var defeated = {units = {}}
 var inencounter = false
 var currentzone
 var lastzone
+#warning-ignore:unused_class_variable
 var awareness = 0
 var ambush = false
 var scout
@@ -37,6 +38,7 @@ var button
 var newbutton
 var main
 var outside
+#warning-ignore:unused_class_variable
 var minimap
 
 func mansionreturn():
@@ -239,6 +241,7 @@ func enemyencounter():
 	var scoutawareness = -1
 	var patrol = 'none'
 	var text = ''
+#warning-ignore:unused_variable
 	var enemyawareness
 	enemygear.clear()
 	enemygroup.clear()
@@ -307,6 +310,7 @@ func buildslave(i):
 	var sex = ''
 	var age = ''
 	var origins = ''
+#warning-ignore:unused_variable
 	var rand = 0
 	if currentzone != null && currentzone.has('races') == false:
 		currentzone.races = [['Human', 1]]
@@ -477,6 +481,7 @@ var chestloot = {
 
 
 var chest = {strength = 0, agility = 0, treasure = {}, trap = ''}
+#warning-ignore:unused_class_variable
 var selectedpartymember = null
 var chestaction = ''
 
@@ -534,6 +539,7 @@ func treasurechestoptions(text = ''):
 func treasurechestgenerate(level = 'easy'):
 	var gear = {number = 0, enchantchance = 0 }
 	var misc = 0
+#warning-ignore:unused_variable
 	var text
 	var miscnumber = 1
 	if level == 'easy':
@@ -632,6 +638,7 @@ func blockedsectionopen():
 	generaterandomloot(loottable, gear, misc, miscnumber)
 	showlootscreen(text)
 
+#warning-ignore:unused_argument
 func generateloot(loot = [], text = ''):
 	var winpanel = get_node("winningpanel")
 	var tempitem
@@ -658,6 +665,7 @@ func generateloot(loot = [], text = ''):
 	
 	showlootscreen()
 
+#warning-ignore:unused_argument
 func generaterandomloot(loottable = [], gear = {number = 0, enchantchance = 0}, misc = 0, miscnumber = [0,0]):
 	var tempitem
 	while gear.number > 0:
@@ -704,9 +712,12 @@ func banditcamp():
 	newbutton.connect("pressed",self,'enemyleave')
 
 func slaversenc(stage = 0):
+#warning-ignore:unused_variable
 	var state = false
 	var buttons = []
+#warning-ignore:unused_variable
 	var image
+#warning-ignore:unused_variable
 	var sprites = []
 	if stage == 0:
 		if enemygroup.units.size() < 4:
@@ -747,6 +758,7 @@ func merchantencounter(stage = 0):
 	var state = false
 	var text = ''
 	var buttons = []
+#warning-ignore:unused_variable
 	var image
 	var sprites = []
 	if stage == 0:
@@ -902,7 +914,7 @@ func enemydefeated():
 		
 		if int(globals.state.sidequests.ayda) == 14 && currentzone.code == 'gornoutskirts' && questitem == false && globals.itemdict.aydajewel.amount == 0:
 			unit.rewardpool.aydajewel = 5
-			questitem == true
+			questitem = true #questitem == true
 		for i in unit.rewardpool:
 			var chance = unit.rewardpool[i]
 			var bonus = 1
@@ -1109,7 +1121,9 @@ func builditemlists():
 	calculateweight()
 
 func calculateweight():
+#warning-ignore:unused_variable
 	var person
+#warning-ignore:unused_variable
 	var tempitem
 	var weight = globals.state.calculateweight()
 	
@@ -1184,6 +1198,7 @@ func defeatedselected(person):
 	get_tree().get_current_scene().popup(person.descriptionsmall())
 
 
+#warning-ignore:unused_argument
 func defeatedchoice(ID, person, node):
 	defeated.select[defeated.units.find(person)] = ID
 
@@ -1196,7 +1211,9 @@ var secondarywin = false
 
 func _on_confirmwinning_pressed(): #0 leave, 1 capture, 2 rape, 3 kill
 	var text = ''
+#warning-ignore:unused_variable
 	var selling = false
+#warning-ignore:unused_variable
 	var sellyourself = false
 	var orgy = false
 	var orgyarray = []
@@ -1451,6 +1468,7 @@ func gornyris():
 	gornbar()
 	main.dialogue(state, self, text, buttons, sprite)
 
+#warning-ignore:unused_argument
 func gornyrisleave(args):
 	zoneenter('gorn')
 	main.close_dialogue()
@@ -1660,6 +1678,7 @@ func shuriyaslaveselect(stage):
 	else:
 		main.selectslavelist(true, 'shuriyadrowselect', self, 'person.race == "Drow"')
 
+#warning-ignore:unused_argument
 func shuriyaslavesgive(none):
 	globals.state.mainquest = 24
 	globals.slaves.erase(slave1)

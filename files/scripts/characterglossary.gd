@@ -6,6 +6,7 @@ onready var charlist = get_node("charlist/VBoxContainer")
 onready var eventlist = get_node("eventslist/events")
 
 func _on_nextsprite_pressed():
+#warning-ignore:unused_variable
 	var temp
 
 func show():

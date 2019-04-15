@@ -1,5 +1,6 @@
 extends Node
 
+#warning-ignore:unused_class_variable
 var traits = {
   "Foul Mouth": {
     "name": "Foul Mouth",

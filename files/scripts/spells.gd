@@ -324,6 +324,7 @@ func invigorateeffect():
 func entrancementeffect():
 	var text = ''
 	var spell = globals.spelldict.entrancement
+#warning-ignore:unused_variable
 	var exists = false
 	globals.resources.mana -= spellcost(spell)
 	if person.effects.has('entranced') == false:
@@ -391,6 +392,7 @@ func markeffect():
 	return text
 
 func tentacleeffect():
+#warning-ignore:unused_variable
 	var spell = globals.spelldict.summontentacle
 	var text = "As you finish chanting the spell, a stream of tentacles emerge from small breach in air. "
 	if person.unique == 'Zoe':
@@ -423,10 +425,12 @@ func mutateeffect():
 	globals.main.rebuild_slave_list()
 	return text
 
+#warning-ignore:unused_argument
 func mutate(power=2, silent = false):
 	var array = ['traitadd','height','tits','ass','penis','balls','penistype','skin','skincov','eyecolor','eyeshape','haircolor','hairlength','ears','tail','wings','horns','beauty','lactation','nipples','lust','amnesia','pregnancy']
 	var line
 	var text = "Raw magic in $name's body causes $him to uncontrollably mutate. \n\n"
+#warning-ignore:unused_variable
 	var temp
 	while power >= 1:
 		person.stress += rand_range(5,15)

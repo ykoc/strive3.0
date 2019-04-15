@@ -5,6 +5,7 @@ var height = 0
 
 func create_select_button(array):
 	get_node("Popup").visible = false
+#warning-ignore:unused_variable
 	var contsize = 0
 	height = 0
 	for i in get_node("Popup/Panel/ScrollContainer/VBoxContainer").get_children():

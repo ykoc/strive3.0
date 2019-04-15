@@ -24,6 +24,7 @@ enchaccobedmod = {name = "+&100v% Obedience", id = 'accessobed', effect = "obedm
 }
 
 
+#warning-ignore:unused_argument
 func addrandomenchant(item, number = 1):
 	var encharray = []
 	var existingenchants = []
@@ -54,5 +55,6 @@ func addrandomenchant(item, number = 1):
 		
 		item.effects += [enchant]
 
+#warning-ignore:unused_argument
 func addenchant(item):
 	pass

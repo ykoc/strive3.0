@@ -334,6 +334,7 @@ func questarray():
 	}
 	return questsarray
 
+#warning-ignore:unused_class_variable
 var reqsfuncdescript = {nobadtraits = 'No Negative Physical Traits.'}
 
 func nobadtraits(person):

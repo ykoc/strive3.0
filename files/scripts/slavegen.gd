@@ -15,6 +15,7 @@ static func getRaceFunction(name):
 
 
 static func newslave(race, age, sex, origins = 'slave'):
+#warning-ignore:unused_variable
 	var temp
 	var temp2
 	var person = globals.person.new()

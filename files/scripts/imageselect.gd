@@ -4,12 +4,14 @@ var mode = 'portrait' setget mode_set
 var person
 
 var portaitsbuilt = false
+#warning-ignore:unused_class_variable
 var bodybuilt = false
 var portraitspath = globals.setfolders.portraits
 var bodypath = globals.setfolders.fullbody
 var thumbnailpath = "user://thumbnails/"
 
 func _ready():
+#warning-ignore:return_value_discarded
 	get_node("ScrollContainer/_v_scroll").connect("value_changed", self, "_on_scroll")
 
 func mode_set(value):
@@ -37,6 +39,7 @@ var currentpath
 
 func buildimagelist(type = mode):
 	var dir = Directory.new()
+#warning-ignore:unused_variable
 	var array = []
 	var filecheck = File.new()
 	if type == 'portrait':
@@ -140,6 +143,7 @@ func _on_racelock_pressed():
 	resort()
 
 
+#warning-ignore:unused_argument
 func _on_search_text_changed( text ):
 	resort()
 
@@ -187,6 +191,7 @@ func _on_FileDialog_file_selected( path ):
 	buildimagelist()
 
 func _on_openfolder_pressed():
+#warning-ignore:return_value_discarded
 	OS.shell_open(OS.get_user_data_dir())
 
 func updatepage():

@@ -1,18 +1,27 @@
 extends Panel
 
 var person
+#warning-ignore:unused_class_variable
 onready var sstr = get_node("sstr/Label")
+#warning-ignore:unused_class_variable
 onready var sagi = get_node("sagi/Label")
+#warning-ignore:unused_class_variable
 onready var smaf = get_node("smaf/Label")
+#warning-ignore:unused_class_variable
 onready var send = get_node("send/Label")
+#warning-ignore:unused_class_variable
 onready var cour = get_node("cour/Label")
+#warning-ignore:unused_class_variable
 onready var conf = get_node("conf/Label")
+#warning-ignore:unused_class_variable
 onready var wit = get_node("wit/Label")
+#warning-ignore:unused_class_variable
 onready var charm = get_node("charm/Label")
 var mode = 'slavebase'
 
 func _ready():
 	for i in ['send','smaf','sstr','sagi']:
+#warning-ignore:return_value_discarded
 		get_node(i+'/Button').connect("pressed", self, 'statup', [i])
 	for i in globals.statsdict:
 		get(i).get_parent().get_node("Control").connect("mouse_entered", self, 'showtooltip', [i])
@@ -89,6 +98,7 @@ func show():
 
 
 
+#warning-ignore:unused_argument
 func _on_traittext_meta_hover_ended(meta):
 	globals.hidetooltip()
 

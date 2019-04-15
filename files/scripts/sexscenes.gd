@@ -30,6 +30,7 @@ text2 = {consensual = 'consensual', function = 'fingeringass', hole = 'ass'},
 },
 }
 
+#warning-ignore:unused_class_variable
 var categories = {
 petting = {code = 'petting', name = 'Petting', actions = ['handjob', 'fingering','handjobgive', 'fingeringtake'], cost = 10, description = 'Good for getting more intimate. Likely to lead to other, even more intimate activities. .', prereq = [], number = 0, unlockdescript = "With some confidence you talk $name into moving to the next point in your relationship and allow you to play with $his body. "}, 
 oral = {code = 'oral', name = 'Oral sex', actions = ['oral', 'blowjob','blowjobgive', 'oraltake', 'rimjob', 'rimjobgive'], cost = 25, description = "Oral sex is very stimulating and good for bringing at least one of the partners to orgasm.", prereq = ['petting'], number = 1, unlockdescript = "You talk $name into using their mouth for more than just kissing. "},
@@ -43,6 +44,7 @@ group = {code = 'group', name = 'Group', actions = [], cost = 70, description = 
 }
 
 
+#warning-ignore:unused_class_variable
 var normalscenes = {
 'kiss': {
 consensual = "You deeply kiss $name and tightly hug $his body. $He responds to your embrace, taking noticeable pleasure from the contact. Proceeding to make out with $him for a little while, you eventually pull back, slightly breathless and definitively aroused. ",
@@ -176,6 +178,7 @@ swingforced = "You have $name and $2name firmly tied with arms on their backs, t
 },
 }
 
+#warning-ignore:unused_class_variable
 var sexbuttons = {
 
 kiss = {
@@ -796,16 +799,19 @@ func blowjobrape(person):
 	text += "You grab $name by the hair and tie $him tightly in place. Brushing your cock over $his cheek, you pick up a ring gag. After a moment you have fixed the gag in the $child's "+ globals.fastif(person.bodyshape == 'bestial', "muzzle", "mouth") + ". You remove your pants and direct your cock into the poor thing's face. $His clumsy attempts to evade it only provoke you further. With force you insert you cock into $his open "+ globals.fastif(person.bodyshape == 'bestial', "muzzle", "mouth") + ", making $him moan in protest. $His warm and damp tongue instinctively tries to push out the invader, but it only increases your pleasure. \n\nWith glee you grab the victim's head and hold it in place. With every thrust you force yourself into $his throat deeper and deeper. By this time moans are replaced with whimpers and cries while $his tear-stained eyes begin to express humility. The sight of $him choking on your cock brings you closer to climax. With one last thrust you pump your load down $his throat. Letting go of $name, $he collapses to the ground, retching a little while trying to gasp for air."
 	return text
 
+
 func hairjob(person):
 	var text = ''
 	text += person.dictionary("$name gives your cock tender care with $his $haircolor hair. ")
 	return text
 	
+#warning-ignore:unused_argument
 func fingering(person):
 	var text = ''
 	text += "You move your hand over $name's pussy, gently teasing the outside of $his lips. As $he gets wetter you slide your finger between $his lips and rub $his clit. $name gasps as you shove your middle finger into $his wet pussy. You begin to move your finger in and out while carressing $his clit."
 	return text
 	
+#warning-ignore:unused_argument
 func fingeringass(person):
 	var text = ''
 	text += "You lube up your fingers before spreading $name's ass cheeks. You gently tease the outside of $his ass transfering some of the lube. You slowly press your finger into $his hole, the tight muscles squeezing down on you as you work your way in deeper. When $he is ready you add an additional finger to $his hole and begin to fuck it in ernest."

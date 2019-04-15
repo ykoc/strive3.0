@@ -1,4 +1,4 @@
-[gd_scene load_steps=197 format=2]
+[gd_scene load_steps=196 format=2]
 
 [ext_resource path="res://files/scripts/Mansion.gd" type="Script" id=1]
 [ext_resource path="res://files/backgrounds/mansion.png" type="Texture" id=2]
@@ -209,10 +209,6 @@ load_path = "res://.import/4.png-5a5e035178ff7ad07f7ffe85f5523d04.stex"
 [sub_resource type="StreamTexture" id=114]
 flags = 4
 load_path = "res://.import/4.png-5a5e035178ff7ad07f7ffe85f5523d04.stex"
-
-[sub_resource type="StyleBoxTexture" id=61]
-texture = ExtResource( 47 )
-region_rect = Rect2( 0, 0, 500, 500 )
 
 [sub_resource type="StyleBoxTexture" id=103]
 
@@ -1302,7 +1298,6 @@ size_flags_vertical = 2
 theme = ExtResource( 3 )
 
 [node name="mansion" type="Panel" parent="MainScreen"]
-editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = 1.0
@@ -2441,6 +2436,7 @@ custom_fonts/font = ExtResource( 45 )
 text = "Work on slaves"
 
 [node name="labmodpanel" type="Panel" parent="MainScreen/mansion/labpanel"]
+editor/display_folded = true
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -3075,7 +3071,6 @@ texture = SubResource( 114 )
 expand = true
 
 [node name="upgradespanel" type="Panel" parent="MainScreen/mansion"]
-editor/display_folded = true
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -3205,7 +3200,7 @@ custom_colors/font_color = Color( 0, 1, 0.109375, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Free upgrade points:"
 
-[node name="upgradepanel" type="PopupPanel" parent="MainScreen/mansion/upgradespanel"]
+[node name="upgradepanel" type="Popup" parent="MainScreen/mansion/upgradespanel"]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -3216,25 +3211,30 @@ margin_right = -261.0
 margin_bottom = -200.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 61 )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="MainScreen/mansion/upgradespanel/upgradepanel"]
-margin_right = 667.0
-margin_bottom = 432.0
+margin_left = 28.0
+margin_top = 23.0
+margin_right = 647.0
+margin_bottom = 308.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 bbcode_enabled = true
 
 [node name="purchaseupgrade" type="Button" parent="MainScreen/mansion/upgradespanel/upgradepanel"]
-margin_right = 667.0
-margin_bottom = 432.0
+margin_left = 243.0
+margin_top = 328.0
+margin_right = 436.0
+margin_bottom = 367.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 text = "Purchase"
 
 [node name="cancelupgrade" type="Button" parent="MainScreen/mansion/upgradespanel/upgradepanel"]
-margin_right = 667.0
-margin_bottom = 432.0
+margin_left = 243.0
+margin_top = 368.0
+margin_right = 436.0
+margin_bottom = 407.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 text = "Close"

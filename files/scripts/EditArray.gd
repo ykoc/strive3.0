@@ -7,6 +7,7 @@ func show_(temparray):
 	self.visible = true
 	array = temparray
 	$Tree.clear()
+#warning-ignore:unused_variable
 	var root = $Tree.create_item()
 	for i in array:
 		var item = $Tree.create_item()

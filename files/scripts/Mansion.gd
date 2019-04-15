@@ -1,24 +1,30 @@
 ### Mansion - Main
 extends Control
 
+#warning-ignore:unused_class_variable
 var test = File.new()
 var testslaverace = globals.allracesarray
 var testslaveage = 'random'
 var testslavegender = 'male'
 var testslaveorigin = ['slave','poor','commoner','rich','noble']
 var currentslave = 0 setget currentslave_set
+#warning-ignore:unused_class_variable
 var selectedslave = -1
 var texture = null
 var startcombatzone = "darkness"
 var nameportallocation
 var enddayprocess = false
+#warning-ignore:unused_class_variable
 onready var maintext = '' setget maintext_set, maintext_get
 onready var exploration = get_node("explorationnode")
+#warning-ignore:unused_class_variable
 onready var slavepanel = get_node("MainScreen/slave_tab")
+#warning-ignore:unused_class_variable
 onready var outside = $outside
 
 onready var tween = $Tween
 
+#warning-ignore:unused_class_variable
 onready var minimap = $outside/minimappanel/map/Control
 
 signal animfinished
@@ -28,6 +34,7 @@ var checkforevents = false
 var debug = false
 
 #QMod - Variables
+#warning-ignore:unused_class_variable
 onready var mansionStaff = get_node("joblist").mansionStaff
 
 func _ready():
@@ -61,8 +68,11 @@ func _ready():
 	rebuild_slave_list()
 	globals.player.consent = true
 	globals.spells.main = get_tree().get_current_scene()
+#warning-ignore:return_value_discarded
 	get_node("birthpanel/raise/childpanel/child").connect('pressed', self, 'babyage', ['child'])
+#warning-ignore:return_value_discarded
 	get_node("birthpanel/raise/childpanel/teen").connect('pressed', self, 'babyage', ['teen'])
+#warning-ignore:return_value_discarded
 	get_node("birthpanel/raise/childpanel/adult").connect('pressed', self, 'babyage', ['adult'])
 	#exploration
 	get_node("explorationnode").buttoncontainer = get_node("outside/buttonpanel/outsidebuttoncontainer")
@@ -95,19 +105,30 @@ func _ready():
 		get(i).get_node('Button').connect("pressed",self,'statup', [i])
 	
 	
+#warning-ignore:return_value_discarded
 	$MainScreen/mansion/selfinspect/relativespanel/relativestext.connect("meta_hover_started",self,'relativeshover')
+#warning-ignore:return_value_discarded
 	$MainScreen/mansion/selfinspect/relativespanel/relativestext.connect("meta_hover_ended",globals, 'slavetooltiphide')
+#warning-ignore:return_value_discarded
 	$MainScreen/mansion/selfinspect/relativespanel/relativestext.connect("meta_clicked",self, "relativesselected")
 	
+#warning-ignore:return_value_discarded
 	$MainScreen/mansion/mansioninfo.connect("meta_hover_started",self,'slavehover')
+#warning-ignore:return_value_discarded
 	$MainScreen/mansion/mansioninfo.connect("meta_hover_ended",globals, 'slavetooltiphide')
+#warning-ignore:return_value_discarded
 	$MainScreen/mansion/mansioninfo.connect("meta_clicked",self, "slaveclicked")
 	
+#warning-ignore:return_value_discarded
 	$outside/textpanel/outsidetextbox.connect("meta_hover_started",self,'slavehover')
+#warning-ignore:return_value_discarded
 	$outside/textpanelexplore/outsidetextbox2.connect("meta_hover_started",self,'slavehover')
+#warning-ignore:return_value_discarded
 	$outside/textpanel/outsidetextbox.connect("meta_hover_ended",globals, 'slavetooltiphide')
+#warning-ignore:return_value_discarded
 	$outside/textpanelexplore/outsidetextbox2.connect("meta_hover_ended",globals, 'slavetooltiphide')
 	
+#warning-ignore:return_value_discarded
 	$MainScreen/mansion/selfinspect/Contraception.connect("pressed", self, 'contraceptiontoggle')
 	
 	if variables.oldemily == true:
@@ -572,13 +593,17 @@ func _on_end_pressed():
 	
 	
 	var text = ''
+#warning-ignore:unused_variable
 	var temp = ''
+#warning-ignore:unused_variable
 	var poorcondition = false
+#warning-ignore:unused_variable
 	var person
 	var count
 	var chef
 	var jailer
 	var headgirl
+#warning-ignore:unused_variable
 	var labassist
 	var farmmanager
 	var workdict
@@ -587,6 +612,7 @@ func _on_end_pressed():
 	var text2 = get_node("FinishDayPanel/FinishDayScreen/Secondary Report")
 	var start_gold = globals.resources.gold
 	var start_food = globals.resources.food
+#warning-ignore:unused_variable
 	var start_mana = globals.resources.mana
 	var deads_array = []
 	var gold_consumption = 0
@@ -1162,6 +1188,7 @@ func _on_end_pressed():
 	
 	for i in globals.state.repeatables:
 		for ii in globals.state.repeatables[i]:
+#warning-ignore:unused_variable
 			var removed = false
 			if ii.time >= 0 && ii.taken == true:
 				ii.time -= 1
@@ -1382,7 +1409,9 @@ func startnewday():
 
 
 func autosave():
+#warning-ignore:unused_variable
 	var counter = 3
+#warning-ignore:unused_variable
 	var savegame = File.new()
 	var dir = Directory.new()
 	if dir.dir_exists("user://saves") == false:
@@ -1455,6 +1484,7 @@ func popup(text):
 
 func _on_popupmessagetext_meta_clicked( meta ):
 	if meta == 'patreon':
+#warning-ignore:return_value_discarded
 		OS.shell_open('https://www.patreon.com/maverik')
 
 var spritedict = globals.spritedict
@@ -1655,6 +1685,7 @@ func _on_mainmenubutton_pressed():
 	yesnopopup('Exit to main menu? Make sure to save', 'mainmenu')
 
 func mainmenu():
+#warning-ignore:return_value_discarded
 	get_tree().change_scene("res://files/mainmenu.scn")
 
 
@@ -1666,6 +1697,7 @@ var yesbutton = {target = null, function = null}
 func yesnopopup(text, yesfunc, target = self):
 	if yesbutton.target != null && get_node("yesnopopup/HBoxContainer/yesbutton").is_connected("pressed",yesbutton.target, yesbutton.function):
 		get_node("yesnopopup/HBoxContainer/yesbutton").disconnect("pressed",yesbutton.target,yesbutton.function)
+#warning-ignore:return_value_discarded
 	get_node("yesnopopup/HBoxContainer/yesbutton").connect('pressed',target,yesfunc,[],4)
 	yesbutton.target = target
 	yesbutton.function = yesfunc
@@ -1688,7 +1720,9 @@ func _on_SavePanel_visibility_changed():
 	if get_node("menucontrol/menupanel/SavePanel").visible == false:
 		return
 	var node
+#warning-ignore:unused_variable
 	var pressedsave
+#warning-ignore:unused_variable
 	var moddedtext
 	for i in get_node("menucontrol/menupanel/SavePanel/ScrollContainer/savelist").get_children():
 		if i != get_node("menucontrol/menupanel/SavePanel/ScrollContainer/savelist/Button"):
@@ -1788,6 +1822,7 @@ func savefile():
 
 func _on_saveloadfolder_pressed():
 	var temp = OS.get_user_data_dir()
+#warning-ignore:return_value_discarded
 	OS.shell_open('file://'+temp + '/saves')
 
 
@@ -1807,6 +1842,7 @@ func hide_everything():
 	get_node("MainScreen/mansion/upgradespanel").hide()
 	globals.hidetooltip()
 
+#warning-ignore:unused_class_variable
 var background setget background_set, background_get
 
 func background_set(text, forcefade = false):
@@ -1836,6 +1872,7 @@ func animationfade(value = 0.4, duration = 0.05):
 
 
 var musicdict = globals.musicdict
+#warning-ignore:unused_class_variable
 var musicvolume = 0
 
 
@@ -2209,6 +2246,7 @@ func _on_brewbutton_pressed():
 	_on_alchemy_pressed()
 	get_node("MainScreen/mansion/alchemypanel/brewbutton").set_disabled(true)
 
+#warning-ignore:unused_argument
 func _on_brewcounter_value_changed( value ):
 	if typeof(potselected) != 4:
 		brewlistpressed(potselected)
@@ -2238,6 +2276,7 @@ func _on_library_pressed():
 			i.hide()
 			i.queue_free()
 	
+#warning-ignore:unused_variable
 	var array = []
 	for i in loredict.values():
 		if globals.evaluate(i.reqs) == false:
@@ -2676,9 +2715,13 @@ func statup(stat):
 	globals.player[stat] += 0
 	updatestats(globals.player)
 
+#warning-ignore:unused_class_variable
 onready var sstr = get_node("MainScreen/mansion/selfinspect/statspanel/sstr")
+#warning-ignore:unused_class_variable
 onready var sagi = get_node("MainScreen/mansion/selfinspect/statspanel/sagi")
+#warning-ignore:unused_class_variable
 onready var smaf = get_node("MainScreen/mansion/selfinspect/statspanel/smaf")
+#warning-ignore:unused_class_variable
 onready var send = get_node("MainScreen/mansion/selfinspect/statspanel/send")
 
 func updatestats(person):
@@ -2714,6 +2757,7 @@ func updatestats(person):
 		person.imageportait = null
 		$MainScreen/mansion/selfinspect/statspanel/TextureRect/portrait.set_texture(null)
 
+#warning-ignore:unused_class_variable
 var gradeimages = {
 'slave' : load("res://files/buttons/mainscreen/40.png"),
 poor = load("res://files/buttons/mainscreen/41.png"),
@@ -2838,6 +2882,7 @@ var potionselected
 func potbuttonpressed(potion):
 	potionselected = potion
 	var description = get_node("MainScreen/mansion/selfinspect/selectpotionpanel/potionusedescription")
+#warning-ignore:unused_variable
 	var potlist = get_node("MainScreen/mansion/selfinspect/selectpotionpanel/ScrollContainer/selectpotionlist")
 	for i in get_tree().get_nodes_in_group('usables'):
 		if i.get_text() != potion.name && i.is_pressed() == true:
@@ -3008,6 +3053,7 @@ func _on_portals_pressed():
 
 
 func portalbuttonpressed(newbutton, portal):
+#warning-ignore:unused_variable
 	var text
 	nameportallocation = portal.code
 	$MainScreen/mansion/portalspanel/traveltoportal.disabled = false
@@ -3273,6 +3319,7 @@ func _on_cleanbutton_pressed():
 
 
 
+#warning-ignore:unused_argument
 func _on_defeateddescript_meta_clicked( meta ):
 	var person = get_node("explorationnode/winningpanel/defeateddescript").get_meta('slave')
 	showracedescript(person)
@@ -3285,7 +3332,9 @@ func _on_selloutclose_pressed():
 	get_node("sellout").hide()
 
 
+#warning-ignore:unused_argument
 func _on_sellouttext_meta_clicked( meta ):
+#warning-ignore:return_value_discarded
 	OS.shell_open('https://www.patreon.com/maverik')
 
 
@@ -3483,11 +3532,15 @@ func _on_listclose_pressed():
 
 
 
+#warning-ignore:unused_class_variable
 var itemselected
+#warning-ignore:unused_class_variable
 var categoryselected
+#warning-ignore:unused_class_variable
 var inventorymode = 'mainscreen'
 
 
+#warning-ignore:unused_argument
 func _on_inventory_pressed(mode = 'mainscreen'):
 	get_node("inventory").open("mansion")
 #
@@ -3508,6 +3561,7 @@ func _on_inventory_pressed(mode = 'mainscreen'):
 
 
 func _on_wiki_pressed():
+#warning-ignore:return_value_discarded
 	OS.shell_open('http://strive4power.wikia.com/wiki/Strive4power_Wiki')
 
 
@@ -3802,9 +3856,11 @@ func _on_headgirlbehavior_item_selected( ID ):
 	get_node("mansionsettings/Panel/supplykeep").set_value(globals.state.supplykeep)
 	get_node("mansionsettings/Panel/supplykeep/supplybuy").set_pressed(globals.state.supplybuy)
 
+#warning-ignore:unused_argument
 func _on_foodbuy_value_changed( value ):
 	globals.state.foodbuy = get_node("mansionsettings/Panel/foodbuy").get_value()
 
+#warning-ignore:unused_argument
 func _on_supplykeep_value_changed( value ):
 	globals.state.supplykeep = get_node("mansionsettings/Panel/supplykeep").get_value()
 
@@ -3830,7 +3886,9 @@ func _on_selftattoo_pressed():
 
 #Tweens
 
+#warning-ignore:unused_argument
 func tweenanimate(node, name):
+#warning-ignore:unused_variable
 	var pos = node.rect_position
 	var tweennode
 	if node.has_node('tween') == false:

@@ -2,8 +2,11 @@
 extends Node
 
 class glossaryelement:
+#warning-ignore:unused_class_variable
 	var name = ''
+#warning-ignore:unused_class_variable
 	var code = ''
+#warning-ignore:unused_class_variable
 	var text = ''
 
 func _init():

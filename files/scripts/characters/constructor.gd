@@ -1,5 +1,6 @@
 extends Node
 
+#warning-ignore:unused_class_variable
 var person
 
 func getrandomsex(person):
@@ -11,6 +12,7 @@ func getrandomsex(person):
 		person.sex = 'female'
 
 func getage(age):
+#warning-ignore:unused_variable
 	var temp
 	var agearray = ['teen']
 	if globals.rules.children == true:
@@ -25,7 +27,9 @@ func getage(age):
 
 
 func newslave(race, age, sex, origins = 'slave'):
+#warning-ignore:unused_variable
 	var temp
+#warning-ignore:unused_variable
 	var temp2
 	var person = globals.person.new()
 	if race == 'randomcommon':

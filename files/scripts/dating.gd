@@ -10,7 +10,9 @@ var date = false
 var jail = false
 var drunkness = 0.0
 var actionhistory = []
+#warning-ignore:unused_class_variable
 var categories = ['Actions','P&P','Location','Items']
+#warning-ignore:unused_class_variable
 var locationarray = ['livingroom','town','dungeon','garden','bedroom']
 var showntext = '' setget showtext_set,showtext_get
 var turns = 0 setget turns_set,turns_get
@@ -302,16 +304,24 @@ var locationdicts = {
 var dateclassarray = []
 
 class dateclass:
+#warning-ignore:unused_class_variable
 	var person
+#warning-ignore:unused_class_variable
 	var sex
+#warning-ignore:unused_class_variable
 	var name
+#warning-ignore:unused_class_variable
 	var lust = 0
+#warning-ignore:unused_class_variable
 	var lube = 0
+#warning-ignore:unused_class_variable
 	var sens = 0 
 
 func _ready():
 	for i in helpdescript:
+#warning-ignore:return_value_discarded
 		get_node(i).connect("mouse_entered",globals,'showtooltip',[helpdescript[i]])
+#warning-ignore:return_value_discarded
 		get_node(i).connect("mouse_exited",globals,'hidetooltip')
 
 func initiate(tempperson):
@@ -546,6 +556,7 @@ func checkhistory(action):
 			counter += 1
 	return counter
 
+#warning-ignore:unused_argument
 func chat(person, counter):
 	var text = ''
 	text += "You attempt to initiate a friendly chat with [name2]. "
@@ -644,6 +655,7 @@ func hug(person, counter):
 	
 	return text
 
+#warning-ignore:unused_argument
 func kiss(person, counter): 
 	var text = ''
 	text += "You gently kiss [name2] on the cheek. "
@@ -658,6 +670,7 @@ func kiss(person, counter):
 	
 	return text
 
+#warning-ignore:unused_argument
 func frenchkiss(person, counter): 
 	var text = ''
 	text += "You invade [name2]'s mouth with your tongue. "
@@ -676,6 +689,7 @@ func frenchkiss(person, counter):
 	
 	return text
 
+#warning-ignore:unused_argument
 func pushdown(person, counter):
 	var text = ''
 	var mode
@@ -696,6 +710,7 @@ func pushdown(person, counter):
 	showsexswitch(text,mode)
 	return text
 
+#warning-ignore:unused_argument
 func propose(person, counter):
 	var text = ''
 	var mode
@@ -737,6 +752,7 @@ func propose(person, counter):
 
 var sexmode
 
+#warning-ignore:unused_argument
 func showsexswitch(text, mode):
 	$sexswitch.visible = true
 	sexmode = mode
@@ -780,6 +796,7 @@ func praise(person, counter):
 	
 	return text
 
+#warning-ignore:unused_argument
 func pathead(person, counter):
 	var text = ''
 	text += "You pat [name2]'s head and praise [him2] for [his2] recent behavior. "
@@ -793,6 +810,8 @@ func pathead(person, counter):
 		self.mood -= 1
 	return text
 
+#warning-ignore:unused_argument
+#warning-ignore:unused_argument
 func scold(person, counter):
 	var text = ''
 	text += "You scold [name2] for [his2] recent faults. "
@@ -831,6 +850,8 @@ func punishaddedeffect():
 	
 	return text
 
+#warning-ignore:unused_argument
+#warning-ignore:unused_argument
 func slap(person, counter):
 	var text = ''
 	text += "You slap [name2] across the face as punishment. [his2] cheek gets red. "
@@ -839,6 +860,8 @@ func slap(person, counter):
 	text += punishaddedeffect()
 	return text
 
+#warning-ignore:unused_argument
+#warning-ignore:unused_argument
 func flag(person, counter):
 	var text = ''
 	text += "You put [name2] on the punishment table, and after exposing [his2] rear, punish it with force. "
@@ -849,6 +872,8 @@ func flag(person, counter):
 	text += punishaddedeffect()
 	return text
 
+#warning-ignore:unused_argument
+#warning-ignore:unused_argument
 func whip(person, counter):
 	var text = ''
 	text += "You put [name2] on the punishment table, and after exposing [his2] rear, whip it with force. "
@@ -859,6 +884,7 @@ func whip(person, counter):
 	text += punishaddedeffect()
 	return text
 
+#warning-ignore:unused_argument
 func horse(person, counter):
 	var text = ''
 	text += "You tie [name2] securely to the wooden horse with [his2] legs spread wide. [he2] cries with pain under [his2] own weight. "
@@ -871,6 +897,8 @@ func horse(person, counter):
 	
 	return text
 
+#warning-ignore:unused_argument
+#warning-ignore:unused_argument
 func wax(person, counter):
 	var text = ''
 	text += "You put [name2] on the punishment table and after exposing [his2] body you drip hot wax over it making [him2] cry with pain. "
@@ -904,6 +932,7 @@ func teach(person, counter):
 	
 	return text
 
+#warning-ignore:unused_argument
 func gift(person, counter):
 	var text = ''
 	text += "You present [name2] with a small decorative gift. "
@@ -926,6 +955,7 @@ func gift(person, counter):
 	
 	return text
 
+#warning-ignore:unused_argument
 func sweets(person, counter):
 	var text = ''
 	text += "You purchase some candies for [name2] from a local vendor. "
@@ -949,6 +979,7 @@ func sweets(person, counter):
 	return text
 
 
+#warning-ignore:unused_argument
 func tea(person, counter):
 	var text = ''
 	text += "You serve tea for you and [name2]. While drinking, you both chatand get a bit closer.  "
@@ -988,6 +1019,7 @@ func wine(person, counter):
 	
 	return text
 
+#warning-ignore:unused_argument
 func castfear(person, counter):
 	var text = ''
 	var spell = globals.spelldict.fear
@@ -998,6 +1030,7 @@ func castfear(person, counter):
 	updatebars()
 	return text
 
+#warning-ignore:unused_argument
 func castsedate(person, counter):
 	var text = ''
 	var spell = globals.spelldict.sedation
@@ -1009,6 +1042,10 @@ func castsedate(person, counter):
 	return text
 
 
+
+#warning-ignore:unused_argument
+#warning-ignore:unused_argument
+#warning-ignore:unused_argument
 func public(person, counter):
 	var text = ''
 	public = !public
@@ -1022,6 +1059,9 @@ func updatebars():
 	self.fear = person.fear
 	self.stress = person.stress
 
+
+#warning-ignore:unused_argument
+#warning-ignore:unused_argument
 func stop(person, counter):
 	var text = ''
 	turns = 1

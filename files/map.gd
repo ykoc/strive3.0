@@ -1,7 +1,9 @@
 extends Control
 
 
+#warning-ignore:unused_class_variable
 var mouse_in = false
+#warning-ignore:unused_class_variable
 var dragging = false
 onready var size = $TextureRect.get_size()
 var offset = Vector2()

@@ -1,6 +1,7 @@
 
 extends Node
 
+#warning-ignore:unused_class_variable
 var statdescription = {
 cour = "[color=yellow]Courage[/color] - Represents how willing a person is to face any sort of threat or danger. A low courage allows for more effective discipline through fear but makes the person less willing to engage in combat and adventure.\n\n[color=aqua]Mental stats can be improved with Learning Points.[/color]",
 conf = "[color=yellow]Confidence[/color] - Represents how dependable a person is when put into a position of authority, where they must deal with others. High confidence causes fear to recover more quickly and may cause someone to refuse certain actions, while low confidence allows the slave to be molded to suit your taste more easily.\n\n[color=aqua]Mental stats can be improved with Learning Points.[/color]",
@@ -43,10 +44,12 @@ static func getRaceArticle(race):
 	else:
 		return 'a '
 
+#warning-ignore:unused_argument
 static func getOriginDescription(person):
 	var text = "Servant's Grade reflects their current attitude, expectations and demands. Low grade severely limits mental stats, while high grade requires a [color=yellow]Luxurious[/color] lifestyle or they will grow untrustworthy. Grade can be changed at Slavers Guild" 
 	return text
 
+#warning-ignore:unused_class_variable
 var loredict = {
 	branding = {
 	code = 'branding',

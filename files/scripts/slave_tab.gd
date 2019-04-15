@@ -20,14 +20,20 @@ func _ready():
 		get(i).get_node('Control').connect('mouse_entered', self, 'stattooltip',[i])
 		get(i).get_node('Control').connect('mouse_exited', globals, 'hidetooltip') 
 	
+#warning-ignore:return_value_discarded
 	$stats/customization/relativespanel/relativestext.connect("meta_hover_started",self,'relativeshover')
+#warning-ignore:return_value_discarded
 	$stats/customization/relativespanel/relativestext.connect("meta_hover_ended",globals, 'slavetooltiphide')
+#warning-ignore:return_value_discarded
 	$stats/customization/relativespanel/relativestext.connect("meta_clicked",self, "relativesselected")
 	
+#warning-ignore:return_value_discarded
 	$stats/trainingabilspanel/upgradepointsbuy.connect("pressed", self, "buyattributepoint")
 	
 	for i in ['cour','conf','wit','charm']:
+#warning-ignore:return_value_discarded
 		get_node("stats/trainingabilspanel/" +i + '/Button').connect("pressed", self, 'mentalup',[i])
+#warning-ignore:return_value_discarded
 		get_node("stats/trainingabilspanel/" +i + '/Button2').connect("pressed", self, 'mentalup5',[i])
 
 func _input(event):
@@ -62,7 +68,7 @@ func buyattributepoint():
 		person.skillpoints -= variables.attributepointsperupgradepoint
 		globals.resources.upgradepoints += 1
 	else:
-		get_tree().get_root().infotext("[color=red]Not enough attribute points[/color]")
+		get_tree().get_root().get_node("Mansion").infotext("[color=red]Not enough attribute points[/color]")
 	upgradecostupdate()
 
 func slavetabopen():
@@ -82,6 +88,7 @@ func slavetabopen():
 		yield(get_tree().get_current_scene(), 'animfinished')
 	globals.currentslave = person
 	self.visible = true
+#warning-ignore:unused_variable
 	var file = File.new()
 	text = person.description()
 	$stats/basics/slavedescript.set_bbcode(text)
@@ -576,6 +583,7 @@ func _on_items_pressed():
 
 #Tattoos
 
+#warning-ignore:unused_class_variable
 var tattoosdescript = { #this goes like : start + tattoo theme + end + tattoo description: I.e On $his face you see a notable nature themed tattoo, depicting flowers and vines
 face = {start = "On $his cheek you see a notable ", end = " themed tattoo, depicting"},
 chest = {start = "$His chest is decorated with a", end = " tattoo, portraying"},
@@ -715,6 +723,7 @@ func _on_tattooclose_pressed():
 	get_node("stats/customization/tattoopanel").visible = false
 
 
+#warning-ignore:unused_argument
 func _on_tattoooptions_item_selected( ID ):
 	for i in tattoodict.values():
 		if i.value == get_node("stats/customization/tattoopanel/tattoooptions").get_selected():
@@ -839,13 +848,21 @@ func statup(stat):
 	person.skillpoints -= 1
 	updatestats()
 
+#warning-ignore:unused_class_variable
 onready var sstr = get_node("stats/statspanel/sstr")
+#warning-ignore:unused_class_variable
 onready var sagi = get_node("stats/statspanel/sagi")
+#warning-ignore:unused_class_variable
 onready var smaf = get_node("stats/statspanel/smaf")
+#warning-ignore:unused_class_variable
 onready var send = get_node("stats/statspanel/send")
+#warning-ignore:unused_class_variable
 onready var cour = get_node("stats/statspanel/cour")
+#warning-ignore:unused_class_variable
 onready var conf = get_node("stats/statspanel/conf")
+#warning-ignore:unused_class_variable
 onready var wit = get_node("stats/statspanel/wit")
+#warning-ignore:unused_class_variable
 onready var charm = get_node("stats/statspanel/charm")
 
 func updatestats():
@@ -924,6 +941,7 @@ func _on_traittext_mouse_exit():
 	globals.hidetooltip()
 
 
+#warning-ignore:unused_argument
 func _on_info_meta_clicked( meta ):
 	get_tree().get_current_scene().showracedescript(person)
 

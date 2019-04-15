@@ -1,5 +1,6 @@
 extends Panel
 
+#warning-ignore:unused_class_variable
 var run_once = false
 
 
@@ -348,6 +349,7 @@ func apply_next_element_to_dictionary(key, string, offset):
 					var pool_string = nested_match.get_string().split("\n")
 					if param > pool_string.size() :
 						param = -1
+#warning-ignore:unused_variable
 					var new_string = current_match.get_string()
 					if which_operation in ["FUNC",'CLASS']:
 						var param_temp = param
@@ -429,6 +431,7 @@ func _on_modhelp_pressed():
 
 
 func _on_openmodfolder_pressed():
+#warning-ignore:return_value_discarded
 	OS.shell_open(modfolder)
 
 

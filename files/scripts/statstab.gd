@@ -12,6 +12,7 @@ func _on_stats_visibility_changed():
 		tab = 'prison'
 	else:
 		tab = 'normal'
+#warning-ignore:unused_variable
 	var text
 	player = globals.player
 	person = globals.slaves[get_tree().get_current_scene().currentslave]
@@ -126,6 +127,7 @@ func chooseability(ability):
 			text += person.dictionary('\n[color=#ff4949]You must purchase this spell before you will be able to teach it others. [/color]')
 	get_node("trainingabilspanel/abilitytext").set_bbcode(text)
 
+#warning-ignore:unused_argument
 func levelfirst(first, second):
 	if first == 'level':
 		return true
@@ -202,6 +204,7 @@ func spellbuttonpressed(spell):
 	get_node("selectspellpanel").popup()
 	spellselected = spell
 	var description = get_node("selectspellpanel/spellusedescription")
+#warning-ignore:unused_variable
 	var spelllist = get_node("selectspellpanel/ScrollContainer/selectspelllist")
 	for i in get_tree().get_nodes_in_group('spells'):
 		if i.get_text() != spell.name && i.is_pressed() == true:

@@ -6,24 +6,30 @@ var participants = []
 var givers = []
 var takers = []
 var turns = 0
+#warning-ignore:unused_class_variable
 var actions = []
 var ongoingactions = []
+#warning-ignore:unused_class_variable
 var location
 var selectmode = 'normal'
+#warning-ignore:unused_class_variable
 var npcs = []
 var aiobserve = false #True - player will not be picked by AI
 
 var takercategories = ['cunnilingus','rimjob','handjob','titjob','tailjob','blowjob']
 var analcategories = ['assfingering','rimjob','missionaryanal','doggyanal','lotusanal','revlotusanal','doubledildoass','inerttaila','analvibrator','enemaplug','insertinturnsass']
 var punishcategories = globals.punishcategories
+#warning-ignore:unused_class_variable
 var penetratecategories = ['missionary','missionaryanal','doggy','doggyanal','lotus','lotusanal','revlotus','revlotusanal','doubledildo','doubledildoass','inserttailv','inserttaila','tribadism','frottage']
 
 
 var filter = ['nosehook','relaxinginsense','facesit','afacesit','grovel','enemaplug']
 
+#warning-ignore:unused_class_variable
 var statuseffects = ['tied', 'subdued', 'drunk', 'resist', 'sexcrazed']
 
 
+#warning-ignore:unused_class_variable
 var statsicons = {
 lub1 = load("res://files/buttons/sexicons/lub1.png"),
 lub2 = load("res://files/buttons/sexicons/lub2.png"),
@@ -52,66 +58,104 @@ var categories = {caress = [], fucking = [], tools = [], SM = [], humiliation = 
 var secondactorcounter = {}
 
 class member:
+#warning-ignore:unused_class_variable
 	var name
 	var person
+#warning-ignore:unused_class_variable
 	var mood
+#warning-ignore:unused_class_variable
 	var submission
+#warning-ignore:unused_class_variable
 	var loyalty
 	var lust = 0 setget lust_set
 	var sens = 0 setget sens_set
 	var sensmod = 1.0
 	var lube = 0
+#warning-ignore:unused_class_variable
 	var pain = 0
+#warning-ignore:unused_class_variable
 	var role
+#warning-ignore:unused_class_variable
 	var sex
 	var orgasms = 0
 	var lastaction
+#warning-ignore:unused_class_variable
 	var request
+#warning-ignore:unused_class_variable
 	var requestsdone = 0
 	
+#warning-ignore:unused_class_variable
 	var number = 0
 	var sceneref
 	
+#warning-ignore:unused_class_variable
 	var svagina = 0
+#warning-ignore:unused_class_variable
 	var smouth = 0
+#warning-ignore:unused_class_variable
 	var sclit = 0
+#warning-ignore:unused_class_variable
 	var sbreast = 0
+#warning-ignore:unused_class_variable
 	var spenis = 0
+#warning-ignore:unused_class_variable
 	var sanus = 0
 	var lewd
+#warning-ignore:unused_class_variable
 	var activeactions = []
 	
 	var orgasm = false
+#warning-ignore:unused_class_variable
 	var virginitytaken = false
 	
 	var effects = []
 	
+#warning-ignore:unused_class_variable
 	var subduedby = []
+#warning-ignore:unused_class_variable
 	var subduing
 	
+#warning-ignore:unused_class_variable
 	var energy = 100
 	
 	
 	var vagina
 	var penis
+#warning-ignore:unused_class_variable
 	var clit
+#warning-ignore:unused_class_variable
 	var breast
+#warning-ignore:unused_class_variable
 	var feet
+#warning-ignore:unused_class_variable
 	var acc1
+#warning-ignore:unused_class_variable
 	var acc2
+#warning-ignore:unused_class_variable
 	var acc3
+#warning-ignore:unused_class_variable
 	var acc4
+#warning-ignore:unused_class_variable
 	var acc5
+#warning-ignore:unused_class_variable
 	var acc6
+#warning-ignore:unused_class_variable
 	var mouth
 	var anus
+#warning-ignore:unused_class_variable
 	var tail
+#warning-ignore:unused_class_variable
 	var strapon
+#warning-ignore:unused_class_variable
 	var nipples
+#warning-ignore:unused_class_variable
 	var posh1
 	var mode = 'normal'
+#warning-ignore:unused_class_variable
 	var limbs = true
+#warning-ignore:unused_class_variable
 	var consent = true
+#warning-ignore:unused_class_variable
 	var npc = false
 	
 	var actionshad = {addtraits = [], removetraits = [], samesex = 0, samesexorgasms = 0, oppositesex = 0, oppositesexorgasms = 0, punishments = 0, group = 0}
@@ -314,6 +358,7 @@ class member:
 		var lewdinput = 0
 		var lustinput = 0
 		var sensinput = 0
+#warning-ignore:unused_variable
 		var paininput = 0
 		lastaction = scenedict
 		if values.has("lewd"):
@@ -574,6 +619,7 @@ func createtestdummy(type = 'normal'):
 	participants.append(newmember)
 
 
+#warning-ignore:unused_argument
 func startsequence(actors, mode = null, secondactors = [], otheractors = []):
 	participants.clear()
 	secondactorcounter.clear()
@@ -649,6 +695,7 @@ func changecategory(name):
 
 func rebuildparticipantslist():
 	var newnode
+#warning-ignore:unused_variable
 	var effects
 	if selectmode == 'ai':
 		clearstate()
@@ -729,6 +776,7 @@ func rebuildparticipantslist():
 			showactions = false
 			actionreplacetext = i.person.dictionary("$name is busy holding down ") + i.subduing.person.dictionary("$name \nand can only act on $him. ")
 	
+#warning-ignore:unused_variable
 	var array = []
 	var bottomrow =  ['rope', 'subdue', 'strapon']
 	
@@ -1050,8 +1098,10 @@ func switchsides(panel, side):
 		takers.append(person)
 	rebuildparticipantslist()
 
+#warning-ignore:unused_argument
 func startscene(scenescript, cont = false, pretext = ''):
 	var textdict = {mainevent = pretext, repeats = '', orgasms = '', speech = ''}
+#warning-ignore:unused_variable
 	var pain = 0
 	var effects
 	scenescript.givers = givers
@@ -1324,6 +1374,7 @@ func startscene(scenescript, cont = false, pretext = ''):
 	
 	rebuildparticipantslist()
 
+#warning-ignore:unused_argument
 func characterspeech(scene, details = []):
 	var character
 	var partner
@@ -1348,6 +1399,7 @@ func characterspeech(scene, details = []):
 	partner = scene[partnerside][0]
 	
 	array.clear() #array will serve as speech selector
+#warning-ignore:unused_variable
 	var preventrest = true
 	var dict = {}
 	var prevailing_lines = ['mute', 'silence', 'orgasm', 'resistorgasm', 'pain', 'painlike', 'resist', 'blowjob']
@@ -1415,6 +1467,7 @@ func characterspeech(scene, details = []):
 	
 	return {text = '[color=lime]' + text + '[/color]', character = character, partner = partner}
 
+#warning-ignore:unused_class_variable
 var speechdict = {
 resist = ["Stop it!", "No... I don't want to!", "Why are you doing this...", "You, bastard...", "Let me go!"],
 resistorgasm = ["Ahh-hh... No...", "*Sob* why... this feels so good...", "No, Please stop, before I... Ahh... No *sob*"],
@@ -1888,6 +1941,7 @@ func askslaveforaction(chosen):
 	#choosing target
 	var targets = []
 	clearstate()
+#warning-ignore:unused_variable
 	var chosensex = chosen.person.sex
 	var debug = ""
 	var group = false
@@ -2124,6 +2178,7 @@ func _on_blacklist_pressed():
 			node.set_meta("action", j)
 			node.connect("toggled", self, 'toggleaction', [node])
 
+#warning-ignore:unused_argument
 func toggleaction(button, node):
 	var action = node.get_meta('action')
 	if filter.has(action.code):

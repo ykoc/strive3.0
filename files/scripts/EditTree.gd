@@ -14,6 +14,7 @@ func show_(type = 'races'):
 
 func buildtree():
 	clear()
+#warning-ignore:unused_variable
 	var root = create_item()
 	for i in dict:
 		var line = create_item()
@@ -37,6 +38,7 @@ func buildtree():
 
 
 
+#warning-ignore:unused_argument
 func _on_edittree_button_pressed(item, column, id):
 	if column == 0:
 		if globals.description.descriptions.has(item.get_text(0)):
