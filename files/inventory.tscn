@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=2]
+[gd_scene load_steps=59 format=2]
 
 [ext_resource path="res://files/theme.tres" type="Theme" id=1]
 [ext_resource path="res://files/buttons/inventory/11-litter.png" type="Texture" id=2]
@@ -52,10 +52,9 @@
 [ext_resource path="res://files/buttons/inventory/4.png" type="Texture" id=50]
 [ext_resource path="res://files/buttons/inventory/5.png" type="Texture" id=51]
 [ext_resource path="res://files/buttons/inventory/33.png" type="Texture" id=52]
-[ext_resource path="res://files/buttons/menupanel.png" type="Texture" id=53]
-[ext_resource path="res://files/buttons/arrows/down.png" type="Texture" id=54]
-[ext_resource path="res://files/buttons/arrows/down-press.png" type="Texture" id=55]
-[ext_resource path="res://files/buttons/arrows/down-hl.png" type="Texture" id=56]
+[ext_resource path="res://files/buttons/arrows/down.png" type="Texture" id=53]
+[ext_resource path="res://files/buttons/arrows/down-press.png" type="Texture" id=54]
+[ext_resource path="res://files/buttons/arrows/down-hl.png" type="Texture" id=55]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 27 )
@@ -76,17 +75,6 @@ margin_left = 5.0
 margin_right = 5.0
 margin_top = 5.0
 margin_bottom = 5.0
-
-[sub_resource type="StyleBoxTexture" id=4]
-texture = ExtResource( 52 )
-region_rect = Rect2( 0, 0, 1318, 493 )
-
-[sub_resource type="StyleBoxTexture" id=5]
-texture = ExtResource( 53 )
-margin_left = 10.0
-margin_right = 10.0
-margin_top = 10.0
-margin_bottom = 10.0
 
 [node name="inventory" type="TextureRect"]
 anchor_right = 1.0
@@ -873,31 +861,41 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="iteminfo" type="PopupPanel" parent="."]
+[node name="iteminfo" type="Popup" parent="."]
+editor/display_folded = true
 margin_left = 187.0
 margin_top = 78.0
 margin_right = 1121.0
 margin_bottom = 424.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 4 )
+
+[node name="TextureRect" type="TextureRect" parent="iteminfo"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 52 )
+expand = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="iteminfo"]
-margin_right = 934.0
-margin_bottom = 346.0
+margin_left = 364.0
+margin_top = 24.0
+margin_right = 911.0
+margin_bottom = 324.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 bbcode_enabled = true
 
 [node name="TextureFrame" type="TextureRect" parent="iteminfo"]
-margin_right = 934.0
-margin_bottom = 346.0
+margin_left = 35.0
+margin_top = 23.0
+margin_right = 335.0
+margin_bottom = 323.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 expand = true
 stretch_mode = 6
 
-[node name="hairchange" type="PopupPanel" parent="."]
+[node name="hairchange" type="Popup" parent="."]
 editor/display_folded = true
 margin_left = 462.0
 margin_top = 175.0
@@ -905,36 +903,41 @@ margin_right = 908.0
 margin_bottom = 398.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 5 )
+
+[node name="TextureRect" type="TextureRect" parent="hairchange"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 4 )
+expand = true
 
 [node name="TextEdit" type="LineEdit" parent="hairchange"]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 436.0
-margin_bottom = 213.0
+margin_left = 52.0
+margin_top = 37.0
+margin_right = 391.0
+margin_bottom = 71.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 placeholder_text = "Input desired hair color"
 
 [node name="hairconfirm" type="Button" parent="hairchange"]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 436.0
-margin_bottom = 213.0
+margin_left = 45.0
+margin_top = 167.0
+margin_right = 181.0
+margin_bottom = 206.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 text = "Confirm"
 
 [node name="haircancel" type="Button" parent="hairchange"]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 436.0
-margin_bottom = 213.0
+margin_left = 255.0
+margin_top = 167.0
+margin_right = 391.0
+margin_bottom = 206.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 text = "Cancel"
 
-[node name="itemrename" type="PopupPanel" parent="."]
+[node name="itemrename" type="Popup" parent="."]
 editor/display_folded = true
 margin_left = 462.0
 margin_top = 175.0
@@ -942,76 +945,91 @@ margin_right = 908.0
 margin_bottom = 398.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 5 )
+
+[node name="TextureRect" type="TextureRect" parent="itemrename"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 4 )
+expand = true
 
 [node name="TextEdit" type="LineEdit" parent="itemrename"]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 436.0
-margin_bottom = 213.0
+margin_left = 52.0
+margin_top = 37.0
+margin_right = 391.0
+margin_bottom = 71.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 placeholder_text = "Input new name"
 
 [node name="renameconfirm" type="Button" parent="itemrename"]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 436.0
-margin_bottom = 213.0
+margin_left = 45.0
+margin_top = 167.0
+margin_right = 181.0
+margin_bottom = 206.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 text = "Confirm"
 
 [node name="renamecancel" type="Button" parent="itemrename"]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 436.0
-margin_bottom = 213.0
+margin_left = 255.0
+margin_top = 167.0
+margin_right = 391.0
+margin_bottom = 206.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 text = "Cancel"
 
-[node name="amnesia" type="PopupPanel" parent="."]
+[node name="amnesia" type="Popup" parent="."]
+editor/display_folded = true
 margin_left = 447.0
 margin_top = 232.0
 margin_right = 893.0
 margin_bottom = 588.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 5 )
+
+[node name="TextureRect" type="TextureRect" parent="amnesia"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 15.0
+margin_top = -57.0
+margin_right = 15.0
+margin_bottom = -57.0
+texture = ExtResource( 4 )
+expand = true
 
 [node name="name" type="LineEdit" parent="amnesia"]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 436.0
-margin_bottom = 346.0
+margin_left = 53.0
+margin_top = 208.0
+margin_right = 392.0
+margin_bottom = 242.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 placeholder_text = "Name"
 
 [node name="surname" type="LineEdit" parent="amnesia"]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 436.0
-margin_bottom = 346.0
+margin_left = 53.0
+margin_top = 249.0
+margin_right = 392.0
+margin_bottom = 283.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 placeholder_text = "Surname"
 
 [node name="amnesiaconf" type="Button" parent="amnesia"]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 436.0
-margin_bottom = 346.0
+margin_left = 146.0
+margin_top = 293.0
+margin_right = 282.0
+margin_bottom = 332.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 text = "Confirm"
 
 [node name="RichTextLabel" type="RichTextLabel" parent="amnesia"]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 436.0
-margin_bottom = 346.0
+margin_left = 21.0
+margin_top = 18.0
+margin_right = 425.0
+margin_bottom = 201.0
 bbcode_enabled = true
 
 [node name="search" type="LineEdit" parent="."]
@@ -1027,9 +1045,9 @@ margin_top = 26.0
 margin_right = 155.0
 margin_bottom = 80.0
 hint_tooltip = "Move everything to storage"
-texture_normal = ExtResource( 54 )
-texture_pressed = ExtResource( 55 )
-texture_hover = ExtResource( 56 )
+texture_normal = ExtResource( 53 )
+texture_pressed = ExtResource( 54 )
+texture_hover = ExtResource( 55 )
 expand = true
 
 [connection signal="pressed" from="mode" to="." method="_on_mode_pressed"]

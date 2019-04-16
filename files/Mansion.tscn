@@ -1,4 +1,4 @@
-[gd_scene load_steps=196 format=2]
+[gd_scene load_steps=197 format=2]
 
 [ext_resource path="res://files/scripts/Mansion.gd" type="Script" id=1]
 [ext_resource path="res://files/backgrounds/mansion.png" type="Texture" id=2]
@@ -122,11 +122,285 @@
 [ext_resource path="res://files/buttons/portraits/1.png" type="Texture" id=120]
 [ext_resource path="res://files/buttons/sexicons/male.png" type="Texture" id=121]
 [ext_resource path="res://files/buttons/mainscreen/30.png" type="Texture" id=122]
-[ext_resource path="res://files/buttons/mainscreen/1.png" type="Texture" id=123]
+[ext_resource path="res://files/buttons/inventory/33.png" type="Texture" id=123]
+[ext_resource path="res://files/buttons/mainscreen/1.png" type="Texture" id=124]
 
-[sub_resource type="StyleBoxTexture" id=94]
+[sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 40 )
 region_rect = Rect2( 0, 0, 558, 915 )
+
+[sub_resource type="StyleBoxTexture" id=2]
+
+[sub_resource type="StyleBoxTexture" id=3]
+
+[sub_resource type="StyleBoxTexture" id=4]
+
+[sub_resource type="StyleBoxTexture" id=5]
+
+[sub_resource type="StyleBoxEmpty" id=6]
+
+[sub_resource type="StyleBoxTexture" id=7]
+texture = ExtResource( 44 )
+region_rect = Rect2( 0, 0, 1317, 830 )
+
+[sub_resource type="StyleBoxTexture" id=8]
+texture = ExtResource( 47 )
+region_rect = Rect2( 0, 0, 500, 500 )
+margin_left = 10.0
+margin_right = 10.0
+margin_top = 10.0
+margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id=9]
+texture = ExtResource( 49 )
+region_rect = Rect2( 0, 0, 20, 20 )
+margin_left = 10.0
+margin_right = 10.0
+margin_top = 10.0
+margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id=10]
+texture = ExtResource( 51 )
+region_rect = Rect2( 0, 0, 26, 25 )
+
+[sub_resource type="StyleBoxTexture" id=11]
+texture = ExtResource( 52 )
+region_rect = Rect2( 0, 0, 26, 25 )
+
+[sub_resource type="DynamicFont" id=12]
+size = 15
+use_filter = true
+extra_spacing_top = 1
+font_data = ExtResource( 58 )
+
+[sub_resource type="DynamicFont" id=13]
+use_filter = true
+extra_spacing_top = 1
+font_data = ExtResource( 58 )
+
+[sub_resource type="StyleBoxTexture" id=14]
+content_margin_left = 20.0
+texture = ExtResource( 61 )
+region_rect = Rect2( 0, 0, 750, 87 )
+
+[sub_resource type="StyleBoxTexture" id=15]
+content_margin_left = 20.0
+texture = ExtResource( 61 )
+region_rect = Rect2( 0, 0, 750, 87 )
+
+[sub_resource type="StyleBoxTexture" id=16]
+
+[sub_resource type="StyleBoxTexture" id=17]
+content_margin_left = 20.0
+texture = ExtResource( 62 )
+region_rect = Rect2( 0, 0, 750, 87 )
+
+[sub_resource type="StreamTexture" id=18]
+flags = 4
+load_path = "res://.import/1.png-dbfd755d3aa5fd0dc51c158016c10926.stex"
+
+[sub_resource type="DynamicFont" id=19]
+size = 18
+font_data = ExtResource( 58 )
+
+[sub_resource type="StreamTexture" id=20]
+flags = 4
+load_path = "res://.import/4.png-5a5e035178ff7ad07f7ffe85f5523d04.stex"
+
+[sub_resource type="StreamTexture" id=21]
+flags = 4
+load_path = "res://.import/4.png-5a5e035178ff7ad07f7ffe85f5523d04.stex"
+
+[sub_resource type="StyleBoxTexture" id=22]
+
+[sub_resource type="DynamicFont" id=23]
+size = 13
+use_filter = true
+extra_spacing_top = 1
+font_data = ExtResource( 58 )
+
+[sub_resource type="DynamicFont" id=24]
+size = 14
+use_filter = true
+extra_spacing_top = 1
+font_data = ExtResource( 58 )
+
+[sub_resource type="StyleBoxTexture" id=25]
+texture = ExtResource( 9 )
+region_rect = Rect2( 0, 0, 229, 229 )
+
+[sub_resource type="StyleBoxTexture" id=26]
+
+[sub_resource type="StyleBoxTexture" id=27]
+
+[sub_resource type="StyleBoxTexture" id=28]
+
+[sub_resource type="StyleBoxTexture" id=29]
+
+[sub_resource type="StyleBoxTexture" id=30]
+
+[sub_resource type="StyleBoxTexture" id=31]
+
+[sub_resource type="DynamicFont" id=32]
+size = 32
+use_filter = true
+extra_spacing_top = 3
+font_data = ExtResource( 58 )
+
+[sub_resource type="StyleBoxTexture" id=33]
+texture = ExtResource( 74 )
+region_rect = Rect2( 0, 0, 860, 682 )
+margin_left = 4.0
+margin_right = 4.0
+margin_top = 4.0
+margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id=34]
+texture = ExtResource( 75 )
+region_rect = Rect2( 0, 0, 50, 50 )
+margin_left = 10.0
+margin_right = 10.0
+margin_top = 10.0
+margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id=35]
+texture = ExtResource( 76 )
+region_rect = Rect2( 0, 0, 50, 50 )
+margin_left = 10.0
+margin_right = 10.0
+margin_top = 10.0
+margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id=36]
+texture = ExtResource( 47 )
+region_rect = Rect2( 0, 0, 500, 500 )
+
+[sub_resource type="StyleBoxTexture" id=37]
+texture = ExtResource( 82 )
+region_rect = Rect2( 0, 0, 500, 294 )
+
+[sub_resource type="StyleBoxTexture" id=38]
+texture = ExtResource( 47 )
+region_rect = Rect2( 0, 0, 500, 500 )
+
+[sub_resource type="StyleBoxTexture" id=39]
+texture = ExtResource( 91 )
+region_rect = Rect2( 0, 0, 150, 18 )
+margin_left = 5.0
+margin_right = 5.0
+margin_top = 5.0
+margin_bottom = 5.0
+
+[sub_resource type="StyleBoxTexture" id=40]
+texture = ExtResource( 92 )
+region_rect = Rect2( 0, 0, 150, 18 )
+margin_left = 5.0
+margin_right = 5.0
+margin_top = 5.0
+margin_bottom = 5.0
+
+[sub_resource type="ShaderMaterial" id=41]
+render_priority = 1
+shader = ExtResource( 97 )
+shader_param/blurSize = null
+
+[sub_resource type="StyleBoxTexture" id=42]
+texture = ExtResource( 99 )
+region_rect = Rect2( 0, 0, 60, 60 )
+margin_left = 10.0
+margin_right = 10.0
+margin_top = 10.0
+margin_bottom = 10.0
+
+[sub_resource type="DynamicFont" id=43]
+size = 18
+use_filter = true
+extra_spacing_top = 3
+font_data = ExtResource( 58 )
+
+[sub_resource type="StyleBoxTexture" id=44]
+texture = ExtResource( 100 )
+region_rect = Rect2( 0, 0, 183, 183 )
+
+[sub_resource type="StyleBoxTexture" id=45]
+texture = ExtResource( 101 )
+region_rect = Rect2( 0, 0, 601, 822 )
+
+[sub_resource type="StyleBoxTexture" id=46]
+texture = ExtResource( 102 )
+region_rect = Rect2( 0, 0, 604, 60 )
+
+[sub_resource type="StyleBoxTexture" id=47]
+texture = ExtResource( 103 )
+region_rect = Rect2( 0, 0, 610, 64 )
+
+[sub_resource type="StyleBoxTexture" id=48]
+texture = ExtResource( 104 )
+region_rect = Rect2( 0, 0, 604, 60 )
+
+[sub_resource type="StyleBoxTexture" id=49]
+texture = ExtResource( 105 )
+region_rect = Rect2( 0, 0, 604, 60 )
+
+[sub_resource type="StyleBoxTexture" id=50]
+texture = ExtResource( 106 )
+region_rect = Rect2( 0, 0, 1235, 212 )
+
+[sub_resource type="StyleBoxTexture" id=51]
+texture = ExtResource( 107 )
+region_rect = Rect2( 0, 0, 1235, 822 )
+
+[sub_resource type="DynamicFont" id=52]
+size = 17
+use_filter = true
+extra_spacing_top = 3
+font_data = ExtResource( 58 )
+
+[sub_resource type="StyleBoxTexture" id=53]
+texture = ExtResource( 109 )
+region_rect = Rect2( 0, 0, 500, 500 )
+margin_left = 8.0
+margin_right = 8.0
+margin_top = 8.0
+margin_bottom = 8.0
+
+[sub_resource type="StreamTexture" id=54]
+flags = 4
+load_path = "res://.import/1.png-836f0e2ac94100ca5824a97c4a9bfb02.stex"
+
+[sub_resource type="StreamTexture" id=55]
+flags = 4
+load_path = "res://.import/sidearrow.png-b71c834f54dd2f3e25ebd156430b5986.stex"
+
+[sub_resource type="StreamTexture" id=56]
+flags = 4
+load_path = "res://.import/6.png-139c7a7d659c7a6ebd67c47faff6d488.stex"
+
+[sub_resource type="StreamTexture" id=57]
+flags = 4
+load_path = "res://.import/5.png-5f441302755a786393fd79bbaa8f2f3f.stex"
+
+[sub_resource type="StreamTexture" id=58]
+flags = 4
+load_path = "res://.import/2.png-4cf966d13a2c7ebfca9f08501bafd5bd.stex"
+
+[sub_resource type="StyleBoxTexture" id=59]
+texture = ExtResource( 113 )
+region_rect = Rect2( 0, 0, 500, 500 )
+margin_left = 10.0
+margin_right = 10.0
+margin_top = 10.0
+margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id=60]
+texture = ExtResource( 99 )
+region_rect = Rect2( 0, 0, 60, 60 )
+margin_left = 20.0
+margin_right = 20.0
+margin_top = 20.0
+margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id=61]
 
 [sub_resource type="StyleBoxTexture" id=62]
 
@@ -136,296 +410,23 @@ region_rect = Rect2( 0, 0, 558, 915 )
 
 [sub_resource type="StyleBoxTexture" id=65]
 
-[sub_resource type="StyleBoxEmpty" id=25]
-
-[sub_resource type="StyleBoxTexture" id=95]
-texture = ExtResource( 44 )
-region_rect = Rect2( 0, 0, 1317, 830 )
-
-[sub_resource type="StyleBoxTexture" id=75]
-texture = ExtResource( 47 )
-region_rect = Rect2( 0, 0, 500, 500 )
-margin_left = 10.0
-margin_right = 10.0
-margin_top = 10.0
-margin_bottom = 10.0
-
-[sub_resource type="StyleBoxTexture" id=74]
-texture = ExtResource( 49 )
-region_rect = Rect2( 0, 0, 20, 20 )
-margin_left = 10.0
-margin_right = 10.0
-margin_top = 10.0
-margin_bottom = 10.0
-
-[sub_resource type="StyleBoxTexture" id=1]
-texture = ExtResource( 51 )
-region_rect = Rect2( 0, 0, 26, 25 )
-
-[sub_resource type="StyleBoxTexture" id=2]
-texture = ExtResource( 52 )
-region_rect = Rect2( 0, 0, 26, 25 )
-
-[sub_resource type="DynamicFont" id=4]
-size = 15
-use_filter = true
-extra_spacing_top = 1
-font_data = ExtResource( 58 )
-
-[sub_resource type="DynamicFont" id=5]
-use_filter = true
-extra_spacing_top = 1
-font_data = ExtResource( 58 )
-
-[sub_resource type="StyleBoxTexture" id=77]
-content_margin_left = 20.0
-texture = ExtResource( 61 )
-region_rect = Rect2( 0, 0, 750, 87 )
-
-[sub_resource type="StyleBoxTexture" id=78]
-content_margin_left = 20.0
-texture = ExtResource( 61 )
-region_rect = Rect2( 0, 0, 750, 87 )
-
-[sub_resource type="StyleBoxTexture" id=79]
-
-[sub_resource type="StyleBoxTexture" id=80]
-content_margin_left = 20.0
-texture = ExtResource( 62 )
-region_rect = Rect2( 0, 0, 750, 87 )
-
-[sub_resource type="StreamTexture" id=113]
-flags = 4
-load_path = "res://.import/1.png-dbfd755d3aa5fd0dc51c158016c10926.stex"
-
-[sub_resource type="DynamicFont" id=111]
-size = 18
-font_data = ExtResource( 58 )
-
-[sub_resource type="StreamTexture" id=112]
-flags = 4
-load_path = "res://.import/4.png-5a5e035178ff7ad07f7ffe85f5523d04.stex"
-
-[sub_resource type="StreamTexture" id=114]
-flags = 4
-load_path = "res://.import/4.png-5a5e035178ff7ad07f7ffe85f5523d04.stex"
-
-[sub_resource type="StyleBoxTexture" id=103]
-
-[sub_resource type="DynamicFont" id=3]
-size = 13
-use_filter = true
-extra_spacing_top = 1
-font_data = ExtResource( 58 )
-
-[sub_resource type="DynamicFont" id=96]
-size = 14
-use_filter = true
-extra_spacing_top = 1
-font_data = ExtResource( 58 )
-
-[sub_resource type="StyleBoxTexture" id=104]
-texture = ExtResource( 9 )
-region_rect = Rect2( 0, 0, 229, 229 )
-
-[sub_resource type="StyleBoxTexture" id=7]
-
-[sub_resource type="StyleBoxTexture" id=8]
-
-[sub_resource type="StyleBoxTexture" id=9]
-
-[sub_resource type="StyleBoxTexture" id=10]
-
-[sub_resource type="StyleBoxTexture" id=11]
-
-[sub_resource type="StyleBoxTexture" id=12]
-
-[sub_resource type="DynamicFont" id=13]
-size = 32
-use_filter = true
-extra_spacing_top = 3
-font_data = ExtResource( 58 )
-
-[sub_resource type="StyleBoxTexture" id=14]
-texture = ExtResource( 74 )
-region_rect = Rect2( 0, 0, 860, 682 )
-margin_left = 4.0
-margin_right = 4.0
-margin_top = 4.0
-margin_bottom = 4.0
-
-[sub_resource type="StyleBoxTexture" id=15]
-texture = ExtResource( 75 )
-region_rect = Rect2( 0, 0, 50, 50 )
-margin_left = 10.0
-margin_right = 10.0
-margin_top = 10.0
-margin_bottom = 10.0
-
-[sub_resource type="StyleBoxTexture" id=16]
-texture = ExtResource( 76 )
-region_rect = Rect2( 0, 0, 50, 50 )
-margin_left = 10.0
-margin_right = 10.0
-margin_top = 10.0
-margin_bottom = 10.0
-
 [sub_resource type="StyleBoxTexture" id=66]
 texture = ExtResource( 47 )
 region_rect = Rect2( 0, 0, 500, 500 )
+margin_left = 10.0
+margin_right = 10.0
+margin_top = 10.0
+margin_bottom = 10.0
 
-[sub_resource type="StyleBoxTexture" id=44]
-texture = ExtResource( 82 )
-region_rect = Rect2( 0, 0, 500, 294 )
+[sub_resource type="StyleBoxTexture" id=67]
+texture = ExtResource( 47 )
+region_rect = Rect2( 0, 0, 500, 500 )
 
-[sub_resource type="StyleBoxTexture" id=71]
+[sub_resource type="StyleBoxTexture" id=68]
 texture = ExtResource( 47 )
 region_rect = Rect2( 0, 0, 500, 500 )
 
 [sub_resource type="StyleBoxTexture" id=69]
-texture = ExtResource( 91 )
-region_rect = Rect2( 0, 0, 150, 18 )
-margin_left = 5.0
-margin_right = 5.0
-margin_top = 5.0
-margin_bottom = 5.0
-
-[sub_resource type="StyleBoxTexture" id=70]
-texture = ExtResource( 92 )
-region_rect = Rect2( 0, 0, 150, 18 )
-margin_left = 5.0
-margin_right = 5.0
-margin_top = 5.0
-margin_bottom = 5.0
-
-[sub_resource type="ShaderMaterial" id=115]
-render_priority = 1
-shader = ExtResource( 97 )
-shader_param/blurSize = null
-
-[sub_resource type="StyleBoxTexture" id=97]
-texture = ExtResource( 99 )
-region_rect = Rect2( 0, 0, 60, 60 )
-margin_left = 10.0
-margin_right = 10.0
-margin_top = 10.0
-margin_bottom = 10.0
-
-[sub_resource type="DynamicFont" id=98]
-size = 18
-use_filter = true
-extra_spacing_top = 3
-font_data = ExtResource( 58 )
-
-[sub_resource type="StyleBoxTexture" id=85]
-texture = ExtResource( 100 )
-region_rect = Rect2( 0, 0, 183, 183 )
-
-[sub_resource type="StyleBoxTexture" id=91]
-texture = ExtResource( 101 )
-region_rect = Rect2( 0, 0, 601, 822 )
-
-[sub_resource type="StyleBoxTexture" id=88]
-texture = ExtResource( 102 )
-region_rect = Rect2( 0, 0, 604, 60 )
-
-[sub_resource type="StyleBoxTexture" id=89]
-texture = ExtResource( 103 )
-region_rect = Rect2( 0, 0, 610, 64 )
-
-[sub_resource type="StyleBoxTexture" id=90]
-texture = ExtResource( 104 )
-region_rect = Rect2( 0, 0, 604, 60 )
-
-[sub_resource type="StyleBoxTexture" id=86]
-texture = ExtResource( 105 )
-region_rect = Rect2( 0, 0, 604, 60 )
-
-[sub_resource type="StyleBoxTexture" id=87]
-texture = ExtResource( 106 )
-region_rect = Rect2( 0, 0, 1235, 212 )
-
-[sub_resource type="StyleBoxTexture" id=84]
-texture = ExtResource( 107 )
-region_rect = Rect2( 0, 0, 1235, 822 )
-
-[sub_resource type="DynamicFont" id=99]
-size = 17
-use_filter = true
-extra_spacing_top = 3
-font_data = ExtResource( 58 )
-
-[sub_resource type="StyleBoxTexture" id=68]
-texture = ExtResource( 109 )
-region_rect = Rect2( 0, 0, 500, 500 )
-margin_left = 8.0
-margin_right = 8.0
-margin_top = 8.0
-margin_bottom = 8.0
-
-[sub_resource type="StreamTexture" id=105]
-flags = 4
-load_path = "res://.import/1.png-836f0e2ac94100ca5824a97c4a9bfb02.stex"
-
-[sub_resource type="StreamTexture" id=106]
-flags = 4
-load_path = "res://.import/sidearrow.png-b71c834f54dd2f3e25ebd156430b5986.stex"
-
-[sub_resource type="StreamTexture" id=107]
-flags = 4
-load_path = "res://.import/6.png-139c7a7d659c7a6ebd67c47faff6d488.stex"
-
-[sub_resource type="StreamTexture" id=108]
-flags = 4
-load_path = "res://.import/5.png-5f441302755a786393fd79bbaa8f2f3f.stex"
-
-[sub_resource type="StreamTexture" id=109]
-flags = 4
-load_path = "res://.import/2.png-4cf966d13a2c7ebfca9f08501bafd5bd.stex"
-
-[sub_resource type="StyleBoxTexture" id=100]
-texture = ExtResource( 113 )
-region_rect = Rect2( 0, 0, 500, 500 )
-margin_left = 10.0
-margin_right = 10.0
-margin_top = 10.0
-margin_bottom = 10.0
-
-[sub_resource type="StyleBoxTexture" id=101]
-texture = ExtResource( 99 )
-region_rect = Rect2( 0, 0, 60, 60 )
-margin_left = 20.0
-margin_right = 20.0
-margin_top = 20.0
-margin_bottom = 20.0
-
-[sub_resource type="StyleBoxTexture" id=55]
-
-[sub_resource type="StyleBoxTexture" id=56]
-
-[sub_resource type="StyleBoxTexture" id=57]
-
-[sub_resource type="StyleBoxTexture" id=58]
-
-[sub_resource type="StyleBoxTexture" id=59]
-
-[sub_resource type="StyleBoxTexture" id=82]
-texture = ExtResource( 47 )
-region_rect = Rect2( 0, 0, 500, 500 )
-margin_left = 10.0
-margin_right = 10.0
-margin_top = 10.0
-margin_bottom = 10.0
-
-[sub_resource type="StyleBoxTexture" id=51]
-texture = ExtResource( 47 )
-region_rect = Rect2( 0, 0, 500, 500 )
-
-[sub_resource type="StyleBoxTexture" id=45]
-texture = ExtResource( 47 )
-region_rect = Rect2( 0, 0, 500, 500 )
-
-[sub_resource type="StyleBoxTexture" id=46]
 texture = ExtResource( 99 )
 region_rect = Rect2( 0, 0, 60, 60 )
 margin_left = 10.0
@@ -437,11 +438,11 @@ expand_margin_right = 7.0
 expand_margin_top = 7.0
 expand_margin_bottom = 7.0
 
-[sub_resource type="StyleBoxTexture" id=47]
+[sub_resource type="StyleBoxTexture" id=70]
 
-[sub_resource type="StyleBoxTexture" id=48]
+[sub_resource type="StyleBoxTexture" id=71]
 
-[sub_resource type="StyleBoxTexture" id=49]
+[sub_resource type="StyleBoxTexture" id=72]
 
 [node name="Mansion" type="Control"]
 anchor_right = 1.0
@@ -1112,7 +1113,7 @@ margin_right = -2.0
 margin_bottom = -17.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 94 )
+custom_styles/panel = SubResource( 1 )
 
 [node name="res_number" type="RichTextLabel" parent="charlistcontrol/CharList"]
 margin_top = 11.0
@@ -1201,10 +1202,10 @@ margin_bottom = 16.0
 rect_min_size = Vector2( 165, 16 )
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_styles/hover = SubResource( 62 )
-custom_styles/pressed = SubResource( 63 )
-custom_styles/focus = SubResource( 64 )
-custom_styles/normal = SubResource( 65 )
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/focus = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
 custom_fonts/font = ExtResource( 41 )
 custom_colors/font_color = Color( 0.921875, 0.921875, 0.921875, 1 )
 custom_colors/font_color_hover = Color( 0, 1, 0.71875, 1 )
@@ -1254,7 +1255,7 @@ margin_bottom = 22.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 theme = ExtResource( 43 )
-custom_styles/disabled = SubResource( 25 )
+custom_styles/disabled = SubResource( 6 )
 
 [node name="orderbutton" type="Button" parent="charlistcontrol"]
 anchor_left = 1.0
@@ -1286,6 +1287,7 @@ size_flags_vertical = 2
 text = "Slave Spreadsheet"
 
 [node name="MainScreen" type="Panel" parent="."]
+editor/display_folded = true
 self_modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -1298,13 +1300,14 @@ size_flags_vertical = 2
 theme = ExtResource( 3 )
 
 [node name="mansion" type="Panel" parent="MainScreen"]
+editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = 1.0
 margin_bottom = -1.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 95 )
+custom_styles/panel = SubResource( 7 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -1612,7 +1615,7 @@ margin_right = 266.0
 margin_bottom = 4.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 75 )
+custom_styles/panel = SubResource( 8 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MainScreen/mansion/alchemypanel"]
 editor/display_folded = true
@@ -1726,7 +1729,7 @@ margin_bottom = 40.0
 rect_min_size = Vector2( 645, 40 )
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_styles/panel = SubResource( 74 )
+custom_styles/panel = SubResource( 9 )
 
 [node name="icon" type="TextureRect" parent="MainScreen/mansion/alchemypanel/VBoxContainer/Panel"]
 margin_left = 1.0
@@ -1806,6 +1809,7 @@ size_flags_vertical = 2
 theme = ExtResource( 3 )
 
 [node name="statspanel" type="TextureRect" parent="MainScreen/mansion/selfinspect"]
+editor/display_folded = true
 margin_left = 1.0
 margin_top = 4.0
 margin_right = 940.0
@@ -1865,9 +1869,9 @@ margin_right = 104.0
 margin_bottom = 21.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/hover = SubResource( 1 )
-custom_styles/pressed = SubResource( 2 )
-custom_styles/normal = SubResource( 1 )
+custom_styles/hover = SubResource( 10 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/normal = SubResource( 10 )
 
 [node name="sagi" type="TextureRect" parent="MainScreen/mansion/selfinspect/statspanel"]
 editor/display_folded = true
@@ -1918,9 +1922,9 @@ margin_right = 104.0
 margin_bottom = 21.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/hover = SubResource( 1 )
-custom_styles/pressed = SubResource( 2 )
-custom_styles/normal = SubResource( 1 )
+custom_styles/hover = SubResource( 10 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/normal = SubResource( 10 )
 
 [node name="smaf" type="TextureRect" parent="MainScreen/mansion/selfinspect/statspanel"]
 editor/display_folded = true
@@ -1971,9 +1975,9 @@ margin_right = 104.0
 margin_bottom = 21.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/hover = SubResource( 1 )
-custom_styles/pressed = SubResource( 2 )
-custom_styles/normal = SubResource( 1 )
+custom_styles/hover = SubResource( 10 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/normal = SubResource( 10 )
 
 [node name="send" type="TextureRect" parent="MainScreen/mansion/selfinspect/statspanel"]
 editor/display_folded = true
@@ -2024,9 +2028,9 @@ margin_right = 104.0
 margin_bottom = 21.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/hover = SubResource( 1 )
-custom_styles/pressed = SubResource( 2 )
-custom_styles/normal = SubResource( 1 )
+custom_styles/hover = SubResource( 10 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/normal = SubResource( 10 )
 
 [node name="levelreqs" type="RichTextLabel" parent="MainScreen/mansion/selfinspect/statspanel"]
 anchor_left = 1.0
@@ -2094,7 +2098,7 @@ margin_left = 160.0
 margin_top = 13.0
 margin_right = 306.0
 margin_bottom = 95.0
-custom_fonts/normal_font = SubResource( 4 )
+custom_fonts/normal_font = SubResource( 12 )
 bbcode_enabled = true
 bbcode_text = "Test text"
 text = "Test text"
@@ -2104,7 +2108,7 @@ margin_left = 367.0
 margin_top = 138.0
 margin_right = 570.0
 margin_bottom = 158.0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 13 )
 
 [node name="hptooltip" type="Control" parent="MainScreen/mansion/selfinspect/statspanel"]
 margin_left = 163.0
@@ -2243,6 +2247,7 @@ size_flags_vertical = 2
 text = "Spell Book"
 
 [node name="relativespanel" type="Popup" parent="MainScreen/mansion/selfinspect"]
+editor/display_folded = true
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -2253,6 +2258,12 @@ margin_right = -260.0
 margin_bottom = -110.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="MainScreen/mansion/selfinspect/relativespanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 44 )
+expand = true
 
 [node name="relativestext" type="RichTextLabel" parent="MainScreen/mansion/selfinspect/relativespanel"]
 margin_left = 28.0
@@ -2313,6 +2324,7 @@ size_flags_vertical = 2
 text = "Close"
 
 [node name="selfabilitypanel" type="Panel" parent="MainScreen/mansion/selfinspect"]
+editor/display_folded = true
 visible = false
 anchor_left = 1.0
 anchor_top = 1.0
@@ -2754,10 +2766,10 @@ margin_bottom = 50.0
 rect_min_size = Vector2( 280, 50 )
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/hover = SubResource( 77 )
-custom_styles/pressed = SubResource( 78 )
-custom_styles/disabled = SubResource( 79 )
-custom_styles/normal = SubResource( 80 )
+custom_styles/hover = SubResource( 14 )
+custom_styles/pressed = SubResource( 15 )
+custom_styles/disabled = SubResource( 16 )
+custom_styles/normal = SubResource( 17 )
 custom_fonts/font = ExtResource( 45 )
 custom_colors/font_color_pressed = Color( 0.695313, 0.233582, 0.320156, 1 )
 toggle_mode = true
@@ -2972,13 +2984,19 @@ margin_bottom = -175.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 
+[node name="TextureRect" type="TextureRect" parent="MainScreen/mansion/portalspanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 44 )
+expand = true
+
 [node name="TextureRect2" type="TextureRect" parent="MainScreen/mansion/portalspanel"]
 visible = false
 margin_left = 4.0
 margin_top = 3.0
 margin_right = 768.0
 margin_bottom = 497.0
-texture = SubResource( 113 )
+texture = SubResource( 18 )
 expand = true
 
 [node name="portalsclose" type="Button" parent="MainScreen/mansion/portalspanel"]
@@ -3041,7 +3059,7 @@ margin_left = -1.0
 margin_top = 212.0
 margin_right = 302.0
 margin_bottom = 235.0
-custom_fonts/font = SubResource( 111 )
+custom_fonts/font = SubResource( 19 )
 custom_colors/font_color = Color( 0.910156, 0.783499, 0.0995483, 1 )
 align = 1
 
@@ -3052,7 +3070,7 @@ margin_right = 302.0
 margin_bottom = 355.0
 rect_clip_content = true
 mouse_filter = 0
-texture = SubResource( 112 )
+texture = SubResource( 20 )
 expand = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="MainScreen/mansion/portalspanel/imagelocation"]
@@ -3067,10 +3085,11 @@ margin_left = -1.0
 margin_top = -1.0
 margin_right = 303.0
 margin_bottom = 204.0
-texture = SubResource( 114 )
+texture = SubResource( 21 )
 expand = true
 
 [node name="upgradespanel" type="Panel" parent="MainScreen/mansion"]
+editor/display_folded = true
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -3201,6 +3220,7 @@ custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Free upgrade points:"
 
 [node name="upgradepanel" type="Popup" parent="MainScreen/mansion/upgradespanel"]
+editor/display_folded = true
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -3211,6 +3231,12 @@ margin_right = -261.0
 margin_bottom = -200.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="MainScreen/mansion/upgradespanel/upgradepanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 44 )
+expand = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="MainScreen/mansion/upgradespanel/upgradepanel"]
 margin_left = 28.0
@@ -3240,8 +3266,6 @@ size_flags_vertical = 2
 text = "Close"
 
 [node name="slave_tab" type="Control" parent="MainScreen"]
-editor/display_folded = true
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = -17.0
@@ -3261,7 +3285,7 @@ margin_right = 22.0
 margin_bottom = 12.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 103 )
+custom_styles/panel = SubResource( 22 )
 script = ExtResource( 67 )
 
 [node name="statspanel" type="TextureRect" parent="MainScreen/slave_tab/stats"]
@@ -3324,9 +3348,9 @@ margin_right = 104.0
 margin_bottom = 21.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/hover = SubResource( 1 )
-custom_styles/pressed = SubResource( 2 )
-custom_styles/normal = SubResource( 1 )
+custom_styles/hover = SubResource( 10 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/normal = SubResource( 10 )
 
 [node name="sagi" type="TextureRect" parent="MainScreen/slave_tab/stats/statspanel"]
 editor/display_folded = true
@@ -3377,9 +3401,9 @@ margin_right = 104.0
 margin_bottom = 21.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/hover = SubResource( 1 )
-custom_styles/pressed = SubResource( 2 )
-custom_styles/normal = SubResource( 1 )
+custom_styles/hover = SubResource( 10 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/normal = SubResource( 10 )
 
 [node name="smaf" type="TextureRect" parent="MainScreen/slave_tab/stats/statspanel"]
 editor/display_folded = true
@@ -3430,9 +3454,9 @@ margin_right = 104.0
 margin_bottom = 21.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/hover = SubResource( 1 )
-custom_styles/pressed = SubResource( 2 )
-custom_styles/normal = SubResource( 1 )
+custom_styles/hover = SubResource( 10 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/normal = SubResource( 10 )
 
 [node name="send" type="TextureRect" parent="MainScreen/slave_tab/stats/statspanel"]
 editor/display_folded = true
@@ -3483,9 +3507,9 @@ margin_right = 104.0
 margin_bottom = 21.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/hover = SubResource( 1 )
-custom_styles/pressed = SubResource( 2 )
-custom_styles/normal = SubResource( 1 )
+custom_styles/hover = SubResource( 10 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/normal = SubResource( 10 )
 
 [node name="cour" type="TextureRect" parent="MainScreen/slave_tab/stats/statspanel"]
 editor/display_folded = true
@@ -3508,7 +3532,7 @@ rect_clip_content = true
 mouse_filter = 0
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 23 )
 text = "100"
 align = 1
 
@@ -3521,7 +3545,7 @@ rect_clip_content = true
 mouse_filter = 0
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 23 )
 text = "100"
 align = 1
 
@@ -3553,7 +3577,7 @@ rect_clip_content = true
 mouse_filter = 0
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 23 )
 text = "100"
 align = 1
 
@@ -3566,7 +3590,7 @@ rect_clip_content = true
 mouse_filter = 0
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 23 )
 text = "100"
 align = 1
 
@@ -3598,7 +3622,7 @@ rect_clip_content = true
 mouse_filter = 0
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 23 )
 text = "100"
 align = 1
 
@@ -3611,7 +3635,7 @@ rect_clip_content = true
 mouse_filter = 0
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 23 )
 text = "100"
 align = 1
 
@@ -3643,7 +3667,7 @@ rect_clip_content = true
 mouse_filter = 0
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 23 )
 text = "100"
 align = 1
 
@@ -3656,7 +3680,7 @@ rect_clip_content = true
 mouse_filter = 0
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 23 )
 text = "100"
 align = 1
 
@@ -3733,7 +3757,7 @@ margin_left = 160.0
 margin_top = 13.0
 margin_right = 306.0
 margin_bottom = 95.0
-custom_fonts/normal_font = SubResource( 4 )
+custom_fonts/normal_font = SubResource( 12 )
 bbcode_enabled = true
 bbcode_text = "Test text"
 text = "Test text"
@@ -3767,7 +3791,7 @@ margin_left = 367.0
 margin_top = 138.0
 margin_right = 570.0
 margin_bottom = 158.0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 13 )
 
 [node name="hptooltip" type="Control" parent="MainScreen/slave_tab/stats/statspanel"]
 margin_left = 163.0
@@ -3930,6 +3954,12 @@ margin_right = -158.0
 margin_bottom = -55.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="MainScreen/slave_tab/stats/trainingabilspanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 44 )
+expand = true
 
 [node name="abilcancel" type="Button" parent="MainScreen/slave_tab/stats/trainingabilspanel"]
 margin_left = 147.0
@@ -4184,6 +4214,12 @@ margin_bottom = -243.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 
+[node name="TextureRect" type="TextureRect" parent="MainScreen/slave_tab/stats/selectspellpanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 44 )
+expand = true
+
 [node name="ScrollContainer" type="ScrollContainer" parent="MainScreen/slave_tab/stats/selectspellpanel"]
 margin_left = 17.0
 margin_top = 15.0
@@ -4251,6 +4287,12 @@ margin_bottom = -272.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 
+[node name="TextureRect" type="TextureRect" parent="MainScreen/slave_tab/stats/callorder"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 44 )
+expand = true
+
 [node name="Label" type="Label" parent="MainScreen/slave_tab/stats/callorder"]
 margin_left = 33.0
 margin_top = 16.0
@@ -4289,7 +4331,7 @@ margin_right = -10.0
 margin_bottom = -470.0
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_fonts/normal_font = SubResource( 96 )
+custom_fonts/normal_font = SubResource( 24 )
 bbcode_enabled = true
 bbcode_text = "She barely pays any attention to you, as if demonstrating her independence.
 
@@ -4308,11 +4350,12 @@ She is pretty considerate and tries to appeal to you, showing that your opinion 
 
 [node name="basics" type="Panel" parent="MainScreen/slave_tab/stats"]
 editor/display_folded = true
+visible = false
 margin_left = 190.0
 margin_top = 169.0
 margin_right = 944.0
 margin_bottom = 624.0
-custom_styles/panel = SubResource( 104 )
+custom_styles/panel = SubResource( 25 )
 
 [node name="LabelTraits" type="Label" parent="MainScreen/slave_tab/stats/basics"]
 editor/display_folded = true
@@ -4473,7 +4516,7 @@ margin_left = 190.0
 margin_top = 169.0
 margin_right = 944.0
 margin_bottom = 624.0
-custom_styles/panel = SubResource( 104 )
+custom_styles/panel = SubResource( 25 )
 
 [node name="rules" type="Panel" parent="MainScreen/slave_tab/stats/customization"]
 editor/display_folded = true
@@ -4551,7 +4594,7 @@ minor cost in gold (5 per intake).
 This will only start working starting next day."
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/focus = SubResource( 7 )
+custom_styles/focus = SubResource( 26 )
 custom_fonts/font = ExtResource( 45 )
 custom_colors/font_color_pressed = Color( 0.0921321, 0.644531, 0.0453186, 1 )
 text = "Herbal contraception"
@@ -4571,7 +4614,7 @@ amounts of aphrodisiac constantly boosting their
 libido for some cost in (8 per day) gold. "
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/focus = SubResource( 8 )
+custom_styles/focus = SubResource( 27 )
 custom_fonts/font = ExtResource( 45 )
 custom_colors/font_color_pressed = Color( 0.0921321, 0.644531, 0.0453186, 1 )
 text = "Aphrodisiac in food"
@@ -4589,7 +4632,7 @@ margin_bottom = 245.0
 hint_tooltip = "Servant will not be able to talk unless addressed."
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/focus = SubResource( 9 )
+custom_styles/focus = SubResource( 28 )
 custom_fonts/font = ExtResource( 45 )
 custom_colors/font_color_pressed = Color( 0.0921321, 0.644531, 0.0453186, 1 )
 text = "Enforced Silence"
@@ -4609,7 +4652,7 @@ walk on all fours and not interact with
 others with human words."
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/focus = SubResource( 10 )
+custom_styles/focus = SubResource( 29 )
 custom_fonts/font = ExtResource( 45 )
 custom_colors/font_color_pressed = Color( 0.0921321, 0.644531, 0.0453186, 1 )
 text = "Pet Behavior"
@@ -4628,7 +4671,7 @@ hint_tooltip = "Servant won't be able to relieve from
 sexual build up on their own."
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/focus = SubResource( 11 )
+custom_styles/focus = SubResource( 30 )
 custom_fonts/font = ExtResource( 45 )
 custom_colors/font_color_pressed = Color( 0.0921321, 0.644531, 0.0453186, 1 )
 text = "No Masturbation"
@@ -4647,7 +4690,7 @@ hint_tooltip = "While in mansion, servant will be wearing
 special clothes, revealing their naughty pieces."
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/focus = SubResource( 12 )
+custom_styles/focus = SubResource( 31 )
 custom_fonts/font = ExtResource( 45 )
 custom_colors/font_color_pressed = Color( 0.0921321, 0.644531, 0.0453186, 1 )
 text = "Partial Nudity"
@@ -4667,7 +4710,7 @@ selection of higher grade food
 (-5 food per day)"
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/focus = SubResource( 9 )
+custom_styles/focus = SubResource( 28 )
 custom_fonts/font = ExtResource( 45 )
 custom_colors/font_color_pressed = Color( 0.0921321, 0.644531, 0.0453186, 1 )
 text = "Better food"
@@ -4687,7 +4730,7 @@ personal bath on their own
 (-2 supplies per day)"
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/focus = SubResource( 10 )
+custom_styles/focus = SubResource( 29 )
 custom_fonts/font = ExtResource( 45 )
 custom_colors/font_color_pressed = Color( 0.0921321, 0.644531, 0.0453186, 1 )
 text = "Personal Bath"
@@ -4707,7 +4750,7 @@ to keep themselves in better shape
 (-1 supply per day)"
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/focus = SubResource( 12 )
+custom_styles/focus = SubResource( 31 )
 custom_fonts/font = ExtResource( 45 )
 custom_colors/font_color_pressed = Color( 0.0921321, 0.644531, 0.0453186, 1 )
 text = "Cosmetics"
@@ -4727,7 +4770,7 @@ which they can use for their needs
 (-10 gold per day)"
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/focus = SubResource( 11 )
+custom_styles/focus = SubResource( 30 )
 custom_fonts/font = ExtResource( 45 )
 custom_colors/font_color_pressed = Color( 0.0921321, 0.644531, 0.0453186, 1 )
 text = "Pocket Money"
@@ -4740,7 +4783,7 @@ margin_right = 168.0
 margin_bottom = 366.0
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 32 )
 custom_colors/font_color = Color( 0.0157561, 0.675781, 0.0105591, 1 )
 text = "B"
 
@@ -4752,7 +4795,7 @@ margin_right = 77.0
 margin_bottom = 365.0
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 32 )
 custom_colors/font_color = Color( 0.0739976, 0.660156, 0.00773621, 1 )
 text = "P"
 
@@ -4842,6 +4885,12 @@ margin_bottom = -161.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 
+[node name="TextureRect" type="TextureRect" parent="MainScreen/slave_tab/stats/customization/piercingpanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 44 )
+expand = true
+
 [node name="closebutton" type="Button" parent="MainScreen/slave_tab/stats/customization/piercingpanel"]
 margin_left = 157.0
 margin_top = 425.0
@@ -4913,6 +4962,16 @@ margin_right = -341.0
 margin_bottom = -137.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="MainScreen/slave_tab/stats/customization/tattoopanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 3.0
+margin_top = -87.0
+margin_right = 3.0
+margin_bottom = -87.0
+texture = ExtResource( 44 )
+expand = true
 
 [node name="Control" type="Control" parent="MainScreen/slave_tab/stats/customization/tattoopanel"]
 margin_left = -314.0
@@ -5121,7 +5180,7 @@ margin_bottom = -392.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 theme = ExtResource( 3 )
-custom_styles/panel = SubResource( 14 )
+custom_styles/panel = SubResource( 33 )
 window_title = "Branding"
 
 [node name="brandingtext" type="RichTextLabel" parent="MainScreen/slave_tab/stats/customization/brandpopup"]
@@ -5255,8 +5314,8 @@ margin_bottom = 233.0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/focus = SubResource( 15 )
-custom_styles/normal = SubResource( 16 )
+custom_styles/focus = SubResource( 34 )
+custom_styles/normal = SubResource( 35 )
 context_menu_enabled = false
 caret_blink_speed = 0.8
 
@@ -5281,6 +5340,16 @@ margin_right = -286.0
 margin_bottom = -114.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
+
+[node name="TextureRect2" type="TextureRect" parent="MainScreen/slave_tab/stats/customization/relativespanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -1.0
+margin_top = -49.0
+margin_right = -1.0
+margin_bottom = -49.0
+texture = ExtResource( 44 )
+expand = true
 
 [node name="relativesclose" type="Button" parent="MainScreen/slave_tab/stats/customization/relativespanel"]
 margin_left = 243.0
@@ -5495,7 +5564,7 @@ margin_right = -43.0
 margin_bottom = -60.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 66 )
+custom_styles/panel = SubResource( 36 )
 
 [node name="noimage" type="Label" parent="gallery"]
 visible = false
@@ -5662,7 +5731,7 @@ margin_right = -344.0
 margin_bottom = 20.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 44 )
+custom_styles/panel = SubResource( 37 )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="FinishDayPanel/alise/speech"]
 anchor_right = 1.0
@@ -5851,6 +5920,12 @@ size_flags_horizontal = 2
 size_flags_vertical = 2
 theme = ExtResource( 3 )
 
+[node name="TextureRect" type="TextureRect" parent="questnode"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 44 )
+expand = true
+
 [node name="TabContainer" type="TabContainer" parent="questnode"]
 margin_left = 1.0
 margin_top = 7.0
@@ -6036,10 +6111,10 @@ margin_bottom = 50.0
 rect_min_size = Vector2( 280, 50 )
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/hover = SubResource( 77 )
-custom_styles/pressed = SubResource( 78 )
-custom_styles/disabled = SubResource( 79 )
-custom_styles/normal = SubResource( 80 )
+custom_styles/hover = SubResource( 14 )
+custom_styles/pressed = SubResource( 15 )
+custom_styles/disabled = SubResource( 16 )
+custom_styles/normal = SubResource( 17 )
 custom_fonts/font = ExtResource( 45 )
 custom_colors/font_color_hover = Color( 0.424118, 0.996094, 0.996094, 1 )
 custom_colors/font_color_pressed = Color( 0.424118, 0.996094, 0.996094, 1 )
@@ -6173,7 +6248,7 @@ margin_bottom = -59.0
 mouse_filter = 2
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 71 )
+custom_styles/panel = SubResource( 38 )
 
 [node name="backpack" type="ScrollContainer" parent="explorationnode/winningpanel/lootpanel"]
 editor/display_folded = true
@@ -6308,8 +6383,8 @@ margin_top = -39.0
 margin_right = -25.0
 margin_bottom = -21.0
 size_flags_horizontal = 2
-custom_styles/fg = SubResource( 69 )
-custom_styles/bg = SubResource( 70 )
+custom_styles/fg = SubResource( 39 )
+custom_styles/bg = SubResource( 40 )
 step = 1.0
 value = 10.0
 percent_visible = false
@@ -6557,7 +6632,7 @@ theme = ExtResource( 3 )
 script = ExtResource( 96 )
 
 [node name="TextureRect" type="TextureRect" parent="dialogue"]
-material = SubResource( 115 )
+material = SubResource( 41 )
 margin_left = -1.0
 margin_top = -1.0
 margin_right = 1378.0
@@ -6634,13 +6709,13 @@ anchor_bottom = 1.0
 margin_left = -907.0
 margin_top = -178.0
 margin_right = -436.0
-focus_neighbour_left = NodePath(".:")
-focus_neighbour_top = NodePath(".:")
-focus_neighbour_right = NodePath(".:")
-focus_neighbour_bottom = NodePath(".:")
+focus_neighbour_left = NodePath(".")
+focus_neighbour_top = NodePath(".")
+focus_neighbour_right = NodePath(".")
+focus_neighbour_bottom = NodePath(".")
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 97 )
+custom_styles/panel = SubResource( 42 )
 
 [node name="dialoguetext" type="RichTextLabel" parent="dialogue"]
 anchor_left = 1.0
@@ -6666,10 +6741,10 @@ margin_left = -894.0
 margin_top = -166.0
 margin_right = -445.0
 margin_bottom = -13.0
-focus_neighbour_left = NodePath(".:")
-focus_neighbour_top = NodePath(".:")
-focus_neighbour_right = NodePath(".:")
-focus_neighbour_bottom = NodePath(".:")
+focus_neighbour_left = NodePath(".")
+focus_neighbour_top = NodePath(".")
+focus_neighbour_right = NodePath(".")
+focus_neighbour_bottom = NodePath(".")
 size_flags_horizontal = 2
 size_flags_vertical = 2
 scroll_horizontal_enabled = false
@@ -6697,7 +6772,7 @@ margin_right = 46.0
 margin_bottom = 33.0
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 98 )
+custom_fonts/font = SubResource( 43 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "1"
 
@@ -6738,7 +6813,7 @@ mouse_filter = 2
 size_flags_horizontal = 2
 size_flags_vertical = 2
 theme = ExtResource( 3 )
-custom_styles/panel = SubResource( 85 )
+custom_styles/panel = SubResource( 44 )
 
 [node name="textpanel" type="Panel" parent="scene"]
 anchor_right = 1.0
@@ -6749,7 +6824,7 @@ margin_right = 9.0
 margin_bottom = -159.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 91 )
+custom_styles/panel = SubResource( 45 )
 
 [node name="scenetext" type="RichTextLabel" parent="scene/textpanel"]
 anchor_left = 1.0
@@ -6787,10 +6862,10 @@ margin_left = -486.0
 margin_top = -152.0
 margin_right = -14.0
 margin_bottom = -10.0
-focus_neighbour_left = NodePath(".:")
-focus_neighbour_top = NodePath(".:")
-focus_neighbour_right = NodePath(".:")
-focus_neighbour_bottom = NodePath(".:")
+focus_neighbour_left = NodePath(".")
+focus_neighbour_top = NodePath(".")
+focus_neighbour_right = NodePath(".")
+focus_neighbour_bottom = NodePath(".")
 size_flags_horizontal = 2
 size_flags_vertical = 2
 scroll_horizontal_enabled = false
@@ -6810,10 +6885,10 @@ rect_min_size = Vector2( 470, 45 )
 size_flags_horizontal = 2
 size_flags_vertical = 2
 theme = ExtResource( 43 )
-custom_styles/hover = SubResource( 88 )
-custom_styles/pressed = SubResource( 89 )
-custom_styles/disabled = SubResource( 90 )
-custom_styles/normal = SubResource( 86 )
+custom_styles/hover = SubResource( 46 )
+custom_styles/pressed = SubResource( 47 )
+custom_styles/disabled = SubResource( 48 )
+custom_styles/normal = SubResource( 49 )
 text = "testbutton"
 
 [node name="Label" type="Label" parent="scene/buttonscroll/buttoncontainer/Button"]
@@ -6823,7 +6898,7 @@ margin_right = 60.0
 margin_bottom = 31.0
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 98 )
+custom_fonts/font = SubResource( 43 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "1"
 
@@ -6835,7 +6910,7 @@ margin_right = 863.0
 margin_bottom = 758.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 87 )
+custom_styles/panel = SubResource( 50 )
 
 [node name="gold" type="Label" parent="scene/resources"]
 margin_left = 364.0
@@ -6921,7 +6996,7 @@ anchor_bottom = 1.0
 mouse_filter = 2
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 84 )
+custom_styles/panel = SubResource( 51 )
 
 [node name="entertext" type="Control" parent="." groups=[
 "blockmaininput",
@@ -7139,7 +7214,7 @@ margin_right = -24.0
 margin_bottom = -15.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_fonts/normal_font = SubResource( 99 )
+custom_fonts/normal_font = SubResource( 52 )
 bbcode_enabled = true
 
 [node name="portrait" type="TextureRect" parent="dailyevents/textpanel"]
@@ -7167,7 +7242,7 @@ margin_right = -703.0
 margin_bottom = 156.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 68 )
+custom_styles/panel = SubResource( 53 )
 
 [node name="yesnopopup" type="Popup" parent="."]
 editor/display_folded = true
@@ -7219,9 +7294,8 @@ size_flags_vertical = 2
 custom_constants/separation = 73
 
 [node name="yesbutton" type="Button" parent="yesnopopup/HBoxContainer"]
-margin_top = 34.0
 margin_right = 100.0
-margin_bottom = 74.0
+margin_bottom = 40.0
 rect_min_size = Vector2( 100, 0 )
 size_flags_horizontal = 2
 size_flags_vertical = 2
@@ -7231,9 +7305,8 @@ text = "Yes"
 
 [node name="nobutton" type="Button" parent="yesnopopup/HBoxContainer"]
 margin_left = 173.0
-margin_top = 34.0
 margin_right = 273.0
-margin_bottom = 74.0
+margin_bottom = 40.0
 rect_min_size = Vector2( 100, 0 )
 size_flags_horizontal = 2
 size_flags_vertical = 2
@@ -7365,7 +7438,7 @@ size_flags_vertical = 2
 [node name="TextureRect" type="TextureRect" parent="menucontrol/menupanel/SavePanel"]
 margin_right = 840.0
 margin_bottom = 528.0
-texture = SubResource( 105 )
+texture = SubResource( 54 )
 expand = true
 
 [node name="TextureRect2" type="TextureRect" parent="menucontrol/menupanel/SavePanel"]
@@ -7374,7 +7447,7 @@ margin_top = 55.0
 margin_right = 59.0
 margin_bottom = 507.0
 rect_rotation = -89.9709
-texture = SubResource( 106 )
+texture = SubResource( 55 )
 expand = true
 
 [node name="TextureRect3" type="TextureRect" parent="menucontrol/menupanel/SavePanel"]
@@ -7383,7 +7456,7 @@ margin_top = 364.0
 margin_right = 511.0
 margin_bottom = 816.0
 rect_rotation = -269.989
-texture = SubResource( 106 )
+texture = SubResource( 55 )
 expand = true
 
 [node name="savefilebutton" type="Button" parent="menucontrol/menupanel/SavePanel"]
@@ -7464,8 +7537,8 @@ rect_min_size = Vector2( 460, 40 )
 size_flags_horizontal = 2
 size_flags_vertical = 2
 toggle_mode = true
-texture_normal = SubResource( 107 )
-texture_pressed = SubResource( 108 )
+texture_normal = SubResource( 56 )
+texture_pressed = SubResource( 57 )
 expand = true
 
 [node name="name" type="Label" parent="menucontrol/menupanel/SavePanel/ScrollContainer/savelist/Button"]
@@ -7506,7 +7579,7 @@ margin_left = 530.0
 margin_top = 242.0
 margin_right = 810.0
 margin_bottom = 360.0
-texture = SubResource( 109 )
+texture = SubResource( 58 )
 expand = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="menucontrol/menupanel/SavePanel"]
@@ -7629,7 +7702,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 100 )
+custom_styles/panel = SubResource( 59 )
 
 [node name="Panel" type="Panel" parent="groupselectnode/grouppanel"]
 anchor_bottom = 1.0
@@ -7639,7 +7712,7 @@ margin_right = 343.0
 margin_bottom = -24.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 101 )
+custom_styles/panel = SubResource( 60 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="groupselectnode/grouppanel"]
 anchor_bottom = 1.0
@@ -7752,6 +7825,7 @@ size_flags_vertical = 2
 theme = ExtResource( 3 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="slavelist"]
+editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 46.0
@@ -7794,7 +7868,7 @@ margin_bottom = 20.0
 rect_min_size = Vector2( 65, 20 )
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_styles/panel = SubResource( 55 )
+custom_styles/panel = SubResource( 61 )
 
 [node name="choseslave" type="TextureButton" parent="slavelist/ScrollContainer/VBoxContainer/line/line/name"]
 margin_right = 84.0
@@ -7822,7 +7896,7 @@ margin_bottom = 20.0
 rect_min_size = Vector2( 80, 20 )
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_styles/panel = SubResource( 56 )
+custom_styles/panel = SubResource( 62 )
 
 [node name="Label" type="Label" parent="slavelist/ScrollContainer/VBoxContainer/line/line/race"]
 anchor_right = 1.0
@@ -7843,7 +7917,7 @@ margin_bottom = 20.0
 rect_min_size = Vector2( 80, 20 )
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_styles/panel = SubResource( 56 )
+custom_styles/panel = SubResource( 62 )
 
 [node name="Label" type="Label" parent="slavelist/ScrollContainer/VBoxContainer/line/line/grade"]
 anchor_right = 1.0
@@ -7864,7 +7938,7 @@ margin_bottom = 20.0
 rect_min_size = Vector2( 80, 20 )
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_styles/panel = SubResource( 57 )
+custom_styles/panel = SubResource( 63 )
 
 [node name="Label" type="Label" parent="slavelist/ScrollContainer/VBoxContainer/line/line/spec"]
 anchor_right = 1.0
@@ -7885,7 +7959,7 @@ margin_bottom = 20.0
 rect_min_size = Vector2( 100, 20 )
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_styles/panel = SubResource( 58 )
+custom_styles/panel = SubResource( 64 )
 
 [node name="Label" type="Label" parent="slavelist/ScrollContainer/VBoxContainer/line/line/phys"]
 anchor_right = 1.0
@@ -7907,7 +7981,7 @@ margin_bottom = 20.0
 rect_min_size = Vector2( 100, 20 )
 size_flags_horizontal = 2
 size_flags_vertical = 0
-custom_styles/panel = SubResource( 59 )
+custom_styles/panel = SubResource( 65 )
 
 [node name="Label" type="Label" parent="slavelist/ScrollContainer/VBoxContainer/line/line/mentals"]
 anchor_right = 1.0
@@ -7960,6 +8034,7 @@ size_flags_vertical = 2
 text = "Close"
 
 [node name="sleeppopup" type="Popup" parent="slavelist"]
+editor/display_folded = true
 margin_right = 612.0
 margin_bottom = 344.0
 size_flags_horizontal = 2
@@ -8078,6 +8153,7 @@ size_flags_vertical = 2
 text = "Cancel"
 
 [node name="managerypanel" type="Panel" parent="sexselect"]
+editor/display_folded = true
 visible = false
 margin_left = 774.0
 margin_top = 1.0
@@ -8157,7 +8233,7 @@ margin_right = -195.0
 margin_bottom = -124.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 82 )
+custom_styles/panel = SubResource( 66 )
 
 [node name="close" type="Button" parent="mansionsettings/Panel"]
 margin_left = 437.0
@@ -8301,7 +8377,7 @@ margin_right = 33.0
 margin_bottom = 14.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 51 )
+custom_styles/panel = SubResource( 67 )
 
 [node name="tutsprite" type="TextureRect" parent="tutorialnode"]
 modulate = Color( 0, 0, 0, 1 )
@@ -8327,7 +8403,7 @@ margin_right = -491.0
 margin_bottom = 256.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 44 )
+custom_styles/panel = SubResource( 37 )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="tutorialnode/speech"]
 anchor_right = 1.0
@@ -8353,7 +8429,7 @@ margin_right = -503.0
 margin_bottom = -112.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panel = SubResource( 45 )
+custom_styles/panel = SubResource( 68 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="tutorialnode/response"]
 margin_left = 13.0
@@ -8377,10 +8453,10 @@ margin_bottom = 30.0
 rect_min_size = Vector2( 340, 30 )
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/hover = SubResource( 46 )
-custom_styles/pressed = SubResource( 47 )
-custom_styles/focus = SubResource( 48 )
-custom_styles/normal = SubResource( 49 )
+custom_styles/hover = SubResource( 69 )
+custom_styles/pressed = SubResource( 70 )
+custom_styles/focus = SubResource( 71 )
+custom_styles/normal = SubResource( 72 )
 custom_fonts/font = ExtResource( 41 )
 text = "– Test —"
 
@@ -8649,15 +8725,22 @@ margin_bottom = 621.0
 theme = ExtResource( 3 )
 popup_exclusive = true
 
-[node name="Container" type="Container" parent="traitselect"]
+[node name="TextureRect" type="TextureRect" parent="traitselect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 40 )
+expand = true
+
+[node name="Container" type="MarginContainer" parent="traitselect"]
+editor/display_folded = true
 margin_left = 96.0
 margin_top = 116.0
 margin_right = 439.0
 margin_bottom = 450.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="traitselect/Container"]
-margin_right = 300.0
-margin_bottom = 40.0
+margin_right = 343.0
+margin_bottom = 334.0
 
 [node name="Button" type="Button" parent="traitselect/Container/VBoxContainer"]
 visible = false
@@ -8689,6 +8772,12 @@ margin_bottom = 412.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 
+[node name="TextureRect" type="TextureRect" parent="tooltip"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 44 )
+expand = true
+
 [node name="RichTextLabel" type="RichTextLabel" parent="tooltip"]
 margin_left = 12.0
 margin_top = 12.0
@@ -8710,6 +8799,14 @@ margin_right = 1048.0
 margin_bottom = 393.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="slavetooltip"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -1.0
+margin_right = -1.0
+texture = ExtResource( 44 )
+expand = true
 
 [node name="text" type="RichTextLabel" parent="slavetooltip"]
 margin_left = 214.0
@@ -8790,6 +8887,12 @@ margin_bottom = 410.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 
+[node name="TextureRect" type="TextureRect" parent="itemtooltip"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 123 )
+expand = true
+
 [node name="text" type="RichTextLabel" parent="itemtooltip"]
 margin_left = 228.0
 margin_top = 6.0
@@ -8845,7 +8948,7 @@ margin_bottom = 8.0
 mouse_filter = 2
 size_flags_horizontal = 2
 size_flags_vertical = 2
-texture = ExtResource( 123 )
+texture = ExtResource( 124 )
 expand = true
 __meta__ = {
 "_edit_lock_": true
